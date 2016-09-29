@@ -11,7 +11,7 @@ $lang = (object) $GLOBALS['TL_LANG']['XPT'];
 <head>
 
   <meta charset="utf-8">
-  <title><?= $lang->error ?></title>
+  <title><?= $lang->noLayout ?></title>
   <meta name="generator" content="Contao Open Source CMS">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
@@ -21,7 +21,7 @@ $lang = (object) $GLOBALS['TL_LANG']['XPT'];
   ?></style>
 
 </head>
-<body>
+<body class="<?= Environment::get('agent')->class ?>">
 
   <div id="header">
     <h1>Contao Open Source CMS</h1>
@@ -31,22 +31,20 @@ $lang = (object) $GLOBALS['TL_LANG']['XPT'];
 
     <div id="main">
 
-      <h2><?= $lang->error ?></h2>
+      <h2><?= $lang->noLayout ?></h2>
 
       <h3><?= $lang->matter ?></h3>
-      <p><?= $lang->errorOccurred ?></p>
+      <p><?= $lang->noLayoutSpecified ?></p>
 
       <h3><?= $lang->howToFix ?></h3>
-      <p><?= $lang->errorFixOne ?></p>
-      <pre>$GLOBALS['TL_CONFIG']['displayErrors'] = true;</pre>
-      <p><?= $lang->errorFixTwo ?></p>
+      <p><?php printf($lang->noLayoutFix, StringUtil::encodeEmail('mailto:' . Config::get('adminEmail'))); ?></p>
 
       <h3><?= $lang->more ?></h3>
-      <p><?= $lang->errorExplain ?></p>
+      <p><?= $lang->noLayoutExplain ?></p>
 
     </div>
 
-    <p class="hint"><?php printf($lang->hint, 'templates/be_error.html5'); ?></p>
+    <p class="hint"><?php printf($lang->hint, 'templates/be_no_layout.html'); ?></p>
 
   </div>
 

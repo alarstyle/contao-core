@@ -11,7 +11,7 @@ $lang = (object) $GLOBALS['TL_LANG']['XPT'];
 <head>
 
   <meta charset="utf-8">
-  <title><?= $lang->noRoot ?></title>
+  <title><?= $lang->requestToken ?></title>
   <meta name="generator" content="Contao Open Source CMS">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
@@ -31,17 +31,21 @@ $lang = (object) $GLOBALS['TL_LANG']['XPT'];
 
     <div id="main">
 
-      <h2><?= $lang->noRoot ?></h2>
+      <h2><?= $lang->requestToken ?></h2>
 
       <h3><?= $lang->matter ?></h3>
-      <p><?= $lang->noRootPage ?></p>
+      <p><?= $lang->invalidToken ?></p>
 
       <h3><?= $lang->howToFix ?></h3>
-      <p><?php printf($lang->noRootFix, Environment::get('base'), StringUtil::encodeEmail('mailto:' . Config::get('adminEmail'))); ?></p>
+      <p><?= $lang->tokenRetry ?></p>
+
+      <h3><?= $lang->more ?></h3>
+      <p><?= $lang->tokenExplainOne ?></p>
+      <p><?= $lang->tokenExplainTwo ?></p>
 
     </div>
 
-    <p class="hint"><?php printf($lang->hint, 'templates/be_no_root.html5'); ?></p>
+    <p class="hint"><?php printf($lang->hint, 'templates/be_referer.html'); ?></p>
 
   </div>
 

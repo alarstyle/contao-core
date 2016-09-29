@@ -142,13 +142,13 @@ function die_nicely($strTemplate, $strFallback)
 {
 	header('Content-type: text/html; charset=utf-8');
 
-	if (file_exists(TL_ROOT . "/templates/$strTemplate.html5"))
+	if (file_exists(TL_ROOT . "/templates/$strTemplate.html"))
 	{
-		include TL_ROOT . "/templates/$strTemplate.html5";
+		include TL_ROOT . "/templates/$strTemplate.html";
 	}
-	elseif (file_exists(TL_ROOT . "/system/modules/core/templates/backend/$strTemplate.html5"))
+	elseif (file_exists(TL_ROOT . "/system/modules/core/templates/backend/$strTemplate.html"))
 	{
-		include TL_ROOT . "/system/modules/core/templates/backend/$strTemplate.html5";
+		include TL_ROOT . "/system/modules/core/templates/backend/$strTemplate.html";
 	}
 	else
 	{

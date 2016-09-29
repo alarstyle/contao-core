@@ -11,7 +11,7 @@ $lang = (object) $GLOBALS['TL_LANG']['XPT'];
 <head>
 
   <meta charset="utf-8">
-  <title><?= $lang->noLayout ?></title>
+  <title><?= $lang->notFound ?></title>
   <meta name="generator" content="Contao Open Source CMS">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
@@ -31,20 +31,17 @@ $lang = (object) $GLOBALS['TL_LANG']['XPT'];
 
     <div id="main">
 
-      <h2><?= $lang->noLayout ?></h2>
+      <h2><?= $lang->notFound ?></h2>
 
       <h3><?= $lang->matter ?></h3>
-      <p><?= $lang->noLayoutSpecified ?></p>
+      <p><?= $lang->pageNotFound ?></p>
 
       <h3><?= $lang->howToFix ?></h3>
-      <p><?php printf($lang->noLayoutFix, StringUtil::encodeEmail('mailto:' . Config::get('adminEmail'))); ?></p>
-
-      <h3><?= $lang->more ?></h3>
-      <p><?= $lang->noLayoutExplain ?></p>
+      <p><?php printf($lang->notFoundFix, Environment::get('base'), StringUtil::encodeEmail('mailto:' . Config::get('adminEmail'))); ?></p>
 
     </div>
 
-    <p class="hint"><?php printf($lang->hint, 'templates/be_no_layout.html5'); ?></p>
+    <p class="hint"><?php printf($lang->hint, 'templates/be_no_page.html'); ?></p>
 
   </div>
 

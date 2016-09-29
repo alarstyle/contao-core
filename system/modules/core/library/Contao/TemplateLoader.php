@@ -88,7 +88,7 @@ class TemplateLoader
 	 * Return a template path
 	 *
 	 * @param string $template The template name
-	 * @param string $format   The output format (e.g. "html5")
+	 * @param string $format   The output format (e.g. "html")
 	 * @param string $custom   The custom templates folder (defaults to "templates")
 	 *
 	 * @return string The path to the template file
@@ -128,13 +128,13 @@ class TemplateLoader
 	 * Return the path to the default template
 	 *
 	 * @param string $template The template name
-	 * @param string $format   The output format (e.g. "html5")
+	 * @param string $format   The output format (e.g. "html")
 	 *
 	 * @return string The path to the default template file
 	 *
 	 * @throws \Exception If $template does not exist
 	 */
-	public static function getDefaultPath($template, $format = 'html5')
+	public static function getDefaultPath($template, $format = 'html')
 	{
 		$file = $template .  '.' . $format;
 

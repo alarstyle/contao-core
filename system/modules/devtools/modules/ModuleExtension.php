@@ -104,7 +104,7 @@ class ModuleExtension extends \BackendModule
 				foreach ($arrTemplates as $strTemplate)
 				{
 					$tplTemplate = $this->newTemplate('dev_beTemplate', $objModule);
-					\File::putContent('system/modules/' . $objModule->folder . '/templates/' . $strTemplate . '.html5', $tplTemplate->parse());
+					\File::putContent('system/modules/' . $objModule->folder . '/templates/' . $strTemplate . '.html', $tplTemplate->parse());
 				}
 			}
 
@@ -154,7 +154,7 @@ class ModuleExtension extends \BackendModule
 				foreach ($arrTemplates as $strTemplate)
 				{
 					$tplTemplate = $this->newTemplate('dev_feTemplate', $objModule);
-					$objTemplate = new \File('system/modules/' . $objModule->folder . '/templates/' . $strTemplate . '.html5', true);
+					$objTemplate = new \File('system/modules/' . $objModule->folder . '/templates/' . $strTemplate . '.html', true);
 					$objTemplate->write($tplTemplate->parse());
 					$objTemplate->close();
 				}

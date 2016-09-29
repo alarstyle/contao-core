@@ -32,7 +32,7 @@ foreach ($arrModules as $strModule) {
 
 	// Create the autoload.ini file if it does not yet exist
 	if (!file_exists(TL_ROOT . '/system/modules/' . $strModule . '/config/autoload.ini')) {
-		copy(TL_ROOT . '/system/modules/devtools/templates/dev_ini.html5', TL_ROOT . '/system/modules/' . $strModule . '/config/autoload.ini');
+		copy(TL_ROOT . '/system/modules/devtools/templates/dev_ini.html', TL_ROOT . '/system/modules/' . $strModule . '/config/autoload.ini');
 	}
 
 	$arrDefaultConfig = array_merge($arrDefaultConfig, parse_ini_file(TL_ROOT . '/system/modules/' . $strModule . '/config/autoload.ini', true));

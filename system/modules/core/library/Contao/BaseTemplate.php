@@ -41,7 +41,7 @@ abstract class BaseTemplate extends \Controller
 	 * Output format
 	 * @var string
 	 */
-	protected $strFormat = 'html5';
+	protected $strFormat = 'html';
 
 	/**
 	 * Blocks

@@ -113,7 +113,7 @@ class ModuleAutoload extends \BackendModule
 			// Create the autoload.ini file if it does not yet exist
 			if (!file_exists(TL_ROOT . '/system/modules/' . $strModule . '/config/autoload.ini'))
 			{
-				$objIni = new \File('system/modules/devtools/templates/dev_ini.html5', true);
+				$objIni = new \File('system/modules/devtools/templates/dev_ini.html', true);
 				$objIni->copyTo('system/modules/' . $strModule . '/config/autoload.ini');
 			}
 

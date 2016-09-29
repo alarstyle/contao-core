@@ -44,10 +44,10 @@ abstract class Controller extends \System
 	 * @throws \InvalidArgumentException If $strFormat is unknown
 	 * @throws \RuntimeException         If the template group folder is insecure
 	 */
-	public static function getTemplate($strTemplate, $strFormat='html5')
+	public static function getTemplate($strTemplate, $strFormat='html')
 	{
 		$arrAllowed = trimsplit(',', strtolower(\Config::get('templateFiles')));
-		array_push($arrAllowed, 'html5'); // see #3398
+		array_push($arrAllowed, 'html'); // see #3398
 
 		if (!in_array($strFormat, $arrAllowed))
 		{

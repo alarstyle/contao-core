@@ -675,7 +675,7 @@ class tl_settings extends Backend
 
 
 	/**
-	 * Make sure that "html5" is in the list of valid template files, so the back end works correctly (see #3398)
+	 * Make sure that "html" is in the list of valid template files, so the back end works correctly (see #3398)
 	 *
 	 * @param mixed $varValue
 	 *
@@ -683,9 +683,9 @@ class tl_settings extends Backend
 	 */
 	public function checkTemplateFiles($varValue)
 	{
-		if (strpos($varValue, 'html5') === false)
+		if (strpos($varValue, 'html') === false)
 		{
-			$varValue .= (($varValue != '') ? ',' : '') . 'html5';
+			$varValue .= (($varValue != '') ? ',' : '') . 'html';
 		}
 
 		return $varValue;

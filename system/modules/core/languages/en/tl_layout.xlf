@@ -380,7 +380,7 @@
       <trans-unit id="tl_layout.moo_fallback">
         <source>CDN with local fallback</source>
       </trans-unit>
-      <trans-unit id="tl_layout.html5">
+      <trans-unit id="tl_layout.html">
         <source>HTML</source>
       </trans-unit>
       <trans-unit id="tl_layout.xhtml_strict">

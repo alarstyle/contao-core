@@ -18,7 +18,7 @@ namespace Contao;
  *
  *     $short = StringUtil::substr($str, 32);
  *     $html  = StringUtil::substrHtml($str, 32);
- *     $xhtml = StringUtil::toXhtml($html5);
+ *     $xhtml = StringUtil::toXhtml($html);
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */

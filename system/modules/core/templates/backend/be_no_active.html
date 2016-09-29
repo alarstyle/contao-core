@@ -11,7 +11,7 @@ $lang = (object) $GLOBALS['TL_LANG']['XPT'];
 <head>
 
   <meta charset="utf-8">
-  <title><?= $lang->noForward ?></title>
+  <title><?= $lang->noActive ?></title>
   <meta name="generator" content="Contao Open Source CMS">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
@@ -31,17 +31,17 @@ $lang = (object) $GLOBALS['TL_LANG']['XPT'];
 
     <div id="main">
 
-      <h2><?= $lang->noForward ?></h2>
+      <h2><?= $lang->noActive ?></h2>
 
       <h3><?= $lang->matter ?></h3>
-      <p><?= $lang->noForwardPage ?></p>
+      <p><?= $lang->noActivePages ?></p>
 
       <h3><?= $lang->howToFix ?></h3>
-      <p><?php printf($lang->noForwardFix, StringUtil::encodeEmail('mailto:' . Config::get('adminEmail'))); ?></p>
+      <p><?php printf($lang->noActiveFix, StringUtil::encodeEmail('mailto:' . Config::get('adminEmail'))); ?></p>
 
     </div>
 
-    <p class="hint"><?php printf($lang->hint, 'templates/be_no_forward.html5'); ?></p>
+    <p class="hint"><?php printf($lang->hint, 'templates/be_no_active.html'); ?></p>
 
   </div>
 

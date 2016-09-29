@@ -1065,8 +1065,8 @@ class InsertTags extends \Controller
 						throw new \RuntimeException('Invalid path ' . $strFile);
 					}
 
-					// Include .php and .html5 files
-					if (preg_match('/\.(php|html5)$/', $strFile) && file_exists(TL_ROOT . '/templates/' . $strFile))
+					// Include .php and .html files
+					if (preg_match('/\.(php|html)$/', $strFile) && file_exists(TL_ROOT . '/templates/' . $strFile))
 					{
 						ob_start();
 						include TL_ROOT . '/templates/' . $strFile;
