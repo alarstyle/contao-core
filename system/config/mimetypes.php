@@ -71,7 +71,6 @@ $GLOBALS['TL_MIME'] = array
 	'sit'   => array('application/x-stuffit', 'iconRAR.gif'),
 	'tar'   => array('application/x-tar', 'iconRAR.gif'),
 	'tgz'   => array('application/x-tar', 'iconRAR.gif'),
-	'xhtml' => array('application/xhtml+xml', 'iconPLAIN.gif'),
 	'xht'   => array('application/xhtml+xml', 'iconPLAIN.gif'),
 	'zip'   => array('application/zip', 'iconRAR.gif'),
 

@@ -135,34 +135,31 @@ class FormTextField extends \Widget
 					return 'password';
 				}
 
-				if ($this->strFormat != 'xhtml')
+				switch ($this->rgxp)
 				{
-					switch ($this->rgxp)
-					{
-						case 'digit':
-							// Allow floats (see #7257)
-							if (!isset($this->arrAttributes['step']))
-							{
-								$this->addAttribute('step', 'any');
-							}
-							// NO break; here
+					case 'digit':
+						// Allow floats (see #7257)
+						if (!isset($this->arrAttributes['step']))
+						{
+							$this->addAttribute('step', 'any');
+						}
+						// NO break; here
 
-						case 'natural':
-							return 'number';
-							break;
+					case 'natural':
+						return 'number';
+						break;
 
-						case 'phone':
-							return 'tel';
-							break;
+					case 'phone':
+						return 'tel';
+						break;
 
-						case 'email':
-							return 'email';
-							break;
+					case 'email':
+						return 'email';
+						break;
 
-						case 'url':
-							return 'url';
-							break;
-					}
+					case 'url':
+						return 'url';
+						break;
 				}
 
 				return 'text';
@@ -210,14 +207,13 @@ class FormTextField extends \Widget
 	 */
 	public function generate()
 	{
-		return sprintf('<input type="%s" name="%s" id="ctrl_%s" class="text%s%s" value="%s"%s%s',
+		return sprintf('<input type="%s" name="%s" id="ctrl_%s" class="text%s%s" value="%s"%s>',
 						$this->type,
 						$this->strName,
 						$this->strId,
 						($this->hideInput ? ' password' : ''),
 						(($this->strClass != '') ? ' ' . $this->strClass : ''),
 						specialchars($this->value),
-						$this->getAttributes(),
-						$this->strTagEnding) . $this->addSubmit();
+						$this->getAttributes()) . $this->addSubmit();
 	}
 }

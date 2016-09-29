@@ -203,14 +203,7 @@ class ModuleEventReader extends \Events
 		{
 			$objTemplate->hasTeaser = true;
 
-			if ($objPage->outputFormat == 'xhtml')
-			{
-				$objTemplate->teaser = \StringUtil::toXhtml($objEvent->teaser);
-			}
-			else
-			{
-				$objTemplate->teaser = \StringUtil::toHtml5($objEvent->teaser);
-			}
+			$objTemplate->teaser = \StringUtil::toHtml5($objEvent->teaser);
 
 			$objTemplate->teaser = \StringUtil::encodeEmail($objTemplate->teaser);
 		}

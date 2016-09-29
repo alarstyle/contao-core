@@ -83,9 +83,6 @@ abstract class ModuleNews extends \Module
 	 */
 	protected function parseArticle($objArticle, $blnAddArchive=false, $strClass='', $intCount=0)
 	{
-		/** @var \PageModel $objPage */
-		global $objPage;
-
 		/** @var \FrontendTemplate|object $objTemplate */
 		$objTemplate = new \FrontendTemplate($this->news_template);
 		$objTemplate->setData($objArticle->row());
@@ -108,14 +105,7 @@ abstract class ModuleNews extends \Module
 		{
 			$objTemplate->hasTeaser = true;
 
-			if ($objPage->outputFormat == 'xhtml')
-			{
-				$objTemplate->teaser = \StringUtil::toXhtml($objArticle->teaser);
-			}
-			else
-			{
-				$objTemplate->teaser = \StringUtil::toHtml5($objArticle->teaser);
-			}
+			$objTemplate->teaser = \StringUtil::toHtml5($objArticle->teaser);
 
 			$objTemplate->teaser = \StringUtil::encodeEmail($objTemplate->teaser);
 		}
@@ -417,14 +407,11 @@ abstract class ModuleNews extends \Module
 			$strArticleUrl = ampersand($objArticle->url);
 		}
 
-		/** @var \PageModel $objPage */
-		global $objPage;
-
 		// External link
 		return sprintf('<a href="%s" title="%s"%s>%s</a>',
 						$strArticleUrl,
 						specialchars(sprintf($GLOBALS['TL_LANG']['MSC']['open'], $strArticleUrl)),
-						($objArticle->target ? (($objPage->outputFormat == 'xhtml') ? ' onclick="return !window.open(this.href)"' : ' target="_blank"') : ''),
+						($objArticle->target ? ' target="_blank"' : ''),
 						$strLink);
 	}
 }

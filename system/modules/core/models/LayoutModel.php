@@ -35,7 +35,6 @@ namespace Contao;
  * @property string  $calendarfeeds
  * @property string  $modules
  * @property string  $template
- * @property string  $doctype
  * @property string  $webfonts
  * @property boolean $picturefill
  * @property string  $viewport

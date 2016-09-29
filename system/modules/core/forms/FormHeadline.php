@@ -51,18 +51,7 @@ class FormHeadline extends \Widget
 	 */
 	public function generate()
 	{
-		/** @var \PageModel $objPage */
-		global $objPage;
-
-		// Clean RTE output
-		if ($objPage->outputFormat == 'xhtml')
-		{
-			$this->text = \StringUtil::toXhtml($this->text);
-		}
-		else
-		{
-			$this->text = \StringUtil::toHtml5($this->text);
-		}
+		$this->text = \StringUtil::toHtml5($this->text);
 
 		return $this->text;
 	}

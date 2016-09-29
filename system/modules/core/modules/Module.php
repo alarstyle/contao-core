@@ -472,7 +472,7 @@ abstract class Module extends \Frontend
 				// Override the link target
 				if ($objSubpage->type == 'redirect' && $objSubpage->target)
 				{
-					$row['target'] = ($objPage->outputFormat == 'xhtml') ? ' onclick="return !window.open(this.href)"' : ' target="_blank"';
+					$row['target'] = ' target="_blank"';
 				}
 
 				$items[] = $row;

@@ -119,8 +119,7 @@ class ModuleNewsletterReader extends \Module
 		// Support plain text newsletters (thanks to Hagen Klemp)
 		if ($objNewsletter->sendText)
 		{
-			$nl2br = ($objPage->outputFormat == 'xhtml') ? 'nl2br_xhtml' : 'nl2br_html5';
-			$strContent = $nl2br($objNewsletter->text);
+			$strContent = nl2br($objNewsletter->text);
 		}
 		else
 		{

@@ -166,12 +166,11 @@ class FormPassword extends \Widget
 	 */
 	public function generate()
 	{
-		return sprintf('<input type="password" name="%s" id="ctrl_%s" class="text password%s" value=""%s%s',
+		return sprintf('<input type="password" name="%s" id="ctrl_%s" class="text password%s" value=""%s>',
 						$this->strName,
 						$this->strId,
 						(($this->strClass != '') ? ' ' . $this->strClass : ''),
-						$this->getAttributes(),
-						$this->strTagEnding) . $this->addSubmit();
+						$this->getAttributes()) . $this->addSubmit();
 	}
 
 
@@ -198,11 +197,10 @@ class FormPassword extends \Widget
 	 */
 	public function generateConfirmation()
 	{
-		return sprintf('<input type="password" name="%s_confirm" id="ctrl_%s_confirm" class="text password confirm%s" value=""%s%s',
+		return sprintf('<input type="password" name="%s_confirm" id="ctrl_%s_confirm" class="text password confirm%s" value=""%s>',
 						$this->strName,
 						$this->strId,
 						(($this->strClass != '') ? ' ' . $this->strClass : ''),
-						$this->getAttributes(),
-						$this->strTagEnding);
+						$this->getAttributes());
 	}
 }

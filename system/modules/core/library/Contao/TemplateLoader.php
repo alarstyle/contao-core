@@ -134,7 +134,7 @@ class TemplateLoader
 	 *
 	 * @throws \Exception If $template does not exist
 	 */
-	public static function getDefaultPath($template, $format)
+	public static function getDefaultPath($template, $format = 'html5')
 	{
 		$file = $template .  '.' . $format;
 

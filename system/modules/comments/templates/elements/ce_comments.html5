@@ -4,6 +4,6 @@
 
   <?= implode('', $this->comments) ?>
   <?= $this->pagination ?>
-  <?php include $this->getTemplate('mod_comment_form', 'html5'); ?>
+  <?php include $this->getTemplate('mod_comment_form'); ?>
 
 <?php $this->endblock(); ?>

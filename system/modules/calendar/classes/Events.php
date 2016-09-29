@@ -288,7 +288,7 @@ abstract class Events extends \Module
 		// Override the link target
 		if ($objEvents->source == 'external' && $objEvents->target)
 		{
-			$arrEvent['target'] = ($objPage->outputFormat == 'xhtml') ? ' onclick="return !window.open(this.href)"' : ' target="_blank"';
+			$arrEvent['target'] = ' target="_blank"';
 		}
 
 		// Clean the RTE output
@@ -296,14 +296,7 @@ abstract class Events extends \Module
 		{
 			$arrEvent['hasTeaser'] = true;
 
-			if ($objPage->outputFormat == 'xhtml')
-			{
-				$arrEvent['teaser'] = \StringUtil::toXhtml($arrEvent['teaser']);
-			}
-			else
-			{
-				$arrEvent['teaser'] = \StringUtil::toHtml5($arrEvent['teaser']);
-			}
+			$arrEvent['teaser'] = \StringUtil::toHtml5($arrEvent['teaser']);
 
 			$arrEvent['teaser'] = \StringUtil::encodeEmail($arrEvent['teaser']);
 		}

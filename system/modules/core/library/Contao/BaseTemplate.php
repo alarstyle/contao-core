@@ -44,12 +44,6 @@ abstract class BaseTemplate extends \Controller
 	protected $strFormat = 'html5';
 
 	/**
-	 * Tag ending
-	 * @var string
-	 */
-	protected $strTagEnding = '>';
-
-	/**
 	 * Blocks
 	 * @var array
 	 */
@@ -78,7 +72,7 @@ abstract class BaseTemplate extends \Controller
 		while ($this->strParent !== null)
 		{
 			$strCurrent = $this->strParent;
-			$strParent = $this->strDefault ?: $this->getTemplate($this->strParent, $this->strFormat);
+			$strParent = $this->strDefault ?: $this->getTemplate($this->strParent);
 
 			// Reset the flags
 			$this->strParent = null;
@@ -94,7 +88,7 @@ abstract class BaseTemplate extends \Controller
 			}
 			elseif ($this->strParent == $strCurrent)
 			{
-				$this->strDefault = \TemplateLoader::getDefaultPath($this->strParent, $this->strFormat);
+				$this->strDefault = \TemplateLoader::getDefaultPath($this->strParent);
 			}
 
 			ob_end_clean();
@@ -106,7 +100,7 @@ abstract class BaseTemplate extends \Controller
 		// Add start and end markers in debug mode
 		if (\Config::get('debugMode'))
 		{
-			$strRelPath = str_replace(TL_ROOT . '/', '', $this->getTemplate($this->strTemplate, $this->strFormat));
+			$strRelPath = str_replace(TL_ROOT . '/', '', $this->getTemplate($this->strTemplate));
 			$strBuffer = "\n<!-- TEMPLATE START: $strRelPath -->\n$strBuffer\n<!-- TEMPLATE END: $strRelPath -->\n";
 		}
 

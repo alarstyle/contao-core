@@ -31,9 +31,6 @@ class ContentHyperlink extends \ContentElement
 	 */
 	protected function compile()
 	{
-		/** @var \PageModel $objPage */
-		global $objPage;
-
 		if (substr($this->url, 0, 7) == 'mailto:')
 		{
 			$this->url = \StringUtil::encodeEmail($this->url);
@@ -77,7 +74,7 @@ class ContentHyperlink extends \ContentElement
 			}
 		}
 
-		if (strncmp($this->rel, 'lightbox', 8) !== 0 || $objPage->outputFormat == 'xhtml')
+		if (strncmp($this->rel, 'lightbox', 8) !== 0)
 		{
 			$this->Template->attribute = ' rel="'. $this->rel .'"';
 		}
@@ -97,7 +94,7 @@ class ContentHyperlink extends \ContentElement
 		// Override the link target
 		if ($this->target)
 		{
-			$this->Template->target = ($objPage->outputFormat == 'xhtml') ? ' onclick="return !window.open(this.href)"' : ' target="_blank"';
+			$this->Template->target = ' target="_blank"';
 		}
 
 		// Unset the title attributes in the back end (see #6258)

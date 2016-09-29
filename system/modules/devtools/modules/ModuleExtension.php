@@ -157,7 +157,6 @@ class ModuleExtension extends \BackendModule
 					$objTemplate = new \File('system/modules/' . $objModule->folder . '/templates/' . $strTemplate . '.html5', true);
 					$objTemplate->write($tplTemplate->parse());
 					$objTemplate->close();
-					$objTemplate->copyTo('system/modules/' . $objModule->folder . '/templates/' . $strTemplate . '.xhtml');
 				}
 			}
 

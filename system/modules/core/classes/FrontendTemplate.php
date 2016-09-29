@@ -33,16 +33,6 @@ class FrontendTemplate extends \Template
 	 */
 	public function parse()
 	{
-		/** @var \PageModel $objPage */
-		global $objPage;
-
-		// Adjust the output format
-		if ($objPage->outputFormat != '')
-		{
-			$this->strFormat = $objPage->outputFormat;
-			$this->strTagEnding = ($this->strFormat == 'xhtml') ? ' />' : '>';
-		}
-
 		$strBuffer = parent::parse();
 
 		// HOOK: add custom parse filters
@@ -141,7 +131,7 @@ class FrontendTemplate extends \Template
 			$template = 'block_section';
 		}
 
-		include $this->getTemplate($template, $this->strFormat);
+		include $this->getTemplate($template);
 	}
 
 
@@ -165,14 +155,14 @@ class FrontendTemplate extends \Template
 		}
 
 		// Use the section tag in HTML5
-		$this->tag = ($key == 'main' && $this->strFormat != 'xhtml') ? 'section' : 'div';
+		$this->tag = ($key == 'main') ? 'section' : 'div';
 
 		if ($template === null)
 		{
 			$template = 'block_sections';
 		}
 
-		include $this->getTemplate($template, $this->strFormat);
+		include $this->getTemplate($template);
 	}
 
 
@@ -369,14 +359,7 @@ class FrontendTemplate extends \Template
 
 		if ($strKey == 'main')
 		{
-			/** @var \PageModel $objPage */
-			global $objPage;
-
-			// Use the section tag in HTML5
-			if ($objPage->outputFormat == 'html5')
-			{
-				$tag = 'section';
-			}
+			$tag = 'section';
 		}
 
 		$sections = '';

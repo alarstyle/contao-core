@@ -195,19 +195,6 @@ abstract class Widget extends \BaseTemplate
 	{
 		parent::__construct();
 
-		// Override the output format in the front end
-		if (TL_MODE == 'FE')
-		{
-			/** @var \PageModel $objPage */
-			global $objPage;
-
-			if ($objPage->outputFormat != '')
-			{
-				$this->strFormat = $objPage->outputFormat;
-				$this->strTagEnding = ($this->strFormat == 'xhtml') ? ' />' : '>';
-			}
-		}
-
 		$this->addAttributes($arrAttributes);
 	}
 
@@ -573,7 +560,7 @@ abstract class Widget extends \BaseTemplate
 	{
 		if ($strSeparator === null)
 		{
-			$strSeparator = '<br' . $this->strTagEnding . "\n";
+			$strSeparator = '<br>' . "\n";
 		}
 
 		return $this->hasErrors() ? implode($strSeparator, $this->arrErrors) : '';
@@ -725,27 +712,6 @@ abstract class Widget extends \BaseTemplate
 			return '';
 		}
 
-		$blnIsXhtml = false;
-
-		if (TL_MODE == 'FE')
-		{
-			/** @var \PageModel $objPage */
-			global $objPage;
-
-			if ($objPage->outputFormat == 'xhtml')
-			{
-				$blnIsXhtml = true;
-			}
-		}
-
-		if ($blnIsXhtml)
-		{
-			if ($strKey == 'autofocus' || $strKey == 'placeholder' || $strKey == 'required')
-			{
-				return '';
-			}
-		}
-
 		$varValue = $this->arrAttributes[$strKey];
 
 		// Prevent the autofocus attribute from being added multiple times (see #8281)
@@ -756,14 +722,7 @@ abstract class Widget extends \BaseTemplate
 
 		if ($strKey == 'disabled' || $strKey == 'readonly' || $strKey == 'required' || $strKey == 'autofocus' || $strKey == 'multiple')
 		{
-			if (TL_MODE == 'FE') // see #3878
-			{
-				return $blnIsXhtml ? ' ' . $strKey . '="' . $varValue . '"' : ' ' . $strKey;
-			}
-			else
-			{
-				return ' ' . $strKey;
-			}
+			return ' ' . $strKey;
 		}
 		else
 		{
@@ -792,7 +751,7 @@ abstract class Widget extends \BaseTemplate
 		return sprintf(' <input type="submit" id="ctrl_%s_submit" class="submit" value="%s"%s',
 						$this->strId,
 						specialchars($this->slabel),
-						$this->strTagEnding);
+						'>');
 	}
 
 
@@ -1244,17 +1203,6 @@ abstract class Widget extends \BaseTemplate
 
 		$attribute = ' selected';
 
-		if (TL_MODE == 'FE')
-		{
-			/** @var \PageModel $objPage */
-			global $objPage;
-
-			if ($objPage->outputFormat == 'xhtml')
-			{
-				$attribute = ' selected="selected"';
-			}
-		}
-
 		return (is_array($varValues) ? in_array($strOption, $varValues) : $strOption == $varValues) ? $attribute : '';
 	}
 
@@ -1275,17 +1223,6 @@ abstract class Widget extends \BaseTemplate
 		}
 
 		$attribute = ' checked';
-
-		if (TL_MODE == 'FE')
-		{
-			/** @var \PageModel $objPage */
-			global $objPage;
-
-			if ($objPage->outputFormat == 'xhtml')
-			{
-				$attribute = ' checked="checked"';
-			}
-		}
 
 		return (is_array($varValues) ? in_array($strOption, $varValues) : $strOption == $varValues) ? $attribute : '';
 	}

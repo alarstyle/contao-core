@@ -114,10 +114,6 @@ class InsertTags extends \Controller
 					{
 						$arrCache[$strTag] = '</span>';
 					}
-					elseif ($objPage->outputFormat == 'xhtml')
-					{
-						$arrCache[$strTag] = '<span lang="' . specialchars($elements[1]) . '" xml:lang="' . specialchars($elements[1]) . '">';
-					}
 					else
 					{
 						$arrCache[$strTag] = $arrCache[$strTag] = '<span lang="' . specialchars($elements[1]) . '">';
@@ -126,7 +122,7 @@ class InsertTags extends \Controller
 
 				// Line break
 				case 'br':
-					$arrCache[$strTag] = '<br' . ($objPage->outputFormat == 'xhtml' ? ' />' : '>');
+					$arrCache[$strTag] = '<br>';
 					break;
 
 				// E-mail addresses
@@ -387,7 +383,7 @@ class InsertTags extends \Controller
 						}
 
 						$strName = $objNextPage->title;
-						$strTarget = $objNextPage->target ? (($objPage->outputFormat == 'xhtml') ? LINK_NEW_WINDOW : ' target="_blank"') : '';
+						$strTarget = $objNextPage->target ? ' target="_blank"' : '';
 						$strTitle = $objNextPage->pageTitle ?: $objNextPage->title;
 					}
 
@@ -650,14 +646,7 @@ class InsertTags extends \Controller
 
 					if ($objTeaser !== null)
 					{
-						if ($objPage->outputFormat == 'xhtml')
-						{
-							$arrCache[$strTag] = \StringUtil::toXhtml($this->replaceInsertTags($objTeaser->teaser, $blnCache));
-						}
-						else
-						{
-							$arrCache[$strTag] = \StringUtil::toHtml5($this->replaceInsertTags($objTeaser->teaser, $blnCache));
-						}
+						$arrCache[$strTag] = \StringUtil::toHtml5($this->replaceInsertTags($objTeaser->teaser, $blnCache));
 					}
 					break;
 
@@ -667,14 +656,7 @@ class InsertTags extends \Controller
 
 					if ($objTeaser !== null)
 					{
-						if ($objPage->outputFormat == 'xhtml')
-						{
-							$arrCache[$strTag] = \StringUtil::toXhtml($this->replaceInsertTags($objTeaser->teaser, $blnCache));
-						}
-						else
-						{
-							$arrCache[$strTag] = \StringUtil::toHtml5($this->replaceInsertTags($objTeaser->teaser, $blnCache));
-						}
+						$arrCache[$strTag] = \StringUtil::toHtml5($this->replaceInsertTags($objTeaser->teaser, $blnCache));
 					}
 					break;
 
@@ -684,14 +666,7 @@ class InsertTags extends \Controller
 
 					if ($objTeaser !== null)
 					{
-						if ($objPage->outputFormat == 'xhtml')
-						{
-							$arrCache[$strTag] = \StringUtil::toXhtml($this->replaceInsertTags($objTeaser->teaser, $blnCache));
-						}
-						else
-						{
-							$arrCache[$strTag] = \StringUtil::toHtml5($this->replaceInsertTags($objTeaser->teaser, $blnCache));
-						}
+						$arrCache[$strTag] = \StringUtil::toHtml5($this->replaceInsertTags($objTeaser->teaser, $blnCache));
 					}
 					break;
 
@@ -880,22 +855,6 @@ class InsertTags extends \Controller
 					}
 					break;
 
-				// Acronyms
-				case 'acronym':
-					if ($objPage->outputFormat == 'xhtml')
-					{
-						if ($elements[1] != '')
-						{
-							$arrCache[$strTag] = '<acronym title="'. specialchars($elements[1]) .'">';
-						}
-						else
-						{
-							$arrCache[$strTag] = '</acronym>';
-						}
-						break;
-					}
-					// NO break;
-
 				// Abbreviations
 				case 'abbr':
 					if ($elements[1] != '')
@@ -1031,7 +990,7 @@ class InsertTags extends \Controller
 								$dimensions = ' width="' . specialchars($imgSize[0]) . '" height="' . specialchars($imgSize[1]) . '"';
 							}
 
-							$arrCache[$strTag] = '<img src="' . TL_FILES_URL . $src . '" ' . $dimensions . ' alt="' . specialchars($alt) . '"' . (($class != '') ? ' class="' . specialchars($class) . '"' : '') . (($objPage->outputFormat == 'xhtml') ? ' />' : '>');
+							$arrCache[$strTag] = '<img src="' . TL_FILES_URL . $src . '" ' . $dimensions . ' alt="' . specialchars($alt) . '"' . (($class != '') ? ' class="' . specialchars($class) . '"' : '') . '>';
 						}
 
 						// Picture
@@ -1048,7 +1007,7 @@ class InsertTags extends \Controller
 						// Add a lightbox link
 						if ($rel != '')
 						{
-							if (strncmp($rel, 'lightbox', 8) !== 0 || $objPage->outputFormat == 'xhtml')
+							if (strncmp($rel, 'lightbox', 8) !== 0)
 							{
 								$attribute = ' rel="' . specialchars($rel) . '"';
 							}
@@ -1106,8 +1065,8 @@ class InsertTags extends \Controller
 						throw new \RuntimeException('Invalid path ' . $strFile);
 					}
 
-					// Include .php, .tpl, .xhtml and .html5 files
-					if (preg_match('/\.(php|tpl|xhtml|html5)$/', $strFile) && file_exists(TL_ROOT . '/templates/' . $strFile))
+					// Include .php and .html5 files
+					if (preg_match('/\.(php|html5)$/', $strFile) && file_exists(TL_ROOT . '/templates/' . $strFile))
 					{
 						ob_start();
 						include TL_ROOT . '/templates/' . $strFile;

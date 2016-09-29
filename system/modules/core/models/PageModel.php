@@ -81,8 +81,6 @@ namespace Contao;
  * @property boolean $rootUseSSL
  * @property string  $rootFallbackLanguage
  * @property array   $subpages
- * @property string  $outputFormat
- * @property string  $outputVariant
  * @property boolean $hasJQuery
  * @property boolean $hasMooTools
  * @property boolean $isMobile

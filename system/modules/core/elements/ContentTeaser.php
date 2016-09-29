@@ -72,9 +72,6 @@ class ContentTeaser extends \ContentElement
 	 */
 	protected function compile()
 	{
-		/** @var \PageModel $objPage */
-		global $objPage;
-
 		$link = '/articles/';
 		$objArticle = $this->objArticle;
 
@@ -87,15 +84,7 @@ class ContentTeaser extends \ContentElement
 
 		$this->Template->href = $this->objParent->getFrontendUrl($link);
 
-		// Clean the RTE output
-		if ($objPage->outputFormat == 'xhtml')
-		{
-			$this->Template->text = \StringUtil::toXhtml($objArticle->teaser);
-		}
-		else
-		{
-			$this->Template->text = \StringUtil::toHtml5($objArticle->teaser);
-		}
+		$this->Template->text = \StringUtil::toHtml5($objArticle->teaser);
 
 		$this->Template->headline = $objArticle->title;
 		$this->Template->readMore = specialchars(sprintf($GLOBALS['TL_LANG']['MSC']['readMore'], $objArticle->title));

@@ -84,15 +84,7 @@ class ModuleFaqPage extends \Module
 			/** @var \FaqModel $objFaq */
 			$objTemp = (object) $objFaq->row();
 
-			// Clean RTE output
-			if ($objPage->outputFormat == 'xhtml')
-			{
-				$objTemp->answer = \StringUtil::toXhtml($objFaq->answer);
-			}
-			else
-			{
-				$objTemp->answer = \StringUtil::toHtml5($objFaq->answer);
-			}
+			$objTemp->answer = \StringUtil::toHtml5($objFaq->answer);
 
 			$objTemp->answer = \StringUtil::encodeEmail($objTemp->answer);
 			$objTemp->addImage = false;

@@ -406,33 +406,6 @@ function ampersand($strString, $blnEncode=true)
 
 
 /**
- * Replace line breaks with HTML5-style <br> tags
- *
- * @param string  $str
- * @param boolean $xhtml
- *
- * @return string
- */
-function nl2br_html5($str, $xhtml=false)
-{
-	return nl2br($str, $xhtml);
-}
-
-
-/**
- * Replace line breaks with XHTML-style <br /> tags
- *
- * @param string $str
- *
- * @return string
- */
-function nl2br_xhtml($str)
-{
-	return nl2br($str);
-}
-
-
-/**
  * Replace line breaks with <br> tags preserving preformatted text
  *
  * @param string  $str
@@ -440,9 +413,9 @@ function nl2br_xhtml($str)
  *
  * @return string
  */
-function nl2br_pre($str, $xhtml=false)
+function nl2br_pre($str)
 {
-	$str = $xhtml ? nl2br_xhtml($str) : nl2br_html5($str);
+	$str = nl2br($str);
 
 	if (stripos($str, '<pre') === false)
 	{

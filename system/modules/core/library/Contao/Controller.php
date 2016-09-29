@@ -715,7 +715,6 @@ abstract class Controller extends \System
 		global $objPage;
 
 		$arrReplace = array();
-		$blnXhtml = ($objPage->outputFormat == 'xhtml');
 		$strScripts = '';
 
 		// Add the internal jQuery scripts
@@ -761,14 +760,14 @@ abstract class Controller extends \System
 				$objCombiner->add($script);
 			}
 
-			$strScripts .= "\n" . \Template::generateScriptTag($objCombiner->getCombinedFile(), $blnXhtml);
-			$strScripts .= "\n" . \Template::generateInlineScript('SyntaxHighlighter.defaults.toolbar=false;SyntaxHighlighter.all()', $blnXhtml) . "\n";
+			$strScripts .= "\n" . \Template::generateScriptTag($objCombiner->getCombinedFile());
+			$strScripts .= "\n" . \Template::generateInlineScript('SyntaxHighlighter.defaults.toolbar=false;SyntaxHighlighter.all()') . "\n";
 		}
 
 		// Command scheduler
 		if (!\Config::get('disableCron'))
 		{
-			$strScripts .= "\n" . \Template::generateInlineScript('setTimeout(function(){var e=function(e,t){try{var n=new XMLHttpRequest}catch(r){return}n.open("GET",e,!0),n.onreadystatechange=function(){this.readyState==4&&this.status==200&&typeof t=="function"&&t(this.responseText)},n.send()},t="system/cron/cron.";e(t+"txt",function(n){parseInt(n||0)<Math.round(+(new Date)/1e3)-' . \Frontend::getCronTimeout() . '&&e(t+"php")})},5e3);', $blnXhtml) . "\n";
+			$strScripts .= "\n" . \Template::generateInlineScript('setTimeout(function(){var e=function(e,t){try{var n=new XMLHttpRequest}catch(r){return}n.open("GET",e,!0),n.onreadystatechange=function(){this.readyState==4&&this.status==200&&typeof t=="function"&&t(this.responseText)},n.send()},t="system/cron/cron.";e(t+"txt",function(n){parseInt(n||0)<Math.round(+(new Date)/1e3)-' . \Frontend::getCronTimeout() . '&&e(t+"php")})},5e3);') . "\n";
 		}
 
 		$arrReplace['[[TL_BODY]]'] = $strScripts;
@@ -803,7 +802,7 @@ abstract class Controller extends \System
 				}
 				else
 				{
-					$strScripts .= \Template::generateStyleTag(static::addStaticUrlTo($stylesheet), $options->media, $blnXhtml) . "\n";
+					$strScripts .= \Template::generateStyleTag(static::addStaticUrlTo($stylesheet), $options->media) . "\n";
 				}
 			}
 		}
@@ -826,7 +825,7 @@ abstract class Controller extends \System
 				}
 				else
 				{
-					$strScripts .= \Template::generateStyleTag(static::addStaticUrlTo($stylesheet), $options->media, $blnXhtml) . "\n";
+					$strScripts .= \Template::generateStyleTag(static::addStaticUrlTo($stylesheet), $options->media) . "\n";
 				}
 			}
 		}
@@ -834,7 +833,7 @@ abstract class Controller extends \System
 		// Create the aggregated style sheet
 		if ($objCombiner->hasEntries())
 		{
-			$strScripts .= \Template::generateStyleTag($objCombiner->getCombinedFile(), 'all', $blnXhtml) . "\n";
+			$strScripts .= \Template::generateStyleTag($objCombiner->getCombinedFile(), 'all') . "\n";
 		}
 
 		$arrReplace['[[TL_CSS]]'] = $strScripts;
@@ -861,19 +860,19 @@ abstract class Controller extends \System
 				}
 				else
 				{
-					$strScripts .= \Template::generateScriptTag(static::addStaticUrlTo($javascript), $blnXhtml, $options->async) . "\n";
+					$strScripts .= \Template::generateScriptTag(static::addStaticUrlTo($javascript), $options->async) . "\n";
 				}
 			}
 
 			// Create the aggregated script and add it before the non-static scripts (see #4890)
 			if ($objCombiner->hasEntries())
 			{
-				$strScripts = \Template::generateScriptTag($objCombiner->getCombinedFile(), $blnXhtml) . "\n" . $strScripts;
+				$strScripts = \Template::generateScriptTag($objCombiner->getCombinedFile()) . "\n" . $strScripts;
 			}
 
 			if ($objCombinerAsync->hasEntries())
 			{
-				$strScripts = \Template::generateScriptTag($objCombinerAsync->getCombinedFile(), $blnXhtml, true) . "\n" . $strScripts;
+				$strScripts = \Template::generateScriptTag($objCombinerAsync->getCombinedFile(), true) . "\n" . $strScripts;
 			}
 		}
 
@@ -1562,14 +1561,7 @@ abstract class Controller extends \System
 		// Provide an ID for single lightbox images in HTML5 (see #3742)
 		if ($strLightboxId === null && $arrItem['fullsize'])
 		{
-			if ($objPage->outputFormat == 'xhtml')
-			{
-				$strLightboxId = 'lightbox';
-			}
-			else
-			{
-				$strLightboxId = 'lightbox[' . substr(md5($objTemplate->getName() . '_' . $arrItem['id']), 0, 6) . ']';
-			}
+			$strLightboxId = 'lightbox[' . substr(md5($objTemplate->getName() . '_' . $arrItem['id']), 0, 6) . ']';
 		}
 
 		// Float image
@@ -1598,11 +1590,11 @@ abstract class Controller extends \System
 						$objTemplate->$strHrefKey = TL_FILES_URL . \System::urlEncode($arrItem['imageUrl']);
 					}
 
-					$objTemplate->attributes = ($objPage->outputFormat == 'xhtml') ? ' rel="' . $strLightboxId . '"' : ' data-lightbox="' . substr($strLightboxId, 9, -1) . '"';
+					$objTemplate->attributes = ' data-lightbox="' . substr($strLightboxId, 9, -1) . '"';
 				}
 				else
 				{
-					$objTemplate->attributes = ($objPage->outputFormat == 'xhtml') ? ' onclick="return !window.open(this.href)"' : ' target="_blank"';
+					$objTemplate->attributes = ' target="_blank"';
 				}
 			}
 		}
@@ -1611,7 +1603,7 @@ abstract class Controller extends \System
 		elseif ($arrItem['fullsize'] && TL_MODE == 'FE')
 		{
 			$objTemplate->$strHrefKey = TL_FILES_URL . \System::urlEncode($arrItem['singleSRC']);
-			$objTemplate->attributes = ($objPage->outputFormat == 'xhtml') ? ' rel="' . $strLightboxId . '"' : ' data-lightbox="' . substr($strLightboxId, 9, -1) . '"';
+			$objTemplate->attributes = ' data-lightbox="' . substr($strLightboxId, 9, -1) . '"';
 		}
 
 		// Do not urlEncode() here because getImage() already does (see #3817)

@@ -107,15 +107,7 @@ class Comments extends \Frontend
 			{
 				$objPartial->setData($objComments->row());
 
-				// Clean the RTE output
-				if ($objPage->outputFormat == 'xhtml')
-				{
-					$objPartial->comment = \StringUtil::toXhtml($objComments->comment);
-				}
-				else
-				{
-					$objPartial->comment = \StringUtil::toHtml5($objComments->comment);
-				}
+				$objPartial->comment = \StringUtil::toHtml5($objComments->comment);
 
 				$objPartial->comment = trim(str_replace(array('{{', '}}'), array('&#123;&#123;', '&#125;&#125;'), $objPartial->comment));
 
@@ -138,15 +130,7 @@ class Comments extends \Frontend
 						$objPartial->reply = $this->replaceInsertTags($objComments->reply);
 						$objPartial->author = $objAuthor;
 
-						// Clean the RTE output
-						if ($objPage->outputFormat == 'xhtml')
-						{
-							$objPartial->reply = \StringUtil::toXhtml($objPartial->reply);
-						}
-						else
-						{
-							$objPartial->reply = \StringUtil::toHtml5($objPartial->reply);
-						}
+						$objPartial->reply = \StringUtil::toHtml5($objPartial->reply);
 					}
 				}
 
@@ -498,7 +482,7 @@ class Comments extends \Frontend
 		/** @var \PageModel $objPage */
 		global $objPage;
 
-		$strComment = nl2br_pre($strComment, ($objPage->outputFormat == 'xhtml'));
+		$strComment = nl2br_pre($strComment);
 
 		// Use paragraphs to generate new lines
 		if (strncmp('<p>', $strComment, 3) !== 0)

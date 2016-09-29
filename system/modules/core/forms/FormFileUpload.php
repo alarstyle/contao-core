@@ -308,11 +308,10 @@ class FormFileUpload extends \Widget implements \uploadable
 	 */
 	public function generate()
 	{
-		return sprintf('<input type="file" name="%s" id="ctrl_%s" class="upload%s"%s%s',
+		return sprintf('<input type="file" name="%s" id="ctrl_%s" class="upload%s"%s>',
 						$this->strName,
 						$this->strId,
 						(($this->strClass != '') ? ' ' . $this->strClass : ''),
-						$this->getAttributes(),
-						$this->strTagEnding) . $this->addSubmit();
+						$this->getAttributes()) . $this->addSubmit();
 	}
 }

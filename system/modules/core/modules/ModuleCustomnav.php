@@ -173,7 +173,7 @@ class ModuleCustomnav extends \Module
 					// Override the link target
 					if ($objModel->type == 'redirect' && $objModel->target)
 					{
-						$row['target'] = ($objPage->outputFormat == 'xhtml') ? ' onclick="return !window.open(this.href)"' : ' target="_blank"';
+						$row['target'] = ' target="_blank"';
 					}
 
 					$items[] = $row;
@@ -199,7 +199,7 @@ class ModuleCustomnav extends \Module
 					// Override the link target
 					if ($objModel->type == 'redirect' && $objModel->target)
 					{
-						$row['target'] = ($objPage->outputFormat == 'xhtml') ? ' onclick="return !window.open(this.href)"' : ' target="_blank"';
+						$row['target'] = ' target="_blank"';
 					}
 
 					$items[] = $row;

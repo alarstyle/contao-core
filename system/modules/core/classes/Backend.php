@@ -136,7 +136,6 @@ abstract class Backend extends \Controller
 		{
 			case 'css':
 			case 'diff':
-			case 'html':
 			case 'ini':
 			case 'java':
 			case 'json':
@@ -178,8 +177,7 @@ abstract class Backend extends \Controller
 				return 'c_cpp';
 				break;
 
-			case 'html5':
-			case 'xhtml':
+			case 'html':
 				return 'php';
 				break;
 
