@@ -57,14 +57,12 @@ namespace  {
 	class FrontendTemplate extends \Contao\FrontendTemplate {}
 	class FrontendUser extends \Contao\FrontendUser {}
 	abstract class Hybrid extends \Contao\Hybrid {}
-	class LiveUpdate extends \Contao\LiveUpdate {}
 	class Messages extends \Contao\Messages {}
 	class PurgeData extends \Contao\PurgeData {}
 	class RebuildIndex extends \Contao\RebuildIndex {}
 	class StyleSheets extends \Contao\StyleSheets {}
 	class Theme extends \Contao\Theme {}
 	class Versions extends \Contao\Versions {}
-	class BackendChangelog extends \Contao\BackendChangelog {}
 	class BackendConfirm extends \Contao\BackendConfirm {}
 	class BackendFile extends \Contao\BackendFile {}
 	class BackendHelp extends \Contao\BackendHelp {}

@@ -138,29 +138,6 @@ class Ajax extends \Backend
 				$this->Session->set('fieldset_states', $fs);
 				exit; break;
 
-			// Check whether the temporary directory is writeable
-			case 'liveUpdate':
-				\Config::set('liveUpdateId', \Input::post('id'));
-				\Config::persist('liveUpdateId', \Input::post('id'));
-
-				// Check whether the temp directory is writeable
-				try
-				{
-					$objFile = new \File('system/tmp/' . md5(uniqid(mt_rand(), true)));
-					$objFile->close();
-					$objFile->delete();
-				}
-				catch (\Exception $e)
-				{
-					if ($e->getCode() == 0)
-					{
-						\System::loadLanguageFile('tl_maintenance');
-						echo '<p class="tl_error">' . $GLOBALS['TL_LANG']['tl_maintenance']['notWriteable'] . '</p>';
-						exit; break;
-					}
-				}
-				exit; break;
-
 			// Toggle checkbox groups
 			case 'toggleCheckboxGroup':
 				$state = $this->Session->get('checkbox_groups');

@@ -33,28 +33,7 @@ class Automator extends \System
 	 */
 	public function checkForUpdates()
 	{
-		if (!is_numeric(BUILD))
-		{
-			return;
-		}
-
-		// HOOK: proxy module
-		if (Config::get('useProxy')) {
-			$objRequest = new \ProxyRequest();
-		} else {
-			$objRequest = new \Request();
-		}
-
-		$objRequest->send(\Config::get('liveUpdateBase') . (LONG_TERM_SUPPORT ? 'lts-version.txt' : 'version.txt'));
-
-		if (!$objRequest->hasError())
-		{
-			\Config::set('latestVersion', $objRequest->response);
-			\Config::persist('latestVersion', $objRequest->response);
-		}
-
-		// Add a log entry
-		$this->log('Checked for Contao updates', __METHOD__, TL_CRON);
+		return;
 	}
 
 

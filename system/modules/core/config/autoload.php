@@ -36,7 +36,6 @@ ClassLoader::addClasses(array
 	'Contao\FrontendTemplate'          => 'system/modules/core/classes/FrontendTemplate.php',
 	'Contao\FrontendUser'              => 'system/modules/core/classes/FrontendUser.php',
 	'Contao\Hybrid'                    => 'system/modules/core/classes/Hybrid.php',
-	'Contao\LiveUpdate'                => 'system/modules/core/classes/LiveUpdate.php',
 	'Contao\Messages'                  => 'system/modules/core/classes/Messages.php',
 	'Contao\PurgeData'                 => 'system/modules/core/classes/PurgeData.php',
 	'Contao\RebuildIndex'              => 'system/modules/core/classes/RebuildIndex.php',
@@ -45,7 +44,6 @@ ClassLoader::addClasses(array
 	'Contao\Versions'                  => 'system/modules/core/classes/Versions.php',
 
 	// Controllers
-	'Contao\BackendChangelog'          => 'system/modules/core/controllers/BackendChangelog.php',
 	'Contao\BackendConfirm'            => 'system/modules/core/controllers/BackendConfirm.php',
 	'Contao\BackendFile'               => 'system/modules/core/controllers/BackendFile.php',
 	'Contao\BackendHelp'               => 'system/modules/core/controllers/BackendHelp.php',
@@ -274,7 +272,6 @@ TemplateLoader::addFiles(array
 	'be_help'             => 'system/modules/core/templates/backend',
 	'be_incomplete'       => 'system/modules/core/templates/backend',
 	'be_install'          => 'system/modules/core/templates/backend',
-	'be_live_update'      => 'system/modules/core/templates/backend',
 	'be_login'            => 'system/modules/core/templates/backend',
 	'be_main'             => 'system/modules/core/templates/backend',
 	'be_maintenance'      => 'system/modules/core/templates/backend',
