@@ -4684,7 +4684,7 @@ class DC_Table extends \DataContainer implements \listable, \editable
 				}
 
 				$return .= '
-  <tr class="'.((++$eoCount % 2 == 0) ? 'even' : 'odd').' click2edit toggle_select" onmouseover="Theme.hoverRow(this,1)" onmouseout="Theme.hoverRow(this,0)">
+  <tr class="'.((++$eoCount % 2 == 0) ? 'even' : 'odd').' click2edit toggle_select">
     ';
 
 				$colspan = 1;

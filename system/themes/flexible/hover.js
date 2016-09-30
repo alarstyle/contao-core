@@ -1,2 +1,169 @@
-/* Contao Open Source CMS, (c) 2005-2016 Leo Feyer, LGPL license */
-var Theme={isWebkit:Browser.chrome||Browser.safari||navigator.userAgent.match(/(?:webkit|khtml)/i),hoverRow:function(e,t){for(var i=$(e).getChildren(),n=0;n<i.length;n++)"td"==i[n].nodeName.toLowerCase()&&i[n].setStyle("background-color",t?"#ebfdd7":"")},hoverDiv:function(e,t){t||e.removeAttribute("data-visited"),$(e).setStyle("background-color",t?"#ebfdd7":"")},fixLabelLastChild:function(){(Browser.ie7||Browser.ie8)&&$$(".tl_checkbox_container label:last-child").each(function(e){e.setStyle("margin-bottom",0)})},stopClickPropagation:function(){$$(".picker_selector").each(function(e){e.getElements("a").each(function(e){e.addEvent("click",function(e){e.stopPropagation()})})}),$$(".picker_selector,.click2edit").each(function(e){e.getElements('input[type="checkbox"]').each(function(e){e.addEvent("click",function(e){e.stopPropagation()})})})},setupCtrlClick:function(){$$(".click2edit").each(function(e){e.getElements("a").each(function(e){e.addEvent("click",function(e){e.stopPropagation()})}),Browser.Features.Touch?e.addEvent("click",function(){e.getAttribute("data-visited")?(e.getElements("a").each(function(e){e.hasClass("edit")&&(document.location.href=e.href)}),e.removeAttribute("data-visited")):e.setAttribute("data-visited","1")}):e.addEvent("click",function(t){var i=Browser.Platform.mac?t.event.metaKey:t.event.ctrlKey;i&&t.event.shiftKey?e.getElements("a").each(function(e){e.hasClass("editheader")&&(document.location.href=e.href)}):i&&e.getElements("a").each(function(e){e.hasClass("edit")&&(document.location.href=e.href)})})})},setupTextareaResizing:function(){$$(".tl_textarea").each(function(e){if(!(Browser.ie6||Browser.ie7||Browser.ie8||e.hasClass("noresize")||e.retrieve("autogrow"))){var t=new Element("div",{html:"X",styles:{position:"absolute",top:0,left:"-999em","overflow-x":"hidden"}}).setStyles(e.getStyles("font-size","font-family","width","line-height")).inject(document.body);"border-box"!=e.getStyle("-moz-box-sizing")&&"border-box"!=e.getStyle("-webkit-box-sizing")&&"border-box"!=e.getStyle("box-sizing")||t.setStyles({padding:e.getStyle("padding"),border:e.getStyle("border-left")});var i=t.clientHeight;e.addEvent("input",function(){t.set("html",this.get("value").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n|\r\n/g,"<br>X"));var e=Math.max(i,t.getSize().y);this.clientHeight!=e&&this.tween("height",e)}).set("tween",{duration:100}).setStyle("height",i+"px"),e.fireEvent("input"),e.store("autogrow",!0)}})},setupMenuToggle:function(){$$(".collapsible").each(function(e){e.getElement("h1").addEvent("click",function(){e.toggleClass("xpnd")})})}};window.addEvent("domready",function(){Theme.fixLabelLastChild(),Theme.stopClickPropagation(),Theme.setupCtrlClick(),Theme.setupTextareaResizing(),Theme.setupMenuToggle()}),window.addEvent("ajax_change",function(){Theme.stopClickPropagation(),Theme.setupCtrlClick(),Theme.setupTextareaResizing()});
+/**
+ * Contao Open Source CMS
+ *
+ * Copyright (c) 2005-2016 Leo Feyer
+ *
+ * @license LGPL-3.0+
+ */
+
+var Theme = {
+
+    /**
+     * Work around the missing :last-child support in IE7 and IE8 (see #4017)
+     */
+    fixLabelLastChild: function() {
+        if (Browser.ie7 || Browser.ie8) {
+            $$('.tl_checkbox_container label:last-child').each(function(el) {
+                el.setStyle('margin-bottom', 0);
+            });
+        }
+    },
+
+    /**
+     * Stop the propagation of click events of certain elements
+     */
+    stopClickPropagation: function() {
+
+        // Do not propagate the click events of the icons
+        $$('.picker_selector').each(function(ul) {
+            ul.getElements('a').each(function(el) {
+                el.addEvent('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+        });
+
+        // Do not propagate the click events of the checkboxes
+        $$('.picker_selector,.click2edit').each(function(ul) {
+            ul.getElements('input[type="checkbox"]').each(function(el) {
+                el.addEvent('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+        });
+    },
+
+    /**
+     * Set up the [Ctrl] + click to edit functionality
+     */
+    setupCtrlClick: function() {
+        $$('.click2edit').each(function(el) {
+
+            // Do not propagate the click events of the default buttons (see #5731)
+            el.getElements('a').each(function(a) {
+                a.addEvent('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+
+            // Set up regular click events on touch devices
+            if (Browser.Features.Touch) {
+                el.addEvent('click', function() {
+                    if (!el.getAttribute('data-visited')) {
+                        el.setAttribute('data-visited', '1');
+                    } else {
+                        el.getElements('a').each(function(a) {
+                            if (a.hasClass('edit')) {
+                                document.location.href = a.href;
+                            }
+                        });
+                        el.removeAttribute('data-visited');
+                    }
+                });
+            } else {
+                el.addEvent('click', function(e) {
+                    var key = Browser.Platform.mac ?
+                        e.event.metaKey : e.event.ctrlKey;
+                    if (key && e.event.shiftKey) {
+                        el.getElements('a').each(function(a) {
+                            if (a.hasClass('editheader')) {
+                                document.location.href = a.href;
+                            }
+                        });
+                    } else if (key) {
+                        el.getElements('a').each(function(a) {
+                            if (a.hasClass('edit')) {
+                                document.location.href = a.href;
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    },
+
+    /**
+     * Set up the textarea resizing
+     */
+    setupTextareaResizing: function() {
+        $$('.tl_textarea').each(function(el) {
+            if (Browser.ie6 || Browser.ie7 || Browser.ie8) return;
+            if (el.hasClass('noresize') || el.retrieve('autogrow')) return;
+
+            // Set up the dummy element
+            var dummy = new Element('div', {
+                html: 'X',
+                styles: {
+                    'position':'absolute',
+                    'top':0,
+                    'left':'-999em',
+                    'overflow-x':'hidden'
+                }
+            }).setStyles(
+                el.getStyles('font-size', 'font-family', 'width', 'line-height')
+            ).inject(document.body);
+
+            // Also consider the box-sizing
+            if (el.getStyle('-moz-box-sizing') == 'border-box' || el.getStyle('-webkit-box-sizing') == 'border-box' || el.getStyle('box-sizing') == 'border-box') {
+                dummy.setStyles({
+                    'padding': el.getStyle('padding'),
+                    'border': el.getStyle('border-left')
+                });
+            }
+
+            // Single line height
+            var line = dummy.clientHeight;
+
+            // Respond to the "input" event
+            el.addEvent('input', function() {
+                dummy.set('html', this.get('value')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/\n|\r\n/g, '<br>X'));
+                var height = Math.max(line, dummy.getSize().y);
+                if (this.clientHeight != height) this.tween('height', height);
+            }).set('tween', { 'duration':100 }).setStyle('height', line + 'px');
+
+            // Fire the event
+            el.fireEvent('input');
+            el.store('autogrow', true);
+        });
+    },
+
+    /**
+     * Set up the menu toggle
+     */
+    setupMenuToggle: function() {
+        $$('.collapsible').each(function(el) {
+            el.getElement('h1').addEvent('click', function() {
+                el.toggleClass('xpnd');
+            });
+        });
+    }
+};
+
+// Initialize
+window.addEvent('domready', function() {
+    Theme.fixLabelLastChild();
+    Theme.stopClickPropagation();
+    Theme.setupCtrlClick();
+    Theme.setupTextareaResizing();
+    Theme.setupMenuToggle();
+});
+
+// Respond to Ajax changes
+window.addEvent('ajax_change', function() {
+    Theme.stopClickPropagation();
+    Theme.setupCtrlClick();
+    Theme.setupTextareaResizing();
+});
