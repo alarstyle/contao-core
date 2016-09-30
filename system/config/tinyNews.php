@@ -33,7 +33,6 @@ setTimeout(function() {
       if (document.activeElement && document.activeElement.id && document.activeElement.id == editor.id) {
         editor.editorManager.get(editor.id).focus();
       }
-      editor.on('focus', function() { Backend.getScrollOffset(); });
     },
     file_browser_callback: function(field_name, url, type, win) {
       Backend.openModalBrowser(field_name, url, type, win);

@@ -9,12 +9,6 @@
 var Theme = {
 
 	/**
-	 * Check for WebKit
-	 * @member {boolean}
- 	 */
-	isWebkit: (Browser.chrome || Browser.safari || navigator.userAgent.match(/(?:webkit|khtml)/i)),
-
-	/**
 	 * Colorize a table row when hovering over it
 	 *
 	 * @param {object} el    The DOM element
@@ -27,19 +21,6 @@ var Theme = {
 				items[i].setStyle('background-color', (state ? '#ebfdd7' : ''));
 			}
 		}
-	},
-
-	/**
-	 * Colorize a layer when hovering over it
-	 *
-	 * @param {object} el    The DOM element
-	 * @param {int}    state The current state
-	 */
-	hoverDiv: function(el, state) {
-		if (!state) {
-			el.removeAttribute('data-visited');
-		}
-		$(el).setStyle('background-color', (state ? '#ebfdd7' : ''));
 	},
 
 	/**

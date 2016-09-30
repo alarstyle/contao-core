@@ -13,7 +13,7 @@
         <input type="hidden" name="REQUEST_TOKEN" value="<?= REQUEST_TOKEN ?>">
         <div class="tl_tbox">
           <h3><label for="ctrl_language"><?= $this->label ?></label></h3>
-          <select name="language" id="ctrl_language" class="tl_select" onfocus="Backend.getScrollOffset();"><?= $this->options ?></select>
+          <select name="language" id="ctrl_language" class="tl_select"><?= $this->options ?></select>
           <?php if ($this->help): ?>
             <p class="tl_help tl_tip"><?= $this->help ?></p>
           <?php endif; ?>

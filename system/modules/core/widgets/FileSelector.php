@@ -133,7 +133,7 @@ class FileSelector extends \Widget
 		// Reset radio button selection
 		else
 		{
-			$strReset = "\n" . '    <li class="tl_folder"><div class="tl_left">&nbsp;</div> <div class="tl_right"><label for="reset_' . $this->strId . '" class="tl_change_selected">' . $GLOBALS['TL_LANG']['MSC']['resetSelected'] . '</label> <input type="radio" name="' . $this->strName . '" id="reset_' . $this->strName . '" class="tl_tree_radio" value="" onfocus="Backend.getScrollOffset()"></div><div style="clear:both"></div></li>';
+			$strReset = "\n" . '    <li class="tl_folder"><div class="tl_left">&nbsp;</div> <div class="tl_right"><label for="reset_' . $this->strId . '" class="tl_change_selected">' . $GLOBALS['TL_LANG']['MSC']['resetSelected'] . '</label> <input type="radio" name="' . $this->strName . '" id="reset_' . $this->strName . '" class="tl_tree_radio" value="" onfocus=""></div><div style="clear:both"></div></li>';
 		}
 
 		// Return the tree
@@ -305,7 +305,7 @@ class FileSelector extends \Widget
 		{
 			$countFiles = 0;
 			$content = scan($folders[$f]);
-			$return .= "\n    " . '<li class="'.$folderClass.' toggle_select" onmouseover="Theme.hoverDiv(this, 1)" onmouseout="Theme.hoverDiv(this, 0)"><div class="tl_left" style="padding-left:'.$intMargin.'px">';
+			$return .= "\n    " . '<li class="'.$folderClass.' toggle_select"><div class="tl_left" style="padding-left:'.$intMargin.'px">';
 
 			// Check whether there are subfolders or files
 			foreach ($content as $v)
@@ -344,11 +344,11 @@ class FileSelector extends \Widget
 				switch ($this->fieldType)
 				{
 					case 'checkbox':
-						$return .= '<input type="checkbox" name="'.$this->strName.'[]" id="'.$this->strName.'_'.md5($currentFolder).'" class="tl_tree_checkbox" value="'.specialchars($currentFolder).'" onfocus="Backend.getScrollOffset()"'.$this->optionChecked($currentFolder, $this->varValue).'>';
+						$return .= '<input type="checkbox" name="'.$this->strName.'[]" id="'.$this->strName.'_'.md5($currentFolder).'" class="tl_tree_checkbox" value="'.specialchars($currentFolder).'" onfocus=""'.$this->optionChecked($currentFolder, $this->varValue).'>';
 						break;
 
 					case 'radio':
-						$return .= '<input type="radio" name="'.$this->strName.'" id="'.$this->strName.'_'.md5($currentFolder).'" class="tl_tree_radio" value="'.specialchars($currentFolder).'" onfocus="Backend.getScrollOffset()"'.$this->optionChecked($currentFolder, $this->varValue).'>';
+						$return .= '<input type="radio" name="'.$this->strName.'" id="'.$this->strName.'_'.md5($currentFolder).'" class="tl_tree_radio" value="'.specialchars($currentFolder).'" onfocus=""'.$this->optionChecked($currentFolder, $this->varValue).'>';
 						break;
 				}
 			}
@@ -388,7 +388,7 @@ class FileSelector extends \Widget
 					continue;
 				}
 
-				$return .= "\n    " . '<li class="tl_file toggle_select" onmouseover="Theme.hoverDiv(this, 1)" onmouseout="Theme.hoverDiv(this, 0)"><div class="tl_left" style="padding-left:'.($intMargin + $intSpacing).'px">';
+				$return .= "\n    " . '<li class="tl_file toggle_select"><div class="tl_left" style="padding-left:'.($intMargin + $intSpacing).'px">';
 				$thumbnail .= ' <span class="tl_gray">('.$this->getReadableSize($objFile->filesize);
 
 				if ($objFile->width && $objFile->height)
@@ -410,11 +410,11 @@ class FileSelector extends \Widget
 				switch ($this->fieldType)
 				{
 					case 'checkbox':
-						$return .= '<input type="checkbox" name="'.$this->strName.'[]" id="'.$this->strName.'_'.md5($currentFile).'" class="tl_tree_checkbox" value="'.specialchars($currentFile).'" onfocus="Backend.getScrollOffset()"'.$this->optionChecked($currentFile, $this->varValue).'>';
+						$return .= '<input type="checkbox" name="'.$this->strName.'[]" id="'.$this->strName.'_'.md5($currentFile).'" class="tl_tree_checkbox" value="'.specialchars($currentFile).'" onfocus=""'.$this->optionChecked($currentFile, $this->varValue).'>';
 						break;
 
 					case 'radio':
-						$return .= '<input type="radio" name="'.$this->strName.'" id="'.$this->strName.'_'.md5($currentFile).'" class="tl_tree_radio" value="'.specialchars($currentFile).'" onfocus="Backend.getScrollOffset()"'.$this->optionChecked($currentFile, $this->varValue).'>';
+						$return .= '<input type="radio" name="'.$this->strName.'" id="'.$this->strName.'_'.md5($currentFile).'" class="tl_tree_radio" value="'.specialchars($currentFile).'" onfocus=""'.$this->optionChecked($currentFile, $this->varValue).'>';
 						break;
 				}
 

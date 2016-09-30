@@ -184,7 +184,7 @@ class ModuleWizard extends \Widget
 
 			$return .= '
   <tr>
-    <td><select name="'.$this->strId.'['.$i.'][mod]" class="tl_select tl_chosen" tabindex="'.$tabindex++.'" onfocus="Backend.getScrollOffset()" onchange="Backend.updateModuleLink(this)">'.$options.'</select></td>';
+    <td><select name="'.$this->strId.'['.$i.'][mod]" class="tl_select tl_chosen" tabindex="'.$tabindex++.'" onfocus="" onchange="Backend.updateModuleLink(this)">'.$options.'</select></td>';
 
 			$options = '';
 
@@ -195,7 +195,7 @@ class ModuleWizard extends \Widget
 			}
 
 			$return .= '
-    <td><select name="'.$this->strId.'['.$i.'][col]" class="tl_select_column" tabindex="'.$tabindex++.'" onfocus="Backend.getScrollOffset()">'.$options.'</select></td>
+    <td><select name="'.$this->strId.'['.$i.'][col]" class="tl_select_column" tabindex="'.$tabindex++.'" onfocus="">'.$options.'</select></td>
     <td>';
 
 			// Add buttons
@@ -213,7 +213,7 @@ class ModuleWizard extends \Widget
 				}
 				elseif ($button == 'enable')
 				{
-					$return .= ' ' . \Image::getHtml((($this->varValue[$i]['enable']) ? 'visible.gif' : 'invisible.gif'), '', 'class="mw_enable" title="' . sprintf($GLOBALS['TL_LANG']['MSC']['mw_enable']) . '"') . '<input name="'.$this->strId.'['.$i.'][enable]" type="checkbox" class="tl_checkbox mw_enable" value="1" tabindex="'.$tabindex++.'" onfocus="Backend.getScrollOffset()"'. (($this->varValue[$i]['enable']) ? ' checked' : '').'>';
+					$return .= ' ' . \Image::getHtml((($this->varValue[$i]['enable']) ? 'visible.gif' : 'invisible.gif'), '', 'class="mw_enable" title="' . sprintf($GLOBALS['TL_LANG']['MSC']['mw_enable']) . '"') . '<input name="'.$this->strId.'['.$i.'][enable]" type="checkbox" class="tl_checkbox mw_enable" value="1" tabindex="'.$tabindex++.'" onfocus=""'. (($this->varValue[$i]['enable']) ? ' checked' : '').'>';
 				}
 				else
 				{

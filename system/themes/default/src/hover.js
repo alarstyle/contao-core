@@ -24,19 +24,6 @@ var Theme = {
 	},
 
 	/**
-	 * Colorize a layer when hovering over it
-	 *
-	 * @param {object} el    The DOM element
-	 * @param {int}    state The current state
-	 */
-	hoverDiv: function(el, state) {
-		if (!state) {
-			el.removeAttribute('data-visited');
-		}
-		$(el).setStyle('background-color', (state ? '#ebfdd7' : ''));
-	},
-
-	/**
 	 * Work around the missing :last-child support in IE7 and IE8 (see #4017)
 	 */
 	fixLabelLastChild: function() {

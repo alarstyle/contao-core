@@ -200,7 +200,7 @@ class FileUpload extends \Backend
 		for ($i=0; $i<\Config::get('uploadFields'); $i++)
 		{
 			$fields .= '
-  <input type="file" name="' . $this->strName . '[]" class="tl_upload_field" onfocus="Backend.getScrollOffset()"><br>';
+  <input type="file" name="' . $this->strName . '[]" class="tl_upload_field" onfocus=""><br>';
 		}
 
 		return '

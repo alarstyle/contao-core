@@ -64,7 +64,7 @@ $GLOBALS['TL_DCA']['tl_files'] = array
 				'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
 				'href'                => 'act=select',
 				'class'               => 'header_edit_all',
-				'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
+				'attributes'          => 'onclick="" accesskey="e"'
 			)
 		),
 		'operations' => array
@@ -81,7 +81,7 @@ $GLOBALS['TL_DCA']['tl_files'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_files']['copy'],
 				'href'                => 'act=paste&amp;mode=copy',
 				'icon'                => 'copy.gif',
-				'attributes'          => 'onclick="Backend.getScrollOffset()"',
+				'attributes'          => 'onclick=""',
 				'button_callback'     => array('tl_files', 'copyFile')
 			),
 			'cut' => array
@@ -89,7 +89,7 @@ $GLOBALS['TL_DCA']['tl_files'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_files']['cut'],
 				'href'                => 'act=paste&amp;mode=cut',
 				'icon'                => 'cut.gif',
-				'attributes'          => 'onclick="Backend.getScrollOffset()"',
+				'attributes'          => 'onclick=""',
 				'button_callback'     => array('tl_files', 'cutFile')
 			),
 			'delete' => array
@@ -97,7 +97,7 @@ $GLOBALS['TL_DCA']['tl_files'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_files']['delete'],
 				'href'                => 'act=delete',
 				'icon'                => 'delete.gif',
-				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirmFile'] . '\'))return false;Backend.getScrollOffset()"',
+				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirmFile'] . '\'))return false;"',
 				'button_callback'     => array('tl_files', 'deleteFile')
 			),
 			'show' => array
@@ -705,7 +705,7 @@ class tl_files extends Backend
 		return '
 <div class="' . $GLOBALS['TL_DCA'][$dc->table]['fields'][$dc->field]['eval']['tl_class'] . ' cbx">
   <div id="ctrl_' . $dc->field . '" class="tl_checkbox_single_container">
-    <input type="hidden" name="' . $dc->inputName . '" value=""><input type="checkbox" name="' . $dc->inputName . '" id="opt_' . $dc->field . '_0" class="tl_checkbox" value="1"' . ($blnProtected ? ' checked="checked"' : '') . ' onfocus="Backend.getScrollOffset()"> <label for="opt_' . $dc->field . '_0">' . $GLOBALS['TL_LANG']['tl_files']['protected'][0] . '</label>
+    <input type="hidden" name="' . $dc->inputName . '" value=""><input type="checkbox" name="' . $dc->inputName . '" id="opt_' . $dc->field . '_0" class="tl_checkbox" value="1"' . ($blnProtected ? ' checked="checked"' : '') . ' onfocus=""> <label for="opt_' . $dc->field . '_0">' . $GLOBALS['TL_LANG']['tl_files']['protected'][0] . '</label>
   </div>' . (Config::get('showHelp') ? '
   <p class="tl_help tl_tip">' . $GLOBALS['TL_LANG']['tl_files']['protected'][1] . '</p>' : '') . '
 </div>';

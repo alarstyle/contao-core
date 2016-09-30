@@ -62,7 +62,6 @@ $GLOBALS['TL_DCA']['tl_calendar'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_calendar']['feeds'],
 				'href'                => 'table=tl_calendar_feed',
 				'class'               => 'header_rss',
-				'attributes'          => 'onclick="Backend.getScrollOffset()"',
 				'button_callback'     => array('tl_calendar', 'manageFeeds')
 			),
 			'all' => array
@@ -70,7 +69,7 @@ $GLOBALS['TL_DCA']['tl_calendar'] = array
 				'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
 				'href'                => 'act=select',
 				'class'               => 'header_edit_all',
-				'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
+				'attributes'          => 'accesskey="e"'
 			)
 		),
 		'operations' => array
@@ -100,7 +99,7 @@ $GLOBALS['TL_DCA']['tl_calendar'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_calendar']['delete'],
 				'href'                => 'act=delete',
 				'icon'                => 'delete.gif',
-				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
+				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;"',
 				'button_callback'     => array('tl_calendar', 'deleteCalendar')
 			),
 			'show' => array

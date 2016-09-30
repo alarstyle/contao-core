@@ -328,7 +328,7 @@ class TableWizard extends \Widget
 
 <div class="tl_tbox">
   <h3><label for="separator">'.$GLOBALS['TL_LANG']['MSC']['separator'][0].'</label></h3>
-  <select name="separator" id="separator" class="tl_select" onfocus="Backend.getScrollOffset()">
+  <select name="separator" id="separator" class="tl_select" onfocus="">
     <option value="comma">'.$GLOBALS['TL_LANG']['MSC']['comma'].'</option>
     <option value="semicolon">'.$GLOBALS['TL_LANG']['MSC']['semicolon'].'</option>
     <option value="tabulator">'.$GLOBALS['TL_LANG']['MSC']['tabulator'].'</option>

@@ -1,3 +1,2356 @@
-/* Contao Open Source CMS, (c) 2005-2016 Leo Feyer, LGPL license */
-var AjaxRequest={themePath:Contao.script_url+"system/themes/"+Contao.theme+"/images/",toggleNavigation:function(e,t){e.blur();var a=$(t),n=$(e).getFirst("img");return a?("none"==a.getStyle("display")?(a.setStyle("display",null),n.src=AjaxRequest.themePath+"modMinus.gif",$(e).store("tip:title",Contao.lang.collapse),(new Request.Contao).post({action:"toggleNavigation",id:t,state:1,REQUEST_TOKEN:Contao.request_token})):(a.setStyle("display","none"),n.src=AjaxRequest.themePath+"modPlus.gif",$(e).store("tip:title",Contao.lang.expand),(new Request.Contao).post({action:"toggleNavigation",id:t,state:0,REQUEST_TOKEN:Contao.request_token})),!1):(new Request.Contao({evalScripts:!0,onRequest:AjaxRequest.displayBox(Contao.lang.loading+" …"),onSuccess:function(a){var o=new Element("li",{id:t,class:"tl_parent",html:a,styles:{display:"inline"}}).inject($(e).getParent("li"),"after");o.getElements("a").each(function(e){e.href=e.href.replace(/&ref=[a-f0-9]+/,"&ref="+Contao.referer_id)}),$(e).store("tip:title",Contao.lang.collapse),n.src=AjaxRequest.themePath+"modMinus.gif",AjaxRequest.hideBox(),window.fireEvent("ajax_change")}}).post({action:"loadNavigation",id:t,state:1,REQUEST_TOKEN:Contao.request_token}),!1)},toggleStructure:function(e,t,a,n){e.blur();var o=$(t),i=$(e).getFirst("img");return o?("none"==o.getStyle("display")?(o.setStyle("display",null),i.src=AjaxRequest.themePath+"folMinus.gif",$(e).store("tip:title",Contao.lang.collapse),new Request.Contao({field:e}).post({action:"toggleStructure",id:t,state:1,REQUEST_TOKEN:Contao.request_token})):(o.setStyle("display","none"),i.src=AjaxRequest.themePath+"folPlus.gif",$(e).store("tip:title",Contao.lang.expand),new Request.Contao({field:e}).post({action:"toggleStructure",id:t,state:0,REQUEST_TOKEN:Contao.request_token})),!1):(new Request.Contao({field:e,evalScripts:!0,onRequest:AjaxRequest.displayBox(Contao.lang.loading+" …"),onSuccess:function(o){var l=new Element("li",{id:t,class:"parent",styles:{display:"inline"}});if(new Element("ul",{class:"level_"+a,html:o}).inject(l,"bottom"),5==n)l.inject($(e).getParent("li"),"after");else{for(var s,r=!1,c=$(e).getParent("li");"element"==typeOf(c)&&(s=c.getNext("li"));)if(c=s,c.hasClass("tl_folder")){r=!0;break}r?l.inject(c,"before"):l.inject(c,"after")}l.getElements("a").each(function(e){e.href=e.href.replace(/&ref=[a-f0-9]+/,"&ref="+Contao.referer_id)}),$(e).store("tip:title",Contao.lang.collapse),i.src=AjaxRequest.themePath+"folMinus.gif",window.fireEvent("structure"),AjaxRequest.hideBox(),window.fireEvent("ajax_change")}}).post({action:"loadStructure",id:t,level:a,state:1,REQUEST_TOKEN:Contao.request_token}),!1)},toggleFileManager:function(e,t,a,n){e.blur();var o=$(t),i=$(e).getFirst("img");return o?("none"==o.getStyle("display")?(o.setStyle("display",null),i.src=AjaxRequest.themePath+"folMinus.gif",$(e).store("tip:title",Contao.lang.collapse),new Request.Contao({field:e}).post({action:"toggleFileManager",id:t,state:1,REQUEST_TOKEN:Contao.request_token})):(o.setStyle("display","none"),i.src=AjaxRequest.themePath+"folPlus.gif",$(e).store("tip:title",Contao.lang.expand),new Request.Contao({field:e}).post({action:"toggleFileManager",id:t,state:0,REQUEST_TOKEN:Contao.request_token})),!1):(new Request.Contao({field:e,evalScripts:!0,onRequest:AjaxRequest.displayBox(Contao.lang.loading+" …"),onSuccess:function(a){var o=new Element("li",{id:t,class:"parent",styles:{display:"inline"}});new Element("ul",{class:"level_"+n,html:a}).inject(o,"bottom"),o.inject($(e).getParent("li"),"after"),o.getElements("a").each(function(e){e.href=e.href.replace(/&ref=[a-f0-9]+/,"&ref="+Contao.referer_id)}),$(e).store("tip:title",Contao.lang.collapse),i.src=AjaxRequest.themePath+"folMinus.gif",AjaxRequest.hideBox(),window.fireEvent("ajax_change")}}).post({action:"loadFileManager",id:t,level:n,folder:a,state:1,REQUEST_TOKEN:Contao.request_token}),!1)},togglePagetree:function(e,t,a,n,o){e.blur(),Backend.getScrollOffset();var i=$(t),l=$(e).getFirst("img");return i?("none"==i.getStyle("display")?(i.setStyle("display",null),l.src=AjaxRequest.themePath+"folMinus.gif",$(e).store("tip:title",Contao.lang.collapse),new Request.Contao({field:e}).post({action:"togglePagetree",id:t,state:1,REQUEST_TOKEN:Contao.request_token})):(i.setStyle("display","none"),l.src=AjaxRequest.themePath+"folPlus.gif",$(e).store("tip:title",Contao.lang.expand),new Request.Contao({field:e}).post({action:"togglePagetree",id:t,state:0,REQUEST_TOKEN:Contao.request_token})),!1):(new Request.Contao({field:e,evalScripts:!0,onRequest:AjaxRequest.displayBox(Contao.lang.loading+" …"),onSuccess:function(a){var n=new Element("li",{id:t,class:"parent",styles:{display:"inline"}});new Element("ul",{class:"level_"+o,html:a}).inject(n,"bottom"),n.inject($(e).getParent("li"),"after"),n.getElements("a").each(function(e){e.href=e.href.replace(/&ref=[a-f0-9]+/,"&ref="+Contao.referer_id)}),$(e).store("tip:title",Contao.lang.collapse),l.src=AjaxRequest.themePath+"folMinus.gif",AjaxRequest.hideBox(),window.fireEvent("ajax_change")}}).post({action:"loadPagetree",id:t,level:o,field:a,name:n,state:1,REQUEST_TOKEN:Contao.request_token}),!1)},toggleFiletree:function(e,t,a,n,o,i){e.blur(),Backend.getScrollOffset();var l=$(t),s=$(e).getFirst("img");return l?("none"==l.getStyle("display")?(l.setStyle("display",null),s.src=AjaxRequest.themePath+"folMinus.gif",$(e).store("tip:title",Contao.lang.collapse),new Request.Contao({field:e}).post({action:"toggleFiletree",id:t,state:1,REQUEST_TOKEN:Contao.request_token})):(l.setStyle("display","none"),s.src=AjaxRequest.themePath+"folPlus.gif",$(e).store("tip:title",Contao.lang.expand),new Request.Contao({field:e}).post({action:"toggleFiletree",id:t,state:0,REQUEST_TOKEN:Contao.request_token})),!1):(new Request.Contao({field:e,evalScripts:!0,onRequest:AjaxRequest.displayBox(Contao.lang.loading+" …"),onSuccess:function(a){var n=new Element("li",{id:t,class:"parent",styles:{display:"inline"}});new Element("ul",{class:"level_"+i,html:a}).inject(n,"bottom"),n.inject($(e).getParent("li"),"after"),n.getElements("a").each(function(e){e.href=e.href.replace(/&ref=[a-f0-9]+/,"&ref="+Contao.referer_id)}),$(e).store("tip:title",Contao.lang.collapse),s.src=AjaxRequest.themePath+"folMinus.gif",AjaxRequest.hideBox(),window.fireEvent("ajax_change")}}).post({action:"loadFiletree",id:t,folder:a,level:i,field:n,name:o,state:1,REQUEST_TOKEN:Contao.request_token}),!1)},toggleSubpalette:function(e,t,a){e.blur();var n=$(t);return n?void(e.value?(e.value="",e.checked="",n.setStyle("display","none"),n.getElements("[required]").each(function(e){e.set("required",null).set("data-required","")}),new Request.Contao({field:e}).post({action:"toggleSubpalette",id:t,field:a,state:0,REQUEST_TOKEN:Contao.request_token})):(e.value=1,e.checked="checked",n.setStyle("display",null),n.getElements("[data-required]").each(function(e){e.set("required","").set("data-required",null)}),new Request.Contao({field:e}).post({action:"toggleSubpalette",id:t,field:a,state:1,REQUEST_TOKEN:Contao.request_token}))):void new Request.Contao({field:e,evalScripts:!1,onRequest:AjaxRequest.displayBox(Contao.lang.loading+" …"),onSuccess:function(a,n){var o=new Element("div",{id:t,html:a,styles:{display:"block"}}).inject($(e).getParent("div").getParent("div"),"after");n.javascript&&(document.write=function(e){var t="";e.replace(/<script src="([^"]+)"/i,function(e,a){t=a}),t&&Asset.javascript(t,{onLoad:function(){Browser.exec(n.javascript)}})},Browser.exec(n.javascript)),e.value=1,e.checked="checked",o.getElements("a").each(function(e){e.href=e.href.replace(/&ref=[a-f0-9]+/,"&ref="+Contao.referer_id)}),AjaxRequest.hideBox(),window.fireEvent("subpalette"),window.fireEvent("ajax_change")}}).post({action:"toggleSubpalette",id:t,field:a,load:1,state:1,REQUEST_TOKEN:Contao.request_token})},toggleVisibility:function(e,t,a){e.blur();var n,o,i,l,s,r=null,c=$(e).getFirst("img"),d=1==c.get("data-state"),u=e.getParent("div");return null===c.get("data-state")&&(d=c.src.indexOf("invisible")==-1,console.warn('Using a visibility toggle without a "data-state" attribute is deprecated. Please adjust your Contao DCA file.')),u.hasClass("tl_right")?r=u.getPrevious("div").getElement("img"):u.hasClass("tl_listing_container")?(r=e.getParent("td").getPrevious("td").getFirst("div.list_icon"),null===r&&(r=e.getParent("td").getPrevious("td").getElement("div.cte_type")),null===r&&(r=e.getParent("tr").getFirst("td").getElement("div.list_icon_new"))):(o=u.getNext("div"))&&(o.hasClass("cte_type")&&(r=o),null===r&&(r=o.getFirst("div.list_icon"))),null!==r&&("img"==r.nodeName.toLowerCase()?r.getParent("ul.tl_listing").hasClass("tl_tree_xtnd")?(i=r.get("data-icon"),l=r.get("data-icon-disabled"),null===i&&(i=r.src.replace(/(.*)\/([a-z0-9]+)_?\.(gif|png|jpe?g|svg)$/,"$1/$2.$3"),console.warn('Using a row icon without a "data-icon" attribute is deprecated. Please adjust your Contao DCA file.')),null===l&&(l=r.src.replace(/(.*)\/([a-z0-9]+)_?\.(gif|png|jpe?g|svg)$/,"$1/$2_.$3"),console.warn('Using a row icon without a "data-icon-disabled" attribute is deprecated. Please adjust your Contao DCA file.')),i.indexOf("/")==-1&&(i=AjaxRequest.themePath+i),l.indexOf("/")==-1&&(l=AjaxRequest.themePath+l),r.src=d?l:i):(s=r.getParent("a"),s&&s.href.indexOf("do=feRedirect")==-1&&(r=(o=s.getNext("a"))?o.getFirst("img"):new Element("img")),i=r.get("data-icon"),l=r.get("data-icon-disabled"),null===i&&(n=r.src.replace(/.*_([0-9])\.(gif|png|jpe?g|svg)/,"$1"),i=r.src.replace(/_[0-9]\.(gif|png|jpe?g|svg)/,(1==n.toInt()?"":"_"+(n.toInt()-1))+".$1").split(/[\\/]/).pop(),console.warn('Using a row icon without a "data-icon" attribute is deprecated. Please adjust your Contao DCA file.')),null===l&&(n=r.src.replace(/.*_([0-9])\.(gif|png|jpe?g|svg)/,"$1"),l=r.src.replace(/(_[0-9])?\.(gif|png|jpe?g|svg)/,(n==r.src?"_1":"_"+(n.toInt()+1))+".$2").split(/[\\/]/).pop(),console.warn('Using a row icon without a "data-icon-disabled" attribute is deprecated. Please adjust your Contao DCA file.')),i.indexOf("/")==-1&&(i=AjaxRequest.themePath+i),l.indexOf("/")==-1&&(l=AjaxRequest.themePath+l),r.src=d?l:i):r.hasClass("cte_type")?d?(r.addClass("unpublished"),r.removeClass("published")):(r.addClass("published"),r.removeClass("unpublished")):(i=r.get("data-icon"),l=r.get("data-icon-disabled"),null===i&&(i=r.getStyle("background-image").replace(/(.*)\/([a-z0-9]+)_?\.(gif|png|jpe?g|svg)\);?$/,"$1/$2.$2"),console.warn('Using a row icon without a "data-icon" attribute is deprecated. Please adjust your Contao DCA file.')),null===l&&(l=r.getStyle("background-image").replace(/(.*)\/([a-z0-9]+)_?\.(gif|png|jpe?g|svg)\);?$/,"$1/$2_.$3"),console.warn('Using a row icon without a "data-icon-disabled" attribute is deprecated. Please adjust your Contao DCA file.')),i.indexOf("/")==-1&&(i=AjaxRequest.themePath+i),l.indexOf("/")==-1&&(l=AjaxRequest.themePath+l),r.setStyle("background-image","url("+(d?l:i)+")"))),"tl_style"==a&&u.getParent("div").getElement("pre").toggleClass("disabled"),d?(c.src=AjaxRequest.themePath+"invisible.gif",c.set("data-state",0),new Request.Contao({url:window.location.href,followRedirects:!1}).get({tid:t,state:0,rt:Contao.request_token})):(c.src=AjaxRequest.themePath+"visible.gif",c.set("data-state",1),new Request.Contao({url:window.location.href,followRedirects:!1}).get({tid:t,state:1,rt:Contao.request_token})),!1},toggleFeatured:function(e,t){e.blur();var a=$(e).getFirst("img"),n=1==a.get("data-state");return null===a.get("data-state")&&(n=a.src.indexOf("featured_")==-1,console.warn('Using a featured toggle without a "data-state" attribute is deprecated. Please adjust your Contao DCA file.')),n?(a.src=AjaxRequest.themePath+"featured_.gif",a.set("data-state",0),(new Request.Contao).post({action:"toggleFeatured",id:t,state:0,REQUEST_TOKEN:Contao.request_token})):(a.src=AjaxRequest.themePath+"featured.gif",a.set("data-state",1),(new Request.Contao).post({action:"toggleFeatured",id:t,state:1,REQUEST_TOKEN:Contao.request_token})),!1},toggleFieldset:function(e,t,a){e.blur();var n=$("pal_"+t);if(n.hasClass("collapsed"))n.removeClass("collapsed"),(new Request.Contao).post({action:"toggleFieldset",id:t,table:a,state:1,REQUEST_TOKEN:Contao.request_token});else{for(var o=n.getParent("form"),i=n.getElements("[required]"),l=!0,s=0;s<i.length;s++)if(!i[s].get("value")){l=!1;break}l?(n.addClass("collapsed"),(new Request.Contao).post({action:"toggleFieldset",id:t,table:a,state:0,REQUEST_TOKEN:Contao.request_token})):"function"==typeof o.checkValidity&&o.getElement('input[type="submit"]').click()}return!1},toggleCheckboxGroup:function(e,t){e.blur();var a=$(t),n=$(e).getFirst("img");return!!a&&("none"==a.getStyle("display")?(a.setStyle("display",null),n.src=AjaxRequest.themePath+"folMinus.gif",(new Request.Contao).post({action:"toggleCheckboxGroup",id:t,state:1,REQUEST_TOKEN:Contao.request_token})):(a.setStyle("display","none"),n.src=AjaxRequest.themePath+"folPlus.gif",(new Request.Contao).post({action:"toggleCheckboxGroup",id:t,state:0,REQUEST_TOKEN:Contao.request_token})),!0)},liveUpdate:function(e,t){var a=$(t);a&&new Request.Contao({onRequest:$("lu_message").set("html",'<p class="tl_info">Connecting to the Live Update server</p>'),onSuccess:function(t,a){t?$("lu_message").set("html",a.content):$(e).submit()}}).post({action:"liveUpdate",id:a.value,REQUEST_TOKEN:Contao.request_token})},displayBox:function(e){var t=$("tl_ajaxBox"),a=$("tl_ajaxOverlay"),n=window.getScroll();null===a&&(a=new Element("div",{id:"tl_ajaxOverlay"}).inject($(document.body),"bottom")),a.set({styles:{display:"block",top:n.y+"px"}}),null===t&&(t=new Element("div",{id:"tl_ajaxBox"}).inject($(document.body),"bottom")),t.set({html:e,styles:{display:"block",top:n.y+100+"px"}})},hideBox:function(){var e=$("tl_ajaxBox"),t=$("tl_ajaxOverlay");t&&t.setStyle("display","none"),e&&e.setStyle("display","none")}},Backend={currentId:null,xMousePosition:0,yMousePosition:0,popupWindow:null,themePath:Contao.script_url+"system/themes/"+Contao.theme+"/images/",getMousePosition:function(e){Backend.xMousePosition=e.client.x,Backend.yMousePosition=e.client.y},openWindow:function(e,t,a){e.blur(),t=Browser.ie?t+40:t+17,a=Browser.ie?a+30:a+17,Backend.popupWindow=window.open(e.href,"","width="+t+",height="+a+",modal=yes,left=100,top=50,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no")},openModalWindow:function(e,t,a){new SimpleModal({width:e,hideFooter:!0,draggable:!1,overlayOpacity:.5,onShow:function(){document.body.setStyle("overflow","hidden")},onHide:function(){document.body.setStyle("overflow","auto")}}).show({title:t,contents:a})},openModalImage:function(e){var t=e||{},a=new SimpleModal({width:t.width,hideFooter:!0,draggable:!1,overlayOpacity:.5,onShow:function(){document.body.setStyle("overflow","hidden")},onHide:function(){document.body.setStyle("overflow","auto")}});a.show({title:t.title,contents:'<img src="'+t.url+'" alt="">'})},openModalIframe:function(e){var t=e||{},a=(window.getSize().y-180).toInt();(!t.height||t.height>a)&&(t.height=a);var n=new SimpleModal({width:t.width,hideFooter:!0,draggable:!1,overlayOpacity:.5,onShow:function(){document.body.setStyle("overflow","hidden")},onHide:function(){document.body.setStyle("overflow","auto")}});n.show({title:t.title,contents:'<iframe src="'+t.url+'" width="100%" height="'+t.height+'" frameborder="0"></iframe>'})},openModalSelector:function(e){var t=e||{},a=(window.getSize().y-180).toInt();(!t.height||t.height>a)&&(t.height=a);var n=new SimpleModal({width:t.width,btn_ok:Contao.lang.close,draggable:!1,overlayOpacity:.5,onShow:function(){document.body.setStyle("overflow","hidden")},onHide:function(){document.body.setStyle("overflow","auto")}});n.addButton(Contao.lang.close,"btn",function(){this.hide()}),n.addButton(Contao.lang.apply,"btn primary",function(){var e,a,n,o=window.frames["simple-modal-iframe"],i=[];if(void 0===o)return void alert("Could not find the SimpleModal frame");if(o.document.location.href.indexOf("contao/main.php")!=-1)return void alert(Contao.lang.picker);for(e=o.document.getElementById("tl_select").getElementsByTagName("input"),n=0;n<e.length;n++)e[n].checked&&!e[n].id.match(/^check_all_/)&&(e[n].id.match(/^reset_/)||i.push(e[n].get("value")));if(t.tag)$(t.tag).value=i.join(","),o.document.location.href.indexOf("contao/page.php")!=-1&&($(t.tag).value="{{link_url::"+$(t.tag).value+"}}"),t.self.set("href",t.self.get("href").replace(/&value=[^&]*/,"&value="+i.join(",")));else{a=$("ctrl_"+t.id),a.value=i.join("\t");var l=o.document.location.href.indexOf("contao/page.php")!=-1?"reloadPagetree":"reloadFiletree";new Request.Contao({field:a,evalScripts:!1,onRequest:AjaxRequest.displayBox(Contao.lang.loading+" …"),onSuccess:function(e,a){$("ctrl_"+t.id).getParent("div").set("html",a.content),a.javascript&&Browser.exec(a.javascript),AjaxRequest.hideBox(),window.fireEvent("ajax_change")}}).post({action:l,name:t.id,value:a.value,REQUEST_TOKEN:Contao.request_token})}this.hide()}),n.show({title:t.title,contents:'<iframe src="'+t.url+'" name="simple-modal-iframe" width="100%" height="'+t.height+'" frameborder="0"></iframe>',model:"modal"})},openModalBrowser:function(e,t,a,n){var o="file.php",i="file"==a?"&amp;switch=1":"",l=t.indexOf("{{link_url::")!=-1;"file"!=a||""!=t&&!l||(o="page.php"),l&&(t=t.replace(/^\{\{link_url::([0-9]+)}}$/,"$1"));var s=new SimpleModal({width:768,btn_ok:Contao.lang.close,draggable:!1,overlayOpacity:.5,onShow:function(){document.body.setStyle("overflow","hidden")},onHide:function(){document.body.setStyle("overflow","auto")}});s.addButton(Contao.lang.close,"btn",function(){this.hide()}),s.addButton(Contao.lang.apply,"btn primary",function(){var t,a,o,i=window.frames["simple-modal-iframe"];if(void 0===i)return void alert("Could not find the SimpleModal frame");for(a=i.document.getElementById("tl_select").getElementsByTagName("input"),o=0;o<a.length;o++)if(a[o].checked&&!a[o].id.match(/^reset_/)){t=a[o].get("value");break}isNaN(t)||(t="{{link_url::"+t+"}}"),n.document.getElementById(e).value=t,this.hide()}),s.show({title:n.document.getElement("div.mce-title").get("text"),contents:'<iframe src="contao/'+o+"?table=tl_content&amp;field=singleSRC&amp;value="+encodeURIComponent(t)+i+'" name="simple-modal-iframe" width="100%" height="'+(window.getSize().y-180).toInt()+'" frameborder="0"></iframe>',model:"modal"})},getScrollOffset:function(){document.cookie="BE_PAGE_OFFSET="+window.getScroll().y+"; path="+(Contao.path||"/")},autoSubmit:function(e){Backend.getScrollOffset();var t=new Element("input",{type:"hidden",name:"SUBMIT_TYPE",value:"auto"}),a=$(e)||e;t.inject(a,"bottom"),a.submit()},vScrollTo:function(e){window.addEvent("load",function(){window.scrollTo(null,parseInt(e))})},limitPreviewHeight:function(){var e=0;$$("div.limit_height").each(function(t){var a,n,o;if(0===e&&(e=t.className.replace(/[^0-9]*/,"").toInt()),e){if(a=new Element("img",{class:"limit_toggler",alt:"",title:Contao.lang.expand,width:20,height:24,"data-state":0}),n=t.getCoordinates(),new Tips.Contao(a,{offset:{x:0,y:30}}),t.setStyle("height",e),n.height<=e)return a.src=Backend.themePath+"expand_.gif",void a.inject(t,"after");a.src=Backend.themePath+"expand.gif",a.setStyle("cursor","pointer"),a.addEvent("click",function(){o=this.getPrevious("div").getStyle("height").toInt(),a.getPrevious("div").setStyle("height",o>e?e:""),0==a.get("data-state")?(a.src=Backend.themePath+"collapse.gif",a.set("data-state",1),a.store("tip:title",Contao.lang.collapse)):(a.src=Backend.themePath+"expand.gif",a.set("data-state",0),a.store("tip:title",Contao.lang.expand))}),a.inject(t,"after")}})},toggleCheckboxes:function(e,t){for(var a=$$("input"),n=$(e).checked?"checked":"",o=0;o<a.length;o++)"checkbox"==a[o].type.toLowerCase()&&(t&&a[o].id.substr(0,t.length)!=t||(a[o].checked=n))},toggleCheckboxGroup:function(e,t){var a=$(e).className,n=$(e).checked?"checked":"";if("tl_checkbox"==a){var o=$(t)?$$("#"+t+" .tl_checkbox"):$(e).getParent("fieldset").getElements(".tl_checkbox");o.each(function(e){e.checked=n})}else"tl_tree_checkbox"==a&&$$("#"+t+" .parent .tl_tree_checkbox").each(function(e){e.checked=n});Backend.getScrollOffset()},toggleCheckboxElements:function(e,t){var a=$(e).checked?"checked":"";$$("."+t).each(function(e){e.hasClass("tl_checkbox")&&(e.checked=a)}),Backend.getScrollOffset()},toggleWrap:function(e){var t=$(e),a="off"==t.getProperty("wrap")?"soft":"off";t.setProperty("wrap",a)},toggleUnchanged:function(){$$("#result-list .tl_confirm").each(function(e){e.toggleClass("hidden")})},blink:function(){},addColorPicker:function(){return!0},pickPage:function(e){var t=320,a=112;Backend.currentId=e,Backend.ppValue=$(e).value,Backend.getScrollOffset(),window.open($$("base")[0].href+"contao/page.php?value="+Backend.ppValue,"","width="+t+",height="+a+",modal=yes,left="+(Backend.xMousePosition?Backend.xMousePosition-t/2:200)+",top="+(Backend.yMousePosition?Backend.yMousePosition-a/2+80:100)+",location=no,menubar=no,resizable=yes,scrollbars=no,status=no,toolbar=no")},pickFile:function(e,t){var a=320,n=112;Backend.currentId=e,Backend.ppValue=$(e).value,Backend.getScrollOffset(),window.open($$("base")[0].href+"contao/file.php?value="+Backend.ppValue+"&filter="+t,"","width="+a+",height="+n+",modal=yes,left="+(Backend.xMousePosition?Backend.xMousePosition-a/2:200)+",top="+(Backend.yMousePosition?Backend.yMousePosition-n/2+80:100)+",location=no,menubar=no,resizable=yes,scrollbars=no,status=no,toolbar=no")},collapsePalettes:function(){$$("fieldset.hide").each(function(e){e.addClass("collapsed")}),$$("label.error, label.mandatory").each(function(e){var t=e.getParent("fieldset");t&&t.removeClass("collapsed")})},addInteractiveHelp:function(){new Tips.Contao("p.tl_tip",{offset:{x:9,y:21},text:function(e){return e.get("html")}}),["a[title]","input[title]"].each(function(e){new Tips.Contao($$(e).filter(function(e){return""!=e.title}),{offset:{x:0,y:26}})}),$$("img[title]").filter(function(e){return""!=e.title}).each(function(e){new Tips.Contao(e,{offset:{x:0,y:"gimage"==e.get("class")?60:30}})})},makeParentViewSortable:function(e){var t=new Scroller(document.getElement("body"),{onChange:function(e,t){this.element.scrollTo(this.element.getScroll().x,t)}}),a=new Sortables(e,{constrain:!0,opacity:.6,onStart:function(){t.start()},onComplete:function(){t.stop()},onSort:function(e){var t=e.getParent("ul"),a=0;t&&t.getChildren("li").each(function(e){var t=e.getFirst("div");t&&(t.hasClass("wrapper_stop")&&a>0&&a--,t.className=t.className.replace(/(^|\s)indent[^\s]*/g,""),a>0&&t.addClass("indent").addClass("indent_"+a),t.hasClass("wrapper_start")&&a++)})},handle:".drag-handle"});a.active=!1,a.addEvent("start",function(){a.active=!0}),a.addEvent("complete",function(e){if(a.active){var t,n,o,i;e.getPrevious("li")?(t=e.get("id").replace(/li_/,""),n=e.getPrevious("li").get("id").replace(/li_/,""),o=window.location.search.replace(/id=[0-9]*/,"id="+t)+"&act=cut&mode=1&pid="+n,i=window.location.href.replace(/\?.*$/,""),new Request.Contao({url:i+o,followRedirects:!1}).get()):e.getParent("ul")&&(t=e.get("id").replace(/li_/,""),n=e.getParent("ul").get("id").replace(/ul_/,""),o=window.location.search.replace(/id=[0-9]*/,"id="+t)+"&act=cut&mode=2&pid="+n,i=window.location.href.replace(/\?.*$/,""),new Request.Contao({url:i+o,followRedirects:!1}).get())}})},makeMultiSrcSortable:function(e,t){var a=new Sortables($(e),{constrain:!0,opacity:.6}).addEvent("complete",function(){var a,n=[],o=$(e).getChildren("li");for(a=0;a<o.length;a++)n.push(o[a].get("data-id"));$(t).value=n.join(",")});a.fireEvent("complete")},makeWizardsSortable:function(){$$(".tl_listwizard").each(function(e){new Sortables(e,{constrain:!0,opacity:.6,handle:".drag-handle"})}),$$(".tl_tablewizard").each(function(e){var t=e.getElement(".sortable");new Sortables(t,{constrain:!0,opacity:.6,handle:".drag-handle",onComplete:function(){Backend.tableWizardResort(t)}})}),$$(".tl_modulewizard").each(function(e){new Sortables(e.getElement(".sortable"),{constrain:!0,opacity:.6,handle:".drag-handle"})}),$$(".tl_optionwizard").each(function(e){new Sortables(e.getElement(".sortable"),{constrain:!0,opacity:.6,handle:".drag-handle"})}),$$(".tl_checkbox_wizard").each(function(e){var t=e.getElement(".sortable");t.hasClass("sortable-done")||(new Sortables(t,{constrain:!0,opacity:.6,handle:".drag-handle"}),t.addClass("sortable-done"))})},listWizard:function(e,t,a){var n,o,i,l,s,r=$(a),c=$(e).getParent("li"),d=r.getChildren(),u=r.get("data-tabindex");switch(Backend.getScrollOffset(),t){case"copy":var g=c.clone(!0).inject(c,"before");(n=c.getFirst("input"))&&(g.getFirst("input").value=n.value);break;case"up":(o=c.getPrevious("li"))?c.inject(o,"before"):c.inject(r,"bottom");break;case"down":(i=c.getNext("li"))?c.inject(i,"after"):c.inject(r.getFirst("li"),"before");break;case"delete":d.length>1?c.destroy():c.getFirst("input").set("value","")}for(l=r.getChildren(),s=0;s<l.length;s++)(n=l[s].getFirst('input[type="text"]'))&&n.set("tabindex",u++);new Sortables(r,{constrain:!0,opacity:.6,handle:".drag-handle"})},tableWizard:function(e,t,a){var n,o,i,l,s,r=$(a),c=r.getElement("tbody"),d=c.getChildren(),u=$(e).getParent("td"),g=u.getParent("tr"),h=r.getElement("thead").getFirst("tr"),f=g.getChildren(),p=0;for(s=0;s<f.length&&f[s]!=u;s++)p++;switch(Backend.getScrollOffset(),t){case"rcopy":var m=new Element("tr");for(s=0;s<f.length;s++)i=f[s].clone(!0).inject(m,"bottom"),(n=f[s].getFirst("textarea"))&&(i.getFirst("textarea").value=n.value);m.inject(g,"after");break;case"rup":(o=g.getPrevious("tr"))?g.inject(o,"before"):g.inject(c,"bottom");break;case"rdown":(i=g.getNext("tr"))?g.inject(i,"after"):g.inject(c,"top");break;case"rdelete":d.length>1?g.destroy():g.getElements("textarea").set("text","");break;case"ccopy":for(s=0;s<d.length;s++)l=d[s].getChildren()[p],i=l.clone(!0).inject(l,"after"),(n=l.getFirst("textarea"))&&(i.getFirst("textarea").value=n.value);h.getFirst("td").clone(!0).inject(h.getLast("td"),"before");break;case"cmovel":if(p>0)for(s=0;s<d.length;s++)l=d[s].getChildren()[p],l.inject(l.getPrevious(),"before");else for(s=0;s<d.length;s++)l=d[s].getChildren()[p],l.inject(d[s].getLast(),"before");break;case"cmover":if(p<f.length-2)for(s=0;s<d.length;s++)l=d[s].getChildren()[p],l.inject(l.getNext(),"after");else for(s=0;s<d.length;s++)l=d[s].getChildren()[p],l.inject(d[s].getFirst(),"before");break;case"cdelete":if(f.length>2){for(s=0;s<d.length;s++)d[s].getChildren()[p].destroy();h.getFirst("td").destroy()}else for(s=0;s<d.length;s++)d[s].getElements("textarea").set("text","")}Backend.tableWizardResort(c),new Sortables(c,{constrain:!0,opacity:.6,handle:".drag-handle",onComplete:function(){Backend.tableWizardResort(c)}}),Backend.tableWizardResize()},tableWizardResort:function(e){var t,a,n,o,i=e.getChildren(),l=e.get("data-tabindex");for(n=0;n<i.length;n++)for(a=i[n].getChildren(),o=0;o<a.length;o++)(t=a[o].getFirst("textarea"))&&(t.set("tabindex",l++),t.name=t.name.replace(/\[[0-9]+][[0-9]+]/g,"["+n+"]["+o+"]"))},tableWizardResize:function(e){var t=Cookie.read("BE_CELL_SIZE");if(null!==t||null!==e)if(null!==e)t="",$$(".tl_tablewizard textarea").each(function(a){a.setStyle("width",(a.getStyle("width").toInt()*e).round().limit(142,284)),a.setStyle("height",(a.getStyle("height").toInt()*e).round().limit(66,132)),""==t&&(t=a.getStyle("width")+"|"+a.getStyle("height"))}),Cookie.write("BE_CELL_SIZE",t,{path:Contao.path});else if(null!==t){var a=t.split("|");$$(".tl_tablewizard textarea").each(function(e){e.setStyle("width",a[0]),e.setStyle("height",a[1])})}},moduleWizard:function(e,t,a){var n,o,i,l,s,r,c=$(a),d=c.getElement("tbody"),u=$(e).getParent("tr"),g=d.getChildren(),h=d.get("data-tabindex");switch(Backend.getScrollOffset(),t){case"copy":var f=new Element("tr");for(i=u.getChildren(),s=0;s<i.length;s++){var p=i[s].clone(!0).inject(f,"bottom");(o=i[s].getFirst("select"))&&(p.getFirst("select").value=o.value)}f.inject(u,"after"),f.getElement(".chzn-container").destroy(),f.getElement(".tl_select_column").destroy(),new Chosen(f.getElement("select.tl_select")),Stylect.convertSelects(),Backend.convertEnableModules();break;case"up":(f=u.getPrevious("tr"))?u.inject(f,"before"):u.inject(d,"bottom");break;case"down":(f=u.getNext("tr"))?u.inject(f,"after"):u.inject(d,"top");break;case"delete":g.length>1&&u.destroy()}for(g=d.getChildren(),s=0;s<g.length;s++)for(i=g[s].getChildren(),r=0;r<i.length;r++)(l=i[r].getFirst("a.chzn-single"))&&l.set("tabindex",h++),(o=i[r].getFirst("select"))&&(o.name=o.name.replace(/\[[0-9]+]/g,"["+s+"]")),(n=i[r].getFirst('input[type="checkbox"]'))&&(n.set("tabindex",h++),n.name=n.name.replace(/\[[0-9]+]/g,"["+s+"]"));new Sortables(d,{constrain:!0,opacity:.6,handle:".drag-handle"})},optionsWizard:function(e,t,a){var n,o,i,l,s=$(a),r=s.getElement("tbody"),c=$(e).getParent("tr"),d=r.getChildren(),u=r.get("data-tabindex");switch(Backend.getScrollOffset(),t){case"copy":var g=new Element("tr");for(o=c.getChildren(),i=0;i<o.length;i++){var h=o[i].clone(!0).inject(g,"bottom");(n=o[i].getFirst("input"))&&(h.getFirst("input").value=n.value,"checkbox"==n.type&&(h.getFirst("input").checked=n.checked?"checked":""))}g.inject(c,"after");break;case"up":(g=c.getPrevious("tr"))?c.inject(g,"before"):c.inject(r,"bottom");break;case"down":(g=c.getNext("tr"))?c.inject(g,"after"):c.inject(r,"top");break;case"delete":d.length>1&&c.destroy()}for(d=r.getChildren(),i=0;i<d.length;i++)for(o=d[i].getChildren(),l=0;l<o.length;l++)(n=o[l].getFirst("input"))&&(n.set("tabindex",u++),n.name=n.name.replace(/\[[0-9]+]/g,"["+i+"]"),"checkbox"==n.type&&(n.id=n.name.replace(/\[[0-9]+]/g,"").replace(/\[/g,"_").replace(/]/g,"")+"_"+i,n.getNext("label").set("for",n.id)));new Sortables(r,{constrain:!0,opacity:.6,handle:".drag-handle"})},keyValueWizard:function(e,t,a){var n,o,i,l,s=$(a),r=s.getElement("tbody"),c=$(e).getParent("tr"),d=r.getChildren(),u=r.get("data-tabindex");switch(Backend.getScrollOffset(),t){case"copy":var g=new Element("tr");for(o=c.getChildren(),i=0;i<o.length;i++){var h=o[i].clone(!0).inject(g,"bottom");(n=o[i].getFirst("input"))&&(h.getFirst().value=n.value)}g.inject(c,"after");break;case"up":(g=c.getPrevious("tr"))?c.inject(g,"before"):c.inject(r,"bottom");break;case"down":(g=c.getNext("tr"))?c.inject(g,"after"):c.inject(r,"top");break;case"delete":d.length>1&&c.destroy()}for(d=r.getChildren(),i=0;i<d.length;i++)for(o=d[i].getChildren(),l=0;l<o.length;l++)(n=o[l].getFirst("input"))&&(n.set("tabindex",u++),n.name=n.name.replace(/\[[0-9]+]/g,"["+i+"]"));new Sortables(r,{constrain:!0,opacity:.6,handle:".drag-handle"})},checkboxWizard:function(e,t,a){var n,o=$(a).getElement(".sortable"),i=$(e).getParent("span");switch(Backend.getScrollOffset(),t){case"up":(n=i.getPrevious("span"))?i.inject(n,"before"):i.inject(o,"bottom");break;case"down":(n=i.getNext("span"))?i.inject(n,"after"):i.inject(o,"top")}},metaWizard:function(e,t){var a=e.getParent("div").getElement("select");if(""!=a.value){var n=$(t).getLast("li").clone(),o=n.getElement("span"),i=o.getElement("img");n.setProperty("data-language",a.value),o.set("text",a.options[a.selectedIndex].text+" "),i.inject(o,"bottom"),n.getElements("input").each(function(e){e.value="",e.name=e.name.replace(/\[[a-z]{2}(_[A-Z]{2})?]/,"["+a.value+"]");var t=e.getPrevious("label"),n=parseInt(t.get("for").replace(/ctrl_[^_]+_/,""));t.set("for",t.get("for").replace(n,n+1)),e.id=t.get("for")}),n.className="even"==n.className?"odd":"even",n.inject($(t),"bottom"),e.getParent("div").getElement('input[type="button"]').setProperty("disabled",!0),a.options[a.selectedIndex].setProperty("disabled",!0),a.value="",a.fireEvent("liszt:updated")}},metaDelete:function(e){var t=e.getParent("li"),a=e.getParent("div").getElement("select");null===t.getPrevious()&&null===t.getNext()?t.getElements("input").each(function(e){e.value=""}):(a.getElement("option[value="+t.getProperty("data-language")+"]").removeProperty("disabled"),t.destroy(),a.fireEvent("liszt:updated"))},toggleAddLanguageButton:function(e){var t=e.getParent("div").getElement('input[type="button"]');""!=e.value?t.removeProperty("disabled"):t.setProperty("disabled",!0);
-},updateModuleLink:function(e){var t=e.getParent("tr").getLast("td"),a=t.getElement("a.module_link");a.href=a.href.replace(/id=[0-9]+/,"id="+e.value),e.value>0?(t.getElement("a.module_link").setStyle("display",null),t.getElement("img.module_image").setStyle("display","none")):(t.getElement("a.module_link").setStyle("display","none"),t.getElement("img.module_image").setStyle("display",null))},convertEnableModules:function(){$$("img.mw_enable").filter(function(e){return!e.hasEvent("click")}).each(function(e){e.addEvent("click",function(){Backend.getScrollOffset();var t=e.getNext("input");t.checked?(t.checked="",e.src=Backend.themePath+"invisible.gif"):(t.checked="checked",e.src=Backend.themePath+"visible.gif")})})},enableImageSizeWidgets:function(){$$(".tl_image_size").each(function(e){var t=e.getElement("select"),a=e.getChildren("input")[0],n=e.getChildren("input")[1],o=function(){if(""===t.get("value")||t.get("value").toInt().toString()===t.get("value")){a.readOnly=!0,n.readOnly=!0;var e=$(t.getSelected()[0]).get("text");e=e.split("(").length>1?e.split("(").getLast().split(")")[0].split("x"):["",""],a.set("value","").set("placeholder",1*e[0]||""),n.set("value","").set("placeholder",1*e[1]||"")}else a.set("placeholder",""),n.set("placeholder",""),a.readOnly=!1,n.readOnly=!1};o(),t.addEvent("change",o),t.addEvent("keyup",o)})},enableToggleSelect:function(){var e,t,a,n,o,i,l=$("tl_select"),s=[],r=function(l){for(t=s.indexOf(l),a=s.indexOf(e),o=Math.min(t,a),i=Math.max(t,a),n=!!s[a].checked,o;o<=i;o++)s[o].checked=n};l&&(s=l.getElements('input[type="checkbox"]')),$$(".toggle_select").each(function(t){t.addEvent("click",function(a){var n=$(t).getElement('input[type="checkbox"],input[type="radio"]');if(n){if("radio"==n.type)return void(n.checked||(n.checked="checked"));a.shift&&e?r(n):(n.checked=n.checked?"":"checked","Backend.toggleCheckboxes(this)"==n.get("onclick")&&Backend.toggleCheckboxes(n)),e=n}})}),s.each(function(t){t.addEvent("click",function(t){t.shift&&e&&r(this),e=this})})},autoFocusFirstInputField:function(){var e=document.id("main").getElement(".tl_formbody_edit");if(e){var t=e.getElements("input, textarea").filter(function(e){return!e.get("disabled")&&e.isVisible()&&"submit"!==e.get("type")&&"image"!==e.get("type")});t[0]&&t[0].focus()}},editPreviewWizard:function(e){e=$(e);var t,a,n=e.getElement("img"),o={},i=!1,l=e.get("data-original-width"),s=e.get("data-original-height"),r=function(){return n.getComputedSize().width/l},c=function(){var e=r(),a=n.getComputedSize();t.setStyles({top:a.computedTop+(o.y.get("value")*e).round()+"px",left:a.computedLeft+(o.x.get("value")*e).round()+"px",width:(o.width.get("value")*e).round()+"px",height:(o.height.get("value")*e).round()+"px"}),o.width.get("value").toInt()&&o.height.get("value").toInt()?t.setStyle("display",null):t.setStyle("display","none")},d=function(){var e=r(),a=t.getStyles("top","left","width","height"),i=n.getComputedSize(),c={x:Math.max(0,Math.min(l,(a.left.toFloat()-i.computedLeft)/e)).round(),y:Math.max(0,Math.min(s,(a.top.toFloat()-i.computedTop)/e)).round()};c.width=Math.min(l-c.x,a.width.toFloat()/e).round(),c.height=Math.min(s-c.y,a.height.toFloat()/e).round(),c.width&&c.height?t.setStyle("display",null):(c.x=c.y=c.width=c.height="",t.setStyle("display","none")),Object.each(c,function(e,t){o[t].set("value",e)})},u=function(t){t.preventDefault(),i||(i=!0,a={x:t.page.x-e.getPosition().x-n.getComputedSize().computedLeft,y:t.page.y-e.getPosition().y-n.getComputedSize().computedTop},g(t))},g=function(o){if(i){o.preventDefault();var l=n.getComputedSize(),s={x:[Math.max(0,Math.min(l.width,a.x)),Math.max(0,Math.min(l.width,o.page.x-e.getPosition().x-l.computedLeft))],y:[Math.max(0,Math.min(l.height,a.y)),Math.max(0,Math.min(l.height,o.page.y-e.getPosition().y-l.computedTop))]};t.setStyles({top:Math.min(s.y[0],s.y[1])+l.computedTop+"px",left:Math.min(s.x[0],s.x[1])+l.computedLeft+"px",width:Math.abs(s.x[0]-s.x[1])+"px",height:Math.abs(s.y[0]-s.y[1])+"px"}),d()}},h=function(e){g(e),i=!1},f=function(){e.getParent().getElements('input[name^="importantPart"]').each(function(e){["x","y","width","height"].each(function(t){e.get("name").substr(13,t.length)===t.capitalize()&&(o[t]=e=$(e))})}),4===Object.getLength(o)&&(Object.each(o,function(e){e.getParent().setStyle("display","none")}),e.addClass("tl_edit_preview_enabled"),t=new Element("div",{class:"tl_edit_preview_important_part"}).inject(e),c(),n.addEvent("load",c),e.addEvents({mousedown:u,touchstart:u}),$(document.documentElement).addEvents({mousemove:g,touchmove:g,mouseup:h,touchend:h,touchcancel:h,resize:c}))};window.addEvent("domready",f)}};document.addEvent("mousedown",function(e){Backend.getMousePosition(e)}),window.addEvent("domready",function(){$(document.body).addClass("js"),Browser.Features.Touch&&$(document.body).addClass("touch"),Backend.collapsePalettes(),Backend.addInteractiveHelp(),Backend.convertEnableModules(),Backend.makeWizardsSortable(),Backend.enableImageSizeWidgets(),Backend.enableToggleSelect(),Backend.autoFocusFirstInputField(),void 0!=Elements.chosen&&$$("select.tl_chosen").chosen(),$$("textarea.monospace").each(function(e){Backend.toggleWrap(e)})}),window.addEvent("load",function(){Backend.limitPreviewHeight()}),window.addEvent("ajax_change",function(){Backend.addInteractiveHelp(),Backend.makeWizardsSortable(),Backend.enableImageSizeWidgets(),Backend.enableToggleSelect(),void 0!=Elements.chosen&&$$("select.tl_chosen").filter(function(e){return"none"!=e.getStyle("display")}).chosen()});
+/**
+ * Contao Open Source CMS
+ *
+ * Copyright (c) 2005-2016 Leo Feyer
+ *
+ * @license LGPL-3.0+
+ */
+
+
+/**
+ * Provide methods to handle Ajax requests.
+ *
+ * @author Leo Feyer <https://github.com/leofeyer>
+ */
+var AjaxRequest =
+{
+    /**
+     * The theme path
+     * @member {string}
+     */
+    themePath: Contao.script_url + 'system/themes/' + Contao.theme + '/images/',
+
+    /**
+     * Toggle the navigation menu
+     *
+     * @param {object} el The DOM element
+     * @param {string} id The ID of the menu item
+     *
+     * @returns {boolean}
+     */
+    toggleNavigation: function(el, id) {
+        el.blur();
+
+        var item = $(id),
+            image = $(el).getFirst('img');
+
+        if (item) {
+            if (item.getStyle('display') == 'none') {
+                item.setStyle('display', null);
+                image.src = AjaxRequest.themePath + 'modMinus.gif';
+                $(el).store('tip:title', Contao.lang.collapse);
+                new Request.Contao().post({'action':'toggleNavigation', 'id':id, 'state':1, 'REQUEST_TOKEN':Contao.request_token});
+            } else {
+                item.setStyle('display', 'none');
+                image.src = AjaxRequest.themePath + 'modPlus.gif';
+                $(el).store('tip:title', Contao.lang.expand);
+                new Request.Contao().post({'action':'toggleNavigation', 'id':id, 'state':0, 'REQUEST_TOKEN':Contao.request_token});
+            }
+            return false;
+        }
+
+        new Request.Contao({
+            evalScripts: true,
+            onRequest: AjaxRequest.displayBox(Contao.lang.loading + ' …'),
+            onSuccess: function(txt) {
+                var li = new Element('li', {
+                    'id': id,
+                    'class': 'tl_parent',
+                    'html': txt,
+                    'styles': {
+                        'display': 'inline'
+                    }
+                }).inject($(el).getParent('li'), 'after');
+
+                // Update the referer ID
+                li.getElements('a').each(function(el) {
+                    el.href = el.href.replace(/&ref=[a-f0-9]+/, '&ref=' + Contao.referer_id);
+                });
+
+                $(el).store('tip:title', Contao.lang.collapse);
+                image.src = AjaxRequest.themePath + 'modMinus.gif';
+                AjaxRequest.hideBox();
+
+                // HOOK
+                window.fireEvent('ajax_change');
+            }
+        }).post({'action':'loadNavigation', 'id':id, 'state':1, 'REQUEST_TOKEN':Contao.request_token});
+
+        return false;
+    },
+
+    /**
+     * Toggle the site structure tree
+     *
+     * @param {object} el    The DOM lement
+     * @param {string} id    The ID of the target element
+     * @param {int}    level The indentation level
+     * @param {int}    mode  The insert mode
+     *
+     * @returns {boolean}
+     */
+    toggleStructure: function (el, id, level, mode) {
+        el.blur();
+
+        var item = $(id),
+            image = $(el).getFirst('img');
+
+        if (item) {
+            if (item.getStyle('display') == 'none') {
+                item.setStyle('display', null);
+                image.src = AjaxRequest.themePath + 'folMinus.gif';
+                $(el).store('tip:title', Contao.lang.collapse);
+                new Request.Contao({field:el}).post({'action':'toggleStructure', 'id':id, 'state':1, 'REQUEST_TOKEN':Contao.request_token});
+            } else {
+                item.setStyle('display', 'none');
+                image.src = AjaxRequest.themePath + 'folPlus.gif';
+                $(el).store('tip:title', Contao.lang.expand);
+                new Request.Contao({field:el}).post({'action':'toggleStructure', 'id':id, 'state':0, 'REQUEST_TOKEN':Contao.request_token});
+            }
+            return false;
+        }
+
+        new Request.Contao({
+            field: el,
+            evalScripts: true,
+            onRequest: AjaxRequest.displayBox(Contao.lang.loading + ' …'),
+            onSuccess: function(txt) {
+                var li = new Element('li', {
+                    'id': id,
+                    'class': 'parent',
+                    'styles': {
+                        'display': 'inline'
+                    }
+                });
+
+                new Element('ul', {
+                    'class': 'level_' + level,
+                    'html': txt
+                }).inject(li, 'bottom');
+
+                if (mode == 5) {
+                    li.inject($(el).getParent('li'), 'after');
+                } else {
+                    var folder = false,
+                        parent = $(el).getParent('li'),
+                        next;
+
+                    while (typeOf(parent) == 'element' && (next = parent.getNext('li'))) {
+                        parent = next;
+                        if (parent.hasClass('tl_folder')) {
+                            folder = true;
+                            break;
+                        }
+                    }
+
+                    if (folder) {
+                        li.inject(parent, 'before');
+                    } else {
+                        li.inject(parent, 'after');
+                    }
+                }
+
+                // Update the referer ID
+                li.getElements('a').each(function(el) {
+                    el.href = el.href.replace(/&ref=[a-f0-9]+/, '&ref=' + Contao.referer_id);
+                });
+
+                $(el).store('tip:title', Contao.lang.collapse);
+                image.src = AjaxRequest.themePath + 'folMinus.gif';
+                window.fireEvent('structure');
+                AjaxRequest.hideBox();
+
+                // HOOK
+                window.fireEvent('ajax_change');
+            }
+        }).post({'action':'loadStructure', 'id':id, 'level':level, 'state':1, 'REQUEST_TOKEN':Contao.request_token});
+
+        return false;
+    },
+
+    /**
+     * Toggle the file manager tree
+     *
+     * @param {object} el     The DOM element
+     * @param {string} id     The ID of the target element
+     * @param {string} folder The folder's path
+     * @param {int}    level  The indentation level
+     *
+     * @returns {boolean}
+     */
+    toggleFileManager: function (el, id, folder, level) {
+        el.blur();
+
+        var item = $(id),
+            image = $(el).getFirst('img');
+
+        if (item) {
+            if (item.getStyle('display') == 'none') {
+                item.setStyle('display', null);
+                image.src = AjaxRequest.themePath + 'folMinus.gif';
+                $(el).store('tip:title', Contao.lang.collapse);
+                new Request.Contao({field:el}).post({'action':'toggleFileManager', 'id':id, 'state':1, 'REQUEST_TOKEN':Contao.request_token});
+            } else {
+                item.setStyle('display', 'none');
+                image.src = AjaxRequest.themePath + 'folPlus.gif';
+                $(el).store('tip:title', Contao.lang.expand);
+                new Request.Contao({field:el}).post({'action':'toggleFileManager', 'id':id, 'state':0, 'REQUEST_TOKEN':Contao.request_token});
+            }
+            return false;
+        }
+
+        new Request.Contao({
+            field: el,
+            evalScripts: true,
+            onRequest: AjaxRequest.displayBox(Contao.lang.loading + ' …'),
+            onSuccess: function(txt) {
+                var li = new Element('li', {
+                    'id': id,
+                    'class': 'parent',
+                    'styles': {
+                        'display': 'inline'
+                    }
+                });
+
+                new Element('ul', {
+                    'class': 'level_' + level,
+                    'html': txt
+                }).inject(li, 'bottom');
+
+                li.inject($(el).getParent('li'), 'after');
+
+                // Update the referer ID
+                li.getElements('a').each(function(el) {
+                    el.href = el.href.replace(/&ref=[a-f0-9]+/, '&ref=' + Contao.referer_id);
+                });
+
+                $(el).store('tip:title', Contao.lang.collapse);
+                image.src = AjaxRequest.themePath + 'folMinus.gif';
+                AjaxRequest.hideBox();
+
+                // HOOK
+                window.fireEvent('ajax_change');
+            }
+        }).post({'action':'loadFileManager', 'id':id, 'level':level, 'folder':folder, 'state':1, 'REQUEST_TOKEN':Contao.request_token});
+
+        return false;
+    },
+
+    /**
+     * Toggle the page tree input field
+     *
+     * @param {object} el    The DOM element
+     * @param {string} id    The ID of the target element
+     * @param {string} field The field name
+     * @param {string} name  The Ajax field name
+     * @param {int}    level The indentation level
+     *
+     * @returns {boolean}
+     */
+    togglePagetree: function (el, id, field, name, level) {
+        el.blur();
+
+        var item = $(id),
+            image = $(el).getFirst('img');
+
+        if (item) {
+            if (item.getStyle('display') == 'none') {
+                item.setStyle('display', null);
+                image.src = AjaxRequest.themePath + 'folMinus.gif';
+                $(el).store('tip:title', Contao.lang.collapse);
+                new Request.Contao({field:el}).post({'action':'togglePagetree', 'id':id, 'state':1, 'REQUEST_TOKEN':Contao.request_token});
+            } else {
+                item.setStyle('display', 'none');
+                image.src = AjaxRequest.themePath + 'folPlus.gif';
+                $(el).store('tip:title', Contao.lang.expand);
+                new Request.Contao({field:el}).post({'action':'togglePagetree', 'id':id, 'state':0, 'REQUEST_TOKEN':Contao.request_token});
+            }
+            return false;
+        }
+
+        new Request.Contao({
+            field: el,
+            evalScripts: true,
+            onRequest: AjaxRequest.displayBox(Contao.lang.loading + ' …'),
+            onSuccess: function(txt) {
+                var li = new Element('li', {
+                    'id': id,
+                    'class': 'parent',
+                    'styles': {
+                        'display': 'inline'
+                    }
+                });
+
+                new Element('ul', {
+                    'class': 'level_' + level,
+                    'html': txt
+                }).inject(li, 'bottom');
+
+                li.inject($(el).getParent('li'), 'after');
+
+                // Update the referer ID
+                li.getElements('a').each(function(el) {
+                    el.href = el.href.replace(/&ref=[a-f0-9]+/, '&ref=' + Contao.referer_id);
+                });
+
+                $(el).store('tip:title', Contao.lang.collapse);
+                image.src = AjaxRequest.themePath + 'folMinus.gif';
+                AjaxRequest.hideBox();
+
+                // HOOK
+                window.fireEvent('ajax_change');
+            }
+        }).post({'action':'loadPagetree', 'id':id, 'level':level, 'field':field, 'name':name, 'state':1, 'REQUEST_TOKEN':Contao.request_token});
+
+        return false;
+    },
+
+    /**
+     * Toggle the file tree input field
+     *
+     * @param {object} el     The DOM element
+     * @param {string} id     The ID of the target element
+     * @param {string} folder The folder name
+     * @param {string} field  The field name
+     * @param {string} name   The Ajax field name
+     * @param {int}    level  The indentation level
+     *
+     * @returns {boolean}
+     */
+    toggleFiletree: function (el, id, folder, field, name, level) {
+        el.blur();
+
+        var item = $(id),
+            image = $(el).getFirst('img');
+
+        if (item) {
+            if (item.getStyle('display') == 'none') {
+                item.setStyle('display', null);
+                image.src = AjaxRequest.themePath + 'folMinus.gif';
+                $(el).store('tip:title', Contao.lang.collapse);
+                new Request.Contao({field:el}).post({'action':'toggleFiletree', 'id':id, 'state':1, 'REQUEST_TOKEN':Contao.request_token});
+            } else {
+                item.setStyle('display', 'none');
+                image.src = AjaxRequest.themePath + 'folPlus.gif';
+                $(el).store('tip:title', Contao.lang.expand);
+                new Request.Contao({field:el}).post({'action':'toggleFiletree', 'id':id, 'state':0, 'REQUEST_TOKEN':Contao.request_token});
+            }
+            return false;
+        }
+
+        new Request.Contao({
+            field: el,
+            evalScripts: true,
+            onRequest: AjaxRequest.displayBox(Contao.lang.loading + ' …'),
+            onSuccess: function(txt) {
+                var li = new Element('li', {
+                    'id': id,
+                    'class': 'parent',
+                    'styles': {
+                        'display': 'inline'
+                    }
+                });
+
+                new Element('ul', {
+                    'class': 'level_' + level,
+                    'html': txt
+                }).inject(li, 'bottom');
+
+                li.inject($(el).getParent('li'), 'after');
+
+                // Update the referer ID
+                li.getElements('a').each(function(el) {
+                    el.href = el.href.replace(/&ref=[a-f0-9]+/, '&ref=' + Contao.referer_id);
+                });
+
+                $(el).store('tip:title', Contao.lang.collapse);
+                image.src = AjaxRequest.themePath + 'folMinus.gif';
+                AjaxRequest.hideBox();
+
+                // HOOK
+                window.fireEvent('ajax_change');
+            }
+        }).post({'action':'loadFiletree', 'id':id, 'folder':folder, 'level':level, 'field':field, 'name':name, 'state':1, 'REQUEST_TOKEN':Contao.request_token});
+
+        return false;
+    },
+
+    /**
+     * Toggle subpalettes in edit mode
+     *
+     * @param {object} el    The DOM element
+     * @param {string} id    The ID of the target element
+     * @param {string} field The field name
+     */
+    toggleSubpalette: function (el, id, field) {
+        el.blur();
+        var item = $(id);
+
+        if (item) {
+            if (!el.value) {
+                el.value = 1;
+                el.checked = 'checked';
+                item.setStyle('display', null);
+                item.getElements('[data-required]').each(function(el) {
+                    el.set('required', '').set('data-required', null);
+                });
+                new Request.Contao({field:el}).post({'action':'toggleSubpalette', 'id':id, 'field':field, 'state':1, 'REQUEST_TOKEN':Contao.request_token});
+            } else {
+                el.value = '';
+                el.checked = '';
+                item.setStyle('display', 'none');
+                item.getElements('[required]').each(function(el) {
+                    el.set('required', null).set('data-required', '');
+                });
+                new Request.Contao({field:el}).post({'action':'toggleSubpalette', 'id':id, 'field':field, 'state':0, 'REQUEST_TOKEN':Contao.request_token});
+            }
+            return;
+        }
+
+        new Request.Contao({
+            field: el,
+            evalScripts: false,
+            onRequest: AjaxRequest.displayBox(Contao.lang.loading + ' …'),
+            onSuccess: function(txt, json) {
+                var div = new Element('div', {
+                    'id': id,
+                    'html': txt,
+                    'styles': {
+                        'display': 'block'
+                    }
+                }).inject($(el).getParent('div').getParent('div'), 'after');
+
+                // Execute scripts after the DOM has been updated
+                if (json.javascript) {
+
+                    // Use Asset.javascript() instead of document.write() to load a
+                    // JavaScript file and re-execute the code after it has been loaded
+                    document.write = function(str) {
+                        var src = '';
+                        str.replace(/<script src="([^"]+)"/i, function(all, match){
+                            src = match;
+                        });
+                        src && Asset.javascript(src, {
+                            onLoad: function() {
+                                Browser.exec(json.javascript);
+                            }
+                        });
+                    };
+
+                    Browser.exec(json.javascript);
+                }
+
+                el.value = 1;
+                el.checked = 'checked';
+
+                // Update the referer ID
+                div.getElements('a').each(function(el) {
+                    el.href = el.href.replace(/&ref=[a-f0-9]+/, '&ref=' + Contao.referer_id);
+                });
+
+                AjaxRequest.hideBox();
+
+                // HOOK
+                window.fireEvent('subpalette'); // Backwards compatibility
+                window.fireEvent('ajax_change');
+            }
+        }).post({'action':'toggleSubpalette', 'id':id, 'field':field, 'load':1, 'state':1, 'REQUEST_TOKEN':Contao.request_token});
+    },
+
+    /**
+     * Toggle the visibility of an element
+     *
+     * @param {object} el    The DOM element
+     * @param {string} id    The ID of the target element
+     * @param {string} table The table name
+     *
+     * @returns {boolean}
+     */
+    toggleVisibility: function(el, id, table) {
+        el.blur();
+
+        var img = null,
+            image = $(el).getFirst('img'),
+            published = (image.get('data-state') == 1),
+            div = el.getParent('div'),
+            index, next, icon, icond, pa;
+
+        // Backwards compatibility
+        if (image.get('data-state') === null) {
+            published = (image.src.indexOf('invisible') == -1);
+            console.warn('Using a visibility toggle without a "data-state" attribute is deprecated. Please adjust your Contao DCA file.');
+        }
+
+        // Find the icon depending on the view (tree view, list view, parent view)
+        if (div.hasClass('tl_right')) {
+            img = div.getPrevious('div').getElement('img');
+        } else if (div.hasClass('tl_listing_container')) {
+            img = el.getParent('td').getPrevious('td').getFirst('div.list_icon');
+            if (img === null) { // comments
+                img = el.getParent('td').getPrevious('td').getElement('div.cte_type');
+            }
+            if (img === null) { // showColumns
+                img = el.getParent('tr').getFirst('td').getElement('div.list_icon_new');
+            }
+        } else if (next = div.getNext('div')) {
+            if (next.hasClass('cte_type')) {
+                img = next;
+            }
+            if (img === null) { // newsletter recipients
+                img = next.getFirst('div.list_icon');
+            }
+        }
+
+        // Change the icon
+        if (img !== null) {
+            // Tree view
+            if (img.nodeName.toLowerCase() == 'img') {
+                if (img.getParent('ul.tl_listing').hasClass('tl_tree_xtnd')) {
+                    icon = img.get('data-icon');
+                    icond = img.get('data-icon-disabled');
+
+                    // Backwards compatibility
+                    if (icon === null) {
+                        icon = img.src.replace(/(.*)\/([a-z0-9]+)_?\.(gif|png|jpe?g|svg)$/, '$1/$2.$3');
+                        console.warn('Using a row icon without a "data-icon" attribute is deprecated. Please adjust your Contao DCA file.');
+                    }
+                    if (icond === null) {
+                        icond = img.src.replace(/(.*)\/([a-z0-9]+)_?\.(gif|png|jpe?g|svg)$/, '$1/$2_.$3');
+                        console.warn('Using a row icon without a "data-icon-disabled" attribute is deprecated. Please adjust your Contao DCA file.');
+                    }
+
+                    // Prepend the theme path
+                    if (icon.indexOf('/') == -1) {
+                        icon = AjaxRequest.themePath + icon;
+                    }
+                    if (icond.indexOf('/') == -1) {
+                        icond = AjaxRequest.themePath + icond;
+                    }
+
+                    img.src = !published ? icon : icond;
+                } else {
+                    pa = img.getParent('a');
+
+                    if (pa && pa.href.indexOf('do=feRedirect') == -1) {
+                        if (next = pa.getNext('a')) {
+                            img = next.getFirst('img');
+                        } else {
+                            img = new Element('img'); // no icons used (see #2286)
+                        }
+                    }
+
+                    icon = img.get('data-icon');
+                    icond = img.get('data-icon-disabled');
+
+                    // Backwards compatibility
+                    if (icon === null) {
+                        index = img.src.replace(/.*_([0-9])\.(gif|png|jpe?g|svg)/, '$1');
+                        icon = img.src.replace(/_[0-9]\.(gif|png|jpe?g|svg)/, ((index.toInt() == 1) ? '' : '_' + (index.toInt() - 1)) + '.$1').split(/[\\/]/).pop();
+                        console.warn('Using a row icon without a "data-icon" attribute is deprecated. Please adjust your Contao DCA file.');
+                    }
+                    if (icond === null) {
+                        index = img.src.replace(/.*_([0-9])\.(gif|png|jpe?g|svg)/, '$1');
+                        icond = img.src.replace(/(_[0-9])?\.(gif|png|jpe?g|svg)/, ((index == img.src) ? '_1' : '_' + (index.toInt() + 1)) + '.$2').split(/[\\/]/).pop();
+                        console.warn('Using a row icon without a "data-icon-disabled" attribute is deprecated. Please adjust your Contao DCA file.');
+                    }
+
+                    // Prepend the theme path
+                    if (icon.indexOf('/') == -1) {
+                        icon = AjaxRequest.themePath + icon;
+                    }
+                    if (icond.indexOf('/') == -1) {
+                        icond = AjaxRequest.themePath + icond;
+                    }
+
+                    img.src = !published ? icon : icond;
+                }
+            }
+            // Parent view
+            else if (img.hasClass('cte_type')) {
+                if (!published) {
+                    img.addClass('published');
+                    img.removeClass('unpublished');
+                } else {
+                    img.addClass('unpublished');
+                    img.removeClass('published');
+                }
+            }
+            // List view
+            else {
+                icon = img.get('data-icon');
+                icond = img.get('data-icon-disabled');
+
+                // Backwards compatibility
+                if (icon === null) {
+                    icon = img.getStyle('background-image').replace(/(.*)\/([a-z0-9]+)_?\.(gif|png|jpe?g|svg)\);?$/, '$1/$2.$2');
+                    console.warn('Using a row icon without a "data-icon" attribute is deprecated. Please adjust your Contao DCA file.');
+                }
+                if (icond === null) {
+                    icond = img.getStyle('background-image').replace(/(.*)\/([a-z0-9]+)_?\.(gif|png|jpe?g|svg)\);?$/, '$1/$2_.$3');
+                    console.warn('Using a row icon without a "data-icon-disabled" attribute is deprecated. Please adjust your Contao DCA file.');
+                }
+
+                // Prepend the theme path
+                if (icon.indexOf('/') == -1) {
+                    icon = AjaxRequest.themePath + icon;
+                }
+                if (icond.indexOf('/') == -1) {
+                    icond = AjaxRequest.themePath + icond;
+                }
+
+                img.setStyle('background-image', 'url(' + (!published ? icon : icond) + ')');
+            }
+        }
+
+        // Mark disabled format definitions
+        if (table == 'tl_style') {
+            div.getParent('div').getElement('pre').toggleClass('disabled');
+        }
+
+        // Send request
+        if (!published) {
+            image.src = AjaxRequest.themePath + 'visible.gif';
+            image.set('data-state', 1);
+            new Request.Contao({'url':window.location.href, 'followRedirects':false}).get({'tid':id, 'state':1, 'rt':Contao.request_token});
+        } else {
+            image.src = AjaxRequest.themePath + 'invisible.gif';
+            image.set('data-state', 0);
+            new Request.Contao({'url':window.location.href, 'followRedirects':false}).get({'tid':id, 'state':0, 'rt':Contao.request_token});
+        }
+
+        return false;
+    },
+
+    /**
+     * Feature/unfeature an element
+     *
+     * @param {object} el The DOM element
+     * @param {string} id The ID of the target element
+     *
+     * @returns {boolean}
+     */
+    toggleFeatured: function(el, id) {
+        el.blur();
+
+        var image = $(el).getFirst('img'),
+            featured = (image.get('data-state') == 1);
+
+        // Backwards compatibility
+        if (image.get('data-state') === null) {
+            featured = (image.src.indexOf('featured_') == -1);
+            console.warn('Using a featured toggle without a "data-state" attribute is deprecated. Please adjust your Contao DCA file.');
+        }
+
+        // Send the request
+        if (!featured) {
+            image.src = AjaxRequest.themePath + 'featured.gif';
+            image.set('data-state', 1);
+            new Request.Contao().post({'action':'toggleFeatured', 'id':id, 'state':1, 'REQUEST_TOKEN':Contao.request_token});
+        } else {
+            image.src = AjaxRequest.themePath + 'featured_.gif';
+            image.set('data-state', 0);
+            new Request.Contao().post({'action':'toggleFeatured', 'id':id, 'state':0, 'REQUEST_TOKEN':Contao.request_token});
+        }
+
+        return false;
+    },
+
+    /**
+     * Toggle the visibility of a fieldset
+     *
+     * @param {object} el    The DOM element
+     * @param {string} id    The ID of the target element
+     * @param {string} table The table name
+     *
+     * @returns {boolean}
+     */
+    toggleFieldset: function(el, id, table) {
+        el.blur();
+        var fs = $('pal_' + id);
+
+        if (fs.hasClass('collapsed')) {
+            fs.removeClass('collapsed');
+            new Request.Contao().post({'action':'toggleFieldset', 'id':id, 'table':table, 'state':1, 'REQUEST_TOKEN':Contao.request_token});
+        } else {
+            var form = fs.getParent('form'),
+                inp = fs.getElements('[required]'),
+                collapse = true;
+
+            for (var i=0; i<inp.length; i++) {
+                if (!inp[i].get('value')) {
+                    collapse = false;
+                    break;
+                }
+            }
+
+            if (!collapse) {
+                if (typeof(form.checkValidity) == 'function') form.getElement('input[type="submit"]').click();
+            } else {
+                fs.addClass('collapsed');
+                new Request.Contao().post({'action':'toggleFieldset', 'id':id, 'table':table, 'state':0, 'REQUEST_TOKEN':Contao.request_token});
+            }
+        }
+
+        return false;
+    },
+
+    /**
+     * Toggle a group of a multi-checkbox field
+     *
+     * @param {object} el The DOM element
+     * @param {string} id The ID of the target element
+     *
+     * @returns {boolean}
+     */
+    toggleCheckboxGroup: function(el, id) {
+        el.blur();
+
+        var item = $(id),
+            image = $(el).getFirst('img');
+
+        if (item) {
+            if (item.getStyle('display') == 'none') {
+                item.setStyle('display', null);
+                image.src = AjaxRequest.themePath + 'folMinus.gif';
+                new Request.Contao().post({'action':'toggleCheckboxGroup', 'id':id, 'state':1, 'REQUEST_TOKEN':Contao.request_token});
+            } else {
+                item.setStyle('display', 'none');
+                image.src = AjaxRequest.themePath + 'folPlus.gif';
+                new Request.Contao().post({'action':'toggleCheckboxGroup', 'id':id, 'state':0, 'REQUEST_TOKEN':Contao.request_token});
+            }
+            return true;
+        }
+
+        return false;
+    },
+
+    /**
+     * Display the "loading data" message
+     *
+     * @param {string} message The message text
+     */
+    displayBox: function(message) {
+        var box = $('tl_ajaxBox'),
+            overlay = $('tl_ajaxOverlay'),
+            scroll = window.getScroll();
+
+        if (overlay === null) {
+            overlay = new Element('div', {
+                'id': 'tl_ajaxOverlay'
+            }).inject($(document.body), 'bottom');
+        }
+
+        overlay.set({
+            'styles': {
+                'display': 'block',
+                'top': scroll.y + 'px'
+            }
+        });
+
+        if (box === null) {
+            box = new Element('div', {
+                'id': 'tl_ajaxBox'
+            }).inject($(document.body), 'bottom');
+        }
+
+        box.set({
+            'html': message,
+            'styles': {
+                'display': 'block',
+                'top': (scroll.y + 100) + 'px'
+            }
+        })
+    },
+
+    /**
+     * Hide the "loading data" message
+     */
+    hideBox: function() {
+        var box = $('tl_ajaxBox'),
+            overlay = $('tl_ajaxOverlay');
+
+        if (overlay) {
+            overlay.setStyle('display', 'none');
+        }
+
+        if (box) {
+            box.setStyle('display', 'none');
+        }
+    }
+};
+
+
+/**
+ * Provide methods to handle back end tasks.
+ *
+ * @author Leo Feyer <https://github.com/leofeyer>
+ */
+var Backend =
+{
+    /**
+     * The current ID
+     * @member {(string|null)}
+     */
+    currentId: null,
+
+    /**
+     * The x mouse position
+     * @member {int}
+     */
+    xMousePosition: 0,
+
+    /**
+     * The Y mouse position
+     * @member {int}
+     */
+    yMousePosition: 0,
+
+    /**
+     * The popup window
+     * @member {object}
+     */
+    popupWindow: null,
+
+    /**
+     * The theme path
+     * @member {string}
+     */
+    themePath: Contao.script_url + 'system/themes/' + Contao.theme + '/images/',
+
+    /**
+     * Get the current mouse position
+     *
+     * @param {object} event The event object
+     */
+    getMousePosition: function(event) {
+        Backend.xMousePosition = event.client.x;
+        Backend.yMousePosition = event.client.y;
+    },
+
+    /**
+     * Open a new window
+     *
+     * @param {object} el     The DOM element
+     * @param {int}    width  The width in pixels
+     * @param {int}    height The height in pixels
+     *
+     * @deprecated Use Backend.openModalWindow() instead
+     */
+    openWindow: function(el, width, height) {
+        el.blur();
+        width = Browser.ie ? (width + 40) : (width + 17);
+        height = Browser.ie ? (height + 30) : (height + 17);
+        Backend.popupWindow = window.open(el.href, '', 'width=' + width + ',height=' + height + ',modal=yes,left=100,top=50,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no');
+    },
+
+    /**
+     * Open a modal window
+     *
+     * @param {int}    width   The width in pixels
+     * @param {string} title   The window's title
+     * @param {string} content The window's content
+     */
+    openModalWindow: function(width, title, content) {
+        new SimpleModal({
+            'width': width,
+            'hideFooter': true,
+            'draggable': false,
+            'overlayOpacity': .5,
+            'onShow': function() { document.body.setStyle('overflow', 'hidden'); },
+            'onHide': function() { document.body.setStyle('overflow', 'auto'); }
+        }).show({
+                'title': title,
+                'contents': content
+            });
+    },
+
+    /**
+     * Open an image in a modal window
+     *
+     * @param {object} options An optional options object
+     */
+    openModalImage: function(options) {
+        var opt = options || {};
+        var M = new SimpleModal({
+            'width': opt.width,
+            'hideFooter': true,
+            'draggable': false,
+            'overlayOpacity': .5,
+            'onShow': function() { document.body.setStyle('overflow', 'hidden'); },
+            'onHide': function() { document.body.setStyle('overflow', 'auto'); }
+        });
+        M.show({
+            'title': opt.title,
+            'contents': '<img src="' + opt.url + '" alt="">'
+        });
+    },
+
+    /**
+     * Open an iframe in a modal window
+     *
+     * @param {object} options An optional options object
+     */
+    openModalIframe: function(options) {
+        var opt = options || {};
+        var max = (window.getSize().y-180).toInt();
+        if (!opt.height || opt.height > max) opt.height = max;
+        var M = new SimpleModal({
+            'width': opt.width,
+            'hideFooter': true,
+            'draggable': false,
+            'overlayOpacity': .5,
+            'onShow': function() { document.body.setStyle('overflow', 'hidden'); },
+            'onHide': function() { document.body.setStyle('overflow', 'auto'); }
+        });
+        M.show({
+            'title': opt.title,
+            'contents': '<iframe src="' + opt.url + '" width="100%" height="' + opt.height + '" frameborder="0"></iframe>'
+        });
+    },
+
+    /**
+     * Open a selector page in a modal window
+     *
+     * @param {object} options An optional options object
+     */
+    openModalSelector: function(options) {
+        var opt = options || {},
+            max = (window.getSize().y-180).toInt();
+        if (!opt.height || opt.height > max) opt.height = max;
+        var M = new SimpleModal({
+            'width': opt.width,
+            'btn_ok': Contao.lang.close,
+            'draggable': false,
+            'overlayOpacity': .5,
+            'onShow': function() { document.body.setStyle('overflow', 'hidden'); },
+            'onHide': function() { document.body.setStyle('overflow', 'auto'); }
+        });
+        M.addButton(Contao.lang.close, 'btn', function() {
+            this.hide();
+        });
+        M.addButton(Contao.lang.apply, 'btn primary', function() {
+            var frm = window.frames['simple-modal-iframe'],
+                val = [], inp, field, i;
+            if (frm === undefined) {
+                alert('Could not find the SimpleModal frame');
+                return;
+            }
+            if (frm.document.location.href.indexOf('contao/main.php') != -1) {
+                alert(Contao.lang.picker);
+                return; // see #5704
+            }
+            inp = frm.document.getElementById('tl_select').getElementsByTagName('input');
+            for (i=0; i<inp.length; i++) {
+                if (!inp[i].checked || inp[i].id.match(/^check_all_/)) continue;
+                if (!inp[i].id.match(/^reset_/)) val.push(inp[i].get('value'));
+            }
+            if (opt.tag) {
+                $(opt.tag).value = val.join(',');
+                if (frm.document.location.href.indexOf('contao/page.php') != -1) {
+                    $(opt.tag).value = '{{link_url::' + $(opt.tag).value + '}}';
+                }
+                opt.self.set('href', opt.self.get('href').replace(/&value=[^&]*/, '&value=' + val.join(',')));
+            } else {
+                field = $('ctrl_' + opt.id);
+                field.value = val.join("\t");
+                var act = (frm.document.location.href.indexOf('contao/page.php') != -1) ? 'reloadPagetree' : 'reloadFiletree';
+                new Request.Contao({
+                    field: field,
+                    evalScripts: false,
+                    onRequest: AjaxRequest.displayBox(Contao.lang.loading + ' …'),
+                    onSuccess: function(txt, json) {
+                        $('ctrl_' + opt.id).getParent('div').set('html', json.content);
+                        json.javascript && Browser.exec(json.javascript);
+                        AjaxRequest.hideBox();
+                        window.fireEvent('ajax_change');
+                    }
+                }).post({'action':act, 'name':opt.id, 'value':field.value, 'REQUEST_TOKEN':Contao.request_token});
+            }
+            this.hide();
+        });
+        M.show({
+            'title': opt.title,
+            'contents': '<iframe src="' + opt.url + '" name="simple-modal-iframe" width="100%" height="' + opt.height + '" frameborder="0"></iframe>',
+            'model': 'modal'
+        });
+    },
+
+    /**
+     * Open a TinyMCE file browser in a modal window
+     *
+     * @param {string} field_name The field name
+     * @param {string} url        The URL
+     * @param {string} type       The picker type
+     * @param {object} win        The window object
+     */
+    openModalBrowser: function(field_name, url, type, win) {
+        var file = 'file.php',
+            swtch = (type == 'file' ? '&amp;switch=1' : ''),
+            isLink = (url.indexOf('{{link_url::') != -1);
+        if (type == 'file' && (url == '' || isLink)) {
+            file = 'page.php';
+        }
+        if (isLink) {
+            url = url.replace(/^\{\{link_url::([0-9]+)}}$/, '$1');
+        }
+        var M = new SimpleModal({
+            'width': 768,
+            'btn_ok': Contao.lang.close,
+            'draggable': false,
+            'overlayOpacity': .5,
+            'onShow': function() { document.body.setStyle('overflow', 'hidden'); },
+            'onHide': function() { document.body.setStyle('overflow', 'auto'); }
+        });
+        M.addButton(Contao.lang.close, 'btn', function() {
+            this.hide();
+        });
+        M.addButton(Contao.lang.apply, 'btn primary', function() {
+            var frm = window.frames['simple-modal-iframe'],
+                val, inp, i;
+            if (frm === undefined) {
+                alert('Could not find the SimpleModal frame');
+                return;
+            }
+            inp = frm.document.getElementById('tl_select').getElementsByTagName('input');
+            for (i=0; i<inp.length; i++) {
+                if (inp[i].checked && !inp[i].id.match(/^reset_/)) {
+                    val = inp[i].get('value');
+                    break;
+                }
+            }
+            if (!isNaN(val)) {
+                val = '{{link_url::' + val + '}}';
+            }
+            win.document.getElementById(field_name).value = val;
+            this.hide();
+        });
+        M.show({
+            'title': win.document.getElement('div.mce-title').get('text'),
+            'contents': '<iframe src="contao/' + file + '?table=tl_content&amp;field=singleSRC&amp;value=' + encodeURIComponent(url) + swtch + '" name="simple-modal-iframe" width="100%" height="' + (window.getSize().y-180).toInt() + '" frameborder="0"></iframe>',
+            'model': 'modal'
+        });
+    },
+
+    /**
+     * Automatically submit a form
+     *
+     * @param {object} el The DOM element
+     */
+    autoSubmit: function(el) {
+        var hidden = new Element('input', {
+            'type': 'hidden',
+            'name': 'SUBMIT_TYPE',
+            'value': 'auto'
+        });
+
+        var form = $(el) || el;
+        hidden.inject(form, 'bottom');
+        form.submit();
+    },
+
+    /**
+     * Scroll the window to a certain vertical position
+     *
+     * @param {int} offset The offset to scroll to
+     */
+    vScrollTo: function(offset) {
+        window.addEvent('load', function() {
+            window.scrollTo(null, parseInt(offset));
+        });
+    },
+
+    /**
+     * Limit the height of the preview pane
+     */
+    limitPreviewHeight: function() {
+        var hgt = 0;
+
+        $$('div.limit_height').each(function(div) {
+            var toggler, size, style;
+
+            if (hgt === 0) {
+                hgt = div.className.replace(/[^0-9]*/, '').toInt();
+            }
+
+            // Return if there is no height value
+            if (!hgt) return;
+
+            toggler = new Element('img', {
+                'class': 'limit_toggler',
+                'alt': '',
+                'title': Contao.lang.expand,
+                'width': 20,
+                'height': 24,
+                'data-state': 0
+            });
+
+            size = div.getCoordinates();
+
+            new Tips.Contao(toggler, {
+                offset: {x:0, y:30}
+            });
+
+            div.setStyle('height', hgt);
+
+            // Disable the function if the preview height is below the max-height
+            if (size.height <= hgt) {
+                toggler.src = Backend.themePath + 'expand_.gif';
+                toggler.inject(div, 'after');
+                return;
+            }
+
+            toggler.src = Backend.themePath + 'expand.gif';
+            toggler.setStyle('cursor', 'pointer');
+
+            toggler.addEvent('click', function() {
+                style = this.getPrevious('div').getStyle('height').toInt();
+                toggler.getPrevious('div').setStyle('height', ((style > hgt) ? hgt : ''));
+
+                if (toggler.get('data-state') == 0) {
+                    toggler.src = Backend.themePath + 'collapse.gif';
+                    toggler.set('data-state', 1);
+                    toggler.store('tip:title', Contao.lang.collapse);
+                } else {
+                    toggler.src = Backend.themePath + 'expand.gif';
+                    toggler.set('data-state', 0);
+                    toggler.store('tip:title', Contao.lang.expand);
+                }
+            });
+
+            toggler.inject(div, 'after');
+        });
+    },
+
+    /**
+     * Toggle checkboxes
+     *
+     * @param {object} el   The DOM element
+     * @param {string} [id] The ID of the target element
+     */
+    toggleCheckboxes: function(el, id) {
+        var items = $$('input'),
+            status = $(el).checked ? 'checked' : '';
+
+        for (var i=0; i<items.length; i++) {
+            if (items[i].type.toLowerCase() != 'checkbox') {
+                continue;
+            }
+            if (id && items[i].id.substr(0, id.length) != id) {
+                continue;
+            }
+            items[i].checked = status;
+        }
+    },
+
+    /**
+     * Toggle a checkbox group
+     *
+     * @param {object} el The DOM element
+     * @param {string} id The ID of the target element
+     */
+    toggleCheckboxGroup: function(el, id) {
+        var cls = $(el).className,
+            status = $(el).checked ? 'checked' : '';
+
+        if (cls == 'tl_checkbox') {
+            var cbx = $(id) ? $$('#' + id + ' .tl_checkbox') : $(el).getParent('fieldset').getElements('.tl_checkbox');
+            cbx.each(function(checkbox) {
+                checkbox.checked = status;
+            });
+        } else if (cls == 'tl_tree_checkbox') {
+            $$('#' + id + ' .parent .tl_tree_checkbox').each(function(checkbox) {
+                checkbox.checked = status;
+            });
+        }
+    },
+
+    /**
+     * Toggle checkbox elements
+     *
+     * @param {string} el  The DOM element
+     * @param {string} cls The CSS class name
+     */
+    toggleCheckboxElements: function(el, cls) {
+        var status = $(el).checked ? 'checked' : '';
+
+        $$('.' + cls).each(function(checkbox) {
+            if (checkbox.hasClass('tl_checkbox')) {
+                checkbox.checked = status;
+            }
+        });
+    },
+
+    /**
+     * Toggle the line wrapping mode of a textarea
+     *
+     * @param {string} id The ID of the target element
+     */
+    toggleWrap: function(id) {
+        var textarea = $(id),
+            status = (textarea.getProperty('wrap') == 'off') ? 'soft' : 'off';
+        textarea.setProperty('wrap', status);
+    },
+
+    /**
+     * Toggle the synchronization results
+     */
+    toggleUnchanged: function() {
+        $$('#result-list .tl_confirm').each(function(el) {
+            el.toggleClass('hidden');
+        });
+    },
+
+    /**
+     * Toggle the opacity of the paste buttons
+     *
+     * @deprecated Not required anymore
+     */
+    blink: function() {},
+
+    /**
+     * Initialize the mootools color picker
+     *
+     * @returns {boolean}
+     *
+     * @deprecated Not required anymore
+     */
+    addColorPicker: function() {
+        return true;
+    },
+
+    /**
+     * Open the page picker wizard in a modal window
+     *
+     * @param {string} id The ID of the target element
+     *
+     * @deprecated Use Backend.openModalIframe() instead
+     */
+    pickPage: function(id) {
+        var width = 320,
+            height = 112;
+
+        Backend.currentId = id;
+        Backend.ppValue = $(id).value;
+
+        window.open($$('base')[0].href + 'contao/page.php?value=' + Backend.ppValue, '', 'width=' + width + ',height=' + height + ',modal=yes,left=' + (Backend.xMousePosition ? (Backend.xMousePosition-(width/2)) : 200) + ',top=' + (Backend.yMousePosition ? (Backend.yMousePosition-(height/2)+80) : 100) + ',location=no,menubar=no,resizable=yes,scrollbars=no,status=no,toolbar=no');
+    },
+
+    /**
+     * Open the file picker wizard in a modal window
+     *
+     * @param {string} id     The ID of the target element
+     * @param {string} filter The filter value
+     *
+     * @deprecated Use Backend.openModalIframe() instead
+     */
+    pickFile: function(id, filter) {
+        var width = 320,
+            height = 112;
+
+        Backend.currentId = id;
+        Backend.ppValue = $(id).value;
+
+        window.open($$('base')[0].href + 'contao/file.php?value=' + Backend.ppValue + '&filter=' + filter, '', 'width=' + width + ',height=' + height + ',modal=yes,left=' + (Backend.xMousePosition ? (Backend.xMousePosition-(width/2)) : 200) + ',top=' + (Backend.yMousePosition ? (Backend.yMousePosition-(height/2)+80) : 100) + ',location=no,menubar=no,resizable=yes,scrollbars=no,status=no,toolbar=no');
+    },
+
+    /**
+     * Collapse all palettes
+     */
+    collapsePalettes: function() {
+        $$('fieldset.hide').each(function(el) {
+            el.addClass('collapsed');
+        });
+        $$('label.error, label.mandatory').each(function(el) {
+            var fs = el.getParent('fieldset');
+            fs && fs.removeClass('collapsed');
+        });
+    },
+
+    /**
+     * Add the interactive help
+     */
+    addInteractiveHelp: function() {
+        new Tips.Contao('p.tl_tip', {
+            offset: {x:9, y:21},
+            text: function(e) {
+                return e.get('html');
+            }
+        });
+
+        // Links and input elements
+        ['a[title]', 'input[title]'].each(function(el) {
+            new Tips.Contao($$(el).filter(function(i) {
+                return i.title != '';
+            }), {
+                offset: {x:0, y:26}
+            });
+        });
+
+        // Images
+        $$('img[title]').filter(function(i) {
+            return i.title != '';
+        }).each(function(el) {
+            new Tips.Contao(el, {
+                offset: {x:0, y:((el.get('class') == 'gimage') ? 60 : 30)}
+            });
+        });
+    },
+
+    /**
+     * Make parent view items sortable
+     *
+     * @param {object} ul The DOM element
+     *
+     * @author Joe Ray Gregory
+     * @author Martin Auswöger
+     */
+    makeParentViewSortable: function(ul) {
+        var ds = new Scroller(document.getElement('body'), {
+            onChange: function(x, y) {
+                this.element.scrollTo(this.element.getScroll().x, y);
+            }
+        });
+
+        var list = new Sortables(ul, {
+            constrain: true,
+            opacity: 0.6,
+            onStart: function() {
+                ds.start();
+            },
+            onComplete: function() {
+                ds.stop();
+            },
+            onSort: function(el) {
+                var ul = el.getParent('ul'),
+                    wrapLevel = 0;
+
+                if (!ul) return;
+
+                ul.getChildren('li').each(function(el) {
+                    var div = el.getFirst('div');
+
+                    if (!div) return;
+
+                    if (div.hasClass('wrapper_stop') && wrapLevel > 0) {
+                        wrapLevel--;
+                    }
+
+                    div.className = div.className.replace(/(^|\s)indent[^\s]*/g, '');
+
+                    if (wrapLevel > 0) {
+                        div.addClass('indent').addClass('indent_' + wrapLevel);
+                    }
+
+                    if (div.hasClass('wrapper_start')) {
+                        wrapLevel++;
+                    }
+                });
+            },
+            handle: '.drag-handle'
+        });
+
+        list.active = false;
+
+        list.addEvent('start', function() {
+            list.active = true;
+        });
+
+        list.addEvent('complete', function(el) {
+            if (!list.active) return;
+            var id, pid, req, href;
+
+            if (el.getPrevious('li')) {
+                id = el.get('id').replace(/li_/, '');
+                pid = el.getPrevious('li').get('id').replace(/li_/, '');
+                req = window.location.search.replace(/id=[0-9]*/, 'id=' + id) + '&act=cut&mode=1&pid=' + pid;
+                href = window.location.href.replace(/\?.*$/, '');
+                new Request.Contao({'url':href+req, 'followRedirects':false}).get();
+            } else if (el.getParent('ul')) {
+                id = el.get('id').replace(/li_/, '');
+                pid = el.getParent('ul').get('id').replace(/ul_/, '');
+                req = window.location.search.replace(/id=[0-9]*/, 'id=' + id) + '&act=cut&mode=2&pid=' + pid;
+                href = window.location.href.replace(/\?.*$/, '');
+                new Request.Contao({'url':href+req, 'followRedirects':false}).get();
+            }
+        });
+    },
+
+    /**
+     * Make multiSRC items sortable
+     *
+     * @param {string} id  The ID of the target element
+     * @param {string} oid The DOM element
+     */
+    makeMultiSrcSortable: function(id, oid) {
+        var list = new Sortables($(id), {
+            constrain: true,
+            opacity: 0.6
+        }).addEvent('complete', function() {
+                var els = [],
+                    lis = $(id).getChildren('li'),
+                    i;
+                for (i=0; i<lis.length; i++) {
+                    els.push(lis[i].get('data-id'));
+                }
+                $(oid).value = els.join(',');
+            });
+        list.fireEvent('complete'); // Initial sorting
+    },
+
+    /**
+     * Make the wizards sortable
+     */
+    makeWizardsSortable: function() {
+        $$('.tl_listwizard').each(function(el) {
+            new Sortables(el, {
+                constrain: true,
+                opacity: 0.6,
+                handle: '.drag-handle'
+            });
+        });
+
+        $$('.tl_tablewizard').each(function(el) {
+            var els = el.getElement('.sortable');
+            new Sortables(els, {
+                constrain: true,
+                opacity: 0.6,
+                handle: '.drag-handle',
+                onComplete: function() {
+                    Backend.tableWizardResort(els);
+                }
+            });
+        });
+
+        $$('.tl_modulewizard').each(function(el) {
+            new Sortables(el.getElement('.sortable'), {
+                constrain: true,
+                opacity: 0.6,
+                handle: '.drag-handle'
+            });
+        });
+
+        $$('.tl_optionwizard').each(function(el) {
+            new Sortables(el.getElement('.sortable'), {
+                constrain: true,
+                opacity: 0.6,
+                handle: '.drag-handle'
+            });
+        });
+
+        $$('.tl_checkbox_wizard').each(function(el) {
+            var els = el.getElement('.sortable');
+            if (els.hasClass('sortable-done')) return;
+
+            new Sortables(els, {
+                constrain: true,
+                opacity: 0.6,
+                handle: '.drag-handle'
+            });
+
+            els.addClass('sortable-done');
+        });
+    },
+
+    /**
+     * List wizard
+     *
+     * @param {object} el      The DOM element
+     * @param {string} command The command name
+     * @param {string} id      The ID of the target element
+     */
+    listWizard: function(el, command, id) {
+        var list = $(id),
+            parent = $(el).getParent('li'),
+            items = list.getChildren(),
+            tabindex = list.get('data-tabindex'),
+            input, previous, next, rows, i;
+
+        switch (command) {
+            case 'copy':
+                var clone = parent.clone(true).inject(parent, 'before');
+                if (input = parent.getFirst('input')) {
+                    clone.getFirst('input').value = input.value;
+                }
+                break;
+            case 'up':
+                if (previous = parent.getPrevious('li')) {
+                    parent.inject(previous, 'before');
+                } else {
+                    parent.inject(list, 'bottom');
+                }
+                break;
+            case 'down':
+                if (next = parent.getNext('li')) {
+                    parent.inject(next, 'after');
+                } else {
+                    parent.inject(list.getFirst('li'), 'before');
+                }
+                break;
+            case 'delete':
+                if (items.length > 1) {
+                    parent.destroy();
+                } else {
+                    parent.getFirst('input').set('value', '');
+                }
+                break;
+        }
+
+        rows = list.getChildren();
+
+        for (i=0; i<rows.length; i++) {
+            if (input = rows[i].getFirst('input[type="text"]')) {
+                input.set('tabindex', tabindex++);
+            }
+        }
+
+        new Sortables(list, {
+            constrain: true,
+            opacity: 0.6,
+            handle: '.drag-handle'
+        });
+    },
+
+    /**
+     * Table wizard
+     *
+     * @param {object} el      The DOM element
+     * @param {string} command The command name
+     * @param {string} id      The ID of the target element
+     */
+    tableWizard: function(el, command, id) {
+        var table = $(id),
+            tbody = table.getElement('tbody'),
+            rows = tbody.getChildren(),
+            parentTd = $(el).getParent('td'),
+            parentTr = parentTd.getParent('tr'),
+            headTr = table.getElement('thead').getFirst('tr'),
+            cols = parentTr.getChildren(),
+            index = 0,
+            textarea, previous, next, current, i;
+
+        for (i=0; i<cols.length; i++) {
+            if (cols[i] == parentTd) {
+                break;
+            }
+            index++;
+        }
+
+        switch (command) {
+            case 'rcopy':
+                var tr = new Element('tr');
+                for (i=0; i<cols.length; i++) {
+                    next = cols[i].clone(true).inject(tr, 'bottom');
+                    if (textarea = cols[i].getFirst('textarea')) {
+                        next.getFirst('textarea').value = textarea.value;
+                    }
+                }
+                tr.inject(parentTr, 'after');
+                break;
+            case 'rup':
+                if (previous = parentTr.getPrevious('tr')) {
+                    parentTr.inject(previous, 'before');
+                } else {
+                    parentTr.inject(tbody, 'bottom')
+                }
+                break;
+            case 'rdown':
+                if (next = parentTr.getNext('tr')) {
+                    parentTr.inject(next, 'after');
+                } else {
+                    parentTr.inject(tbody, 'top');
+                }
+                break;
+            case 'rdelete':
+                if (rows.length > 1) {
+                    parentTr.destroy();
+                } else {
+                    parentTr.getElements('textarea').set('text', '');
+                }
+                break;
+            case 'ccopy':
+                for (i=0; i<rows.length; i++) {
+                    current = rows[i].getChildren()[index];
+                    next = current.clone(true).inject(current, 'after');
+                    if (textarea = current.getFirst('textarea')) {
+                        next.getFirst('textarea').value = textarea.value;
+                    }
+                }
+                headTr.getFirst('td').clone(true).inject(headTr.getLast('td'), 'before');
+                break;
+            case 'cmovel':
+                if (index > 0) {
+                    for (i=0; i<rows.length; i++) {
+                        current = rows[i].getChildren()[index];
+                        current.inject(current.getPrevious(), 'before');
+                    }
+                } else {
+                    for (i=0; i<rows.length; i++) {
+                        current = rows[i].getChildren()[index];
+                        current.inject(rows[i].getLast(), 'before');
+                    }
+                }
+                break;
+            case 'cmover':
+                if (index < (cols.length - 2)) {
+                    for (i=0; i<rows.length; i++) {
+                        current = rows[i].getChildren()[index];
+                        current.inject(current.getNext(), 'after');
+                    }
+                } else {
+                    for (i=0; i<rows.length; i++) {
+                        current = rows[i].getChildren()[index];
+                        current.inject(rows[i].getFirst(), 'before');
+                    }
+                }
+                break;
+            case 'cdelete':
+                if (cols.length > 2) {
+                    for (i=0; i<rows.length; i++) {
+                        rows[i].getChildren()[index].destroy();
+                    }
+                    headTr.getFirst('td').destroy();
+                } else {
+                    for (i=0; i<rows.length; i++) {
+                        rows[i].getElements('textarea').set('text', '');
+                    }
+                }
+                break;
+        }
+
+        Backend.tableWizardResort(tbody);
+
+        new Sortables(tbody, {
+            constrain: true,
+            opacity: 0.6,
+            handle: '.drag-handle',
+            onComplete: function() {
+                Backend.tableWizardResort(tbody);
+            }
+        });
+
+        Backend.tableWizardResize();
+    },
+
+    /**
+     * Resort the table wizard fields
+     *
+     * @param {object} tbody The DOM element
+     */
+    tableWizardResort: function(tbody) {
+        var rows = tbody.getChildren(),
+            tabindex = tbody.get('data-tabindex'),
+            textarea, childs, i, j;
+
+        for (i=0; i<rows.length; i++) {
+            childs = rows[i].getChildren();
+            for (j=0; j<childs.length; j++) {
+                if (textarea = childs[j].getFirst('textarea')) {
+                    textarea.set('tabindex', tabindex++);
+                    textarea.name = textarea.name.replace(/\[[0-9]+][[0-9]+]/g, '[' + i + '][' + j + ']')
+                }
+            }
+        }
+    },
+
+    /**
+     * Resize the table wizard fields on focus
+     *
+     * @param {float} [factor] The resize factor
+     */
+    tableWizardResize: function(factor) {
+        var size = Cookie.read('BE_CELL_SIZE');
+        if (size === null && factor === null) return;
+
+        if (factor !== null) {
+            size = '';
+            $$('.tl_tablewizard textarea').each(function(el) {
+                el.setStyle('width', (el.getStyle('width').toInt() * factor).round().limit(142, 284));
+                el.setStyle('height', (el.getStyle('height').toInt() * factor).round().limit(66, 132));
+                if (size == '') {
+                    size = el.getStyle('width') + '|' + el.getStyle('height');
+                }
+            });
+            Cookie.write('BE_CELL_SIZE', size, { path: Contao.path });
+        } else if (size !== null) {
+            var chunks = size.split('|');
+            $$('.tl_tablewizard textarea').each(function(el) {
+                el.setStyle('width', chunks[0]);
+                el.setStyle('height', chunks[1]);
+            });
+        }
+    },
+
+    /**
+     * Module wizard
+     *
+     * @param {object} el      The DOM element
+     * @param {string} command The command name
+     * @param {string} id      The ID of the target element
+     */
+    moduleWizard: function(el, command, id) {
+        var table = $(id),
+            tbody = table.getElement('tbody'),
+            parent = $(el).getParent('tr'),
+            rows = tbody.getChildren(),
+            tabindex = tbody.get('data-tabindex'),
+            input, select, childs, a, i, j;
+
+        switch (command) {
+            case 'copy':
+                var tr = new Element('tr');
+                childs = parent.getChildren();
+                for (i=0; i<childs.length; i++) {
+                    var next = childs[i].clone(true).inject(tr, 'bottom');
+                    if (select = childs[i].getFirst('select')) {
+                        next.getFirst('select').value = select.value;
+                    }
+                }
+                tr.inject(parent, 'after');
+                tr.getElement('.chzn-container').destroy();
+                tr.getElement('.tl_select_column').destroy();
+                new Chosen(tr.getElement('select.tl_select'));
+                Stylect.convertSelects();
+                Backend.convertEnableModules();
+                break;
+            case 'up':
+                if (tr = parent.getPrevious('tr')) {
+                    parent.inject(tr, 'before');
+                } else {
+                    parent.inject(tbody, 'bottom');
+                }
+                break;
+            case 'down':
+                if (tr = parent.getNext('tr')) {
+                    parent.inject(tr, 'after');
+                } else {
+                    parent.inject(tbody, 'top');
+                }
+                break;
+            case 'delete':
+                if (rows.length > 1) {
+                    parent.destroy();
+                }
+                break;
+        }
+
+        rows = tbody.getChildren();
+
+        for (i=0; i<rows.length; i++) {
+            childs = rows[i].getChildren();
+            for (j=0; j<childs.length; j++) {
+                if (a = childs[j].getFirst('a.chzn-single')) {
+                    a.set('tabindex', tabindex++);
+                }
+                if (select = childs[j].getFirst('select')) {
+                    select.name = select.name.replace(/\[[0-9]+]/g, '[' + i + ']');
+                }
+                if (input = childs[j].getFirst('input[type="checkbox"]')) {
+                    input.set('tabindex', tabindex++);
+                    input.name = input.name.replace(/\[[0-9]+]/g, '[' + i + ']');
+                }
+            }
+        }
+
+        new Sortables(tbody, {
+            constrain: true,
+            opacity: 0.6,
+            handle: '.drag-handle'
+        });
+    },
+
+    /**
+     * Options wizard
+     *
+     * @param {object} el      The DOM element
+     * @param {string} command The command name
+     * @param {string} id      The ID of the target element
+     */
+    optionsWizard: function(el, command, id) {
+        var table = $(id),
+            tbody = table.getElement('tbody'),
+            parent = $(el).getParent('tr'),
+            rows = tbody.getChildren(),
+            tabindex = tbody.get('data-tabindex'),
+            input, childs, i, j;
+
+        switch (command) {
+            case 'copy':
+                var tr = new Element('tr');
+                childs = parent.getChildren();
+                for (i=0; i<childs.length; i++) {
+                    var next = childs[i].clone(true).inject(tr, 'bottom');
+                    if (input = childs[i].getFirst('input')) {
+                        next.getFirst('input').value = input.value;
+                        if (input.type == 'checkbox') {
+                            next.getFirst('input').checked = input.checked ? 'checked' : '';
+                        }
+                    }
+                }
+                tr.inject(parent, 'after');
+                break;
+            case 'up':
+                if (tr = parent.getPrevious('tr')) {
+                    parent.inject(tr, 'before');
+                } else {
+                    parent.inject(tbody, 'bottom');
+                }
+                break;
+            case 'down':
+                if (tr = parent.getNext('tr')) {
+                    parent.inject(tr, 'after');
+                } else {
+                    parent.inject(tbody, 'top');
+                }
+                break;
+            case 'delete':
+                if (rows.length > 1) {
+                    parent.destroy();
+                }
+                break;
+        }
+
+        rows = tbody.getChildren();
+
+        for (i=0; i<rows.length; i++) {
+            childs = rows[i].getChildren();
+            for (j=0; j<childs.length; j++) {
+                if (input = childs[j].getFirst('input')) {
+                    input.set('tabindex', tabindex++);
+                    input.name = input.name.replace(/\[[0-9]+]/g, '[' + i + ']');
+                    if (input.type == 'checkbox') {
+                        input.id = input.name.replace(/\[[0-9]+]/g, '').replace(/\[/g, '_').replace(/]/g, '') + '_' + i;
+                        input.getNext('label').set('for', input.id);
+                    }
+                }
+            }
+        }
+
+        new Sortables(tbody, {
+            constrain: true,
+            opacity: 0.6,
+            handle: '.drag-handle'
+        });
+    },
+
+    /**
+     * Key/value wizard
+     *
+     * @param {object} el      The DOM element
+     * @param {string} command The command name
+     * @param {string} id      The ID of the target element
+     */
+    keyValueWizard: function(el, command, id) {
+        var table = $(id),
+            tbody = table.getElement('tbody'),
+            parent = $(el).getParent('tr'),
+            rows = tbody.getChildren(),
+            tabindex = tbody.get('data-tabindex'),
+            input, childs, i, j;
+
+        switch (command) {
+            case 'copy':
+                var tr = new Element('tr');
+                childs = parent.getChildren();
+                for (i=0; i<childs.length; i++) {
+                    var next = childs[i].clone(true).inject(tr, 'bottom');
+                    if (input = childs[i].getFirst('input')) {
+                        next.getFirst().value = input.value;
+                    }
+                }
+                tr.inject(parent, 'after');
+                break;
+            case 'up':
+                if (tr = parent.getPrevious('tr')) {
+                    parent.inject(tr, 'before');
+                } else {
+                    parent.inject(tbody, 'bottom');
+                }
+                break;
+            case 'down':
+                if (tr = parent.getNext('tr')) {
+                    parent.inject(tr, 'after');
+                } else {
+                    parent.inject(tbody, 'top');
+                }
+                break;
+            case 'delete':
+                if (rows.length > 1) {
+                    parent.destroy();
+                }
+                break;
+        }
+
+        rows = tbody.getChildren();
+
+        for (i=0; i<rows.length; i++) {
+            childs = rows[i].getChildren();
+            for (j=0; j<childs.length; j++) {
+                if (input = childs[j].getFirst('input')) {
+                    input.set('tabindex', tabindex++);
+                    input.name = input.name.replace(/\[[0-9]+]/g, '[' + i + ']')
+                }
+            }
+        }
+
+        new Sortables(tbody, {
+            constrain: true,
+            opacity: 0.6,
+            handle: '.drag-handle'
+        });
+    },
+
+    /**
+     * Checkbox wizard
+     *
+     * @param {object} el      The DOM element
+     * @param {string} command The command name
+     * @param {string} id      The ID of the target element
+     */
+    checkboxWizard: function(el, command, id) {
+        var container = $(id).getElement('.sortable'),
+            parent = $(el).getParent('span'), span;
+
+        switch (command) {
+            case 'up':
+                if ((span = parent.getPrevious('span'))) {
+                    parent.inject(span, 'before');
+                } else {
+                    parent.inject(container, 'bottom');
+                }
+                break;
+            case 'down':
+                if (span = parent.getNext('span')) {
+                    parent.inject(span, 'after');
+                } else {
+                    parent.inject(container, 'top');
+                }
+                break;
+        }
+    },
+
+    /**
+     * Meta wizard
+     *
+     * @param {object} el The select element
+     * @param {string} ul The DOM element
+     */
+    metaWizard: function(el, ul) {
+        var opt = el.getParent('div').getElement('select');
+
+        if (opt.value == '') {
+            return; // No language given
+        }
+
+        var li = $(ul).getLast('li').clone(),
+            span = li.getElement('span'),
+            img = span.getElement('img');
+
+        // Update the data-language attribute
+        li.setProperty('data-language', opt.value);
+
+        // Update the language text
+        span.set('text', opt.options[opt.selectedIndex].text + ' ');
+        img.inject(span, 'bottom');
+
+        // Update the name, label and ID attributes
+        li.getElements('input').each(function(inp) {
+            inp.value = '';
+            inp.name = inp.name.replace(/\[[a-z]{2}(_[A-Z]{2})?]/, '[' + opt.value + ']');
+            var lbl = inp.getPrevious('label'),
+                i = parseInt(lbl.get('for').replace(/ctrl_[^_]+_/, ''));
+            lbl.set('for', lbl.get('for').replace(i, i+1));
+            inp.id = lbl.get('for');
+        });
+
+        // Update the class name
+        li.className = (li.className == 'even') ? 'odd' : 'even';
+        li.inject($(ul), 'bottom');
+
+        // Disable the "add language" button
+        el.getParent('div').getElement('input[type="button"]').setProperty('disabled', true);
+
+        // Disable the option and update chosen
+        opt.options[opt.selectedIndex].setProperty('disabled', true);
+        opt.value = '';
+        opt.fireEvent('liszt:updated');
+    },
+
+    /**
+     * Remove a meta entry
+     *
+     * @param {object} el The DOM element
+     */
+    metaDelete: function(el) {
+        var li = el.getParent('li'),
+            opt = el.getParent('div').getElement('select');
+
+        // Empty the last element instead of removing it (see #4858)
+        if (li.getPrevious() === null && li.getNext() === null) {
+            li.getElements('input').each(function(input) {
+                input.value = '';
+            });
+        } else {
+            // Enable the option and update chosen
+            opt.getElement('option[value=' + li.getProperty('data-language') + ']').removeProperty('disabled');
+            li.destroy();
+            opt.fireEvent('liszt:updated');
+        }
+    },
+
+    /**
+     * Toggle the "add language" button
+     *
+     * @param {object} el The DOM element
+     */
+    toggleAddLanguageButton: function(el) {
+        var inp = el.getParent('div').getElement('input[type="button"]');
+        if (el.value != '') {
+            inp.removeProperty('disabled');
+        } else {
+            inp.setProperty('disabled', true);
+        }
+    },
+
+    /**
+     * Update the "edit module" links in the module wizard
+     *
+     * @param {object} el The DOM element
+     */
+    updateModuleLink: function(el) {
+        var td = el.getParent('tr').getLast('td'),
+            a = td.getElement('a.module_link');
+
+        a.href = a.href.replace(/id=[0-9]+/, 'id=' + el.value);
+
+        if (el.value > 0) {
+            td.getElement('a.module_link').setStyle('display', null);
+            td.getElement('img.module_image').setStyle('display', 'none');
+        } else {
+            td.getElement('a.module_link').setStyle('display', 'none');
+            td.getElement('img.module_image').setStyle('display', null);
+        }
+    },
+
+    /**
+     * Convert the "enable module" checkboxes
+     */
+    convertEnableModules: function() {
+        $$('img.mw_enable').filter(function(el) {
+            return !el.hasEvent('click');
+        }).each(function(el) {
+            el.addEvent('click', function() {
+                var cbx = el.getNext('input');
+
+                if (cbx.checked) {
+                    cbx.checked = '';
+                    el.src = Backend.themePath + 'invisible.gif';
+                } else {
+                    cbx.checked = 'checked';
+                    el.src = Backend.themePath + 'visible.gif';
+                }
+            });
+        });
+    },
+
+    /**
+     * Update the fields of the imageSize widget upon change
+     */
+    enableImageSizeWidgets: function() {
+        $$('.tl_image_size').each(function(el) {
+            var select = el.getElement('select'),
+                widthInput = el.getChildren('input')[0],
+                heightInput = el.getChildren('input')[1],
+                update = function() {
+                    if (select.get('value') === '' || select.get('value').toInt().toString() === select.get('value')) {
+                        widthInput.readOnly = true;
+                        heightInput.readOnly = true;
+                        var dimensions = $(select.getSelected()[0]).get('text');
+                        dimensions = dimensions.split('(').length > 1
+                            ? dimensions.split('(').getLast().split(')')[0].split('x')
+                            : ['', ''];
+                        widthInput.set('value', '').set('placeholder', dimensions[0] * 1 || '');
+                        heightInput.set('value', '').set('placeholder', dimensions[1] * 1 || '');
+                    }
+                    else {
+                        widthInput.set('placeholder', '');
+                        heightInput.set('placeholder', '');
+                        widthInput.readOnly = false;
+                        heightInput.readOnly = false;
+                    }
+                }
+                ;
+
+            update();
+            select.addEvent('change', update);
+            select.addEvent('keyup', update);
+        });
+    },
+
+    /**
+     * Allow to toggle checkboxes or radio buttons by clicking a row
+     *
+     * @author Kamil Kuzminski
+     */
+    enableToggleSelect: function() {
+        var container = $('tl_select'),
+            checkboxes = [], start, thisIndex, startIndex, status, from, to,
+            shiftToggle = function(el) {
+                thisIndex = checkboxes.indexOf(el);
+                startIndex = checkboxes.indexOf(start);
+                from = Math.min(thisIndex, startIndex);
+                to = Math.max(thisIndex, startIndex);
+                status = checkboxes[startIndex].checked ? true : false;
+
+                for (from; from<=to; from++) {
+                    checkboxes[from].checked = status;
+                }
+            };
+
+        if (container) {
+            checkboxes = container.getElements('input[type="checkbox"]');
+        }
+
+        // Row click
+        $$('.toggle_select').each(function(el) {
+            el.addEvent('click', function(e) {
+                var input = $(el).getElement('input[type="checkbox"],input[type="radio"]');
+
+                if (!input) {
+                    return;
+                }
+
+                // Radio buttons
+                if (input.type == 'radio') {
+                    if (!input.checked) {
+                        input.checked = 'checked';
+                    }
+                    return;
+                }
+
+                // Checkboxes
+                if (e.shift && start) {
+                    shiftToggle(input);
+                } else {
+                    input.checked = input.checked ? '' : 'checked';
+
+                    if (input.get('onclick') == 'Backend.toggleCheckboxes(this)') {
+                        Backend.toggleCheckboxes(input); // see #6399
+                    }
+                }
+
+                start = input;
+            });
+        });
+
+        // Checkbox click
+        checkboxes.each(function(el) {
+            el.addEvent('click', function(e) {
+                if (e.shift && start) {
+                    shiftToggle(this);
+                }
+
+                start = this;
+            });
+        });
+    },
+
+    /**
+     * Try to focus the first input field in the main section.
+     *
+     * @author Yanick Witschi
+     */
+    autoFocusFirstInputField: function() {
+        var edit = document.id('main').getElement('.tl_formbody_edit');
+        if (!edit) return;
+
+        var inputs = edit
+            .getElements('input, textarea')
+            .filter(function(item) {
+                return !item.get('disabled') && item.isVisible() && item.get('type') !== 'submit' && item.get('type') !== 'image';
+            });
+
+        if (inputs[0]) inputs[0].focus();
+    },
+
+    /**
+     * Allow to mark the important part of an image
+     *
+     * @param {object} el The DOM element
+     */
+    editPreviewWizard: function(el) {
+        el = $(el);
+        var imageElement = el.getElement('img'),
+            inputElements = {},
+            isDrawing = false,
+            originalWidth = el.get('data-original-width'),
+            originalHeight = el.get('data-original-height'),
+            partElement, startPos,
+            getScale = function() {
+                return imageElement.getComputedSize().width / originalWidth;
+            },
+            updateImage = function() {
+                var scale = getScale(),
+                    imageSize = imageElement.getComputedSize();
+                partElement.setStyles({
+                    top: imageSize.computedTop + (inputElements.y.get('value') * scale).round() + 'px',
+                    left: imageSize.computedLeft + (inputElements.x.get('value') * scale).round() + 'px',
+                    width: (inputElements.width.get('value') * scale).round() + 'px',
+                    height: (inputElements.height.get('value') * scale).round() + 'px'
+                });
+                if (!inputElements.width.get('value').toInt() || !inputElements.height.get('value').toInt()) {
+                    partElement.setStyle('display', 'none');
+                } else {
+                    partElement.setStyle('display', null);
+                }
+            },
+            updateValues = function() {
+                var scale = getScale(),
+                    styles = partElement.getStyles('top', 'left', 'width', 'height'),
+                    imageSize = imageElement.getComputedSize(),
+                    values = {
+                        x: Math.max(0, Math.min(originalWidth, (styles.left.toFloat() - imageSize.computedLeft) / scale)).round(),
+                        y: Math.max(0, Math.min(originalHeight, (styles.top.toFloat() - imageSize.computedTop) / scale)).round()
+                    };
+                values.width = Math.min(originalWidth - values.x, styles.width.toFloat() / scale).round();
+                values.height = Math.min(originalHeight - values.y, styles.height.toFloat() / scale).round();
+                if (!values.width || !values.height) {
+                    values.x = values.y = values.width = values.height = '';
+                    partElement.setStyle('display', 'none');
+                } else {
+                    partElement.setStyle('display', null);
+                }
+                Object.each(values, function(value, key) {
+                    inputElements[key].set('value', value);
+                });
+            },
+            start = function(event) {
+                event.preventDefault();
+                if (isDrawing) {
+                    return;
+                }
+                isDrawing = true;
+                startPos = {
+                    x: event.page.x - el.getPosition().x - imageElement.getComputedSize().computedLeft,
+                    y: event.page.y - el.getPosition().y - imageElement.getComputedSize().computedTop
+                };
+                move(event);
+            },
+            move = function(event) {
+                if (!isDrawing) {
+                    return;
+                }
+                event.preventDefault();
+                var imageSize = imageElement.getComputedSize();
+                var rect = {
+                    x: [
+                        Math.max(0, Math.min(imageSize.width, startPos.x)),
+                        Math.max(0, Math.min(imageSize.width, event.page.x - el.getPosition().x - imageSize.computedLeft))
+                    ],
+                    y: [
+                        Math.max(0, Math.min(imageSize.height, startPos.y)),
+                        Math.max(0, Math.min(imageSize.height, event.page.y - el.getPosition().y - imageSize.computedTop))
+                    ]
+                };
+                partElement.setStyles({
+                    top: Math.min(rect.y[0], rect.y[1]) + imageSize.computedTop + 'px',
+                    left: Math.min(rect.x[0], rect.x[1]) + imageSize.computedLeft + 'px',
+                    width: Math.abs(rect.x[0] - rect.x[1]) + 'px',
+                    height: Math.abs(rect.y[0] - rect.y[1]) + 'px'
+                });
+                updateValues();
+            },
+            stop = function(event) {
+                move(event);
+                isDrawing = false;
+            },
+            init = function() {
+                el.getParent().getElements('input[name^="importantPart"]').each(function(input) {
+                    ['x', 'y', 'width', 'height'].each(function(key) {
+                        if (input.get('name').substr(13, key.length) === key.capitalize()) {
+                            inputElements[key] = input = $(input);
+                        }
+                    });
+                });
+                if (Object.getLength(inputElements) !== 4) {
+                    return;
+                }
+                Object.each(inputElements, function(input) {
+                    input.getParent().setStyle('display', 'none');
+                });
+                el.addClass('tl_edit_preview_enabled');
+                partElement = new Element('div', {
+                    'class': 'tl_edit_preview_important_part'
+                }).inject(el);
+                updateImage();
+                imageElement.addEvent('load', updateImage);
+                el.addEvents({
+                    mousedown: start,
+                    touchstart: start
+                });
+                $(document.documentElement).addEvents({
+                    mousemove: move,
+                    touchmove: move,
+                    mouseup: stop,
+                    touchend: stop,
+                    touchcancel: stop,
+                    resize: updateImage
+                });
+            }
+            ;
+
+        window.addEvent('domready', init);
+    }
+};
+
+// Track the mousedown event
+document.addEvent('mousedown', function(event) {
+    Backend.getMousePosition(event);
+});
+
+// Initialize the back end script
+window.addEvent('domready', function() {
+    $(document.body).addClass('js');
+
+    // Mark touch devices (see #5563)
+    if (Browser.Features.Touch) {
+        $(document.body).addClass('touch');
+    }
+
+    Backend.collapsePalettes();
+    Backend.addInteractiveHelp();
+    Backend.convertEnableModules();
+    Backend.makeWizardsSortable();
+    Backend.enableImageSizeWidgets();
+    Backend.enableToggleSelect();
+    Backend.autoFocusFirstInputField();
+
+    // Chosen
+    if (Elements.chosen != undefined) {
+        $$('select.tl_chosen').chosen();
+    }
+
+    // Remove line wraps from textareas
+    $$('textarea.monospace').each(function(el) {
+        Backend.toggleWrap(el);
+    });
+});
+
+// Limit the height of the preview fields
+window.addEvent('load', function() {
+    Backend.limitPreviewHeight();
+});
+
+// Re-apply certain changes upon ajax_change
+window.addEvent('ajax_change', function() {
+    Backend.addInteractiveHelp();
+    Backend.makeWizardsSortable();
+    Backend.enableImageSizeWidgets();
+    Backend.enableToggleSelect();
+
+    // Chosen
+    if (Elements.chosen != undefined) {
+        $$('select.tl_chosen').filter(function(el) {
+            return el.getStyle('display') != 'none';
+        }).chosen();
+    }
+});

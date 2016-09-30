@@ -65,7 +65,6 @@ window.ace && window.addEvent('domready', function() {
   };
 
   editor.on('focus', function() {
-    Backend.getScrollOffset();
     updateHeight();
   });
 

@@ -16,14 +16,14 @@
             <legend><?= $this->available ?></legend>
             <input type="checkbox" id="check_all_modules" class="tl_checkbox" onclick="Backend.toggleCheckboxGroup(this, 'ctrl_modules')"> <label for="check_all_modules" style="color:#a6a6a6"><em><?= $this->selectAll ?></em></label><br>
             <?php foreach ($this->modules as $module): ?>
-              <input type="checkbox" name="modules[]" id="opt_<?= $module ?>" class="tl_checkbox" value="<?= $module ?>" onfocus="Backend.getScrollOffset()"> <label for="opt_<?= $module ?>"><?= $module ?></label><br>
+              <input type="checkbox" name="modules[]" id="opt_<?= $module ?>" class="tl_checkbox" value="<?= $module ?>"> <label for="opt_<?= $module ?>"><?= $module ?></label><br>
             <?php endforeach; ?>
           </fieldset>
           <p class="tl_help tl_tip"><?= $this->xplAvailable ?></p>
         </div>
         <div>
           <div class="tl_checkbox_single_container">
-            <input type="hidden" name="override" value=""><input type="checkbox" name="override" id="opt_override" value="1" class="tl_checkbox" onfocus="Backend.getScrollOffset()"> <label for="opt_override"><?= $this->override ?></label>
+            <input type="hidden" name="override" value=""><input type="checkbox" name="override" id="opt_override" value="1" class="tl_checkbox"> <label for="opt_override"><?= $this->override ?></label>
           </div>
           <p class="tl_help tl_tip"><?= $this->xplOverride ?></p>
         </div>

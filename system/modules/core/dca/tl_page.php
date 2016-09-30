@@ -79,7 +79,7 @@ $GLOBALS['TL_DCA']['tl_page'] = array
 				'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
 				'href'                => 'act=select',
 				'class'               => 'header_edit_all',
-				'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
+				'attributes'          => 'onclick="" accesskey="e"'
 			)
 		),
 		'operations' => array
@@ -96,7 +96,7 @@ $GLOBALS['TL_DCA']['tl_page'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_page']['copy'],
 				'href'                => 'act=paste&amp;mode=copy',
 				'icon'                => 'copy.gif',
-				'attributes'          => 'onclick="Backend.getScrollOffset()"',
+				'attributes'          => 'onclick=""',
 				'button_callback'     => array('tl_page', 'copyPage')
 			),
 			'copyChilds' => array
@@ -104,7 +104,7 @@ $GLOBALS['TL_DCA']['tl_page'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_page']['copyChilds'],
 				'href'                => 'act=paste&amp;mode=copy&amp;childs=1',
 				'icon'                => 'copychilds.gif',
-				'attributes'          => 'onclick="Backend.getScrollOffset()"',
+				'attributes'          => 'onclick=""',
 				'button_callback'     => array('tl_page', 'copyPageWithSubpages')
 			),
 			'cut' => array
@@ -112,7 +112,7 @@ $GLOBALS['TL_DCA']['tl_page'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_page']['cut'],
 				'href'                => 'act=paste&amp;mode=cut',
 				'icon'                => 'cut.gif',
-				'attributes'          => 'onclick="Backend.getScrollOffset()"',
+				'attributes'          => 'onclick=""',
 				'button_callback'     => array('tl_page', 'cutPage')
 			),
 			'delete' => array
@@ -120,14 +120,14 @@ $GLOBALS['TL_DCA']['tl_page'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_page']['delete'],
 				'href'                => 'act=delete',
 				'icon'                => 'delete.gif',
-				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
+				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;"',
 				'button_callback'     => array('tl_page', 'deletePage')
 			),
 			'toggle' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_page']['toggle'],
 				'icon'                => 'visible.gif',
-				'attributes'          => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
+				'attributes'          => 'onclick="return AjaxRequest.toggleVisibility(this,%s)"',
 				'button_callback'     => array('tl_page', 'toggleIcon')
 			),
 			'show' => array
@@ -1475,10 +1475,10 @@ class tl_page extends Backend
 
 		if ($row['id'] > 0)
 		{
-			$return = $disablePA ? Image::getHtml('pasteafter_.gif').' ' : '<a href="'.$this->addToUrl('act='.$arrClipboard['mode'].'&amp;mode=1&amp;pid='.$row['id'].(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars(sprintf($GLOBALS['TL_LANG'][$table]['pasteafter'][1], $row['id'])).'" onclick="Backend.getScrollOffset()">'.$imagePasteAfter.'</a> ';
+			$return = $disablePA ? Image::getHtml('pasteafter_.gif').' ' : '<a href="'.$this->addToUrl('act='.$arrClipboard['mode'].'&amp;mode=1&amp;pid='.$row['id'].(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars(sprintf($GLOBALS['TL_LANG'][$table]['pasteafter'][1], $row['id'])).'" onclick="">'.$imagePasteAfter.'</a> ';
 		}
 
-		return $return.($disablePI ? Image::getHtml('pasteinto_.gif').' ' : '<a href="'.$this->addToUrl('act='.$arrClipboard['mode'].'&amp;mode=2&amp;pid='.$row['id'].(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars(sprintf($GLOBALS['TL_LANG'][$table]['pasteinto'][1], $row['id'])).'" onclick="Backend.getScrollOffset()">'.$imagePasteInto.'</a> ');
+		return $return.($disablePI ? Image::getHtml('pasteinto_.gif').' ' : '<a href="'.$this->addToUrl('act='.$arrClipboard['mode'].'&amp;mode=2&amp;pid='.$row['id'].(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars(sprintf($GLOBALS['TL_LANG'][$table]['pasteinto'][1], $row['id'])).'" onclick="">'.$imagePasteInto.'</a> ');
 	}
 
 
