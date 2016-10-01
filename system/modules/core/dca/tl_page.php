@@ -965,17 +965,6 @@ class tl_page extends Backend
 		{
 			$autoAlias = true;
 			$varValue = StringUtil::generateAlias($dc->activeRecord->title);
-
-			// Generate folder URL aliases (see #4933)
-			if (Config::get('folderUrl'))
-			{
-				$objPage = PageModel::findWithDetails($dc->activeRecord->id);
-
-				if ($objPage->folderUrl != '')
-				{
-					$varValue = $objPage->folderUrl . $varValue;
-				}
-			}
 		}
 
 		$objAlias = $this->Database->prepare("SELECT id FROM tl_page WHERE id=? OR alias=?")

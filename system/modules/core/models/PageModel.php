@@ -69,7 +69,7 @@ namespace Contao;
  * @property string  $parentAlias
  * @property string  $parentTitle
  * @property string  $parentPageTitle
- * @property string  $folderUrl
+
  * @property integer $rootId
  * @property string  $rootAlias
  * @property string  $rootTitle
@@ -732,7 +732,6 @@ class PageModel extends \Model
 		$alias = $this->alias;
 		$name = $this->title;
 		$title = $this->pageTitle ?: $this->title;
-		$folderUrl = '';
 		$palias = '';
 		$pname = '';
 		$ptitle = '';
@@ -769,7 +768,6 @@ class PageModel extends \Model
 						$alias = $objParentPage->alias;
 						$name = $objParentPage->title;
 						$title = $objParentPage->pageTitle ?: $objParentPage->title;
-						$folderUrl = basename($alias) . '/' . $folderUrl;
 						$trail[] = $objParentPage->pid;
 					}
 
@@ -808,7 +806,6 @@ class PageModel extends \Model
 			$this->parentAlias = $palias;
 			$this->parentTitle = $pname;
 			$this->parentPageTitle = $ptitle;
-			$this->folderUrl = $folderUrl;
 		}
 
 		// Set the root ID and title
