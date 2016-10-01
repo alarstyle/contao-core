@@ -80,7 +80,7 @@ class ContentTeaser extends \ContentElement
 			$link .= $objArticle->inColumn . ':';
 		}
 
-		$link .= ($objArticle->alias != '' && !\Config::get('disableAlias')) ? $objArticle->alias : $objArticle->id;
+		$link .= $objArticle->alias != '' ? $objArticle->alias : $objArticle->id;
 
 		$this->Template->href = $this->objParent->getFrontendUrl($link);
 

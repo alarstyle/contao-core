@@ -958,7 +958,7 @@ class Newsletter extends \Backend
 					}
 
 					// Generate the URL
-					$arrProcessed[$objNewsletter->jumpTo] = $objParent->getAbsoluteUrl((\Config::get('useAutoItem') && !\Config::get('disableAlias')) ? '/%s' : '/items/%s');
+					$arrProcessed[$objNewsletter->jumpTo] = $objParent->getAbsoluteUrl(\Config::get('useAutoItem') ? '/%s' : '/items/%s');
 				}
 
 				$strUrl = $arrProcessed[$objNewsletter->jumpTo];
@@ -970,7 +970,7 @@ class Newsletter extends \Backend
 				{
 					while ($objItem->next())
 					{
-						$arrPages[] = sprintf($strUrl, (($objItem->alias != '' && !\Config::get('disableAlias')) ? $objItem->alias : $objItem->id));
+						$arrPages[] = sprintf($strUrl, ($objItem->alias != '' ? $objItem->alias : $objItem->id));
 					}
 				}
 			}

@@ -116,7 +116,7 @@ abstract class Events extends \Module
 			if ($objCalendar !== null && $objCalendar->jumpTo && ($objTarget = $objCalendar->getRelated('jumpTo')) !== null)
 			{
 				/** @var \PageModel $objTarget */
-				$strUrl = $objTarget->getFrontendUrl((\Config::get('useAutoItem') && !\Config::get('disableAlias')) ? '/%s' : '/events/%s');
+				$strUrl = $objTarget->getFrontendUrl(\Config::get('useAutoItem') ? '/%s' : '/events/%s');
 			}
 
 			// Get the events of the current period
@@ -413,13 +413,13 @@ abstract class Events extends \Module
 				if (($objArticle = \ArticleModel::findByPk($objEvent->articleId, array('eager'=>true))) !== null && ($objPid = $objArticle->getRelated('pid')) !== null)
 				{
 					/** @var \PageModel $objPid */
-					return ampersand($objPid->getFrontendUrl('/articles/' . ((!\Config::get('disableAlias') && $objArticle->alias != '') ? $objArticle->alias : $objArticle->id)));
+					return ampersand($objPid->getFrontendUrl('/articles/' . ($objArticle->alias != '' ? $objArticle->alias : $objArticle->id)));
 				}
 				break;
 		}
 
 		// Link to the default page
-		return ampersand(sprintf($strUrl, ((!\Config::get('disableAlias') && $objEvent->alias != '') ? $objEvent->alias : $objEvent->id)));
+		return ampersand(sprintf($strUrl, ($objEvent->alias != '' ? $objEvent->alias : $objEvent->id)));
 	}
 
 

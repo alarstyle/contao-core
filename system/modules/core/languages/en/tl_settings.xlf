@@ -92,12 +92,6 @@
       <trans-unit id="tl_settings.doNotCollapse.1">
         <source>Do not collapse elements in the back end preview.</source>
       </trans-unit>
-      <trans-unit id="tl_settings.urlSuffix.0">
-        <source>URL suffix</source>
-      </trans-unit>
-      <trans-unit id="tl_settings.urlSuffix.1">
-        <source>The URL suffix will be added to the URI string to simulate static documents.</source>
-      </trans-unit>
       <trans-unit id="tl_settings.cacheMode.0">
         <source>Cache mode</source>
       </trans-unit>
@@ -151,12 +145,6 @@
       </trans-unit>
       <trans-unit id="tl_settings.useAutoItem.1">
         <source>Skip the &lt;em&gt;items/&lt;/em&gt; or &lt;em&gt;events/&lt;/em&gt; fragment in the URL and automatically discover the item based on the &lt;em&gt;auto_item&lt;/em&gt; parameter.</source>
-      </trans-unit>
-      <trans-unit id="tl_settings.disableAlias.0">
-        <source>Disable page alias usage</source>
-      </trans-unit>
-      <trans-unit id="tl_settings.disableAlias.1">
-        <source>Use the numeric ID of a page or article instead of its alias.</source>
       </trans-unit>
       <trans-unit id="tl_settings.folderUrl.0">
         <source>Enable folder URLs</source>

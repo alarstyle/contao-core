@@ -154,10 +154,10 @@ class ModuleFaqList extends \Module
 			if ($jumpTo > 0 && ($objTarget = \PageModel::findByPk($jumpTo)) !== null)
 			{
 				/** @var \PageModel $objTarget */
-				$this->arrTargets[$jumpTo] = ampersand($objTarget->getFrontendUrl((\Config::get('useAutoItem') && !\Config::get('disableAlias')) ? '/%s' : '/items/%s'));
+				$this->arrTargets[$jumpTo] = ampersand($objTarget->getFrontendUrl(\Config::get('useAutoItem') ? '/%s' : '/items/%s'));
 			}
 		}
 
-		return sprintf($this->arrTargets[$jumpTo], ((!\Config::get('disableAlias') && $objFaq->alias != '') ? $objFaq->alias : $objFaq->id));
+		return sprintf($this->arrTargets[$jumpTo], ($objFaq->alias != '' ? $objFaq->alias : $objFaq->id));
 	}
 }

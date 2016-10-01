@@ -51,7 +51,6 @@ $GLOBALS['TL_CONFIG']['displayErrors']  = false;
 $GLOBALS['TL_CONFIG']['logErrors']      = true;
 $GLOBALS['TL_CONFIG']['rewriteURL']     = false;
 $GLOBALS['TL_CONFIG']['folderUrl']      = false;
-$GLOBALS['TL_CONFIG']['disableAlias']   = false;
 $GLOBALS['TL_CONFIG']['minifyMarkup']   = false;
 $GLOBALS['TL_CONFIG']['gzipScripts']    = false;
 
@@ -320,7 +319,6 @@ $GLOBALS['TL_CONFIG']['disableInsertTags']    = false;
 $GLOBALS['TL_CONFIG']['rootFiles']            = array();
 $GLOBALS['TL_CONFIG']['fileSyncExclude']      = '';
 $GLOBALS['TL_CONFIG']['doNotCollapse']        = false;
-$GLOBALS['TL_CONFIG']['urlSuffix']            = '.html';
 $GLOBALS['TL_CONFIG']['exampleWebsite']       = '';
 $GLOBALS['TL_CONFIG']['minPasswordLength']    = 8;
 $GLOBALS['TL_CONFIG']['cacheMode']            = 'both';

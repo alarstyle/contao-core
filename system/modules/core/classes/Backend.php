@@ -708,7 +708,7 @@ abstract class Backend extends \Controller
 
 							while ($objArticles->next())
 							{
-								$arrPages[] = sprintf($feUrl, (($objArticles->alias != '' && !\Config::get('disableAlias')) ? $objArticles->alias : $objArticles->id));
+								$arrPages[] = sprintf($feUrl, ($objArticles->alias != '' ? $objArticles->alias : $objArticles->id));
 							}
 						}
 					}

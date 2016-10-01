@@ -139,7 +139,7 @@ class ModuleNewsMenu extends \ModuleNews
 
 			$arrItems[$intYear]['date'] = $intDate;
 			$arrItems[$intYear]['link'] = $intYear;
-			$arrItems[$intYear]['href'] = $this->strUrl . (\Config::get('disableAlias') ? '&amp;' : '?') . 'year=' . $intDate;
+			$arrItems[$intYear]['href'] = $this->strUrl . '?' . 'year=' . $intDate;
 			$arrItems[$intYear]['title'] = specialchars($intYear . ' (' . $quantity . ')');
 			$arrItems[$intYear]['class'] = trim(((++$count == 1) ? 'first ' : '') . (($count == $limit) ? 'last' : ''));
 			$arrItems[$intYear]['isActive'] = (\Input::get('year') == $intDate);
@@ -192,7 +192,7 @@ class ModuleNewsMenu extends \ModuleNews
 
 				$arrItems[$intYear][$intMonth]['date'] = $intDate;
 				$arrItems[$intYear][$intMonth]['link'] = $GLOBALS['TL_LANG']['MONTHS'][$intMonth] . ' ' . $intYear;
-				$arrItems[$intYear][$intMonth]['href'] = $this->strUrl . (\Config::get('disableAlias') ? '&amp;' : '?') . 'month=' . $intDate;
+				$arrItems[$intYear][$intMonth]['href'] = $this->strUrl . '?' . 'month=' . $intDate;
 				$arrItems[$intYear][$intMonth]['title'] = specialchars($GLOBALS['TL_LANG']['MONTHS'][$intMonth].' '.$intYear . ' (' . $quantity . ')');
 				$arrItems[$intYear][$intMonth]['class'] = trim(((++$count == 1) ? 'first ' : '') . (($count == $limit) ? 'last' : ''));
 				$arrItems[$intYear][$intMonth]['isActive'] = (\Input::get('month') == $intDate);
@@ -202,7 +202,7 @@ class ModuleNewsMenu extends \ModuleNews
 
 		$this->Template->items = $arrItems;
 		$this->Template->showQuantity = ($this->news_showQuantity != '') ? true : false;
-		$this->Template->url = $this->strUrl . (\Config::get('disableAlias') ? '&amp;' : '?');
+		$this->Template->url = $this->strUrl . '?';
 		$this->Template->activeYear = \Input::get('year');
 	}
 
@@ -257,7 +257,7 @@ class ModuleNewsMenu extends \ModuleNews
 		$prevYear = ($intMonth == 1) ? ($intYear - 1) : $intYear;
 		$lblPrevious = $GLOBALS['TL_LANG']['MONTHS'][($prevMonth - 1)] . ' ' . $prevYear;
 
-		$this->Template->prevHref = $this->strUrl . (\Config::get('disableAlias') ? '?id=' . \Input::get('id') . '&amp;' : '?') . 'day=' . $prevYear . ((strlen($prevMonth) < 2) ? '0' : '') . $prevMonth . '01';
+		$this->Template->prevHref = $this->strUrl . '?' . 'day=' . $prevYear . ((strlen($prevMonth) < 2) ? '0' : '') . $prevMonth . '01';
 		$this->Template->prevTitle = specialchars($lblPrevious);
 		$this->Template->prevLink = $GLOBALS['TL_LANG']['MSC']['news_previous'] . ' ' . $lblPrevious;
 		$this->Template->prevLabel = $GLOBALS['TL_LANG']['MSC']['news_previous'];
@@ -270,7 +270,7 @@ class ModuleNewsMenu extends \ModuleNews
 		$nextYear = ($intMonth == 12) ? ($intYear + 1) : $intYear;
 		$lblNext = $GLOBALS['TL_LANG']['MONTHS'][($nextMonth - 1)] . ' ' . $nextYear;
 
-		$this->Template->nextHref = $this->strUrl . (\Config::get('disableAlias') ? '?id=' . \Input::get('id') . '&amp;' : '?') . 'day=' . $nextYear . ((strlen($nextMonth) < 2) ? '0' : '') . $nextMonth . '01';
+		$this->Template->nextHref = $this->strUrl . '?' . 'day=' . $nextYear . ((strlen($nextMonth) < 2) ? '0' : '') . $nextMonth . '01';
 		$this->Template->nextTitle = specialchars($lblNext);
 		$this->Template->nextLink = $lblNext . ' ' . $GLOBALS['TL_LANG']['MSC']['news_next'];
 		$this->Template->nextLabel = $GLOBALS['TL_LANG']['MSC']['news_next'];
@@ -368,7 +368,7 @@ class ModuleNewsMenu extends \ModuleNews
 
 			$arrDays[$strWeekClass][$i]['label'] = $intDay;
 			$arrDays[$strWeekClass][$i]['class'] = 'days active' . $strClass;
-			$arrDays[$strWeekClass][$i]['href'] = $this->strUrl . (\Config::get('disableAlias') ? '&amp;' : '?') . 'day=' . $intKey;
+			$arrDays[$strWeekClass][$i]['href'] = $this->strUrl . '?' . 'day=' . $intKey;
 			$arrDays[$strWeekClass][$i]['title'] = sprintf(specialchars($GLOBALS['TL_LANG']['MSC']['news_items']), $arrData[$intKey]);
 		}
 

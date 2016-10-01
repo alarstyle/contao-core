@@ -160,7 +160,7 @@ class News extends \Frontend
 					}
 					else
 					{
-						$arrUrls[$jumpTo] = $objParent->getAbsoluteUrl((\Config::get('useAutoItem') && !\Config::get('disableAlias')) ? '/%s' : '/items/%s');
+						$arrUrls[$jumpTo] = $objParent->getAbsoluteUrl(\Config::get('useAutoItem') ? '/%s' : '/items/%s');
 					}
 				}
 
@@ -319,7 +319,7 @@ class News extends \Frontend
 					}
 
 					// Generate the URL
-					$arrProcessed[$objArchive->jumpTo] = $objParent->getAbsoluteUrl((\Config::get('useAutoItem') && !\Config::get('disableAlias')) ? '/%s' : '/items/%s');
+					$arrProcessed[$objArchive->jumpTo] = $objParent->getAbsoluteUrl(\Config::get('useAutoItem') ? '/%s' : '/items/%s');
 				}
 
 				$strUrl = $arrProcessed[$objArchive->jumpTo];
@@ -373,7 +373,7 @@ class News extends \Frontend
 				if (($objArticle = \ArticleModel::findByPk($objItem->articleId, array('eager'=>true))) !== null && ($objPid = $objArticle->getRelated('pid')) !== null)
 				{
 					/** @var \PageModel $objPid */
-					return ampersand($objPid->getAbsoluteUrl('/articles/' . ((!\Config::get('disableAlias') && $objArticle->alias != '') ? $objArticle->alias : $objArticle->id)));
+					return ampersand($objPid->getAbsoluteUrl('/articles/' . ($objArticle->alias != '' ? $objArticle->alias : $objArticle->id)));
 				}
 				break;
 		}
@@ -385,7 +385,7 @@ class News extends \Frontend
 		}
 
 		// Link to the default page
-		return sprintf($strUrl, (($objItem->alias != '' && !\Config::get('disableAlias')) ? $objItem->alias : $objItem->id));
+		return sprintf($strUrl, ($objItem->alias != '' ? $objItem->alias : $objItem->id));
 	}
 
 

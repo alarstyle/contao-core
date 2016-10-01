@@ -1113,61 +1113,42 @@ abstract class Controller extends \System
 			}
 		}
 
-		if (!\Config::get('disableAlias'))
+		$strLanguage = '';
+
+		if (\Config::get('addLanguageToUrl'))
 		{
-			$strLanguage = '';
-
-			if (\Config::get('addLanguageToUrl'))
+			if ($strForceLang != '')
 			{
-				if ($strForceLang != '')
-				{
-					$strLanguage = $strForceLang . '/';
-				}
-				elseif (isset($arrRow['rootLanguage']))
-				{
-					$strLanguage = $arrRow['rootLanguage'] . '/';
-				}
-				elseif (isset($arrRow['language']) && $arrRow['type'] == 'root')
-				{
-					$strLanguage = $arrRow['language'] . '/';
-				}
-				elseif (TL_MODE == 'FE')
-				{
-					/** @var \PageModel $objPage */
-					global $objPage;
-
-					$strLanguage = $objPage->rootLanguage . '/';
-				}
+				$strLanguage = $strForceLang . '/';
 			}
-
-			// Correctly handle the "index" alias (see #3961)
-			if ($arrRow['alias'] == 'index' && $strParams == '')
+			elseif (isset($arrRow['rootLanguage']))
 			{
-				if ($strLanguage != '') // see #7757
-				{
-					$strUrl = (\Config::get('rewriteURL') ? '' : 'index.php/') . $strLanguage;
-				}
+				$strLanguage = $arrRow['rootLanguage'] . '/';
 			}
-			else
+			elseif (isset($arrRow['language']) && $arrRow['type'] == 'root')
 			{
-				$strUrl = (\Config::get('rewriteURL') ? '' : 'index.php/') . $strLanguage . ($arrRow['alias'] ?: $arrRow['id']) . $strParams . \Config::get('urlSuffix');
+				$strLanguage = $arrRow['language'] . '/';
+			}
+			elseif (TL_MODE == 'FE')
+			{
+				/** @var \PageModel $objPage */
+				global $objPage;
+
+				$strLanguage = $objPage->rootLanguage . '/';
+			}
+		}
+
+		// Correctly handle the "index" alias (see #3961)
+		if ($arrRow['alias'] == 'index' && $strParams == '')
+		{
+			if ($strLanguage != '') // see #7757
+			{
+				$strUrl = (\Config::get('rewriteURL') ? '' : 'index.php/') . $strLanguage;
 			}
 		}
 		else
 		{
-			$strRequest = '';
-
-			if ($strParams != '')
-			{
-				$arrChunks = explode('/', preg_replace('@^/@', '', $strParams));
-
-				for ($i=0, $c=count($arrChunks); $i<$c; $i=($i+2))
-				{
-					$strRequest .= sprintf('&%s=%s', $arrChunks[$i], $arrChunks[($i+1)]);
-				}
-			}
-
-			$strUrl = 'index.php?id=' . $arrRow['id'] . $strRequest;
+			$strUrl = (\Config::get('rewriteURL') ? '' : 'index.php/') . $strLanguage . ($arrRow['alias'] ?: $arrRow['id']) . $strParams . '/';
 		}
 
 		// Add the domain if it differs from the current one (see #3765 and #6927)
@@ -1695,7 +1676,7 @@ abstract class Controller extends \System
 					$strHref = preg_replace('/(&(amp;)?|\?)file=[^&]+/', '', $strHref);
 				}
 
-				$strHref .= ((\Config::get('disableAlias') || strpos($strHref, '?') !== false) ? '&amp;' : '?') . 'file=' . \System::urlEncode($objFiles->path);
+				$strHref .= (strpos($strHref, '?') !== false ? '&amp;' : '?') . 'file=' . \System::urlEncode($objFiles->path);
 
 				$arrMeta = \Frontend::getMetaData($objFiles->meta, $objPage->language);
 

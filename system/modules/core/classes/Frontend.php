@@ -57,10 +57,6 @@ abstract class Frontend extends \Controller
 	 */
 	public static function getPageIdFromUrl()
 	{
-		if (\Config::get('disableAlias'))
-		{
-			return is_numeric(\Input::get('id')) ? \Input::get('id') : null;
-		}
 
 		if (\Environment::get('request') == '')
 		{
@@ -89,12 +85,12 @@ abstract class Frontend extends \Controller
 		// Remove the URL suffix if not just a language root (e.g. en/) is requested
 		if ($strRequest != '' && (!\Config::get('addLanguageToUrl') || !preg_match('@^[a-z]{2}(-[A-Z]{2})?/$@', $strRequest)))
 		{
-			$intSuffixLength = strlen(\Config::get('urlSuffix'));
+			$intSuffixLength = strlen('/');
 
 			// Return false if the URL suffix does not match (see #2864)
 			if ($intSuffixLength > 0)
 			{
-				if (substr($strRequest, -$intSuffixLength) != \Config::get('urlSuffix'))
+				if (substr($strRequest, -$intSuffixLength) != '/')
 				{
 					return false;
 				}
@@ -391,17 +387,8 @@ abstract class Frontend extends \Controller
 			unset($arrGet['language']);
 		}
 
-		// Determine connector and separator
-		if (\Config::get('disableAlias'))
-		{
-			$strConnector = '&amp;';
-			$strSeparator = '=';
-		}
-		else
-		{
-			$strConnector = '/';
-			$strSeparator = '/';
-		}
+		$strConnector = '/';
+		$strSeparator = '/';
 
 		$strParams = '';
 
@@ -409,7 +396,7 @@ abstract class Frontend extends \Controller
 		foreach ($arrGet as $k=>$v)
 		{
 			// Omit the key if it is an auto_item key (see #5037)
-			if (!\Config::get('disableAlias') && \Config::get('useAutoItem') && ($k == 'auto_item' || in_array($k, $GLOBALS['TL_AUTO_ITEM'])))
+			if (\Config::get('useAutoItem') && ($k == 'auto_item' || in_array($k, $GLOBALS['TL_AUTO_ITEM'])))
 			{
 				$strParams = $strConnector . urlencode($v) . $strParams;
 			}
@@ -417,12 +404,6 @@ abstract class Frontend extends \Controller
 			{
 				$strParams .= $strConnector . urlencode($k) . $strSeparator . urlencode($v);
 			}
-		}
-
-		// Do not use aliases
-		if (\Config::get('disableAlias'))
-		{
-			return 'index.php?' . preg_replace('/^&(amp;)?/i', '', $strParams);
 		}
 
 		/** @var \PageModel $objPage */
@@ -444,7 +425,7 @@ abstract class Frontend extends \Controller
 			$pageLanguage = $objPage->rootLanguage . '/';
 		}
 
-		return (\Config::get('rewriteURL') ? '' : 'index.php/') . $pageLanguage . $pageId . $strParams . \Config::get('urlSuffix');
+		return (\Config::get('rewriteURL') ? '' : 'index.php/') . $pageLanguage . $pageId . $strParams . '/';
 	}
 
 

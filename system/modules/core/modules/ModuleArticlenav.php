@@ -74,7 +74,7 @@ class ModuleArticlenav extends \Module
 
 			/** @var \ArticleModel $objArticle */
 			$objArticle = $this->objArticles->current();
-			$strAlias = ($objArticle->alias != '' && !\Config::get('disableAlias')) ? $objArticle->alias : $objArticle->id;
+			$strAlias = $objArticle->alias != '' ? $objArticle->alias : $objArticle->id;
 
 			$this->redirect($objPage->getFrontendUrl('/articles/' . $strAlias));
 		}
@@ -97,7 +97,7 @@ class ModuleArticlenav extends \Module
 
 		foreach ($this->objArticles as $objArticle)
 		{
-			$strAlias = ($objArticle->alias != '' && !\Config::get('disableAlias')) ? $objArticle->alias : $objArticle->id;
+			$strAlias = $objArticle->alias != '' ? $objArticle->alias : $objArticle->id;
 
 			// Active article
 			if (\Input::get('articles') == $strAlias)

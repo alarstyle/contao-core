@@ -10,6 +10,7 @@
 
 // Set the script name
 define('TL_SCRIPT', 'contao/install.php');
+define('CR_CONTROLLER', 'INSTALL');
 
 // Initialize the system
 define('TL_MODE', 'BE');

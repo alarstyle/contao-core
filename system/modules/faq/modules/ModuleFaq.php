@@ -93,7 +93,7 @@ class ModuleFaq extends \Frontend
 					}
 
 					// Generate the URL
-					$arrProcessed[$objFaq->jumpTo] = $objParent->getAbsoluteUrl((\Config::get('useAutoItem') && !\Config::get('disableAlias')) ? '/%s' : '/items/%s');
+					$arrProcessed[$objFaq->jumpTo] = $objParent->getAbsoluteUrl(\Config::get('useAutoItem') ? '/%s' : '/items/%s');
 				}
 
 				$strUrl = $arrProcessed[$objFaq->jumpTo];
@@ -105,7 +105,7 @@ class ModuleFaq extends \Frontend
 				{
 					while ($objItems->next())
 					{
-						$arrPages[] = sprintf($strUrl, (($objItems->alias != '' && !\Config::get('disableAlias')) ? $objItems->alias : $objItems->id));
+						$arrPages[] = sprintf($strUrl, ($objItems->alias != '' ? $objItems->alias : $objItems->id));
 					}
 				}
 			}

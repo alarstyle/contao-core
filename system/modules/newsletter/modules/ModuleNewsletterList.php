@@ -98,7 +98,7 @@ class ModuleNewsletterList extends \Module
 					if (($objJumpTo = $objTarget->getRelated('jumpTo')) !== null)
 					{
 						/** @var \PageModel $objJumpTo */
-						$arrJumpTo[$objTarget->jumpTo] = $objJumpTo->getFrontendUrl((\Config::get('useAutoItem') && !\Config::get('disableAlias')) ? '/%s' : '/items/%s');
+						$arrJumpTo[$objTarget->jumpTo] = $objJumpTo->getFrontendUrl((\Config::get('useAutoItem')) ? '/%s' : '/items/%s');
 					}
 					else
 					{
@@ -107,7 +107,7 @@ class ModuleNewsletterList extends \Module
 				}
 
 				$strUrl = $arrJumpTo[$objTarget->jumpTo];
-				$strAlias = ($objNewsletter->alias != '' && !\Config::get('disableAlias')) ? $objNewsletter->alias : $objNewsletter->id;
+				$strAlias = $objNewsletter->alias != '' ? $objNewsletter->alias : $objNewsletter->id;
 
 				$arrNewsletter[] = array
 				(
