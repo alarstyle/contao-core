@@ -468,3 +468,11 @@ $GLOBALS['TL_ASSETS'] = array
  */
 $GLOBALS['TL_MODELS'] = array();
 $GLOBALS['TL_PERMISSIONS'] = array();
+
+$GLOBALS['BE_HEADER_MENU'] =
+[
+	function()
+	{
+		return 'Hello';
+	}
+];

@@ -11,7 +11,6 @@
     $objCombiner->add(\'system/themes/\'. $this->theme .\'/main.css\');
     echo $objCombiner->getCombinedFile();
   ?>'; ?>">
-  <!--[if IE]><link rel="stylesheet" href="<?= '<?php echo TL_ASSETS_URL ?>'; ?>system/themes/<?= '<?php echo $this->theme ?>'; ?>/iefixes.css"><![endif]-->
   <script><?= '<?php echo $this->getLocaleString() ?>'; ?></script>
   <script src="<?php echo '<?php
     $objCombiner = new Combiner();

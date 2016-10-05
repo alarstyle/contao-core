@@ -1,0 +1,73 @@
+@function str-replace($string, $search, $replace: '') {
+    $string: $string + '';
+    $index: str-index($string, $search);
+    @if $index {
+        @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    }
+    @return $string;
+}
+
+@mixin transition($transitions...) {
+    $str: null;
+    @for $i from 1 through length($transitions) {
+        $e: nth($transitions, $i);
+        $str: if($i != length($transitions), $str#{$e}#{','}, $str#{$e});
+    }
+    $transitions: $str;
+    -webkit-transition: str-replace($transitions, 'transform', '-webkit-transform');
+    transition: $transitions;
+}
+
+@mixin transform($transform ...) {
+    -webkit-transform: $transform;
+    -ms-transform: $transform;
+    transform: $transform;
+}
+
+@mixin transform-origin($transform-origin ...) {
+    -webkit-transform-origin: $transform-origin;
+    -ms-transform-origin: $transform-origin;
+    transform-origin: $transform-origin;
+}
+
+@mixin abs-pos($left: null, $top: null, $right: null, $bottom: null) {
+    position: absolute;
+    @if $top {
+        top: $top;
+    }
+    @if $left {
+        left: $left;
+    }
+    @if $right {
+        right: $right;
+    }
+    @if $bottom {
+        bottom: $bottom;
+    }
+}
+
+@mixin flexbox() {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+@mixin flex($values) {
+    -webkit-flex:  $values;
+    -ms-flex:  $values;
+    flex:  $values;
+}
+
+.disable-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.clearfix:after {
+    content:"";
+    display:table;
+    clear:both;
+}

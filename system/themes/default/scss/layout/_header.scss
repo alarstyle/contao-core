@@ -1,0 +1,20 @@
+.header {
+    background: #252a2e;
+    color: #b3bbbe;
+    text-align: right;
+    height: 65px;
+}
+
+.header-logo {
+
+}
+
+.header-menu {
+    height: 100%;
+    font-size: 0;
+    li {
+        display: inline-block;
+        font-size: 12px;
+        height: 100%;
+    }
+}
