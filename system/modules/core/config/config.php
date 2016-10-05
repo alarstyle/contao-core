@@ -17,11 +17,9 @@ $GLOBALS['BE_MOD'] = array
 	// Content modules
 	'content' => array
 	(
-		'article' => array
+		'page' => array
 		(
-			'tables'      => array('tl_article', 'tl_content'),
-			'table'       => array('TableWizard', 'importTable'),
-			'list'        => array('ListWizard', 'importList')
+			'tables'      => array('tl_page', 'tl_content')
 		),
 		'form' => array
 		(
@@ -39,10 +37,6 @@ $GLOBALS['BE_MOD'] = array
 			'exportTheme' => array('Theme', 'exportTheme'),
 			'import'      => array('StyleSheets', 'importStyleSheet'),
 			'export'      => array('StyleSheets', 'exportStyleSheet')
-		),
-		'page' => array
-		(
-			'tables'      => array('tl_page', 'tl_content')
 		),
 		'tpl_editor' => array
 		(
