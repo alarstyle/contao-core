@@ -16,10 +16,6 @@ define('TL_MODE', 'FE');
 require __DIR__ . '/system/initialize.php';
 
 
-var_dump(\Environment::get('indexFreeRequest'));
-
-die();
-
 // Run the controller
 $controller = new FrontendIndex;
 $controller->run();

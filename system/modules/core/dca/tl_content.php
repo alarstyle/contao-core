@@ -20,7 +20,7 @@ $GLOBALS['TL_DCA']['tl_content'] = array
 	(
 		'dataContainer'               => 'Table',
 		'enableVersioning'            => true,
-		'ptable'                      => '',
+		'ptable'                      => 'tl_page',
 		'dynamicPtable'               => true,
 		'onload_callback'             => array
 		(
@@ -826,10 +826,19 @@ $GLOBALS['TL_DCA']['tl_content'] = array
 /**
  * Dynamically add the permission check and parent table (see #5241)
  */
-if (Input::get('do') == 'article' || Input::get('do') == 'page')
+if (Input::get('do') == 'article')
 {
 	$GLOBALS['TL_DCA']['tl_content']['config']['ptable'] = 'tl_article';
 	$GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('tl_content', 'checkPermission');
+}
+if (Input::get('do') == 'page')
+{
+	$GLOBALS['TL_DCA']['tl_content']['config']['ptable'] = 'tl_page';
+	foreach ($GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'] as $index=>$item) {
+		if ($item[0] === 'tl_content' && $item[1] === 'checkPermission') {
+			unset($GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][$index]);
+		}
+	}
 }
 
 

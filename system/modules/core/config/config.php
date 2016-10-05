@@ -42,7 +42,7 @@ $GLOBALS['BE_MOD'] = array
 		),
 		'page' => array
 		(
-			'tables'      => array('tl_page')
+			'tables'      => array('tl_page', 'tl_content')
 		),
 		'tpl_editor' => array
 		(
@@ -113,7 +113,6 @@ $GLOBALS['FE_MOD'] = array
 		'quicknav'       => 'ModuleQuicknav',
 		'quicklink'      => 'ModuleQuicklink',
 		'booknav'        => 'ModuleBooknav',
-		'articlenav'     => 'ModuleArticlenav',
 		'sitemap'        => 'ModuleSitemap'
 	),
 	'user' => array
@@ -134,7 +133,6 @@ $GLOBALS['FE_MOD'] = array
 	'miscellaneous' => array
 	(
 		'flash'          => 'ModuleFlash',
-		'articleList'    => 'ModuleArticleList',
 		'randomImage'    => 'ModuleRandomImage',
 		'html'           => 'ModuleHtml',
 		'rss_reader'     => 'ModuleRssReader'
@@ -187,11 +185,9 @@ $GLOBALS['TL_CTE'] = array
 	),
 	'includes' => array
 	(
-		'article'         => 'ContentArticle',
 		'alias'           => 'ContentAlias',
 		'form'            => 'Form',
 		'module'          => 'ContentModule',
-		'teaser'          => 'ContentTeaser'
 	)
 );
 

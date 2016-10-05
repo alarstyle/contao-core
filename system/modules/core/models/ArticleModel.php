@@ -135,17 +135,14 @@ class ArticleModel extends \Model
 	 */
 	public static function findByIdOrAliasAndPid($varId, $intPid, array $arrOptions=array())
 	{
-		$t = static::$strTable;
-		$arrColumns = array("($t.id=? OR $t.alias=?)");
-		$arrValues = array((is_numeric($varId) ? $varId : 0), $varId);
-
-		if ($intPid)
+		// Do nothing if call from insert tag
+		if (is_null($intPid))
 		{
-			$arrColumns[] = "$t.pid=?";
-			$arrValues[] = $intPid;
+			return null;
 		}
 
-		return static::findOneBy($arrColumns, $arrValues, $arrOptions);
+		// Create a dummy model
+		return new \ArticleModel();
 	}
 
 
@@ -214,22 +211,8 @@ class ArticleModel extends \Model
 	 */
 	public static function findPublishedByPidAndColumn($intPid, $strColumn, array $arrOptions=array())
 	{
-		$t = static::$strTable;
-		$arrColumns = array("$t.pid=? AND $t.inColumn=?");
-		$arrValues = array($intPid, $strColumn);
-
-		if (!BE_USER_LOGGED_IN)
-		{
-			$time = \Date::floorToMinute();
-			$arrColumns[] = "($t.start='' OR $t.start<='$time') AND ($t.stop='' OR $t.stop>'" . ($time + 60) . "') AND $t.published='1'";
-		}
-
-		if (!isset($arrOptions['order']))
-		{
-			$arrOptions['order'] = "$t.sorting";
-		}
-
-		return static::findBy($arrColumns, $arrValues, $arrOptions);
+		// Create a dummy collection
+		return static::createCollection(array( new \ArticleModel() ), static::$strTable);
 	}
 
 

@@ -20,7 +20,7 @@ $GLOBALS['TL_DCA']['tl_page'] = array
 	(
 		'label'                       => Config::get('websiteTitle'),
 		'dataContainer'               => 'Table',
-		'ctable'                      => array('tl_article'),
+		'ctable'                      => array('tl_article', 'tl_content'),
 		'enableVersioning'            => true,
 		'onload_callback' => array
 		(
@@ -31,8 +31,7 @@ $GLOBALS['TL_DCA']['tl_page'] = array
 		),
 		'onsubmit_callback' => array
 		(
-			array('tl_page', 'updateSitemap'),
-			array('tl_page', 'generateArticle')
+			array('tl_page', 'updateSitemap')
 		),
 		'ondelete_callback' => array
 		(
@@ -87,9 +86,16 @@ $GLOBALS['TL_DCA']['tl_page'] = array
 			'edit' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_page']['edit'],
-				'href'                => 'act=edit',
+				'href'                => 'table=tl_content',
 				'icon'                => 'edit.gif',
-				'button_callback'     => array('tl_page', 'editPage')
+				'button_callback'     => array('tl_page', 'editContent')
+			),
+			'editheader' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_form']['editheader'],
+				'href'                => 'act=edit',
+				'icon'                => 'header.gif',
+				'attributes'          => 'class="edit-header"'
 			),
 			'copy' => array
 			(
@@ -135,13 +141,6 @@ $GLOBALS['TL_DCA']['tl_page'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_page']['show'],
 				'href'                => 'act=show',
 				'icon'                => 'show.gif'
-			),
-			'articles' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_page']['articles'],
-				'href'                => 'do=article',
-				'icon'                => 'article.gif',
-				'button_callback'     => array('tl_page', 'editArticles')
 			)
 		)
 	),
@@ -629,7 +628,6 @@ $GLOBALS['TL_DCA']['tl_page'] = array
 if (Input::get('popup'))
 {
 	unset($GLOBALS['TL_DCA']['tl_page']['list']['operations']['show']);
-	unset($GLOBALS['TL_DCA']['tl_page']['list']['operations']['articles']);
 }
 
 
@@ -1029,56 +1027,6 @@ class tl_page extends Backend
 		}
 
 		return $varValue;
-	}
-
-
-	/**
-	 * Automatically create an article in the main column of a new page
-	 *
-	 * @param DataContainer $dc
-	 */
-	public function generateArticle(DataContainer $dc)
-	{
-		// Return if there is no active record (override all)
-		if (!$dc->activeRecord)
-		{
-			return;
-		}
-
-		// No title or not a regular page
-		if ($dc->activeRecord->title == '' || !in_array($dc->activeRecord->type, array('regular', 'error_403', 'error_404')))
-		{
-			return;
-		}
-
-		$new_records = $this->Session->get('new_records');
-
-		// Not a new page
-		if (!$new_records || (is_array($new_records[$dc->table]) && !in_array($dc->id, $new_records[$dc->table])))
-		{
-			return;
-		}
-
-		// Check whether there are articles (e.g. on copied pages)
-		$objTotal = $this->Database->prepare("SELECT COUNT(*) AS count FROM tl_article WHERE pid=?")
-								   ->execute($dc->id);
-
-		if ($objTotal->count > 0)
-		{
-			return;
-		}
-
-		// Create article
-		$arrSet['pid'] = $dc->id;
-		$arrSet['sorting'] = 128;
-		$arrSet['tstamp'] = time();
-		$arrSet['author'] = $this->User->id;
-		$arrSet['inColumn'] = 'main';
-		$arrSet['title'] = $dc->activeRecord->title;
-		$arrSet['alias'] = str_replace('/', '-', $dc->activeRecord->alias); // see #5168
-		$arrSet['published'] = $dc->activeRecord->published;
-
-		$this->Database->prepare("INSERT INTO tl_article %s")->set($arrSet)->execute();
 	}
 
 
@@ -1492,28 +1440,6 @@ class tl_page extends Backend
 
 
 	/**
-	 * Generate an "edit articles" button and return it as string
-	 *
-	 * @param array  $row
-	 * @param string $href
-	 * @param string $label
-	 * @param string $title
-	 * @param string $icon
-	 *
-	 * @return string
-	 */
-	public function editArticles($row, $href, $label, $title, $icon)
-	{
-		if (!$this->User->hasAccess('article', 'modules'))
-		{
-			return '';
-		}
-
-		return ($row['type'] == 'regular' || $row['type'] == 'error_403' || $row['type'] == 'error_404') ? '<a href="' . $this->addToUrl($href.'&amp;pn='.$row['id']) . '" title="'.specialchars($title).'">'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
-	}
-
-
-	/**
 	 * Automatically generate the folder URL aliases
 	 *
 	 * @param array         $arrButtons
@@ -1695,5 +1621,19 @@ class tl_page extends Backend
 					   ->execute($intId);
 
 		$objVersions->create();
+	}
+
+
+	/**
+	 * Generate an "edit content" button and return it as string
+	 */
+	public function editContent($row, $href, $label, $title, $icon)
+	{
+		//if (!$this->User->hasAccess('article', 'modules'))
+		//{
+		//    return '';
+		//}
+
+		return ($row['type'] == 'regular' || $row['type'] == 'error_403' || $row['type'] == 'error_404') ? '<a href="' . $this->addToUrl($href.'&amp;id='.$row['id']) . '" title="'.specialchars($title).'">'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
 	}
 }

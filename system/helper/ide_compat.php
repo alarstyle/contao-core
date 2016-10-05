@@ -84,7 +84,6 @@ namespace  {
 	class ContentAccordionStart extends \Contao\ContentAccordionStart {}
 	class ContentAccordionStop extends \Contao\ContentAccordionStop {}
 	class ContentAlias extends \Contao\ContentAlias {}
-	class ContentArticle extends \Contao\ContentArticle {}
 	class ContentCode extends \Contao\ContentCode {}
 	class ContentDownload extends \Contao\ContentDownload {}
 	class ContentDownloads extends \Contao\ContentDownloads {}
@@ -101,7 +100,6 @@ namespace  {
 	class ContentSliderStart extends \Contao\ContentSliderStart {}
 	class ContentSliderStop extends \Contao\ContentSliderStop {}
 	class ContentTable extends \Contao\ContentTable {}
-	class ContentTeaser extends \Contao\ContentTeaser {}
 	class ContentText extends \Contao\ContentText {}
 	class ContentToplink extends \Contao\ContentToplink {}
 	class ContentYouTube extends \Contao\ContentYouTube {}
