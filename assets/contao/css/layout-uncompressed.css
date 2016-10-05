@@ -55,9 +55,6 @@ select,input,textarea {
 #right {
 	margin-right:-100%;
 }
-#footer {
-	clear:both;
-}
 #main .inside {
 	min-height:1px; /* see #4893 */
 }

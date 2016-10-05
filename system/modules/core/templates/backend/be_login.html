@@ -5,8 +5,9 @@
   <meta charset="<?= $this->charset ?>">
   <title><?= $this->title ?> - Contao Open Source CMS <?= VERSION ?></title>
   <base href="<?= $this->base ?>">
-  <meta name="generator" content="Contao Open Source CMS">
+  <meta name="generator" content="">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="origin">
 
   <link rel="stylesheet" href="<?php
@@ -16,7 +17,6 @@
     $objCombiner->add('system/themes/'. $this->theme .'/login.css');
     echo $objCombiner->getCombinedFile();
   ?>">
-  <!--[if IE]><link rel="stylesheet" href="<?= TL_ASSETS_URL ?>system/themes/<?= $this->theme ?>/iefixes.css"><![endif]-->
   <?= $this->stylesheets ?>
 
   <script><?= $this->getLocaleString() ?></script>
