@@ -20,7 +20,7 @@ $GLOBALS['TL_DCA']['tl_page'] = array
 	(
 		'label'                       => Config::get('websiteTitle'),
 		'dataContainer'               => 'Table',
-		'ctable'                      => array('tl_article', 'tl_content'),
+		'ctable'                      => array('tl_content'),
 		'enableVersioning'            => true,
 		'onload_callback' => array
 		(

@@ -129,7 +129,6 @@ $GLOBALS['TL_DCA']['tl_content'] = array
 		'download'                    => '{type_legend},type,headline;{source_legend},singleSRC;{dwnconfig_legend},linkTitle,titleText;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop',
 		'downloads'                   => '{type_legend},type,headline;{source_legend},multiSRC,sortBy,metaIgnore;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,useHomeDir,cssID,space;{invisible_legend:hide},invisible,start,stop',
 		'alias'                       => '{type_legend},type;{include_legend},cteAlias;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop',
-		'article'                     => '{type_legend},type;{include_legend},articleAlias;{protected_legend:hide},protected;{invisible_legend:hide},invisible,start,stop',
 		'teaser'                      => '{type_legend},type;{include_legend},article;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop',
 		'form'                        => '{type_legend},type,headline;{include_legend},form;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop',
 		'module'                      => '{type_legend},type;{include_legend},module;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop'
@@ -699,32 +698,6 @@ $GLOBALS['TL_DCA']['tl_content'] = array
 			),
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
-		'articleAlias' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_content']['articleAlias'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options_callback'        => array('tl_content', 'getArticleAlias'),
-			'eval'                    => array('mandatory'=>true, 'chosen'=>true, 'submitOnChange'=>true),
-			'wizard' => array
-			(
-				array('tl_content', 'editArticleAlias')
-			),
-			'sql'                     => "int(10) unsigned NOT NULL default '0'"
-		),
-		'article' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_content']['article'],
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options_callback'        => array('tl_content', 'getArticles'),
-			'eval'                    => array('mandatory'=>true, 'chosen'=>true, 'submitOnChange'=>true),
-			'wizard' => array
-			(
-				array('tl_content', 'editArticle')
-			),
-			'sql'                     => "int(10) unsigned NOT NULL default '0'"
-		),
 		'form' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_content']['form'],
@@ -826,11 +799,6 @@ $GLOBALS['TL_DCA']['tl_content'] = array
 /**
  * Dynamically add the permission check and parent table (see #5241)
  */
-if (Input::get('do') == 'article')
-{
-	$GLOBALS['TL_DCA']['tl_content']['config']['ptable'] = 'tl_article';
-	$GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('tl_content', 'checkPermission');
-}
 if (Input::get('do') == 'page')
 {
 	$GLOBALS['TL_DCA']['tl_content']['config']['ptable'] = 'tl_page';
@@ -1176,69 +1144,6 @@ class tl_content extends Backend
 </div>' . "\n";
 	}
 
-
-	/**
-	 * Return the edit article alias wizard
-	 *
-	 * @param DataContainer $dc
-	 *
-	 * @return string
-	 */
-	public function editArticleAlias(DataContainer $dc)
-	{
-		return ($dc->value < 1) ? '' : ' <a href="contao/main.php?do=article&amp;table=tl_content&amp;id=' . $dc->value . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . sprintf(specialchars($GLOBALS['TL_LANG']['tl_content']['editalias'][1]), $dc->value) . '" style="padding-left:3px" onclick="Backend.openModalIframe({\'width\':768,\'title\':\'' . specialchars(str_replace("'", "\\'", sprintf($GLOBALS['TL_LANG']['tl_content']['editalias'][1], $dc->value))) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.gif', $GLOBALS['TL_LANG']['tl_content']['editalias'][0], 'style="vertical-align:top"') . '</a>';
-	}
-
-
-	/**
-	 * Get all articles and return them as array (article alias)
-	 *
-	 * @param DataContainer $dc
-	 *
-	 * @return array
-	 */
-	public function getArticleAlias(DataContainer $dc)
-	{
-		$arrPids = array();
-		$arrAlias = array();
-
-		if (!$this->User->isAdmin)
-		{
-			foreach ($this->User->pagemounts as $id)
-			{
-				$arrPids[] = $id;
-				$arrPids = array_merge($arrPids, $this->Database->getChildRecords($id, 'tl_page'));
-			}
-
-			if (empty($arrPids))
-			{
-				return $arrAlias;
-			}
-
-			$objAlias = $this->Database->prepare("SELECT a.id, a.pid, a.title, a.inColumn, p.title AS parent FROM tl_article a LEFT JOIN tl_page p ON p.id=a.pid WHERE a.pid IN(". implode(',', array_map('intval', array_unique($arrPids))) .") AND a.id!=(SELECT pid FROM tl_content WHERE id=?) ORDER BY parent, a.sorting")
-									   ->execute($dc->id);
-		}
-		else
-		{
-			$objAlias = $this->Database->prepare("SELECT a.id, a.pid, a.title, a.inColumn, p.title AS parent FROM tl_article a LEFT JOIN tl_page p ON p.id=a.pid WHERE a.id!=(SELECT pid FROM tl_content WHERE id=?) ORDER BY parent, a.sorting")
-									   ->execute($dc->id);
-		}
-
-		if ($objAlias->numRows)
-		{
-			System::loadLanguageFile('tl_article');
-
-			while ($objAlias->next())
-			{
-				$key = $objAlias->parent . ' (ID ' . $objAlias->pid . ')';
-				$arrAlias[$key][$objAlias->id] = $objAlias->title . ' (' . ($GLOBALS['TL_LANG']['COLS'][$objAlias->inColumn] ?: $objAlias->inColumn) . ', ID ' . $objAlias->id . ')';
-			}
-		}
-
-		return $arrAlias;
-	}
-
-
 	/**
 	 * Return the edit alias wizard
 	 *
@@ -1408,19 +1313,6 @@ class tl_content extends Backend
 	public function getElementTemplates()
 	{
 		return $this->getTemplateGroup('ce_');
-	}
-
-
-	/**
-	 * Return the edit article teaser wizard
-	 *
-	 * @param DataContainer $dc
-	 *
-	 * @return string
-	 */
-	public function editArticle(DataContainer $dc)
-	{
-		return ($dc->value < 1) ? '' : ' <a href="contao/main.php?do=article&amp;table=tl_article&amp;act=edit&amp;id=' . $dc->value . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . sprintf(specialchars($GLOBALS['TL_LANG']['tl_content']['editarticle'][1]), $dc->value) . '" onclick="Backend.openModalIframe({\'width\':768,\'title\':\'' . specialchars(str_replace("'", "\\'", sprintf($GLOBALS['TL_LANG']['tl_content']['editarticle'][1], $dc->value))) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.gif', $GLOBALS['TL_LANG']['tl_content']['editarticle'][0], 'style="vertical-align:top"') . '</a>';
 	}
 
 
