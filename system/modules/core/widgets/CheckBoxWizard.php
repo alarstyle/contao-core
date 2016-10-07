@@ -33,7 +33,7 @@ class CheckBoxWizard extends \Widget
 	 * Template
 	 * @var string
 	 */
-	protected $strTemplate = 'be_widget_chk';
+	protected $strTemplate = 'be_editor_chk';
 
 
 	/**

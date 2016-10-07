@@ -40,7 +40,7 @@ class Password extends \Widget
 	 * Template
 	 * @var string
 	 */
-	protected $strTemplate = 'be_widget_pw';
+	protected $strTemplate = 'be_editor_base';
 
 
 	/**

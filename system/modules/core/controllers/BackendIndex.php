@@ -88,7 +88,6 @@ class BackendIndex extends \Backend
 		$objTemplate->title = specialchars($strHeadline);
 		$objTemplate->charset = \Config::get('characterSet');
 		$objTemplate->action = ampersand(\Environment::get('request'));
-		$objTemplate->userLanguage = $GLOBALS['TL_LANG']['tl_user']['language'][0];
 		$objTemplate->headline = $strHeadline;
 		$objTemplate->curLanguage = \Input::post('language') ?: str_replace('-', '_', $GLOBALS['TL_LANGUAGE']);
 		$objTemplate->curUsername = \Input::post('username') ?: '';

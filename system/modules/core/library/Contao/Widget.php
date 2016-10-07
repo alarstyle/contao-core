@@ -581,7 +581,7 @@ abstract class Widget extends \BaseTemplate
 
 
 	/**
-	 * Return true if the widgets submits user input
+	 * Return true if the editor submits user input
 	 *
 	 * @return boolean True if the widget submits user input
 	 */

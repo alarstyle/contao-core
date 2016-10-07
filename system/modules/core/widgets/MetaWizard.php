@@ -31,7 +31,7 @@ class MetaWizard extends \Widget
 	 * Template
 	 * @var string
 	 */
-	protected $strTemplate = 'be_widget';
+	protected $strTemplate = 'be_editor_base';
 
 
 	/**

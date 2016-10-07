@@ -209,6 +209,18 @@ class BackendMain extends \Backend
 			$this->Template->manager = (strpos($this->Session->get('filePickerRef'), 'contao/page.php') !== false) ? $GLOBALS['TL_LANG']['MSC']['pagePickerHome'] : $GLOBALS['TL_LANG']['MSC']['filePickerHome'];
 		}
 
+		$this->Template->headerMenu = '';
+		if (isset($GLOBALS['BE_HEADER_MENU']))
+		{
+			foreach($GLOBALS['BE_HEADER_MENU'] as $headerMenuItem)
+			{
+				if (is_callable($headerMenuItem))
+				{
+					$this->Template->headerMenu .= '<li>' . $headerMenuItem() . '</li>';
+				}
+			}
+		}
+
 		$this->Template->theme = \Backend::getTheme();
 		$this->Template->base = \Environment::get('base');
 		$this->Template->language = $GLOBALS['TL_LANGUAGE'];

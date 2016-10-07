@@ -99,7 +99,7 @@ class ModulePassword extends \Module
 		$strFields = '';
 		$doNotSubmit = false;
 
-		// Initialize the widgets
+		// Initialize the editors
 		foreach ($arrFields as $arrField)
 		{
 			/** @var \Widget $strClass */

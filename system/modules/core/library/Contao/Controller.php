@@ -2020,7 +2020,7 @@ abstract class Controller extends \System
 
 
 	/**
-	 * Convert a DCA file configuration to be used with widgets
+	 * Convert a DCA file configuration to be used with editors
 	 *
 	 * @param array  $arrData  The field configuration array
 	 * @param string $strName  The field name in the form

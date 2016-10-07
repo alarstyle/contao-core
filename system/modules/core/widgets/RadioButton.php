@@ -32,7 +32,7 @@ class RadioButton extends \Widget
 	 * Template
 	 * @var string
 	 */
-	protected $strTemplate = 'be_widget_rdo';
+	protected $strTemplate = 'be_editor_rdo';
 
 
 	/**

@@ -105,7 +105,7 @@ class ModuleChangePassword extends \Module
 		/** @var \FormPassword $objNewPassword */
 		$objNewPassword = null;
 
-		// Initialize the widgets
+		// Initialize the editors
 		foreach ($arrFields as $strKey=>$arrField)
 		{
 			/** @var \Widget $strClass */

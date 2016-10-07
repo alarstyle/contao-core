@@ -242,7 +242,7 @@ class Comments extends \Frontend
 		$arrWidgets = array();
 		$strFormId = 'com_'. $strSource .'_'. $intParent;
 
-		// Initialize the widgets
+		// Initialize the editors
 		foreach ($arrFields as $arrField)
 		{
 			/** @var \Widget $strClass */
