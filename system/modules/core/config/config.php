@@ -408,15 +408,6 @@ $GLOBALS['TL_CSS_UNITS'] = array('px', '%', 'em', 'rem', 'vw', 'vh', 'vmin', 'vm
 
 
 /**
- * Wrapper elements
- */
-$GLOBALS['TL_WRAPPERS'] = array
-(
-	'separator' => array()
-);
-
-
-/**
  * Asset versions
  */
 $GLOBALS['TL_ASSETS'] = array
