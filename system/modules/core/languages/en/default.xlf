@@ -317,12 +317,6 @@
       <trans-unit id="CTE.image.1">
         <source>Generates a stand-alone image.</source>
       </trans-unit>
-      <trans-unit id="CTE.gallery.0">
-        <source>Gallery</source>
-      </trans-unit>
-      <trans-unit id="CTE.gallery.1">
-        <source>Generates a lightbox image gallery.</source>
-      </trans-unit>
       <trans-unit id="CTE.player.0">
         <source>Video/audio</source>
       </trans-unit>

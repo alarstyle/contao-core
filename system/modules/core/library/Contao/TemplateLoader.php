@@ -20,7 +20,7 @@ namespace Contao;
  *
  * Usage:
  *
- *     ClassLoader::addFile('moo_mediabox', 'core/templates');
+ *     ClassLoader::addFile('template_name', 'core/templates');
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */

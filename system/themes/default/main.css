@@ -1747,14 +1747,6 @@ ul.sgallery li {
   -moz-opacity: 0.5;
   opacity: 0.5; }
 
-/* Misc */
-.ce_gallery ul {
-  overflow: hidden; }
-
-.ce_gallery li {
-  float: left;
-  margin: 0 6px 6px 0; }
-
 #theme-store {
   margin-top: 24px;
   text-align: right; }
