@@ -149,12 +149,6 @@ $GLOBALS['TL_CTE'] = array
 		'code'            => 'ContentCode',
 		'markdown'        => 'ContentMarkdown'
 	),
-	'accordion' => array
-	(
-		'accordionSingle' => 'ContentAccordion',
-		'accordionStart'  => 'ContentAccordionStart',
-		'accordionStop'   => 'ContentAccordionStop'
-	),
 	'slider' => array
 	(
 		'sliderStart'     => 'ContentSliderStart',
@@ -418,20 +412,6 @@ $GLOBALS['TL_CSS_UNITS'] = array('px', '%', 'em', 'rem', 'vw', 'vh', 'vmin', 'vm
  */
 $GLOBALS['TL_WRAPPERS'] = array
 (
-	'start' => array
-	(
-		'accordionStart',
-		'sliderStart'
-	),
-	'stop' => array
-	(
-		'accordionStop',
-		'sliderStop'
-	),
-	'single' => array
-	(
-		'accordionSingle'
-	),
 	'separator' => array()
 );
 

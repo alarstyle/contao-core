@@ -80,9 +80,6 @@ namespace  {
 	class DC_File extends \Contao\DC_File {}
 	class DC_Folder extends \Contao\DC_Folder {}
 	class DC_Table extends \Contao\DC_Table {}
-	class ContentAccordion extends \Contao\ContentAccordion {}
-	class ContentAccordionStart extends \Contao\ContentAccordionStart {}
-	class ContentAccordionStop extends \Contao\ContentAccordionStop {}
 	class ContentAlias extends \Contao\ContentAlias {}
 	class ContentCode extends \Contao\ContentCode {}
 	class ContentDownload extends \Contao\ContentDownload {}
