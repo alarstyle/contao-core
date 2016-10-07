@@ -18,7 +18,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormCheckBox extends \Widget
+class FormCheckBox extends \Editor
 {
 
 	/**
@@ -240,9 +240,9 @@ class FormCheckBox extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
-	 * @return string The widget markup
+	 * @return string The editor markup
 	 */
 	public function generate()
 	{

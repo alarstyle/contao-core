@@ -21,7 +21,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormPassword extends \Widget
+class FormPassword extends \Editor
 {
 
 	/**
@@ -160,9 +160,9 @@ class FormPassword extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
-	 * @return string The widget markup
+	 * @return string The editor markup
 	 */
 	public function generate()
 	{
@@ -191,7 +191,7 @@ class FormPassword extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
 	 * @return string The confirmation field markup
 	 */

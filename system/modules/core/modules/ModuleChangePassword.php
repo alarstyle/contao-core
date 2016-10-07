@@ -72,7 +72,7 @@ class ModuleChangePassword extends \Module
 		\System::loadLanguageFile('tl_member');
 		$this->loadDataContainer('tl_member');
 
-		// Old password widget
+		// Old password editor
 		$arrFields['oldPassword'] = array
 		(
 			'name'      => 'oldpassword',
@@ -81,7 +81,7 @@ class ModuleChangePassword extends \Module
 			'eval'      => array('mandatory'=>true, 'preserveTags'=>true, 'hideInput'=>true),
 		);
 
-		// New password widget
+		// New password editor
 		$arrFields['newPassword'] = $GLOBALS['TL_DCA']['tl_member']['fields']['password'];
 		$arrFields['newPassword']['name'] = 'password';
 		$arrFields['newPassword']['label'] = &$GLOBALS['TL_LANG']['MSC']['newPassword'];
@@ -108,7 +108,7 @@ class ModuleChangePassword extends \Module
 		// Initialize the editors
 		foreach ($arrFields as $strKey=>$arrField)
 		{
-			/** @var \Widget $strClass */
+			/** @var \Editor $strClass */
 			$strClass = $GLOBALS['TL_FFL'][$arrField['inputType']];
 
 			// Continue if the class is not defined
@@ -120,57 +120,57 @@ class ModuleChangePassword extends \Module
 			$arrField['eval']['tableless'] = $this->tableless;
 			$arrField['eval']['required'] = $arrField['eval']['mandatory'];
 
-			/** @var \Widget $objWidget */
-			$objWidget = new $strClass($strClass::getAttributesFromDca($arrField, $arrField['name']));
+			/** @var \Editor $objEditor */
+			$objEditor = new $strClass($strClass::getAttributesFromDca($arrField, $arrField['name']));
 
-			$objWidget->storeValues = true;
-			$objWidget->rowClass = 'row_' . $row . (($row == 0) ? ' row_first' : '') . ((($row % 2) == 0) ? ' even' : ' odd');
+			$objEditor->storeValues = true;
+			$objEditor->rowClass = 'row_' . $row . (($row == 0) ? ' row_first' : '') . ((($row % 2) == 0) ? ' even' : ' odd');
 
 			// Increase the row count if it is a password field
-			if ($objWidget instanceof \FormPassword)
+			if ($objEditor instanceof \FormPassword)
 			{
-				$objWidget->rowClassConfirm = 'row_' . ++$row . ((($row % 2) == 0) ? ' even' : ' odd');
+				$objEditor->rowClassConfirm = 'row_' . ++$row . ((($row % 2) == 0) ? ' even' : ' odd');
 			}
 
 			++$row;
 
-			// Store the widget objects
+			// Store the editor objects
 			$strVar  = 'obj' . ucfirst($strKey);
-			$$strVar = $objWidget;
+			$$strVar = $objEditor;
 
-			// Validate the widget
+			// Validate the editor
 			if (\Input::post('FORM_SUBMIT') == 'tl_change_password')
 			{
-				$objWidget->validate();
+				$objEditor->validate();
 
 				// Validate the old password
 				if ($strKey == 'oldPassword')
 				{
 					if (\Encryption::test($objMember->password))
 					{
-						$blnAuthenticated = \Encryption::verify($objWidget->value, $objMember->password);
+						$blnAuthenticated = \Encryption::verify($objEditor->value, $objMember->password);
 					}
 					else
 					{
 						list($strPassword, $strSalt) = explode(':', $objMember->password);
-						$blnAuthenticated = ($strSalt == '') ? ($strPassword === sha1($objWidget->value)) : ($strPassword === sha1($strSalt . $objWidget->value));
+						$blnAuthenticated = ($strSalt == '') ? ($strPassword === sha1($objEditor->value)) : ($strPassword === sha1($strSalt . $objEditor->value));
 					}
 
 					if (!$blnAuthenticated)
 					{
-						$objWidget->value = '';
-						$objWidget->addError($GLOBALS['TL_LANG']['MSC']['oldPasswordWrong']);
+						$objEditor->value = '';
+						$objEditor->addError($GLOBALS['TL_LANG']['MSC']['oldPasswordWrong']);
 						sleep(2); // Wait 2 seconds while brute forcing :)
 					}
 				}
 
-				if ($objWidget->hasErrors())
+				if ($objEditor->hasErrors())
 				{
 					$doNotSubmit = true;
 				}
 			}
 
-			$strFields .= $objWidget->parse();
+			$strFields .= $objEditor->parse();
 		}
 
 		$this->Template->fields = $strFields;

@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ChmodTable extends \Widget
+class ChmodTable extends \Editor
 {
 
 	/**
@@ -33,7 +33,7 @@ class ChmodTable extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
 	 * @return string
 	 */

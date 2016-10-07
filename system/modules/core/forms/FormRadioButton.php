@@ -19,7 +19,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormRadioButton extends \Widget
+class FormRadioButton extends \Editor
 {
 
 	/**
@@ -197,9 +197,9 @@ class FormRadioButton extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
-	 * @return string The widget markup
+	 * @return string The editor markup
 	 */
 	public function generate()
 	{

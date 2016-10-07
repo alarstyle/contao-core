@@ -2020,25 +2020,6 @@ abstract class Controller extends \System
 
 
 	/**
-	 * Convert a DCA file configuration to be used with editors
-	 *
-	 * @param array  $arrData  The field configuration array
-	 * @param string $strName  The field name in the form
-	 * @param mixed  $varValue The field value
-	 * @param string $strField The field name in the database
-	 * @param string $strTable The table name
-	 *
-	 * @return array An array that can be passed to a widget
-	 *
-	 * @deprecated Use Widget::getAttributesFromDca() instead
-	 */
-	protected function prepareForWidget($arrData, $strName, $varValue=null, $strField='', $strTable='')
-	{
-		return \Widget::getAttributesFromDca($arrData, $strName, $varValue, $strField, $strTable);
-	}
-
-
-	/**
 	 * Return the IDs of all child records of a particular record (see #2475)
 	 *
 	 * @author Andreas Schempp
@@ -2072,110 +2053,6 @@ abstract class Controller extends \System
 	protected function getParentRecords($intId, $strTable)
 	{
 		return $this->Database->getParentRecords($intId, $strTable);
-	}
-
-
-	/**
-	 * Print an article as PDF and stream it to the browser
-	 *
-	 * @param \ModuleModel $objArticle An article object
-	 *
-	 * @deprecated Use ModuleArticle->generatePdf() instead
-	 */
-	protected function printArticleAsPdf($objArticle)
-	{
-		$objArticle = new \ModuleArticle($objArticle);
-		$objArticle->generatePdf();
-	}
-
-
-	/**
-	 * Return all page sections as array
-	 *
-	 * @return array An array of active page sections
-	 *
-	 * @deprecated See #4693
-	 */
-	public static function getPageSections()
-	{
-		return array('header', 'left', 'right', 'main', 'footer');
-	}
-
-
-	/**
-	 * Return a "selected" attribute if the option is selected
-	 *
-	 * @param string $strOption The option to check
-	 * @param mixed  $varValues One or more values to check against
-	 *
-	 * @return string The attribute or an empty string
-	 *
-	 * @deprecated Use Widget::optionSelected() instead
-	 */
-	public static function optionSelected($strOption, $varValues)
-	{
-		return \Widget::optionSelected($strOption, $varValues);
-	}
-
-
-	/**
-	 * Return a "checked" attribute if the option is checked
-	 *
-	 * @param string $strOption The option to check
-	 * @param mixed  $varValues One or more values to check against
-	 *
-	 * @return string The attribute or an empty string
-	 *
-	 * @deprecated Use Widget::optionChecked() instead
-	 */
-	public static function optionChecked($strOption, $varValues)
-	{
-		return \Widget::optionChecked($strOption, $varValues);
-	}
-
-
-	/**
-	 * Find a content element in the TL_CTE array and return the class name
-	 *
-	 * @param string $strName The content element name
-	 *
-	 * @return string The class name
-	 *
-	 * @deprecated Use ContentElement::findClass() instead
-	 */
-	public static function findContentElement($strName)
-	{
-		return \ContentElement::findClass($strName);
-	}
-
-
-	/**
-	 * Find a front end module in the FE_MOD array and return the class name
-	 *
-	 * @param string $strName The front end module name
-	 *
-	 * @return string The class name
-	 *
-	 * @deprecated Use Module::findClass() instead
-	 */
-	public static function findFrontendModule($strName)
-	{
-		return \Module::findClass($strName);
-	}
-
-
-	/**
-	 * Create an initial version of a record
-	 *
-	 * @param string  $strTable The table name
-	 * @param integer $intId    The ID of the element to be versioned
-	 *
-	 * @deprecated Use Versions->initialize() instead
-	 */
-	protected function createInitialVersion($strTable, $intId)
-	{
-		$objVersions = new \Versions($strTable, $intId);
-		$objVersions->initialize();
 	}
 
 

@@ -18,7 +18,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class MetaWizard extends \Widget
+class MetaWizard extends \Editor
 {
 
 	/**
@@ -92,7 +92,7 @@ class MetaWizard extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
 	 * @return string
 	 */

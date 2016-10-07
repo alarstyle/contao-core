@@ -72,18 +72,18 @@ class ModulePassword extends \Module
 			return;
 		}
 
-		// Username widget
+		// Username editor
 		if (!$this->reg_skipName)
 		{
 			$arrFields['username'] = $GLOBALS['TL_DCA']['tl_member']['fields']['username'];
 			$arrFields['username']['name'] = 'username';
 		}
 
-		// E-mail widget
+		// E-mail editor
 		$arrFields['email'] = $GLOBALS['TL_DCA']['tl_member']['fields']['email'];
 		$arrFields['email']['name'] = 'email';
 
-		// Captcha widget
+		// Captcha editor
 		if (!$this->disableCaptcha)
 		{
 			$arrFields['captcha'] = array
@@ -102,7 +102,7 @@ class ModulePassword extends \Module
 		// Initialize the editors
 		foreach ($arrFields as $arrField)
 		{
-			/** @var \Widget $strClass */
+			/** @var \Editor $strClass */
 			$strClass = $GLOBALS['TL_FFL'][$arrField['inputType']];
 
 			// Continue if the class is not defined
@@ -114,25 +114,25 @@ class ModulePassword extends \Module
 			$arrField['eval']['tableless'] = $this->tableless;
 			$arrField['eval']['required'] = $arrField['eval']['mandatory'];
 
-			/** @var \Widget $objWidget */
-			$objWidget = new $strClass($strClass::getAttributesFromDca($arrField, $arrField['name']));
+			/** @var \Editor $objEditor */
+			$objEditor = new $strClass($strClass::getAttributesFromDca($arrField, $arrField['name']));
 
-			$objWidget->storeValues = true;
-			$objWidget->rowClass = 'row_' . $row . (($row == 0) ? ' row_first' : '') . ((($row % 2) == 0) ? ' even' : ' odd');
+			$objEditor->storeValues = true;
+			$objEditor->rowClass = 'row_' . $row . (($row == 0) ? ' row_first' : '') . ((($row % 2) == 0) ? ' even' : ' odd');
 			++$row;
 
-			// Validate the widget
+			// Validate the editor
 			if (\Input::post('FORM_SUBMIT') == 'tl_lost_password')
 			{
-				$objWidget->validate();
+				$objEditor->validate();
 
-				if ($objWidget->hasErrors())
+				if ($objEditor->hasErrors())
 				{
 					$doNotSubmit = true;
 				}
 			}
 
-			$strFields .= $objWidget->parse();
+			$strFields .= $objEditor->parse();
 		}
 
 		$this->Template->fields = $strFields;
@@ -205,7 +205,7 @@ class ModulePassword extends \Module
 		$arrField = $GLOBALS['TL_DCA']['tl_member']['fields']['password'];
 		$arrField['eval']['tableless'] = $this->tableless;
 
-		/** @var \Widget $strClass */
+		/** @var \Editor $strClass */
 		$strClass = $GLOBALS['TL_FFL']['password'];
 
 		// Fallback to default if the class is not defined
@@ -214,27 +214,27 @@ class ModulePassword extends \Module
 			$strClass = 'FormPassword';
 		}
 
-		/** @var \Widget $objWidget */
-		$objWidget = new $strClass($strClass::getAttributesFromDca($arrField, 'password'));
+		/** @var \Editor $objEditor */
+		$objEditor = new $strClass($strClass::getAttributesFromDca($arrField, 'password'));
 
 		// Set row classes
-		$objWidget->rowClass = 'row_0 row_first even';
-		$objWidget->rowClassConfirm = 'row_1 odd';
+		$objEditor->rowClass = 'row_0 row_first even';
+		$objEditor->rowClassConfirm = 'row_1 odd';
 		$this->Template->rowLast = 'row_2 row_last even';
 
 		// Validate the field
 		if (strlen(\Input::post('FORM_SUBMIT')) && \Input::post('FORM_SUBMIT') == $this->Session->get('setPasswordToken'))
 		{
-			$objWidget->validate();
+			$objEditor->validate();
 
 			// Set the new password and redirect
-			if (!$objWidget->hasErrors())
+			if (!$objEditor->hasErrors())
 			{
 				$this->Session->set('setPasswordToken', '');
 
 				$objMember->tstamp = time();
 				$objMember->activation = '';
-				$objMember->password = $objWidget->value;
+				$objMember->password = $objEditor->value;
 				$objMember->save();
 
 				// Create a new version
@@ -249,7 +249,7 @@ class ModulePassword extends \Module
 					foreach ($GLOBALS['TL_HOOKS']['setNewPassword'] as $callback)
 					{
 						$this->import($callback[0]);
-						$this->{$callback[0]}->{$callback[1]}($objMember, $objWidget->value, $this);
+						$this->{$callback[0]}->{$callback[1]}($objMember, $objEditor->value, $this);
 					}
 				}
 
@@ -278,7 +278,7 @@ class ModulePassword extends \Module
 		$this->Session->set('setPasswordToken', $strToken);
 
 		$this->Template->formId = $strToken;
-		$this->Template->fields = $objWidget->parse();
+		$this->Template->fields = $objEditor->parse();
 		$this->Template->action = \Environment::get('indexFreeRequest');
 		$this->Template->slabel = specialchars($GLOBALS['TL_LANG']['MSC']['setNewPassword']);
 		$this->Template->tableless = $this->tableless;

@@ -19,7 +19,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class PageSelector extends \Widget
+class PageSelector extends \Editor
 {
 
 	/**
@@ -54,7 +54,7 @@ class PageSelector extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
 	 * @return string
 	 */

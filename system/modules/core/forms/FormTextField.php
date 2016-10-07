@@ -26,7 +26,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormTextField extends \Widget
+class FormTextField extends \Editor
 {
 
 	/**
@@ -201,9 +201,9 @@ class FormTextField extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
-	 * @return string The widget markup
+	 * @return string The editor markup
 	 */
 	public function generate()
 	{

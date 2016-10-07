@@ -19,7 +19,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ImageSize extends \Widget
+class ImageSize extends \Editor
 {
 
 	/**
@@ -81,7 +81,7 @@ class ImageSize extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
 	 * @return string
 	 */

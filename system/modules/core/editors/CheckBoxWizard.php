@@ -20,7 +20,7 @@ namespace Contao;
  * @author John Brand <http://www.thyon.com>
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class CheckBoxWizard extends \Widget
+class CheckBoxWizard extends \Editor
 {
 
 	/**
@@ -74,7 +74,7 @@ class CheckBoxWizard extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
 	 * @return string
 	 */

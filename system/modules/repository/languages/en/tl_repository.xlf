@@ -435,7 +435,7 @@
         <source>Utility</source>
       </trans-unit>
       <trans-unit id="tl_repository_category_options.widget">
-        <source>Widget</source>
+        <source>Editor</source>
       </trans-unit>
       <trans-unit id="tl_repository_category_options.translation">
         <source>Translation</source>

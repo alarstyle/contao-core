@@ -19,7 +19,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class TextStore extends \Widget
+class TextStore extends \Editor
 {
 
 	/**
@@ -80,7 +80,7 @@ class TextStore extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
 	 * @return string
 	 */

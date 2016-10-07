@@ -159,7 +159,7 @@ namespace  {
 	class TemplateLoader extends \Contao\TemplateLoader {}
 	abstract class User extends \Contao\User {}
 	class Validator extends \Contao\Validator {}
-	abstract class Widget extends \Contao\Widget {}
+	abstract class Editor extends \Contao\Editor {}
 	class ZipReader extends \Contao\ZipReader {}
 	class ZipWriter extends \Contao\ZipWriter {}
 	class ArticleModel extends \Contao\ArticleModel {}

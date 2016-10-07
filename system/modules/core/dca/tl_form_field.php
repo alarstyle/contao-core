@@ -590,21 +590,21 @@ class tl_form_field extends Backend
 			return '';
 		}
 
-		/** @var Widget $objWidget */
-		$objWidget = new $strClass($arrRow);
+		/** @var \Editor $objEditor */
+		$objEditor = new $strClass($arrRow);
 
-		$strWidget = $objWidget->parse();
-		$strWidget = preg_replace('/ name="[^"]+"/i', '', $strWidget);
-		$strWidget = str_replace(array(' type="submit"', ' autofocus', ' required'), array(' type="button"', '', ''), $strWidget);
+		$strEditor = $objEditor->parse();
+		$strEditor = preg_replace('/ name="[^"]+"/i', '', $strEditor);
+		$strEditor = str_replace(array(' type="submit"', ' autofocus', ' required'), array(' type="button"', '', ''), $strEditor);
 
-		if ($objWidget instanceof FormHidden)
+		if ($objEditor instanceof FormHidden)
 		{
-			return $strType . "\n" . $objWidget->value . "\n</div>\n";
+			return $strType . "\n" . $objEditor->value . "\n</div>\n";
 		}
 
 		return $strType . '
 <table class="tl_form_field_preview">
-'.StringUtil::insertTagToSrc($strWidget).'</table>
+'.StringUtil::insertTagToSrc($strEditor).'</table>
 </div>' . "\n";
 	}
 

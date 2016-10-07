@@ -179,7 +179,7 @@ class ModuleRegistration extends \Module
 				$arrData['inputType'] = 'upload';
 			}
 
-			/** @var \Widget $strClass */
+			/** @var \Editor $strClass */
 			$strClass = $GLOBALS['TL_FFL'][$arrData['inputType']];
 
 			// Continue if the class is not defined
@@ -191,27 +191,27 @@ class ModuleRegistration extends \Module
 			$arrData['eval']['tableless'] = $this->tableless;
 			$arrData['eval']['required'] = $arrData['eval']['mandatory'];
 
-			$objWidget = new $strClass($strClass::getAttributesFromDca($arrData, $field, $arrData['default'], '', '', $this));
+			$objEditor = new $strClass($strClass::getAttributesFromDca($arrData, $field, $arrData['default'], '', '', $this));
 
-			$objWidget->storeValues = true;
-			$objWidget->rowClass = 'row_' . $i . (($i == 0) ? ' row_first' : '') . ((($i % 2) == 0) ? ' even' : ' odd');
+			$objEditor->storeValues = true;
+			$objEditor->rowClass = 'row_' . $i . (($i == 0) ? ' row_first' : '') . ((($i % 2) == 0) ? ' even' : ' odd');
 
 			// Increase the row count if its a password field
-			if ($objWidget instanceof \FormPassword)
+			if ($objEditor instanceof \FormPassword)
 			{
-				$objWidget->rowClassConfirm = 'row_' . ++$i . ((($i % 2) == 0) ? ' even' : ' odd');
+				$objEditor->rowClassConfirm = 'row_' . ++$i . ((($i % 2) == 0) ? ' even' : ' odd');
 			}
 
 			// Validate input
 			if (\Input::post('FORM_SUBMIT') == 'tl_registration')
 			{
-				$objWidget->validate();
-				$varValue = $objWidget->value;
+				$objEditor->validate();
+				$varValue = $objEditor->value;
 
 				// Check whether the password matches the username
-				if ($objWidget instanceof \FormPassword && \Encryption::verify(\Input::post('username'), $varValue))
+				if ($objEditor instanceof \FormPassword && \Encryption::verify(\Input::post('username'), $varValue))
 				{
-					$objWidget->addError($GLOBALS['TL_LANG']['ERR']['passwordName']);
+					$objEditor->addError($GLOBALS['TL_LANG']['ERR']['passwordName']);
 				}
 
 				$rgxp = $arrData['eval']['rgxp'];
@@ -226,18 +226,18 @@ class ModuleRegistration extends \Module
 					}
 					catch (\OutOfBoundsException $e)
 					{
-						$objWidget->addError(sprintf($GLOBALS['TL_LANG']['ERR']['invalidDate'], $varValue));
+						$objEditor->addError(sprintf($GLOBALS['TL_LANG']['ERR']['invalidDate'], $varValue));
 					}
 				}
 
 				// Make sure that unique fields are unique (check the eval setting first -> #3063)
 				if ($arrData['eval']['unique'] && $varValue != '' && !$this->Database->isUniqueValue('tl_member', $field, $varValue))
 				{
-					$objWidget->addError(sprintf($GLOBALS['TL_LANG']['ERR']['unique'], $arrData['label'][0] ?: $field));
+					$objEditor->addError(sprintf($GLOBALS['TL_LANG']['ERR']['unique'], $arrData['label'][0] ?: $field));
 				}
 
 				// Save callback
-				if ($objWidget->submitInput() && !$objWidget->hasErrors() && is_array($arrData['save_callback']))
+				if ($objEditor->submitInput() && !$objEditor->hasErrors() && is_array($arrData['save_callback']))
 				{
 					foreach ($arrData['save_callback'] as $callback)
 					{
@@ -255,23 +255,23 @@ class ModuleRegistration extends \Module
 						}
 						catch (\Exception $e)
 						{
-							$objWidget->class = 'error';
-							$objWidget->addError($e->getMessage());
+							$objEditor->class = 'error';
+							$objEditor->addError($e->getMessage());
 						}
 					}
 				}
 
 				// Store the current value
-				if ($objWidget->hasErrors())
+				if ($objEditor->hasErrors())
 				{
 					$doNotSubmit = true;
 				}
-				elseif ($objWidget->submitInput())
+				elseif ($objEditor->submitInput())
 				{
 					// Set the correct empty value (see #6284, #6373)
 					if ($varValue === '')
 					{
-						$varValue = $objWidget->getEmptyValue();
+						$varValue = $objEditor->getEmptyValue();
 					}
 
 					// Encrypt the value (see #7815)
@@ -285,12 +285,12 @@ class ModuleRegistration extends \Module
 				}
 			}
 
-			if ($objWidget instanceof \uploadable)
+			if ($objEditor instanceof \uploadable)
 			{
 				$hasUpload = true;
 			}
 
-			$temp = $objWidget->parse();
+			$temp = $objEditor->parse();
 
 			$this->Template->fields .= $temp;
 			$arrFields[$arrData['eval']['feGroup']][$field] .= $temp;

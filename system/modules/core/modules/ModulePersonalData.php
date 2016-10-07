@@ -149,7 +149,7 @@ class ModulePersonalData extends \Module
 				$arrData['inputType'] = 'upload';
 			}
 
-			/** @var \Widget $strClass */
+			/** @var \Editor $strClass */
 			$strClass = $GLOBALS['TL_FFL'][$arrData['inputType']];
 
 			// Continue if the class does not exist
@@ -201,28 +201,28 @@ class ModulePersonalData extends \Module
 				}
 			}
 
-			/** @var \Widget $objWidget */
-			$objWidget = new $strClass($strClass::getAttributesFromDca($arrData, $field, $varValue, $field, $strTable, $this));
+			/** @var \Editor $objEditor */
+			$objEditor = new $strClass($strClass::getAttributesFromDca($arrData, $field, $varValue, $field, $strTable, $this));
 
-			$objWidget->storeValues = true;
-			$objWidget->rowClass = 'row_' . $row . (($row == 0) ? ' row_first' : '') . ((($row % 2) == 0) ? ' even' : ' odd');
+			$objEditor->storeValues = true;
+			$objEditor->rowClass = 'row_' . $row . (($row == 0) ? ' row_first' : '') . ((($row % 2) == 0) ? ' even' : ' odd');
 
 			// Increase the row count if it is a password field
-			if ($objWidget instanceof \FormPassword)
+			if ($objEditor instanceof \FormPassword)
 			{
 				if ($objMember->password != '')
 				{
-					$objWidget->mandatory = false;
+					$objEditor->mandatory = false;
 				}
 
-				$objWidget->rowClassConfirm = 'row_' . ++$row . ((($row % 2) == 0) ? ' even' : ' odd');
+				$objEditor->rowClassConfirm = 'row_' . ++$row . ((($row % 2) == 0) ? ' even' : ' odd');
 			}
 
 			// Validate the form data
 			if (\Input::post('FORM_SUBMIT') == 'tl_member_' . $this->id)
 			{
-				$objWidget->validate();
-				$varValue = $objWidget->value;
+				$objEditor->validate();
+				$varValue = $objEditor->value;
 
 				$rgxp = $arrData['eval']['rgxp'];
 
@@ -236,18 +236,18 @@ class ModulePersonalData extends \Module
 					}
 					catch (\OutOfBoundsException $e)
 					{
-						$objWidget->addError(sprintf($GLOBALS['TL_LANG']['ERR']['invalidDate'], $varValue));
+						$objEditor->addError(sprintf($GLOBALS['TL_LANG']['ERR']['invalidDate'], $varValue));
 					}
 				}
 
 				// Make sure that unique fields are unique (check the eval setting first -> #3063)
 				if ($arrData['eval']['unique'] && $varValue != '' && !$this->Database->isUniqueValue('tl_member', $field, $varValue, $this->User->id))
 				{
-					$objWidget->addError(sprintf($GLOBALS['TL_LANG']['ERR']['unique'], $arrData['label'][0] ?: $field));
+					$objEditor->addError(sprintf($GLOBALS['TL_LANG']['ERR']['unique'], $arrData['label'][0] ?: $field));
 				}
 
 				// Trigger the save_callback (see #5247)
-				if ($objWidget->submitInput() && !$objWidget->hasErrors() && is_array($arrData['save_callback']))
+				if ($objEditor->submitInput() && !$objEditor->hasErrors() && is_array($arrData['save_callback']))
 				{
 					foreach ($arrData['save_callback'] as $callback)
 					{
@@ -265,18 +265,18 @@ class ModulePersonalData extends \Module
 						}
 						catch (\Exception $e)
 						{
-							$objWidget->class = 'error';
-							$objWidget->addError($e->getMessage());
+							$objEditor->class = 'error';
+							$objEditor->addError($e->getMessage());
 						}
 					}
 				}
 
 				// Do not submit the field if there are errors
-				if ($objWidget->hasErrors())
+				if ($objEditor->hasErrors())
 				{
 					$doNotSubmit = true;
 				}
-				elseif ($objWidget->submitInput())
+				elseif ($objEditor->submitInput())
 				{
 					// Store the form data
 					$_SESSION['FORM_DATA'][$field] = $varValue;
@@ -284,7 +284,7 @@ class ModulePersonalData extends \Module
 					// Set the correct empty value (see #6284, #6373)
 					if ($varValue === '')
 					{
-						$varValue = $objWidget->getEmptyValue();
+						$varValue = $objEditor->getEmptyValue();
 					}
 
 					// Encrypt the value (see #7815)
@@ -305,12 +305,12 @@ class ModulePersonalData extends \Module
 				}
 			}
 
-			if ($objWidget instanceof \uploadable)
+			if ($objEditor instanceof \uploadable)
 			{
 				$hasUpload = true;
 			}
 
-			$temp = $objWidget->parse();
+			$temp = $objEditor->parse();
 
 			$this->Template->fields .= $temp;
 			$arrFields[$strGroup][$field] .= $temp;

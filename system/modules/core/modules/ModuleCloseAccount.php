@@ -64,7 +64,7 @@ class ModuleCloseAccount extends \Module
 	{
 		$this->import('FrontendUser', 'User');
 
-		// Initialize the password widget
+		// Initialize the password editor
 		$arrField = array
 		(
 			'name' => 'password',
@@ -73,37 +73,37 @@ class ModuleCloseAccount extends \Module
 			'eval' => array('hideInput'=>true, 'preserveTags'=>true, 'mandatory'=>true, 'required'=>true, 'tableless'=>$this->tableless)
 		);
 
-		$objWidget = new \FormTextField(\FormTextField::getAttributesFromDca($arrField, $arrField['name']));
-		$objWidget->rowClass = 'row_0 row_first even';
+		$objEditor = new \FormTextField(\FormTextField::getAttributesFromDca($arrField, $arrField['name']));
+		$objEditor->rowClass = 'row_0 row_first even';
 
-		// Validate widget
+		// Validate editor
 		if (\Input::post('FORM_SUBMIT') == 'tl_close_account')
 		{
-			$objWidget->validate();
+			$objEditor->validate();
 
 			// Validate the password
-			if (!$objWidget->hasErrors())
+			if (!$objEditor->hasErrors())
 			{
 				// The password has been generated with crypt()
 				if (\Encryption::test($this->User->password))
 				{
-					$blnAuthenticated = \Encryption::verify($objWidget->value, $this->User->password);
+					$blnAuthenticated = \Encryption::verify($objEditor->value, $this->User->password);
 				}
 				else
 				{
 					list($strPassword, $strSalt) = explode(':', $this->User->password);
-					$blnAuthenticated = ($strSalt == '') ? ($strPassword === sha1($objWidget->value)) : ($strPassword === sha1($strSalt . $objWidget->value));
+					$blnAuthenticated = ($strSalt == '') ? ($strPassword === sha1($objEditor->value)) : ($strPassword === sha1($strSalt . $objEditor->value));
 				}
 
 				if (!$blnAuthenticated)
 				{
-					$objWidget->value = '';
-					$objWidget->addError($GLOBALS['TL_LANG']['ERR']['invalidPass']);
+					$objEditor->value = '';
+					$objEditor->addError($GLOBALS['TL_LANG']['ERR']['invalidPass']);
 				}
 			}
 
 			// Close account
-			if (!$objWidget->hasErrors())
+			if (!$objEditor->hasErrors())
 			{
 				// HOOK: send account ID
 				if (isset($GLOBALS['TL_HOOKS']['closeAccount']) && is_array($GLOBALS['TL_HOOKS']['closeAccount']))
@@ -144,7 +144,7 @@ class ModuleCloseAccount extends \Module
 			}
 		}
 
-		$this->Template->fields = $objWidget->parse();
+		$this->Template->fields = $objEditor->parse();
 
 		$this->Template->formId = 'tl_close_account';
 		$this->Template->action = \Environment::get('indexFreeRequest');

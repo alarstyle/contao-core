@@ -184,9 +184,9 @@ class Form extends \Hybrid
 					}
 				}
 
-				/** @var \Widget $objWidget */
-				$objWidget = new $strClass($arrData);
-				$objWidget->required = $objField->mandatory ? true : false;
+				/** @var \Editor $objEditor */
+				$objEditor = new $strClass($arrData);
+				$objEditor->required = $objField->mandatory ? true : false;
 
 				// HOOK: load form field callback
 				if (isset($GLOBALS['TL_HOOKS']['loadFormField']) && is_array($GLOBALS['TL_HOOKS']['loadFormField']))
@@ -194,14 +194,14 @@ class Form extends \Hybrid
 					foreach ($GLOBALS['TL_HOOKS']['loadFormField'] as $callback)
 					{
 						$this->import($callback[0]);
-						$objWidget = $this->{$callback[0]}->{$callback[1]}($objWidget, $formId, $this->arrData, $this);
+						$objEditor = $this->{$callback[0]}->{$callback[1]}($objEditor, $formId, $this->arrData, $this);
 					}
 				}
 
 				// Validate the input
 				if (\Input::post('FORM_SUBMIT') == $formId)
 				{
-					$objWidget->validate();
+					$objEditor->validate();
 
 					// HOOK: validate form field callback
 					if (isset($GLOBALS['TL_HOOKS']['validateFormField']) && is_array($GLOBALS['TL_HOOKS']['validateFormField']))
@@ -209,42 +209,42 @@ class Form extends \Hybrid
 						foreach ($GLOBALS['TL_HOOKS']['validateFormField'] as $callback)
 						{
 							$this->import($callback[0]);
-							$objWidget = $this->{$callback[0]}->{$callback[1]}($objWidget, $formId, $this->arrData, $this);
+							$objEditor = $this->{$callback[0]}->{$callback[1]}($objEditor, $formId, $this->arrData, $this);
 						}
 					}
 
-					if ($objWidget->hasErrors())
+					if ($objEditor->hasErrors())
 					{
 						$doNotSubmit = true;
 					}
 
 					// Store current value in the session
-					elseif ($objWidget->submitInput())
+					elseif ($objEditor->submitInput())
 					{
-						$arrSubmitted[$objField->name] = $objWidget->value;
-						$_SESSION['FORM_DATA'][$objField->name] = $objWidget->value;
+						$arrSubmitted[$objField->name] = $objEditor->value;
+						$_SESSION['FORM_DATA'][$objField->name] = $objEditor->value;
 						unset($_POST[$objField->name]); // see #5474
 					}
 				}
 
-				if ($objWidget instanceof \uploadable)
+				if ($objEditor instanceof \uploadable)
 				{
 					$hasUpload = true;
 				}
 
-				if ($objWidget instanceof \FormHidden)
+				if ($objEditor instanceof \FormHidden)
 				{
-					$this->Template->hidden .= $objWidget->parse();
+					$this->Template->hidden .= $objEditor->parse();
 					--$max_row;
 					continue;
 				}
 
-				if ($objWidget->name != '' && $objWidget->label != '')
+				if ($objEditor->name != '' && $objEditor->label != '')
 				{
-					$arrLabels[$objWidget->name] = $this->replaceInsertTags($objWidget->label); // see #4268
+					$arrLabels[$objEditor->name] = $this->replaceInsertTags($objEditor->label); // see #4268
 				}
 
-				$this->Template->fields .= $objWidget->parse();
+				$this->Template->fields .= $objEditor->parse();
 				++$row;
 			}
 		}
@@ -519,7 +519,7 @@ class Form extends \Hybrid
 			{
 				if ($v === '')
 				{
-					$arrSet[$k] = \Widget::getEmptyValueByFieldType($GLOBALS['TL_DCA'][$this->targetTable]['fields'][$k]['sql']);
+					$arrSet[$k] = \Editor::getEmptyValueByFieldType($GLOBALS['TL_DCA'][$this->targetTable]['fields'][$k]['sql']);
 				}
 			}
 

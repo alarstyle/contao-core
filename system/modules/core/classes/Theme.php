@@ -615,7 +615,7 @@ class Theme extends \Backend
 							}
 						}
 
-						// Adjust the imageSize widget data
+						// Adjust the imageSize editor data
 						elseif ($GLOBALS['TL_DCA'][$table]['fields'][$name]['inputType'] == 'imageSize')
 						{
 							$imageSizes = deserialize($value, true);

@@ -18,7 +18,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class KeyValueWizard extends \Widget
+class KeyValueWizard extends \Editor
 {
 
 	/**
@@ -105,7 +105,7 @@ class KeyValueWizard extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
 	 * @return string
 	 */

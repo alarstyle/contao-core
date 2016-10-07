@@ -23,7 +23,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FileSelector extends \Widget
+class FileSelector extends \Editor
 {
 
 	/**
@@ -46,7 +46,7 @@ class FileSelector extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
 	 * @return string
 	 */

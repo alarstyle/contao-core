@@ -26,7 +26,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormSubmit extends \Widget
+class FormSubmit extends \Editor
 {
 
 	/**
@@ -124,9 +124,9 @@ class FormSubmit extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
-	 * @return string The widget markup
+	 * @return string The editor markup
 	 */
 	public function generate()
 	{

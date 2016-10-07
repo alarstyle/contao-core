@@ -21,7 +21,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class InputUnit extends \Widget
+class InputUnit extends \Editor
 {
 
 	/**
@@ -132,7 +132,7 @@ class InputUnit extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
 	 * @return string
 	 */

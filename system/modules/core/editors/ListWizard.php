@@ -18,7 +18,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ListWizard extends \Widget
+class ListWizard extends \Editor
 {
 
 	/**
@@ -59,7 +59,7 @@ class ListWizard extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
 	 * @return string
 	 */

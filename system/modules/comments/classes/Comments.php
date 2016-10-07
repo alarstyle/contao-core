@@ -239,13 +239,13 @@ class Comments extends \Frontend
 		);
 
 		$doNotSubmit = false;
-		$arrWidgets = array();
+		$arrEditors = array();
 		$strFormId = 'com_'. $strSource .'_'. $intParent;
 
 		// Initialize the editors
 		foreach ($arrFields as $arrField)
 		{
-			/** @var \Widget $strClass */
+			/** @var \Editor $strClass */
 			$strClass = $GLOBALS['TL_FFL'][$arrField['inputType']];
 
 			// Continue if the class is not defined
@@ -256,24 +256,24 @@ class Comments extends \Frontend
 
 			$arrField['eval']['required'] = $arrField['eval']['mandatory'];
 
-			/** @var \Widget $objWidget */
-			$objWidget = new $strClass($strClass::getAttributesFromDca($arrField, $arrField['name'], $arrField['value']));
+			/** @var \Editor $objEditor */
+			$objEditor = new $strClass($strClass::getAttributesFromDca($arrField, $arrField['name'], $arrField['value']));
 
-			// Validate the widget
+			// Validate the editor
 			if (\Input::post('FORM_SUBMIT') == $strFormId)
 			{
-				$objWidget->validate();
+				$objEditor->validate();
 
-				if ($objWidget->hasErrors())
+				if ($objEditor->hasErrors())
 				{
 					$doNotSubmit = true;
 				}
 			}
 
-			$arrWidgets[$arrField['name']] = $objWidget;
+			$arrEditors[$arrField['name']] = $objEditor;
 		}
 
-		$objTemplate->fields = $arrWidgets;
+		$objTemplate->fields = $arrEditors;
 		$objTemplate->submit = $GLOBALS['TL_LANG']['MSC']['com_submit'];
 		$objTemplate->action = ampersand(\Environment::get('request'));
 		$objTemplate->messages = ''; // Backwards compatibility
@@ -296,7 +296,7 @@ class Comments extends \Frontend
 		// Store the comment
 		if (!$doNotSubmit && \Input::post('FORM_SUBMIT') == $strFormId)
 		{
-			$strWebsite = $arrWidgets['website']->value;
+			$strWebsite = $arrEditors['website']->value;
 
 			// Add http:// to the website
 			if (($strWebsite != '') && !preg_match('@^(https?://|ftp://|mailto:|#)@i', $strWebsite))
@@ -305,7 +305,7 @@ class Comments extends \Frontend
 			}
 
 			// Do not parse any tags in the comment
-			$strComment = specialchars(trim($arrWidgets['comment']->value));
+			$strComment = specialchars(trim($arrEditors['comment']->value));
 			$strComment = str_replace(array('&amp;', '&lt;', '&gt;'), array('[&]', '[lt]', '[gt]'), $strComment);
 
 			// Remove multiple line feeds
@@ -328,8 +328,8 @@ class Comments extends \Frontend
 				'tstamp'    => $time,
 				'source'    => $strSource,
 				'parent'    => $intParent,
-				'name'      => $arrWidgets['name']->value,
-				'email'     => $arrWidgets['email']->value,
+				'name'      => $arrEditors['name']->value,
+				'email'     => $arrEditors['email']->value,
 				'website'   => $strWebsite,
 				'comment'   => $this->convertLineFeeds($strComment),
 				'ip'        => $this->anonymizeIp(\Environment::get('ip')),
@@ -342,7 +342,7 @@ class Comments extends \Frontend
 			$objComment->setRow($arrSet)->save();
 
 			// Store the subscription
-			if ($arrWidgets['notify']->value)
+			if ($arrEditors['notify']->value)
 			{
 				static::addCommentsSubscription($objComment);
 			}

@@ -228,10 +228,10 @@ abstract class DataContainer extends \Backend
 			return $arrData['input_field_callback']($this, $xlabel);
 		}
 
-		/** @var \Widget $strClass */
+		/** @var \Editor $strClass */
 		$strClass = $GLOBALS['BE_FFL'][$arrData['inputType']];
 
-		// Return if the widget class does not exists
+		// Return if the editor class does not exists
 		if (!class_exists($strClass))
 		{
 			return '';
@@ -264,11 +264,11 @@ abstract class DataContainer extends \Backend
 			$this->varValue = \StringUtil::insertTagToSrc($this->varValue);
 		}
 
-		/** @var \Widget $objWidget */
-		$objWidget = new $strClass($strClass::getAttributesFromDca($arrData, $this->strInputName, $this->varValue, $this->strField, $this->strTable, $this));
+		/** @var \Editor $objEditor */
+		$objEditor = new $strClass($strClass::getAttributesFromDca($arrData, $this->strInputName, $this->varValue, $this->strField, $this->strTable, $this));
 
-		$objWidget->xlabel = $xlabel;
-		$objWidget->currentRecord = $this->intId;
+		$objEditor->xlabel = $xlabel;
+		$objEditor->currentRecord = $this->intId;
 
 		// Validate the field
 		if (\Input::post('FORM_SUBMIT') == $this->strTable)
@@ -320,19 +320,19 @@ abstract class DataContainer extends \Backend
 			// Validate and save the field
 			if (in_array($this->strInputName, $paletteFields) || \Input::get('act') == 'overrideAll')
 			{
-				$objWidget->validate();
+				$objEditor->validate();
 
-				if ($objWidget->hasErrors())
+				if ($objEditor->hasErrors())
 				{
 					// Skip mandatory fields on auto-submit (see #4077)
-					if (\Input::post('SUBMIT_TYPE') != 'auto' || !$objWidget->mandatory || $objWidget->value != '')
+					if (\Input::post('SUBMIT_TYPE') != 'auto' || !$objEditor->mandatory || $objEditor->value != '')
 					{
 						$this->noReload = true;
 					}
 				}
-				elseif ($objWidget->submitInput())
+				elseif ($objEditor->submitInput())
 				{
-					$varValue = $objWidget->value;
+					$varValue = $objEditor->value;
 
 					// Sort array by key (fix for JavaScript wizards)
 					if (is_array($varValue))
@@ -355,7 +355,7 @@ abstract class DataContainer extends \Backend
 					catch (\Exception $e)
 					{
 						$this->noReload = true;
-						$objWidget->addError($e->getMessage());
+						$objEditor->addError($e->getMessage());
 					}
 				}
 			}
@@ -385,12 +385,12 @@ abstract class DataContainer extends \Backend
 					break;
 			}
 
-			$wizard .= ' ' . \Image::getHtml('assets/mootools/datepicker/' . $GLOBALS['TL_ASSETS']['DATEPICKER'] . '/icon.gif', '', 'title="'.specialchars($GLOBALS['TL_LANG']['MSC']['datepicker']).'" id="toggle_' . $objWidget->id . '" style="vertical-align:-6px;cursor:pointer"') . '
+			$wizard .= ' ' . \Image::getHtml('assets/mootools/datepicker/' . $GLOBALS['TL_ASSETS']['DATEPICKER'] . '/icon.gif', '', 'title="'.specialchars($GLOBALS['TL_LANG']['MSC']['datepicker']).'" id="toggle_' . $objEditor->id . '" style="vertical-align:-6px;cursor:pointer"') . '
   <script>
     window.addEvent("domready", function() {
-      new Picker.Date($("ctrl_' . $objWidget->id . '"), {
+      new Picker.Date($("ctrl_' . $objEditor->id . '"), {
         draggable: false,
-        toggle: $("toggle_' . $objWidget->id . '"),
+        toggle: $("toggle_' . $objEditor->id . '"),
         format: "' . $format . '",
         positionOffset: {x:-211,y:-209}' . $time . ',
         pickerClass: "datepicker_bootstrap",
@@ -440,10 +440,10 @@ abstract class DataContainer extends \Backend
 			}
 		}
 
-		$objWidget->wizard = $wizard;
+		$objEditor->wizard = $wizard;
 
 		// Set correct form enctype
-		if ($objWidget instanceof \uploadable)
+		if ($objEditor instanceof \uploadable)
 		{
 			$this->blnUploadable = true;
 		}
@@ -546,7 +546,7 @@ abstract class DataContainer extends \Backend
 		}
 
 		return $strPreview . '
-<div' . ($arrData['eval']['tl_class'] ? ' class="' . $arrData['eval']['tl_class'] . '"' : '') . '>' . $objWidget->parse() . $updateMode . (!$objWidget->hasErrors() ? $this->help($strHelpClass) : '') . '
+<div' . ($arrData['eval']['tl_class'] ? ' class="' . $arrData['eval']['tl_class'] . '"' : '') . '>' . $objEditor->parse() . $updateMode . (!$objEditor->hasErrors() ? $this->help($strHelpClass) : '') . '
 </div>';
 	}
 

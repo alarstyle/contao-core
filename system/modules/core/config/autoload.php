@@ -164,7 +164,7 @@ ClassLoader::addClasses(array
 	'Contao\TemplateLoader'            => 'system/modules/core/library/Contao/TemplateLoader.php',
 	'Contao\User'                      => 'system/modules/core/library/Contao/User.php',
 	'Contao\Validator'                 => 'system/modules/core/library/Contao/Validator.php',
-	'Contao\Widget'                    => 'system/modules/core/library/Contao/Widget.php',
+	'Contao\Editor'                    => 'system/modules/core/library/Contao/Editor.php',
 	'Contao\ZipReader'                 => 'system/modules/core/library/Contao/ZipReader.php',
 	'Contao\ZipWriter'                 => 'system/modules/core/library/Contao/ZipWriter.php',
 
@@ -223,7 +223,7 @@ ClassLoader::addClasses(array
 	'Contao\PageRegular'               => 'system/modules/core/pages/PageRegular.php',
 	'Contao\PageRoot'                  => 'system/modules/core/pages/PageRoot.php',
 
-	// Widgets
+	// Editors
 	'Contao\CheckBox'                  => 'system/modules/core/editors/CheckBox.php',
 	'Contao\CheckBoxWizard'            => 'system/modules/core/editors/CheckBoxWizard.php',
 	'Contao\ChmodTable'                => 'system/modules/core/editors/ChmodTable.php',

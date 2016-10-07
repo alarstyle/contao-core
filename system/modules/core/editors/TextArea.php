@@ -22,7 +22,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class TextArea extends \Widget
+class TextArea extends \Editor
 {
 
 	/**
@@ -101,7 +101,7 @@ class TextArea extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
 	 * @return string
 	 */

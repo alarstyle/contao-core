@@ -19,7 +19,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class TableWizard extends \Widget
+class TableWizard extends \Editor
 {
 
 	/**
@@ -73,7 +73,7 @@ class TableWizard extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
 	 * @return string
 	 */

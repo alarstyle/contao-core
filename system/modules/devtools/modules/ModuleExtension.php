@@ -287,7 +287,7 @@ class ModuleExtension extends \BackendModule
 		}
 		elseif (strncmp($strClassName, 'Form', 4) === 0)
 		{
-			return 'Widget';
+			return 'Editor';
 		}
 		elseif (strncmp($strClassName, 'Page', 4) === 0)
 		{

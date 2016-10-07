@@ -14,23 +14,23 @@ namespace Contao;
 /**
  * Generates and validates form fields
  *
- * The class functions as abstract parent class for all widget classes and
+ * The class functions as abstract parent class for all editor classes and
  * provides methods to generate the form field markup and to validate the form
  * field input.
  *
  * Usage:
  *
- *     $widget = new TextField();
- *     $widget->name = 'test';
- *     $widget->label = 'Test';
+ *     $editor = new TextField();
+ *     $editor->name = 'test';
+ *     $editor->label = 'Test';
  *
  *     if ($_POST)
  *     {
- *         $widget->validate();
+ *         $editor->validate();
  *
- *         if (!$widget->hasErrors())
+ *         if (!$editor->hasErrors())
  *         {
- *             echo $widget->value;
+ *             echo $editor->value;
  *         }
  *     }
  *
@@ -98,7 +98,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-abstract class Widget extends \BaseTemplate
+abstract class Editor extends \BaseTemplate
 {
 
 	/**
@@ -515,7 +515,7 @@ abstract class Widget extends \BaseTemplate
 
 
 	/**
-	 * Return true if the widget has errors
+	 * Return true if the editor has errors
 	 *
 	 * @return boolean True if there are errors
 	 */
@@ -583,7 +583,7 @@ abstract class Widget extends \BaseTemplate
 	/**
 	 * Return true if the editor submits user input
 	 *
-	 * @return boolean True if the widget submits user input
+	 * @return boolean True if the editor submits user input
 	 */
 	public function submitInput()
 	{
@@ -617,9 +617,9 @@ abstract class Widget extends \BaseTemplate
 		$strBuffer = parent::parse();
 
 		// HOOK: add custom parse filters (see #5553)
-		if (isset($GLOBALS['TL_HOOKS']['parseWidget']) && is_array($GLOBALS['TL_HOOKS']['parseWidget']))
+		if (isset($GLOBALS['TL_HOOKS']['parseEditor']) && is_array($GLOBALS['TL_HOOKS']['parseEditor']))
 		{
-			foreach ($GLOBALS['TL_HOOKS']['parseWidget'] as $callback)
+			foreach ($GLOBALS['TL_HOOKS']['parseEditor'] as $callback)
 			{
 				$this->import($callback[0]);
 				$strBuffer = $this->{$callback[0]}->{$callback[1]}($strBuffer, $this);
@@ -652,15 +652,15 @@ abstract class Widget extends \BaseTemplate
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
-	 * @return string The widget markup
+	 * @return string The editor markup
 	 */
 	abstract public function generate();
 
 
 	/**
-	 * Generate the widget with error message and return it as string
+	 * Generate the editor with error message and return it as string
 	 *
 	 * @param boolean $blnSwitchOrder If true, the error message will be shown below the field
 	 *
@@ -668,10 +668,10 @@ abstract class Widget extends \BaseTemplate
 	 */
 	public function generateWithError($blnSwitchOrder=false)
 	{
-		$strWidget = $this->generate();
+		$strEditor = $this->generate();
 		$strError = $this->getErrorAsHTML();
 
-		return $blnSwitchOrder ? $strWidget . $strError : $strError . $strWidget;
+		return $blnSwitchOrder ? $strEditor . $strError : $strError . $strEditor;
 	}
 
 
@@ -1281,7 +1281,7 @@ abstract class Widget extends \BaseTemplate
 
 
 	/**
-	 * Extract the Widget attributes from a Data Container array
+	 * Extract the Editor attributes from a Data Container array
 	 *
 	 * @param array  $arrData  The field configuration array
 	 * @param string $strName  The field name in the form
@@ -1290,7 +1290,7 @@ abstract class Widget extends \BaseTemplate
 	 * @param string $strTable The table name in the database
 	 * @param object $objDca   An optional DataContainer object
 	 *
-	 * @return array An attributes array that can be passed to a widget
+	 * @return array An attributes array that can be passed to a editor
 	 */
 	public static function getAttributesFromDca($arrData, $strName, $varValue=null, $strField='', $strTable='', $objDca=null)
 	{

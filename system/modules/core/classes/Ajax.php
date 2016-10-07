@@ -195,10 +195,10 @@ class Ajax extends \Backend
 				/** @var \PageSelector $strClass */
 				$strClass = $GLOBALS['BE_FFL']['pageSelector'];
 
-				/** @var \PageSelector $objWidget */
-				$objWidget = new $strClass($strClass::getAttributesFromDca($GLOBALS['TL_DCA'][$dc->table]['fields'][$strField], $dc->field, null, $strField, $dc->table, $dc));
+				/** @var \PageSelector $objEditor */
+				$objEditor = new $strClass($strClass::getAttributesFromDca($GLOBALS['TL_DCA'][$dc->table]['fields'][$strField], $dc->field, null, $strField, $dc->table, $dc));
 
-				echo $objWidget->generateAjax($this->strAjaxId, \Input::post('field'), intval(\Input::post('level')));
+				echo $objEditor->generateAjax($this->strAjaxId, \Input::post('field'), intval(\Input::post('level')));
 				exit; break;
 
 			// Load nodes of the file tree
@@ -208,17 +208,17 @@ class Ajax extends \Backend
 				/** @var \FileSelector $strClass */
 				$strClass = $GLOBALS['BE_FFL']['fileSelector'];
 
-				/** @var \FileSelector $objWidget */
-				$objWidget = new $strClass($strClass::getAttributesFromDca($GLOBALS['TL_DCA'][$dc->table]['fields'][$strField], $dc->field, null, $strField, $dc->table, $dc));
+				/** @var \FileSelector $objEditor */
+				$objEditor = new $strClass($strClass::getAttributesFromDca($GLOBALS['TL_DCA'][$dc->table]['fields'][$strField], $dc->field, null, $strField, $dc->table, $dc));
 
 				// Load a particular node
 				if (\Input::post('folder', true) != '')
 				{
-					echo $objWidget->generateAjax(\Input::post('folder', true), \Input::post('field'), intval(\Input::post('level')));
+					echo $objEditor->generateAjax(\Input::post('folder', true), \Input::post('field'), intval(\Input::post('level')));
 				}
 				else
 				{
-					echo $objWidget->generate();
+					echo $objEditor->generate();
 				}
 				exit; break;
 
@@ -315,10 +315,10 @@ class Ajax extends \Backend
 				/** @var \FileTree|\PageTree $strClass */
 				$strClass = $GLOBALS['BE_FFL'][$strKey];
 
-				/** @var \FileTree|\PageTree $objWidget */
-				$objWidget = new $strClass($strClass::getAttributesFromDca($GLOBALS['TL_DCA'][$dc->table]['fields'][$strField], $dc->field, $varValue, $strField, $dc->table, $dc));
+				/** @var \FileTree|\PageTree $objEditor */
+				$objEditor = new $strClass($strClass::getAttributesFromDca($GLOBALS['TL_DCA'][$dc->table]['fields'][$strField], $dc->field, $varValue, $strField, $dc->table, $dc));
 
-				echo $objWidget->generate();
+				echo $objEditor->generate();
 				exit; break;
 
 			// Feature/unfeature an element

@@ -19,7 +19,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class RadioButton extends \Widget
+class RadioButton extends \Editor
 {
 
 	/**
@@ -85,7 +85,7 @@ class RadioButton extends \Widget
 
 
 	/**
-	 * Generate the widget and return it as string
+	 * Generate the editor and return it as string
 	 *
 	 * @return string
 	 */
