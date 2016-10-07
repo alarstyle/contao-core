@@ -66,7 +66,7 @@ namespace  {
 	class BackendConfirm extends \Contao\BackendConfirm {}
 	class BackendFile extends \Contao\BackendFile {}
 	class BackendHelp extends \Contao\BackendHelp {}
-	class BackendIndex extends \Contao\BackendIndex {}
+	class BackendLogin extends \Contao\BackendLogin {}
 	class BackendInstall extends \Contao\BackendInstall {}
 	class BackendMain extends \Contao\BackendMain {}
 	class BackendPage extends \Contao\BackendPage {}

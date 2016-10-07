@@ -47,7 +47,7 @@ ClassLoader::addClasses(array
 	'Contao\BackendConfirm'            => 'system/modules/core/controllers/BackendConfirm.php',
 	'Contao\BackendFile'               => 'system/modules/core/controllers/BackendFile.php',
 	'Contao\BackendHelp'               => 'system/modules/core/controllers/BackendHelp.php',
-	'Contao\BackendIndex'              => 'system/modules/core/controllers/BackendIndex.php',
+	'Contao\BackendLogin'              => 'system/modules/core/controllers/BackendLogin.php',
 	'Contao\BackendInstall'            => 'system/modules/core/controllers/BackendInstall.php',
 	'Contao\BackendMain'               => 'system/modules/core/controllers/BackendMain.php',
 	'Contao\BackendPage'               => 'system/modules/core/controllers/BackendPage.php',
