@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cbdbd49515eba00f20efe5787ff17713",
-    "content-hash": "a11bc0512d63b52df07269d47ec45e44",
+    "hash": "63a34138f0a4b65035f378bb81583a04",
+    "content-hash": "d8b3a8af35be0b86188e385f38330962",
     "packages": [
         {
             "name": "contao-components/compass",
-            "version": "0.12.2",
+            "version": "0.12.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-components/compass.git",
-                "reference": "a174266fa89c3c808a9c2c090bf64693dec237f2"
+                "reference": "57f0d49607922a71b78101728cf03a5bde287a28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-components/compass/zipball/a174266fa89c3c808a9c2c090bf64693dec237f2",
-                "reference": "a174266fa89c3c808a9c2c090bf64693dec237f2",
+                "url": "https://api.github.com/repos/contao-components/compass/zipball/57f0d49607922a71b78101728cf03a5bde287a28",
+                "reference": "57f0d49607922a71b78101728cf03a5bde287a28",
                 "shasum": ""
             },
             "type": "library",
@@ -33,20 +33,20 @@
                 }
             ],
             "description": "Compass integration for Contao Open Source CMS",
-            "time": "2014-11-18 08:30:16"
+            "time": "2016-07-07 11:45:34"
         },
         {
             "name": "leafo/scssphp",
-            "version": "v0.6.3",
+            "version": "v0.6.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafo/scssphp.git",
-                "reference": "a27edad3d16635a222d7204706572e24c338aa17"
+                "reference": "6fdfe19d2b13a3f12ba0792227f0718809ce4e4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/a27edad3d16635a222d7204706572e24c338aa17",
-                "reference": "a27edad3d16635a222d7204706572e24c338aa17",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/6fdfe19d2b13a3f12ba0792227f0718809ce4e4d",
+                "reference": "6fdfe19d2b13a3f12ba0792227f0718809ce4e4d",
                 "shasum": ""
             },
             "require": {
@@ -86,20 +86,20 @@
                 "scss",
                 "stylesheet"
             ],
-            "time": "2016-01-15 02:50:06"
+            "time": "2016-09-11 01:34:11"
         },
         {
             "name": "matthiasmullie/minify",
-            "version": "1.3.35",
+            "version": "1.3.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/minify.git",
-                "reference": "3253a81d07cd01afcb651e309900d8ad58a052da"
+                "reference": "325e9b9dc1016929f05edaa47401dc2337519b2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/3253a81d07cd01afcb651e309900d8ad58a052da",
-                "reference": "3253a81d07cd01afcb651e309900d8ad58a052da",
+                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/325e9b9dc1016929f05edaa47401dc2337519b2f",
+                "reference": "325e9b9dc1016929f05edaa47401dc2337519b2f",
                 "shasum": ""
             },
             "require": {
@@ -142,7 +142,7 @@
                 "minifier",
                 "minify"
             ],
-            "time": "2016-06-09 19:35:54"
+            "time": "2016-09-20 12:58:02"
         },
         {
             "name": "matthiasmullie/path-converter",
@@ -400,23 +400,23 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.2",
+            "version": "v5.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "d8db871a54619458a805229a057ea2af33c753e8"
+                "reference": "4cc92842069c2bbc1f28daaaf1d2576ec4dfe153"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/d8db871a54619458a805229a057ea2af33c753e8",
-                "reference": "d8db871a54619458a805229a057ea2af33c753e8",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/4cc92842069c2bbc1f28daaaf1d2576ec4dfe153",
+                "reference": "4cc92842069c2bbc1f28daaaf1d2576ec4dfe153",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "mockery/mockery": "~0.9.1,<0.9.4"
+                "mockery/mockery": "~0.9.1"
             },
             "type": "library",
             "extra": {
@@ -449,70 +449,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2016-05-01 08:45:47"
-        },
-        {
-            "name": "tecnickcom/tcpdf",
-            "version": "6.2.12",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tecnickcom/TCPDF.git",
-                "reference": "2f732eaa91b5665274689b1d40b285a7bacdc37f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/2f732eaa91b5665274689b1d40b285a7bacdc37f",
-                "reference": "2f732eaa91b5665274689b1d40b285a7bacdc37f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "fonts",
-                    "config",
-                    "include",
-                    "tcpdf.php",
-                    "tcpdf_parser.php",
-                    "tcpdf_import.php",
-                    "tcpdf_barcodes_1d.php",
-                    "tcpdf_barcodes_2d.php",
-                    "include/tcpdf_colors.php",
-                    "include/tcpdf_filters.php",
-                    "include/tcpdf_font_data.php",
-                    "include/tcpdf_fonts.php",
-                    "include/tcpdf_images.php",
-                    "include/tcpdf_static.php",
-                    "include/barcodes/datamatrix.php",
-                    "include/barcodes/pdf417.php",
-                    "include/barcodes/qrcode.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPLv3"
-            ],
-            "authors": [
-                {
-                    "name": "Nicola Asuni",
-                    "email": "info@tecnick.com",
-                    "homepage": "http://nicolaasuni.tecnick.com"
-                }
-            ],
-            "description": "TCPDF is a PHP class for generating PDF documents and barcodes.",
-            "homepage": "http://www.tcpdf.org/",
-            "keywords": [
-                "PDFD32000-2008",
-                "TCPDF",
-                "barcodes",
-                "datamatrix",
-                "pdf",
-                "pdf417",
-                "qrcode"
-            ],
-            "time": "2015-09-12 10:08:34"
+            "time": "2016-07-08 11:51:25"
         },
         {
             "name": "true/punycode",
