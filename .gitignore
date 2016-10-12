@@ -26,8 +26,8 @@ nbproject/
 /system/config/pathconfig.php
 /system/cron/cron.txt
 /system/logs/*
-/system/modules/!composer
-/system/modules/*/.skip
+/system/plugins/!composer
+/system/plugins/*/.skip
 /system/tmp/*
 /templates/*
 /vendor/

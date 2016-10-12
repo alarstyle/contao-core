@@ -74,16 +74,16 @@ set_exception_handler('__exception');
 /**
  * Include some classes required for further processing
  */
-require TL_ROOT . '/system/modules/core/library/Contao/Config.php';
+require TL_ROOT . '/system/plugins/core/library/Contao/Config.php';
 class_alias('Contao\\Config', 'Config');
 
-require TL_ROOT . '/system/modules/core/library/Contao/ClassLoader.php';
+require TL_ROOT . '/system/plugins/core/library/Contao/ClassLoader.php';
 class_alias('Contao\\ClassLoader', 'ClassLoader');
 
-require TL_ROOT . '/system/modules/core/library/Contao/TemplateLoader.php';
+require TL_ROOT . '/system/plugins/core/library/Contao/TemplateLoader.php';
 class_alias('Contao\\TemplateLoader', 'TemplateLoader');
 
-require TL_ROOT . '/system/modules/core/library/Contao/PluginLoader.php';
+require TL_ROOT . '/system/plugins/core/library/Contao/PluginLoader.php';
 class_alias('Contao\\PluginLoader', 'PluginLoader');
 
 Config::preload(); // see #5872
@@ -186,7 +186,7 @@ if (!isset($_SESSION['TL_LANGUAGE']))
 
 	foreach ($langs as $lang)
 	{
-		if (is_dir(TL_ROOT . '/system/modules/core/languages/' . str_replace('-', '_', $lang)))
+		if (is_dir(TL_ROOT . '/system/plugins/core/languages/' . str_replace('-', '_', $lang)))
 		{
 			$_SESSION['TL_LANGUAGE'] = $lang;
 			break;

@@ -26,13 +26,13 @@ include TL_ROOT . '/system/helper/functions.php';
 $counter = array();
 
 // Loop through the modules
-foreach (scan('system/modules') as $module) {
-	if (!is_dir("system/modules/$module")) {
+foreach (scan('system/plugins') as $module) {
+	if (!is_dir("system/plugins/$module")) {
 		continue;
 	}
 
 	// Loop through the languages
-	foreach (scan("system/modules/$module/languages") as $language) {
+	foreach (scan("system/plugins/$module/languages") as $language) {
 
 		// Initialize the language
 		if (!isset($counter[$language])) {
@@ -40,7 +40,7 @@ foreach (scan('system/modules') as $module) {
 		}
 
 		// Parse all files and count the labels
-		foreach (scan("system/modules/$module/languages/$language") as $file) {
+		foreach (scan("system/plugins/$module/languages/$language") as $file) {
 			if (substr($file, -3) != 'xlf') {
 				die("Invalid file: $module/languages/$language/$file");
 			}
@@ -48,7 +48,7 @@ foreach (scan('system/modules') as $module) {
 			// Parse the XML document
 			$xml = new DOMDocument();
 			$xml->preserveWhiteSpace = false;
-			$xml->load("system/modules/$module/languages/$language/$file");
+			$xml->load("system/plugins/$module/languages/$language/$file");
 			$units = $xml->getElementsByTagName('trans-unit');
 
 			// Count the translated nodes
@@ -71,7 +71,7 @@ foreach ($counter as $language=>$translated) {
 		// Remove languages which are less than 95% complete
 		if ($completion < 95) {
 			echo "  Removing $language (only $completion% complete)\n";
-			shell_exec("rm -r system/modules/*/languages/$language");
+			shell_exec("rm -r system/plugins/*/languages/$language");
 		}
 	}
 }

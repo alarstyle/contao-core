@@ -146,9 +146,9 @@ function die_nicely($strTemplate, $strFallback)
 	{
 		include TL_ROOT . "/templates/$strTemplate.html";
 	}
-	elseif (file_exists(TL_ROOT . "/system/modules/core/templates/backend/$strTemplate.html"))
+	elseif (file_exists(TL_ROOT . "/system/plugins/core/templates/backend/$strTemplate.html"))
 	{
-		include TL_ROOT . "/system/modules/core/templates/backend/$strTemplate.html";
+		include TL_ROOT . "/system/plugins/core/templates/backend/$strTemplate.html";
 	}
 	else
 	{
