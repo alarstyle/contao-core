@@ -546,7 +546,7 @@ class tl_layout extends Backend
 	 */
 	public function getNewsfeeds()
 	{
-		if (!in_array('news', ModuleLoader::getActive()))
+		if (!in_array('news', PluginLoader::getActive()))
 		{
 			return array();
 		}
@@ -576,7 +576,7 @@ class tl_layout extends Backend
 	 */
 	public function getCalendarfeeds()
 	{
-		if (!in_array('calendar', ModuleLoader::getActive()))
+		if (!in_array('calendar', PluginLoader::getActive()))
 		{
 			return array();
 		}

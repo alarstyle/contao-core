@@ -734,7 +734,7 @@ class tl_member extends Backend
 		}
 
 		// HOOK: update newsletter subscriptions
-		if (in_array('newsletter', ModuleLoader::getActive()))
+		if (in_array('newsletter', PluginLoader::getActive()))
 		{
 			$objUser = $this->Database->prepare("SELECT email FROM tl_member WHERE id=?")
 									  ->limit(1)

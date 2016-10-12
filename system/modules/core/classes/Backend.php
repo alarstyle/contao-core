@@ -303,7 +303,7 @@ abstract class Backend extends \Controller
 			}
 		}
 
-		$arrInactiveModules = \ModuleLoader::getDisabled();
+		$arrInactiveModules = \PluginLoader::getDisabled();
 
 		// Check whether the module is active
 		if (is_array($arrInactiveModules) && in_array($module, $arrInactiveModules))

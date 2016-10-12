@@ -467,7 +467,7 @@ class Automator extends \System
 		$objCacheFile = new \File('system/cache/config/autoload.php', true);
 		$objCacheFile->write('<?php '); // add one space to prevent the "unexpected $end" error
 
-		foreach (\ModuleLoader::getActive() as $strModule)
+		foreach (\PluginLoader::getActive() as $strModule)
 		{
 			$strFile = 'system/modules/' . $strModule . '/config/autoload.php';
 
@@ -481,11 +481,11 @@ class Automator extends \System
 		$objCacheFile->close();
 
 		// Generate the module loader cache file
-		$objCacheFile = new \File('system/cache/config/modules.php', true);
+		$objCacheFile = new \File('system/cache/config/plugins.php', true);
 		$objCacheFile->write("<?php\n\n");
 
-		$objCacheFile->append(sprintf("static::\$active = %s;\n", var_export(\ModuleLoader::getActive(), true)));
-		$objCacheFile->append(sprintf("static::\$disabled = %s;", var_export(\ModuleLoader::getDisabled(), true)));
+		$objCacheFile->append(sprintf("static::\$active = %s;\n", var_export(\PluginLoader::getActive(), true)));
+		$objCacheFile->append(sprintf("static::\$disabled = %s;", var_export(\PluginLoader::getDisabled(), true)));
 
 		// Close the file (moves it to its final destination)
 		$objCacheFile->close();
@@ -494,7 +494,7 @@ class Automator extends \System
 		$objCacheFile = new \File('system/cache/config/config.php', true);
 		$objCacheFile->write('<?php '); // add one space to prevent the "unexpected $end" error
 
-		foreach (\ModuleLoader::getActive() as $strModule)
+		foreach (\PluginLoader::getActive() as $strModule)
 		{
 			$strFile = 'system/modules/' . $strModule . '/config/config.php';
 
@@ -544,7 +544,7 @@ class Automator extends \System
 		$arrFiles = array();
 
 		// Parse all active modules
-		foreach (\ModuleLoader::getActive() as $strModule)
+		foreach (\PluginLoader::getActive() as $strModule)
 		{
 			$strDir = 'system/modules/' . $strModule . '/dca';
 
@@ -572,7 +572,7 @@ class Automator extends \System
 			$objCacheFile->write('<?php '); // add one space to prevent the "unexpected $end" error
 
 			// Parse all active modules
-			foreach (\ModuleLoader::getActive() as $strModule)
+			foreach (\PluginLoader::getActive() as $strModule)
 			{
 				$strFile = 'system/modules/' . $strModule . '/dca/' . $strName . '.php';
 
@@ -623,7 +623,7 @@ class Automator extends \System
 			$arrFiles = array();
 
 			// Parse all active modules
-			foreach (\ModuleLoader::getActive() as $strModule)
+			foreach (\PluginLoader::getActive() as $strModule)
 			{
 				$strDir = 'system/modules/' . $strModule . '/languages/' . $strLanguage;
 
@@ -669,7 +669,7 @@ class Automator extends \System
 				$objCacheFile->write(sprintf($strHeader, $strLanguage));
 
 				// Parse all active modules and append to the cache file
-				foreach (\ModuleLoader::getActive() as $strModule)
+				foreach (\PluginLoader::getActive() as $strModule)
 				{
 					$strFile = 'system/modules/' . $strModule . '/languages/' . $strLanguage . '/' . $strName;
 
@@ -702,7 +702,7 @@ class Automator extends \System
 		$arrExtracts = array();
 
 		// Only check the active modules (see #4541)
-		foreach (\ModuleLoader::getActive() as $strModule)
+		foreach (\PluginLoader::getActive() as $strModule)
 		{
 			$strDir = 'system/modules/' . $strModule . '/dca';
 

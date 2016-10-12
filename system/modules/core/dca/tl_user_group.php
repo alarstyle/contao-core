@@ -310,7 +310,7 @@ class tl_user_group extends Backend
 	{
 		$included = array();
 
-		foreach (ModuleLoader::getActive() as $strModule)
+		foreach (PluginLoader::getActive() as $strModule)
 		{
 			$strDir = 'system/modules/' . $strModule . '/dca';
 

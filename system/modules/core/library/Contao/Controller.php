@@ -233,7 +233,7 @@ abstract class Controller extends \System
 			}
 
 			// HOOK: trigger the article_raster_designer extension
-			if (in_array('article_raster_designer', \ModuleLoader::getActive()))
+			if (in_array('article_raster_designer', \PluginLoader::getActive()))
 			{
 				return \RasterDesigner::load($objPage->id, $strColumn);
 			}

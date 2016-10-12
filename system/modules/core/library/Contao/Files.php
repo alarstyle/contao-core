@@ -71,7 +71,7 @@ abstract class Files
 			}
 
 			// HOOK: use the smhextended module
-			elseif (\Config::get('useSmhExtended') && in_array('smhextended', \ModuleLoader::getActive()))
+			elseif (\Config::get('useSmhExtended') && in_array('smhextended', \PluginLoader::getActive()))
 			{
 				self::$objInstance = new \SMHExtended();
 			}

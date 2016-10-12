@@ -694,12 +694,12 @@ class InsertTags extends \Controller
 				case 'last_update':
 					$strQuery = "SELECT MAX(tstamp) AS tc";
 
-					if (in_array('news', \ModuleLoader::getActive()))
+					if (in_array('news', \PluginLoader::getActive()))
 					{
 						$strQuery .= ", (SELECT MAX(tstamp) FROM tl_news) AS tn";
 					}
 
-					if (in_array('calendar', \ModuleLoader::getActive()))
+					if (in_array('calendar', \PluginLoader::getActive()))
 					{
 						$strQuery .= ", (SELECT MAX(tstamp) FROM tl_calendar_events) AS te";
 					}

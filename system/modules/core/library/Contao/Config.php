@@ -132,7 +132,7 @@ class Config
 		else
 		{
 			// Get the module configuration files
-			foreach (\ModuleLoader::getActive() as $strModule)
+			foreach (\PluginLoader::getActive() as $strModule)
 			{
 				$strFile = TL_ROOT . '/system/modules/' . $strModule . '/config/config.php';
 
@@ -331,11 +331,11 @@ class Config
 	 *
 	 * @return array An array of active modules
 	 *
-	 * @deprecated Use ModuleLoader::getActive() instead
+	 * @deprecated Use PluginLoader::getActive() instead
 	 */
 	public function getActiveModules()
 	{
-		return \ModuleLoader::getActive();
+		return \PluginLoader::getActive();
 	}
 
 

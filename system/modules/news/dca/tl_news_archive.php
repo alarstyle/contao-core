@@ -273,7 +273,7 @@ class tl_news_archive extends Backend
 	public function checkPermission()
 	{
 		// HOOK: comments extension required
-		if (!in_array('comments', ModuleLoader::getActive()))
+		if (!in_array('comments', PluginLoader::getActive()))
 		{
 			unset($GLOBALS['TL_DCA']['tl_news_archive']['fields']['allowComments']);
 		}

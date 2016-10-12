@@ -83,8 +83,8 @@ class_alias('Contao\\ClassLoader', 'ClassLoader');
 require TL_ROOT . '/system/modules/core/library/Contao/TemplateLoader.php';
 class_alias('Contao\\TemplateLoader', 'TemplateLoader');
 
-require TL_ROOT . '/system/modules/core/library/Contao/ModuleLoader.php';
-class_alias('Contao\\ModuleLoader', 'ModuleLoader');
+require TL_ROOT . '/system/modules/core/library/Contao/PluginLoader.php';
+class_alias('Contao\\PluginLoader', 'PluginLoader');
 
 Config::preload(); // see #5872
 

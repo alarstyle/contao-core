@@ -1,0 +1,5 @@
+{
+    "require":    ["core", "webpages"],
+    "loadAfter":  [],
+    "conflict":   []
+}

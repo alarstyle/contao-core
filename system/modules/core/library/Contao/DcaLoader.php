@@ -77,7 +77,7 @@ class DcaLoader extends \Controller
 		}
 		else
 		{
-			foreach (\ModuleLoader::getActive() as $strModule)
+			foreach (\PluginLoader::getActive() as $strModule)
 			{
 				$strFile = 'system/modules/' . $strModule . '/dca/' . $this->strTable . '.php';
 

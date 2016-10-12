@@ -274,7 +274,7 @@ class Installer extends \Controller
 		\Config::set('bypassCache', true);
 
 		// Only check the active modules (see #4541)
-		foreach (\ModuleLoader::getActive() as $strModule)
+		foreach (\PluginLoader::getActive() as $strModule)
 		{
 			$strDir = 'system/modules/' . $strModule . '/dca';
 
@@ -331,7 +331,7 @@ class Installer extends \Controller
 		$return = array();
 
 		// Only check the active modules (see #4541)
-		foreach (\ModuleLoader::getActive() as $strModule)
+		foreach (\PluginLoader::getActive() as $strModule)
 		{
 			if (strncmp($strModule, '.', 1) === 0 || strncmp($strModule, '__', 2) === 0)
 			{

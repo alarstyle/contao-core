@@ -149,7 +149,7 @@ ClassLoader::addClasses(array
 	'Contao\Model\QueryBuilder'        => 'system/modules/core/library/Contao/Model/QueryBuilder.php',
 	'Contao\Model\Registry'            => 'system/modules/core/library/Contao/Model/Registry.php',
 	'Contao\Model'                     => 'system/modules/core/library/Contao/Model.php',
-	'Contao\ModuleLoader'              => 'system/modules/core/library/Contao/ModuleLoader.php',
+	'Contao\PluginLoader'              => 'system/modules/core/library/Contao/PluginLoader.php',
 	'Contao\Pagination'                => 'system/modules/core/library/Contao/Pagination.php',
 	'Contao\Picture'                   => 'system/modules/core/library/Contao/Picture.php',
 	'Contao\Request'                   => 'system/modules/core/library/Contao/Request.php',

@@ -143,9 +143,9 @@ namespace  {
 	class InsertTags extends \Contao\InsertTags {}
 	class Message extends \Contao\Message {}
 	abstract class Model extends \Contao\Model {}
-	class ModuleLoader extends \Contao\ModuleLoader {}
 	class Pagination extends \Contao\Pagination {}
 	class Picture extends \Contao\Picture {}
+	class PluginLoader extends \Contao\PluginLoader {}
 	class Request extends \Contao\Request {}
 	class RequestToken extends \Contao\RequestToken {}
 	class Search extends \Contao\Search {}

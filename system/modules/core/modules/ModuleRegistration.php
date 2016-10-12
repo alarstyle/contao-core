@@ -371,7 +371,7 @@ class ModuleRegistration extends \Module
 			$arrTokenData['link'] = \Idna::decode(\Environment::get('base')) . \Environment::get('request') . (strpos(\Environment::get('request'), '?') !== false ? '&' : '?') . 'token=' . $arrData['activation'];
 			$arrTokenData['channels'] = '';
 
-			if (in_array('newsletter', \ModuleLoader::getActive()))
+			if (in_array('newsletter', \PluginLoader::getActive()))
 			{
 				// Make sure newsletter is an array
 				if (!is_array($arrData['newsletter']))

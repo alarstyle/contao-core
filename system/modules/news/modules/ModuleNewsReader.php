@@ -121,7 +121,7 @@ class ModuleNewsReader extends \ModuleNews
 		}
 
 		// HOOK: comments extension required
-		if ($objArticle->noComments || !in_array('comments', \ModuleLoader::getActive()))
+		if ($objArticle->noComments || !in_array('comments', \PluginLoader::getActive()))
 		{
 			$this->Template->allowComments = false;
 

@@ -279,7 +279,7 @@ abstract class ModuleNews extends \Module
 					break;
 
 				case 'comments':
-					if ($objArticle->noComments || !in_array('comments', \ModuleLoader::getActive()) || $objArticle->source != 'default')
+					if ($objArticle->noComments || !in_array('comments', \PluginLoader::getActive()) || $objArticle->source != 'default')
 					{
 						break;
 					}

@@ -316,7 +316,7 @@ abstract class System
 			}
 			else
 			{
-				foreach (\ModuleLoader::getActive() as $strModule)
+				foreach (\PluginLoader::getActive() as $strModule)
 				{
 					$strFile = 'system/modules/' . $strModule . '/languages/' . $strCreateLang . '/' . $strName;
 

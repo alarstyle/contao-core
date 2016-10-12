@@ -213,7 +213,7 @@ class ClassLoader
 		}
 		else
 		{
-			foreach (\ModuleLoader::getActive() as $module)
+			foreach (\PluginLoader::getActive() as $module)
 			{
 				$file = 'system/modules/' . $module . '/config/autoload.php';
 
