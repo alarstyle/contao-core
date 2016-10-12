@@ -380,27 +380,6 @@ abstract class Controller extends \System
 			return '';
 		}
 
-		// Print the article as PDF
-		if (isset($_GET['pdf']) && \Input::get('pdf') == $objRow->id)
-		{
-			// Backwards compatibility
-			if ($objRow->printable == 1)
-			{
-				$objArticle = new \ModuleArticle($objRow);
-				$objArticle->generatePdf();
-			}
-			elseif ($objRow->printable != '')
-			{
-				$options = deserialize($objRow->printable);
-
-				if (is_array($options) && in_array('pdf', $options))
-				{
-					$objArticle = new \ModuleArticle($objRow);
-					$objArticle->generatePdf();
-				}
-			}
-		}
-
 		$objRow->headline = $objRow->title;
 		$objRow->multiMode = $blnMultiMode;
 

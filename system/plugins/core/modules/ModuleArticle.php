@@ -116,13 +116,4 @@ class ModuleArticle extends \Module
 			}
 		}
 	}
-
-
-	/**
-	 * Print an article as PDF and stream it to the browser
-	 */
-	public function generatePdf()
-	{
-		exit;
-	}
 }
