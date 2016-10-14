@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class Messages extends \Backend
+class Messages extends Backend
 {
 
 	/**
@@ -26,7 +26,7 @@ class Messages extends \Backend
 	 */
 	public function versionCheck()
 	{
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 
 		if (\Config::get('latestVersion') && version_compare(VERSION . '.' . BUILD, \Config::get('latestVersion'), '<'))
 		{
@@ -51,7 +51,7 @@ class Messages extends \Backend
 	 */
 	public function lastLogin()
 	{
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 
 		if ($this->User->lastLogin > 0)
 		{

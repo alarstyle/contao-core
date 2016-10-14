@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ModuleUser extends \BackendModule
+class ModuleUser extends BackendModule
 {
 
 	/**
@@ -33,7 +33,7 @@ class ModuleUser extends \BackendModule
 	 */
 	public function generate()
 	{
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 
 		$GLOBALS['TL_DCA'][$this->table]['config']['closed'] = true;
 		$GLOBALS['TL_DCA'][$this->table]['config']['hideVersionMenu'] = true;

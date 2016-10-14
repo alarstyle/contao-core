@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FrontendIndex extends \Frontend
+class FrontendIndex extends Frontend
 {
 
 	/**
@@ -28,7 +28,7 @@ class FrontendIndex extends \Frontend
 		$this->outputFromCache();
 
 		// Load the user object before calling the parent constructor
-		$this->import('FrontendUser', 'User');
+		$this->import('Contao\FrontendUser', 'User');
 		parent::__construct();
 
 		// Check whether a user is logged in

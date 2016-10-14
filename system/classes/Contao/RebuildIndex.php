@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class RebuildIndex extends \Backend implements \executable
+class RebuildIndex extends Backend implements \executable
 {
 
 	/**
@@ -45,7 +45,7 @@ class RebuildIndex extends \Backend implements \executable
 		$time = time();
 
 		/** @var \BackendTemplate|object $objTemplate */
-		$objTemplate = new \BackendTemplate('be_rebuild_index');
+		$objTemplate = new BackendTemplate('be_rebuild_index');
 		$objTemplate->action = ampersand(\Environment::get('request'));
 		$objTemplate->indexHeadline = $GLOBALS['TL_LANG']['tl_maintenance']['searchIndex'];
 		$objTemplate->isActive = $this->isActive();
@@ -134,7 +134,7 @@ class RebuildIndex extends \Backend implements \executable
 			$objTemplate->loading = $GLOBALS['TL_LANG']['tl_maintenance']['indexLoading'];
 			$objTemplate->complete = $GLOBALS['TL_LANG']['tl_maintenance']['indexComplete'];
 			$objTemplate->indexContinue = $GLOBALS['TL_LANG']['MSC']['continue'];
-			$objTemplate->theme = \Backend::getTheme();
+			$objTemplate->theme = Backend::getTheme();
 			$objTemplate->isRunning = true;
 
 			return $objTemplate->parse();

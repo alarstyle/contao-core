@@ -52,7 +52,7 @@ class FileSelector extends \Editor
 	 */
 	public function generate()
 	{
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 		$this->convertValuesToPaths();
 
 		$strNode = $this->Session->get('tl_files_picker');

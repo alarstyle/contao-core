@@ -9,6 +9,13 @@
 			"homepage": "https://github.com/leofeyer"
 		}
 	],
+	"autoload": {
+	  	"psr-4": {
+			"": [
+				"system/classes/"
+			]
+	  	}
+	},
 	"require": {
 		"php": ">=5.4.0",
 		"leafo/scssphp": "~0.1",

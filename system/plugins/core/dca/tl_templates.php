@@ -145,7 +145,7 @@ $GLOBALS['TL_DCA']['tl_templates'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_templates extends Backend
+class tl_templates extends \Contao\Backend
 {
 
 	/**

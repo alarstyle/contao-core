@@ -118,7 +118,7 @@ $GLOBALS['TL_DCA']['tl_undo'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_undo extends Backend
+class tl_undo extends \Contao\Backend
 {
 
 	/**
@@ -127,7 +127,7 @@ class tl_undo extends Backend
 	public function __construct()
 	{
 		parent::__construct();
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 	}
 
 

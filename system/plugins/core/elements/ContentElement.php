@@ -104,7 +104,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-abstract class ContentElement extends \Frontend
+abstract class ContentElement extends Frontend
 {
 
 	/**
@@ -259,7 +259,7 @@ abstract class ContentElement extends \Frontend
 			$this->arrStyle[] = 'margin-bottom:'.$this->arrData['space'][1].'px;';
 		}
 
-		$this->Template = new \FrontendTemplate($this->strTemplate);
+		$this->Template = new FrontendTemplate($this->strTemplate);
 		$this->Template->setData($this->arrData);
 
 		$this->compile();

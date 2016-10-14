@@ -203,7 +203,7 @@ class FormFileUpload extends \Editor implements \uploadable
 				// Overwrite the upload folder with user's home directory
 				if ($this->useHomeDir && FE_USER_LOGGED_IN)
 				{
-					$this->import('FrontendUser', 'User');
+					$this->import('Contao\\FrontendUser', 'User');
 
 					if ($this->User->assignDir && $this->User->homeDir)
 					{

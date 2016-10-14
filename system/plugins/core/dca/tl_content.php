@@ -805,7 +805,9 @@ if (Input::get('do') == 'page')
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_content extends Backend
+use \Contao\DataContainer;
+
+class tl_content extends \Contao\Backend
 {
 
 	/**
@@ -814,7 +816,7 @@ class tl_content extends Backend
 	public function __construct()
 	{
 		parent::__construct();
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 	}
 
 

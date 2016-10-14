@@ -177,7 +177,7 @@ class FrontendTemplate extends \Template
 	 */
 	public static function addToUrl($strRequest, $blnIgnoreParams=false, $arrUnset=array())
 	{
-		return \Frontend::addToUrl($strRequest, $blnIgnoreParams, $arrUnset);
+		return Frontend::addToUrl($strRequest, $blnIgnoreParams, $arrUnset);
 	}
 
 

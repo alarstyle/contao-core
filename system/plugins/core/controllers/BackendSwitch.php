@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class BackendSwitch extends \Backend
+class BackendSwitch extends Backend
 {
 
 	/**
@@ -30,7 +30,7 @@ class BackendSwitch extends \Backend
 	 */
 	public function __construct()
 	{
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 		parent::__construct();
 
 		$this->User->authenticate();
@@ -65,18 +65,18 @@ class BackendSwitch extends \Backend
 		}
 
 		/** @var \BackendTemplate|object $objTemplate */
-		$objTemplate = new \BackendTemplate('be_switch');
+		$objTemplate = new BackendTemplate('be_switch');
 		$objTemplate->user = $strUser;
-		$objTemplate->show = \Input::cookie('FE_PREVIEW');
+		$objTemplate->show = Input::cookie('FE_PREVIEW');
 		$objTemplate->update = false;
 
 		// Switch
-		if (\Input::post('FORM_SUBMIT') == 'tl_switch')
+		if (Input::post('FORM_SUBMIT') == 'tl_switch')
 		{
 			$time = time();
 
 			// Hide unpublished elements
-			if (\Input::post('unpublished') == 'hide')
+			if (Input::post('unpublished') == 'hide')
 			{
 				$this->setCookie('FE_PREVIEW', 0, ($time - 86400));
 				$objTemplate->show = 0;
@@ -126,20 +126,20 @@ class BackendSwitch extends \Backend
 		}
 
 		// Default variables
-		$objTemplate->theme = \Backend::getTheme();
-		$objTemplate->base = \Environment::get('base');
+		$objTemplate->theme = Backend::getTheme();
+		$objTemplate->base = Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->apply = $GLOBALS['TL_LANG']['MSC']['apply'];
 		$objTemplate->reload = $GLOBALS['TL_LANG']['MSC']['reload'];
 		$objTemplate->feUser = $GLOBALS['TL_LANG']['MSC']['feUser'];
 		$objTemplate->username = $GLOBALS['TL_LANG']['MSC']['username'];
-		$objTemplate->charset = \Config::get('characterSet');
+		$objTemplate->charset = Config::get('characterSet');
 		$objTemplate->lblHide = $GLOBALS['TL_LANG']['MSC']['hiddenHide'];
 		$objTemplate->lblShow = $GLOBALS['TL_LANG']['MSC']['hiddenShow'];
 		$objTemplate->fePreview = $GLOBALS['TL_LANG']['MSC']['fePreview'];
 		$objTemplate->hiddenElements = $GLOBALS['TL_LANG']['MSC']['hiddenElements'];
-		$objTemplate->closeSrc = TL_FILES_URL . 'system/themes/' . \Backend::getTheme() . '/images/close.gif';
-		$objTemplate->action = ampersand(\Environment::get('request'));
+		$objTemplate->closeSrc = TL_FILES_URL . 'system/themes/' . Backend::getTheme() . '/images/close.gif';
+		$objTemplate->action = ampersand(Environment::get('request'));
 		$objTemplate->isAdmin = $this->User->isAdmin;
 
 		\Config::set('debugMode', false);

@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class Newsletter extends \Backend
+class Newsletter extends Backend
 {
 
 	/**
@@ -26,7 +26,7 @@ class Newsletter extends \Backend
 	 *
 	 * @return string
 	 */
-	public function send(\DataContainer $dc)
+	public function send(DataContainer $dc)
 	{
 		$objNewsletter = $this->Database->prepare("SELECT n.*, c.useSMTP, c.smtpHost, c.smtpUser, c.smtpPass, c.smtpEnc, c.smtpPort FROM tl_newsletter n LEFT JOIN tl_newsletter_channel c ON n.pid=c.id WHERE n.id=?")
 										->limit(1)
@@ -216,7 +216,7 @@ class Newsletter extends \Backend
 		$strToken = md5(uniqid(mt_rand(), true));
 		$this->Session->set('tl_newsletter_send', $strToken);
 		$sprintf = ($objNewsletter->senderName != '') ? $objNewsletter->senderName . ' &lt;%s&gt;' : '%s';
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 
 		// Preview newsletter
 		$return = '
@@ -422,7 +422,7 @@ class Newsletter extends \Backend
 			return '';
 		}
 
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 		$class = $this->User->uploader;
 
 		// See #4086 and #7046
@@ -681,7 +681,7 @@ class Newsletter extends \Backend
 		$blnIsFrontend = true;
 
 		// If called from the back end, the second argument is a DataContainer object
-		if ($objUser instanceof \DataContainer)
+		if ($objUser instanceof DataContainer)
 		{
 			$objUser = $this->Database->prepare("SELECT * FROM tl_member WHERE id=?")
 									  ->limit(1)
@@ -757,7 +757,7 @@ class Newsletter extends \Backend
 		// Front end call
 		if (TL_MODE == 'FE')
 		{
-			$this->import('FrontendUser', 'User');
+			$this->import('Contao\\FrontendUser', 'User');
 			$intUser = $this->User->id;
 		}
 

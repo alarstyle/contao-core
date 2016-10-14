@@ -157,7 +157,7 @@ class Pagination
 		if ($objTemplate === null)
 		{
 			/** @var \FrontendTemplate|object $objTemplate */
-			$objTemplate = new \FrontendTemplate('pagination');
+			$objTemplate = new FrontendTemplate('pagination');
 		}
 
 		$this->objTemplate = $objTemplate;

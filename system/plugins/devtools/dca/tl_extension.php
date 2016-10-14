@@ -246,7 +246,7 @@ $GLOBALS['TL_DCA']['tl_extension'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_extension extends Backend
+class tl_extension extends \Contao\Backend
 {
 
 	/**

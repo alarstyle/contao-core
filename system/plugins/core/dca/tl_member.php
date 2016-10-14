@@ -449,7 +449,10 @@ if (TL_MODE == 'FE')
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_member extends Backend
+
+use \Contao\DataContainer;
+
+class tl_member extends \Contao\Backend
 {
 
 	/**
@@ -458,7 +461,7 @@ class tl_member extends Backend
 	public function __construct()
 	{
 		parent::__construct();
-		$this->import('BackendUser', 'User');
+		$this->import('\Contao\BackendUser', 'User');
 	}
 
 
@@ -505,7 +508,7 @@ class tl_member extends Backend
 			$image .= '_';
 		}
 
-		$args[0] = sprintf('<div class="list_icon_new" style="background-image:url(\'%ssystem/themes/%s/images/%s.gif\')" data-icon="%s.gif" data-icon-disabled="%s.gif">&nbsp;</div>', TL_ASSETS_URL, Backend::getTheme(), $image, $disabled ? $image : rtrim($image, '_'), rtrim($image, '_') . '_');
+		$args[0] = sprintf('<div class="list_icon_new" style="background-image:url(\'%ssystem/themes/%s/images/%s.gif\')" data-icon="%s.gif" data-icon-disabled="%s.gif">&nbsp;</div>', TL_ASSETS_URL, \Contao\Backend::getTheme(), $image, $disabled ? $image : rtrim($image, '_'), rtrim($image, '_') . '_');
 
 		return $args;
 	}

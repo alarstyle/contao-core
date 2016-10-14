@@ -426,7 +426,7 @@ class Form extends \Hybrid
 			if ($this->format == 'xml')
 			{
 				/** @var \FrontendTemplate|object $objTemplate */
-				$objTemplate = new \FrontendTemplate('form_xml');
+				$objTemplate = new FrontendTemplate('form_xml');
 
 				$objTemplate->fields = $fields;
 				$objTemplate->charset = \Config::get('characterSet');
@@ -550,7 +550,7 @@ class Form extends \Hybrid
 		// Add a log entry
 		if (FE_USER_LOGGED_IN)
 		{
-			$this->import('FrontendUser', 'User');
+			$this->import('Contao\\FrontendUser', 'User');
 			$this->log('Form "' . $this->title . '" has been submitted by "' . $this->User->username . '".', __METHOD__, TL_FORMS);
 		}
 		else
@@ -603,7 +603,7 @@ class Form extends \Hybrid
 				foreach ($_SESSION[$formId][$tl] as $message)
 				{
 					/** @var \FrontendTemplate|object $objTemplate */
-					$objTemplate = new \FrontendTemplate('form_message');
+					$objTemplate = new FrontendTemplate('form_message');
 
 					$objTemplate->message = $message;
 					$objTemplate->class = strtolower($tl);

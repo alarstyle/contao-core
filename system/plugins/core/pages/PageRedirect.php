@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class PageRedirect extends \Frontend
+class PageRedirect extends Frontend
 {
 
 	/**

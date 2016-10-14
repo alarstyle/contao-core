@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class BackendPreview extends \Backend
+class BackendPreview extends Backend
 {
 
 	/**
@@ -30,7 +30,7 @@ class BackendPreview extends \Backend
 	 */
 	public function __construct()
 	{
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 		parent::__construct();
 
 		$this->User->authenticate();
@@ -44,7 +44,7 @@ class BackendPreview extends \Backend
 	public function run()
 	{
 		/** @var \BackendTemplate|object $objTemplate */
-		$objTemplate = new \BackendTemplate('be_preview');
+		$objTemplate = new BackendTemplate('be_preview');
 
 		$objTemplate->base = \Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];

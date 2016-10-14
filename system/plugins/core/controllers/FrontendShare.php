@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FrontendShare extends \Frontend
+class FrontendShare extends Frontend
 {
 
 	/**

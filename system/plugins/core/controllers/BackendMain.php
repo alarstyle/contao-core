@@ -16,17 +16,17 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class BackendMain extends \Backend
+class BackendMain extends Backend
 {
 
 	/**
 	 * Current Ajax object
-	 * @var \Ajax
+	 * @var Ajax
 	 */
 	protected $objAjax;
 
 	/**
-	 * @var \BackendTemplate|object
+	 * @var BackendTemplate|object
 	 */
 	protected $Template;
 
@@ -42,7 +42,7 @@ class BackendMain extends \Backend
 	 */
 	public function __construct()
 	{
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 		parent::__construct();
 
 		$this->User->authenticate();
@@ -103,24 +103,24 @@ class BackendMain extends \Backend
 	 */
 	public function run()
 	{
-		$this->Template = new \BackendTemplate('be_main');
+		$this->Template = new BackendTemplate('be_main');
 		$this->Template->main = '';
 
 		// Ajax request
-		if ($_POST && \Environment::get('isAjaxRequest'))
+		if ($_POST && Environment::get('isAjaxRequest'))
 		{
-			$this->objAjax = new \Ajax(\Input::post('action'));
+			$this->objAjax = new Ajax(Input::post('action'));
 			$this->objAjax->executePreActions();
 		}
 
 		// Error
-		if (\Input::get('act') == 'error')
+		if (Input::get('act') == 'error')
 		{
 			$this->Template->error = $GLOBALS['TL_LANG']['ERR']['general'];
 			$this->Template->title = $GLOBALS['TL_LANG']['ERR']['general'];
 		}
 		// Welcome screen
-		elseif (!\Input::get('do') && !\Input::get('act'))
+		elseif (!Input::get('do') && !Input::get('act'))
 		{
 			$this->Template->main .= $this->welcomeScreen();
 			$this->Template->title = $GLOBALS['TL_LANG']['MSC']['home'];
@@ -143,11 +143,11 @@ class BackendMain extends \Backend
 	 */
 	protected function welcomeScreen()
 	{
-		\System::loadLanguageFile('explain');
+		System::loadLanguageFile('explain');
 
-		/** @var \BackendTemplate|object $objTemplate */
-		$objTemplate = new \BackendTemplate('be_welcome');
-		$objTemplate->messages = \Message::generate(false, true);
+		/** @var BackendTemplate|object $objTemplate */
+		$objTemplate = new BackendTemplate('be_welcome');
+		$objTemplate->messages = Message::generate(false, true);
 
 		// HOOK: add custom messages
 		if (isset($GLOBALS['TL_HOOKS']['getSystemMessages']) && is_array($GLOBALS['TL_HOOKS']['getSystemMessages']))
@@ -172,7 +172,7 @@ class BackendMain extends \Backend
 		}
 
 		// Add the versions overview
-		\Versions::addToTemplate($objTemplate);
+		Versions::addToTemplate($objTemplate);
 
 		$objTemplate->welcome = sprintf($GLOBALS['TL_LANG']['MSC']['welcomeTo'], \Config::get('websiteTitle'));
 		$objTemplate->showDifferences = specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MSC']['showDifferences']));
@@ -221,15 +221,15 @@ class BackendMain extends \Backend
 			}
 		}
 
-		$this->Template->theme = \Backend::getTheme();
-		$this->Template->base = \Environment::get('base');
+		$this->Template->theme = Backend::getTheme();
+		$this->Template->base = Environment::get('base');
 		$this->Template->language = $GLOBALS['TL_LANGUAGE'];
 		$this->Template->title = specialchars($this->Template->title);
-		$this->Template->charset = \Config::get('characterSet');
+		$this->Template->charset = Config::get('characterSet');
 		$this->Template->account = $GLOBALS['TL_LANG']['MOD']['login'][1];
 		$this->Template->preview = $GLOBALS['TL_LANG']['MSC']['fePreview'];
 		$this->Template->previewTitle = specialchars($GLOBALS['TL_LANG']['MSC']['fePreviewTitle']);
-		$this->Template->pageOffset = \Input::cookie('BE_PAGE_OFFSET');
+		$this->Template->pageOffset = Input::cookie('BE_PAGE_OFFSET');
 		$this->Template->logout = $GLOBALS['TL_LANG']['MSC']['logoutBT'];
 		$this->Template->logoutTitle = specialchars($GLOBALS['TL_LANG']['MSC']['logoutBTTitle']);
 		$this->Template->backendModules = $GLOBALS['TL_LANG']['MSC']['backendModules'];
@@ -243,9 +243,9 @@ class BackendMain extends \Backend
 		$this->Template->expandNode = $GLOBALS['TL_LANG']['MSC']['expandNode'];
 		$this->Template->collapseNode = $GLOBALS['TL_LANG']['MSC']['collapseNode'];
 		$this->Template->loadingData = $GLOBALS['TL_LANG']['MSC']['loadingData'];
-		$this->Template->loadFonts = \Config::get('loadGoogleFonts');
+		$this->Template->loadFonts = Config::get('loadGoogleFonts');
 		$this->Template->isAdmin = $this->User->isAdmin;
-		$this->Template->isCoreOnlyMode = \Config::get('coreOnlyMode');
+		$this->Template->isCoreOnlyMode = Config::get('coreOnlyMode');
 		$this->Template->coreOnlyMode = $GLOBALS['TL_LANG']['MSC']['coreOnlyMode'];
 		$this->Template->coreOnlyOff = specialchars($GLOBALS['TL_LANG']['MSC']['coreOnlyOff']);
 		$this->Template->coreOnlyHref = $this->addToUrl('smo=1');
@@ -256,7 +256,7 @@ class BackendMain extends \Backend
 		$this->Template->buildCacheLink = $GLOBALS['TL_LANG']['MSC']['buildCacheLink'];
 		$this->Template->buildCacheText = $GLOBALS['TL_LANG']['MSC']['buildCacheText'];
 		$this->Template->buildCacheHref = $this->addToUrl('bic=1');
-		$this->Template->isPopup = \Input::get('popup');
+		$this->Template->isPopup = Input::get('popup');
 
 		// Hide the cache message in the repository manager (see #5966)
 		if (!\Config::get('bypassCache') && $this->User->isAdmin)

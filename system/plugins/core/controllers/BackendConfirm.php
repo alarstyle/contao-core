@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class BackendConfirm extends \Backend
+class BackendConfirm extends Backend
 {
 
 	/**
@@ -30,7 +30,7 @@ class BackendConfirm extends \Backend
 	 */
 	public function __construct()
 	{
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 		parent::__construct();
 
 		$this->User->authenticate();
@@ -53,7 +53,7 @@ class BackendConfirm extends \Backend
 		}
 
 		/** @var \BackendTemplate|object $objTemplate */
-		$objTemplate = new \BackendTemplate('be_confirm');
+		$objTemplate = new BackendTemplate('be_confirm');
 
 		// Prepare the URL
 		$url = preg_replace('/(\?|&)rt=[^&]*/', '', $this->Session->get('INVALID_TOKEN_URL'));

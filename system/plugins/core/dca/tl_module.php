@@ -771,7 +771,7 @@ $GLOBALS['TL_DCA']['tl_module'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_module extends Backend
+class tl_module extends \Contao\Backend
 {
 
 	/**
@@ -780,7 +780,7 @@ class tl_module extends Backend
 	public function __construct()
 	{
 		parent::__construct();
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 	}
 
 

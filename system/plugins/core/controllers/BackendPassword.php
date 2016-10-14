@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class BackendPassword extends \Backend
+class BackendPassword extends Backend
 {
 
 	/**
@@ -30,7 +30,7 @@ class BackendPassword extends \Backend
 	 */
 	public function __construct()
 	{
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 		parent::__construct();
 
 		$this->User->authenticate();
@@ -46,7 +46,7 @@ class BackendPassword extends \Backend
 	public function run()
 	{
 		/** @var \BackendTemplate|object $objTemplate */
-		$objTemplate = new \BackendTemplate('be_password');
+		$objTemplate = new BackendTemplate('be_password');
 
 		if (\Input::post('FORM_SUBMIT') == 'tl_password')
 		{

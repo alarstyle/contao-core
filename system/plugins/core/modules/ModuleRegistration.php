@@ -100,7 +100,7 @@ class ModuleRegistration extends \Module
 		if ($this->memberTpl != '')
 		{
 			/** @var \FrontendTemplate|object $objTemplate */
-			$objTemplate = new \FrontendTemplate($this->memberTpl);
+			$objTemplate = new FrontendTemplate($this->memberTpl);
 
 			$this->Template = $objTemplate;
 			$this->Template->setData($this->arrData);
@@ -460,7 +460,7 @@ class ModuleRegistration extends \Module
 		}
 
 		// Create the initial version (see #7816)
-		$objVersions = new \Versions('tl_member', $objNewUser->id);
+		$objVersions = new Versions('tl_member', $objNewUser->id);
 		$objVersions->setUsername($objNewUser->username);
 		$objVersions->setUserId(0);
 		$objVersions->setEditUrl('contao/main.php?do=member&act=edit&id=%s&rt=1');
@@ -490,7 +490,7 @@ class ModuleRegistration extends \Module
 		$this->strTemplate = 'mod_message';
 
 		/** @var \FrontendTemplate|object $objTemplate */
-		$objTemplate = new \FrontendTemplate($this->strTemplate);
+		$objTemplate = new FrontendTemplate($this->strTemplate);
 
 		$this->Template = $objTemplate;
 

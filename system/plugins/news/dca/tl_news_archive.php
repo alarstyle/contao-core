@@ -254,7 +254,7 @@ $GLOBALS['TL_DCA']['tl_news_archive'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_news_archive extends Backend
+class tl_news_archive extends \Contao\Backend
 {
 
 	/**
@@ -263,7 +263,7 @@ class tl_news_archive extends Backend
 	public function __construct()
 	{
 		parent::__construct();
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 	}
 
 
@@ -410,7 +410,7 @@ class tl_news_archive extends Backend
 			return;
 		}
 
-		$this->import('News');
+		$this->import('Contao\News', 'News');
 
 		foreach ($session as $id)
 		{

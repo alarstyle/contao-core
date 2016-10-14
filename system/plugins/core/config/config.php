@@ -253,8 +253,8 @@ $GLOBALS['TL_PTY'] = array
  */
 $GLOBALS['TL_MAINTENANCE'] = array
 (
-	'RebuildIndex',
-	'PurgeData'
+	'Contao\\RebuildIndex',
+	'Contao\\PurgeData'
 );
 
 
@@ -381,10 +381,10 @@ $GLOBALS['TL_HOOKS'] = array
 (
 	'getSystemMessages' => array
 	(
-		array('Messages', 'versionCheck'),
-		array('Messages', 'lastLogin'),
-		array('Messages', 'topLevelRoot'),
-		array('Messages', 'languageFallback')
+		array('Contao\\Messages', 'versionCheck'),
+		array('Contao\\Messages', 'lastLogin'),
+		array('Contao\\Messages', 'topLevelRoot'),
+		array('Contao\\Messages', 'languageFallback')
 	)
 );
 

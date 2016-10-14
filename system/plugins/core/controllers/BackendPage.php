@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class BackendPage extends \Backend
+class BackendPage extends Backend
 {
 
 	/**
@@ -37,7 +37,7 @@ class BackendPage extends \Backend
 	 */
 	public function __construct()
 	{
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 		parent::__construct();
 
 		$this->User->authenticate();
@@ -51,18 +51,18 @@ class BackendPage extends \Backend
 	public function run()
 	{
 		/** @var \BackendTemplate|object $objTemplate */
-		$objTemplate = new \BackendTemplate('be_picker');
+		$objTemplate = new BackendTemplate('be_picker');
 		$objTemplate->main = '';
 
 		// Ajax request
 		if ($_POST && \Environment::get('isAjaxRequest'))
 		{
-			$this->objAjax = new \Ajax(\Input::post('action'));
+			$this->objAjax = new Ajax(Input::post('action'));
 			$this->objAjax->executePreActions();
 		}
 
-		$strTable = \Input::get('table');
-		$strField = \Input::get('field');
+		$strTable = Input::get('table');
+		$strField = Input::get('field');
 
 		// Define the current ID
 		define('CURRENT_ID', (\Input::get('table') ? $this->Session->get('CURRENT_ID') : \Input::get('id')));

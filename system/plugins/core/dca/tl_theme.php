@@ -223,7 +223,7 @@ $GLOBALS['TL_DCA']['tl_theme'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_theme extends Backend
+class tl_theme extends \Contao\Backend
 {
 
 	/**
@@ -232,7 +232,7 @@ class tl_theme extends Backend
 	public function __construct()
 	{
 		parent::__construct();
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 	}
 
 

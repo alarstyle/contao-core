@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class DC_File extends \DataContainer implements \editable
+class DC_File extends DataContainer implements \editable
 {
 
 	/**

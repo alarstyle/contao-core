@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class PageRoot extends \Frontend
+class PageRoot extends Frontend
 {
 
 	/**

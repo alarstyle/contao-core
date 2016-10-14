@@ -25,7 +25,7 @@ require_once dirname(dirname(__FILE__)).'/classes/RepositorySettings.php';
  * @author Leo Feyer <https://github.com/leofeyer>
  * @package    Repository
  */
-class RepositoryBackendModule extends BackendModule
+class RepositoryBackendModule extends \Contao\BackendModule
 {
 	protected $strTemplate;
 	protected $actions = array();

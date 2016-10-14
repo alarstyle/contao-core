@@ -97,23 +97,40 @@ error_reporting((Config::get('displayErrors') || Config::get('logErrors')) ? Con
 set_error_handler('__error', Config::get('errorReporting'));
 
 
+
+/**
+ * Include the Composer autoloader
+ */
+require_once TL_ROOT . '/vendor/autoload.php';
+
+
 /**
  * Try to load the modules
  */
 try
 {
 	ClassLoader::scanAndRegister();
+
+	$loader = new \Composer\Autoload\ClassLoader();
+	foreach (\Contao\PluginLoader::getActive() as $module)
+	{
+
+		//var_dump(TL_ROOT);
+
+		$loader->add('', TL_ROOT . '/system/plugins/' . $module . '/classes');
+	}
+
+	// activate the autoloader
+	$loader->register();
+
+	// to enable searching the include path (eg. for PEAR packages)
+	$loader->setUseIncludePath(true);
 }
 catch (UnresolvableDependenciesException $e)
 {
 	die($e->getMessage()); // see #6343
 }
 
-
-/**
- * Include the Composer autoloader
- */
-require_once TL_ROOT . '/vendor/autoload.php';
 
 
 /**

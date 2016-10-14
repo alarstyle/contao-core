@@ -230,7 +230,7 @@ class InsertTags extends \Controller
 				case 'user':
 					if (FE_USER_LOGGED_IN)
 					{
-						$this->import('FrontendUser', 'User');
+						$this->import('Contao\\FrontendUser', 'User');
 						$value = $this->User->{$elements[1]};
 
 						if ($value == '')
@@ -336,7 +336,7 @@ class InsertTags extends \Controller
 								break;
 							}
 
-							$this->import('FrontendUser', 'User');
+							$this->import('Contao\\FrontendUser', 'User');
 							$elements[1] = $this->User->loginPage;
 						}
 
@@ -999,7 +999,7 @@ class InsertTags extends \Controller
 							$picture = \Picture::create($strFile, array(0, 0, $size))->getTemplateData();
 							$picture['alt'] = $alt;
 							$picture['class'] = $class;
-							$pictureTemplate = new \FrontendTemplate($strTemplate);
+							$pictureTemplate = new FrontendTemplate($strTemplate);
 							$pictureTemplate->setData($picture);
 							$arrCache[$strTag] = $pictureTemplate->parse();
 						}

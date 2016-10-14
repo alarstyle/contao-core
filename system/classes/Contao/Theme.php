@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class Theme extends \Backend
+class Theme extends Backend
 {
 
 	/**
@@ -26,7 +26,7 @@ class Theme extends \Backend
 	 */
 	public function importTheme()
 	{
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 		$class = $this->User->uploader;
 
 		// See #4086 and #7046

@@ -238,14 +238,14 @@ class TableWizard extends \Editor
 	 *
 	 * @return string
 	 */
-	public function importTable(\DataContainer $dc)
+	public function importTable(DataContainer $dc)
 	{
 		if (\Input::get('key') != 'table')
 		{
 			return '';
 		}
 
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 		$class = $this->User->uploader;
 
 		// See #4086 and #7046
@@ -305,14 +305,14 @@ class TableWizard extends \Editor
 				}
 			}
 
-			$objVersions = new \Versions($dc->table, \Input::get('id'));
+			$objVersions = new Versions($dc->table, \Input::get('id'));
 			$objVersions->create();
 
 			$this->Database->prepare("UPDATE " . $dc->table . " SET tableitems=? WHERE id=?")
-						   ->execute(serialize($arrTable), \Input::get('id'));
+						   ->execute(serialize($arrTable), Input::get('id'));
 
-			\System::setCookie('BE_PAGE_OFFSET', 0, 0);
-			$this->redirect(str_replace('&key=table', '', \Environment::get('request')));
+			System::setCookie('BE_PAGE_OFFSET', 0, 0);
+			$this->redirect(str_replace('&key=table', '', Environment::get('request')));
 		}
 
 		// Return form

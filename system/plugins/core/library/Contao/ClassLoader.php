@@ -204,22 +204,22 @@ class ClassLoader
 	 */
 	public static function scanAndRegister()
 	{
-		$strCacheFile = 'system/cache/config/autoload.php';
+		$strCachePath = TL_ROOT . '/system/cache/config/autoload.php';
 
 		// Try to load from cache
-		if (!\Config::get('bypassCache') && file_exists(TL_ROOT . '/' . $strCacheFile))
+		if (!\Config::get('bypassCache') && file_exists($strCachePath))
 		{
-			include TL_ROOT . '/' . $strCacheFile;
+			include $strCachePath;
 		}
 		else
 		{
 			foreach (\PluginLoader::getActive() as $module)
 			{
-				$file = 'system/plugins/' . $module . '/config/autoload.php';
+				$strFilePath = TL_ROOT . '/system/plugins/' . $module . '/config/autoload.php';
 
-				if (file_exists(TL_ROOT . '/' . $file))
+				if (file_exists($strFilePath))
 				{
-					include TL_ROOT . '/' . $file;
+					include $strFilePath;
 				}
 			}
 		}

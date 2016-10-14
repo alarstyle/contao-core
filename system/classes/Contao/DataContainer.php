@@ -24,7 +24,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-abstract class DataContainer extends \Backend
+abstract class DataContainer extends Backend
 {
 
 	/**
@@ -477,7 +477,7 @@ abstract class DataContainer extends \Backend
 			}
 
 			$selector = 'ctrl_' . $this->strInputName;
-			$language = \Backend::getTinyMceLanguage(); // backwards compatibility
+			$language = Backend::getTinyMceLanguage(); // backwards compatibility
 
 			ob_start();
 			include TL_ROOT . '/system/config/' . $file . '.php';
@@ -755,7 +755,7 @@ abstract class DataContainer extends \Backend
 				// Add the theme path if only the file name is given
 				if (strpos($v['icon'], '/') === false)
 				{
-					$v['icon'] = 'system/themes/' . \Backend::getTheme() . '/images/' . $v['icon'];
+					$v['icon'] = 'system/themes/' . Backend::getTheme() . '/images/' . $v['icon'];
 				}
 
 				$attributes = sprintf('style="background-image:url(\'%s%s\')"', TL_ASSETS_URL, $v['icon']) . $attributes;

@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ModuleAutoload extends \BackendModule
+class ModuleAutoload extends BackendModule
 {
 
 	/**

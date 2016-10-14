@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class PageForward extends \Frontend
+class PageForward extends Frontend
 {
 
 	/**

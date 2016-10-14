@@ -21,7 +21,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class DC_Folder extends \DataContainer implements \listable, \editable
+class DC_Folder extends DataContainer implements \listable, \editable
 {
 
 	/**
@@ -305,7 +305,7 @@ class DC_Folder extends \DataContainer implements \listable, \editable
 		\Config::set('loadGoogleFonts', $blnClipboard);
 
 		$this->import('Files');
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 
 		// Call recursive function tree()
 		if (empty($this->arrFilemounts) && !is_array($GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['root']) && $GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['root'] !== false)
@@ -919,7 +919,7 @@ class DC_Folder extends \DataContainer implements \listable, \editable
 		}
 
 		// Instantiate the uploader
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 		$class = $this->User->uploader;
 
 		// See #4086
@@ -1097,18 +1097,18 @@ class DC_Folder extends \DataContainer implements \listable, \editable
 			$this->blnCreateNewVersion = false;
 
 			/** @var \FilesModel $objModel */
-			$objVersions = new \Versions($this->strTable, $objModel->id);
+			$objVersions = new Versions($this->strTable, $objModel->id);
 
 			if (!$GLOBALS['TL_DCA'][$this->strTable]['config']['hideVersionMenu'])
 			{
 				// Compare versions
-				if (\Input::get('versions'))
+				if (Input::get('versions'))
 				{
 					$objVersions->compare();
 				}
 
 				// Restore a version
-				if (\Input::post('FORM_SUBMIT') == 'tl_version' && \Input::post('version') != '')
+				if (Input::post('FORM_SUBMIT') == 'tl_version' && Input::post('version') != '')
 				{
 					$objVersions->restore(\Input::post('version'));
 					$this->reload();
@@ -1411,14 +1411,14 @@ class DC_Folder extends \DataContainer implements \listable, \editable
 
 					if ($objModel === null)
 					{
-						$objModel = \Dbafs::addResource($id);
+						$objModel = Dbafs::addResource($id);
 					}
 
 					$this->objActiveRecord = $objModel;
 					$this->blnCreateNewVersion = false;
 
 					/** @var \FilesModel $objModel */
-					$objVersions = new \Versions($this->strTable, $objModel->id);
+					$objVersions = new Versions($this->strTable, $objModel->id);
 					$objVersions->initialize();
 				}
 				else
@@ -1698,7 +1698,7 @@ class DC_Folder extends \DataContainer implements \listable, \editable
 			$this->redirect('contao/main.php?act=error');
 		}
 
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 
 		// Check user permission
 		if (!$this->User->hasAccess('f5', 'fop'))
@@ -1729,7 +1729,7 @@ class DC_Folder extends \DataContainer implements \listable, \editable
 				$objMeta = \Dbafs::addResource($objFile->value);
 			}
 
-			$objVersions = new \Versions($this->strTable, $objMeta->id);
+			$objVersions = new Versions($this->strTable, $objMeta->id);
 
 			if (!$GLOBALS['TL_DCA'][$this->strTable]['config']['hideVersionMenu'])
 			{
@@ -2144,7 +2144,7 @@ class DC_Folder extends \DataContainer implements \listable, \editable
 			return '';
 		}
 
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 		$this->loadLanguageFile('tl_files');
 
 		// Check the permission to synchronize
@@ -2285,7 +2285,7 @@ class DC_Folder extends \DataContainer implements \listable, \editable
 		}
 
 		$this->import('Files');
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 
 		return $this->generateTree(TL_ROOT.'/'.$strFolder, ($level * 20), false, $blnProtected, ($blnClipboard ? $arrClipboard : false));
 	}
@@ -2603,7 +2603,7 @@ class DC_Folder extends \DataContainer implements \listable, \editable
 		// Do not allow file operations on root folders
 		if (\Input::get('act') == 'edit' || \Input::get('act') == 'paste' || \Input::get('act') == 'delete')
 		{
-			$this->import('BackendUser', 'User');
+			$this->import('Contao\\BackendUser', 'User');
 
 			if (!$this->User->isAdmin && in_array($strFile, $this->User->filemounts))
 			{

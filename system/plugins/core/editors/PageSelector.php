@@ -60,7 +60,7 @@ class PageSelector extends \Editor
 	 */
 	public function generate()
 	{
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 
 		// Store the keyword
 		if (\Input::post('FORM_SUBMIT') == 'item_selector')

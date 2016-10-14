@@ -26,7 +26,7 @@ if (Input::get('do') == 'news')
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_content_news extends Backend
+class tl_content_news extends \Contao\Backend
 {
 
 	/**
@@ -35,7 +35,7 @@ class tl_content_news extends Backend
 	public function __construct()
 	{
 		parent::__construct();
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 	}
 
 
@@ -171,7 +171,7 @@ class tl_content_news extends Backend
 			return;
 		}
 
-		$this->import('News');
+		$this->import('Contao\News', 'News');
 
 		foreach ($session as $id)
 		{

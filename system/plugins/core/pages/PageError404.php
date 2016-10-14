@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class PageError404 extends \Frontend
+class PageError404 extends Frontend
 {
 
 	/**

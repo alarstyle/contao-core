@@ -15,7 +15,7 @@
 ClassLoader::addClasses(array
 (
 	// Classes
-	'Contao\News'              => 'system/plugins/news/classes/News.php',
+	//'Contao\News'              => 'system/plugins/news/classes/News.php',
 
 	// Models
 	'Contao\NewsArchiveModel'  => 'system/plugins/news/models/NewsArchiveModel.php',

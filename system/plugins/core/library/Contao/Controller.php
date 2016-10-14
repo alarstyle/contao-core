@@ -629,7 +629,7 @@ abstract class Controller extends \System
 				{
 					$groups = deserialize($objElement->groups);
 
-					if (empty($groups) || !is_array($groups) || !count(array_intersect($groups, \FrontendUser::getInstance()->groups)))
+					if (empty($groups) || !is_array($groups) || !count(array_intersect($groups, FrontendUser::getInstance()->groups)))
 					{
 						$blnReturn = false;
 					}
@@ -746,7 +746,7 @@ abstract class Controller extends \System
 		// Command scheduler
 		if (!\Config::get('disableCron'))
 		{
-			$strScripts .= "\n" . \Template::generateInlineScript('setTimeout(function(){var e=function(e,t){try{var n=new XMLHttpRequest}catch(r){return}n.open("GET",e,!0),n.onreadystatechange=function(){this.readyState==4&&this.status==200&&typeof t=="function"&&t(this.responseText)},n.send()},t="system/cron/cron.";e(t+"txt",function(n){parseInt(n||0)<Math.round(+(new Date)/1e3)-' . \Frontend::getCronTimeout() . '&&e(t+"php")})},5e3);') . "\n";
+			$strScripts .= "\n" . \Template::generateInlineScript('setTimeout(function(){var e=function(e,t){try{var n=new XMLHttpRequest}catch(r){return}n.open("GET",e,!0),n.onreadystatechange=function(){this.readyState==4&&this.status==200&&typeof t=="function"&&t(this.responseText)},n.send()},t="system/cron/cron.";e(t+"txt",function(n){parseInt(n||0)<Math.round(+(new Date)/1e3)-' . Frontend::getCronTimeout() . '&&e(t+"php")})},5e3);') . "\n";
 		}
 
 		$arrReplace['[[TL_BODY]]'] = $strScripts;
@@ -1657,11 +1657,11 @@ abstract class Controller extends \System
 
 				$strHref .= (strpos($strHref, '?') !== false ? '&amp;' : '?') . 'file=' . \System::urlEncode($objFiles->path);
 
-				$arrMeta = \Frontend::getMetaData($objFiles->meta, $objPage->language);
+				$arrMeta = Frontend::getMetaData($objFiles->meta, $objPage->language);
 
 				if (empty($arrMeta) && $objPage->rootFallbackLanguage !== null)
 				{
-					$arrMeta = \Frontend::getMetaData($objFiles->meta, $objPage->rootFallbackLanguage);
+					$arrMeta = Frontend::getMetaData($objFiles->meta, $objPage->rootFallbackLanguage);
 				}
 
 				// Use the file name as title if none is given
@@ -1720,9 +1720,9 @@ abstract class Controller extends \System
 
 		foreach ($arrConstants as $strKey=>$strConstant)
 		{
-			$url = ($objPage !== null) ? $objPage->$strKey : \Config::get($strKey);
+			$url = ($objPage !== null) ? $objPage->$strKey : Config::get($strKey);
 
-			if ($url == '' || \Config::get('debugMode'))
+			if ($url == '' || Config::get('debugMode'))
 			{
 				define($strConstant, '');
 			}
@@ -2045,7 +2045,7 @@ abstract class Controller extends \System
 	 */
 	protected function createNewVersion($strTable, $intId)
 	{
-		$objVersions = new \Versions($strTable, $intId);
+		$objVersions = new Versions($strTable, $intId);
 		$objVersions->create();
 	}
 }

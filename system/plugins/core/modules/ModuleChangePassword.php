@@ -65,7 +65,7 @@ class ModuleChangePassword extends \Module
 		/** @var \PageModel $objPage */
 		global $objPage;
 
-		$this->import('FrontendUser', 'User');
+		$this->import('Contao\\FrontendUser', 'User');
 
 		$GLOBALS['TL_LANGUAGE'] = $objPage->language;
 
@@ -89,11 +89,11 @@ class ModuleChangePassword extends \Module
 		$row = 0;
 		$strFields = '';
 		$doNotSubmit = false;
-		$objMember = \MemberModel::findByPk($this->User->id);
+		$objMember = MemberModel::findByPk($this->User->id);
 		$strTable = $objMember->getTable();
 
 		// Initialize the versioning (see #8301)
-		$objVersions = new \Versions($strTable, $objMember->id);
+		$objVersions = new Versions($strTable, $objMember->id);
 		$objVersions->setUsername($objMember->username);
 		$objVersions->setUserId(0);
 		$objVersions->setEditUrl('contao/main.php?do=member&act=edit&id=%s&rt=1');

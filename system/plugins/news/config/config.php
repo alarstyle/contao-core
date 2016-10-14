@@ -42,15 +42,15 @@ array_insert($GLOBALS['FE_MOD'], 2, array
 /**
  * Cron jobs
  */
-$GLOBALS['TL_CRON']['daily'][] = array('News', 'generateFeeds');
+$GLOBALS['TL_CRON']['daily'][] = array('Contao\News', 'generateFeeds');
 
 
 /**
  * Register hook to add news items to the indexer
  */
-$GLOBALS['TL_HOOKS']['removeOldFeeds'][] = array('News', 'purgeOldFeeds');
-$GLOBALS['TL_HOOKS']['getSearchablePages'][] = array('News', 'getSearchablePages');
-$GLOBALS['TL_HOOKS']['generateXmlFiles'][] = array('News', 'generateFeeds');
+$GLOBALS['TL_HOOKS']['removeOldFeeds'][] = array('Contao\News', 'purgeOldFeeds');
+$GLOBALS['TL_HOOKS']['getSearchablePages'][] = array('Contao\News', 'getSearchablePages');
+$GLOBALS['TL_HOOKS']['generateXmlFiles'][] = array('Contao\News', 'generateFeeds');
 
 
 /**

@@ -53,7 +53,7 @@ class ModuleLogout extends \Module
 			$_SESSION['LAST_PAGE_VISITED'] = $this->getReferer();
 		}
 
-		$this->import('FrontendUser', 'User');
+		$this->import('Contao\\FrontendUser', 'User');
 		$strRedirect = \Environment::get('base');
 
 		// Redirect to last page visited

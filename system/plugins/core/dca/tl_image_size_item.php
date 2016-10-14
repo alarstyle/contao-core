@@ -213,7 +213,7 @@ $GLOBALS['TL_DCA']['tl_image_size_item'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_image_size_item extends Backend
+class tl_image_size_item extends \Contao\Backend
 {
 
 	/**
@@ -222,7 +222,7 @@ class tl_image_size_item extends Backend
 	public function __construct()
 	{
 		parent::__construct();
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 	}
 
 

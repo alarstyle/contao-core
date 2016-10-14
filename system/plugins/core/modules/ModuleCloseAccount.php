@@ -62,7 +62,7 @@ class ModuleCloseAccount extends \Module
 	 */
 	protected function compile()
 	{
-		$this->import('FrontendUser', 'User');
+		$this->import('Contao\\FrontendUser', 'User');
 
 		// Initialize the password editor
 		$arrField = array

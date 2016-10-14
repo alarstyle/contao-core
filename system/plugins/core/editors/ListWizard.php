@@ -152,14 +152,14 @@ class ListWizard extends \Editor
 	 *
 	 * @return string
 	 */
-	public function importList(\DataContainer $dc)
+	public function importList(DataContainer $dc)
 	{
 		if (\Input::get('key') != 'list')
 		{
 			return '';
 		}
 
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 		$class = $this->User->uploader;
 
 		// See #4086 and #7046
@@ -223,14 +223,14 @@ class ListWizard extends \Editor
 				}
 			}
 
-			$objVersions = new \Versions($dc->table, \Input::get('id'));
+			$objVersions = new Versions($dc->table, \Input::get('id'));
 			$objVersions->create();
 
 			$this->Database->prepare("UPDATE " . $dc->table . " SET listitems=? WHERE id=?")
 						   ->execute(serialize($arrList), \Input::get('id'));
 
-			\System::setCookie('BE_PAGE_OFFSET', 0, 0);
-			$this->redirect(str_replace('&key=list', '', \Environment::get('request')));
+			System::setCookie('BE_PAGE_OFFSET', 0, 0);
+			$this->redirect(str_replace('&key=list', '', Environment::get('request')));
 		}
 
 		// Return form

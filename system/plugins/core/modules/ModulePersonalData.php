@@ -69,7 +69,7 @@ class ModulePersonalData extends \Module
 		/** @var \PageModel $objPage */
 		global $objPage;
 
-		$this->import('FrontendUser', 'User');
+		$this->import('Contao\\FrontendUser', 'User');
 
 		$GLOBALS['TL_LANGUAGE'] = $objPage->language;
 
@@ -97,7 +97,7 @@ class ModulePersonalData extends \Module
 		if ($this->memberTpl != '')
 		{
 			/** @var \FrontendTemplate|object $objTemplate */
-			$objTemplate = new \FrontendTemplate($this->memberTpl);
+			$objTemplate = new FrontendTemplate($this->memberTpl);
 
 			$this->Template = $objTemplate;
 			$this->Template->setData($this->arrData);
@@ -122,11 +122,11 @@ class ModulePersonalData extends \Module
 		);
 
 		$blnModified = false;
-		$objMember = \MemberModel::findByPk($this->User->id);
+		$objMember = MemberModel::findByPk($this->User->id);
 		$strTable = $objMember->getTable();
 
 		// Initialize the versioning (see #7415)
-		$objVersions = new \Versions($strTable, $objMember->id);
+		$objVersions = new Versions($strTable, $objMember->id);
 		$objVersions->setUsername($objMember->username);
 		$objVersions->setUserId(0);
 		$objVersions->setEditUrl('contao/main.php?do=member&act=edit&id=%s&rt=1');

@@ -37,7 +37,7 @@ namespace Contao;
  * @property \Input                                    $Input       The input object
  * @property \Database\Installer                       $Installer   The database installer object
  * @property \Database\Updater                         $Updater     The database updater object
- * @property \Messages                                 $Messages    The messages object
+ * @property Messages                                 $Messages    The messages object
  * @property \News                                     $News        The news object
  * @property \Session                                  $Session     The session object
  * @property \StyleSheets                              $StyleSheets The style sheets object
@@ -900,7 +900,7 @@ abstract class System
 	 */
 	protected function addErrorMessage($strMessage)
 	{
-		\Message::addError($strMessage);
+		Message::addError($strMessage);
 	}
 
 
@@ -913,7 +913,7 @@ abstract class System
 	 */
 	protected function addConfirmationMessage($strMessage)
 	{
-		\Message::addConfirmation($strMessage);
+		Message::addConfirmation($strMessage);
 	}
 
 
@@ -926,7 +926,7 @@ abstract class System
 	 */
 	protected function addNewMessage($strMessage)
 	{
-		\Message::addNew($strMessage);
+		Message::addNew($strMessage);
 	}
 
 
@@ -939,7 +939,7 @@ abstract class System
 	 */
 	protected function addInfoMessage($strMessage)
 	{
-		\Message::addInfo($strMessage);
+		Message::addInfo($strMessage);
 	}
 
 
@@ -952,7 +952,7 @@ abstract class System
 	 */
 	protected function addRawMessage($strMessage)
 	{
-		\Message::addRaw($strMessage);
+		Message::addRaw($strMessage);
 	}
 
 
@@ -966,7 +966,7 @@ abstract class System
 	 */
 	protected function addMessage($strMessage, $strType)
 	{
-		\Message::add($strMessage, $strType);
+		Message::add($strMessage, $strType);
 	}
 
 
@@ -982,7 +982,7 @@ abstract class System
 	 */
 	protected function getMessages($blnDcLayout=false, $blnNoWrapper=false)
 	{
-		return \Message::generate($blnDcLayout, $blnNoWrapper);
+		return Message::generate($blnDcLayout, $blnNoWrapper);
 	}
 
 
@@ -993,7 +993,7 @@ abstract class System
 	 */
 	protected function resetMessages()
 	{
-		\Message::reset();
+		Message::reset();
 	}
 
 
@@ -1006,7 +1006,7 @@ abstract class System
 	 */
 	protected function getMessageTypes()
 	{
-		return \Message::getTypes();
+		return Message::getTypes();
 	}
 
 

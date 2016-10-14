@@ -834,7 +834,7 @@ class Image
 			return 'assets/contao/images/' . $src;
 		}
 
-		return 'system/themes/' . \Backend::getTheme() . '/images/' . $src;
+		return 'system/themes/' . Backend::getTheme() . '/images/' . $src;
 	}
 
 

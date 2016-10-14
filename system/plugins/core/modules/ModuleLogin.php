@@ -63,7 +63,7 @@ class ModuleLogin extends \Module
 				$this->reload();
 			}
 
-			$this->import('FrontendUser', 'User');
+			$this->import('Contao\\FrontendUser', 'User');
 			$strRedirect = \Environment::get('request');
 
 			// Redirect to the last page visited
@@ -121,7 +121,7 @@ class ModuleLogin extends \Module
 			/** @var \PageModel $objPage */
 			global $objPage;
 
-			$this->import('FrontendUser', 'User');
+			$this->import('Contao\\FrontendUser', 'User');
 			$strRedirect = \Environment::get('request');
 
 			// Redirect to last page visited
@@ -157,11 +157,11 @@ class ModuleLogin extends \Module
 		// Show logout form
 		if (FE_USER_LOGGED_IN)
 		{
-			$this->import('FrontendUser', 'User');
+			$this->import('Contao\\FrontendUser', 'User');
 			$this->strTemplate = ($this->cols > 1) ? 'mod_logout_2cl' : 'mod_logout_1cl';
 
 			/** @var \FrontendTemplate|object $objTemplate */
-			$objTemplate = new \FrontendTemplate($this->strTemplate);
+			$objTemplate = new FrontendTemplate($this->strTemplate);
 
 			$this->Template = $objTemplate;
 			$this->Template->setData($this->arrData);
@@ -184,7 +184,7 @@ class ModuleLogin extends \Module
 		$this->strTemplate = ($this->cols > 1) ? 'mod_login_2cl' : 'mod_login_1cl';
 
 		/** @var \FrontendTemplate|object $objTemplate */
-		$objTemplate = new \FrontendTemplate($this->strTemplate);
+		$objTemplate = new FrontendTemplate($this->strTemplate);
 
 		$this->Template = $objTemplate;
 		$this->Template->setData($this->arrData);

@@ -23,7 +23,7 @@ namespace Contao;
  * @author Leo Feyer <https://github.com/leofeyer>
  * @author Andreas Schempp <https://github.com/aschempp>
  */
-class DC_Table extends \DataContainer implements \listable, \editable
+class DC_Table extends DataContainer implements \listable, \editable
 {
 
 	/**
@@ -1510,7 +1510,7 @@ class DC_Table extends \DataContainer implements \listable, \editable
 			}
 		}
 
-		$this->import('BackendUser', 'User');
+		$this->import('\Contao\BackendUser', 'User');
 
 		$objUndoStmt = $this->Database->prepare("INSERT INTO tl_undo (pid, tstamp, fromTable, query, affectedRows, data) VALUES (?, ?, ?, ?, ?, ?)")
 									  ->execute($this->User->id, time(), $this->strTable, 'DELETE FROM '.$this->strTable.' WHERE id='.$this->intId, $affected, serialize($data));
@@ -1797,7 +1797,7 @@ class DC_Table extends \DataContainer implements \listable, \editable
 		$this->procedure[] = 'id=?';
 
 		$this->blnCreateNewVersion = false;
-		$objVersions = new \Versions($this->strTable, $this->intId);
+		$objVersions = new Versions($this->strTable, $this->intId);
 
 		if (!$GLOBALS['TL_DCA'][$this->strTable]['config']['hideVersionMenu'])
 		{
@@ -2191,7 +2191,7 @@ class DC_Table extends \DataContainer implements \listable, \editable
 		}
 
 		$return = '';
-		$this->import('BackendUser', 'User');
+		$this->import('\Contao\BackendUser', 'User');
 
 		// Get current IDs from session
 		$session = $this->Session->getData();
@@ -2225,7 +2225,7 @@ class DC_Table extends \DataContainer implements \listable, \editable
 				$this->blnCreateNewVersion = false;
 				$this->strPalette = trimsplit('[;,]', $this->getPalette());
 
-				$objVersions = new \Versions($this->strTable, $this->intId);
+				$objVersions = new Versions($this->strTable, $this->intId);
 				$objVersions->initialize();
 
 				// Add meta fields if the current user is an administrator
@@ -2576,7 +2576,7 @@ class DC_Table extends \DataContainer implements \listable, \editable
 		}
 
 		$return = '';
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 
 		// Get current IDs from session
 		$session = $this->Session->getData();
@@ -2615,7 +2615,7 @@ class DC_Table extends \DataContainer implements \listable, \editable
 					// Store the active record
 					$this->objActiveRecord = $objRow;
 
-					$objVersions = new \Versions($this->strTable, $this->intId);
+					$objVersions = new Versions($this->strTable, $this->intId);
 					$objVersions->initialize();
 
 					// Store all fields
@@ -3910,7 +3910,7 @@ class DC_Table extends \DataContainer implements \listable, \editable
 		// List all records of the child table
 		if (!\Input::get('act') || \Input::get('act') == 'paste' || \Input::get('act') == 'select')
 		{
-			$this->import('BackendUser', 'User');
+			$this->import('\Contao\BackendUser', 'User');
 
 			// Header
 			$imagePasteNew = \Image::getHtml('new.gif', $GLOBALS['TL_LANG'][$this->strTable]['pastenew'][0]);
@@ -4867,7 +4867,7 @@ class DC_Table extends \DataContainer implements \listable, \editable
 				$submit = '
 
 <div class="tl_submit_panel tl_subpanel">
-<input type="image" name="filter" id="filter" src="' . TL_FILES_URL . 'system/themes/' . \Backend::getTheme() . '/images/reload.gif" class="tl_img_submit" title="' . specialchars($GLOBALS['TL_LANG']['MSC']['applyTitle']) . '" alt="' . specialchars($GLOBALS['TL_LANG']['MSC']['apply']) . '">
+<input type="image" name="filter" id="filter" src="' . TL_FILES_URL . 'system/themes/' . Backend::getTheme() . '/images/reload.gif" class="tl_img_submit" title="' . specialchars($GLOBALS['TL_LANG']['MSC']['applyTitle']) . '" alt="' . specialchars($GLOBALS['TL_LANG']['MSC']['apply']) . '">
 </div>';
 			}
 
@@ -5644,7 +5644,7 @@ class DC_Table extends \DataContainer implements \listable, \editable
 		// Set the limit filter based on the page number
 		if (isset($_GET['lp']))
 		{
-			$lp = intval(\Input::get('lp')) - 1;
+			$lp = intval(Input::get('lp')) - 1;
 
 			if ($lp >= 0 && $lp < ceil($this->total / $limit))
 			{
@@ -5652,15 +5652,15 @@ class DC_Table extends \DataContainer implements \listable, \editable
 				$this->Session->setData($session);
 			}
 
-			$this->redirect(preg_replace('/&(amp;)?lp=[^&]+/i', '', \Environment::get('request')));
+			$this->redirect(preg_replace('/&(amp;)?lp=[^&]+/i', '', Environment::get('request')));
 		}
 
 		if ($limit) // see #6923
 		{
-			\Input::setGet('lp', $offset / $limit + 1);
+			Input::setGet('lp', $offset / $limit + 1);
 		}
 
-		$objPagination = new \Pagination($this->total, $limit, 7, 'lp', new \BackendTemplate('be_pagination'), true);
+		$objPagination = new Pagination($this->total, $limit, 7, 'lp', new BackendTemplate('be_pagination'), true);
 
 		return $objPagination->generate();
 	}

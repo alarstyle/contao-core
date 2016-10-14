@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class StyleSheets extends \Backend
+class StyleSheets extends Backend
 {
 
 	/**
@@ -1088,7 +1088,7 @@ class StyleSheets extends \Backend
 			return '';
 		}
 
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 		$class = $this->User->uploader;
 
 		// See #4086 and #7046
@@ -1363,11 +1363,11 @@ class StyleSheets extends \Backend
 	/**
 	 * Export a style sheet
 	 *
-	 * @param \DataContainer $dc
+	 * @param DataContainer $dc
 	 *
 	 * @throws \Exception
 	 */
-	public function exportStyleSheet(\DataContainer $dc)
+	public function exportStyleSheet(DataContainer $dc)
 	{
 		$objStyleSheet = $this->Database->prepare("SELECT * FROM tl_style_sheet WHERE id=?")
 										->limit(1)

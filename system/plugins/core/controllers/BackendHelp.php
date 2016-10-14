@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class BackendHelp extends \Backend
+class BackendHelp extends Backend
 {
 
 	/**
@@ -30,7 +30,7 @@ class BackendHelp extends \Backend
 	 */
 	public function __construct()
 	{
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 		parent::__construct();
 
 		$this->User->authenticate();
@@ -52,7 +52,7 @@ class BackendHelp extends \Backend
 		$this->loadDataContainer($table);
 
 		/** @var \BackendTemplate|object $objTemplate */
-		$objTemplate = new \BackendTemplate('be_help');
+		$objTemplate = new BackendTemplate('be_help');
 		$objTemplate->rows = array();
 		$objTemplate->explanation = '';
 

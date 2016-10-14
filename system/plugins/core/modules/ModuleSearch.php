@@ -80,7 +80,7 @@ class ModuleSearch extends \Module
 		$strKeywords = trim(\Input::get('keywords'));
 
 		/** @var \FrontendTemplate|object $objFormTemplate */
-		$objFormTemplate = new \FrontendTemplate((($this->searchType == 'advanced') ? 'mod_search_advanced' : 'mod_search_simple'));
+		$objFormTemplate = new FrontendTemplate((($this->searchType == 'advanced') ? 'mod_search_advanced' : 'mod_search_simple'));
 
 		$objFormTemplate->uniqueId = $this->id;
 		$objFormTemplate->queryType = $strQueryType;
@@ -181,7 +181,7 @@ class ModuleSearch extends \Module
 			// Sort out protected pages
 			if (\Config::get('indexProtected') && !BE_USER_LOGGED_IN)
 			{
-				$this->import('FrontendUser', 'User');
+				$this->import('Contao\\FrontendUser', 'User');
 
 				foreach ($arrResult as $k=>$v)
 				{
@@ -256,7 +256,7 @@ class ModuleSearch extends \Module
 			for ($i=($from-1); $i<$to && $i<$count; $i++)
 			{
 				/** @var \FrontendTemplate|object $objTemplate */
-				$objTemplate = new \FrontendTemplate($this->searchTpl ?: 'search_default');
+				$objTemplate = new FrontendTemplate($this->searchTpl ?: 'search_default');
 
 				$objTemplate->url = $arrResult[$i]['url'];
 				$objTemplate->link = $arrResult[$i]['title'];

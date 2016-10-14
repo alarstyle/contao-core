@@ -101,7 +101,7 @@ class ModuleRssReader extends \Module
 			$this->strTemplate = $this->rss_template;
 
 			/** @var \FrontendTemplate|object $objTemplate */
-			$objTemplate = new \FrontendTemplate($this->strTemplate);
+			$objTemplate = new FrontendTemplate($this->strTemplate);
 
 			$this->Template = $objTemplate;
 			$this->Template->setData($this->arrData);

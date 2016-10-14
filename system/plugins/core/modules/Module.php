@@ -137,7 +137,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-abstract class Module extends \Frontend
+abstract class Module extends Frontend
 {
 
 	/**
@@ -281,7 +281,7 @@ abstract class Module extends \Frontend
 			$this->arrStyle[] = 'margin-bottom:'.$this->arrData['space'][1].'px;';
 		}
 
-		$this->Template = new \FrontendTemplate($this->strTemplate);
+		$this->Template = new FrontendTemplate($this->strTemplate);
 		$this->Template->setData($this->arrData);
 
 		$this->compile();
@@ -344,7 +344,7 @@ abstract class Module extends \Frontend
 		// Get all groups of the current front end user
 		if (FE_USER_LOGGED_IN)
 		{
-			$this->import('FrontendUser', 'User');
+			$this->import('Contao\\FrontendUser', 'User');
 			$groups = $this->User->groups;
 		}
 
@@ -355,7 +355,7 @@ abstract class Module extends \Frontend
 		}
 
 		/** @var \FrontendTemplate|object $objTemplate */
-		$objTemplate = new \FrontendTemplate($this->navigationTpl);
+		$objTemplate = new FrontendTemplate($this->navigationTpl);
 
 		$objTemplate->pid = $pid;
 		$objTemplate->type = get_class($this);

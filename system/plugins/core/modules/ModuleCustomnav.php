@@ -75,7 +75,7 @@ class ModuleCustomnav extends \Module
 		// Get all groups of the current front end user
 		if (FE_USER_LOGGED_IN)
 		{
-			$this->import('FrontendUser', 'User');
+			$this->import('Contao\\FrontendUser', 'User');
 			$groups = $this->User->groups;
 		}
 
@@ -116,7 +116,7 @@ class ModuleCustomnav extends \Module
 		}
 
 		/** @var \FrontendTemplate|object $objTemplate */
-		$objTemplate = new \FrontendTemplate($this->navigationTpl);
+		$objTemplate = new FrontendTemplate($this->navigationTpl);
 
 		$objTemplate->type = get_class($this);
 		$objTemplate->cssID = $this->cssID; // see #4897 and 6129

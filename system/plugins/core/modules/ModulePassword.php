@@ -183,7 +183,7 @@ class ModulePassword extends \Module
 			$this->strTemplate = 'mod_message';
 
 			/** @var \FrontendTemplate|object $objTemplate */
-			$objTemplate = new \FrontendTemplate($this->strTemplate);
+			$objTemplate = new FrontendTemplate($this->strTemplate);
 
 			$this->Template = $objTemplate;
 			$this->Template->type = 'error';
@@ -195,7 +195,7 @@ class ModulePassword extends \Module
 		$strTable = $objMember->getTable();
 
 		// Initialize the versioning (see #8301)
-		$objVersions = new \Versions($strTable, $objMember->id);
+		$objVersions = new Versions($strTable, $objMember->id);
 		$objVersions->setUsername($objMember->username);
 		$objVersions->setUserId(0);
 		$objVersions->setEditUrl('contao/main.php?do=member&act=edit&id=%s&rt=1');
@@ -264,7 +264,7 @@ class ModulePassword extends \Module
 				$this->strTemplate = 'mod_message';
 
 				/** @var \FrontendTemplate|object $objTemplate */
-				$objTemplate = new \FrontendTemplate($this->strTemplate);
+				$objTemplate = new FrontendTemplate($this->strTemplate);
 
 				$this->Template = $objTemplate;
 				$this->Template->type = 'confirm';

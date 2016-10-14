@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ModuleLabels extends \BackendModule
+class ModuleLabels extends BackendModule
 {
 
 	/**

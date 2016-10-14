@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class Ajax extends \Backend
+class Ajax extends Backend
 {
 
 	/**
@@ -83,10 +83,10 @@ class Ajax extends \Backend
 				$bemod[\Input::post('id')] = intval(\Input::post('state'));
 				$this->Session->set('backend_modules', $bemod);
 
-				$this->import('BackendUser', 'User');
+				$this->import('Contao\\BackendUser', 'User');
 
 				/** @var \BackendTemplate|object $objTemplate */
-				$objTemplate = new \BackendTemplate('be_navigation');
+				$objTemplate = new BackendTemplate('be_navigation');
 				$navigation = $this->User->navigation();
 				$objTemplate->modules = $navigation[\Input::post('id')]['modules'];
 
@@ -163,9 +163,9 @@ class Ajax extends \Backend
 	/**
 	 * Ajax actions that do require a data container object
 	 *
-	 * @param \DataContainer $dc
+	 * @param DataContainer $dc
 	 */
-	public function executePostActions(\DataContainer $dc)
+	public function executePostActions(DataContainer $dc)
 	{
 		header('Content-Type: text/html; charset=' . \Config::get('characterSet'));
 
@@ -336,7 +336,7 @@ class Ajax extends \Backend
 
 			// Toggle subpalettes
 			case 'toggleSubpalette':
-				$this->import('BackendUser', 'User');
+				$this->import('Contao\\BackendUser', 'User');
 
 				// Check whether the field is a selector field and allowed for regular users (thanks to Fabian Mihailowitsch) (see #4427)
 				if (!is_array($GLOBALS['TL_DCA'][$dc->table]['palettes']['__selector__']) || !in_array(\Input::post('field'), $GLOBALS['TL_DCA'][$dc->table]['palettes']['__selector__']) || ($GLOBALS['TL_DCA'][$dc->table]['fields'][\Input::post('field')]['exclude'] && !$this->User->hasAccess($dc->table . '::' . \Input::post('field'), 'alexf')))
@@ -397,9 +397,9 @@ class Ajax extends \Backend
 	/**
 	 * Execute the post actions hook
 	 *
-	 * @param \DataContainer $dc
+	 * @param DataContainer $dc
 	 */
-	protected function executePostActionsHook(\DataContainer $dc)
+	protected function executePostActionsHook(DataContainer $dc)
 	{
 		if (isset($GLOBALS['TL_HOOKS']['executePostActions']) && is_array($GLOBALS['TL_HOOKS']['executePostActions']))
 		{

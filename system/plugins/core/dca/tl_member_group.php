@@ -176,7 +176,10 @@ $GLOBALS['TL_DCA']['tl_member_group'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_member_group extends Backend
+
+use \Contao\DataContainer;
+
+class tl_member_group extends \Contao\Backend
 {
 
 	/**
@@ -185,7 +188,7 @@ class tl_member_group extends Backend
 	public function __construct()
 	{
 		parent::__construct();
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 	}
 
 

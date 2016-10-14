@@ -233,7 +233,8 @@ $GLOBALS['TL_DCA']['tl_files'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_files extends Backend
+
+class tl_files extends \Contao\Backend
 {
 
 	/**
@@ -242,7 +243,7 @@ class tl_files extends Backend
 	public function __construct()
 	{
 		parent::__construct();
-		$this->import('BackendUser', 'User');
+		$this->import('\Contao\BackendUser', 'User');
 	}
 
 
@@ -406,7 +407,7 @@ class tl_files extends Backend
 	 */
 	public function addBreadcrumb()
 	{
-		Backend::addFilesBreadcrumb();
+		\Contao\Backend::addFilesBreadcrumb();
 	}
 
 

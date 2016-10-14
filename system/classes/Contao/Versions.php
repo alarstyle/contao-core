@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class Versions extends \Controller
+class Versions extends Controller
 {
 
 	/**
@@ -505,8 +505,8 @@ class Versions extends \Controller
 			$strBuffer = '<p>'.$GLOBALS['TL_LANG']['MSC']['identicalVersions'].'</p>';
 		}
 
-		/** @var \BackendTemplate|object $objTemplate */
-		$objTemplate = new \BackendTemplate('be_diff');
+		/** @var BackendTemplate|object $objTemplate */
+		$objTemplate = new BackendTemplate('be_diff');
 
 		// Template variables
 		$objTemplate->content = $strBuffer;
@@ -514,11 +514,11 @@ class Versions extends \Controller
 		$objTemplate->to = $intTo;
 		$objTemplate->from = $intFrom;
 		$objTemplate->showLabel = specialchars($GLOBALS['TL_LANG']['MSC']['showDifferences']);
-		$objTemplate->theme = \Backend::getTheme();
-		$objTemplate->base = \Environment::get('base');
+		$objTemplate->theme = Backend::getTheme();
+		$objTemplate->base = Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($GLOBALS['TL_LANG']['MSC']['showDifferences']);
-		$objTemplate->charset = \Config::get('characterSet');
+		$objTemplate->charset = Config::get('characterSet');
 		$objTemplate->action = ampersand(\Environment::get('request'));
 
 		\Config::set('debugMode', false);
@@ -561,7 +561,7 @@ class Versions extends \Controller
 <select name="version" class="tl_select">'.$versions.'
 </select>
 <input type="submit" name="showVersion" id="showVersion" class="tl_submit" value="'.specialchars($GLOBALS['TL_LANG']['MSC']['restore']).'">
-<a href="'.\Backend::addToUrl('versions=1&amp;popup=1').'" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['showDifferences']).'" onclick="Backend.openModalIframe({\'width\':768,\'title\':\''.specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MSC']['showDifferences'])).'\',\'url\':this.href});return false">'.\Image::getHtml('diff.gif').'</a>
+<a href="'.Backend::addToUrl('versions=1&amp;popup=1').'" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['showDifferences']).'" onclick="Backend.openModalIframe({\'width\':768,\'title\':\''.specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MSC']['showDifferences'])).'\',\'url\':this.href});return false">'.\Image::getHtml('diff.gif').'</a>
 </div>
 </form>
 
@@ -573,14 +573,14 @@ class Versions extends \Controller
 	/**
 	 * Add a list of versions to a template
 	 *
-	 * @param \BackendTemplate|object $objTemplate
+	 * @param BackendTemplate|object $objTemplate
 	 */
-	public static function addToTemplate(\BackendTemplate $objTemplate)
+	public static function addToTemplate(BackendTemplate $objTemplate)
 	{
 		$arrVersions = array();
 
-		$objUser = \BackendUser::getInstance();
-		$objDatabase = \Database::getInstance();
+		$objUser = BackendUser::getInstance();
+		$objDatabase = Database::getInstance();
 
 		// Get the total number of versions
 		$objTotal = $objDatabase->prepare("SELECT COUNT(*) AS count FROM tl_version WHERE version>1" . (!$objUser->isAdmin ? " AND userid=?" : ""))
@@ -597,7 +597,7 @@ class Versions extends \Controller
 		}
 
 		// Create the pagination menu
-		$objPagination = new \Pagination($objTotal->count, 30, 7, 'vp', new \BackendTemplate('be_pagination'));
+		$objPagination = new Pagination($objTotal->count, 30, 7, 'vp', new BackendTemplate('be_pagination'));
 		$objTemplate->pagination = $objPagination->generate();
 
 		// Get the versions
@@ -702,7 +702,7 @@ class Versions extends \Controller
 			return $this->strUsername;
 		}
 
-		$this->import('BackendUser', 'User');
+		$this->import('\Contao\BackendUser', 'User');
 
 		return $this->User->username;
 	}
@@ -720,7 +720,7 @@ class Versions extends \Controller
 			return $this->intUserId;
 		}
 
-		$this->import('BackendUser', 'User');
+		$this->import('\Contao\BackendUser', 'User');
 
 		return $this->User->id;
 	}

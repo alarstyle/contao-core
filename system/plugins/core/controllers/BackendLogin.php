@@ -6,7 +6,7 @@ namespace Contao;
 /**
  * Handle back end logins and logouts.
  */
-class BackendLogin extends \Backend
+class BackendLogin extends Backend
 {
 
     /**
@@ -20,7 +20,7 @@ class BackendLogin extends \Backend
      */
     public function __construct()
     {
-        $this->import('BackendUser', 'User');
+        $this->import('\Contao\BackendUser', 'User');
         parent::__construct();
 
         // Login
@@ -59,8 +59,8 @@ class BackendLogin extends \Backend
      */
     public function run()
     {
-        /** @var \BackendTemplate|object $objTemplate */
-        $objTemplate = new \BackendTemplate('be_login');
+        /** @var BackendTemplate|object $objTemplate */
+        $objTemplate = new BackendTemplate('be_login');
 
         // Show a cookie warning
         if (\Input::get('referer', true) != '' && empty($_COOKIE))
@@ -70,24 +70,24 @@ class BackendLogin extends \Backend
 
         $strHeadline = sprintf($GLOBALS['TL_LANG']['MSC']['loginTo'], \Config::get('websiteTitle'));
 
-        $objTemplate->theme = \Backend::getTheme();
-        $objTemplate->messages = \Message::generate();
-        $objTemplate->base = \Environment::get('base');
+        $objTemplate->theme = Backend::getTheme();
+        $objTemplate->messages = Message::generate();
+        $objTemplate->base = Environment::get('base');
         $objTemplate->language = $GLOBALS['TL_LANGUAGE'];
-        $objTemplate->languages = \System::getLanguages(true);
+        $objTemplate->languages = System::getLanguages(true);
         $objTemplate->title = specialchars($strHeadline);
-        $objTemplate->charset = \Config::get('characterSet');
+        $objTemplate->charset = Config::get('characterSet');
         $objTemplate->action = ampersand(\Environment::get('request'));
         $objTemplate->headline = $strHeadline;
-        $objTemplate->curUsername = \Input::post('username') ?: '';
+        $objTemplate->curUsername = Input::post('username') ?: '';
         $objTemplate->uClass = ($_POST && empty($_POST['username'])) ? ' class="login_error"' : '';
         $objTemplate->pClass = ($_POST && empty($_POST['password'])) ? ' class="login_error"' : '';
         $objTemplate->loginButton = specialchars($GLOBALS['TL_LANG']['MSC']['loginBT']);
         $objTemplate->username = $GLOBALS['TL_LANG']['tl_user']['username'][0];
         $objTemplate->password = $GLOBALS['TL_LANG']['MSC']['password'][0];
         $objTemplate->feLink = $GLOBALS['TL_LANG']['MSC']['feLink'];
-        $objTemplate->frontendUrl = \Environment::get('base');
-        $objTemplate->disableCron = \Config::get('disableCron');
+        $objTemplate->frontendUrl = Environment::get('base');
+        $objTemplate->disableCron = Config::get('disableCron');
 
         $objTemplate->output();
     }

@@ -260,11 +260,11 @@ abstract class BaseTemplate extends \Controller
 		}
 		elseif (TL_MODE == 'BE')
 		{
-			$tpl = new \BackendTemplate($name);
+			$tpl = new BackendTemplate($name);
 		}
 		else
 		{
-			$tpl = new \FrontendTemplate($name);
+			$tpl = new FrontendTemplate($name);
 		}
 
 		if ($data !== null)

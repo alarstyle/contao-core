@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class PageRegular extends \Frontend
+class PageRegular extends Frontend
 {
 
 	/**
@@ -250,7 +250,7 @@ class PageRegular extends \Frontend
 	protected function createTemplate($objPage, $objLayout)
 	{
 		/** @var \FrontendTemplate|object $objTemplate */
-		$objTemplate = new \FrontendTemplate($objPage->template);
+		$objTemplate = new FrontendTemplate($objPage->template);
 
 		$this->Template = $objTemplate;
 
@@ -697,7 +697,7 @@ class PageRegular extends \Frontend
 			{
 				if ($strTemplate != '')
 				{
-					$objTemplate = new \FrontendTemplate($strTemplate);
+					$objTemplate = new FrontendTemplate($strTemplate);
 					$strScripts .= $objTemplate->parse();
 				}
 			}
@@ -715,7 +715,7 @@ class PageRegular extends \Frontend
 			{
 				if ($strTemplate != '')
 				{
-					$objTemplate = new \FrontendTemplate($strTemplate);
+					$objTemplate = new FrontendTemplate($strTemplate);
 					$strScripts .= $objTemplate->parse();
 				}
 			}
@@ -742,7 +742,7 @@ class PageRegular extends \Frontend
 			{
 				if ($strTemplate != '')
 				{
-					$objTemplate = new \FrontendTemplate($strTemplate);
+					$objTemplate = new FrontendTemplate($strTemplate);
 					$strScripts .= $objTemplate->parse();
 				}
 			}

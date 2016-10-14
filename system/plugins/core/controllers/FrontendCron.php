@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FrontendCron extends \Frontend
+class FrontendCron extends Frontend
 {
 
 	/**

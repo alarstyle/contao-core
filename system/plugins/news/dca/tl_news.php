@@ -198,7 +198,7 @@ $GLOBALS['TL_DCA']['tl_news'] = array
 		'author' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news']['author'],
-			'default'                 => BackendUser::getInstance()->id,
+			'default'                 => \Contao\BackendUser::getInstance()->id,
 			'exclude'                 => true,
 			'search'                  => true,
 			'filter'                  => true,
@@ -462,7 +462,7 @@ $GLOBALS['TL_DCA']['tl_news'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_news extends Backend
+class tl_news extends \Contao\Backend
 {
 
 	/**
@@ -471,7 +471,7 @@ class tl_news extends Backend
 	public function __construct()
 	{
 		parent::__construct();
-		$this->import('BackendUser', 'User');
+		$this->import('\Contao\BackendUser', 'User');
 	}
 
 
@@ -770,7 +770,7 @@ class tl_news extends Backend
 			return;
 		}
 
-		$this->import('News');
+		$this->import('Contao\News', 'News');
 
 		foreach ($session as $id)
 		{
@@ -1021,7 +1021,7 @@ class tl_news extends Backend
 
 		// Update the RSS feed (for some reason it does not work without sleep(1))
 		sleep(1);
-		$this->import('News');
+		$this->import('Contao\News', 'News');
 		$this->News->generateFeedsByArchive(CURRENT_ID);
 	}
 }

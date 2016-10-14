@@ -18,7 +18,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-abstract class Backend extends \Controller
+abstract class Backend extends Controller
 {
 
 	/**
@@ -312,7 +312,7 @@ abstract class Backend extends \Controller
 			$this->redirect('contao/main.php?act=error');
 		}
 
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\BackendUser', 'User');
 
 		// Dynamically add the "personal data" module (see #4193)
 		if (\Input::get('do') == 'login')
@@ -866,7 +866,7 @@ abstract class Backend extends \Controller
 
 		$arrIds   = array();
 		$arrLinks = array();
-		$objUser  = \BackendUser::getInstance();
+		$objUser  = BackendUser::getInstance();
 
 		// Generate breadcrumb trail
 		if ($intNode)
@@ -898,11 +898,11 @@ abstract class Backend extends \Controller
 				// No link for the active page
 				if ($objPage->id == $intNode)
 				{
-					$arrLinks[] = \Backend::addPageIcon($objPage->row(), '', null, '', true) . ' ' . $objPage->title;
+					$arrLinks[] = Backend::addPageIcon($objPage->row(), '', null, '', true) . ' ' . $objPage->title;
 				}
 				else
 				{
-					$arrLinks[] = \Backend::addPageIcon($objPage->row(), '', null, '', true) . ' <a href="' . \Controller::addToUrl('pn='.$objPage->id) . '" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['selectNode']).'">' . $objPage->title . '</a>';
+					$arrLinks[] = Backend::addPageIcon($objPage->row(), '', null, '', true) . ' <a href="' . \Controller::addToUrl('pn='.$objPage->id) . '" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['selectNode']).'">' . $objPage->title . '</a>';
 				}
 
 				// Do not show the mounted pages
@@ -946,14 +946,14 @@ abstract class Backend extends \Controller
 	 *
 	 * @param array          $row
 	 * @param string         $label
-	 * @param \DataContainer $dc
+	 * @param DataContainer  $dc
 	 * @param string         $imageAttribute
 	 * @param boolean        $blnReturnImage
 	 * @param boolean        $blnProtected
 	 *
 	 * @return string
 	 */
-	public static function addPageIcon($row, $label, \DataContainer $dc=null, $imageAttribute='', $blnReturnImage=false, $blnProtected=false)
+	public static function addPageIcon($row, $label, DataContainer $dc=null, $imageAttribute='', $blnReturnImage=false, $blnProtected=false)
 	{
 		if ($blnProtected)
 		{
@@ -1028,7 +1028,7 @@ abstract class Backend extends \Controller
 			return;
 		}
 
-		$objUser  = \BackendUser::getInstance();
+		$objUser  = BackendUser::getInstance();
 		$strPath  = \Config::get('uploadPath');
 		$arrNodes = explode('/', preg_replace('/^' . preg_quote(\Config::get('uploadPath'), '/') . '\//', '', $strNode));
 		$arrLinks = array();
@@ -1086,7 +1086,7 @@ abstract class Backend extends \Controller
 	 */
 	public function createPageList()
 	{
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\BackendUser', 'User');
 
 		if ($this->User->isAdmin)
 		{
@@ -1196,7 +1196,7 @@ abstract class Backend extends \Controller
 			$strFilter = 'gif,jpg,jpeg,png';
 		}
 
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\BackendUser', 'User');
 
 		if ($this->User->isAdmin)
 		{

@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class BackendPopup extends \Backend
+class BackendPopup extends Backend
 {
 
 	/**
@@ -37,7 +37,7 @@ class BackendPopup extends \Backend
 	 */
 	public function __construct()
 	{
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 		parent::__construct();
 
 		$this->User->authenticate();
@@ -93,7 +93,7 @@ class BackendPopup extends \Backend
 		}
 
 		/** @var \BackendTemplate|object $objTemplate */
-		$objTemplate = new \BackendTemplate('be_popup');
+		$objTemplate = new BackendTemplate('be_popup');
 
 		// Add the resource (see #6880)
 		if (($objModel = \FilesModel::findByPath($this->strFile)) === null)

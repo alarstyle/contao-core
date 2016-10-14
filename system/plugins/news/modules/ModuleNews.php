@@ -40,7 +40,7 @@ abstract class ModuleNews extends \Module
 			return $arrArchives;
 		}
 
-		$this->import('FrontendUser', 'User');
+		$this->import('Contao\\FrontendUser', 'User');
 		$objArchive = \NewsArchiveModel::findMultipleByIds($arrArchives);
 		$arrArchives = array();
 

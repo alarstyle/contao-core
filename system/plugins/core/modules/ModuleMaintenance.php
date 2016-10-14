@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ModuleMaintenance extends \BackendModule
+class ModuleMaintenance extends BackendModule
 {
 
 	/**

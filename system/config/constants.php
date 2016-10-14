@@ -44,20 +44,6 @@ define('SLIMBOX', '1.8');
 
 
 /**
- * Link constants
- *
- * These constants can be used with any HTML link. Their primary purpose is
- * to provide an accessible alternative for common operations.
- *
- * Usage example:
- *   <a href="index.html"<?php echo LINK_NEW_WINDOW_BLUR; ?>>Home</a>
- */
-define('LINK_BLUR', ' onclick="this.blur()"');
-define('LINK_NEW_WINDOW', ' onclick="return !window.open(this.href)"');
-define('LINK_NEW_WINDOW_BLUR', ' onclick="this.blur();return !window.open(this.href)"');
-
-
-/**
  * Log constants
  *
  * These constants can be used with method $this->log() to add log entries.

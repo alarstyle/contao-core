@@ -18,7 +18,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-abstract class BackendModule extends \Backend
+abstract class BackendModule extends Backend
 {
 
 	/**
@@ -43,9 +43,9 @@ abstract class BackendModule extends \Backend
 	/**
 	 * Initialize the object
 	 *
-	 * @param \DataContainer $dc
+	 * @param DataContainer $dc
 	 */
-	public function __construct(\DataContainer $dc=null)
+	public function __construct(DataContainer $dc=null)
 	{
 		parent::__construct();
 		$this->objDc = $dc;
@@ -94,7 +94,7 @@ abstract class BackendModule extends \Backend
 	 */
 	public function generate()
 	{
-		$this->Template = new \BackendTemplate($this->strTemplate);
+		$this->Template = new BackendTemplate($this->strTemplate);
 		$this->compile();
 
 		return $this->Template->parse();

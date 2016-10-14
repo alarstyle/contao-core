@@ -270,7 +270,7 @@ $GLOBALS['TL_DCA']['tl_newsletter'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_newsletter extends Backend
+class tl_newsletter extends \Contao\Backend
 {
 
 	/**
@@ -279,7 +279,7 @@ class tl_newsletter extends Backend
 	public function __construct()
 	{
 		parent::__construct();
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 	}
 
 
