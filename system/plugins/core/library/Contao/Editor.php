@@ -75,7 +75,7 @@ namespace Contao;
  * @property boolean                 $nullIfEmpty       Set to NULL if the value is empty
  * @property boolean                 $doNotTrim         Do not trim the user input
  * @property string                  $forAttribute      The "for" attribute
- * @property \DataContainer          $dataContainer     The data container object
+ * @property DataContainer           $dataContainer     The data container object
  * @property \Database\Result|object $activeRecord      The active record
  * @property string                  $mandatoryField    The "mandatory field" label
  * @property string                  $customTpl         A custom template name

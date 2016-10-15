@@ -636,9 +636,9 @@ if (Input::get('popup'))
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-use \Contao\DataContainer as DataContainer;
+use Contao\DataContainer;
 
-class tl_page extends \Contao\Backend
+class tl_page extends Contao\Backend
 {
 
 	/**
@@ -689,13 +689,13 @@ class tl_page extends \Contao\Backend
 
 				$row = $objPage->row();
 
-				if ($this->User->isAllowed(\Contao\BackendUser::CAN_EDIT_PAGE, $row))
+				if ($this->User->isAllowed(Contao\BackendUser::CAN_EDIT_PAGE, $row))
 				{
 					$edit_all[] = $id;
 				}
 
 				// Mounted pages cannot be deleted
-				if ($this->User->isAllowed(\Contao\BackendUser::CAN_DELETE_PAGE, $row) && !$this->User->hasAccess($id, 'pagemounts'))
+				if ($this->User->isAllowed(Contao\BackendUser::CAN_DELETE_PAGE, $row) && !$this->User->hasAccess($id, 'pagemounts'))
 				{
 					$delete_all[] = $id;
 				}
@@ -720,7 +720,7 @@ class tl_page extends \Contao\Backend
 					continue;
 				}
 
-				if ($this->User->isAllowed(\Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY, $objPage->row()))
+				if ($this->User->isAllowed(Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY, $objPage->row()))
 				{
 					$clipboard[] = $id;
 				}
@@ -739,7 +739,7 @@ class tl_page extends \Contao\Backend
 									  ->limit(1)
 									  ->execute(Input::get('id'));
 
-			if ($objPage->numRows && !$this->User->isAllowed(\Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY, $objPage->row()))
+			if ($objPage->numRows && !$this->User->isAllowed(Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY, $objPage->row()))
 			{
 				$GLOBALS['TL_DCA']['tl_page']['config']['closed'] = true;
 			}
@@ -757,11 +757,11 @@ class tl_page extends \Contao\Backend
 			{
 				case 'edit':
 				case 'toggle':
-					$permission = \Contao\BackendUser::CAN_EDIT_PAGE;
+					$permission = Contao\BackendUser::CAN_EDIT_PAGE;
 					break;
 
 				case 'move':
-					$permission = \Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY;
+					$permission = Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY;
 					$ids[] = Input::get('sid');
 					break;
 
@@ -770,7 +770,7 @@ class tl_page extends \Contao\Backend
 				case 'copyAll':
 				case 'cut':
 				case 'cutAll':
-					$permission = \Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY;
+					$permission = Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY;
 
 					// Check the parent page in "paste into" mode
 					if (Input::get('mode') == 2)
@@ -789,7 +789,7 @@ class tl_page extends \Contao\Backend
 					break;
 
 				case 'delete':
-					$permission = \Contao\BackendUser::CAN_DELETE_PAGE;
+					$permission = Contao\BackendUser::CAN_DELETE_PAGE;
 					break;
 			}
 
@@ -874,7 +874,7 @@ class tl_page extends \Contao\Backend
 	 */
 	public function addBreadcrumb()
 	{
-		\Contao\Backend::addPagesBreadcrumb();
+		Contao\Backend::addPagesBreadcrumb();
 	}
 
 
@@ -1241,7 +1241,7 @@ class tl_page extends \Contao\Backend
 	 */
 	public function addIcon($row, $label, DataContainer $dc=null, $imageAttribute='', $blnReturnImage=false, $blnProtected=false)
 	{
-		return \Contao\Backend::addPageIcon($row, $label, $dc, $imageAttribute, $blnReturnImage, $blnProtected);
+		return Contao\Backend::addPageIcon($row, $label, $dc, $imageAttribute, $blnReturnImage, $blnProtected);
 	}
 
 
@@ -1259,7 +1259,7 @@ class tl_page extends \Contao\Backend
 	 */
 	public function editPage($row, $href, $label, $title, $icon, $attributes)
 	{
-		return ($this->User->hasAccess($row['type'], 'alpty') && $this->User->isAllowed(\Contao\BackendUser::CAN_EDIT_PAGE, $row)) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
+		return ($this->User->hasAccess($row['type'], 'alpty') && $this->User->isAllowed(Contao\BackendUser::CAN_EDIT_PAGE, $row)) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
 	}
 
 
@@ -1283,7 +1283,7 @@ class tl_page extends \Contao\Backend
 			return '';
 		}
 
-		return ($this->User->hasAccess($row['type'], 'alpty') && $this->User->isAllowed(\Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY, $row)) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
+		return ($this->User->hasAccess($row['type'], 'alpty') && $this->User->isAllowed(Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY, $row)) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
 	}
 
 
@@ -1311,7 +1311,7 @@ class tl_page extends \Contao\Backend
 									  ->limit(1)
 									  ->execute($row['id']);
 
-		return ($objSubpages->numRows && $this->User->hasAccess($row['type'], 'alpty') && $this->User->isAllowed(\Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY, $row)) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
+		return ($objSubpages->numRows && $this->User->hasAccess($row['type'], 'alpty') && $this->User->isAllowed(Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY, $row)) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
 	}
 
 
@@ -1329,7 +1329,7 @@ class tl_page extends \Contao\Backend
 	 */
 	public function cutPage($row, $href, $label, $title, $icon, $attributes)
 	{
-		return ($this->User->hasAccess($row['type'], 'alpty') && $this->User->isAllowed(\Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY, $row)) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
+		return ($this->User->hasAccess($row['type'], 'alpty') && $this->User->isAllowed(Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY, $row)) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
 	}
 
 
@@ -1380,7 +1380,7 @@ class tl_page extends \Contao\Backend
 			// Disable "paste into" button if there is no permission 2 (move) or 1 (create) for the current page
 			if (!$disablePI)
 			{
-				if (!$this->User->isAllowed(\Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY, $row) || (Input::get('mode') == 'create' && !$this->User->isAllowed(\Contao\BackendUser::CAN_EDIT_PAGE, $row)))
+				if (!$this->User->isAllowed(Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY, $row) || (Input::get('mode') == 'create' && !$this->User->isAllowed(Contao\BackendUser::CAN_EDIT_PAGE, $row)))
 				{
 					$disablePI = true;
 				}
@@ -1393,7 +1393,7 @@ class tl_page extends \Contao\Backend
 			// Disable "paste after" button if there is no permission 2 (move) or 1 (create) for the parent page
 			if (!$disablePA && $objPage->numRows)
 			{
-				if (!$this->User->isAllowed(\Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY, $objPage->row()) || (Input::get('mode') == 'create' && !$this->User->isAllowed(\Contao\BackendUser::CAN_EDIT_PAGE, $objPage->row())))
+				if (!$this->User->isAllowed(Contao\BackendUser::CAN_EDIT_PAGE_HIERARCHY, $objPage->row()) || (Input::get('mode') == 'create' && !$this->User->isAllowed(Contao\BackendUser::CAN_EDIT_PAGE, $objPage->row())))
 				{
 					$disablePA = true;
 				}
@@ -1437,7 +1437,7 @@ class tl_page extends \Contao\Backend
 	{
 		$root = func_get_arg(7);
 
-		return ($this->User->hasAccess($row['type'], 'alpty') && $this->User->isAllowed(\Contao\BackendUser::CAN_DELETE_PAGE, $row) && ($this->User->isAdmin || !in_array($row['id'], $root))) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
+		return ($this->User->hasAccess($row['type'], 'alpty') && $this->User->isAllowed(Contao\BackendUser::CAN_DELETE_PAGE, $row) && ($this->User->isAdmin || !in_array($row['id'], $root))) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
 	}
 
 
@@ -1562,7 +1562,7 @@ class tl_page extends \Contao\Backend
 								  ->limit(1)
 								  ->execute($row['id']);
 
-		if (!$this->User->hasAccess($row['type'], 'alpty') || !$this->User->isAllowed(\Contao\BackendUser::CAN_EDIT_PAGE, $objPage->row()))
+		if (!$this->User->hasAccess($row['type'], 'alpty') || !$this->User->isAllowed(Contao\BackendUser::CAN_EDIT_PAGE, $objPage->row()))
 		{
 			return Image::getHtml($icon) . ' ';
 		}

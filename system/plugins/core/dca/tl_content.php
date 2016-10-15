@@ -805,9 +805,9 @@ if (Input::get('do') == 'page')
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-use \Contao\DataContainer;
+use Contao\DataContainer;
 
-class tl_content extends \Contao\Backend
+class tl_content extends Contao\Backend
 {
 
 	/**

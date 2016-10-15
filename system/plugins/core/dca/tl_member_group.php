@@ -177,9 +177,9 @@ $GLOBALS['TL_DCA']['tl_member_group'] = array
  * @author Leo Feyer <https://github.com/leofeyer>
  */
 
-use \Contao\DataContainer;
+use Contao\DataContainer;
 
-class tl_member_group extends \Contao\Backend
+class tl_member_group extends Contao\Backend
 {
 
 	/**

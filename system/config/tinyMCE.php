@@ -22,7 +22,7 @@ setTimeout(function() {
   window.tinymce && tinymce.init({
     skin: 'contao',
     selector: '#<?php echo $selector; ?>',
-    language: '<?php echo \Contao\Backend::getTinyMceLanguage(); ?>',
+    language: '<?php echo Contao\Backend::getTinyMceLanguage(); ?>',
     element_format: 'html',
     document_base_url: '<?php echo Environment::get('base'); ?>',
     entities: '160,nbsp,60,lt,62,gt,173,shy',
@@ -38,7 +38,7 @@ setTimeout(function() {
       Backend.openModalBrowser(field_name, url, type, win);
     },
     templates: [
-      <?php echo \Contao\Backend::getTinyTemplates(); ?>
+      <?php echo Contao\Backend::getTinyTemplates(); ?>
     ],
     plugins: 'autosave charmap code fullscreen image importcss link lists paste searchreplace tabfocus table template visualblocks',
     browser_spellcheck: true,

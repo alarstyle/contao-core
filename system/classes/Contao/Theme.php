@@ -696,7 +696,7 @@ class Theme extends Backend
 	/**
 	 * Export a theme
 	 *
-	 * @param \DataContainer $dc
+	 * @param DataContainer $dc
 	 */
 	public function exportTheme($dc)
 	{

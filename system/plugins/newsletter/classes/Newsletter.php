@@ -22,7 +22,7 @@ class Newsletter extends Backend
 	/**
 	 * Renturn a form to choose an existing style sheet and import it
 	 *
-	 * @param \DataContainer $dc
+	 * @param DataContainer $dc
 	 *
 	 * @return string
 	 */

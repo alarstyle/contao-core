@@ -148,7 +148,7 @@ class ListWizard extends \Editor
 	/**
 	 * Return a form to choose a CSV file and import it
 	 *
-	 * @param \DataContainer $dc
+	 * @param DataContainer $dc
 	 *
 	 * @return string
 	 */

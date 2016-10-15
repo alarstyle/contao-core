@@ -234,7 +234,7 @@ $GLOBALS['TL_DCA']['tl_files'] = array
  * @author Leo Feyer <https://github.com/leofeyer>
  */
 
-class tl_files extends \Contao\Backend
+class tl_files extends Contao\Backend
 {
 
 	/**
@@ -407,7 +407,7 @@ class tl_files extends \Contao\Backend
 	 */
 	public function addBreadcrumb()
 	{
-		\Contao\Backend::addFilesBreadcrumb();
+		Contao\Backend::addFilesBreadcrumb();
 	}
 
 

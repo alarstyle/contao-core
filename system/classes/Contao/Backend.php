@@ -402,7 +402,7 @@ abstract class Backend extends Controller
 
 			$dataContainer = 'DC_' . $GLOBALS['TL_DCA'][$strTable]['config']['dataContainer'];
 
-			/** @var \DataContainer $dc */
+			/** @var DataContainer $dc */
 			$dc = new $dataContainer($strTable, $arrModule);
 		}
 

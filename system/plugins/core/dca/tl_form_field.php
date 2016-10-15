@@ -427,7 +427,7 @@ $GLOBALS['TL_DCA']['tl_form_field'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_form_field extends \Contao\Backend
+class tl_form_field extends Contao\Backend
 {
 
 	/**

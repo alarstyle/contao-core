@@ -479,7 +479,9 @@ $GLOBALS['TL_DCA']['tl_settings'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_settings extends \Contao\Backend
+use Contao\DataContainer;
+
+class tl_settings extends Contao\Backend
 {
 
 	/**

@@ -112,12 +112,12 @@ try
 	ClassLoader::scanAndRegister();
 
 	$loader = new \Composer\Autoload\ClassLoader();
-	foreach (\Contao\PluginLoader::getActive() as $module)
+	foreach (Contao\PluginLoader::getActive() as $module)
 	{
 
 		//var_dump(TL_ROOT);
 
-		$loader->add('', TL_ROOT . '/system/plugins/' . $module . '/classes');
+		$loader->addPsr4('', TL_ROOT . '/system/plugins/' . $module . '/classes');
 	}
 
 	// activate the autoloader

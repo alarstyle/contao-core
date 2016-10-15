@@ -473,7 +473,7 @@ $GLOBALS['TL_DCA']['tl_layout'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_layout extends \Contao\Backend
+class tl_layout extends Contao\Backend
 {
 
 	/**
