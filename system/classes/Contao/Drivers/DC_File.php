@@ -8,7 +8,9 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Drivers;
+
+use Contao\DataContainer;
 
 
 /**

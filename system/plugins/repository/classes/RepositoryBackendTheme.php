@@ -30,11 +30,6 @@ class RepositoryBackendTheme
 	 */
 	public static function file($file)
 	{
-		$theme = Config::get('backendTheme');
-		if (strlen($theme) && $theme!='default') {
-			$f = self::themepath.$theme.'/'.$file;
-			if (is_file(TL_ROOT.'/'.$f)) return $f;
-		} // if
 		return self::themepath.'default/'. $file;
 	} // file
 
@@ -45,12 +40,6 @@ class RepositoryBackendTheme
 	 */
 	public static function image($file)
 	{
-		$theme = Config::get('backendTheme');
-		if (strlen($theme) && $theme!='default') {
-			$url = self::themepath.$theme.'/images/';
-			if (is_file(TL_ROOT.'/'.$url.$file.'.png')) return $url.$file.'.png';
-			if (is_file(TL_ROOT.'/'.$url.$file.'.gif')) return $url.$file.'.gif';
-		} // if
 		$url = self::themepath.'default/images/';
 		if (is_file(TL_ROOT.'/'.$url.$file.'.png')) return $url.$file.'.png';
 		if (is_file(TL_ROOT.'/'.$url.$file.'.gif')) return $url.$file.'.gif';

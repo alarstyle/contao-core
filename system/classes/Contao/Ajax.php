@@ -10,6 +10,9 @@
 
 namespace Contao;
 
+use Contao\Drivers\DC_File;
+use Contao\Drivers\DC_Folder;
+use Contao\Drivers\DC_Table;
 
 /**
  * Provide methods to handle Ajax requests.
@@ -170,7 +173,7 @@ class Ajax extends Backend
 		header('Content-Type: text/html; charset=' . \Config::get('characterSet'));
 
 		// Bypass any core logic for non-core drivers (see #5957)
-		if (!$dc instanceof \DC_File && !$dc instanceof \DC_Folder && !$dc instanceof \DC_Table)
+		if (!$dc instanceof DC_File && !$dc instanceof DC_Folder && !$dc instanceof DC_Table)
 		{
 			$this->executePostActionsHook($dc);
 			exit;
@@ -368,7 +371,7 @@ class Ajax extends Backend
 						}
 					}
 				}
-				elseif ($dc instanceof \DC_File)
+				elseif ($dc instanceof DC_File)
 				{
 					$val = (intval(\Input::post('state') == 1) ? true : false);
 					\Config::persist(\Input::post('field'), $val);

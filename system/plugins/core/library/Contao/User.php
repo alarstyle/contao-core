@@ -34,7 +34,6 @@ namespace Contao;
  * @property string  $name
  * @property string  $email
  * @property string  $language
- * @property string  $backendTheme
  * @property string  $uploader
  * @property boolean $showHelp
  * @property boolean $thumbnails

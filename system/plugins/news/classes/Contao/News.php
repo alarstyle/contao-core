@@ -26,7 +26,7 @@ class News extends Frontend
 	 */
 	public function generateFeed($intId)
 	{
-		$objFeed = \NewsFeedModel::findByPk($intId);
+		$objFeed = NewsFeedModel::findByPk($intId);
 
 		if ($objFeed === null)
 		{
@@ -36,7 +36,7 @@ class News extends Frontend
 		$objFeed->feedName = $objFeed->alias ?: 'news' . $objFeed->id;
 
 		// Delete XML file
-		if (\Input::get('act') == 'delete')
+		if (Input::get('act') == 'delete')
 		{
 			$this->import('Files');
 			$this->Files->delete($objFeed->feedName . '.xml');
@@ -59,7 +59,7 @@ class News extends Frontend
 		$this->import('Automator');
 		$this->Automator->purgeXmlFiles();
 
-		$objFeed = \NewsFeedModel::findAll();
+		$objFeed = NewsFeedModel::findAll();
 
 		if ($objFeed !== null)
 		{
@@ -114,7 +114,7 @@ class News extends Frontend
 		$strLink = $arrFeed['feedBase'] ?: \Environment::get('base');
 		$strFile = $arrFeed['feedName'];
 
-		$objFeed = new \Feed($strFile);
+		$objFeed = new Feed($strFile);
 		$objFeed->link = $strLink;
 		$objFeed->title = $arrFeed['title'];
 		$objFeed->description = $arrFeed['description'];
@@ -124,11 +124,11 @@ class News extends Frontend
 		// Get the items
 		if ($arrFeed['maxItems'] > 0)
 		{
-			$objArticle = \NewsModel::findPublishedByPids($arrArchives, null, $arrFeed['maxItems']);
+			$objArticle = NewsModel::findPublishedByPids($arrArchives, null, $arrFeed['maxItems']);
 		}
 		else
 		{
-			$objArticle = \NewsModel::findPublishedByPids($arrArchives);
+			$objArticle = NewsModel::findPublishedByPids($arrArchives);
 		}
 
 		// Parse the items
@@ -171,7 +171,7 @@ class News extends Frontend
 				}
 
 				$strUrl = $arrUrls[$jumpTo];
-				$objItem = new \FeedItem();
+				$objItem = new FeedItem();
 
 				$objItem->title = $objArticle->headline;
 				$objItem->link = $this->getLink($objArticle, $strUrl);
@@ -182,20 +182,20 @@ class News extends Frontend
 				if ($arrFeed['source'] == 'source_text')
 				{
 					$strDescription = '';
-					$objElement = \ContentModel::findPublishedByPidAndTable($objArticle->id, 'tl_news');
+					$objElement = ContentModel::findPublishedByPidAndTable($objArticle->id, 'tl_news');
 
 					if ($objElement !== null)
 					{
 						// Overwrite the request (see #7756)
-						$strRequest = \Environment::get('request');
-						\Environment::set('request', $objItem->link);
+						$strRequest = Environment::get('request');
+						Environment::set('request', $objItem->link);
 
 						while ($objElement->next())
 						{
 							$strDescription .= $this->getContentElement($objElement->current());
 						}
 
-						\Environment::set('request', $strRequest);
+						Environment::set('request', $strRequest);
 					}
 				}
 				else
@@ -209,7 +209,7 @@ class News extends Frontend
 				// Add the article image as enclosure
 				if ($objArticle->addImage)
 				{
-					$objFile = \FilesModel::findByUuid($objArticle->singleSRC);
+					$objFile = FilesModel::findByUuid($objArticle->singleSRC);
 
 					if ($objFile !== null)
 					{
@@ -224,7 +224,7 @@ class News extends Frontend
 
 					if (is_array($arrEnclosure))
 					{
-						$objFile = \FilesModel::findMultipleByUuids($arrEnclosure);
+						$objFile = FilesModel::findMultipleByUuids($arrEnclosure);
 
 						if ($objFile !== null)
 						{
@@ -370,7 +370,7 @@ class News extends Frontend
 
 			// Link to an article
 			case 'article':
-				if (($objArticle = \ArticleModel::findByPk($objItem->articleId, array('eager'=>true))) !== null && ($objPid = $objArticle->getRelated('pid')) !== null)
+				if (($objArticle = ArticleModel::findByPk($objItem->articleId, array('eager'=>true))) !== null && ($objPid = $objArticle->getRelated('pid')) !== null)
 				{
 					/** @var \PageModel $objPid */
 					return ampersand($objPid->getAbsoluteUrl('/articles/' . ($objArticle->alias != '' ? $objArticle->alias : $objArticle->id)));
@@ -397,7 +397,7 @@ class News extends Frontend
 	public function purgeOldFeeds()
 	{
 		$arrFeeds = array();
-		$objFeeds = \NewsFeedModel::findAll();
+		$objFeeds = NewsFeedModel::findAll();
 
 		if ($objFeeds !== null)
 		{

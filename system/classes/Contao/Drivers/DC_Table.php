@@ -8,7 +8,13 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Drivers;
+
+use \Contao\Backend;
+use \Contao\BackendTemplate;
+use \Contao\DataContainer;
+use \Contao\Input;
+use \Contao\Pagination;
 
 
 /**

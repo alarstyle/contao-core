@@ -40,9 +40,9 @@ ClassLoader::addClasses(array
 	'Contao\FrontendShare'             => 'system/plugins/core/controllers/FrontendShare.php',
 
 	// Drivers
-	'Contao\DC_File'                   => 'system/plugins/core/drivers/DC_File.php',
-	'Contao\DC_Folder'                 => 'system/plugins/core/drivers/DC_Folder.php',
-	'Contao\DC_Table'                  => 'system/plugins/core/drivers/DC_Table.php',
+//	'Contao\Drivers\DC_File'                   => 'system/plugins/core/drivers/DC_File.php',
+//	'Contao\Drivers\DC_Folder'                 => 'system/plugins/core/drivers/DC_Folder.php',
+//	'Contao\Drivers\DC_Table'                  => 'system/plugins/core/drivers/DC_Table.php',
 
 	// Elements
 	'Contao\ContentAlias'              => 'system/plugins/core/elements/ContentAlias.php',
@@ -188,7 +188,6 @@ ClassLoader::addClasses(array
 	'Contao\ModulePersonalData'        => 'system/plugins/core/modules/ModulePersonalData.php',
 	'Contao\ModuleQuicklink'           => 'system/plugins/core/modules/ModuleQuicklink.php',
 	'Contao\ModuleQuicknav'            => 'system/plugins/core/modules/ModuleQuicknav.php',
-	'Contao\ModuleRandomImage'         => 'system/plugins/core/modules/ModuleRandomImage.php',
 	'Contao\ModuleRegistration'        => 'system/plugins/core/modules/ModuleRegistration.php',
 	'Contao\ModuleRssReader'           => 'system/plugins/core/modules/ModuleRssReader.php',
 	'Contao\ModuleSearch'              => 'system/plugins/core/modules/ModuleSearch.php',
@@ -332,7 +331,6 @@ TemplateLoader::addFiles(array
 	'mod_password'        => 'system/plugins/core/templates/modules',
 	'mod_quicklink'       => 'system/plugins/core/templates/modules',
 	'mod_quicknav'        => 'system/plugins/core/templates/modules',
-	'mod_random_image'    => 'system/plugins/core/templates/modules',
 	'mod_search'          => 'system/plugins/core/templates/modules',
 	'mod_search_advanced' => 'system/plugins/core/templates/modules',
 	'mod_search_simple'   => 'system/plugins/core/templates/modules',

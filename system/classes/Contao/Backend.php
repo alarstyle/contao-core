@@ -39,18 +39,6 @@ abstract class Backend extends Controller
 	 */
 	public static function getTheme()
 	{
-		if (\Config::get('coreOnlyMode'))
-		{
-			return 'default'; // see #6505
-		}
-
-		$theme = \Config::get('backendTheme');
-
-		if ($theme != '' && $theme != 'default' && is_dir(TL_ROOT . '/system/themes/' . $theme))
-		{
-			return $theme;
-		}
-
 		return 'default';
 	}
 
@@ -400,7 +388,7 @@ abstract class Backend extends Controller
 				trigger_error('Could not create a data container object', E_USER_ERROR);
 			}
 
-			$dataContainer = 'DC_' . $GLOBALS['TL_DCA'][$strTable]['config']['dataContainer'];
+			$dataContainer = 'Contao\\Drivers\\DC_' . $GLOBALS['TL_DCA'][$strTable]['config']['dataContainer'];
 
 			/** @var DataContainer $dc */
 			$dc = new $dataContainer($strTable, $arrModule);
