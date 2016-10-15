@@ -152,12 +152,12 @@ abstract class ContentElement extends Frontend
 	 */
 	public function __construct($objElement, $strColumn='main')
 	{
-		if ($objElement instanceof \Model || $objElement instanceof \Model\Collection)
+		if ($objElement instanceof \Contao\Model || $objElement instanceof \Contao\Model\Collection)
 		{
 			/** @var \ContentModel $objModel */
 			$objModel = $objElement;
 
-			if ($objModel instanceof \Model\Collection)
+			if ($objModel instanceof \Contao\Model\Collection)
 			{
 				$objModel = $objModel->current();
 			}

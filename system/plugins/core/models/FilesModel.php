@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Database;
 
 /**
  * Reads and writes file entries
@@ -236,7 +237,7 @@ class FilesModel extends \Model
 
 		if (!isset($arrOptions['order']))
 		{
-			$arrOptions['order'] = \Database::getInstance()->findInSet("$t.path", $arrPaths);
+			$arrOptions['order'] = Database::getInstance()->findInSet("$t.path", $arrPaths);
 		}
 
 		return static::findBy(array("$t.path IN(" . implode(',', array_fill(0, count($arrPaths), '?')) . ")"), $arrPaths, $arrOptions);

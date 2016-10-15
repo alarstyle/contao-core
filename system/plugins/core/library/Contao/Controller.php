@@ -1804,7 +1804,7 @@ abstract class Controller extends \System
 		{
 			return $intId->loadDetails();
 		}
-		elseif ($intId instanceof \Model\Collection)
+		elseif ($intId instanceof \Contao\Model\Collection)
 		{
 			/** @var \PageModel $objPage */
 			$objPage = $intId->current();

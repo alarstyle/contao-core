@@ -154,7 +154,7 @@ abstract class User extends \System
 	protected function __construct()
 	{
 		parent::__construct();
-		$this->import('Database');
+		$this->import('Contao\\Database', 'Database');
 	}
 
 

@@ -76,7 +76,7 @@ namespace Contao;
  * @property boolean                 $doNotTrim         Do not trim the user input
  * @property string                  $forAttribute      The "for" attribute
  * @property DataContainer           $dataContainer     The data container object
- * @property \Database\Result|object $activeRecord      The active record
+ * @property \Contao\Database\Result|object $activeRecord      The active record
  * @property string                  $mandatoryField    The "mandatory field" label
  * @property string                  $customTpl         A custom template name
  * @property string                  $slabel            The submit button label
@@ -1347,7 +1347,7 @@ abstract class Editor extends \BaseTemplate
 		elseif (isset($arrData['foreignKey']))
 		{
 			$arrKey = explode('.', $arrData['foreignKey'], 2);
-			$objOptions = \Database::getInstance()->query("SELECT id, " . $arrKey[1] . " AS value FROM " . $arrKey[0] . " WHERE tstamp>0 ORDER BY value");
+			$objOptions = Database::getInstance()->query("SELECT id, " . $arrKey[1] . " AS value FROM " . $arrKey[0] . " WHERE tstamp>0 ORDER BY value");
 			$arrData['options'] = array();
 
 			while ($objOptions->next())

@@ -68,7 +68,7 @@ class Dbafs
 		$strPath     = array_shift($arrChunks);
 		$arrPids     = array($strPath => null);
 		$arrUpdate   = array($strResource);
-		$objDatabase = \Database::getInstance();
+		$objDatabase = Database::getInstance();
 
 		// Build the paths
 		while (count($arrChunks))
@@ -288,8 +288,8 @@ class Dbafs
 	 */
 	public static function copyResource($strSource, $strDestination)
 	{
-		$objDatabase = \Database::getInstance();
-		$objFile = \FilesModel::findByPath($strSource);
+		$objDatabase = Database::getInstance();
+		$objFile = FilesModel::findByPath($strSource);
 
 		// Add the source entry
 		if ($objFile === null)
@@ -475,7 +475,7 @@ class Dbafs
 			@ini_set('memory_limit', -1);
 		}
 
-		$objDatabase = \Database::getInstance();
+		$objDatabase = Database::getInstance();
 
 		// Lock the files table
 		$objDatabase->lockTables(array('tl_files'=>'WRITE'));

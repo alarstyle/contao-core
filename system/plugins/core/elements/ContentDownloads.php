@@ -42,7 +42,7 @@ class ContentDownloads extends \ContentElement
 		// Use the home directory of the current user as file source
 		if ($this->useHomeDir && FE_USER_LOGGED_IN)
 		{
-			$this->import('Contao\FrontendUser', 'User');
+			$this->import('Contao\\FrontendUser', 'User');
 
 			if ($this->User->assignDir && $this->User->homeDir)
 			{

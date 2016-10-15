@@ -28,7 +28,7 @@ class FrontendIndex extends Frontend
 		$this->outputFromCache();
 
 		// Load the user object before calling the parent constructor
-		$this->import('Contao\FrontendUser', 'User');
+		$this->import('Contao\\FrontendUser', 'User');
 		parent::__construct();
 
 		// Check whether a user is logged in
@@ -153,7 +153,7 @@ class FrontendIndex extends Frontend
 		}
 
 		// Throw a 404 error if the page could not be found or the result is still ambiguous
-		if ($objPage === null || ($objPage instanceof \Model\Collection && $objPage->count() > 1))
+		if ($objPage === null || ($objPage instanceof \Contao\Model\Collection && $objPage->count() > 1))
 		{
 			$this->User->authenticate();
 			$objHandler = new $GLOBALS['TL_PTY']['error_404']();
@@ -161,7 +161,7 @@ class FrontendIndex extends Frontend
 		}
 
 		// Make sure $objPage is a Model
-		if ($objPage instanceof \Model\Collection)
+		if ($objPage instanceof \Contao\Model\Collection)
 		{
 			$objPage = $objPage->current();
 		}

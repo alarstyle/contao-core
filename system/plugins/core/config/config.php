@@ -183,31 +183,31 @@ $GLOBALS['TL_CTE'] = array
  */
 $GLOBALS['BE_FFL'] = array
 (
-	'text'           => 'TextField',
-	'password'       => 'Password',
-	'textStore'      => 'TextStore',
-	'textarea'       => 'TextArea',
-	'select'         => 'SelectMenu',
-	'checkbox'       => 'CheckBox',
-	'checkboxWizard' => 'CheckBoxWizard',
-	'radio'          => 'RadioButton',
-	'radioTable'     => 'RadioTable',
-	'inputUnit'      => 'InputUnit',
-	'trbl'           => 'TrblField',
-	'chmod'          => 'ChmodTable',
-	'pageTree'       => 'PageTree',
-	'pageSelector'   => 'PageSelector',
-	'fileTree'       => 'FileTree',
-	'fileSelector'   => 'FileSelector',
-	'fileUpload'     => 'Upload',
-	'tableWizard'    => 'TableWizard',
-	'listWizard'     => 'ListWizard',
-	'optionWizard'   => 'OptionWizard',
-	'moduleWizard'   => 'ModuleWizard',
-	'keyValueWizard' => 'KeyValueWizard',
-	'imageSize'      => 'ImageSize',
-	'timePeriod'     => 'TimePeriod',
-	'metaWizard'     => 'MetaWizard'
+	'text'           => 'Contao\\Editors\\TextField',
+	'password'       => 'Contao\\Editors\\Password',
+	'textStore'      => 'Contao\\Editors\\TextStore',
+	'textarea'       => 'Contao\\Editors\\TextArea',
+	'select'         => 'Contao\\Editors\\SelectMenu',
+	'checkbox'       => 'Contao\\Editors\\CheckBox',
+	'checkboxWizard' => 'Contao\\Editors\\CheckBoxWizard',
+	'radio'          => 'Contao\\Editors\\RadioButton',
+	'radioTable'     => 'Contao\\Editors\\RadioTable',
+	'inputUnit'      => 'Contao\\Editors\\InputUnit',
+	'trbl'           => 'Contao\\Editors\\TrblField',
+	'chmod'          => 'Contao\\Editors\\ChmodTable',
+	'pageTree'       => 'Contao\\Editors\\PageTree',
+	'pageSelector'   => 'Contao\\Editors\\PageSelector',
+	'fileTree'       => 'Contao\\Editors\\FileTree',
+	'fileSelector'   => 'Contao\\Editors\\FileSelector',
+	'fileUpload'     => 'Contao\\Editors\\Upload',
+	'tableWizard'    => 'Contao\\Editors\\TableWizard',
+	'listWizard'     => 'Contao\\Editors\\ListWizard',
+	'optionWizard'   => 'Contao\\Editors\\OptionWizard',
+	'moduleWizard'   => 'Contao\\Editors\\ModuleWizard',
+	'keyValueWizard' => 'Contao\\Editors\\KeyValueWizard',
+	'imageSize'      => 'Contao\\Editors\\ImageSize',
+	'timePeriod'     => 'Contao\\Editors\\TimePeriod',
+	'metaWizard'     => 'Contao\\Editors\\MetaWizard'
 );
 
 
@@ -238,12 +238,12 @@ $GLOBALS['TL_FFL'] = array
  */
 $GLOBALS['TL_PTY'] = array
 (
-	'regular'   => 'PageRegular',
-	'forward'   => 'PageForward',
-	'redirect'  => 'PageRedirect',
-	'root'      => 'PageRoot',
-	'error_403' => 'PageError403',
-	'error_404' => 'PageError404'
+	'regular'   => 'Contao\\Pages\\PageRegular',
+	'forward'   => 'Contao\\Pages\\PageForward',
+	'redirect'  => 'Contao\\Pages\\PageRedirect',
+	'root'      => 'Contao\\Pages\\PageRoot',
+	'error_403' => 'Contao\\Pages\\PageError403',
+	'error_404' => 'Contao\\Pages\\PageError404'
 );
 
 

@@ -49,7 +49,7 @@ class Search
 	 */
 	public static function indexPage($arrData)
 	{
-		$objDatabase = \Database::getInstance();
+		$objDatabase = Database::getInstance();
 
 		$arrSet['tstamp'] = time();
 		$arrSet['url'] = $arrData['url'];
@@ -299,7 +299,7 @@ class Search
 	 * @param integer $intOffset   An optional result offset
 	 * @param boolean $blnFuzzy    If true, the search will be fuzzy
 	 *
-	 * @return \Database\Result The database result object
+	 * @return \Contao\Database\Result The database result object
 	 *
 	 * @throws \Exception If the cleaned keyword string is empty
 	 */
@@ -508,7 +508,7 @@ class Search
 		$strQuery .= " ORDER BY relevance DESC";
 
 		// Return result
-		$objResultStmt = \Database::getInstance()->prepare($strQuery);
+		$objResultStmt = Database::getInstance()->prepare($strQuery);
 
 		if ($intRows > 0)
 		{
@@ -526,7 +526,7 @@ class Search
 	 */
 	public static function removeEntry($strUrl)
 	{
-		$objDatabase = \Database::getInstance();
+		$objDatabase = Database::getInstance();
 
 		$objResult = $objDatabase->prepare("SELECT id FROM tl_search WHERE url=?")
 								 ->execute($strUrl);

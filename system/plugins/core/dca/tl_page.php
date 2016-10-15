@@ -647,7 +647,7 @@ class tl_page extends Contao\Backend
 	public function __construct()
 	{
 		parent::__construct();
-		$this->import('\Contao\BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 	}
 
 

@@ -476,7 +476,7 @@ class BackendInstall extends Backend
 		// Try to connect
 		try
 		{
-			$this->import('Database');
+			$this->import('Contao\\Database', 'Database');
 			$this->Database->listTables();
 			$this->Template->dbConnection = true;
 		}
@@ -628,7 +628,7 @@ class BackendInstall extends Backend
 			$this->handleRunOnce();
 		}
 
-		$this->import('Database\\Installer', 'Installer');
+		$this->import('Contao\\Database\\Installer', 'Installer');
 
 		$this->Template->dbUpdate = $this->Installer->generateSqlForm();
 		$this->Template->dbUpToDate = ($this->Template->dbUpdate != '') ? false : true;
@@ -774,7 +774,7 @@ class BackendInstall extends Backend
 					// Scan the upload folder (see #6134)
 					if ($this->Database->tableExists('tl_files') && $this->Database->query("SELECT COUNT(*) AS count FROM tl_files")->count < 1)
 					{
-						$this->import('Database\\Updater', 'Updater');
+						$this->import('Contao\\Database\\Updater', 'Updater');
 						$this->Updater->scanUploadFolder();
 					}
 
@@ -910,7 +910,7 @@ class BackendInstall extends Backend
 
 			if (\Input::post('FORM_SUBMIT') == 'tl_28update')
 			{
-				$this->import('Database\\Updater', 'Updater');
+				$this->import('Contao\\Database\\Updater', 'Updater');
 				$this->Updater->run28Update();
 				$this->reload();
 			}
@@ -932,7 +932,7 @@ class BackendInstall extends Backend
 
 			if (\Input::post('FORM_SUBMIT') == 'tl_29update')
 			{
-				$this->import('Database\\Updater', 'Updater');
+				$this->import('Contao\\Database\\Updater', 'Updater');
 				$this->Updater->run29Update();
 				$this->reload();
 			}
@@ -960,7 +960,7 @@ class BackendInstall extends Backend
 
 					if (\Input::post('FORM_SUBMIT') == 'tl_292update')
 					{
-						$this->import('Database\\Updater', 'Updater');
+						$this->import('Contao\\Database\\Updater', 'Updater');
 						$this->Updater->run292Update();
 						$this->reload();
 					}
@@ -984,7 +984,7 @@ class BackendInstall extends Backend
 
 			if (\Input::post('FORM_SUBMIT') == 'tl_210update')
 			{
-				$this->import('Database\\Updater', 'Updater');
+				$this->import('Contao\\Database\\Updater', 'Updater');
 				$this->Updater->run210Update();
 				$this->reload();
 			}
@@ -1007,7 +1007,7 @@ class BackendInstall extends Backend
 
 			if (\Input::post('FORM_SUBMIT') == 'tl_30update')
 			{
-				$this->import('Database\\Updater', 'Updater');
+				$this->import('Contao\\Database\\Updater', 'Updater');
 				$this->Updater->run300Update();
 				$this->reload();
 			}
@@ -1045,7 +1045,7 @@ class BackendInstall extends Backend
 
 			if (\Input::post('FORM_SUBMIT') == 'tl_30update')
 			{
-				$this->import('Database\\Updater', 'Updater');
+				$this->import('Contao\\Database\\Updater', 'Updater');
 				$this->Updater->scanUploadFolder();
 
 				\Config::persist('checkFileTree', true);
@@ -1064,7 +1064,7 @@ class BackendInstall extends Backend
 
 			if (\Input::post('FORM_SUBMIT') == 'tl_30update')
 			{
-				$this->import('Database\\Updater', 'Updater');
+				$this->import('Contao\\Database\\Updater', 'Updater');
 				$this->Updater->updateFileTreeFields();
 
 				\Config::persist('checkFileTree', false);
@@ -1089,7 +1089,7 @@ class BackendInstall extends Backend
 
 			if (\Input::post('FORM_SUBMIT') == 'tl_31update')
 			{
-				$this->import('Database\\Updater', 'Updater');
+				$this->import('Contao\\Database\\Updater', 'Updater');
 				$this->Updater->run31Update();
 				$this->reload();
 			}
@@ -1126,7 +1126,7 @@ class BackendInstall extends Backend
 
 				if (\Input::post('FORM_SUBMIT') == 'tl_32update')
 				{
-					$this->import('Database\\Updater', 'Updater');
+					$this->import('Contao\\Database\\Updater', 'Updater');
 					$this->Updater->run32Update();
 					$this->reload();
 				}
@@ -1149,7 +1149,7 @@ class BackendInstall extends Backend
 
 			if (\Input::post('FORM_SUBMIT') == 'tl_33update')
 			{
-				$this->import('Database\\Updater', 'Updater');
+				$this->import('Contao\\Database\\Updater', 'Updater');
 				$this->Updater->run33Update();
 				$this->reload();
 			}
@@ -1184,7 +1184,7 @@ class BackendInstall extends Backend
 
 				if (\Input::post('FORM_SUBMIT') == 'tl_35update')
 				{
-					$this->import('Database\\Updater', 'Updater');
+					$this->import('Contao\\Database\\Updater', 'Updater');
 					$this->Updater->run35Update();
 					$this->reload();
 				}

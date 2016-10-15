@@ -308,12 +308,12 @@ class Newsletter extends Backend
 	/**
 	 * Generate the e-mail object and return it
 	 *
-	 * @param \Database\Result|object $objNewsletter
+	 * @param \Contao\Database\Result|object $objNewsletter
 	 * @param array                   $arrAttachments
 	 *
 	 * @return \Email
 	 */
-	protected function generateEmailObject(\Database\Result $objNewsletter, $arrAttachments)
+	protected function generateEmailObject(\Contao\Database\Result $objNewsletter, $arrAttachments)
 	{
 		$objEmail = new \Email();
 
@@ -354,7 +354,7 @@ class Newsletter extends Backend
 	 *
 	 * @return string
 	 */
-	protected function sendNewsletter(\Email $objEmail, \Database\Result $objNewsletter, $arrRecipient, $text, $html, $css=null)
+	protected function sendNewsletter(\Email $objEmail, \Contao\Database\Result $objNewsletter, $arrRecipient, $text, $html, $css=null)
 	{
 		// Prepare the text content
 		$objEmail->text = \StringUtil::parseSimpleTokens($text, $arrRecipient);

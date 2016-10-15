@@ -20,7 +20,7 @@ class BackendLogin extends Backend
      */
     public function __construct()
     {
-        $this->import('\Contao\BackendUser', 'User');
+        $this->import('Contao\\BackendUser', 'User');
         parent::__construct();
 
         // Login

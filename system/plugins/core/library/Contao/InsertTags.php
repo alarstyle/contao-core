@@ -705,7 +705,7 @@ class InsertTags extends \Controller
 					}
 
 					$strQuery .= " FROM tl_content";
-					$objUpdate = \Database::getInstance()->query($strQuery);
+					$objUpdate = Database::getInstance()->query($strQuery);
 
 					if ($objUpdate->numRows)
 					{

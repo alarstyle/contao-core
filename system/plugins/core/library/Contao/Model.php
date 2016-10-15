@@ -105,13 +105,13 @@ abstract class Model
 	/**
 	 * Load the relations and optionally process a result set
 	 *
-	 * @param \Database\Result $objResult An optional database result
+	 * @param \Contao\Database\Result $objResult An optional database result
 	 */
-	public function __construct(\Database\Result $objResult=null)
+	public function __construct(\Contao\Database\Result $objResult=null)
 	{
 		$this->arrModified = array();
 
-		$objDca = \DcaExtractor::getInstance(static::$strTable);
+		$objDca = \Contao\DcaExtractor::getInstance(static::$strTable);
 		$this->arrRelations = $objDca->getRelations();
 
 		if ($objResult !== null)
@@ -434,7 +434,7 @@ abstract class Model
 			throw new \LogicException('The model instance has been detached and cannot be saved');
 		}
 
-		$objDatabase = \Database::getInstance();
+		$objDatabase = Database::getInstance();
 		$arrFields = $objDatabase->getFieldNames(static::$strTable);
 
 		// The model is in the registry
@@ -563,7 +563,7 @@ abstract class Model
 		}
 
 		// Delete the row
-		$intAffected = \Database::getInstance()->prepare("DELETE FROM " . static::$strTable . " WHERE " . static::$strPk . "=?")
+		$intAffected = Database::getInstance()->prepare("DELETE FROM " . static::$strTable . " WHERE " . static::$strPk . "=?")
 											   ->execute($intPk)
 											   ->affectedRows;
 
@@ -638,7 +638,7 @@ abstract class Model
 				(
 					array
 					(
-						'order' => \Database::getInstance()->findInSet($strField, $arrValues)
+						'order' => Database::getInstance()->findInSet($strField, $arrValues)
 					),
 
 					$arrOptions
@@ -668,7 +668,7 @@ abstract class Model
 		}
 
 		// Reload the database record
-		$res = \Database::getInstance()->prepare("SELECT * FROM " . static::$strTable . " WHERE " . static::$strPk . "=?")
+		$res = Database::getInstance()->prepare("SELECT * FROM " . static::$strTable . " WHERE " . static::$strPk . "=?")
 									   ->execute($intPk);
 
 		$this->setRow($res->row());
@@ -873,7 +873,7 @@ abstract class Model
 				(
 					'column' => array("$t.id IN(" . implode(',', array_map('intval', $arrUnregistered)) . ")"),
 					'value'  => null,
-					'order'  => \Database::getInstance()->findInSet("$t.id", $arrIds),
+					'order'  => Database::getInstance()->findInSet("$t.id", $arrIds),
 					'return' => 'Collection'
 				),
 
@@ -1060,7 +1060,7 @@ abstract class Model
 		$arrOptions['table'] = static::$strTable;
 		$strQuery = static::buildFindQuery($arrOptions);
 
-		$objStatement = \Database::getInstance()->prepare($strQuery);
+		$objStatement = Database::getInstance()->prepare($strQuery);
 
 		// Defaults for limit and offset
 		if (!isset($arrOptions['limit']))
@@ -1110,11 +1110,11 @@ abstract class Model
 	/**
 	 * Modify the database statement before it is executed
 	 *
-	 * @param \Database\Statement $objStatement The database statement object
+	 * @param \Contao\Database\Statement $objStatement The database statement object
 	 *
-	 * @return \Database\Statement The database statement object
+	 * @return \Contao\Database\Statement The database statement object
 	 */
-	protected static function preFind(\Database\Statement $objStatement)
+	protected static function preFind(\Contao\Database\Statement $objStatement)
 	{
 		return $objStatement;
 	}
@@ -1123,11 +1123,11 @@ abstract class Model
 	/**
 	 * Modify the database result before the model is created
 	 *
-	 * @param \Database\Result $objResult The database result object
+	 * @param \Contao\Database\Result $objResult The database result object
 	 *
-	 * @return \Database\Result The database result object
+	 * @return \Contao\Database\Result The database result object
 	 */
-	protected static function postFind(\Database\Result $objResult)
+	protected static function postFind(\Contao\Database\Result $objResult)
 	{
 		return $objResult;
 	}
@@ -1163,7 +1163,7 @@ abstract class Model
 
 		$strQuery = static::buildCountQuery($arrOptions);
 
-		return (int) \Database::getInstance()->prepare($strQuery)->execute($arrOptions['value'])->count;
+		return (int) Database::getInstance()->prepare($strQuery)->execute($arrOptions['value'])->count;
 	}
 
 
@@ -1243,11 +1243,11 @@ abstract class Model
 	/**
 	 * Create a model from a database result
 	 *
-	 * @param \Database\Result $objResult The database result object
+	 * @param \Contao\Database\Result $objResult The database result object
 	 *
 	 * @return static The model
 	 */
-	protected static function createModelFromDbResult(\Database\Result $objResult)
+	protected static function createModelFromDbResult(\Contao\Database\Result $objResult)
 	{
 		return new static($objResult);
 	}
@@ -1259,24 +1259,24 @@ abstract class Model
 	 * @param array  $arrModels An array of models
 	 * @param string $strTable  The table name
 	 *
-	 * @return \Model\Collection The Model\Collection object
+	 * @return \Contao\Model\Collection The Model\Collection object
 	 */
 	protected static function createCollection(array $arrModels, $strTable)
 	{
-		return new \Model\Collection($arrModels, $strTable);
+		return new \Contao\Model\Collection($arrModels, $strTable);
 	}
 
 
 	/**
 	 * Create a new collection from a database result
 	 *
-	 * @param \Database\Result $objResult The database result object
+	 * @param \Contao\Database\Result $objResult The database result object
 	 * @param string           $strTable  The table name
 	 *
-	 * @return \Model\Collection The model collection
+	 * @return \Contao\Model\Collection The model collection
 	 */
-	protected static function createCollectionFromDbResult(\Database\Result $objResult, $strTable)
+	protected static function createCollectionFromDbResult(\Contao\Database\Result $objResult, $strTable)
 	{
-		return \Model\Collection::createFromDbResult($objResult, $strTable);
+		return \Contao\Model\Collection::createFromDbResult($objResult, $strTable);
 	}
 }

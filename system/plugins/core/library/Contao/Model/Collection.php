@@ -125,20 +125,20 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate
 	/**
 	 * Create a new collection from a database result
 	 *
-	 * @param \Database\Result $objResult The database result object
+	 * @param \Contao\Database\Result $objResult The database result object
 	 * @param string           $strTable  The table name
 	 *
 	 * @return static The model collection
 	 */
-	public static function createFromDbResult(\Database\Result $objResult, $strTable)
+	public static function createFromDbResult(\Contao\Database\Result $objResult, $strTable)
 	{
 		$arrModels = array();
-		$strClass = \Model::getClassFromTable($strTable);
+		$strClass = \Contao\Model::getClassFromTable($strTable);
 
 		while ($objResult->next())
 		{
-			/** @var \Model $strClass */
-			$objModel = \Model\Registry::getInstance()->fetch($strTable, $objResult->{$strClass::getPk()});
+			/** @var \Contao\Model $strClass */
+			$objModel = \Contao\Model\Registry::getInstance()->fetch($strTable, $objResult->{$strClass::getPk()});
 
 			if ($objModel !== null)
 			{

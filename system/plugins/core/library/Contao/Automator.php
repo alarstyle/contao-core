@@ -42,7 +42,7 @@ class Automator extends \System
 	 */
 	public function purgeSearchTables()
 	{
-		$objDatabase = \Database::getInstance();
+		$objDatabase = Database::getInstance();
 
 		// Truncate the tables
 		$objDatabase->execute("TRUNCATE TABLE tl_search");
@@ -62,7 +62,7 @@ class Automator extends \System
 	 */
 	public function purgeUndoTable()
 	{
-		$objDatabase = \Database::getInstance();
+		$objDatabase = Database::getInstance();
 
 		// Truncate the table
 		$objDatabase->execute("TRUNCATE TABLE tl_undo");
@@ -77,7 +77,7 @@ class Automator extends \System
 	 */
 	public function purgeVersionTable()
 	{
-		$objDatabase = \Database::getInstance();
+		$objDatabase = Database::getInstance();
 
 		// Truncate the table
 		$objDatabase->execute("TRUNCATE TABLE tl_version");
@@ -92,7 +92,7 @@ class Automator extends \System
 	 */
 	public function purgeSystemLog()
 	{
-		$objDatabase = \Database::getInstance();
+		$objDatabase = Database::getInstance();
 
 		// Truncate the table
 		$objDatabase->execute("TRUNCATE TABLE tl_log");
@@ -262,7 +262,7 @@ class Automator extends \System
 	public function purgeXmlFiles($blnReturn=false)
 	{
 		$arrFeeds = array();
-		$objDatabase = \Database::getInstance();
+		$objDatabase = Database::getInstance();
 
 		// XML sitemaps
 		$objFeeds = $objDatabase->execute("SELECT sitemapName FROM tl_page WHERE type='root' AND createSitemap=1 AND sitemapName!=''");
@@ -312,8 +312,8 @@ class Automator extends \System
 	 */
 	public function generateSitemap($intId=0)
 	{
-		$time = \Date::floorToMinute();
-		$objDatabase = \Database::getInstance();
+		$time = Date::floorToMinute();
+		$objDatabase = Database::getInstance();
 
 		$this->purgeXmlFiles();
 
@@ -597,7 +597,7 @@ class Automator extends \System
 	public function generateLanguageCache()
 	{
 		$arrLanguages = array('en');
-		$objLanguages = \Database::getInstance()->query("SELECT language FROM tl_member UNION SELECT language FROM tl_user UNION SELECT REPLACE(language, '-', '_') FROM tl_page WHERE type='root'");
+		$objLanguages = Database::getInstance()->query("SELECT language FROM tl_member UNION SELECT language FROM tl_user UNION SELECT REPLACE(language, '-', '_') FROM tl_page WHERE type='root'");
 
 		// Only cache the languages which are in use (see #6013)
 		while ($objLanguages->next())

@@ -425,7 +425,7 @@ class DcaExtractor extends \Controller
 		{
 			if (!isset(static::$arrSql[$this->strTable]))
 			{
-				$objInstaller = new \Database\Installer();
+				$objInstaller = new Database\Installer();
 				static::$arrSql = $objInstaller->getFromFile();
 			}
 
