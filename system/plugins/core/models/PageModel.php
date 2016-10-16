@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Config;
 use Contao\Database;
 
 /**
@@ -867,15 +868,15 @@ class PageModel extends \Model
 		// Use the global date format if none is set (see #6104)
 		if ($this->dateFormat == '')
 		{
-			$this->dateFormat = \Config::get('dateFormat');
+			$this->dateFormat = Config::get('dateFormat');
 		}
 		if ($this->timeFormat == '')
 		{
-			$this->timeFormat = \Config::get('timeFormat');
+			$this->timeFormat = Config::get('timeFormat');
 		}
 		if ($this->datimFormat == '')
 		{
-			$this->datimFormat = \Config::get('datimFormat');
+			$this->datimFormat = Config::get('datimFormat');
 		}
 
 		// Prevent saving (see #6506 and #7199)

@@ -31,13 +31,13 @@ namespace Contao;
  * @property \Automator                                $Automator   The automator object
  * @property \Calendar                                 $Calendar    The calendar object
  * @property \Comments                                 $Comments    The comments object
- * @property \Config                                   $Config      The config object
- * @property \Database                                 $Database    The database object
+ * @property Config                                    $Config      The config object
+ * @property Database                                  $Database    The database object
  * @property \Files                                    $Files       The files object
  * @property \Input                                    $Input       The input object
- * @property \Database\Installer                       $Installer   The database installer object
- * @property \Database\Updater                         $Updater     The database updater object
- * @property Messages                                 $Messages    The messages object
+ * @property \Contao\Database\Installer                $Installer   The database installer object
+ * @property \Contao\Database\Updater                  $Updater     The database updater object
+ * @property Messages                                  $Messages    The messages object
  * @property \News                                     $News        The news object
  * @property \Session                                  $Session     The session object
  * @property \StyleSheets                              $StyleSheets The style sheets object
@@ -91,8 +91,8 @@ abstract class System
 	 */
 	protected function __construct()
 	{
-		$this->import('Config');
-		$this->import('Session');
+		$this->import('Contao\\Config', 'Config');
+		$this->import('Contao\\Session', 'Session');
 	}
 
 
@@ -185,7 +185,7 @@ abstract class System
 			$strIp = static::anonymizeIp(\Environment::get('ip'));
 		}
 
-		\Database::getInstance()->prepare("INSERT INTO tl_log (tstamp, source, action, username, text, func, ip, browser) VALUES(?, ?, ?, ?, ?, ?, ?, ?)")
+		Database::getInstance()->prepare("INSERT INTO tl_log (tstamp, source, action, username, text, func, ip, browser) VALUES(?, ?, ?, ?, ?, ?, ?, ?)")
 							   ->execute(time(), (TL_MODE == 'FE' ? 'FE' : 'BE'), $strCategory, ($GLOBALS['TL_USERNAME'] ? $GLOBALS['TL_USERNAME'] : ''), specialchars($strText), $strFunction, $strIp, $strUa);
 
 		// HOOK: allow to add custom loggers
@@ -310,7 +310,7 @@ abstract class System
 			$strCacheFile = 'system/cache/language/' . $strCreateLang . '/' . $strName . '.php';
 
 			// Try to load from cache
-			if (!\Config::get('bypassCache') && file_exists(TL_ROOT . '/' . $strCacheFile))
+			if (!Config::get('bypassCache') && file_exists(TL_ROOT . '/' . $strCacheFile))
 			{
 				include TL_ROOT . '/' . $strCacheFile;
 			}
@@ -618,7 +618,7 @@ abstract class System
 	public static function anonymizeIp($strIp)
 	{
 		// The feature has been disabled
-		if (!\Config::get('privacyAnonymizeIp'))
+		if (!Config::get('privacyAnonymizeIp'))
 		{
 			return $strIp;
 		}

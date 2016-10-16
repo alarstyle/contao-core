@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Config;
 
 /**
  * Class FormPassword
@@ -121,9 +122,9 @@ class FormPassword extends \Editor
 			return '';
 		}
 
-		if (utf8_strlen($varInput) < \Config::get('minPasswordLength'))
+		if (utf8_strlen($varInput) < Config::get('minPasswordLength'))
 		{
-			$this->addError(sprintf($GLOBALS['TL_LANG']['ERR']['passwordLength'], \Config::get('minPasswordLength')));
+			$this->addError(sprintf($GLOBALS['TL_LANG']['ERR']['passwordLength'], Config::get('minPasswordLength')));
 		}
 
 		if ($varInput != $this->getPost($this->strName . '_confirm'))

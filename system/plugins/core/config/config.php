@@ -101,34 +101,34 @@ $GLOBALS['FE_MOD'] = array
 (
 	'navigationMenu' => array
 	(
-		'navigation'     => 'ModuleNavigation',
-		'customnav'      => 'ModuleCustomnav',
-		'breadcrumb'     => 'ModuleBreadcrumb',
-		'quicknav'       => 'ModuleQuicknav',
-		'quicklink'      => 'ModuleQuicklink',
-		'booknav'        => 'ModuleBooknav',
-		'sitemap'        => 'ModuleSitemap'
+		'navigation'     => 'Contao\\Modules\\ModuleNavigation',
+		'customnav'      => 'Contao\\Modules\\ModuleCustomnav',
+		'breadcrumb'     => 'Contao\\Modules\\ModuleBreadcrumb',
+		'quicknav'       => 'Contao\\Modules\\ModuleQuicknav',
+		'quicklink'      => 'Contao\\Modules\\ModuleQuicklink',
+		'booknav'        => 'Contao\\Modules\\ModuleBooknav',
+		'sitemap'        => 'Contao\\Modules\\ModuleSitemap'
 	),
 	'user' => array
 	(
-		'login'          => 'ModuleLogin',
-		'logout'         => 'ModuleLogout',
-		'personalData'   => 'ModulePersonalData',
-		'registration'   => 'ModuleRegistration',
-		'changePassword' => 'ModuleChangePassword',
-		'lostPassword'   => 'ModulePassword',
-		'closeAccount'   => 'ModuleCloseAccount'
+		'login'          => 'Contao\\Modules\\ModuleLogin',
+		'logout'         => 'Contao\\Modules\\ModuleLogout',
+		'personalData'   => 'Contao\\Modules\\ModulePersonalData',
+		'registration'   => 'Contao\\Modules\\ModuleRegistration',
+		'changePassword' => 'Contao\\Modules\\ModuleChangePassword',
+		'lostPassword'   => 'Contao\\Modules\\ModulePassword',
+		'closeAccount'   => 'Contao\\Modules\\ModuleCloseAccount'
 	),
 	'application' => array
 	(
 		'form'           => 'Form',
-		'search'         => 'ModuleSearch'
+		'search'         => 'Contao\\Modules\\ModuleSearch'
 	),
 	'miscellaneous' => array
 	(
-		'flash'          => 'ModuleFlash',
-		'html'           => 'ModuleHtml',
-		'rss_reader'     => 'ModuleRssReader'
+		'flash'          => 'Contao\\Modules\\ModuleFlash',
+		'html'           => 'Contao\\Modules\\ModuleHtml',
+		'rss_reader'     => 'Contao\\Modules\\ModuleRssReader'
 	)
 );
 

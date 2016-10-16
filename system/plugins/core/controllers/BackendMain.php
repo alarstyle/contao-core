@@ -10,6 +10,8 @@
 
 namespace Contao;
 
+use Contao\Config;
+use Contao\Input;
 
 /**
  * Main back end controller.
@@ -51,7 +53,7 @@ class BackendMain extends Backend
 		if ($this->User->pwChange)
 		{
 			$objSession = $this->Database->prepare("SELECT su FROM tl_session WHERE hash=?")
-										 ->execute(sha1(session_id() . (!\Config::get('disableIpCheck') ? \Environment::get('ip') : '') . 'BE_USER_AUTH'));
+										 ->execute(sha1(session_id() . (!Config::get('disableIpCheck') ? \Environment::get('ip') : '') . 'BE_USER_AUTH'));
 
 			if (!$objSession->su)
 			{
@@ -60,32 +62,32 @@ class BackendMain extends Backend
 		}
 
 		// Front end redirect
-		if (\Input::get('do') == 'feRedirect')
+		if (Input::get('do') == 'feRedirect')
 		{
-			$this->redirectToFrontendPage(\Input::get('page'), \Input::get('article'));
+			$this->redirectToFrontendPage(Input::get('page'), Input::get('article'));
 		}
 
 		// Convenience functions
 		if ($this->User->isAdmin)
 		{
 			// Safe mode off
-			if (\Input::get('smo'))
+			if (Input::get('smo'))
 			{
 				$this->import('Automator');
 				$this->Automator->purgeInternalCache();
-				\Config::persist('coreOnlyMode', false);
+				Config::persist('coreOnlyMode', false);
 				$this->redirect($this->getReferer());
 			}
 
 			// Maintenance mode off
-			if (\Input::get('mmo'))
+			if (Input::get('mmo'))
 			{
-				\Config::persist('maintenanceMode', false);
+				Config::persist('maintenanceMode', false);
 				$this->redirect($this->getReferer());
 			}
 
 			// Build internal cache
-			if (\Input::get('bic'))
+			if (Input::get('bic'))
 			{
 				$this->import('Automator');
 				$this->Automator->generateInternalCache();
@@ -174,7 +176,7 @@ class BackendMain extends Backend
 		// Add the versions overview
 		Versions::addToTemplate($objTemplate);
 
-		$objTemplate->welcome = sprintf($GLOBALS['TL_LANG']['MSC']['welcomeTo'], \Config::get('websiteTitle'));
+		$objTemplate->welcome = sprintf($GLOBALS['TL_LANG']['MSC']['welcomeTo'], Config::get('websiteTitle'));
 		$objTemplate->showDifferences = specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MSC']['showDifferences']));
 		$objTemplate->systemMessages = $GLOBALS['TL_LANG']['MSC']['systemMessages'];
 		$objTemplate->shortcuts = $GLOBALS['TL_LANG']['MSC']['shortcuts'][0];
@@ -193,7 +195,7 @@ class BackendMain extends Backend
 		// Default headline
 		if ($this->Template->headline == '')
 		{
-			$this->Template->headline = \Config::get('websiteTitle');
+			$this->Template->headline = Config::get('websiteTitle');
 		}
 
 		// Default title
@@ -249,7 +251,7 @@ class BackendMain extends Backend
 		$this->Template->coreOnlyMode = $GLOBALS['TL_LANG']['MSC']['coreOnlyMode'];
 		$this->Template->coreOnlyOff = specialchars($GLOBALS['TL_LANG']['MSC']['coreOnlyOff']);
 		$this->Template->coreOnlyHref = $this->addToUrl('smo=1');
-		$this->Template->isMaintenanceMode = \Config::get('maintenanceMode');
+		$this->Template->isMaintenanceMode = Config::get('maintenanceMode');
 		$this->Template->maintenanceMode = $GLOBALS['TL_LANG']['MSC']['maintenanceMode'];
 		$this->Template->maintenanceOff = specialchars($GLOBALS['TL_LANG']['MSC']['maintenanceOff']);
 		$this->Template->maintenanceHref = $this->addToUrl('mmo=1');
@@ -259,22 +261,22 @@ class BackendMain extends Backend
 		$this->Template->isPopup = Input::get('popup');
 
 		// Hide the cache message in the repository manager (see #5966)
-		if (!\Config::get('bypassCache') && $this->User->isAdmin)
+		if (!Config::get('bypassCache') && $this->User->isAdmin)
 		{
-			$this->Template->needsCacheBuild = ((\Input::get('do') != 'repository_manager' || !isset($_GET['install']) && !isset($_GET['uninstall']) && !isset($_GET['update'])) && !is_dir(TL_ROOT . '/system/cache/dca'));
+			$this->Template->needsCacheBuild = ((Input::get('do') != 'repository_manager' || !isset($_GET['install']) && !isset($_GET['uninstall']) && !isset($_GET['update'])) && !is_dir(TL_ROOT . '/system/cache/dca'));
 		}
 
 		// Front end preview links
 		if (defined('CURRENT_ID') && CURRENT_ID != '')
 		{
 			// Pages
-			if (\Input::get('do') == 'page')
+			if (Input::get('do') == 'page')
 			{
 				$this->Template->frontendFile = '?page=' . CURRENT_ID;
 			}
 
 			// Articles
-			elseif (\Input::get('do') == 'article')
+			elseif (Input::get('do') == 'article')
 			{
 				if (($objArticle = \ArticleModel::findByPk(CURRENT_ID)) !== null)
 				{

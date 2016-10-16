@@ -624,7 +624,7 @@ class tl_user extends \Contao\Backend
 			}
 
 			$this->Database->prepare("UPDATE tl_session SET pid=?, su=1 WHERE hash=?")
-						   ->execute($objUser->id, sha1(session_id() . (!\Config::get('disableIpCheck') ? \Environment::get('ip') : '') . 'BE_USER_AUTH'));
+						   ->execute($objUser->id, sha1(session_id() . (!\Contao\Config::get('disableIpCheck') ? \Environment::get('ip') : '') . 'BE_USER_AUTH'));
 
 			$this->log('User "' . $this->User->username . '" has switched to user "' . $objUser->username . '"', __METHOD__, TL_ACCESS);
 

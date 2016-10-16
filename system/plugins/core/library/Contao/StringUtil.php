@@ -107,7 +107,7 @@ class StringUtil
 		$arrEmptyTags = array('area', 'base', 'br', 'col', 'hr', 'img', 'input', 'frame', 'link', 'meta', 'param');
 
 		$strString = preg_replace('/[\t\n\r]+/', ' ', $strString);
-		$strString = strip_tags($strString, \Config::get('allowedTags'));
+		$strString = strip_tags($strString, Config::get('allowedTags'));
 		$strString = preg_replace('/ +/', ' ', $strString);
 
 		// Seperate tags and text
@@ -231,7 +231,7 @@ class StringUtil
 
 		if ($strCharset === null)
 		{
-			$strCharset = \Config::get('characterSet');
+			$strCharset = Config::get('characterSet');
 		}
 
 		$strString = preg_replace('/(&#*\w+)[\x00-\x20]+;/i', '$1;', $strString);

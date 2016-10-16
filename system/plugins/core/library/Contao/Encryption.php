@@ -73,7 +73,7 @@ class Encryption
 
 		if (!$strKey)
 		{
-			$strKey = \Config::get('encryptionKey');
+			$strKey = Config::get('encryptionKey');
 		}
 
 		$iv = mcrypt_create_iv(mcrypt_enc_get_iv_size(static::$resTd));
@@ -129,7 +129,7 @@ class Encryption
 
 		if (!$strKey)
 		{
-			$strKey = \Config::get('encryptionKey');
+			$strKey = Config::get('encryptionKey');
 		}
 
 		mcrypt_generic_init(static::$resTd, md5($strKey), $iv);
@@ -152,12 +152,12 @@ class Encryption
 			throw new \Exception('The PHP mcrypt extension is not installed');
 		}
 
-		if ((self::$resTd = mcrypt_module_open(\Config::get('encryptionCipher'), '', \Config::get('encryptionMode'), '')) == false)
+		if ((self::$resTd = mcrypt_module_open(Config::get('encryptionCipher'), '', Config::get('encryptionMode'), '')) == false)
 		{
 			throw new \Exception('Error initializing encryption module');
 		}
 
-		if (\Config::get('encryptionKey') == '')
+		if (Config::get('encryptionKey') == '')
 		{
 			throw new \Exception('Encryption key not set');
 		}
@@ -175,7 +175,7 @@ class Encryption
 	 */
 	public static function hash($strPassword)
 	{
-		$intCost = \Config::get('bcryptCost') ?: 10;
+		$intCost = Config::get('bcryptCost') ?: 10;
 
 		if ($intCost < 4 || $intCost > 31)
 		{

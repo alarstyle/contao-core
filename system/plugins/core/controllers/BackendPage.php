@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Config;
 
 /**
  * Back end page picker.
@@ -126,7 +127,7 @@ class BackendPage extends Backend
 		$objTemplate->base = \Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker']);
-		$objTemplate->charset = \Config::get('characterSet');
+		$objTemplate->charset = Config::get('characterSet');
 		$objTemplate->addSearch = true;
 		$objTemplate->search = $GLOBALS['TL_LANG']['MSC']['search'];
 		$objTemplate->action = ampersand(\Environment::get('request'));
@@ -145,7 +146,7 @@ class BackendPage extends Backend
 			$objTemplate->switchHref = str_replace('contao/page.php', 'contao/file.php', ampersand(\Environment::get('request')));
 		}
 
-		\Config::set('debugMode', false);
+		Config::set('debugMode', false);
 		$objTemplate->output();
 	}
 }

@@ -178,7 +178,7 @@ class Input
 
 			$varValue = static::decodeEntities($varValue);
 			$varValue = static::xssClean($varValue);
-			$varValue = static::stripTags($varValue, \Config::get('allowedTags'));
+			$varValue = static::stripTags($varValue, Config::get('allowedTags'));
 
 			if (!$blnDecodeEntities)
 			{
@@ -682,7 +682,7 @@ class Input
 
 		// Preserve basic entities
 		$varValue = static::preserveBasicEntities($varValue);
-		$varValue = html_entity_decode($varValue, ENT_QUOTES, \Config::get('characterSet'));
+		$varValue = html_entity_decode($varValue, ENT_QUOTES, Config::get('characterSet'));
 
 		return $varValue;
 	}

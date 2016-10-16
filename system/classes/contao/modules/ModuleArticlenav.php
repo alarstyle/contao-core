@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ModuleArticlenav extends \Module
+class ModuleArticlenav extends AbstractModule
 {
 
 	/**

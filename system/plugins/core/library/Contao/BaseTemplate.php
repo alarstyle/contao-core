@@ -98,7 +98,7 @@ abstract class BaseTemplate extends \Controller
 		$this->arrBlocks = array();
 
 		// Add start and end markers in debug mode
-		if (\Config::get('debugMode'))
+		if (Config::get('debugMode'))
 		{
 			$strRelPath = str_replace(TL_ROOT . '/', '', $this->getTemplate($this->strTemplate));
 			$strBuffer = "\n<!-- TEMPLATE START: $strRelPath -->\n$strBuffer\n<!-- TEMPLATE END: $strRelPath -->\n";

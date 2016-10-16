@@ -10,6 +10,8 @@
 
 namespace Contao\Pages;
 
+use Contao\Config;
+use Contao\Environment;
 use Contao\Frontend;
 
 /**
@@ -51,10 +53,10 @@ class PageError404 extends Frontend
 		$objRootPage = $this->getRootPageFromUrl();
 
 		// Forward if the language should be but is not set (see #4028)
-		if (\Config::get('addLanguageToUrl'))
+		if (Config::get('addLanguageToUrl'))
 		{
 			// Get the request string without the index.php fragment
-			if (\Environment::get('request') == 'index.php')
+			if (Environment::get('request') == 'index.php')
 			{
 				$strRequest = '';
 			}
@@ -69,11 +71,11 @@ class PageError404 extends Frontend
 				// Handle language fragments without trailing slash (see #7666)
 				if (preg_match('@^[a-z]{2}(-[A-Z]{2})?$@', $strRequest))
 				{
-					$this->redirect((\Config::get('rewriteURL') ? '' : 'index.php/') . $strRequest . '/', 301);
+					$this->redirect((Config::get('rewriteURL') ? '' : 'index.php/') . $strRequest . '/', 301);
 				}
 				else
 				{
-					$this->redirect((\Config::get('rewriteURL') ? '' : 'index.php/') . $objRootPage->language . '/' . $strRequest, 301);
+					$this->redirect((Config::get('rewriteURL') ? '' : 'index.php/') . $objRootPage->language . '/' . $strRequest, 301);
 				}
 			}
 		}

@@ -10,6 +10,9 @@
 
 namespace Contao;
 
+use Contao\Config;
+use Contao\Environment;
+use Contao\Input;
 
 /**
  * Set up the front end preview frames.
@@ -49,46 +52,46 @@ class BackendPreview extends Backend
 		$objTemplate->base = \Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($GLOBALS['TL_LANG']['MSC']['fePreview']);
-		$objTemplate->charset = \Config::get('characterSet');
-		$objTemplate->site = \Input::get('site', true);
+		$objTemplate->charset = Config::get('characterSet');
+		$objTemplate->site = Input::get('site', true);
 
-		if (\Input::get('url'))
+		if (Input::get('url'))
 		{
-			$objTemplate->url = \Environment::get('base') . \Input::get('url');
+			$objTemplate->url = \Environment::get('base') . Input::get('url');
 		}
-		elseif (\Input::get('page'))
+		elseif (Input::get('page'))
 		{
-			$objTemplate->url = $this->redirectToFrontendPage(\Input::get('page'), \Input::get('article'), true);
+			$objTemplate->url = $this->redirectToFrontendPage(Input::get('page'), Input::get('article'), true);
 		}
 		else
 		{
-			$objTemplate->url = \Environment::get('base');
+			$objTemplate->url = Environment::get('base');
 		}
 
 		// Switch to a particular member (see #6546)
 		if (\Input::get('user') && $this->User->isAdmin)
 		{
-			$objUser = \MemberModel::findByUsername(\Input::get('user'));
+			$objUser = \MemberModel::findByUsername(Input::get('user'));
 
 			if ($objUser !== null)
 			{
-				$strHash = sha1(session_id() . (!\Config::get('disableIpCheck') ? \Environment::get('ip') : '') . 'FE_USER_AUTH');
+				$strHash = sha1(session_id() . (!Config::get('disableIpCheck') ? Environment::get('ip') : '') . 'FE_USER_AUTH');
 
 				// Remove old sessions
 				$this->Database->prepare("DELETE FROM tl_session WHERE tstamp<? OR hash=?")
-							   ->execute((time() - \Config::get('sessionTimeout')), $strHash);
+							   ->execute((time() - Config::get('sessionTimeout')), $strHash);
 
 				// Insert the new session
 				$this->Database->prepare("INSERT INTO tl_session (pid, tstamp, name, sessionID, ip, hash) VALUES (?, ?, ?, ?, ?, ?)")
-							   ->execute($objUser->id, time(), 'FE_USER_AUTH', session_id(), \Environment::get('ip'), $strHash);
+							   ->execute($objUser->id, time(), 'FE_USER_AUTH', session_id(), Environment::get('ip'), $strHash);
 
 				// Set the cookie
-				$this->setCookie('FE_USER_AUTH', $strHash, (time() + \Config::get('sessionTimeout')), null, null, false, true);
-				$objTemplate->user = \Input::post('user');
+				$this->setCookie('FE_USER_AUTH', $strHash, (time() + Config::get('sessionTimeout')), null, null, false, true);
+				$objTemplate->user = Input::post('user');
 			}
 		}
 
-		\Config::set('debugMode', false);
+		Config::set('debugMode', false);
 		$objTemplate->output();
 	}
 }

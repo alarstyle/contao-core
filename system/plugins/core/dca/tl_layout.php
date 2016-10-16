@@ -507,11 +507,11 @@ class tl_layout extends Contao\Backend
 	/**
 	 * Return all style sheets of the current theme
 	 *
-	 * @param DataContainer $dc
+	 * @param Contao\DataContainer $dc
 	 *
 	 * @return array
 	 */
-	public function getStyleSheets(DataContainer $dc)
+	public function getStyleSheets(Contao\DataContainer $dc)
 	{
 		$intPid = $dc->activeRecord->pid;
 
@@ -659,11 +659,11 @@ class tl_layout extends Contao\Backend
 	/**
 	 * Add a link to edit the stylesheets of the theme
 	 *
-	 * @param DataContainer $dc
+	 * @param Contao\DataContainer $dc
 	 *
 	 * @return string
 	 */
-	public function styleSheetLink(DataContainer $dc)
+	public function styleSheetLink(Contao\DataContainer $dc)
 	{
 		return ' <a href="contao/main.php?do=themes&amp;table=tl_style_sheet&amp;id=' . $dc->activeRecord->pid . '&amp;popup=1&amp;rt=' . REQUEST_TOKEN . '" title="' . specialchars($GLOBALS['TL_LANG']['tl_layout']['edit_styles']) . '" onclick="Backend.openModalIframe({\'width\':768,\'title\':\''.specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['tl_layout']['edit_styles'])).'\',\'url\':this.href});return false">' . Image::getHtml('edit.gif', '', 'style="vertical-align:text-bottom"') . '</a>';
 	}

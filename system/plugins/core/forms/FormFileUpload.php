@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Config;
 
 /**
  * Class FormFileUpload
@@ -173,18 +174,18 @@ class FormFileUpload extends \Editor implements \uploadable
 		if (($arrImageSize = @getimagesize($file['tmp_name'])) != false)
 		{
 			// Image exceeds maximum image width
-			if ($arrImageSize[0] > \Config::get('imageWidth'))
+			if ($arrImageSize[0] > Config::get('imageWidth'))
 			{
-				$this->addError(sprintf($GLOBALS['TL_LANG']['ERR']['filewidth'], $file['name'], \Config::get('imageWidth')));
+				$this->addError(sprintf($GLOBALS['TL_LANG']['ERR']['filewidth'], $file['name'], Config::get('imageWidth')));
 				unset($_FILES[$this->strName]);
 
 				return;
 			}
 
 			// Image exceeds maximum image height
-			if ($arrImageSize[1] > \Config::get('imageHeight'))
+			if ($arrImageSize[1] > Config::get('imageHeight'))
 			{
-				$this->addError(sprintf($GLOBALS['TL_LANG']['ERR']['fileheight'], $file['name'], \Config::get('imageHeight')));
+				$this->addError(sprintf($GLOBALS['TL_LANG']['ERR']['fileheight'], $file['name'], Config::get('imageHeight')));
 				unset($_FILES[$this->strName]);
 
 				return;
@@ -250,7 +251,7 @@ class FormFileUpload extends \Editor implements \uploadable
 
 					// Move the file to its destination
 					$this->Files->move_uploaded_file($file['tmp_name'], $strUploadFolder . '/' . $file['name']);
-					$this->Files->chmod($strUploadFolder . '/' . $file['name'], \Config::get('defaultFileChmod'));
+					$this->Files->chmod($strUploadFolder . '/' . $file['name'], Config::get('defaultFileChmod'));
 
 					$strUuid = null;
 					$strFile = $strUploadFolder . '/' . $file['name'];

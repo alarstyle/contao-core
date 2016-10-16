@@ -65,13 +65,13 @@ abstract class Files
 		if (self::$objInstance === null)
 		{
 			// Use FTP to modify files
-			if (\Config::get('useFTP'))
+			if (Config::get('useFTP'))
 			{
 				self::$objInstance = new \Files\Ftp();
 			}
 
 			// HOOK: use the smhextended module
-			elseif (\Config::get('useSmhExtended') && in_array('smhextended', \PluginLoader::getActive()))
+			elseif (Config::get('useSmhExtended') && in_array('smhextended', \PluginLoader::getActive()))
 			{
 				self::$objInstance = new \SMHExtended();
 			}

@@ -22,9 +22,9 @@ setTimeout(function() {
   window.tinymce && tinymce.init({
     skin: 'contao',
     selector: '#<?php echo $selector; ?>',
-    language: '<?php echo Contao\Backend::getTinyMceLanguage(); ?>',
+    language: '<?php echo \Contao\Backend::getTinyMceLanguage(); ?>',
     element_format: 'html',
-    document_base_url: '<?php echo Environment::get('base'); ?>',
+    document_base_url: '<?php echo \Contao\Environment::get('base'); ?>',
     entities: '160,nbsp,60,lt,62,gt,173,shy',
     setup: function(editor) {
       editor.getElement().removeAttribute('required');
@@ -38,14 +38,14 @@ setTimeout(function() {
       Backend.openModalBrowser(field_name, url, type, win);
     },
     templates: [
-      <?php echo Contao\Backend::getTinyTemplates(); ?>
+      <?php echo \Contao\Backend::getTinyTemplates(); ?>
     ],
     plugins: 'autosave charmap code fullscreen image importcss link lists paste searchreplace tabfocus table template visualblocks',
     browser_spellcheck: true,
     tabfocus_elements: ':prev,:next',
     importcss_append: true,
-    importcss_groups: [{title: '<?php echo Config::get('uploadPath'); ?>/tinymce.css'}],
-    content_css: '<?php echo TL_PATH; ?>/system/themes/tinymce.css,<?php echo TL_PATH . '/' . Config::get('uploadPath'); ?>/tinymce.css',
+    importcss_groups: [{title: '<?php echo \Contao\Config::get('uploadPath'); ?>/tinymce.css'}],
+    content_css: '<?php echo TL_PATH; ?>/system/themes/tinymce.css,<?php echo TL_PATH . '/' . \Contao\Config::get('uploadPath'); ?>/tinymce.css',
     extended_valid_elements: 'q[cite|class|title],article,section,hgroup,figure,figcaption',
     menubar: 'file edit insert view format table',
     toolbar: 'link unlink | image | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | undo redo | code'

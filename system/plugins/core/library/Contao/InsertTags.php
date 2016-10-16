@@ -47,7 +47,7 @@ class InsertTags extends \Controller
 		global $objPage;
 
 		// Preserve insert tags
-		if (\Config::get('disableInsertTags'))
+		if (Config::get('disableInsertTags'))
 		{
 			return \StringUtil::restoreBasicEntities($strBuffer);
 		}
@@ -105,7 +105,7 @@ class InsertTags extends \Controller
 			{
 				// Date
 				case 'date':
-					$arrCache[$strTag] = \Date::parse($elements[1] ?: \Config::get('dateFormat'));
+					$arrCache[$strTag] = Date::parse($elements[1] ?: Config::get('dateFormat'));
 					break;
 
 				// Accessibility tags
@@ -261,15 +261,15 @@ class InsertTags extends \Controller
 
 						if ($rgxp == 'date')
 						{
-							$arrCache[$strTag] = \Date::parse(\Config::get('dateFormat'), $value);
+							$arrCache[$strTag] = Date::parse(Config::get('dateFormat'), $value);
 						}
 						elseif ($rgxp == 'time')
 						{
-							$arrCache[$strTag] = \Date::parse(\Config::get('timeFormat'), $value);
+							$arrCache[$strTag] = Date::parse(Config::get('timeFormat'), $value);
 						}
 						elseif ($rgxp == 'datim')
 						{
-							$arrCache[$strTag] = \Date::parse(\Config::get('datimFormat'), $value);
+							$arrCache[$strTag] = Date::parse(Config::get('datimFormat'), $value);
 						}
 						elseif (is_array($value))
 						{
@@ -421,18 +421,6 @@ class InsertTags extends \Controller
 					$arrCache[$strTag] = '</a>';
 					break;
 
-				// Insert article
-				case 'insert_article':
-					if (($strOutput = $this->getArticle($elements[1], false, true)) !== false)
-					{
-						$arrCache[$strTag] = $this->replaceInsertTags(ltrim($strOutput), $blnCache);
-					}
-					else
-					{
-						$arrCache[$strTag] = '<p class="error">' . sprintf($GLOBALS['TL_LANG']['MSC']['invalidPage'], $elements[1]) . '</p>';
-					}
-					break;
-
 				// Insert content element
 				case 'insert_content':
 					$arrCache[$strTag] = $this->replaceInsertTags($this->getContentElement($elements[1]), $blnCache);
@@ -493,7 +481,7 @@ class InsertTags extends \Controller
 					}
 
 					/** @var \PageModel $objJumpTo */
-					$strUrl = $objJumpTo->getFrontendUrl((\Config::get('useAutoItem') ? '/' : '/items/') . ($objFaq->alias != '' ? $objFaq->alias : $objFaq->id));
+					$strUrl = $objJumpTo->getFrontendUrl((Config::get('useAutoItem') ? '/' : '/items/') . ($objFaq->alias != '' ? $objFaq->alias : $objFaq->id));
 
 					// Replace the tag
 					switch (strtolower($elements[0]))
@@ -553,7 +541,7 @@ class InsertTags extends \Controller
 						if (($objArchive = $objNews->getRelated('pid')) !== null && ($objJumpTo = $objArchive->getRelated('jumpTo')) !== null)
 						{
 							/** @var \PageModel $objJumpTo */
-							$strUrl = $objJumpTo->getFrontendUrl((\Config::get('useAutoItem') ? '/' : '/items/') . ($objNews->alias != '' ? $objNews->alias : $objNews->id));
+							$strUrl = $objJumpTo->getFrontendUrl((Config::get('useAutoItem') ? '/' : '/items/') . ($objNews->alias != '' ? $objNews->alias : $objNews->id));
 						}
 					}
 
@@ -615,7 +603,7 @@ class InsertTags extends \Controller
 						if (($objCalendar = $objEvent->getRelated('pid')) !== null && ($objJumpTo = $objCalendar->getRelated('jumpTo')) !== null)
 						{
 							/** @var \PageModel $objJumpTo */
-							$strUrl = $objJumpTo->getFrontendUrl((\Config::get('useAutoItem') ? '/' : '/events/') . ($objEvent->alias != '' ? $objEvent->alias : $objEvent->id));
+							$strUrl = $objJumpTo->getFrontendUrl((Config::get('useAutoItem') ? '/' : '/events/') . ($objEvent->alias != '' ? $objEvent->alias : $objEvent->id));
 						}
 					}
 
@@ -709,7 +697,7 @@ class InsertTags extends \Controller
 
 					if ($objUpdate->numRows)
 					{
-						$arrCache[$strTag] = \Date::parse($elements[1] ?: \Config::get('datimFormat'), max($objUpdate->tc, $objUpdate->tn, $objUpdate->te));
+						$arrCache[$strTag] = Date::parse($elements[1] ?: Config::get('datimFormat'), max($objUpdate->tc, $objUpdate->tn, $objUpdate->te));
 					}
 					break;
 
@@ -967,9 +955,9 @@ class InsertTags extends \Controller
 					}
 
 					// Check the maximum image width
-					if (\Config::get('maxImageWidth') > 0 && $width > \Config::get('maxImageWidth'))
+					if (Config::get('maxImageWidth') > 0 && $width > Config::get('maxImageWidth'))
 					{
-						$width = \Config::get('maxImageWidth');
+						$width = Config::get('maxImageWidth');
 						$height = null;
 					}
 
@@ -1095,7 +1083,7 @@ class InsertTags extends \Controller
 							}
 						}
 					}
-					if (\Config::get('debugMode'))
+					if (Config::get('debugMode'))
 					{
 						$GLOBALS['TL_DEBUG']['unknown_insert_tags'][] = $strTag;
 					}
@@ -1188,7 +1176,7 @@ class InsertTags extends \Controller
 									}
 								}
 							}
-							if (\Config::get('debugMode'))
+							if (Config::get('debugMode'))
 							{
 								$GLOBALS['TL_DEBUG']['unknown_insert_tag_flags'][] = $flag;
 							}

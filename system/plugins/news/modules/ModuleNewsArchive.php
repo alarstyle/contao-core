@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Config;
 
 /**
  * Front end module "news archive".
@@ -56,7 +57,7 @@ class ModuleNewsArchive extends \ModuleNews
 		}
 
 		// Show the news reader if an item has been selected
-		if ($this->news_readerModule > 0 && (isset($_GET['items']) || (\Config::get('useAutoItem') && isset($_GET['auto_item']))))
+		if ($this->news_readerModule > 0 && (isset($_GET['items']) || (Config::get('useAutoItem') && isset($_GET['auto_item']))))
 		{
 			return $this->getFrontendModule($this->news_readerModule, $this->strColumn);
 		}
@@ -177,7 +178,7 @@ class ModuleNewsArchive extends \ModuleNews
 				$offset = (max($page, 1) - 1) * $this->perPage;
 
 				// Add the pagination menu
-				$objPagination = new \Pagination($total, $this->perPage, \Config::get('maxPaginationLinks'), $id);
+				$objPagination = new \Pagination($total, $this->perPage, Config::get('maxPaginationLinks'), $id);
 				$this->Template->pagination = $objPagination->generate("\n  ");
 			}
 		}

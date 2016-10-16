@@ -10,6 +10,8 @@
 
 namespace Contao;
 
+use Contao\Config;
+use Contao\Date;
 
 /**
  * Pop-up file preview (file manager).
@@ -68,7 +70,7 @@ class BackendPopup extends Backend
 		}
 
 		// Limit preview to the files directory
-		if (!preg_match('@^' . preg_quote(\Config::get('uploadPath'), '@') . '@i', $this->strFile))
+		if (!preg_match('@^' . preg_quote(Config::get('uploadPath'), '@') . '@i', $this->strFile))
 		{
 			die('Invalid path');
 		}
@@ -134,16 +136,16 @@ class BackendPopup extends Backend
 
 		$objTemplate->icon = $objFile->icon;
 		$objTemplate->mime = $objFile->mime;
-		$objTemplate->ctime = \Date::parse(\Config::get('datimFormat'), $objFile->ctime);
-		$objTemplate->mtime = \Date::parse(\Config::get('datimFormat'), $objFile->mtime);
-		$objTemplate->atime = \Date::parse(\Config::get('datimFormat'), $objFile->atime);
+		$objTemplate->ctime = Date::parse(Config::get('datimFormat'), $objFile->ctime);
+		$objTemplate->mtime = Date::parse(Config::get('datimFormat'), $objFile->mtime);
+		$objTemplate->atime = Date::parse(Config::get('datimFormat'), $objFile->atime);
 		$objTemplate->path = specialchars($this->strFile);
 		$objTemplate->theme = \Backend::getTheme();
 		$objTemplate->base = \Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($this->strFile);
-		$objTemplate->charset = \Config::get('characterSet');
-		$objTemplate->headline = basename(utf8_convert_encoding($this->strFile, \Config::get('characterSet')));
+		$objTemplate->charset = Config::get('characterSet');
+		$objTemplate->headline = basename(utf8_convert_encoding($this->strFile, Config::get('characterSet')));
 		$objTemplate->label_uuid = $GLOBALS['TL_LANG']['MSC']['fileUuid'];
 		$objTemplate->label_imagesize = $GLOBALS['TL_LANG']['MSC']['fileImageSize'];
 		$objTemplate->label_filesize = $GLOBALS['TL_LANG']['MSC']['fileSize'];
@@ -153,7 +155,7 @@ class BackendPopup extends Backend
 		$objTemplate->label_path = $GLOBALS['TL_LANG']['MSC']['filePath'];
 		$objTemplate->download = specialchars($GLOBALS['TL_LANG']['MSC']['fileDownload']);
 
-		\Config::set('debugMode', false);
+		Config::set('debugMode', false);
 		$objTemplate->output();
 	}
 }

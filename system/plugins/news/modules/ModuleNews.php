@@ -10,13 +10,16 @@
 
 namespace Contao;
 
+use Contao\Config;
+use Contao\Modules\AbstractModule;
+
 
 /**
  * Parent class for news modules.
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-abstract class ModuleNews extends \Module
+abstract class ModuleNews extends AbstractModule
 {
 
 	/**
@@ -359,7 +362,7 @@ abstract class ModuleNews extends \Module
 			}
 			else
 			{
-				self::$arrUrlCache[$strCacheKey] = ampersand($objPage->getFrontendUrl((\Config::get('useAutoItem') ? '/' : '/items/') . ($objItem->alias != '' ? $objItem->alias : $objItem->id)));
+				self::$arrUrlCache[$strCacheKey] = ampersand($objPage->getFrontendUrl((Config::get('useAutoItem') ? '/' : '/items/') . ($objItem->alias != '' ? $objItem->alias : $objItem->id)));
 			}
 
 			// Add the current archive parameter (news archive)

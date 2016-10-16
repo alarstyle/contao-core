@@ -119,7 +119,7 @@ class DcaExtractor extends \Controller
 		$this->strFile = 'system/cache/sql/' . $strTable . '.php';
 
 		// Try to load from cache
-		if (!\Config::get('bypassCache') && file_exists(TL_ROOT . '/' . $this->strFile))
+		if (!Config::get('bypassCache') && file_exists(TL_ROOT . '/' . $this->strFile))
 		{
 			include TL_ROOT . '/' . $this->strFile;
 		}
@@ -478,7 +478,7 @@ class DcaExtractor extends \Controller
 		}
 		if (empty($sql['charset']))
 		{
-			$sql['charset'] = \Config::get('dbCharset');
+			$sql['charset'] = Config::get('dbCharset');
 		}
 
 		// Meta

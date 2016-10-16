@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Config;
 
 /**
  * Class FormExplanation
@@ -57,7 +58,7 @@ class FormExplanation extends \Editor
 		// Add the static files URL to images
 		if (TL_FILES_URL != '')
 		{
-			$path = \Config::get('uploadPath') . '/';
+			$path = Config::get('uploadPath') . '/';
 			$this->text = str_replace(' src="' . $path, ' src="' . TL_FILES_URL . $path, $this->text);
 		}
 

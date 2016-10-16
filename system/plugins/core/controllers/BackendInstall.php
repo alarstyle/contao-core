@@ -10,6 +10,9 @@
 
 namespace Contao;
 
+use Contao\Config;
+use Contao\Date;
+use Contao\Input;
 
 /**
  * Back end install tool.
@@ -32,11 +35,11 @@ class BackendInstall extends Backend
 	{
 		// No parent::__construct() here
 
-		$this->import('Config');
-		$this->import('Session');
+		$this->import('Contao\\Config', 'Config');
+		$this->import('Contao\\Session', 'Session');
 
-		\Config::set('showHelp', false);
-		\Config::set('displayErrors', false);
+		Config::set('showHelp', false);
+		Config::set('displayErrors', false);
 
 		$this->setStaticUrls();
 
@@ -53,14 +56,14 @@ class BackendInstall extends Backend
 		$this->Template = new BackendTemplate('be_install');
 
 		// Lock the tool if there are too many login attempts
-		if (\Config::get('installCount') >= 3)
+		if (Config::get('installCount') >= 3)
 		{
 			$this->Template->locked = true;
 			$this->outputAndExit();
 		}
 
 		// Store the FTP login credentials
-		if (\Input::post('FORM_SUBMIT') == 'tl_ftp')
+		if (Input::post('FORM_SUBMIT') == 'tl_ftp')
 		{
 			$this->storeFtpCredentials();
 		}
@@ -77,13 +80,13 @@ class BackendInstall extends Backend
 		$this->Template->lcfWriteable = true;
 
 		// Create the local configuration files if not done yet
-		if (!\Config::get('useFTP'))
+		if (!Config::get('useFTP'))
 		{
 			$this->createLocalConfigurationFiles();
 		}
 
 		// Show the license text
-		if (!\Config::get('licenseAccepted'))
+		if (!Config::get('licenseAccepted'))
 		{
 			$this->acceptLicense();
 		}
@@ -95,13 +98,13 @@ class BackendInstall extends Backend
 		}
 
 		// Auto-login on fresh installations
-		if (\Config::get('installPassword') == '')
+		if (Config::get('installPassword') == '')
 		{
 			$this->setAuthCookie();
 		}
 
 		// Login required
-		elseif (!\Input::cookie('TL_INSTALL_AUTH') || $_SESSION['TL_INSTALL_AUTH'] == '' || \Input::cookie('TL_INSTALL_AUTH') != $_SESSION['TL_INSTALL_AUTH'] || $_SESSION['TL_INSTALL_EXPIRE'] < time())
+		elseif (!Input::cookie('TL_INSTALL_AUTH') || $_SESSION['TL_INSTALL_AUTH'] == '' || Input::cookie('TL_INSTALL_AUTH') != $_SESSION['TL_INSTALL_AUTH'] || $_SESSION['TL_INSTALL_EXPIRE'] < time())
 		{
 			$this->Template->login = true;
 			$this->outputAndExit();
@@ -117,38 +120,38 @@ class BackendInstall extends Backend
 		$this->storeRelativePath();
 
 		// Store the install tool password
-		if (\Input::post('FORM_SUBMIT') == 'tl_install')
+		if (Input::post('FORM_SUBMIT') == 'tl_install')
 		{
 			$this->storeInstallToolPassword();
 		}
 
 		// Require a password
-		if (\Config::get('installPassword') == '')
+		if (Config::get('installPassword') == '')
 		{
 			$this->Template->setPassword = true;
 			$this->outputAndExit();
 		}
 
 		// Save the encryption key
-		if (\Input::post('FORM_SUBMIT') == 'tl_encryption')
+		if (Input::post('FORM_SUBMIT') == 'tl_encryption')
 		{
-			\Config::persist('encryptionKey', \Input::post('key'));
+			Config::persist('encryptionKey', Input::post('key'));
 			$this->reload();
 		}
 
 		// Autogenerate an encryption key
-		if (\Config::get('encryptionKey') == '')
+		if (Config::get('encryptionKey') == '')
 		{
 			$strKey = md5(uniqid(mt_rand(), true));
 
-			\Config::set('encryptionKey', $strKey);
-			\Config::persist('encryptionKey', $strKey);
+			Config::set('encryptionKey', $strKey);
+			Config::persist('encryptionKey', $strKey);
 		}
 
-		$this->Template->encryptionKey = \Config::get('encryptionKey');
+		$this->Template->encryptionKey = Config::get('encryptionKey');
 
 		// Check the minimum length of the encryption key
-		if (utf8_strlen(\Config::get('encryptionKey')) < 12)
+		if (utf8_strlen(Config::get('encryptionKey')) < 12)
 		{
 			$this->Template->encryptionLength = true;
 			$this->outputAndExit();
@@ -183,7 +186,7 @@ class BackendInstall extends Backend
 		}
 		catch (\Exception $e)
 		{
-			\Config::remove('exampleWebsite');
+			Config::remove('exampleWebsite');
 			$this->Template->importException = true;
 			error_log("\nPHP Fatal error: {$e->getMessage()} in {$e->getFile()} on line {$e->getLine()}\n{$e->getTraceAsString()}\n");
 			$this->outputAndExit();
@@ -193,9 +196,9 @@ class BackendInstall extends Backend
 		$this->createAdminUser();
 
 		// Clear the cron timestamps so the jobs are run
-		\Config::remove('cron_hourly');
-		\Config::remove('cron_daily');
-		\Config::remove('cron_weekly');
+		Config::remove('cron_hourly');
+		Config::remove('cron_daily');
+		Config::remove('cron_weekly');
 
 		$this->outputAndExit();
 	}
@@ -206,52 +209,52 @@ class BackendInstall extends Backend
 	 */
 	protected function storeFtpCredentials()
 	{
-		if (\Config::get('installPassword') != '')
+		if (Config::get('installPassword') != '')
 		{
 			return;
 		}
 
-		\Config::set('useFTP', true);
-		\Config::set('ftpHost', \Input::post('host'));
-		\Config::set('ftpPath', \Input::post('path'));
-		\Config::set('ftpUser', \Input::post('username', true));
+		Config::set('useFTP', true);
+		Config::set('ftpHost', Input::post('host'));
+		Config::set('ftpPath', Input::post('path'));
+		Config::set('ftpUser', Input::post('username', true));
 
-		if (\Input::postUnsafeRaw('password') != '*****')
+		if (Input::postUnsafeRaw('password') != '*****')
 		{
-			\Config::set('ftpPass', \Input::postUnsafeRaw('password'));
+			Config::set('ftpPass', Input::postUnsafeRaw('password'));
 		}
 
-		\Config::set('ftpSSL', \Input::post('ssl'));
-		\Config::set('ftpPort', (int) \Input::post('port'));
+		Config::set('ftpSSL', Input::post('ssl'));
+		Config::set('ftpPort', (int) Input::post('port'));
 
 		// Add a trailing slash
-		if (\Config::get('ftpPath') != '' && substr(\Config::get('ftpPath'), -1) != '/')
+		if (Config::get('ftpPath') != '' && substr(Config::get('ftpPath'), -1) != '/')
 		{
-			\Config::set('ftpPath', \Config::get('ftpPath') . '/');
+			Config::set('ftpPath', Config::get('ftpPath') . '/');
 		}
 
 		// Re-insert the data into the form
-		$this->Template->ftpHost = \Config::get('ftpHost');
-		$this->Template->ftpPath = \Config::get('ftpPath');
-		$this->Template->ftpUser = \Config::get('ftpUser');
-		$this->Template->ftpPass = (\Config::get('ftpPass') != '') ? '*****' : '';
-		$this->Template->ftpSSL  = \Config::get('ftpSSL');
-		$this->Template->ftpPort = \Config::get('ftpPort');
+		$this->Template->ftpHost = Config::get('ftpHost');
+		$this->Template->ftpPath = Config::get('ftpPath');
+		$this->Template->ftpUser = Config::get('ftpUser');
+		$this->Template->ftpPass = (Config::get('ftpPass') != '') ? '*****' : '';
+		$this->Template->ftpSSL  = Config::get('ftpSSL');
+		$this->Template->ftpPort = Config::get('ftpPort');
 
-		$ftp_connect = (\Config::get('ftpSSL') && function_exists('ftp_ssl_connect')) ? 'ftp_ssl_connect' : 'ftp_connect';
+		$ftp_connect = (Config::get('ftpSSL') && function_exists('ftp_ssl_connect')) ? 'ftp_ssl_connect' : 'ftp_connect';
 
 		// Try to connect and locate the Contao directory
-		if (($resFtp = $ftp_connect(\Config::get('ftpHost'), \Config::get('ftpPort'), 5)) == false)
+		if (($resFtp = $ftp_connect(Config::get('ftpHost'), Config::get('ftpPort'), 5)) == false)
 		{
 			$this->Template->ftpHostError = true;
 			$this->outputAndExit();
 		}
-		elseif (!ftp_login($resFtp, \Config::get('ftpUser'), \Config::get('ftpPass')))
+		elseif (!ftp_login($resFtp, Config::get('ftpUser'), Config::get('ftpPass')))
 		{
 			$this->Template->ftpUserError = true;
 			$this->outputAndExit();
 		}
-		elseif (ftp_size($resFtp, \Config::get('ftpPath') . 'assets/contao/css/debug.css') == -1)
+		elseif (ftp_size($resFtp, Config::get('ftpPath') . 'assets/contao/css/debug.css') == -1)
 		{
 			$this->Template->ftpPathError = true;
 			$this->outputAndExit();
@@ -294,18 +297,18 @@ class BackendInstall extends Backend
 			$this->createLocalConfigurationFiles();
 
 			// Save the FTP credentials
-			\Config::persist('useFTP', true);
-			\Config::persist('ftpHost', \Config::get('ftpHost'));
-			\Config::persist('ftpPath', \Config::get('ftpPath'));
-			\Config::persist('ftpUser', \Config::get('ftpUser'));
+			Config::persist('useFTP', true);
+			Config::persist('ftpHost', Config::get('ftpHost'));
+			Config::persist('ftpPath', Config::get('ftpPath'));
+			Config::persist('ftpUser', Config::get('ftpUser'));
 
-			if (\Input::postUnsafeRaw('password') != '*****')
+			if (Input::postUnsafeRaw('password') != '*****')
 			{
-				\Config::persist('ftpPass', \Config::get('ftpPass'));
+				Config::persist('ftpPass', Config::get('ftpPass'));
 			}
 
-			\Config::persist('ftpSSL', \Config::get('ftpSSL'));
-			\Config::persist('ftpPort', \Config::get('ftpPort'));
+			Config::persist('ftpSSL', Config::get('ftpSSL'));
+			Config::persist('ftpPort', Config::get('ftpPort'));
 
 			$this->reload();
 		}
@@ -317,9 +320,9 @@ class BackendInstall extends Backend
 	 */
 	protected function acceptLicense()
 	{
-		if (\Input::post('FORM_SUBMIT') == 'tl_license')
+		if (Input::post('FORM_SUBMIT') == 'tl_license')
 		{
-			\Config::persist('licenseAccepted', true);
+			Config::persist('licenseAccepted', true);
 			$this->reload();
 		}
 
@@ -337,36 +340,36 @@ class BackendInstall extends Backend
 		$_SESSION['TL_INSTALL_EXPIRE'] = 0;
 
 		// The password has been generated with crypt()
-		if (\Encryption::test(\Config::get('installPassword')))
+		if (\Encryption::test(Config::get('installPassword')))
 		{
-			if (\Encryption::verify(\Input::postUnsafeRaw('password'), \Config::get('installPassword')))
+			if (\Encryption::verify(Input::postUnsafeRaw('password'), Config::get('installPassword')))
 			{
 				$this->setAuthCookie();
-				\Config::persist('installCount', 0);
+				Config::persist('installCount', 0);
 
 				$this->reload();
 			}
 		}
 		else
 		{
-			list($strPassword, $strSalt) = explode(':', \Config::get('installPassword'));
-			$blnAuthenticated = ($strSalt == '') ? ($strPassword === sha1(\Input::postUnsafeRaw('password'))) : ($strPassword === sha1($strSalt . \Input::postUnsafeRaw('password')));
+			list($strPassword, $strSalt) = explode(':', Config::get('installPassword'));
+			$blnAuthenticated = ($strSalt == '') ? ($strPassword === sha1(Input::postUnsafeRaw('password'))) : ($strPassword === sha1($strSalt . \Input::postUnsafeRaw('password')));
 
 			if ($blnAuthenticated)
 			{
 				// Store a crypt() version of the password
-				$strPassword = \Encryption::hash(\Input::postUnsafeRaw('password'));
-				\Config::persist('installPassword', $strPassword);
+				$strPassword = \Encryption::hash(Input::postUnsafeRaw('password'));
+				Config::persist('installPassword', $strPassword);
 
 				$this->setAuthCookie();
-				\Config::persist('installCount', 0);
+				Config::persist('installCount', 0);
 
 				$this->reload();
 			}
 		}
 
 		// Increase the login count if we get here
-		\Config::persist('installCount', \Config::get('installCount') + 1);
+		Config::persist('installCount', Config::get('installCount') + 1);
 
 		$this->Template->passwordError = $GLOBALS['TL_LANG']['ERR']['invalidPass'];
 	}
@@ -377,25 +380,25 @@ class BackendInstall extends Backend
 	 */
 	protected function storeInstallToolPassword()
 	{
-		$strPassword = \Input::postUnsafeRaw('password');
+		$strPassword = Input::postUnsafeRaw('password');
 
 		// The passwords do not match
-		if ($strPassword != \Input::postUnsafeRaw('confirm_password'))
+		if ($strPassword != Input::postUnsafeRaw('confirm_password'))
 		{
 			$this->Template->passwordError = $GLOBALS['TL_LANG']['ERR']['passwordMatch'];
 		}
 
 		// The password is too short
-		elseif (utf8_strlen($strPassword) < \Config::get('minPasswordLength'))
+		elseif (utf8_strlen($strPassword) < Config::get('minPasswordLength'))
 		{
-			$this->Template->passwordError = sprintf($GLOBALS['TL_LANG']['ERR']['passwordLength'], \Config::get('minPasswordLength'));
+			$this->Template->passwordError = sprintf($GLOBALS['TL_LANG']['ERR']['passwordLength'], Config::get('minPasswordLength'));
 		}
 
 		// Save the password
 		else
 		{
 			$strPassword = \Encryption::hash($strPassword);
-			\Config::persist('installPassword', $strPassword);
+			Config::persist('installPassword', $strPassword);
 
 			$this->reload();
 		}
@@ -420,29 +423,29 @@ class BackendInstall extends Backend
 		}
 
 		// If there is another driver defined, add it here as well
-		if (\Config::get('dbDriver') != '' && !in_array(\Config::get('dbDriver'), $arrDrivers))
+		if (Config::get('dbDriver') != '' && !in_array(Config::get('dbDriver'), $arrDrivers))
 		{
-			$arrDrivers[] = \Config::get('dbDriver');
+			$arrDrivers[] = Config::get('dbDriver');
 		}
 
 		foreach ($arrDrivers as $strDriver)
 		{
 			$strDrivers .= sprintf('<option value="%s"%s>%s</option>',
 									$strDriver,
-									(($strDriver == \Config::get('dbDriver')) ? ' selected="selected"' : ''),
+									(($strDriver == Config::get('dbDriver')) ? ' selected="selected"' : ''),
 									($strDriver ?: '-'));
 		}
 
 		$this->Template->drivers = $strDrivers;
-		$this->Template->driver = \Config::get('dbDriver');
-		$this->Template->host = \Config::get('dbHost');
-		$this->Template->user = \Config::get('dbUser');
-		$this->Template->pass = (\Config::get('dbPass') != '') ? '*****' : '';
-		$this->Template->port = \Config::get('dbPort');
-		$this->Template->socket = \Config::get('dbSocket');
-		$this->Template->pconnect = \Config::get('dbPconnect');
-		$this->Template->dbcharset = \Config::get('dbCharset');
-		$this->Template->database = \Config::get('dbDatabase');
+		$this->Template->driver = Config::get('dbDriver');
+		$this->Template->host = Config::get('dbHost');
+		$this->Template->user = Config::get('dbUser');
+		$this->Template->pass = (Config::get('dbPass') != '') ? '*****' : '';
+		$this->Template->port = Config::get('dbPort');
+		$this->Template->socket = Config::get('dbSocket');
+		$this->Template->pconnect = Config::get('dbPconnect');
+		$this->Template->dbcharset = Config::get('dbCharset');
+		$this->Template->database = Config::get('dbDatabase');
 
 		// Store the database connection parameters
 		if (\Input::post('FORM_SUBMIT') == 'tl_database_login')
@@ -455,19 +458,19 @@ class BackendInstall extends Backend
 				}
 
 				// The port number must not be empty (see #7950)
-				if ($strKey == 'dbPort' && \Input::post($strKey, true) == '')
+				if ($strKey == 'dbPort' && Input::post($strKey, true) == '')
 				{
-					\Input::setPost($strKey, 3306);
+					Input::setPost($strKey, 3306);
 				}
 
-				\Config::persist($strKey, ($strKey == 'dbPass' ? \Input::postUnsafeRaw($strKey) : \Input::post($strKey, true)));
+				Config::persist($strKey, ($strKey == 'dbPass' ? Input::postUnsafeRaw($strKey) : Input::post($strKey, true)));
 			}
 
 			$this->reload();
 		}
 
 		// No driver selected (see #6088)
-		if (\Config::get('dbDriver') == '')
+		if (Config::get('dbDriver') == '')
 		{
 			$this->Template->dbConnection = false;
 			$this->outputAndExit();
@@ -526,12 +529,12 @@ class BackendInstall extends Backend
 	{
 		if (\Input::post('FORM_SUBMIT') == 'tl_collation')
 		{
-			$strCharset = strtolower(\Config::get('dbCharset'));
-			$strCollation = \Input::post('dbCollation');
+			$strCharset = strtolower(Config::get('dbCharset'));
+			$strCollation = Input::post('dbCollation');
 
 			try
 			{
-				$this->Database->query("ALTER DATABASE " . \Config::get('dbDatabase') . " DEFAULT CHARACTER SET $strCharset COLLATE $strCollation");
+				$this->Database->query("ALTER DATABASE " . Config::get('dbDatabase') . " DEFAULT CHARACTER SET $strCharset COLLATE $strCollation");
 			}
 			catch (\Exception $e) {}
 
@@ -574,14 +577,14 @@ class BackendInstall extends Backend
 				}
 			}
 
-			\Config::persist('dbCollation', $strCollation);
+			Config::persist('dbCollation', $strCollation);
 			$this->reload();
 		}
 
 		$arrOptions = array();
 
 		$objCollation = $this->Database->prepare("SHOW COLLATION LIKE ?")
-									   ->execute(\Config::get('dbCharset') . '\_%');
+									   ->execute(Config::get('dbCharset') . '\_%');
 
 		while ($objCollation->next())
 		{
@@ -589,7 +592,7 @@ class BackendInstall extends Backend
 
 			$arrOptions[$key] = sprintf('<option value="%s"%s>%s</option>',
 										$key,
-										(($key == \Config::get('dbCollation')) ? ' selected="selected"' : ''),
+										(($key == Config::get('dbCollation')) ? ' selected="selected"' : ''),
 										$key);
 		}
 
@@ -603,9 +606,9 @@ class BackendInstall extends Backend
 	 */
 	protected function adjustDatabaseTables()
 	{
-		if (\Input::post('FORM_SUBMIT') == 'tl_tables')
+		if (Input::post('FORM_SUBMIT') == 'tl_tables')
 		{
-			$sql = \Input::post('sql');
+			$sql = Input::post('sql');
 
 			if (!empty($sql) && is_array($sql))
 			{
@@ -613,7 +616,7 @@ class BackendInstall extends Backend
 				{
 					if (isset($_SESSION['sql_commands'][$key]))
 					{
-						$this->Database->query(str_replace('DEFAULT CHARSET=utf8;', 'DEFAULT CHARSET=utf8 COLLATE ' . \Config::get('dbCollation') . ';', $_SESSION['sql_commands'][$key]));
+						$this->Database->query(str_replace('DEFAULT CHARSET=utf8;', 'DEFAULT CHARSET=utf8 COLLATE ' . Config::get('dbCollation') . ';', $_SESSION['sql_commands'][$key]));
 					}
 				}
 			}
@@ -706,12 +709,12 @@ class BackendInstall extends Backend
 					}
 				}
 
-				\Config::persist('exampleWebsite', time());
+				Config::persist('exampleWebsite', time());
 				$this->reload();
 			}
 		}
 
-		$this->Template->dateImported = \Date::parse(\Config::get('datimFormat'), \Config::get('exampleWebsite'));
+		$this->Template->dateImported = Date::parse(Config::get('datimFormat'), Config::get('exampleWebsite'));
 	}
 
 
@@ -751,25 +754,25 @@ class BackendInstall extends Backend
 					$this->Template->passwordError = $GLOBALS['TL_LANG']['ERR']['passwordMatch'];
 				}
 				// The password is too short
-				elseif (utf8_strlen(\Input::post('pass', true)) < \Config::get('minPasswordLength'))
+				elseif (utf8_strlen(Input::post('pass', true)) < Config::get('minPasswordLength'))
 				{
-					$this->Template->passwordError = sprintf($GLOBALS['TL_LANG']['ERR']['passwordLength'], \Config::get('minPasswordLength'));
+					$this->Template->passwordError = sprintf($GLOBALS['TL_LANG']['ERR']['passwordLength'], Config::get('minPasswordLength'));
 				}
 				// Password and username are the same
-				elseif (\Input::post('pass', true) == \Input::post('username', true))
+				elseif (Input::post('pass', true) == Input::post('username', true))
 				{
 					$this->Template->passwordError = $GLOBALS['TL_LANG']['ERR']['passwordName'];
 				}
 				// Save the data
-				elseif (\Input::post('name') != '' && \Input::post('email', true) != '' && \Input::post('username', true) != '')
+				elseif (Input::post('name') != '' && Input::post('email', true) != '' && Input::post('username', true) != '')
 				{
 					$time = time();
-					$strPassword = \Encryption::hash(\Input::post('pass', true));
+					$strPassword = \Encryption::hash(Input::post('pass', true));
 
 					$this->Database->prepare("INSERT INTO tl_user (tstamp, name, email, username, password, language, admin, showHelp, useRTE, useCE, thumbnails, dateAdded) VALUES ($time, ?, ?, ?, ?, ?, 1, 1, 1, 1, 1, $time)")
 								   ->execute(\Input::post('name'), \Input::post('email', true), \Input::post('username', true), $strPassword, str_replace('-', '_', $GLOBALS['TL_LANGUAGE']));
 
-					\Config::persist('adminEmail', \Input::post('email', true));
+					Config::persist('adminEmail', Input::post('email', true));
 
 					// Scan the upload folder (see #6134)
 					if ($this->Database->tableExists('tl_files') && $this->Database->query("SELECT COUNT(*) AS count FROM tl_files")->count < 1)
@@ -798,7 +801,7 @@ class BackendInstall extends Backend
 	 */
 	protected function createLocalConfigurationFiles()
 	{
-		if (\Config::get('installPassword') != '')
+		if (Config::get('installPassword') != '')
 		{
 			return;
 		}
@@ -820,7 +823,7 @@ class BackendInstall extends Backend
 	protected function setAuthCookie()
 	{
 		$_SESSION['TL_INSTALL_EXPIRE'] = (time() + 300);
-		$_SESSION['TL_INSTALL_AUTH'] = md5(uniqid(mt_rand(), true) . (!\Config::get('disableIpCheck') ? \Environment::get('ip') : '') . session_id());
+		$_SESSION['TL_INSTALL_AUTH'] = md5(uniqid(mt_rand(), true) . (!Config::get('disableIpCheck') ? \Environment::get('ip') : '') . session_id());
 		$this->setCookie('TL_INSTALL_AUTH', $_SESSION['TL_INSTALL_AUTH'], $_SESSION['TL_INSTALL_EXPIRE'], null, null, false, true);
 	}
 
@@ -864,8 +867,8 @@ class BackendInstall extends Backend
 		$this->Template->theme = \Backend::getTheme();
 		$this->Template->base = \Environment::get('base');
 		$this->Template->language = $GLOBALS['TL_LANGUAGE'];
-		$this->Template->charset = \Config::get('characterSet');
-		$this->Template->pageOffset = \Input::cookie('BE_PAGE_OFFSET');
+		$this->Template->charset = Config::get('characterSet');
+		$this->Template->pageOffset = Input::cookie('BE_PAGE_OFFSET');
 		$this->Template->action = ampersand(\Environment::get('request'));
 		$this->Template->noCookies = $GLOBALS['TL_LANG']['MSC']['noCookies'];
 		$this->Template->title = specialchars($GLOBALS['TL_LANG']['tl_install']['installTool'][0]);
@@ -885,16 +888,16 @@ class BackendInstall extends Backend
 	 */
 	protected function enableSafeMode()
 	{
-		if (!\Config::get('maintenanceMode'))
+		if (!Config::get('maintenanceMode'))
 		{
-			\Config::set('maintenanceMode', true);
-			\Config::persist('maintenanceMode', true);
+			Config::set('maintenanceMode', true);
+			Config::persist('maintenanceMode', true);
 		}
 
-		if (!\Config::get('coreOnlyMode') && count(array_diff(scan(TL_ROOT . '/system/plugins'), array('core', 'calendar', 'comments', 'devtools', 'faq', 'listing', 'news', 'newsletter', 'repository'))) > 0)
+		if (!Config::get('coreOnlyMode') && count(array_diff(scan(TL_ROOT . '/system/plugins'), array('core', 'calendar', 'comments', 'devtools', 'faq', 'listing', 'news', 'newsletter', 'repository'))) > 0)
 		{
-			\Config::set('coreOnlyMode', true);
-			\Config::persist('coreOnlyMode', true);
+			Config::set('coreOnlyMode', true);
+			Config::persist('coreOnlyMode', true);
 		}
 	}
 
@@ -1019,14 +1022,14 @@ class BackendInstall extends Backend
 			}
 
 			// Reset the upload path if it has been changed already (see #5560 and #5870)
-			if (\Config::get('uploadPath') == 'files' && is_dir(TL_ROOT . '/tl_files'))
+			if (Config::get('uploadPath') == 'files' && is_dir(TL_ROOT . '/tl_files'))
 			{
-				\Config::set('uploadPath', 'tl_files');
-				\Config::persist('uploadPath', 'tl_files');
+				Config::set('uploadPath', 'tl_files');
+				Config::persist('uploadPath', 'tl_files');
 			}
 
 			// Show a warning if the upload folder does not exist (see #4626)
-			if (!is_dir(TL_ROOT . '/' . \Config::get('uploadPath')))
+			if (!is_dir(TL_ROOT . '/' . Config::get('uploadPath')))
 			{
 				$this->Template->filesWarning = sprintf($GLOBALS['TL_LANG']['tl_install']['filesWarning'], '<a href="https://gist.github.com/3304014" target="_blank">https://gist.github.com/3304014</a>');
 			}
@@ -1039,16 +1042,16 @@ class BackendInstall extends Backend
 		$objRow = $this->Database->query("SELECT COUNT(*) AS count FROM tl_files");
 
 		// Step 2: scan the upload folder if it is not empty (see #6061)
-		if ($objRow->count < 1 && count(scan(TL_ROOT . '/' . \Config::get('uploadPath'))) > 0)
+		if ($objRow->count < 1 && count(scan(TL_ROOT . '/' . Config::get('uploadPath'))) > 0)
 		{
 			$this->enableSafeMode();
 
-			if (\Input::post('FORM_SUBMIT') == 'tl_30update')
+			if (Input::post('FORM_SUBMIT') == 'tl_30update')
 			{
 				$this->import('Contao\\Database\\Updater', 'Updater');
 				$this->Updater->scanUploadFolder();
 
-				\Config::persist('checkFileTree', true);
+				Config::persist('checkFileTree', true);
 				$this->reload();
 			}
 
@@ -1058,16 +1061,16 @@ class BackendInstall extends Backend
 		}
 
 		// Step 3: update the database fields
-		elseif (\Config::get('checkFileTree'))
+		elseif (Config::get('checkFileTree'))
 		{
 			$this->enableSafeMode();
 
-			if (\Input::post('FORM_SUBMIT') == 'tl_30update')
+			if (Input::post('FORM_SUBMIT') == 'tl_30update')
 			{
 				$this->import('Contao\\Database\\Updater', 'Updater');
 				$this->Updater->updateFileTreeFields();
 
-				\Config::persist('checkFileTree', false);
+				Config::persist('checkFileTree', false);
 				$this->reload();
 			}
 

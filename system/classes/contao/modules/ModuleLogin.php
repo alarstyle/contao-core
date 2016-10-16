@@ -8,15 +8,16 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Modules;
 
+use Contao\Config;
 
 /**
  * Front end module "login".
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ModuleLogin extends \Module
+class ModuleLogin extends AbstractModule
 {
 
 	/**
@@ -210,7 +211,7 @@ class ModuleLogin extends \Module
 		$this->Template->action = ampersand(\Environment::get('indexFreeRequest'));
 		$this->Template->slabel = specialchars($GLOBALS['TL_LANG']['MSC']['login']);
 		$this->Template->value = specialchars(\Input::post('username'));
-		$this->Template->autologin = ($this->autologin && \Config::get('autologin') > 0);
+		$this->Template->autologin = ($this->autologin && Config::get('autologin') > 0);
 		$this->Template->autoLabel = $GLOBALS['TL_LANG']['MSC']['autologin'];
 	}
 }

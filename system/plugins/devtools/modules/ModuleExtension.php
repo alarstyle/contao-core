@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Config;
 
 /**
  * Back end module "extension".
@@ -63,7 +64,7 @@ class ModuleExtension extends BackendModule
 			}
 
 			// Disable the debug mode (see #7068)
-			\Config::set('debugMode', false);
+			Config::set('debugMode', false);
 
 			// config/config.php
 			$tplConfig = $this->newTemplate('dev_config', $objModule);

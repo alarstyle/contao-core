@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Config;
 
 /**
  * Back end module "missing labels".
@@ -35,7 +36,7 @@ class ModuleLabels extends BackendModule
 
 		$this->Template->label = $GLOBALS['TL_LANG']['tl_labels']['label'][0];
 		$this->Template->headline = sprintf($GLOBALS['TL_LANG']['tl_labels']['headline'], \Input::get('id'));
-		$this->Template->help = (\Config::get('showHelp') && strlen($GLOBALS['TL_LANG']['tl_labels']['label'][1])) ? $GLOBALS['TL_LANG']['tl_labels']['label'][1] : '';
+		$this->Template->help = (Config::get('showHelp') && strlen($GLOBALS['TL_LANG']['tl_labels']['label'][1])) ? $GLOBALS['TL_LANG']['tl_labels']['label'][1] : '';
 		$this->Template->submit = specialchars($GLOBALS['TL_LANG']['tl_labels']['submitBT']);
 
 		$strOptions = '';

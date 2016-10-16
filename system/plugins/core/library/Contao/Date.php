@@ -509,7 +509,7 @@ class Date
 			}
 		}
 
-		return \Config::get('dateFormat');
+		return Config::get('dateFormat');
 	}
 
 
@@ -531,7 +531,7 @@ class Date
 			}
 		}
 
-		return \Config::get('timeFormat');
+		return Config::get('timeFormat');
 	}
 
 
@@ -553,7 +553,7 @@ class Date
 			}
 		}
 
-		return \Config::get('datimFormat');
+		return Config::get('datimFormat');
 	}
 
 

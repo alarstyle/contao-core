@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Config;
 
 /**
  * Back end module "autoload files".
@@ -260,7 +261,7 @@ class ModuleAutoload extends BackendModule
 						continue;
 					}
 
-					$arrTplExts = trimsplit(',', strtolower(\Config::get('templateFiles')));
+					$arrTplExts = trimsplit(',', strtolower(Config::get('templateFiles')));
 
 					// Add all known template types (see #5857)
 					if (in_array(strtolower($objFile->getExtension()), $arrTplExts))

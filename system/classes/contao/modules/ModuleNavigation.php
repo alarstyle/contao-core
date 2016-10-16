@@ -8,26 +8,27 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Modules;
 
+use Contao\Config;
 
 /**
- * Front end module "sitemap".
+ * Front end module "navigation".
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ModuleSitemap extends \Module
+class ModuleNavigation extends AbstractModule
 {
 
 	/**
 	 * Template
 	 * @var string
 	 */
-	protected $strTemplate = 'mod_sitemap';
+	protected $strTemplate = 'mod_navigation';
 
 
 	/**
-	 * Display a wildcard in the back end
+	 * Do not display the module if there are no menu items
 	 *
 	 * @return string
 	 */
@@ -38,7 +39,7 @@ class ModuleSitemap extends \Module
 			/** @var \BackendTemplate|object $objTemplate */
 			$objTemplate = new \BackendTemplate('be_wildcard');
 
-			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['sitemap'][0]) . ' ###';
+			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['navigation'][0]) . ' ###';
 			$objTemplate->title = $this->headline;
 			$objTemplate->id = $this->id;
 			$objTemplate->link = $this->name;
@@ -47,7 +48,9 @@ class ModuleSitemap extends \Module
 			return $objTemplate->parse();
 		}
 
-		return parent::generate();
+		$strBuffer = parent::generate();
+
+		return ($this->Template->items != '') ? $strBuffer : '';
 	}
 
 
@@ -59,22 +62,28 @@ class ModuleSitemap extends \Module
 		/** @var \PageModel $objPage */
 		global $objPage;
 
+		// Set the trail and level
+		if ($this->defineRoot && $this->rootPage > 0)
+		{
+			$trail = array($this->rootPage);
+			$level = 0;
+		}
+		else
+		{
+			$trail = $objPage->trail;
+			$level = ($this->levelOffset > 0) ? $this->levelOffset : 0;
+		}
+
 		$lang = null;
 		$host = null;
 
-		// Start from the website root if there is no reference page
-		if (!$this->rootPage)
-		{
-			$this->rootPage = $objPage->rootId;
-		}
-
 		// Overwrite the domain and language if the reference page belongs to a differnt root page (see #3765)
-		else
+		if ($this->defineRoot && $this->rootPage > 0)
 		{
 			$objRootPage = \PageModel::findWithDetails($this->rootPage);
 
 			// Set the language
-			if (\Config::get('addLanguageToUrl') && $objRootPage->rootLanguage != $objPage->rootLanguage)
+			if (Config::get('addLanguageToUrl') && $objRootPage->rootLanguage != $objPage->rootLanguage)
 			{
 				$lang = $objRootPage->rootLanguage;
 			}
@@ -86,10 +95,7 @@ class ModuleSitemap extends \Module
 			}
 		}
 
-		$this->showLevel = 0;
-		$this->hardLimit = false;
-		$this->levelOffset = 0;
-
-		$this->Template->items = $this->renderNavigation($this->rootPage, 1, $host, $lang);
+		$this->Template->request = ampersand(\Environment::get('indexFreeRequest'));
+		$this->Template->items = $this->renderNavigation($trail[$level], 1, $host, $lang);
 	}
 }

@@ -8,8 +8,10 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Modules;
 
+use Contao\Frontend;
+use Contao\FrontendTemplate;
 
 /**
  * Parent class for front end modules.
@@ -137,7 +139,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-abstract class Module extends Frontend
+abstract class AbstractModule extends Frontend
 {
 
 	/**

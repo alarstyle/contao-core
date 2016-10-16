@@ -8,15 +8,16 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Modules;
 
+use Contao\Config;
 
 /**
  * Front end module "search".
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ModuleSearch extends \Module
+class ModuleSearch extends AbstractModule
 {
 
 	/**
@@ -179,7 +180,7 @@ class ModuleSearch extends \Module
 			$query_endtime = microtime(true);
 
 			// Sort out protected pages
-			if (\Config::get('indexProtected') && !BE_USER_LOGGED_IN)
+			if (Config::get('indexProtected') && !BE_USER_LOGGED_IN)
 			{
 				$this->import('Contao\\FrontendUser', 'User');
 
@@ -245,7 +246,7 @@ class ModuleSearch extends \Module
 				// Pagination menu
 				if ($to < $count || $from > 1)
 				{
-					$objPagination = new \Pagination($count, $per_page, \Config::get('maxPaginationLinks'), $id);
+					$objPagination = new \Pagination($count, $per_page, Config::get('maxPaginationLinks'), $id);
 					$this->Template->pagination = $objPagination->generate("\n  ");
 				}
 

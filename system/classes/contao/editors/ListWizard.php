@@ -10,6 +10,7 @@
 
 namespace Contao\Editors;
 
+use Contao\Config;
 
 /**
  * Provide methods to handle list items.
@@ -243,7 +244,7 @@ class ListWizard extends \Contao\Editor
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_list_import">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">
-<input type="hidden" name="MAX_FILE_SIZE" value="'.\Config::get('maxFileSize').'">
+<input type="hidden" name="MAX_FILE_SIZE" value="'.Config::get('maxFileSize').'">
 
 <div class="tl_tbox">
   <h3><label for="separator">'.$GLOBALS['TL_LANG']['MSC']['separator'][0].'</label></h3>

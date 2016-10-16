@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Config;
 
 /**
  * Back end help wizard.
@@ -59,9 +60,9 @@ class BackendPassword extends Backend
 				\Message::addError($GLOBALS['TL_LANG']['ERR']['passwordMatch']);
 			}
 			// Password too short
-			elseif (utf8_strlen($pw) < \Config::get('minPasswordLength'))
+			elseif (utf8_strlen($pw) < Config::get('minPasswordLength'))
 			{
-				\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['passwordLength'], \Config::get('minPasswordLength')));
+				\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['passwordLength'], Config::get('minPasswordLength')));
 			}
 			// Password and username are the same
 			elseif ($pw == $this->User->username)
@@ -115,7 +116,7 @@ class BackendPassword extends Backend
 		$objTemplate->base = \Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($GLOBALS['TL_LANG']['MSC']['pw_new']);
-		$objTemplate->charset = \Config::get('characterSet');
+		$objTemplate->charset = Config::get('characterSet');
 		$objTemplate->action = ampersand(\Environment::get('request'));
 		$objTemplate->headline = $GLOBALS['TL_LANG']['MSC']['pw_change'];
 		$objTemplate->submitButton = specialchars($GLOBALS['TL_LANG']['MSC']['continue']);

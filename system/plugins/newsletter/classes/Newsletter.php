@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Config;
 
 /**
  * Provide methods to handle newsletters.
@@ -41,18 +42,18 @@ class Newsletter extends Backend
 		// Overwrite the SMTP configuration
 		if ($objNewsletter->useSMTP)
 		{
-			\Config::set('useSMTP', true);
-			\Config::set('smtpHost', $objNewsletter->smtpHost);
-			\Config::set('smtpUser', $objNewsletter->smtpUser);
-			\Config::set('smtpPass', $objNewsletter->smtpPass);
-			\Config::set('smtpEnc', $objNewsletter->smtpEnc);
-			\Config::set('smtpPort', $objNewsletter->smtpPort);
+			Config::set('useSMTP', true);
+			Config::set('smtpHost', $objNewsletter->smtpHost);
+			Config::set('smtpUser', $objNewsletter->smtpUser);
+			Config::set('smtpPass', $objNewsletter->smtpPass);
+			Config::set('smtpEnc', $objNewsletter->smtpEnc);
+			Config::set('smtpPort', $objNewsletter->smtpPort);
 		}
 
 		// Add default sender address
 		if ($objNewsletter->sender == '')
 		{
-			list($objNewsletter->senderName, $objNewsletter->sender) = \StringUtil::splitFriendlyEmail(\Config::get('adminEmail'));
+			list($objNewsletter->senderName, $objNewsletter->sender) = \StringUtil::splitFriendlyEmail(Config::get('adminEmail'));
 		}
 
 		$arrAttachments = array();
@@ -259,23 +260,23 @@ class Newsletter extends Backend
 <div class="tl_tbox">
 <div class="w50">
   <h3><label for="ctrl_mpc">' . $GLOBALS['TL_LANG']['tl_newsletter']['mailsPerCycle'][0] . '</label></h3>
-  <input type="text" name="mpc" id="ctrl_mpc" value="10" class="tl_text" onfocus="">' . (($GLOBALS['TL_LANG']['tl_newsletter']['mailsPerCycle'][1] && \Config::get('showHelp')) ? '
+  <input type="text" name="mpc" id="ctrl_mpc" value="10" class="tl_text" onfocus="">' . (($GLOBALS['TL_LANG']['tl_newsletter']['mailsPerCycle'][1] && Config::get('showHelp')) ? '
   <p class="tl_help tl_tip">' . $GLOBALS['TL_LANG']['tl_newsletter']['mailsPerCycle'][1] . '</p>' : '') . '
 </div>
 <div class="w50">
   <h3><label for="ctrl_timeout">' . $GLOBALS['TL_LANG']['tl_newsletter']['timeout'][0] . '</label></h3>
-  <input type="text" name="timeout" id="ctrl_timeout" value="1" class="tl_text" onfocus="">' . (($GLOBALS['TL_LANG']['tl_newsletter']['timeout'][1] && \Config::get('showHelp')) ? '
+  <input type="text" name="timeout" id="ctrl_timeout" value="1" class="tl_text" onfocus="">' . (($GLOBALS['TL_LANG']['tl_newsletter']['timeout'][1] && Config::get('showHelp')) ? '
   <p class="tl_help tl_tip">' . $GLOBALS['TL_LANG']['tl_newsletter']['timeout'][1] . '</p>' : '') . '
 </div>
 <div class="w50">
   <h3><label for="ctrl_start">' . $GLOBALS['TL_LANG']['tl_newsletter']['start'][0] . '</label></h3>
-  <input type="text" name="start" id="ctrl_start" value="0" class="tl_text" onfocus="">' . (($GLOBALS['TL_LANG']['tl_newsletter']['start'][1] && \Config::get('showHelp')) ? '
+  <input type="text" name="start" id="ctrl_start" value="0" class="tl_text" onfocus="">' . (($GLOBALS['TL_LANG']['tl_newsletter']['start'][1] && Config::get('showHelp')) ? '
   <p class="tl_help tl_tip">' . $GLOBALS['TL_LANG']['tl_newsletter']['start'][1] . '</p>' : '') . '
 </div>
 <div class="w50">
   <h3><label for="ctrl_recipient">' . $GLOBALS['TL_LANG']['tl_newsletter']['sendPreviewTo'][0] . '</label></h3>
   <input type="text" name="recipient" id="ctrl_recipient" value="'.\Idna::decodeEmail($this->User->email).'" class="tl_text" onfocus="">' . (isset($_SESSION['TL_PREVIEW_MAIL_ERROR']) ? '
-  <div class="tl_error">' . $GLOBALS['TL_LANG']['ERR']['email'] . '</div>' : (($GLOBALS['TL_LANG']['tl_newsletter']['sendPreviewTo'][1] && \Config::get('showHelp')) ? '
+  <div class="tl_error">' . $GLOBALS['TL_LANG']['ERR']['email'] . '</div>' : (($GLOBALS['TL_LANG']['tl_newsletter']['sendPreviewTo'][1] && Config::get('showHelp')) ? '
   <p class="tl_help tl_tip">' . $GLOBALS['TL_LANG']['tl_newsletter']['sendPreviewTo'][1] . '</p>' : '')) . '
 </div>
 <div class="clear"></div>
@@ -373,7 +374,7 @@ class Newsletter extends Backend
 
 			$objTemplate->title = $objNewsletter->subject;
 			$objTemplate->body = \StringUtil::parseSimpleTokens($html, $arrRecipient);
-			$objTemplate->charset = \Config::get('characterSet');
+			$objTemplate->charset = Config::get('characterSet');
 			$objTemplate->css = $css; // Backwards compatibility
 			$objTemplate->recipient = $arrRecipient['email'];
 
@@ -535,7 +536,7 @@ class Newsletter extends Backend
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_recipients_import">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">
-<input type="hidden" name="MAX_FILE_SIZE" value="'.\Config::get('maxFileSize').'">
+<input type="hidden" name="MAX_FILE_SIZE" value="'.Config::get('maxFileSize').'">
 
 <div class="tl_tbox">
   <h3><label for="separator">'.$GLOBALS['TL_LANG']['MSC']['separator'][0].'</label></h3>
@@ -705,7 +706,7 @@ class Newsletter extends Backend
 		$varValue = deserialize($varValue, true);
 
 		// Get all channel IDs (thanks to Andreas Schempp)
-		if ($blnIsFrontend && $objModule instanceof \Module)
+		if ($blnIsFrontend && $objModule instanceof \Contao\Modules\AbstractModule)
 		{
 			$arrChannel = deserialize($objModule->newsletters, true);
 		}
@@ -958,7 +959,7 @@ class Newsletter extends Backend
 					}
 
 					// Generate the URL
-					$arrProcessed[$objNewsletter->jumpTo] = $objParent->getAbsoluteUrl(\Config::get('useAutoItem') ? '/%s' : '/items/%s');
+					$arrProcessed[$objNewsletter->jumpTo] = $objParent->getAbsoluteUrl(Config::get('useAutoItem') ? '/%s' : '/items/%s');
 				}
 
 				$strUrl = $arrProcessed[$objNewsletter->jumpTo];

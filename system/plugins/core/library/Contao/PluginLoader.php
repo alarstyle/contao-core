@@ -70,7 +70,7 @@ class PluginLoader
 		$strPluginsDir = TL_ROOT . '/system/plugins';
 
 		// Try to load from cache
-		if (!\Config::get('bypassCache') && file_exists($strCacheFile))
+		if (!Config::get('bypassCache') && file_exists($strCacheFile))
 		{
 			include $strCacheFile;
 		}
@@ -82,7 +82,7 @@ class PluginLoader
 			static::$disabled = [];
 
 			// Ignore non-core plugins if the system runs in safe mode
-			if (\Config::get('coreOnlyMode'))
+			if (Config::get('coreOnlyMode'))
 			{
 				$plugins = ['core', 'devtools', 'news', 'newsletter', 'repository'];
 			}

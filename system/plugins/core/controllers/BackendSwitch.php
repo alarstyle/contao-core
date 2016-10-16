@@ -10,6 +10,9 @@
 
 namespace Contao;
 
+use Contao\Config;
+use Contao\Input;
+use Contao\Environment;
 
 /**
  * Switch accounts in the front end preview.
@@ -49,7 +52,7 @@ class BackendSwitch extends Backend
 		}
 
 		$strUser = '';
-		$strHash = sha1(session_id() . (!\Config::get('disableIpCheck') ? \Environment::get('ip') : '') . 'FE_USER_AUTH');
+		$strHash = sha1(session_id() . (!Config::get('disableIpCheck') ? Environment::get('ip') : '') . 'FE_USER_AUTH');
 
 		// Get the front end user
 		if (FE_USER_LOGGED_IN)
@@ -85,7 +88,7 @@ class BackendSwitch extends Backend
 			// Show unpublished elements
 			else
 			{
-				$this->setCookie('FE_PREVIEW', 1, ($time + \Config::get('sessionTimeout')));
+				$this->setCookie('FE_PREVIEW', 1, ($time + Config::get('sessionTimeout')));
 				$objTemplate->show = 1;
 			}
 
@@ -94,22 +97,22 @@ class BackendSwitch extends Backend
 			{
 				// Remove old sessions
 				$this->Database->prepare("DELETE FROM tl_session WHERE tstamp<? OR hash=?")
-							   ->execute(($time - \Config::get('sessionTimeout')), $strHash);
+							   ->execute(($time - Config::get('sessionTimeout')), $strHash);
 
 			   // Log in the front end user
-				if (\Input::post('user'))
+				if (Input::post('user'))
 				{
-					$objUser = \MemberModel::findByUsername(\Input::post('user'));
+					$objUser = \MemberModel::findByUsername(Input::post('user'));
 
 					if ($objUser !== null)
 					{
 						// Insert the new session
 						$this->Database->prepare("INSERT INTO tl_session (pid, tstamp, name, sessionID, ip, hash) VALUES (?, ?, ?, ?, ?, ?)")
-									   ->execute($objUser->id, $time, 'FE_USER_AUTH', session_id(), \Environment::get('ip'), $strHash);
+									   ->execute($objUser->id, $time, 'FE_USER_AUTH', session_id(), Environment::get('ip'), $strHash);
 
 						// Set the cookie
-						$this->setCookie('FE_USER_AUTH', $strHash, ($time + \Config::get('sessionTimeout')), null, null, false, true);
-						$objTemplate->user = \Input::post('user');
+						$this->setCookie('FE_USER_AUTH', $strHash, ($time + Config::get('sessionTimeout')), null, null, false, true);
+						$objTemplate->user = Input::post('user');
 					}
 				}
 
@@ -142,7 +145,7 @@ class BackendSwitch extends Backend
 		$objTemplate->action = ampersand(Environment::get('request'));
 		$objTemplate->isAdmin = $this->User->isAdmin;
 
-		\Config::set('debugMode', false);
+		Config::set('debugMode', false);
 		$objTemplate->output();
 	}
 

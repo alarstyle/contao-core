@@ -10,6 +10,9 @@
 
 namespace Contao;
 
+use Contao\Config;
+use Contao\Environment;
+use Contao\Input;
 
 /**
  * Main front end controller.
@@ -39,14 +42,14 @@ class FrontendIndex extends Frontend
 		if (!$_SESSION['DISABLE_CACHE'])
 		{
 			// Maintenance mode (see #4561 and #6353)
-			if (\Config::get('maintenanceMode'))
+			if (Config::get('maintenanceMode'))
 			{
 				header('HTTP/1.1 503 Service Unavailable');
 				die_nicely('be_unavailable', 'This site is currently down for maintenance. Please come back later.');
 			}
 
 			// Disable the debug mode (see #6450)
-			\Config::set('debugMode', false);
+			Config::set('debugMode', false);
 		}
 	}
 
@@ -80,7 +83,7 @@ class FrontendIndex extends Frontend
 			$objHandler->generate($pageId);
 		}
 		// Throw a 404 error if URL rewriting is active and the URL contains the index.php fragment
-		elseif (\Config::get('rewriteURL') && strncmp(\Environment::get('request'), 'index.php/', 10) === 0)
+		elseif (Config::get('rewriteURL') && strncmp(\Environment::get('request'), 'index.php/', 10) === 0)
 		{
 			$this->User->authenticate();
 
@@ -128,7 +131,7 @@ class FrontendIndex extends Frontend
 			}
 
 			// Use the first result (see #4872)
-			if (!\Config::get('addLanguageToUrl'))
+			if (!Config::get('addLanguageToUrl'))
 			{
 				$objNewPage = current($arrLangs);
 			}
@@ -169,7 +172,7 @@ class FrontendIndex extends Frontend
 		// If the page has an alias, it can no longer be called via ID (see #7661)
 		if ($objPage->alias != '')
 		{
-			if (\Config::get('addLanguageToUrl'))
+			if (Config::get('addLanguageToUrl'))
 			{
 				$regex = '#^[a-z]{2}(-[A-Z]{2})?/' . $objPage->id . '[$/.]#';
 			}
@@ -206,7 +209,7 @@ class FrontendIndex extends Frontend
 		}
 		else
 		{
-			list($GLOBALS['TL_ADMIN_NAME'], $GLOBALS['TL_ADMIN_EMAIL']) = \StringUtil::splitFriendlyEmail(\Config::get('adminEmail'));
+			list($GLOBALS['TL_ADMIN_NAME'], $GLOBALS['TL_ADMIN_EMAIL']) = \StringUtil::splitFriendlyEmail(Config::get('adminEmail'));
 		}
 
 		// Exit if the root page has not been published (see #2425)
@@ -218,7 +221,7 @@ class FrontendIndex extends Frontend
 		}
 
 		// Check wether the language matches the root page language
-		if (\Config::get('addLanguageToUrl') && \Input::get('language') != $objPage->rootLanguage)
+		if (Config::get('addLanguageToUrl') && \Input::get('language') != $objPage->rootLanguage)
 		{
 			$this->User->authenticate();
 			$objHandler = new $GLOBALS['TL_PTY']['error_404']();
@@ -310,28 +313,28 @@ class FrontendIndex extends Frontend
 	protected function outputFromCache()
 	{
 		// Build the page if a user is (potentially) logged in or there is POST data
-		if (!empty($_POST) || \Input::cookie('BE_USER_AUTH') || \Input::cookie('FE_USER_AUTH') || \Input::cookie('FE_AUTO_LOGIN') || $_SESSION['DISABLE_CACHE'] || isset($_SESSION['LOGIN_ERROR']) || \Config::get('debugMode'))
+		if (!empty($_POST) || Input::cookie('BE_USER_AUTH') || Input::cookie('FE_USER_AUTH') || Input::cookie('FE_AUTO_LOGIN') || $_SESSION['DISABLE_CACHE'] || isset($_SESSION['LOGIN_ERROR']) || Config::get('debugMode'))
 		{
 			return;
 		}
 
 		// Try to map the empty request
-		if (\Environment::get('request') == '' || \Environment::get('request') == 'index.php')
+		if (Environment::get('request') == '' || Environment::get('request') == 'index.php')
 		{
 			// Return if the language is added to the URL and the empty domain will be redirected
-			if (\Config::get('addLanguageToUrl') && !\Config::get('doNotRedirectEmpty'))
+			if (Config::get('addLanguageToUrl') && !Config::get('doNotRedirectEmpty'))
 			{
 				return;
 			}
 
 			$strCacheKey = null;
-			$arrLanguage = \Environment::get('httpAcceptLanguage');
+			$arrLanguage = Environment::get('httpAcceptLanguage');
 
 			// Try to get the cache key from the mapper array
 			if (file_exists(TL_ROOT . '/system/cache/config/mapping.php'))
 			{
 				$arrMapper = include TL_ROOT . '/system/cache/config/mapping.php';
-				$arrPaths = array(\Environment::get('host'), '*');
+				$arrPaths = array(Environment::get('host'), '*');
 
 				// Try the language specific keys
 				foreach ($arrLanguage as $strLanguage)
@@ -367,12 +370,12 @@ class FrontendIndex extends Frontend
 			// Fall back to the first accepted language
 			if ($strCacheKey === null)
 			{
-				$strCacheKey = \Environment::get('host') . '/empty.' . $arrLanguage[0];
+				$strCacheKey = Environment::get('host') . '/empty.' . $arrLanguage[0];
 			}
 		}
 		else
 		{
-			$strCacheKey = \Environment::get('host') . '/' . \Environment::get('request');
+			$strCacheKey = Environment::get('host') . '/' . Environment::get('request');
 		}
 
 		// HOOK: add custom logic
@@ -508,10 +511,10 @@ class FrontendIndex extends Frontend
 		}
 
 		header('Vary: User-Agent', false);
-		header('Content-Type: ' . $content . '; charset=' . \Config::get('characterSet'));
+		header('Content-Type: ' . $content . '; charset=' . Config::get('characterSet'));
 
 		// Send the cache headers
-		if ($expire !== null && (\Config::get('cacheMode') == 'both' || \Config::get('cacheMode') == 'browser'))
+		if ($expire !== null && (Config::get('cacheMode') == 'both' || Config::get('cacheMode') == 'browser'))
 		{
 			header('Cache-Control: public, max-age=' . ($expire - time()));
 			header('Pragma: public');

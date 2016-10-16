@@ -10,6 +10,8 @@
 
 namespace Contao;
 
+use Contao\Config;
+use Contao\Input;
 
 /**
  * Front end module "news reader".
@@ -48,13 +50,13 @@ class ModuleNewsReader extends \ModuleNews
 		}
 
 		// Set the item from the auto_item parameter
-		if (!isset($_GET['items']) && \Config::get('useAutoItem') && isset($_GET['auto_item']))
+		if (!isset($_GET['items']) && Config::get('useAutoItem') && isset($_GET['auto_item']))
 		{
-			\Input::setGet('items', \Input::get('auto_item'));
+			Input::setGet('items', Input::get('auto_item'));
 		}
 
 		// Do not index or cache the page if no news item has been specified
-		if (!\Input::get('items'))
+		if (!Input::get('items'))
 		{
 			/** @var \PageModel $objPage */
 			global $objPage;

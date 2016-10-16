@@ -2,6 +2,8 @@
 
 namespace Contao;
 
+use Contao\Config;
+use Contao\Input;
 
 /**
  * Handle back end logins and logouts.
@@ -63,12 +65,12 @@ class BackendLogin extends Backend
         $objTemplate = new BackendTemplate('be_login');
 
         // Show a cookie warning
-        if (\Input::get('referer', true) != '' && empty($_COOKIE))
+        if (Input::get('referer', true) != '' && empty($_COOKIE))
         {
             $objTemplate->noCookies = $GLOBALS['TL_LANG']['MSC']['noCookies'];
         }
 
-        $strHeadline = sprintf($GLOBALS['TL_LANG']['MSC']['loginTo'], \Config::get('websiteTitle'));
+        $strHeadline = sprintf($GLOBALS['TL_LANG']['MSC']['loginTo'], Config::get('websiteTitle'));
 
         $objTemplate->theme = Backend::getTheme();
         $objTemplate->messages = Message::generate();

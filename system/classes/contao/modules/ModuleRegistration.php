@@ -8,15 +8,17 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Modules;
 
+use Contao\Config;
+use Contao\Date;
 
 /**
  * Front end module "registration".
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ModuleRegistration extends \Module
+class ModuleRegistration extends AbstractModule
 {
 
 	/**
@@ -563,7 +565,7 @@ class ModuleRegistration extends \Module
 
 			if ($k == 'dateOfBirth' && strlen($v))
 			{
-				$v = \Date::parse(\Config::get('dateFormat'), $v);
+				$v = Date::parse(Config::get('dateFormat'), $v);
 			}
 
 			$strData .= $GLOBALS['TL_LANG']['tl_member'][$k][0] . ': ' . (is_array($v) ? implode(', ', $v) : $v) . "\n";

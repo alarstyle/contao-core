@@ -37,7 +37,7 @@ window.ace && window.addEvent('domready', function() {
   editor.renderer.setScrollMargin(3, 3, 0, 0);
   editor.renderer.scrollBy(0, -6);
   editor.getSession().setValue(ta.value);
-  editor.getSession().setMode("ace/mode/<?php echo Backend::getAceType($type); ?>");
+  editor.getSession().setMode("ace/mode/<?php echo Contao\Backend::getAceType($type); ?>");
   editor.getSession().setUseSoftTabs(false);
   editor.getSession().setUseWrapMode(true);
   editor.setAutoScrollEditorIntoView(true);

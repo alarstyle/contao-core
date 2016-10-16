@@ -10,6 +10,7 @@
 
 namespace Contao\Editors;
 
+use COntao\Config;
 
 /**
  * Provide methods to handle password fields.
@@ -111,9 +112,9 @@ class Password extends \Contao\Editor
 			return '*****';
 		}
 
-		if (utf8_strlen($varInput) < \Config::get('minPasswordLength'))
+		if (utf8_strlen($varInput) < Config::get('minPasswordLength'))
 		{
-			$this->addError(sprintf($GLOBALS['TL_LANG']['ERR']['passwordLength'], \Config::get('minPasswordLength')));
+			$this->addError(sprintf($GLOBALS['TL_LANG']['ERR']['passwordLength'], Config::get('minPasswordLength')));
 		}
 
 		if ($varInput != $this->getPost($this->strName . '_confirm'))
@@ -154,7 +155,7 @@ class Password extends \Contao\Editor
 						(($this->varValue != '') ? '*****' : ''),
 						$this->getAttributes(),
 						$this->wizard,
-						((strlen($this->description) && \Config::get('showHelp') && !$this->hasErrors()) ? "\n  " . '<p class="tl_help tl_tip">'.$this->description.'</p>' : ''));
+						((strlen($this->description) && Config::get('showHelp') && !$this->hasErrors()) ? "\n  " . '<p class="tl_help tl_tip">'.$this->description.'</p>' : ''));
 	}
 
 
@@ -187,6 +188,6 @@ class Password extends \Contao\Editor
 						(strlen($this->strClass) ? ' ' . $this->strClass : ''),
 						(($this->varValue != '') ? '*****' : ''),
 						$this->getAttributes(),
-						((strlen($GLOBALS['TL_LANG']['MSC']['confirm'][1]) && \Config::get('showHelp')) ? "\n  " . '<p class="tl_help tl_tip">'.$GLOBALS['TL_LANG']['MSC']['confirm'][1].'</p>' : ''));
+						((strlen($GLOBALS['TL_LANG']['MSC']['confirm'][1]) && Config::get('showHelp')) ? "\n  " . '<p class="tl_help tl_tip">'.$GLOBALS['TL_LANG']['MSC']['confirm'][1].'</p>' : ''));
 	}
 }

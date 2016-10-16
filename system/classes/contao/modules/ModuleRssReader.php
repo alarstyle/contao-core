@@ -8,15 +8,16 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Modules;
 
+use Contao\Config;
 
 /**
  * Front end module "rss reader".
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ModuleRssReader extends \Module
+class ModuleRssReader extends AbstractModule
 {
 
 	/**
@@ -65,7 +66,7 @@ class ModuleRssReader extends \Module
 			$this->objFeed->set_feed_url($arrUrls[0]);
 		}
 
-		$this->objFeed->set_output_encoding(\Config::get('characterSet'));
+		$this->objFeed->set_output_encoding(Config::get('characterSet'));
 		$this->objFeed->set_cache_location(TL_ROOT . '/system/tmp');
 		$this->objFeed->enable_cache(false);
 
@@ -149,7 +150,7 @@ class ModuleRssReader extends \Module
 			$offset = (($page - 1) * $this->perPage);
 			$limit = $this->perPage + $offset;
 
-			$objPagination = new \Pagination(count($arrItems), $this->perPage, \Config::get('maxPaginationLinks'), $id);
+			$objPagination = new \Pagination(count($arrItems), $this->perPage, Config::get('maxPaginationLinks'), $id);
 			$this->Template->pagination = $objPagination->generate("\n  ");
 		}
 

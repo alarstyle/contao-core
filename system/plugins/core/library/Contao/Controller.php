@@ -10,6 +10,8 @@
 
 namespace Contao;
 
+use Contao\Modules\AbstractModule;
+
 
 /**
  * Abstract parent class for Controllers
@@ -46,7 +48,7 @@ abstract class Controller extends \System
 	 */
 	public static function getTemplate($strTemplate, $strFormat='html')
 	{
-		$arrAllowed = trimsplit(',', strtolower(\Config::get('templateFiles')));
+		$arrAllowed = trimsplit(',', strtolower(Config::get('templateFiles')));
 		array_push($arrAllowed, 'html'); // see #3398
 
 		if (!in_array($strFormat, $arrAllowed))
@@ -194,49 +196,6 @@ abstract class Controller extends \System
 		// Articles
 		if (!is_object($intId) && $intId == 0)
 		{
-			// Show a particular article only
-			if ($objPage->type == 'regular' && \Input::get('articles'))
-			{
-				list($strSection, $strArticle) = explode(':', \Input::get('articles'));
-
-				if ($strArticle === null)
-				{
-					$strArticle = $strSection;
-					$strSection = 'main';
-				}
-
-				if ($strSection == $strColumn)
-				{
-					$objArticle = \ArticleModel::findPublishedByIdOrAliasAndPid($strArticle, $objPage->id);
-
-					// Send a 404 header if there is no published article
-					if (null === $objArticle)
-					{
-						/** @var \PageError404 $objHandler */
-						$objHandler = new $GLOBALS['TL_PTY']['error_404']();
-						$objHandler->generate($objPage->id);
-					}
-
-					// Send a 403 header if the article cannot be accessed
-					if (!static::isVisibleElement($objArticle))
-					{
-						/** @var \PageError403 $objHandler */
-						$objHandler = new $GLOBALS['TL_PTY']['error_403']();
-						$objHandler->generate($objPage->id);
-					}
-
-					// Add the "first" and "last" classes (see #2583)
-					$objArticle->classes = array('first', 'last');
-
-					return static::getArticle($objArticle);
-				}
-			}
-
-			// HOOK: trigger the article_raster_designer extension
-			if (in_array('article_raster_designer', \PluginLoader::getActive()))
-			{
-				return \RasterDesigner::load($objPage->id, $strColumn);
-			}
 
 			// Show all articles (no else block here, see #4740)
 			$objArticles = \ArticleModel::findPublishedByPidAndColumn($objPage->id, $strColumn);
@@ -304,7 +263,7 @@ abstract class Controller extends \System
 				return '';
 			}
 
-			$strClass = \Module::findClass($objRow->type);
+			$strClass = AbstractModule::findClass($objRow->type);
 
 			// Return if the class does not exist
 			if (!class_exists($strClass))
@@ -392,7 +351,7 @@ abstract class Controller extends \System
 			}
 		}
 
-		$objArticle = new \ModuleArticle($objRow, $strColumn);
+		$objArticle = new \Contao\Modules\ModuleArticle($objRow, $strColumn);
 		$strBuffer = $objArticle->generate($blnIsInsertTag);
 
 		// Disable indexing if protected
@@ -744,7 +703,7 @@ abstract class Controller extends \System
 		}
 
 		// Command scheduler
-		if (!\Config::get('disableCron'))
+		if (!Config::get('disableCron'))
 		{
 			$strScripts .= "\n" . \Template::generateInlineScript('setTimeout(function(){var e=function(e,t){try{var n=new XMLHttpRequest}catch(r){return}n.open("GET",e,!0),n.onreadystatechange=function(){this.readyState==4&&this.status==200&&typeof t=="function"&&t(this.responseText)},n.send()},t="system/cron/cron.";e(t+"txt",function(n){parseInt(n||0)<Math.round(+(new Date)/1e3)-' . Frontend::getCronTimeout() . '&&e(t+"php")})},5e3);') . "\n";
 		}
@@ -1094,7 +1053,7 @@ abstract class Controller extends \System
 
 		$strLanguage = '';
 
-		if (\Config::get('addLanguageToUrl'))
+		if (Config::get('addLanguageToUrl'))
 		{
 			if ($strForceLang != '')
 			{
@@ -1122,12 +1081,12 @@ abstract class Controller extends \System
 		{
 			if ($strLanguage != '') // see #7757
 			{
-				$strUrl = (\Config::get('rewriteURL') ? '' : 'index.php/') . $strLanguage;
+				$strUrl = (Config::get('rewriteURL') ? '' : 'index.php/') . $strLanguage;
 			}
 		}
 		else
 		{
-			$strUrl = (\Config::get('rewriteURL') ? '' : 'index.php/') . $strLanguage . ($arrRow['alias'] ?: $arrRow['id']) . $strParams . '/';
+			$strUrl = (Config::get('rewriteURL') ? '' : 'index.php/') . $strLanguage . ($arrRow['alias'] ?: $arrRow['id']) . $strParams . '/';
 		}
 
 		// Add the domain if it differs from the current one (see #3765 and #6927)
@@ -1208,7 +1167,7 @@ abstract class Controller extends \System
 		}
 
 		// Limit downloads to the files directory
-		if (!preg_match('@^' . preg_quote(\Config::get('uploadPath'), '@') . '@i', $strFile))
+		if (!preg_match('@^' . preg_quote(Config::get('uploadPath'), '@') . '@i', $strFile))
 		{
 			header('HTTP/1.1 404 Not Found');
 			die('Invalid path');
@@ -1222,7 +1181,7 @@ abstract class Controller extends \System
 		}
 
 		$objFile = new \File($strFile, true);
-		$arrAllowedTypes = trimsplit(',', strtolower(\Config::get('allowedDownload')));
+		$arrAllowedTypes = trimsplit(',', strtolower(Config::get('allowedDownload')));
 
 		// Check whether the file type is allowed to be downloaded
 		if (!in_array($objFile->extension, $arrAllowedTypes))
@@ -1443,7 +1402,7 @@ abstract class Controller extends \System
 
 		if ($intMaxWidth === null)
 		{
-			$intMaxWidth = (TL_MODE == 'BE') ? 320 : \Config::get('maxImageWidth');
+			$intMaxWidth = (TL_MODE == 'BE') ? 320 : Config::get('maxImageWidth');
 		}
 
 		$arrMargin = (TL_MODE == 'BE') ? array() : deserialize($arrItem['imagemargin']);
@@ -1634,7 +1593,7 @@ abstract class Controller extends \System
 		global $objPage;
 
 		$arrEnclosures = array();
-		$allowedDownload = trimsplit(',', strtolower(\Config::get('allowedDownload')));
+		$allowedDownload = trimsplit(',', strtolower(Config::get('allowedDownload')));
 
 		// Add download links
 		while ($objFiles->next())

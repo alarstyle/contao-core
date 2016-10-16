@@ -10,6 +10,8 @@
 
 namespace Contao\Pages;
 
+use Contao\Config;
+use Contao\Environment;
 use Contao\Frontend;
 use Contao\FrontendTemplate;
 
@@ -413,7 +415,7 @@ class PageRegular extends Frontend
 		}
 
 		// Load MooTools core for the debug bar (see #5195)
-		if (\Config::get('debugMode') && !\Config::get('hideDebugBar') && !$objLayout->addMooTools)
+		if (Config::get('debugMode') && !Config::get('hideDebugBar') && !$objLayout->addMooTools)
 		{
 			$GLOBALS['TL_JAVASCRIPT'][] = 'assets/mootools/core/' . $GLOBALS['TL_ASSETS']['MOOTOOLS'] . '/mootools-core.js|static';
 		}
@@ -444,9 +446,9 @@ class PageRegular extends Frontend
 		// Default settings
 		$this->Template->layout = $objLayout;
 		$this->Template->language = $GLOBALS['TL_LANGUAGE'];
-		$this->Template->charset = \Config::get('characterSet');
-		$this->Template->base = \Environment::get('base');
-		$this->Template->disableCron = \Config::get('disableCron');
+		$this->Template->charset = Config::get('characterSet');
+		$this->Template->base = Environment::get('base');
+		$this->Template->disableCron = Config::get('disableCron');
 		$this->Template->cronTimeout = $this->getCronTimeout();
 		$this->Template->isRTL = false;
 	}
@@ -484,9 +486,9 @@ class PageRegular extends Frontend
 		}
 
 		// Add the TinyMCE style sheet
-		if (is_array($arrFramework) && in_array('tinymce.css', $arrFramework) && file_exists(TL_ROOT . '/' . \Config::get('uploadPath') . '/tinymce.css'))
+		if (is_array($arrFramework) && in_array('tinymce.css', $arrFramework) && file_exists(TL_ROOT . '/' . Config::get('uploadPath') . '/tinymce.css'))
 		{
-			$GLOBALS['TL_FRAMEWORK_CSS'][] = \Config::get('uploadPath') . '/tinymce.css';
+			$GLOBALS['TL_FRAMEWORK_CSS'][] = Config::get('uploadPath') . '/tinymce.css';
 		}
 
 		// Make sure TL_USER_CSS is set
@@ -628,7 +630,7 @@ class PageRegular extends Frontend
 		$strStyleSheets .= '[[TL_CSS]]';
 
 		// Add the debug style sheet
-		if (\Config::get('debugMode') && !\Config::get('hideDebugBar'))
+		if (Config::get('debugMode') && !Config::get('hideDebugBar'))
 		{
 			$strStyleSheets .= \Template::generateStyleTag($this->addStaticUrlTo('assets/contao/css/debug.css'), 'all') . "\n";
 		}

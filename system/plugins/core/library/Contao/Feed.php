@@ -133,7 +133,7 @@ class Feed
 	{
 		$this->adjustPublicationDate();
 
-		$xml  = '<?xml version="1.0" encoding="' . \Config::get('characterSet') . '"?>';
+		$xml  = '<?xml version="1.0" encoding="' . Config::get('characterSet') . '"?>';
 		$xml .= '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">';
 		$xml .= '<channel>';
 		$xml .= '<title>' . specialchars($this->title) . '</title>';
@@ -198,7 +198,7 @@ class Feed
 	{
 		$this->adjustPublicationDate();
 
-		$xml  = '<?xml version="1.0" encoding="' . \Config::get('characterSet') . '"?>';
+		$xml  = '<?xml version="1.0" encoding="' . Config::get('characterSet') . '"?>';
 		$xml .= '<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="' . $this->language . '">';
 		$xml .= '<title>' . specialchars($this->title) . '</title>';
 		$xml .= '<subtitle>' . specialchars($this->description) . '</subtitle>';

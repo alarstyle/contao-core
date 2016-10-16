@@ -292,10 +292,10 @@ abstract class Template extends \BaseTemplate
 		$this->strBuffer = $this->minifyHtml($this->strBuffer);
 
 		header('Vary: User-Agent', false);
-		header('Content-Type: ' . $this->strContentType . '; charset=' . \Config::get('characterSet'));
+		header('Content-Type: ' . $this->strContentType . '; charset=' . Config::get('characterSet'));
 
 		// Add the debug bar
-		if (\Config::get('debugMode') && !\Config::get('hideDebugBar') && !isset($_GET['popup']))
+		if (Config::get('debugMode') && !Config::get('hideDebugBar') && !isset($_GET['popup']))
 		{
 			$this->strBuffer = str_replace('</body>', $this->getDebugBar() . '</body>', $this->strBuffer);
 		}
@@ -397,7 +397,7 @@ abstract class Template extends \BaseTemplate
 	public function minifyHtml($strHtml)
 	{
 		// The feature has been disabled
-		if (!\Config::get('minifyMarkup') || \Config::get('debugMode'))
+		if (!Config::get('minifyMarkup') || Config::get('debugMode'))
 		{
 			return $strHtml;
 		}

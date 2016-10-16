@@ -10,6 +10,7 @@
 
 namespace Contao\Pages;
 
+use Contao\Config;
 use Contao\Frontend;
 
 /**
@@ -67,7 +68,7 @@ class PageForward extends Frontend
 			foreach (array_keys($_GET) as $key)
 			{
 
-				if (\Config::get('addLanguageToUrl') && $key == 'language')
+				if (Config::get('addLanguageToUrl') && $key == 'language')
 				{
 					continue;
 				}

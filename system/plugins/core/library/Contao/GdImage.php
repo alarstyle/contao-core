@@ -181,7 +181,7 @@ class GdImage
 			case 'jpg':
 			case 'jpeg':
 				imageinterlace($this->gdResource, 1); // see #6529
-				imagejpeg($this->gdResource, $path, (\Config::get('jpgQuality') ?: 80));
+				imagejpeg($this->gdResource, $path, (Config::get('jpgQuality') ?: 80));
 				break;
 
 			case 'png':

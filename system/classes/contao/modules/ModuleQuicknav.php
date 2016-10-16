@@ -8,15 +8,16 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Modules;
 
+use Contao\Config;
 
 /**
  * Front end module "quick navigation".
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ModuleQuicknav extends \Module
+class ModuleQuicknav extends AbstractModule
 {
 
 	/**
@@ -79,7 +80,7 @@ class ModuleQuicknav extends \Module
 			$objRootPage = \PageModel::findWithDetails($this->rootPage);
 
 			// Set the language
-			if (\Config::get('addLanguageToUrl') && $objRootPage->rootLanguage != $objPage->rootLanguage)
+			if (Config::get('addLanguageToUrl') && $objRootPage->rootLanguage != $objPage->rootLanguage)
 			{
 				$lang = $objRootPage->rootLanguage;
 			}

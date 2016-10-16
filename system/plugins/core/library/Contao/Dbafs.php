@@ -46,7 +46,7 @@ class Dbafs
 	 */
 	public static function addResource($strResource, $blnUpdateFolders=true)
 	{
-		$strUploadPath = \Config::get('uploadPath') . '/';
+		$strUploadPath = Config::get('uploadPath') . '/';
 
 		// Remove trailing slashes (see #5707)
 		if (substr($strResource, -1) == '/')
@@ -228,7 +228,7 @@ class Dbafs
 		$strFolder = dirname($strDestination);
 
 		// Set the new parent ID
-		if ($strFolder == \Config::get('uploadPath'))
+		if ($strFolder == Config::get('uploadPath'))
 		{
 			$objFile->pid = null;
 		}
@@ -265,11 +265,11 @@ class Dbafs
 		}
 
 		// Update the MD5 hash of the parent folders
-		if (($strPath = dirname($strSource)) != \Config::get('uploadPath'))
+		if (($strPath = dirname($strSource)) != Config::get('uploadPath'))
 		{
 			static::updateFolderHashes($strPath);
 		}
-		if (($strPath = dirname($strDestination)) != \Config::get('uploadPath'))
+		if (($strPath = dirname($strDestination)) != Config::get('uploadPath'))
 		{
 			static::updateFolderHashes($strPath);
 		}
@@ -303,7 +303,7 @@ class Dbafs
 		$objNewFile = clone $objFile->current();
 
 		// Set the new parent ID
-		if ($strFolder == \Config::get('uploadPath'))
+		if ($strFolder == Config::get('uploadPath'))
 		{
 			$objNewFile->pid = null;
 		}
@@ -348,11 +348,11 @@ class Dbafs
 		}
 
 		// Update the MD5 hash of the parent folders
-		if (($strPath = dirname($strSource)) != \Config::get('uploadPath'))
+		if (($strPath = dirname($strSource)) != Config::get('uploadPath'))
 		{
 			static::updateFolderHashes($strPath);
 		}
-		if (($strPath = dirname($strDestination)) != \Config::get('uploadPath'))
+		if (($strPath = dirname($strDestination)) != Config::get('uploadPath'))
 		{
 			static::updateFolderHashes($strPath);
 		}
@@ -487,7 +487,7 @@ class Dbafs
 		$objFiles = new \RecursiveIteratorIterator(
 			new \Filter\SyncExclude(
 				new \RecursiveDirectoryIterator(
-					TL_ROOT . '/' . \Config::get('uploadPath'),
+					TL_ROOT . '/' . Config::get('uploadPath'),
 					\FilesystemIterator::UNIX_PATHS|\FilesystemIterator::FOLLOW_SYMLINKS|\FilesystemIterator::SKIP_DOTS
 				)
 			), \RecursiveIteratorIterator::SELF_FIRST
@@ -539,7 +539,7 @@ class Dbafs
 				$strParent = dirname($strRelpath);
 
 				// Get the parent ID
-				if ($strParent == \Config::get('uploadPath'))
+				if ($strParent == Config::get('uploadPath'))
 				{
 					$strPid = null;
 				}
@@ -736,7 +736,7 @@ class Dbafs
 	 */
 	protected static function isFileSyncExclude($strPath)
 	{
-		if (\Config::get('uploadPath') == 'templates')
+		if (Config::get('uploadPath') == 'templates')
 		{
 			return true;
 		}
@@ -747,15 +747,15 @@ class Dbafs
 		}
 
 		// Outside the files directory
-		if (strncmp($strPath . '/', \Config::get('uploadPath') . '/', strlen(\Config::get('uploadPath')) + 1) !== 0)
+		if (strncmp($strPath . '/', Config::get('uploadPath') . '/', strlen(Config::get('uploadPath')) + 1) !== 0)
 		{
 			return true;
 		}
 
 		// Check the excluded folders
-		if (\Config::get('fileSyncExclude') != '')
+		if (Config::get('fileSyncExclude') != '')
 		{
-			$arrExempt = array_map(function ($e) { return \Config::get('uploadPath') . '/' . $e; }, trimsplit(',', \Config::get('fileSyncExclude')));
+			$arrExempt = array_map(function ($e) { return Config::get('uploadPath') . '/' . $e; }, trimsplit(',', Config::get('fileSyncExclude')));
 
 			foreach ($arrExempt as $strExempt)
 			{

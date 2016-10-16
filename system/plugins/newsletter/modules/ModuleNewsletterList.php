@@ -10,6 +10,8 @@
 
 namespace Contao;
 
+use Contao\Config;
+use Contao\Input;
 
 /**
  * Front end module "newsletter list".
@@ -98,7 +100,7 @@ class ModuleNewsletterList extends \Module
 					if (($objJumpTo = $objTarget->getRelated('jumpTo')) !== null)
 					{
 						/** @var \PageModel $objJumpTo */
-						$arrJumpTo[$objTarget->jumpTo] = $objJumpTo->getFrontendUrl((\Config::get('useAutoItem')) ? '/%s' : '/items/%s');
+						$arrJumpTo[$objTarget->jumpTo] = $objJumpTo->getFrontendUrl((Config::get('useAutoItem')) ? '/%s' : '/items/%s');
 					}
 					else
 					{
@@ -114,9 +116,9 @@ class ModuleNewsletterList extends \Module
 					'subject' => $objNewsletter->subject,
 					'title' => strip_insert_tags($objNewsletter->subject),
 					'href' => sprintf($strUrl, $strAlias),
-					'date' => \Date::parse($objPage->dateFormat, $objNewsletter->date),
-					'datim' => \Date::parse($objPage->datimFormat, $objNewsletter->date),
-					'time' => \Date::parse($objPage->timeFormat, $objNewsletter->date),
+					'date' => Date::parse($objPage->dateFormat, $objNewsletter->date),
+					'datim' => Date::parse($objPage->datimFormat, $objNewsletter->date),
+					'time' => Date::parse($objPage->timeFormat, $objNewsletter->date),
 					'channel' => $objNewsletter->pid
 				);
 			}

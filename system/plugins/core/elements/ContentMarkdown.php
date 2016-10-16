@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Config;
 
 /**
  * Front end content element "code".
@@ -55,6 +56,6 @@ class ContentMarkdown extends \ContentElement
 	protected function compile()
 	{
 		$this->code = \Michelf\MarkdownExtra::defaultTransform($this->code);
-		$this->Template->content = strip_tags($this->code, \Config::get('allowedTags'));
+		$this->Template->content = strip_tags($this->code, Config::get('allowedTags'));
 	}
 }

@@ -74,8 +74,7 @@ set_exception_handler('__exception');
 /**
  * Include some classes required for further processing
  */
-require TL_ROOT . '/system/plugins/core/library/Contao/Config.php';
-class_alias('Contao\\Config', 'Config');
+require TL_ROOT . '/system/classes/contao/Config.php';
 
 require TL_ROOT . '/system/plugins/core/library/Contao/ClassLoader.php';
 class_alias('Contao\\ClassLoader', 'ClassLoader');
@@ -86,15 +85,15 @@ class_alias('Contao\\TemplateLoader', 'TemplateLoader');
 require TL_ROOT . '/system/plugins/core/library/Contao/PluginLoader.php';
 class_alias('Contao\\PluginLoader', 'PluginLoader');
 
-Config::preload(); // see #5872
+Contao\Config::preload(); // see #5872
 
 
 /**
  * Adjust the error handling
  */
-@ini_set('display_errors', (Config::get('displayErrors') ? 1 : 0));
-error_reporting((Config::get('displayErrors') || Config::get('logErrors')) ? Config::get('errorReporting') : 0);
-set_error_handler('__error', Config::get('errorReporting'));
+@ini_set('display_errors', (Contao\Config::get('displayErrors') ? 1 : 0));
+error_reporting((Contao\Config::get('displayErrors') || Contao\Config::get('logErrors')) ? Contao\Config::get('errorReporting') : 0);
+set_error_handler('__error', Contao\Config::get('errorReporting'));
 
 
 
@@ -140,12 +139,12 @@ Swift::init(function ()
 {
 	$preferences = Swift_Preferences::getInstance();
 
-	if (!Config::get('useFTP'))
+	if (!Contao\Config::get('useFTP'))
 	{
 		$preferences->setTempDir(TL_ROOT . '/system/tmp')->setCacheType('disk');
 	}
 
-	$preferences->setCharset(Config::get('characterSet'));
+	$preferences->setCharset(Contao\Config::get('characterSet'));
 });
 
 
@@ -176,13 +175,13 @@ else
 /**
  * Get the Config instance
  */
-$objConfig = Config::getInstance();
+$objConfig = Contao\Config::getInstance();
 
 
 /**
  * Set the website path (backwards compatibility)
  */
-Config::set('websitePath', TL_PATH);
+Contao\Config::set('websitePath', TL_PATH);
 
 
 /**
@@ -230,15 +229,15 @@ if (!$objConfig->isComplete() && TL_SCRIPT != 'contao/install.php')
  */
 if (Input::cookie('TL_INSTALL_AUTH') && !empty($_SESSION['TL_INSTALL_AUTH']) && Input::cookie('TL_INSTALL_AUTH') == $_SESSION['TL_INSTALL_AUTH'] && $_SESSION['TL_INSTALL_EXPIRE'] > time())
 {
-	Config::set('displayErrors', 1);
+	Contao\Config::set('displayErrors', 1);
 }
 
 
 /**
  * Set the timezone
  */
-@ini_set('date.timezone', Config::get('timeZone'));
-@date_default_timezone_set(Config::get('timeZone'));
+@ini_set('date.timezone', Contao\Config::get('timeZone'));
+@date_default_timezone_set(Contao\Config::get('timeZone'));
 
 
 /**
@@ -246,7 +245,7 @@ if (Input::cookie('TL_INSTALL_AUTH') && !empty($_SESSION['TL_INSTALL_AUTH']) && 
  */
 if (USE_MBSTRING && function_exists('mb_regex_encoding'))
 {
-	mb_regex_encoding(Config::get('characterSet'));
+	mb_regex_encoding(Contao\Config::get('characterSet'));
 }
 
 

@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Config;
 use Contao\Database;
 
 /**
@@ -124,7 +125,7 @@ class FormModel extends \Model
 		}
 		else
 		{
-			return \Config::get('maxFileSize');
+			return Config::get('maxFileSize');
 		}
 	}
 }

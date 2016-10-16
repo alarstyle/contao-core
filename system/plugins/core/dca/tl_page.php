@@ -18,7 +18,7 @@ $GLOBALS['TL_DCA']['tl_page'] = array
 	// Config
 	'config' => array
 	(
-		'label'                       => Config::get('websiteTitle'),
+		'label'                       => \Contao\Config::get('websiteTitle'),
 		'dataContainer'               => 'Table',
 		'ctable'                      => array('tl_content'),
 		'enableVersioning'            => true,
@@ -509,7 +509,7 @@ $GLOBALS['TL_DCA']['tl_page'] = array
 		'cuser' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_page']['cuser'],
-			'default'                 => intval(Config::get('defaultUser')),
+			'default'                 => intval(\Contao\Config::get('defaultUser')),
 			'exclude'                 => true,
 			'search'                  => true,
 			'inputType'               => 'select',
@@ -521,7 +521,7 @@ $GLOBALS['TL_DCA']['tl_page'] = array
 		'cgroup' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_page']['cgroup'],
-			'default'                 => intval(Config::get('defaultGroup')),
+			'default'                 => intval(\Contao\Config::get('defaultGroup')),
 			'exclude'                 => true,
 			'search'                  => true,
 			'inputType'               => 'select',
@@ -533,7 +533,7 @@ $GLOBALS['TL_DCA']['tl_page'] = array
 		'chmod' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_page']['chmod'],
-			'default'                 => Config::get('defaultChmod'),
+			'default'                 => \Contao\Config::get('defaultChmod'),
 			'exclude'                 => true,
 			'inputType'               => 'chmod',
 			'eval'                    => array('tl_class'=>'clr'),
@@ -664,8 +664,8 @@ class tl_page extends Contao\Backend
 		$session = $this->Session->getData();
 
 		// Set the default page user and group
-		$GLOBALS['TL_DCA']['tl_page']['fields']['cuser']['default'] = intval(Config::get('defaultUser') ?: $this->User->id);
-		$GLOBALS['TL_DCA']['tl_page']['fields']['cgroup']['default'] = intval(Config::get('defaultGroup') ?: $this->User->groups[0]);
+		$GLOBALS['TL_DCA']['tl_page']['fields']['cuser']['default'] = intval(\Contao\Config::get('defaultUser') ?: $this->User->id);
+		$GLOBALS['TL_DCA']['tl_page']['fields']['cgroup']['default'] = intval(\Contao\Config::get('defaultGroup') ?: $this->User->groups[0]);
 
 		// Restrict the page tree
 		$GLOBALS['TL_DCA']['tl_page']['list']['sorting']['root'] = $this->User->pagemounts;
@@ -1001,7 +1001,7 @@ class tl_page extends Contao\Backend
 				else
 				{
 					// Check the domain and language or the domain only
-					if (Config::get('addLanguageToUrl'))
+					if (\Contao\Config::get('addLanguageToUrl'))
 					{
 						$arrPages[$domain][$language][] = $objAlias->id;
 					}
@@ -1012,7 +1012,7 @@ class tl_page extends Contao\Backend
 				}
 			}
 
-			$arrCheck = Config::get('addLanguageToUrl') ? $arrPages[$strDomain][$strLanguage] : $arrPages[$strDomain];
+			$arrCheck = \Contao\Config::get('addLanguageToUrl') ? $arrPages[$strDomain][$strLanguage] : $arrPages[$strDomain];
 
 			// Check if there are multiple results for the current domain
 			if (!empty($arrCheck))

@@ -24,7 +24,7 @@ class Config
 
 	/**
 	 * Object instance (Singleton)
-	 * @var \Config
+	 * @var Config
 	 */
 	protected static $objInstance;
 
@@ -98,7 +98,7 @@ class Config
 	/**
 	 * Return the current object instance (Singleton)
 	 *
-	 * @return \Config The object instance
+	 * @return Config The object instance
 	 */
 	public static function getInstance()
 	{
@@ -257,7 +257,7 @@ class Config
 		}
 
 		// Adjust the file permissions (see #8178)
-		$this->Files->chmod('system/tmp/' . $strTemp, \Config::get('defaultFileChmod'));
+		$this->Files->chmod('system/tmp/' . $strTemp, Config::get('defaultFileChmod'));
 
 		// Then move the file to its final destination
 		$this->Files->rename('system/tmp/' . $strTemp, 'system/config/localconfig.php');

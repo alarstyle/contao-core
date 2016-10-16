@@ -206,7 +206,7 @@ class Combiner extends \System
 		$strKey = substr(md5($this->strKey), 0, 12);
 
 		// Do not combine the files in debug mode (see #6450)
-		if (\Config::get('debugMode'))
+		if (Config::get('debugMode'))
 		{
 			$return = array();
 
@@ -289,7 +289,7 @@ class Combiner extends \System
 		$objFile->close();
 
 		// Create a gzipped version
-		if (\Config::get('gzipScripts') && function_exists('gzencode'))
+		if (Config::get('gzipScripts') && function_exists('gzencode'))
 		{
 			\File::putContent('assets/' . $strTarget . '/' . $strKey . $this->strMode . '.gz', gzencode(file_get_contents(TL_ROOT . '/assets/' . $strTarget . '/' . $strKey . $this->strMode), 9));
 		}
@@ -340,7 +340,7 @@ class Combiner extends \System
 				TL_ROOT . '/vendor/contao-components/compass/css'
 			));
 
-			$objCompiler->setFormatter((\Config::get('debugMode') ? 'Leafo\ScssPhp\Formatter\Expanded' : 'Leafo\ScssPhp\Formatter\Compressed'));
+			$objCompiler->setFormatter((Config::get('debugMode') ? 'Leafo\ScssPhp\Formatter\Expanded' : 'Leafo\ScssPhp\Formatter\Compressed'));
 
 			return $this->fixPaths($objCompiler->compile($content), $arrFile);
 		}
@@ -351,7 +351,7 @@ class Combiner extends \System
 			$arrOptions = array
 			(
 				'strictMath' => true,
-				'compress' => !\Config::get('debugMode'),
+				'compress' => !Config::get('debugMode'),
 				'import_dirs' => array(TL_ROOT . '/' . $strPath => $strPath)
 			);
 

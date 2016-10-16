@@ -10,6 +10,8 @@
 
 namespace Contao;
 
+use Contao\Config;
+use Contao\Input;
 
 /**
  * Front end content element "download".
@@ -51,7 +53,7 @@ class ContentDownload extends \ContentElement
 			return '';
 		}
 
-		$allowedDownload = trimsplit(',', strtolower(\Config::get('allowedDownload')));
+		$allowedDownload = trimsplit(',', strtolower(Config::get('allowedDownload')));
 
 		// Return if the file type is not allowed
 		if (!in_array($objFile->extension, $allowedDownload))
@@ -59,7 +61,7 @@ class ContentDownload extends \ContentElement
 			return '';
 		}
 
-		$file = \Input::get('file', true);
+		$file = Input::get('file', true);
 
 		// Send the file to the browser and do not send a 404 header (see #4632)
 		if ($file != '' && $file == $objFile->path)

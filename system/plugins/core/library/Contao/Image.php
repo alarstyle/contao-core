@@ -113,7 +113,7 @@ class Image
 		}
 
 		$this->fileObj = $file;
-		$arrAllowedTypes = trimsplit(',', strtolower(\Config::get('validImageTypes')));
+		$arrAllowedTypes = trimsplit(',', strtolower(Config::get('validImageTypes')));
 
 		// Check the file type
 		if (!in_array($this->fileObj->extension, $arrAllowedTypes))
@@ -442,7 +442,7 @@ class Image
 		}
 
 		// Check whether the image exists already
-		if (!\Config::get('debugMode'))
+		if (!Config::get('debugMode'))
 		{
 			// Custom target (thanks to Tristan Lins) (see #4166)
 			if ($this->getTargetPath() && !$this->getForceOverride())
@@ -490,7 +490,7 @@ class Image
 		}
 
 		$svgNotPossible = ($this->fileObj->isSvgImage && (!extension_loaded('dom') || !$this->fileObj->viewWidth || !$this->fileObj->viewHeight));
-		$gdNotPossible = ($this->fileObj->isGdImage && (!extension_loaded('gd') || $this->fileObj->width > \Config::get('gdMaxImgWidth') || $this->fileObj->height > \Config::get('gdMaxImgHeight') || $this->getTargetWidth() > \Config::get('gdMaxImgWidth') || $this->getTargetHeight() > \Config::get('gdMaxImgHeight')));
+		$gdNotPossible = ($this->fileObj->isGdImage && (!extension_loaded('gd') || $this->fileObj->width > Config::get('gdMaxImgWidth') || $this->fileObj->height > Config::get('gdMaxImgHeight') || $this->getTargetWidth() > Config::get('gdMaxImgWidth') || $this->getTargetHeight() > Config::get('gdMaxImgHeight')));
 
 		// Return the path to the original image if it cannot be handled
 		if (!$this->fileObj->isImage || $svgNotPossible || $gdNotPossible)
@@ -511,9 +511,9 @@ class Image
 		}
 
 		// Set the file permissions when the Safe Mode Hack is used
-		if (\Config::get('useFTP'))
+		if (Config::get('useFTP'))
 		{
-			\Files::getInstance()->chmod($this->getCacheName(), \Config::get('defaultFileChmod'));
+			\Files::getInstance()->chmod($this->getCacheName(), Config::get('defaultFileChmod'));
 		}
 
 		// Resize the original image

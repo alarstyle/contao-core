@@ -125,12 +125,12 @@ class Email
 	 */
 	public function __construct()
 	{
-		$this->strCharset = \Config::get('characterSet');
+		$this->strCharset = Config::get('characterSet');
 
 		// Instantiate mailer
 		if (self::$objMailer === null)
 		{
-			if (!\Config::get('useSMTP'))
+			if (!Config::get('useSMTP'))
 			{
 				// Mail
 				$objTransport = \Swift_MailTransport::newInstance();
@@ -138,18 +138,18 @@ class Email
 			else
 			{
 				// SMTP
-				$objTransport = \Swift_SmtpTransport::newInstance(\Config::get('smtpHost'), \Config::get('smtpPort'));
+				$objTransport = \Swift_SmtpTransport::newInstance(Config::get('smtpHost'), Config::get('smtpPort'));
 
 				// Encryption
-				if (\Config::get('smtpEnc') == 'ssl' || \Config::get('smtpEnc') == 'tls')
+				if (Config::get('smtpEnc') == 'ssl' || Config::get('smtpEnc') == 'tls')
 				{
-					$objTransport->setEncryption(\Config::get('smtpEnc'));
+					$objTransport->setEncryption(Config::get('smtpEnc'));
 				}
 
 				// Authentication
-				if (\Config::get('smtpUser') != '')
+				if (Config::get('smtpUser') != '')
 				{
-					$objTransport->setUsername(\Config::get('smtpUser'))->setPassword(\Config::get('smtpPass'));
+					$objTransport->setUsername(Config::get('smtpUser'))->setPassword(Config::get('smtpPass'));
 				}
 			}
 
@@ -477,7 +477,7 @@ class Email
 		// Add the administrator e-mail as default sender
 		if ($this->strSender == '')
 		{
-			list($this->strSenderName, $this->strSender) = \StringUtil::splitFriendlyEmail(\Config::get('adminEmail'));
+			list($this->strSenderName, $this->strSender) = \StringUtil::splitFriendlyEmail(Config::get('adminEmail'));
 		}
 
 		// Sender

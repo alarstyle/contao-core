@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Input;
 
 /**
  * Front end content element "downloads".
@@ -105,7 +106,7 @@ class ContentDownloads extends \ContentElement
 		$auxDate = array();
 
 		$objFiles = $this->objFiles;
-		$allowedDownload = trimsplit(',', strtolower(\Config::get('allowedDownload')));
+		$allowedDownload = trimsplit(',', strtolower(Config::get('allowedDownload')));
 
 		// Get all files
 		while ($objFiles->next())

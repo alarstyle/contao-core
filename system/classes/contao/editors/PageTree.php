@@ -10,6 +10,7 @@
 
 namespace Contao\Editors;
 
+use Contao\Config;
 
 /**
  * Provide methods to handle input field "page tree".
@@ -173,7 +174,7 @@ class PageTree extends \Contao\Editor
 		}
 
 		// Load the fonts for the drag hint (see #4838)
-		\Config::set('loadGoogleFonts', true);
+		Config::set('loadGoogleFonts', true);
 
 		$return = '<input type="hidden" name="'.$this->strName.'" id="ctrl_'.$this->strId.'" value="'.implode(',', $arrSet).'">' . ($blnHasOrder ? '
   <input type="hidden" name="'.$this->strOrderName.'" id="ctrl_'.$this->strOrderId.'" value="'.$this->{$this->orderField}.'">' : '') . '

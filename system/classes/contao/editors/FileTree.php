@@ -10,6 +10,8 @@
 
 namespace Contao\Editors;
 
+use Contao\Config;
+use Contao\Image;
 
 /**
  * Provide methods to handle input field "file tree".
@@ -139,7 +141,7 @@ class FileTree extends \Contao\Editor
 		if (!empty($this->varValue)) // Can be an array
 		{
 			$objFiles = \FilesModel::findMultipleByUuids((array)$this->varValue);
-			$allowedDownload = trimsplit(',', strtolower(\Config::get('allowedDownload')));
+			$allowedDownload = trimsplit(',', strtolower(Config::get('allowedDownload')));
 
 			if ($objFiles !== null)
 			{
@@ -169,12 +171,12 @@ class FileTree extends \Contao\Editor
 							{
 								$image = 'placeholder.png';
 
-								if (($objFile->isSvgImage || $objFile->height <= \Config::get('gdMaxImgHeight') && $objFile->width <= \Config::get('gdMaxImgWidth')) && $objFile->viewWidth && $objFile->viewHeight)
+								if (($objFile->isSvgImage || $objFile->height <= Config::get('gdMaxImgHeight') && $objFile->width <= Config::get('gdMaxImgWidth')) && $objFile->viewWidth && $objFile->viewHeight)
 								{
-									$image = \Image::get($objFiles->path, 80, 60, 'center_center');
+									$image = Image::get($objFiles->path, 80, 60, 'center_center');
 								}
 
-								$arrValues[$objFiles->uuid] = \Image::getHtml($image, '', 'class="gimage" title="' . specialchars($strInfo) . '"');
+								$arrValues[$objFiles->uuid] = Image::getHtml($image, '', 'class="gimage" title="' . specialchars($strInfo) . '"');
 							}
 							else
 							{
@@ -213,7 +215,7 @@ class FileTree extends \Contao\Editor
 									{
 										$image = 'placeholder.png';
 
-										if (($objFile->isSvgImage || $objFile->height <= \Config::get('gdMaxImgHeight') && $objFile->width <= \Config::get('gdMaxImgWidth')) && $objFile->viewWidth && $objFile->viewHeight)
+										if (($objFile->isSvgImage || $objFile->height <= Config::get('gdMaxImgHeight') && $objFile->width <= Config::get('gdMaxImgWidth')) && $objFile->viewWidth && $objFile->viewHeight)
 										{
 											$image = \Image::get($objSubfiles->path, 80, 60, 'center_center');
 										}
@@ -243,12 +245,12 @@ class FileTree extends \Contao\Editor
 								{
 									$image = 'placeholder.png';
 
-									if (($objFile->isSvgImage || $objFile->height <= \Config::get('gdMaxImgHeight') && $objFile->width <= \Config::get('gdMaxImgWidth')) && $objFile->viewWidth && $objFile->viewHeight)
+									if (($objFile->isSvgImage || $objFile->height <= Config::get('gdMaxImgHeight') && $objFile->width <= Config::get('gdMaxImgWidth')) && $objFile->viewWidth && $objFile->viewHeight)
 									{
-										$image = \Image::get($objFiles->path, 80, 60, 'center_center');
+										$image = Image::get($objFiles->path, 80, 60, 'center_center');
 									}
 
-									$arrValues[$objFiles->uuid] = \Image::getHtml($image, '', 'class="gimage" title="' . specialchars($strInfo) . '"');
+									$arrValues[$objFiles->uuid] = Image::getHtml($image, '', 'class="gimage" title="' . specialchars($strInfo) . '"');
 								}
 							}
 							else
@@ -292,7 +294,7 @@ class FileTree extends \Contao\Editor
 		}
 
 		// Load the fonts for the drag hint (see #4838)
-		\Config::set('loadGoogleFonts', true);
+		Config::set('loadGoogleFonts', true);
 
 		// Convert the binary UUIDs
 		$strSet = implode(',', array_map('StringUtil::binToUuid', $arrSet));
