@@ -30,7 +30,7 @@ class DropZone extends \FileUpload
 		$intMaxSize = round($this->getMaximumUploadSize() / 1024 / 1024);
 
 		// String of accepted file extensions
-		$strAccepted = implode(',', array_map(function($a) { return '.' . $a; }, trimsplit(',', strtolower(\Config::get('uploadTypes')))));
+		$strAccepted = implode(',', array_map(function($a) { return '.' . $a; }, trimsplit(',', strtolower(Config::get('uploadTypes')))));
 
 		// Add the scripts
 		$GLOBALS['TL_CSS'][] = 'assets/dropzone/' . $GLOBALS['TL_ASSETS']['DROPZONE'] . '/css/dropzone.min.css';
@@ -62,6 +62,6 @@ class DropZone extends \FileUpload
       $$("div.tl_formbody_submit").setStyle("display", "none");
     });
   </script>
-  <p class="tl_help tl_tip">' . sprintf($GLOBALS['TL_LANG']['tl_files']['fileupload'][1], \System::getReadableSize($this->getMaximumUploadSize()), \Config::get('gdMaxImgWidth') . 'x' . \Config::get('gdMaxImgHeight')) . '</p>';
+  <p class="tl_help tl_tip">' . sprintf($GLOBALS['TL_LANG']['tl_files']['fileupload'][1], System::getReadableSize($this->getMaximumUploadSize()), Config::get('gdMaxImgWidth') . 'x' . Config::get('gdMaxImgHeight')) . '</p>';
 	}
 }

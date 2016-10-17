@@ -46,7 +46,7 @@ abstract class Frontend extends \Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->import('Database');
+		$this->import('Contao\\Database', 'Database');
 	}
 
 
@@ -83,7 +83,7 @@ abstract class Frontend extends \Controller
 		}
 
 		// Remove the URL suffix if not just a language root (e.g. en/) is requested
-		if ($strRequest != '' && (!\Config::get('addLanguageToUrl') || !preg_match('@^[a-z]{2}(-[A-Z]{2})?/$@', $strRequest)))
+		if ($strRequest != '' && (!Config::get('addLanguageToUrl') || !preg_match('@^[a-z]{2}(-[A-Z]{2})?/$@', $strRequest)))
 		{
 			$intSuffixLength = strlen('/');
 
@@ -100,7 +100,7 @@ abstract class Frontend extends \Controller
 		}
 
 		// Extract the language
-		if (\Config::get('addLanguageToUrl'))
+		if (Config::get('addLanguageToUrl'))
 		{
 			$arrMatches = array();
 
@@ -139,7 +139,7 @@ abstract class Frontend extends \Controller
 		}
 
 		// Add the second fragment as auto_item if the number of fragments is even
-		if (\Config::get('useAutoItem') && count($arrFragments) % 2 == 0)
+		if (Config::get('useAutoItem') && count($arrFragments) % 2 == 0)
 		{
 			array_insert($arrFragments, 1, array('auto_item'));
 		}
@@ -175,7 +175,7 @@ abstract class Frontend extends \Controller
 			}
 
 			// Return false if the request contains an auto_item keyword (duplicate content) (see #4012)
-			if (\Config::get('useAutoItem') && in_array($arrFragments[$i], $GLOBALS['TL_AUTO_ITEM']))
+			if (Config::get('useAutoItem') && in_array($arrFragments[$i], $GLOBALS['TL_AUTO_ITEM']))
 			{
 				return false;
 			}
@@ -221,7 +221,7 @@ abstract class Frontend extends \Controller
 		$host = \Environment::get('host');
 
 		// The language is set in the URL
-		if (\Config::get('addLanguageToUrl') && !empty($_GET['language']))
+		if (Config::get('addLanguageToUrl') && !empty($_GET['language']))
 		{
 			$objRootPage = \PageModel::findFirstPublishedRootByHostAndLanguage($host, \Input::get('language'));
 
@@ -246,14 +246,14 @@ abstract class Frontend extends \Controller
 			if ($objRootPage === null)
 			{
 				header('HTTP/1.1 404 Not Found');
-				\System::log('No root page found (host "' . \Environment::get('host') . '", languages "'.implode(', ', \Environment::get('httpAcceptLanguage')).'")', __METHOD__, TL_ERROR);
+				System::log('No root page found (host "' . Environment::get('host') . '", languages "'.implode(', ', \Environment::get('httpAcceptLanguage')).'")', __METHOD__, TL_ERROR);
 				die_nicely('be_no_root', 'No root page found');
 			}
 
 			// Redirect to the language root (e.g. en/)
-			if (\Config::get('addLanguageToUrl') && !\Config::get('doNotRedirectEmpty') && \Environment::get('request') == '')
+			if (Config::get('addLanguageToUrl') && !Config::get('doNotRedirectEmpty') && Environment::get('request') == '')
 			{
-				static::redirect((!\Config::get('rewriteURL') ? 'index.php/' : '') . $objRootPage->language . '/', 301);
+				static::redirect((!Config::get('rewriteURL') ? 'index.php/' : '') . $objRootPage->language . '/', 301);
 			}
 		}
 
@@ -298,7 +298,7 @@ abstract class Frontend extends \Controller
 		}
 
 		// Unset the language parameter
-		if (\Config::get('addLanguageToUrl'))
+		if (Config::get('addLanguageToUrl'))
 		{
 			unset($arrGet['language']);
 		}
@@ -312,7 +312,7 @@ abstract class Frontend extends \Controller
 		foreach ($arrGet as $k=>$v)
 		{
 			// Omit the key if it is an auto_item key (see #5037)
-			if (\Config::get('useAutoItem') && ($k == 'auto_item' || in_array($k, $GLOBALS['TL_AUTO_ITEM'])))
+			if (Config::get('useAutoItem') && ($k == 'auto_item' || in_array($k, $GLOBALS['TL_AUTO_ITEM'])))
 			{
 				$strParams = $strConnector . urlencode($v) . $strParams;
 			}
@@ -336,12 +336,12 @@ abstract class Frontend extends \Controller
 		$pageLanguage = '';
 
 		// Add the language
-		if (\Config::get('addLanguageToUrl'))
+		if (Config::get('addLanguageToUrl'))
 		{
 			$pageLanguage = $objPage->rootLanguage . '/';
 		}
 
-		return (\Config::get('rewriteURL') ? '' : 'index.php/') . $pageLanguage . $pageId . $strParams . '/';
+		return (Config::get('rewriteURL') ? '' : 'index.php/') . $pageLanguage . $pageId . $strParams . '/';
 	}
 
 
@@ -406,7 +406,7 @@ abstract class Frontend extends \Controller
 			return false;
 		}
 
-		$hash = sha1(session_id() . (!\Config::get('disableIpCheck') ? \Environment::get('ip') : '') . $strCookie);
+		$hash = sha1(session_id() . (!Config::get('disableIpCheck') ? \Environment::get('ip') : '') . $strCookie);
 
 		// Validate the cookie hash
 		if ($cookie == $hash)
@@ -415,7 +415,7 @@ abstract class Frontend extends \Controller
 			$objSession = \SessionModel::findByHashAndName($hash, $strCookie);
 
 			// Validate the session ID and timeout
-			if ($objSession !== null && $objSession->sessionID == session_id() && (\Config::get('disableIpCheck') || $objSession->ip == \Environment::get('ip')) && ($objSession->tstamp + \Config::get('sessionTimeout')) > time())
+			if ($objSession !== null && $objSession->sessionID == session_id() && (Config::get('disableIpCheck') || $objSession->ip == \Environment::get('ip')) && ($objSession->tstamp + Config::get('sessionTimeout')) > time())
 			{
 				// Disable the cache if a back end user is logged in
 				if (TL_MODE == 'FE' && $strCookie == 'BE_USER_AUTH')
@@ -504,7 +504,7 @@ abstract class Frontend extends \Controller
 		}
 
 		$strBuffer = file_get_contents(TL_ROOT . '/' . $strFile);
-		$strBuffer = utf8_convert_encoding($strBuffer, \Config::get('characterSet'));
+		$strBuffer = utf8_convert_encoding($strBuffer, Config::get('characterSet'));
 		$arrBuffer = array_filter(trimsplit('[\n\r]+', $strBuffer));
 
 		foreach ($arrBuffer as $v)

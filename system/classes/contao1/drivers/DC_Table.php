@@ -10,11 +10,16 @@
 
 namespace Contao\Drivers;
 
-use \Contao\Backend;
-use \Contao\BackendTemplate;
-use \Contao\DataContainer;
-use \Contao\Input;
-use \Contao\Pagination;
+use Contao\Backend;
+use Contao\BackendTemplate;
+use Contao\Config;
+use Contao\DataContainer;
+use Contao\Date;
+use Contao\Editor;
+use Contao\Input;
+use Contao\Pagination;
+use Contao\System;
+use Contao\Versions;
 
 
 /**
@@ -328,15 +333,15 @@ class DC_Table extends DataContainer implements \listable, \editable
 		$this->bid = 'tl_buttons';
 
 		// Clean up old tl_undo and tl_log entries
-		if ($this->strTable == 'tl_undo' && strlen(\Config::get('undoPeriod')))
+		if ($this->strTable == 'tl_undo' && strlen(Config::get('undoPeriod')))
 		{
 			$this->Database->prepare("DELETE FROM tl_undo WHERE tstamp<?")
-						   ->execute(intval(time() - \Config::get('undoPeriod')));
+						   ->execute(intval(time() - Config::get('undoPeriod')));
 		}
-		elseif ($this->strTable == 'tl_log' && strlen(\Config::get('logPeriod')))
+		elseif ($this->strTable == 'tl_log' && strlen(Config::get('logPeriod')))
 		{
 			$this->Database->prepare("DELETE FROM tl_log WHERE tstamp<?")
-						   ->execute(intval(time() - \Config::get('logPeriod')));
+						   ->execute(intval(time() - Config::get('logPeriod')));
 		}
 
 		$this->reviseTable();
@@ -515,15 +520,15 @@ class DC_Table extends DataContainer implements \listable, \editable
 			}
 			elseif ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$i]['eval']['rgxp'] == 'date')
 			{
-				$row[$i] = $value ? \Date::parse(\Config::get('dateFormat'), $value) : '-';
+				$row[$i] = $value ? \Date::parse(Config::get('dateFormat'), $value) : '-';
 			}
 			elseif ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$i]['eval']['rgxp'] == 'time')
 			{
-				$row[$i] = $value ? \Date::parse(\Config::get('timeFormat'), $value) : '-';
+				$row[$i] = $value ? \Date::parse(Config::get('timeFormat'), $value) : '-';
 			}
 			elseif ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$i]['eval']['rgxp'] == 'datim' || in_array($GLOBALS['TL_DCA'][$this->strTable]['fields'][$i]['flag'], array(5, 6, 7, 8, 9, 10)) || $i == 'tstamp')
 			{
-				$row[$i] = $value ? \Date::parse(\Config::get('datimFormat'), $value) : '-';
+				$row[$i] = $value ? \Date::parse(Config::get('datimFormat'), $value) : '-';
 			}
 			elseif ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$i]['inputType'] == 'checkbox' && !$GLOBALS['TL_DCA'][$this->strTable]['fields'][$i]['eval']['multiple'])
 			{
@@ -1516,7 +1521,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 			}
 		}
 
-		$this->import('\Contao\BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 
 		$objUndoStmt = $this->Database->prepare("INSERT INTO tl_undo (pid, tstamp, fromTable, query, affectedRows, data) VALUES (?, ?, ?, ?, ?, ?)")
 									  ->execute($this->User->id, time(), $this->strTable, 'DELETE FROM '.$this->strTable.' WHERE id='.$this->intId, $affected, serialize($data));
@@ -2197,7 +2202,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 		}
 
 		$return = '';
-		$this->import('\Contao\BackendUser', 'User');
+		$this->import('Contao\\BackendUser', 'User');
 
 		// Get current IDs from session
 		$session = $this->Session->getData();
@@ -2544,7 +2549,7 @@ class DC_Table extends DataContainer implements \listable, \editable
   <legend'.($blnIsError ? ' class="error"' : '').'>'.$GLOBALS['TL_LANG']['MSC']['all_fields'][0].'</legend>
   <input type="checkbox" id="check_all" class="tl_checkbox" onclick="Backend.toggleCheckboxes(this)"> <label for="check_all" style="color:#a6a6a6"><em>'.$GLOBALS['TL_LANG']['MSC']['selectAll'].'</em></label><br>'.$options.'
 </fieldset>'.($blnIsError ? '
-<p class="tl_error">'.$GLOBALS['TL_LANG']['ERR']['all_fields'].'</p>' : ((\Config::get('showHelp') && strlen($GLOBALS['TL_LANG']['MSC']['all_fields'][1])) ? '
+<p class="tl_error">'.$GLOBALS['TL_LANG']['ERR']['all_fields'].'</p>' : ((Config::get('showHelp') && strlen($GLOBALS['TL_LANG']['MSC']['all_fields'][1])) ? '
 <p class="tl_help tl_tip">'.$GLOBALS['TL_LANG']['MSC']['all_fields'][1].'</p>' : '')).'
 </div>
 
@@ -2853,7 +2858,7 @@ class DC_Table extends DataContainer implements \listable, \editable
   <legend'.($blnIsError ? ' class="error"' : '').'>'.$GLOBALS['TL_LANG']['MSC']['all_fields'][0].'</legend>
   <input type="checkbox" id="check_all" class="tl_checkbox" onclick="Backend.toggleCheckboxes(this)"> <label for="check_all" style="color:#a6a6a6"><em>'.$GLOBALS['TL_LANG']['MSC']['selectAll'].'</em></label><br>'.$options.'
 </fieldset>'.($blnIsError ? '
-<p class="tl_error">'.$GLOBALS['TL_LANG']['ERR']['all_fields'].'</p>' : ((\Config::get('showHelp') && strlen($GLOBALS['TL_LANG']['MSC']['all_fields'][1])) ? '
+<p class="tl_error">'.$GLOBALS['TL_LANG']['ERR']['all_fields'].'</p>' : ((Config::get('showHelp') && strlen($GLOBALS['TL_LANG']['MSC']['all_fields'][1])) ? '
 <p class="tl_help tl_tip">'.$GLOBALS['TL_LANG']['MSC']['all_fields'][1].'</p>' : '')).'
 </div>
 
@@ -3311,7 +3316,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 		}
 
 		// Load the fonts to display the paste hint
-		\Config::set('loadGoogleFonts', $blnClipboard);
+		Config::set('loadGoogleFonts', $blnClipboard);
 
 		$label = $GLOBALS['TL_DCA'][$table]['config']['label'];
 		$icon = $GLOBALS['TL_DCA'][$table]['list']['sorting']['icon'] ?: 'pagemounts.gif';
@@ -3344,7 +3349,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 			{
 				$strPattern = "CAST(%s AS CHAR) REGEXP ?";
 
-				if (substr(\Config::get('dbCollation'), -3) == '_ci')
+				if (substr(Config::get('dbCollation'), -3) == '_ci')
 				{
 					$strPattern = "LOWER(CAST(%s AS CHAR)) REGEXP LOWER(?)";
 				}
@@ -3706,7 +3711,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 			}
 			elseif (in_array($GLOBALS['TL_DCA'][$table]['fields'][$v]['flag'], array(5, 6, 7, 8, 9, 10)))
 			{
-				$args[$k] = \Date::parse(\Config::get('datimFormat'), $objRow->$v);
+				$args[$k] = Date::parse(Config::get('datimFormat'), $objRow->$v);
 			}
 			elseif ($GLOBALS['TL_DCA'][$table]['fields'][$v]['inputType'] == 'checkbox' && !$GLOBALS['TL_DCA'][$table]['fields'][$v]['eval']['multiple'])
 			{
@@ -3874,14 +3879,14 @@ class DC_Table extends DataContainer implements \listable, \editable
 		}
 
 		// Load the fonts to display the paste hint
-		\Config::set('loadGoogleFonts', $blnClipboard);
+		Config::set('loadGoogleFonts', $blnClipboard);
 
 		// Load the language file and data container array of the parent table
-		\System::loadLanguageFile($this->ptable);
+		System::loadLanguageFile($this->ptable);
 		$this->loadDataContainer($this->ptable);
 
 		$return = '
-<div id="tl_buttons">' . (\Input::get('nb') ? '&nbsp;' : ($this->ptable ? '
+<div id="tl_buttons">' . (Input::get('nb') ? '&nbsp;' : ($this->ptable ? '
 <a href="'.$this->getReferer(true, $this->ptable).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b" onclick="">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>' : (isset($GLOBALS['TL_DCA'][$this->strTable]['config']['backlink']) ? '
 <a href="contao/main.php?'.$GLOBALS['TL_DCA'][$this->strTable]['config']['backlink'].'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b" onclick="">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>' : ''))) . ' ' . ((\Input::get('act') != 'select' && !$blnClipboard && !$GLOBALS['TL_DCA'][$this->strTable]['config']['closed'] && !$GLOBALS['TL_DCA'][$this->strTable]['config']['notCreatable']) ? '
 <a href="'.$this->addToUrl(($blnHasSorting ? 'act=paste&amp;mode=create' : 'act=create&amp;mode=2&amp;pid='.$this->intId)).'" class="header_new" title="'.specialchars($GLOBALS['TL_LANG'][$this->strTable]['new'][1]).'" accesskey="n" onclick="">'.$GLOBALS['TL_LANG'][$this->strTable]['new'][0].'</a> ' : '') . ($blnClipboard ? '
@@ -3916,7 +3921,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 		// List all records of the child table
 		if (!\Input::get('act') || \Input::get('act') == 'paste' || \Input::get('act') == 'select')
 		{
-			$this->import('\Contao\BackendUser', 'User');
+			$this->import('Contao\\BackendUser', 'User');
 
 			// Header
 			$imagePasteNew = \Image::getHtml('new.gif', $GLOBALS['TL_LANG'][$this->strTable]['pastenew'][0]);
@@ -3958,15 +3963,15 @@ class DC_Table extends DataContainer implements \listable, \editable
 				}
 				elseif ($GLOBALS['TL_DCA'][$this->ptable]['fields'][$v]['eval']['rgxp'] == 'date')
 				{
-					$_v = $_v ? \Date::parse(\Config::get('dateFormat'), $_v) : '-';
+					$_v = $_v ? Date::parse(Config::get('dateFormat'), $_v) : '-';
 				}
 				elseif ($GLOBALS['TL_DCA'][$this->ptable]['fields'][$v]['eval']['rgxp'] == 'time')
 				{
-					$_v = $_v ? \Date::parse(\Config::get('timeFormat'), $_v) : '-';
+					$_v = $_v ? Date::parse(Config::get('timeFormat'), $_v) : '-';
 				}
 				elseif ($GLOBALS['TL_DCA'][$this->ptable]['fields'][$v]['eval']['rgxp'] == 'datim')
 				{
-					$_v = $_v ? \Date::parse(\Config::get('datimFormat'), $_v) : '-';
+					$_v = $_v ? Date::parse(Config::get('datimFormat'), $_v) : '-';
 				}
 				elseif ($v == 'tstamp')
 				{
@@ -3989,7 +3994,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 						$objMaxTstamp->tstamp = $objParent->tstamp;
 					}
 
-					$_v = \Date::parse(\Config::get('datimFormat'), max($objParent->tstamp, $objMaxTstamp->tstamp));
+					$_v = Date::parse(Config::get('datimFormat'), max($objParent->tstamp, $objMaxTstamp->tstamp));
 				}
 				elseif (isset($GLOBALS['TL_DCA'][$this->ptable]['fields'][$v]['foreignKey']))
 				{
@@ -4587,15 +4592,15 @@ class DC_Table extends DataContainer implements \listable, \editable
 					{
 						if ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$v]['eval']['rgxp'] == 'date')
 						{
-							$args[$k] = $row[$v] ? \Date::parse(\Config::get('dateFormat'), $row[$v]) : '-';
+							$args[$k] = $row[$v] ? Date::parse(Config::get('dateFormat'), $row[$v]) : '-';
 						}
 						elseif ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$v]['eval']['rgxp'] == 'time')
 						{
-							$args[$k] = $row[$v] ? \Date::parse(\Config::get('timeFormat'), $row[$v]) : '-';
+							$args[$k] = $row[$v] ? Date::parse(Config::get('timeFormat'), $row[$v]) : '-';
 						}
 						else
 						{
-							$args[$k] = $row[$v] ? \Date::parse(\Config::get('datimFormat'), $row[$v]) : '-';
+							$args[$k] = $row[$v] ? Date::parse(Config::get('datimFormat'), $row[$v]) : '-';
 						}
 					}
 					elseif ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$v]['inputType'] == 'checkbox' && !$GLOBALS['TL_DCA'][$this->strTable]['fields'][$v]['eval']['multiple'])
@@ -4952,7 +4957,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 		{
 			$strPattern = "CAST(%s AS CHAR) REGEXP ?";
 
-			if (substr(\Config::get('dbCollation'), -3) == '_ci')
+			if (substr(Config::get('dbCollation'), -3) == '_ci')
 			{
 				$strPattern = "LOWER(CAST(%s AS CHAR)) REGEXP LOWER(?)";
 			}
@@ -5134,7 +5139,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 		// Set limit from table configuration
 		else
 		{
-			$this->limit = ($session['filter'][$filter]['limit'] != '') ? (($session['filter'][$filter]['limit'] == 'all') ? null : $session['filter'][$filter]['limit']) : '0,' . \Config::get('resultsPerPage');
+			$this->limit = ($session['filter'][$filter]['limit'] != '') ? (($session['filter'][$filter]['limit'] == 'all') ? null : $session['filter'][$filter]['limit']) : '0,' . Config::get('resultsPerPage');
 
 			$arrProcedure = $this->procedure;
 			$arrValues = $this->values;
@@ -5163,16 +5168,16 @@ class DC_Table extends DataContainer implements \listable, \editable
 			$blnIsMaxResultsPerPage = false;
 
 			// Overall limit
-			if ($this->total > \Config::get('maxResultsPerPage') && ($this->limit === null || preg_replace('/^.*,/', '', $this->limit) == \Config::get('maxResultsPerPage')))
+			if ($this->total > Config::get('maxResultsPerPage') && ($this->limit === null || preg_replace('/^.*,/', '', $this->limit) == Config::get('maxResultsPerPage')))
 			{
 				if ($this->limit === null)
 				{
-					$this->limit = '0,' . \Config::get('maxResultsPerPage');
+					$this->limit = '0,' . Config::get('maxResultsPerPage');
 				}
 
 				$blnIsMaxResultsPerPage = true;
-				\Config::set('resultsPerPage', \Config::get('maxResultsPerPage'));
-				$session['filter'][$filter]['limit'] = \Config::get('maxResultsPerPage');
+				Config::set('resultsPerPage', Config::get('maxResultsPerPage'));
+				$session['filter'][$filter]['limit'] = Config::get('maxResultsPerPage');
 			}
 
 			$options = '';
@@ -5181,19 +5186,19 @@ class DC_Table extends DataContainer implements \listable, \editable
 			if ($this->total > 0)
 			{
 				$options = '';
-				$options_total = ceil($this->total / \Config::get('resultsPerPage'));
+				$options_total = ceil($this->total / Config::get('resultsPerPage'));
 
 				// Reset limit if other parameters have decreased the number of results
 				if ($this->limit !== null && ($this->limit == '' || preg_replace('/,.*$/', '', $this->limit) > $this->total))
 				{
-					$this->limit = '0,'.\Config::get('resultsPerPage');
+					$this->limit = '0,'.Config::get('resultsPerPage');
 				}
 
 				// Build options
 				for ($i=0; $i<$options_total; $i++)
 				{
-					$this_limit = ($i*\Config::get('resultsPerPage')).','.\Config::get('resultsPerPage');
-					$upper_limit = ($i*\Config::get('resultsPerPage')+\Config::get('resultsPerPage'));
+					$this_limit = ($i*Config::get('resultsPerPage')).','.Config::get('resultsPerPage');
+					$upper_limit = ($i*Config::get('resultsPerPage')+Config::get('resultsPerPage'));
 
 					if ($upper_limit > $this->total)
 					{
@@ -5201,13 +5206,13 @@ class DC_Table extends DataContainer implements \listable, \editable
 					}
 
 					$options .= '
-  <option value="'.$this_limit.'"' . \Editor::optionSelected($this->limit, $this_limit) . '>'.($i*\Config::get('resultsPerPage')+1).' - '.$upper_limit.'</option>';
+  <option value="'.$this_limit.'"' . Editor::optionSelected($this->limit, $this_limit) . '>'.($i*Config::get('resultsPerPage')+1).' - '.$upper_limit.'</option>';
 				}
 
 				if (!$blnIsMaxResultsPerPage)
 				{
 					$options .= '
-  <option value="all"' . \Editor::optionSelected($this->limit, null) . '>'.$GLOBALS['TL_LANG']['MSC']['filterAll'].'</option>';
+  <option value="all"' . Editor::optionSelected($this->limit, null) . '>'.$GLOBALS['TL_LANG']['MSC']['filterAll'].'</option>';
 				}
 			}
 
@@ -5218,7 +5223,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 			}
 
 			$fields = '
-<select name="tl_limit" class="tl_select' . (($session['filter'][$filter]['limit'] != 'all' && $this->total > \Config::get('resultsPerPage')) ? ' active' : '') . '" onchange="this.form.submit()">
+<select name="tl_limit" class="tl_select' . (($session['filter'][$filter]['limit'] != 'all' && $this->total > Config::get('resultsPerPage')) ? ' active' : '') . '" onchange="this.form.submit()">
   <option value="tl_limit">'.$GLOBALS['TL_LANG']['MSC']['filterRecords'].'</option>'.$options.'
 </select> ';
 		}
@@ -5420,7 +5425,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 						}
 						else
 						{
-							$options[$v] = \Date::parse(\Config::get('dateFormat'), $v);
+							$options[$v] = Date::parse(Config::get('dateFormat'), $v);
 						}
 
 						unset($options[$k]);
@@ -5717,7 +5722,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 		}
 		elseif (in_array($mode, array(5, 6)))
 		{
-			$remoteNew = ($value != '') ? \Date::parse(\Config::get('dateFormat'), $value) : '-';
+			$remoteNew = ($value != '') ? Date::parse(Config::get('dateFormat'), $value) : '-';
 		}
 		elseif (in_array($mode, array(7, 8)))
 		{

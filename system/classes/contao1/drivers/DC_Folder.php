@@ -10,7 +10,9 @@
 
 namespace Contao\Drivers;
 
+use Contao\Config;
 use Contao\DataContainer;
+use Contao\Versions;
 
 
 /**
@@ -281,7 +283,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 			// Expand tree
 			if (!is_array($session['filetree']) || empty($session['filetree']) || current($session['filetree']) != 1)
 			{
-				$session['filetree'] = $this->getMD5Folders(\Config::get('uploadPath'));
+				$session['filetree'] = $this->getMD5Folders(Config::get('uploadPath'));
 			}
 			// Collapse tree
 			else
@@ -304,15 +306,15 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		}
 
 		// Load the fonts to display the paste hint
-		\Config::set('loadGoogleFonts', $blnClipboard);
+		Config::set('loadGoogleFonts', $blnClipboard);
 
-		$this->import('Files');
+		$this->import('Contao\\Files', 'Files');
 		$this->import('Contao\\BackendUser', 'User');
 
 		// Call recursive function tree()
 		if (empty($this->arrFilemounts) && !is_array($GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['root']) && $GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['root'] !== false)
 		{
-			$return .= $this->generateTree(TL_ROOT . '/' . \Config::get('uploadPath'), 0, false, false, ($blnClipboard ? $arrClipboard : false));
+			$return .= $this->generateTree(TL_ROOT . '/' . Config::get('uploadPath'), 0, false, false, ($blnClipboard ? $arrClipboard : false));
 		}
 		else
 		{
@@ -366,7 +368,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 </div>' : '').'
 
 <ul class="tl_listing">
-  <li class="tl_folder_top"><div class="tl_left">'.\Image::getHtml('filemounts.gif').' '.$GLOBALS['TL_LANG']['MSC']['filetree'].'</div> <div class="tl_right">'.(($blnClipboard && empty($this->arrFilemounts) && !is_array($GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['root']) && $GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['root'] !== false) ? '<a href="'.$this->addToUrl('&amp;act='.$arrClipboard['mode'].'&amp;mode=2&amp;pid='.\Config::get('uploadPath').(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars($GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][1]).'" onclick="">'.$imagePasteInto.'</a>' : '&nbsp;').'</div><div style="clear:both"></div></li>'.$return.'
+  <li class="tl_folder_top"><div class="tl_left">'.\Image::getHtml('filemounts.gif').' '.$GLOBALS['TL_LANG']['MSC']['filetree'].'</div> <div class="tl_right">'.(($blnClipboard && empty($this->arrFilemounts) && !is_array($GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['root']) && $GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['root'] !== false) ? '<a href="'.$this->addToUrl('&amp;act='.$arrClipboard['mode'].'&amp;mode=2&amp;pid='.Config::get('uploadPath').(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars($GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][1]).'" onclick="">'.$imagePasteInto.'</a>' : '&nbsp;').'</div><div style="clear:both"></div></li>'.$return.'
 </ul>
 
 </div>';
@@ -453,7 +455,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 			$this->redirect('contao/main.php?act=error');
 		}
 
-		$this->import('Files');
+		$this->import('Contao\\Files', 'Files');
 		$strFolder = \Input::get('pid', true);
 
 		if ($strFolder == '' || !file_exists(TL_ROOT . '/' . $strFolder) || !$this->isMounted($strFolder))
@@ -519,7 +521,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		$arrClipboard[$this->strTable] = array();
 		$this->Session->set('CLIPBOARD', $arrClipboard);
 
-		$this->import('Files');
+		$this->import('Contao\\Files', 'Files');
 
 		// Calculate the destination path
 		$destination = str_replace(dirname($source), $strFolder, $source);
@@ -667,7 +669,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		$arrClipboard[$this->strTable] = array();
 		$this->Session->set('CLIPBOARD', $arrClipboard);
 
-		$this->import('Files');
+		$this->import('Contao\\Files', 'Files');
 
 		// Copy folders
 		if (is_dir(TL_ROOT . '/' . $source))
@@ -823,7 +825,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 			}
 		}
 
-		$this->import('Files');
+		$this->import('Contao\\Files', 'Files');
 
 		// Delete the folder or file
 		if (is_dir(TL_ROOT . '/' . $source))
@@ -906,7 +908,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 			$this->redirect('contao/main.php?act=error');
 		}
 
-		if (!preg_match('/^'.preg_quote(\Config::get('uploadPath'), '/').'/i', $strFolder))
+		if (!preg_match('/^'.preg_quote(Config::get('uploadPath'), '/').'/i', $strFolder))
 		{
 			$this->log('Parent folder "'.$strFolder.'" is not within the files directory', __METHOD__, TL_ERROR);
 			$this->redirect('contao/main.php?act=error');
@@ -1041,7 +1043,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_upload">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">
-<input type="hidden" name="MAX_FILE_SIZE" value="'.\Config::get('maxFileSize').'">
+<input type="hidden" name="MAX_FILE_SIZE" value="'.Config::get('maxFileSize').'">
 
 <div class="tl_tbox">
   <h3>'.$GLOBALS['TL_LANG'][$this->strTable]['fileupload'][0].'</h3>'.$objUploader->generateMarkup().'
@@ -1656,7 +1658,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
   <legend'.($blnIsError ? ' class="error"' : '').'>'.$GLOBALS['TL_LANG']['MSC']['all_fields'][0].'</legend>
   <input type="checkbox" id="check_all" class="tl_checkbox" onclick="Backend.toggleCheckboxes(this)"> <label for="check_all" style="color:#a6a6a6"><em>'.$GLOBALS['TL_LANG']['MSC']['selectAll'].'</em></label><br>'.$options.'
 </fieldset>'.($blnIsError ? '
-<p class="tl_error">'.$GLOBALS['TL_LANG']['ERR']['all_fields'].'</p>' : ((\Config::get('showHelp') && strlen($GLOBALS['TL_LANG']['MSC']['all_fields'][1])) ? '
+<p class="tl_error">'.$GLOBALS['TL_LANG']['ERR']['all_fields'].'</p>' : ((Config::get('showHelp') && strlen($GLOBALS['TL_LANG']['MSC']['all_fields'][1])) ? '
 <p class="tl_help tl_tip">'.$GLOBALS['TL_LANG']['MSC']['all_fields'][1].'</p>' : '')).'
 </div>
 
@@ -1712,7 +1714,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		$objFile = new \File($this->intId, true);
 
 		// Check whether file type is editable
-		if (!in_array($objFile->extension, trimsplit(',', strtolower(\Config::get('editableFiles')))))
+		if (!in_array($objFile->extension, trimsplit(',', strtolower(Config::get('editableFiles')))))
 		{
 			$this->log('File type "'.$objFile->extension.'" ('.$this->intId.') is not allowed to be edited', __METHOD__, TL_ERROR);
 			$this->redirect('contao/main.php?act=error');
@@ -1749,7 +1751,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 					// Purge the script cache (see #7005)
 					if ($objFile->extension == 'css' || $objFile->extension == 'scss' || $objFile->extension == 'less')
 					{
-						$this->import('Automator');
+						$this->import('Contao\\Automator', 'Automator');
 						$this->Automator->purgeScriptCache();
 					}
 
@@ -1798,7 +1800,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 				// Purge the script cache (see #7005)
 				if ($objFile->extension == 'css' || $objFile->extension == 'scss' || $objFile->extension == 'less')
 				{
-					$this->import('Automator');
+					$this->import('Contao\\Automator', 'Automator');
 					$this->Automator->purgeScriptCache();
 				}
 			}
@@ -1815,7 +1817,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		$codeEditor = '';
 
 		// Prepare the code editor
-		if (\Config::get('useCE'))
+		if (Config::get('useCE'))
 		{
 			$selector = 'ctrl_source';
 			$type = $objFile->extension;
@@ -1873,7 +1875,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">
 <div class="tl_tbox">
   <h3><label for="ctrl_source">'.$GLOBALS['TL_LANG']['tl_files']['editor'][0].'</label></h3>
-  <textarea name="source" id="ctrl_source" class="tl_textarea monospace" rows="12" cols="80" style="height:400px" onfocus="">' . "\n" . htmlspecialchars($strContent) . '</textarea>' . ((\Config::get('showHelp') && strlen($GLOBALS['TL_LANG']['tl_files']['editor'][1])) ? '
+  <textarea name="source" id="ctrl_source" class="tl_textarea monospace" rows="12" cols="80" style="height:400px" onfocus="">' . "\n" . htmlspecialchars($strContent) . '</textarea>' . ((Config::get('showHelp') && strlen($GLOBALS['TL_LANG']['tl_files']['editor'][1])) ? '
   <p class="tl_help tl_tip">'.$GLOBALS['TL_LANG']['tl_files']['editor'][1].'</p>' : '') . '
 </div>
 </div>
@@ -1943,7 +1945,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 				return;
 			}
 
-			$this->import('Files');
+			$this->import('Contao\\Files', 'Files');
 			$varValue = utf8_romanize($varValue);
 
 			// Trigger the save_callback
@@ -1969,7 +1971,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 				throw new \Exception(sprintf($GLOBALS['TL_LANG']['ERR']['fileExists'], $varValue));
 			}
 
-			$arrImageTypes = trimsplit(',', strtolower(\Config::get('validImageTypes')));
+			$arrImageTypes = trimsplit(',', strtolower(Config::get('validImageTypes')));
 
 			// Remove potentially existing thumbnails (see #6641)
 			if (in_array(substr($this->strExtension, 1), $arrImageTypes))
@@ -2286,7 +2288,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 			$strPath = dirname($strPath);
 		}
 
-		$this->import('Files');
+		$this->import('Contao\\Files', 'Files');
 		$this->import('Contao\\BackendUser', 'User');
 
 		return $this->generateTree(TL_ROOT.'/'.$strFolder, ($level * 20), false, $blnProtected, ($blnClipboard ? $arrClipboard : false));
@@ -2400,7 +2402,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 			$folderImg = $protected ? 'folderCP.gif' : 'folderC.gif';
 
 			// Add the current folder
-			$strFolderNameEncoded = utf8_convert_encoding(specialchars(basename($currentFolder)), \Config::get('characterSet'));
+			$strFolderNameEncoded = utf8_convert_encoding(specialchars(basename($currentFolder)), Config::get('characterSet'));
 			$return .= \Image::getHtml($folderImg, '').' <a href="' . $this->addToUrl('fn='.$currentEncoded) . '" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['selectNode']).'"><strong>'.$strFolderNameEncoded.'</strong></a></div> <div class="tl_right">';
 
 			// Paste buttons
@@ -2478,7 +2480,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 						$popupHeight = 625 / $objFile->viewWidth * $objFile->viewHeight + 210;
 					}
 
-					if (\Config::get('thumbnails') && ($objFile->isSvgImage || $objFile->height <= \Config::get('gdMaxImgHeight') && $objFile->width <= \Config::get('gdMaxImgWidth')))
+					if (Config::get('thumbnails') && ($objFile->isSvgImage || $objFile->height <= Config::get('gdMaxImgHeight') && $objFile->width <= Config::get('gdMaxImgWidth')))
 					{
 						$thumbnail .= '<br>' . \Image::getHtml(\Image::get($currentEncoded, 400, (($objFile->height && $objFile->height < 50) ? $objFile->height : 50), 'box'), '', 'style="margin:0 0 2px -19px"');
 					}
@@ -2489,7 +2491,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 				}
 			}
 
-			$strFileNameEncoded = utf8_convert_encoding(specialchars(basename($currentFile)), \Config::get('characterSet'));
+			$strFileNameEncoded = utf8_convert_encoding(specialchars(basename($currentFile)), Config::get('characterSet'));
 
 			// No popup links for templates and in the popup file manager
 			if ($this->strTable == 'tl_templates' || \Input::get('popup'))
@@ -2589,14 +2591,14 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		}
 
 		// Check whether the file is within the files directory
-		if (!preg_match('/^'.preg_quote(\Config::get('uploadPath'), '/').'/i', $strFile))
+		if (!preg_match('/^'.preg_quote(Config::get('uploadPath'), '/').'/i', $strFile))
 		{
 			$this->log('File or folder "'.$strFile.'" is not within the files directory', __METHOD__, TL_ERROR);
 			$this->redirect('contao/main.php?act=error');
 		}
 
 		// Check whether the parent folder is within the files directory
-		if ($strFolder && !preg_match('/^'.preg_quote(\Config::get('uploadPath'), '/').'/i', $strFolder))
+		if ($strFolder && !preg_match('/^'.preg_quote(Config::get('uploadPath'), '/').'/i', $strFolder))
 		{
 			$this->log('Parent folder "'.$strFolder.'" is not within the files directory', __METHOD__, TL_ERROR);
 			$this->redirect('contao/main.php?act=error');

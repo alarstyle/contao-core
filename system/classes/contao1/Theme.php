@@ -121,7 +121,7 @@ class Theme extends Backend
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_theme_import">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">
-<input type="hidden" name="MAX_FILE_SIZE" value="'.\Config::get('maxFileSize').'">
+<input type="hidden" name="MAX_FILE_SIZE" value="'.Config::get('maxFileSize').'">
 
 <div class="tl_tbox">
   <h3>'.$GLOBALS['TL_LANG']['tl_theme']['source'][0].'</h3>'.$objUploader->generateMarkup().(isset($GLOBALS['TL_LANG']['tl_theme']['source'][1]) ? '
@@ -665,7 +665,7 @@ class Theme extends Backend
 			$this->Database->unlockTables();
 
 			// Update the style sheets
-			$this->import('StyleSheets');
+			$this->import('Contao\\StyleSheets', 'StyleSheets');
 			$this->StyleSheets->updateStyleSheets();
 
 			// Notify the user
@@ -769,7 +769,7 @@ class Theme extends Backend
 	 * @param \DOMNode|\DOMElement    $tables
 	 * @param \Database\Result|object $objTheme
 	 */
-	protected function addTableTlTheme(\DOMDocument $xml, \DOMNode $tables, \Database\Result $objTheme)
+	protected function addTableTlTheme(\DOMDocument $xml, \DOMNode $tables, \Contao\Database\Result $objTheme)
 	{
 		// Add the table
 		$table = $xml->createElement('table');
@@ -795,7 +795,7 @@ class Theme extends Backend
 	 * @param \DOMNode|\DOMElement    $tables
 	 * @param \Database\Result|object $objTheme
 	 */
-	protected function addTableTlStyleSheet(\DOMDocument $xml, \DOMNode $tables, \Database\Result $objTheme)
+	protected function addTableTlStyleSheet(\DOMDocument $xml, \DOMNode $tables, \Contao\Database\Result $objTheme)
 	{
 		// Add the table
 		$table = $xml->createElement('table');
@@ -856,7 +856,7 @@ class Theme extends Backend
 	 * @param \DOMNode|\DOMElement    $tables
 	 * @param \Database\Result|object $objTheme
 	 */
-	protected function addTableTlModule(\DOMDocument $xml, \DOMNode $tables, \Database\Result $objTheme)
+	protected function addTableTlModule(\DOMDocument $xml, \DOMNode $tables, \Contao\Database\Result $objTheme)
 	{
 		// Add the table
 		$table = $xml->createElement('table');
@@ -889,7 +889,7 @@ class Theme extends Backend
 	 * @param \DOMNode|\DOMElement    $tables
 	 * @param \Database\Result|object $objTheme
 	 */
-	protected function addTableTlLayout(\DOMDocument $xml, \DOMNode $tables, \Database\Result $objTheme)
+	protected function addTableTlLayout(\DOMDocument $xml, \DOMNode $tables, \Contao\Database\Result $objTheme)
 	{
 		// Add the table
 		$table = $xml->createElement('table');
@@ -922,7 +922,7 @@ class Theme extends Backend
 	 * @param \DOMNode|\DOMElement    $tables
 	 * @param \Database\Result|object $objTheme
 	 */
-	protected function addTableTlImageSize(\DOMDocument $xml, \DOMNode $tables, \Database\Result $objTheme)
+	protected function addTableTlImageSize(\DOMDocument $xml, \DOMNode $tables, \Contao\Database\Result $objTheme)
 	{
 		// Add the tables
 		$imageSizeTable = $xml->createElement('table');
@@ -962,7 +962,7 @@ class Theme extends Backend
 	 * @param \Database\Result|object $objTheme
 	 * @param \ZipWriter              $objArchive
 	 */
-	protected function addTableTlFiles(\DOMDocument $xml, \DOMElement $tables, \Database\Result $objTheme, \ZipWriter $objArchive)
+	protected function addTableTlFiles(\DOMDocument $xml, \DOMElement $tables, \Contao\Database\Result $objTheme, \ZipWriter $objArchive)
 	{
 		// Add the table
 		$table = $xml->createElement('table');
@@ -1085,18 +1085,18 @@ class Theme extends Backend
 	protected function addFolderToArchive(\ZipWriter $objArchive, $strFolder, \DOMDocument $xml, \DOMElement $table, array $arrOrder=array())
 	{
 		// Strip the custom upload folder name
-		$strFolder = preg_replace('@^'.preg_quote(\Config::get('uploadPath'), '@').'/@', '', $strFolder);
+		$strFolder = preg_replace('@^'.preg_quote(Config::get('uploadPath'), '@').'/@', '', $strFolder);
 
 		// Add the default upload folder name
 		if ($strFolder == '')
 		{
 			$strTarget = 'files';
-			$strFolder = \Config::get('uploadPath');
+			$strFolder = Config::get('uploadPath');
 		}
 		else
 		{
 			$strTarget = 'files/' . $strFolder;
-			$strFolder = \Config::get('uploadPath') .'/'. $strFolder;
+			$strFolder = Config::get('uploadPath') .'/'. $strFolder;
 		}
 
 		if (\Validator::isInsecurePath($strFolder))
@@ -1185,7 +1185,7 @@ class Theme extends Backend
 			return;
 		}
 
-		$arrAllowed = trimsplit(',', strtolower(\Config::get('templateFiles')));
+		$arrAllowed = trimsplit(',', strtolower(Config::get('templateFiles')));
 		array_push($arrAllowed, 'sql'); // see #7048
 
 		// Add all template files to the archive
@@ -1213,7 +1213,7 @@ class Theme extends Backend
 			return '';
 		}
 
-		return preg_replace('@^(tl_)?files/@', \Config::get('uploadPath') . '/', $strPath);
+		return preg_replace('@^(tl_)?files/@', Config::get('uploadPath') . '/', $strPath);
 	}
 
 
@@ -1231,6 +1231,6 @@ class Theme extends Backend
 			return '';
 		}
 
-		return preg_replace('@^' . preg_quote(\Config::get('uploadPath'), '@') . '/@', 'files/', $strPath);
+		return preg_replace('@^' . preg_quote(Config::get('uploadPath'), '@') . '/@', 'files/', $strPath);
 	}
 }

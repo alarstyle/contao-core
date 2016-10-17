@@ -156,23 +156,23 @@ class FileUpload extends Backend
 				$strExtension = strtolower(substr($file['name'], strrpos($file['name'], '.') + 1));
 
 				// File type not allowed
-				if (!in_array($strExtension, trimsplit(',', strtolower(\Config::get('uploadTypes')))))
+				if (!in_array($strExtension, trimsplit(',', strtolower(Config::get('uploadTypes')))))
 				{
 					\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filetype'], $strExtension));
 					$this->blnHasError = true;
 				}
 				else
 				{
-					$this->import('Files');
+					$this->import('Contao\\Files', 'Files');
 					$strNewFile = $strTarget . '/' . $file['name'];
 
 					// Set CHMOD and resize if neccessary
 					if ($this->Files->move_uploaded_file($file['tmp_name'], $strNewFile))
 					{
-						$this->Files->chmod($strNewFile, \Config::get('defaultFileChmod'));
+						$this->Files->chmod($strNewFile, Config::get('defaultFileChmod'));
 
 						// Notify the user
-						\Message::addConfirmation(sprintf($GLOBALS['TL_LANG']['MSC']['fileUploaded'], $file['name']));
+						Message::addConfirmation(sprintf($GLOBALS['TL_LANG']['MSC']['fileUploaded'], $file['name']));
 						$this->log('File "' . $strNewFile . '" has been uploaded', __METHOD__, TL_FILES);
 
 						// Resize the uploaded image if necessary
@@ -197,7 +197,7 @@ class FileUpload extends Backend
 	{
 		$fields = '';
 
-		for ($i=0; $i<\Config::get('uploadFields'); $i++)
+		for ($i=0; $i<Config::get('uploadFields'); $i++)
 		{
 			$fields .= '
   <input type="file" name="' . $this->strName . '[]" class="tl_upload_field" onfocus=""><br>';
@@ -217,7 +217,7 @@ class FileUpload extends Backend
       }
     });
   </script>
-  <p class="tl_help tl_tip">' . sprintf($GLOBALS['TL_LANG']['tl_files']['fileupload'][1], \System::getReadableSize($this->getMaximumUploadSize()), \Config::get('gdMaxImgWidth') . 'x' . \Config::get('gdMaxImgHeight')) . '</p>';
+  <p class="tl_help tl_tip">' . sprintf($GLOBALS['TL_LANG']['tl_files']['fileupload'][1], \System::getReadableSize($this->getMaximumUploadSize()), Config::get('gdMaxImgWidth') . 'x' . Config::get('gdMaxImgHeight')) . '</p>';
 	}
 
 
@@ -276,7 +276,7 @@ class FileUpload extends Backend
 			$upload_max_filesize = round($upload_max_filesize * 1024 * 1024 * 1024);
 		}
 
-		return min($upload_max_filesize, \Config::get('maxFileSize'));
+		return min($upload_max_filesize, Config::get('maxFileSize'));
 	}
 
 
@@ -290,7 +290,7 @@ class FileUpload extends Backend
 	protected function resizeUploadedImage($strImage)
 	{
 		// The feature is disabled
-		if (\Config::get('imageWidth') < 1 && \Config::get('imageHeight') < 1)
+		if (Config::get('imageWidth') < 1 && Config::get('imageHeight') < 1)
 		{
 			return false;
 		}
@@ -306,7 +306,7 @@ class FileUpload extends Backend
 		$arrImageSize = $objFile->imageSize;
 
 		// The image is too big to be handled by the GD library
-		if ($objFile->isGdImage && ($arrImageSize[0] > \Config::get('gdMaxImgWidth') || $arrImageSize[1] > \Config::get('gdMaxImgHeight')))
+		if ($objFile->isGdImage && ($arrImageSize[0] > Config::get('gdMaxImgWidth') || $arrImageSize[1] > Config::get('gdMaxImgHeight')))
 		{
 			\Message::addInfo(sprintf($GLOBALS['TL_LANG']['MSC']['fileExceeds'], $objFile->basename));
 			$this->log('File "' . $strImage . '" is too big to be resized automatically', __METHOD__, TL_FILES);
@@ -317,20 +317,20 @@ class FileUpload extends Backend
 		$blnResize = false;
 
 		// The image exceeds the maximum image width
-		if ($arrImageSize[0] > \Config::get('imageWidth'))
+		if ($arrImageSize[0] > Config::get('imageWidth'))
 		{
 			$blnResize = true;
-			$intWidth = \Config::get('imageWidth');
-			$intHeight = round(\Config::get('imageWidth') * $arrImageSize[1] / $arrImageSize[0]);
+			$intWidth = Config::get('imageWidth');
+			$intHeight = round(Config::get('imageWidth') * $arrImageSize[1] / $arrImageSize[0]);
 			$arrImageSize = array($intWidth, $intHeight);
 		}
 
 		// The image exceeds the maximum image height
-		if ($arrImageSize[1] > \Config::get('imageHeight'))
+		if ($arrImageSize[1] > Config::get('imageHeight'))
 		{
 			$blnResize = true;
-			$intWidth = round(\Config::get('imageHeight') * $arrImageSize[0] / $arrImageSize[1]);
-			$intHeight = \Config::get('imageHeight');
+			$intWidth = round(Config::get('imageHeight') * $arrImageSize[0] / $arrImageSize[1]);
+			$intHeight = Config::get('imageHeight');
 			$arrImageSize = array($intWidth, $intHeight);
 		}
 

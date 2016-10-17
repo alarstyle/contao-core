@@ -25,7 +25,7 @@ class StyleSheets extends Backend
 	public function __construct()
 	{
 		parent::__construct();
-		$this->import('Files');
+		$this->import('Contao\\Files', 'Files');
 	}
 
 
@@ -48,7 +48,7 @@ class StyleSheets extends Backend
 		// Delete the CSS file
 		if (\Input::get('act') == 'delete')
 		{
-			$this->import('Files');
+			$this->import('Contao\\Files', 'Files');
 			$this->Files->delete('assets/css/' . $objStyleSheet->name . '.css');
 		}
 
@@ -82,7 +82,7 @@ class StyleSheets extends Backend
 			}
 
 			// Preserve root files (is this still required now that scripts are in assets/css/scripts?)
-			if (is_array(\Config::get('rootFiles')) && in_array($file, \Config::get('rootFiles')))
+			if (is_array(Config::get('rootFiles')) && in_array($file, Config::get('rootFiles')))
 			{
 				continue;
 			}
@@ -1340,7 +1340,7 @@ class StyleSheets extends Backend
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_style_sheet_import">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">
-<input type="hidden" name="MAX_FILE_SIZE" value="'.\Config::get('maxFileSize').'">
+<input type="hidden" name="MAX_FILE_SIZE" value="'.Config::get('maxFileSize').'">
 
 <div class="tl_tbox">
   <h3>'.$GLOBALS['TL_LANG']['tl_style_sheet']['source'][0].'</h3>'.$objUploader->generateMarkup().(isset($GLOBALS['TL_LANG']['tl_style_sheet']['source'][1]) ? '

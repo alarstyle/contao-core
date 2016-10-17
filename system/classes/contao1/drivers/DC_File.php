@@ -10,6 +10,7 @@
 
 namespace Contao\Drivers;
 
+use Contao\Config;
 use Contao\DataContainer;
 
 
@@ -211,7 +212,7 @@ class DC_File extends DataContainer implements \editable
 
 					$this->strField = $vv;
 					$this->strInputName = $vv;
-					$this->varValue = \Config::get($this->strField);
+					$this->varValue = Config::get($this->strField);
 
 					// Handle entities
 					if ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$this->strField]['inputType'] == 'text' || $GLOBALS['TL_DCA'][$this->strTable]['fields'][$this->strField]['inputType'] == 'textarea')
@@ -260,7 +261,7 @@ class DC_File extends DataContainer implements \editable
 			}
 		}
 
-		$this->import('Files');
+		$this->import('Contao\\Files', 'Files');
 
 		// Check whether the target file is writeable
 		if (!$this->Files->is_writeable('system/config/localconfig.php'))
@@ -451,16 +452,16 @@ class DC_File extends DataContainer implements \editable
 		}
 		elseif (is_string($strCurrent))
 		{
-			$strCurrent = html_entity_decode($this->varValue, ENT_QUOTES, \Config::get('characterSet'));
+			$strCurrent = html_entity_decode($this->varValue, ENT_QUOTES, Config::get('characterSet'));
 		}
 
 		// Save the value if there was no error
 		if ((strlen($varValue) || !$arrData['eval']['doNotSaveEmpty']) && $strCurrent != $varValue)
 		{
-			\Config::persist($this->strField, $varValue);
+			Config::persist($this->strField, $varValue);
 
 			$deserialize = deserialize($varValue);
-			$prior = is_bool(\Config::get($this->strField)) ? (\Config::get($this->strField) ? 'true' : 'false') : \Config::get($this->strField);
+			$prior = is_bool(Config::get($this->strField)) ? (Config::get($this->strField) ? 'true' : 'false') : Config::get($this->strField);
 
 			// Add a log entry
 			if (!is_array(deserialize($prior)) && !is_array($deserialize))
@@ -477,7 +478,7 @@ class DC_File extends DataContainer implements \editable
 
 			// Set the new value so the input field can show it
 			$this->varValue = $deserialize;
-			\Config::set($this->strField, $deserialize);
+			Config::set($this->strField, $deserialize);
 		}
 	}
 
@@ -500,7 +501,7 @@ class DC_File extends DataContainer implements \editable
 
 			foreach ($GLOBALS['TL_DCA'][$this->strTable]['palettes']['__selector__'] as $name)
 			{
-				$trigger = \Config::get($name);
+				$trigger = Config::get($name);
 
 				// Overwrite the trigger if the page is not reloaded
 				if (\Input::post('FORM_SUBMIT') == $this->strTable)

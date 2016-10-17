@@ -85,12 +85,12 @@ abstract class Hybrid extends Frontend
 		parent::__construct();
 
 		// Store the parent element (see #4556)
-		if ($objElement instanceof \Model || $objElement instanceof \Model\Collection)
+		if ($objElement instanceof Model || $objElement instanceof \Contao\Model\Collection)
 		{
 			/** @var \ContentModel|\ModuleModel|\FormModel $objModel */
 			$objModel = $objElement;
 
-			if ($objModel instanceof \Model\Collection)
+			if ($objModel instanceof \Contao\Model\Collection)
 			{
 				$objModel = $objModel->current();
 			}

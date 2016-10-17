@@ -323,15 +323,15 @@ class BackendUser extends \User
 			// Set default values
 			if ($row['chmod'] === false)
 			{
-				$row['chmod'] = \Config::get('defaultChmod');
+				$row['chmod'] = Config::get('defaultChmod');
 			}
 			if ($row['cuser'] === false)
 			{
-				$row['cuser'] = intval(\Config::get('defaultUser'));
+				$row['cuser'] = intval(Config::get('defaultUser'));
 			}
 			if ($row['cgroup'] === false)
 			{
-				$row['cgroup'] = intval(\Config::get('defaultGroup'));
+				$row['cgroup'] = intval(Config::get('defaultGroup'));
 			}
 		}
 
@@ -408,10 +408,10 @@ class BackendUser extends \User
 		$GLOBALS['TL_USERNAME'] = $this->username;
 		$GLOBALS['TL_LANGUAGE'] = str_replace('_', '-', $this->language);
 
-		\Config::set('showHelp', $this->showHelp);
-		\Config::set('useRTE', $this->useRTE);
-		\Config::set('useCE', $this->useCE);
-		\Config::set('thumbnails', $this->thumbnails);
+		Config::set('showHelp', $this->showHelp);
+		Config::set('useRTE', $this->useRTE);
+		Config::set('useCE', $this->useCE);
+		Config::set('thumbnails', $this->thumbnails);
 
 		// Inherit permissions
 		$always = array('alexf');
@@ -434,7 +434,7 @@ class BackendUser extends \User
 
 		// Merge permissions
 		$inherit = in_array($this->inherit, array('group', 'extend')) ? array_merge($always, $depends) : $always;
-		$time = \Date::floorToMinute();
+		$time = Date::floorToMinute();
 
 		foreach ((array) $this->groups as $id)
 		{

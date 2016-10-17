@@ -64,7 +64,7 @@ class Versions extends Controller
 	 */
 	public function __construct($strTable, $intPid)
 	{
-		$this->import('Database');
+		$this->import('Contao\\Database', 'Database');
 		parent::__construct();
 
 		$this->strTable = $strTable;
@@ -75,7 +75,7 @@ class Versions extends Controller
 		{
 			$objFile = \FilesModel::findByPk($intPid);
 
-			if ($objFile !== null && in_array($objFile->extension, trimsplit(',', strtolower(\Config::get('editableFiles')))))
+			if ($objFile !== null && in_array($objFile->extension, trimsplit(',', strtolower(Config::get('editableFiles')))))
 			{
 				$this->strPath = $objFile->path;
 			}
@@ -150,7 +150,7 @@ class Versions extends Controller
 		}
 
 		// Delete old versions from the database
-		$tstamp = time() - intval(\Config::get('versionPeriod'));
+		$tstamp = time() - intval(Config::get('versionPeriod'));
 		$this->Database->query("DELETE FROM tl_version WHERE tstamp<$tstamp");
 
 		// Get the new record
@@ -372,7 +372,7 @@ class Versions extends Controller
 				}
 
 				$arrVersions[$objVersions->version] = $objVersions->row();
-				$arrVersions[$objVersions->version]['info'] = $GLOBALS['TL_LANG']['MSC']['version'].' '.$objVersions->version.' ('.\Date::parse(\Config::get('datimFormat'), $objVersions->tstamp).') '.$objVersions->username;
+				$arrVersions[$objVersions->version]['info'] = $GLOBALS['TL_LANG']['MSC']['version'].' '.$objVersions->version.' ('.Date::parse(Config::get('datimFormat'), $objVersions->tstamp).') '.$objVersions->username;
 			}
 
 			// To
@@ -468,18 +468,18 @@ class Versions extends Controller
 						// Convert date fields
 						if ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$k]['eval']['rgxp'] == 'date')
 						{
-							$to[$k] = \Date::parse(\Config::get('dateFormat'), $to[$k] ?: '');
-							$from[$k] = \Date::parse(\Config::get('dateFormat'), $from[$k] ?: '');
+							$to[$k] = Date::parse(Config::get('dateFormat'), $to[$k] ?: '');
+							$from[$k] = Date::parse(Config::get('dateFormat'), $from[$k] ?: '');
 						}
 						elseif ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$k]['eval']['rgxp'] == 'time')
 						{
-							$to[$k] = \Date::parse(\Config::get('timeFormat'), $to[$k] ?: '');
-							$from[$k] = \Date::parse(\Config::get('timeFormat'), $from[$k] ?: '');
+							$to[$k] = Date::parse(Config::get('timeFormat'), $to[$k] ?: '');
+							$from[$k] = Date::parse(Config::get('timeFormat'), $from[$k] ?: '');
 						}
 						elseif ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$k]['eval']['rgxp'] == 'datim' || $k == 'tstamp')
 						{
-							$to[$k] = \Date::parse(\Config::get('datimFormat'), $to[$k] ?: '');
-							$from[$k] = \Date::parse(\Config::get('datimFormat'), $from[$k] ?: '');
+							$to[$k] = Date::parse(Config::get('datimFormat'), $to[$k] ?: '');
+							$from[$k] = Date::parse(Config::get('datimFormat'), $from[$k] ?: '');
 						}
 
 						// Convert strings into arrays
@@ -521,7 +521,7 @@ class Versions extends Controller
 		$objTemplate->charset = Config::get('characterSet');
 		$objTemplate->action = ampersand(\Environment::get('request'));
 
-		\Config::set('debugMode', false);
+		Config::set('debugMode', false);
 		$objTemplate->output();
 
 		exit;
@@ -548,7 +548,7 @@ class Versions extends Controller
 		while ($objVersion->next())
 		{
 			$versions .= '
-  <option value="'.$objVersion->version.'"'.($objVersion->active ? ' selected="selected"' : '').'>'.$GLOBALS['TL_LANG']['MSC']['version'].' '.$objVersion->version.' ('.\Date::parse(\Config::get('datimFormat'), $objVersion->tstamp).') '.$objVersion->username.'</option>';
+  <option value="'.$objVersion->version.'"'.($objVersion->active ? ' selected="selected"' : '').'>'.$GLOBALS['TL_LANG']['MSC']['version'].' '.$objVersion->version.' ('.Date::parse(Config::get('datimFormat'), $objVersion->tstamp).') '.$objVersion->username.'</option>';
 		}
 
 		return '
@@ -612,9 +612,9 @@ class Versions extends Controller
 			// Add some parameters
 			$arrRow['from'] = max(($objVersions->version - 1), 1); // see #4828
 			$arrRow['to'] = $objVersions->version;
-			$arrRow['date'] = date(\Config::get('datimFormat'), $objVersions->tstamp);
-			$arrRow['description'] = \StringUtil::substr($arrRow['description'], 32);
-			$arrRow['shortTable'] = \StringUtil::substr($arrRow['fromTable'], 18); // see #5769
+			$arrRow['date'] = date(Config::get('datimFormat'), $objVersions->tstamp);
+			$arrRow['description'] = StringUtil::substr($arrRow['description'], 32);
+			$arrRow['shortTable'] = StringUtil::substr($arrRow['fromTable'], 18); // see #5769
 
 			if ($arrRow['editUrl'] != '')
 			{

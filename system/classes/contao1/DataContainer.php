@@ -368,7 +368,7 @@ abstract class DataContainer extends Backend
 		if ($arrData['eval']['datepicker'])
 		{
 			$rgxp = $arrData['eval']['rgxp'];
-			$format = \Date::formatToJs(\Config::get($rgxp.'Format'));
+			$format = Date::formatToJs(Config::get($rgxp.'Format'));
 
 			switch ($rgxp)
 			{
@@ -512,7 +512,7 @@ abstract class DataContainer extends Backend
 			{
 				$image = 'placeholder.png';
 
-				if ($objFile->isSvgImage || $objFile->height <= \Config::get('gdMaxImgHeight') && $objFile->width <= \Config::get('gdMaxImgWidth'))
+				if ($objFile->isSvgImage || $objFile->height <= Config::get('gdMaxImgHeight') && $objFile->width <= Config::get('gdMaxImgWidth'))
 				{
 					if ($objFile->width > 699 || $objFile->height > 524 || !$objFile->width || !$objFile->height)
 					{
@@ -537,7 +537,7 @@ abstract class DataContainer extends Backend
 				{
 					$strPreview .= '<script>Backend.editPreviewWizard($(\'' . $ctrl . '\'));</script>';
 
-					if (\Config::get('showHelp'))
+					if (Config::get('showHelp'))
 					{
 						$strPreview .= '<p class="tl_help tl_tip">' . $GLOBALS['TL_LANG'][$this->strTable]['edit_preview_help'] . '</p>';
 					}
@@ -562,7 +562,7 @@ abstract class DataContainer extends Backend
 	{
 		$return = $GLOBALS['TL_DCA'][$this->strTable]['fields'][$this->strField]['label'][1];
 
-		if (!\Config::get('showHelp') || $GLOBALS['TL_DCA'][$this->strTable]['fields'][$this->strField]['inputType'] == 'password' || $return == '')
+		if (!Config::get('showHelp') || $GLOBALS['TL_DCA'][$this->strTable]['fields'][$this->strField]['inputType'] == 'password' || $return == '')
 		{
 			return '';
 		}

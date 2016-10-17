@@ -28,15 +28,15 @@ class Messages extends Backend
 	{
 		$this->import('Contao\\BackendUser', 'User');
 
-		if (\Config::get('latestVersion') && version_compare(VERSION . '.' . BUILD, \Config::get('latestVersion'), '<'))
+		if (Config::get('latestVersion') && version_compare(VERSION . '.' . BUILD, Config::get('latestVersion'), '<'))
 		{
 			if ($this->User->hasAccess('maintenance', 'modules'))
 			{
-				return '<p class="tl_info"><a href="contao/main.php?do=maintenance">' . sprintf($GLOBALS['TL_LANG']['MSC']['updateVersion'], \Config::get('latestVersion')) . '</a></p>';
+				return '<p class="tl_info"><a href="contao/main.php?do=maintenance">' . sprintf($GLOBALS['TL_LANG']['MSC']['updateVersion'], Config::get('latestVersion')) . '</a></p>';
 			}
 			else
 			{
-				return '<p class="tl_info">' . sprintf($GLOBALS['TL_LANG']['MSC']['updateVersion'], \Config::get('latestVersion')) . '</p>';
+				return '<p class="tl_info">' . sprintf($GLOBALS['TL_LANG']['MSC']['updateVersion'], Config::get('latestVersion')) . '</p>';
 			}
 		}
 
@@ -55,7 +55,7 @@ class Messages extends Backend
 
 		if ($this->User->lastLogin > 0)
 		{
-			return '<p class="tl_info">' . sprintf($GLOBALS['TL_LANG']['MSC']['lastLogin'][1], \Date::parse(\Config::get('datimFormat'), $this->User->lastLogin)) . '</p>';
+			return '<p class="tl_info">' . sprintf($GLOBALS['TL_LANG']['MSC']['lastLogin'][1], Date::parse(Config::get('datimFormat'), $this->User->lastLogin)) . '</p>';
 		}
 
 		return '';
@@ -70,7 +70,7 @@ class Messages extends Backend
 	public function languageFallback()
 	{
 		$arrRoots = array();
-		$time = \Date::floorToMinute();
+		$time = Date::floorToMinute();
 		$objRoots = $this->Database->execute("SELECT fallback, dns FROM tl_page WHERE type='root' AND (start='' OR start<='$time') AND (stop='' OR stop>'" . ($time + 60) . "') AND published='1' ORDER BY dns");
 
 		while ($objRoots->next())

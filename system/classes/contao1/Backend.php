@@ -27,7 +27,7 @@ abstract class Backend extends Controller
 	protected function __construct()
 	{
 		parent::__construct();
-		$this->import('Database');
+		$this->import('Contao\\Database', 'Database');
 		$this->setStaticUrls();
 	}
 
@@ -188,7 +188,7 @@ abstract class Backend extends Controller
 	 */
 	public static function getTinyTemplates()
 	{
-		$strDir = \Config::get('uploadPath') . '/tiny_templates';
+		$strDir = Config::get('uploadPath') . '/tiny_templates';
 
 		if (!is_dir(TL_ROOT . '/' . $strDir))
 		{
@@ -235,7 +235,7 @@ abstract class Backend extends Controller
 	 */
 	protected function handleRunOnce()
 	{
-		$this->import('Files');
+		$this->import('Contao\\Files', 'Files');
 		$arrFiles = array('system/runonce.php');
 
 		// Always scan all folders and not just the active modules (see #4200)
@@ -651,8 +651,8 @@ abstract class Backend extends Controller
 	 */
 	public static function findSearchablePages($pid=0, $domain='', $blnIsSitemap=false)
 	{
-		$time = \Date::floorToMinute();
-		$objDatabase = \Database::getInstance();
+		$time = Date::floorToMinute();
+		$objDatabase = Database::getInstance();
 
 		// Get published pages
 		$objPages = $objDatabase->prepare("SELECT * FROM tl_page WHERE pid=? AND (start='' OR start<='$time') AND (stop='' OR stop>'" . ($time + 60) . "') AND published='1' ORDER BY sorting")
@@ -679,7 +679,7 @@ abstract class Backend extends Controller
 			if ($objPage->type == 'regular')
 			{
 				// Searchable and not protected
-				if ((!$objPage->noSearch || $blnIsSitemap) && (!$objPage->protected || \Config::get('indexProtected') && (!$blnIsSitemap || $objPage->sitemap == 'map_always')) && (!$blnIsSitemap || $objPage->sitemap != 'map_never'))
+				if ((!$objPage->noSearch || $blnIsSitemap) && (!$objPage->protected || Config::get('indexProtected') && (!$blnIsSitemap || $objPage->sitemap == 'map_always')) && (!$blnIsSitemap || $objPage->sitemap != 'map_never'))
 				{
 					// Published
 					if ($objPage->published && ($objPage->start == '' || $objPage->start <= $time) && ($objPage->stop == '' || $objPage->stop > ($time + 60)))
@@ -704,7 +704,7 @@ abstract class Backend extends Controller
 			}
 
 			// Get subpages
-			if ((!$objPage->protected || \Config::get('indexProtected')) && ($arrSubpages = static::findSearchablePages($objPage->id, $domain, $blnIsSitemap)) != false)
+			if ((!$objPage->protected || Config::get('indexProtected')) && ($arrSubpages = static::findSearchablePages($objPage->id, $domain, $blnIsSitemap)) != false)
 			{
 				$arrPages = array_merge($arrPages, $arrSubpages);
 			}
@@ -777,7 +777,7 @@ abstract class Backend extends Controller
 						}
 					}
 
-					if ($objPage instanceof \Database\Result && $objPage->numRows < 1)
+					if ($objPage instanceof \Contao\Database\Result && $objPage->numRows < 1)
 					{
 						return;
 					}
@@ -860,7 +860,7 @@ abstract class Backend extends Controller
 		if ($intNode)
 		{
 			$intId = $intNode;
-			$objDatabase = \Database::getInstance();
+			$objDatabase = Database::getInstance();
 
 			do
 			{
@@ -1017,8 +1017,8 @@ abstract class Backend extends Controller
 		}
 
 		$objUser  = BackendUser::getInstance();
-		$strPath  = \Config::get('uploadPath');
-		$arrNodes = explode('/', preg_replace('/^' . preg_quote(\Config::get('uploadPath'), '/') . '\//', '', $strNode));
+		$strPath  = Config::get('uploadPath');
+		$arrNodes = explode('/', preg_replace('/^' . preg_quote(Config::get('uploadPath'), '/') . '\//', '', $strNode));
 		$arrLinks = array();
 
 		// Add root link
@@ -1188,7 +1188,7 @@ abstract class Backend extends Controller
 
 		if ($this->User->isAdmin)
 		{
-			return $this->doCreateFileList(\Config::get('uploadPath'), -1, $strFilter);
+			return $this->doCreateFileList(Config::get('uploadPath'), -1, $strFilter);
 		}
 
 		$return = '';

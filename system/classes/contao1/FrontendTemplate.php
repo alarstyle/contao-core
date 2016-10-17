@@ -198,12 +198,12 @@ class FrontendTemplate extends \Template
 		}
 
 		// Server-side cache
-		if ($intCache > 0 && (\Config::get('cacheMode') == 'both' || \Config::get('cacheMode') == 'server'))
+		if ($intCache > 0 && (Config::get('cacheMode') == 'both' || Config::get('cacheMode') == 'server'))
 		{
 			// If the request string is empty, use a special cache tag which considers the page language
-			if (\Environment::get('request') == '' || \Environment::get('request') == 'index.php')
+			if (Environment::get('request') == '' || Environment::get('request') == 'index.php')
 			{
-				$strCacheKey = \Environment::get('host') . '/empty.' . $objPage->language;
+				$strCacheKey = Environment::get('host') . '/empty.' . $objPage->language;
 			}
 			else
 			{
@@ -260,7 +260,7 @@ class FrontendTemplate extends \Template
 		// Client-side cache
 		if (!headers_sent())
 		{
-			if ($intCache > 0 && (\Config::get('cacheMode') == 'both' || \Config::get('cacheMode') == 'browser'))
+			if ($intCache > 0 && (Config::get('cacheMode') == 'both' || Config::get('cacheMode') == 'browser'))
 			{
 				header('Cache-Control: public, max-age=' . ($intCache - time()));
 				header('Pragma: public');
@@ -287,10 +287,10 @@ class FrontendTemplate extends \Template
 		global $objPage;
 
 		// Index page if searching is allowed and there is no back end user
-		if (\Config::get('enableSearch') && $objPage->type == 'regular' && !BE_USER_LOGGED_IN && !$objPage->noSearch)
+		if (Config::get('enableSearch') && $objPage->type == 'regular' && !BE_USER_LOGGED_IN && !$objPage->noSearch)
 		{
 			// Index protected pages if enabled
-			if (\Config::get('indexProtected') || (!FE_USER_LOGGED_IN && !$objPage->protected))
+			if (Config::get('indexProtected') || (!FE_USER_LOGGED_IN && !$objPage->protected))
 			{
 				$blnIndex = true;
 

@@ -170,7 +170,7 @@ class Ajax extends Backend
 	 */
 	public function executePostActions(DataContainer $dc)
 	{
-		header('Content-Type: text/html; charset=' . \Config::get('characterSet'));
+		header('Content-Type: text/html; charset=' . Config::get('characterSet'));
 
 		// Bypass any core logic for non-core drivers (see #5957)
 		if (!$dc instanceof DC_File && !$dc instanceof DC_Folder && !$dc instanceof DC_Table)
@@ -254,7 +254,7 @@ class Ajax extends Backend
 				{
 					if ($GLOBALS['TL_DCA'][$dc->table]['config']['dataContainer'] == 'File')
 					{
-						$varValue = \Config::get($strField);
+						$varValue = Config::get($strField);
 					}
 					elseif ($intId > 0 && $this->Database->tableExists($dc->table))
 					{
@@ -373,13 +373,13 @@ class Ajax extends Backend
 				}
 				elseif ($dc instanceof DC_File)
 				{
-					$val = (intval(\Input::post('state') == 1) ? true : false);
-					\Config::persist(\Input::post('field'), $val);
+					$val = (intval(Input::post('state') == 1) ? true : false);
+					Config::persist(Input::post('field'), $val);
 
-					if (\Input::post('load'))
+					if (Input::post('load'))
 					{
-						\Config::set(\Input::post('field'), $val);
-						echo $dc->edit(false, \Input::post('id'));
+						Config::set(Input::post('field'), $val);
+						echo $dc->edit(false, Input::post('id'));
 					}
 				}
 				exit; break;
