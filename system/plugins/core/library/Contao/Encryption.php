@@ -169,9 +169,7 @@ class Encryption
 	 *
 	 * @param string $strPassword The unencrypted password
 	 *
-	 * @return string The encrypted password
-	 *
-	 * @throws \Exception If none of the algorithms is available
+	 * @return string The encrypted passworв
 	 */
 	public static function hash($strPassword)
 	{
@@ -182,24 +180,7 @@ class Encryption
 			throw new \Exception("The bcrypt cost has to be between 4 and 31, $intCost given");
 		}
 
-		if (function_exists('password_hash'))
-		{
-			return password_hash($strPassword, PASSWORD_BCRYPT, array('cost'=>$intCost));
-		}
-		elseif (CRYPT_BLOWFISH == 1)
-		{
-			return crypt($strPassword, '$2y$' . sprintf('%02d', $intCost) . '$' . md5(uniqid(mt_rand(), true)) . '$');
-		}
-		elseif (CRYPT_SHA512 == 1)
-		{
-			return crypt($strPassword, '$6$' . md5(uniqid(mt_rand(), true)) . '$');
-		}
-		elseif (CRYPT_SHA256 == 1)
-		{
-			return crypt($strPassword, '$5$' . md5(uniqid(mt_rand(), true)) . '$');
-		}
-
-		throw new \Exception('None of the required crypt() algorithms is available');
+		return password_hash($strPassword, PASSWORD_BCRYPT, array('cost'=>$intCost));
 	}
 
 
@@ -245,30 +226,7 @@ class Encryption
 	 */
 	public static function verify($strPassword, $strHash)
 	{
-		if (function_exists('password_verify'))
-		{
-			return password_verify($strPassword, $strHash);
-		}
-
-		$getLength = function($str) {
-			return extension_loaded('mbstring') ? mb_strlen($str, '8bit') : strlen($str);
-		};
-
-		$newHash = crypt($strPassword, $strHash);
-
-		if (!is_string($newHash) || $getLength($newHash) != $getLength($strHash) || $getLength($newHash) <= 13)
-		{
-			return false;
-		}
-
-		$intStatus = 0;
-
-		for ($i=0; $i<$getLength($newHash); $i++)
-		{
-			$intStatus |= (ord($newHash[$i]) ^ ord($strHash[$i]));
-		}
-
-		return $intStatus === 0;
+		return password_verify($strPassword, $strHash);
 	}
 
 
