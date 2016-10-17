@@ -126,7 +126,7 @@ class FilesModel extends \Model
 	 */
 	public static function findById($intId, array $arrOptions=array())
 	{
-		if (\Validator::isUuid($intId))
+		if (Validator::isUuid($intId))
 		{
 			return static::findByUuid($intId, $arrOptions);
 		}
@@ -150,7 +150,7 @@ class FilesModel extends \Model
 			return null;
 		}
 
-		if (\Validator::isUuid(current($arrIds)))
+		if (Validator::isUuid(current($arrIds)))
 		{
 			return static::findMultipleByUuids($arrIds, $arrOptions);
 		}
@@ -172,7 +172,7 @@ class FilesModel extends \Model
 		$t = static::$strTable;
 
 		// Convert UUIDs to binary
-		if (\Validator::isStringUuid($strUuid))
+		if (Validator::isStringUuid($strUuid))
 		{
 			$strUuid = \StringUtil::uuidToBin($strUuid);
 		}
@@ -201,7 +201,7 @@ class FilesModel extends \Model
 		foreach ($arrUuids as $k=>$v)
 		{
 			// Convert UUIDs to binary
-			if (\Validator::isStringUuid($v))
+			if (Validator::isStringUuid($v))
 			{
 				$v = \StringUtil::uuidToBin($v);
 			}
@@ -289,9 +289,9 @@ class FilesModel extends \Model
 		foreach ($arrUuids as $k=>$v)
 		{
 			// Convert UUIDs to binary
-			if (\Validator::isStringUuid($v))
+			if (Validator::isStringUuid($v))
 			{
-				$v = \StringUtil::uuidToBin($v);
+				$v = StringUtil::uuidToBin($v);
 			}
 
 			$arrUuids[$k] = "UNHEX('" . bin2hex($v) . "')";

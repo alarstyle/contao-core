@@ -919,7 +919,7 @@ class InsertTags extends \Controller
 						$strFile = $arrChunks[0];
 					}
 
-					if (\Validator::isUuid($strFile))
+					if (Validator::isUuid($strFile))
 					{
 						// Handle UUIDs
 						$objFile = \FilesModel::findByUuid($strFile);
@@ -948,7 +948,7 @@ class InsertTags extends \Controller
 					else
 					{
 						// Check the path
-						if (\Validator::isInsecurePath($strFile))
+						if (Validator::isInsecurePath($strFile))
 						{
 							throw new \RuntimeException('Invalid path ' . $strFile);
 						}
@@ -1015,7 +1015,7 @@ class InsertTags extends \Controller
 
 				// Files (UUID or template path)
 				case 'file':
-					if (\Validator::isUuid($elements[1]))
+					if (Validator::isUuid($elements[1]))
 					{
 						$objFile = \FilesModel::findByUuid($elements[1]);
 
@@ -1048,7 +1048,7 @@ class InsertTags extends \Controller
 					}
 
 					// Check the path
-					if (\Validator::isInsecurePath($strFile))
+					if (Validator::isInsecurePath($strFile))
 					{
 						throw new \RuntimeException('Invalid path ' . $strFile);
 					}

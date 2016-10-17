@@ -45,7 +45,7 @@ class ContentDownload extends \ContentElement
 
 		if ($objFile === null)
 		{
-			if (!\Validator::isUuid($this->singleSRC))
+			if (!Validator::isUuid($this->singleSRC))
 			{
 				return '<p class="error">'.$GLOBALS['TL_LANG']['ERR']['version2format'].'</p>';
 			}

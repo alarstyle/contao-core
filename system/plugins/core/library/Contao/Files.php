@@ -271,7 +271,7 @@ abstract class Files
 			{
 				throw new \RuntimeException('No file or folder name given');
 			}
-			elseif (\Validator::isInsecurePath($strPath))
+			elseif (Validator::isInsecurePath($strPath))
 			{
 				throw new \RuntimeException('Invalid file or folder name ' . $strPath);
 			}

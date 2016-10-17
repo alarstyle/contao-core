@@ -705,7 +705,7 @@ abstract class Controller extends \System
 		// Command scheduler
 		if (!Config::get('disableCron'))
 		{
-			$strScripts .= "\n" . \Template::generateInlineScript('setTimeout(function(){var e=function(e,t){try{var n=new XMLHttpRequest}catch(r){return}n.open("GET",e,!0),n.onreadystatechange=function(){this.readyState==4&&this.status==200&&typeof t=="function"&&t(this.responseText)},n.send()},t="system/cron/cron.";e(t+"txt",function(n){parseInt(n||0)<Math.round(+(new Date)/1e3)-' . Frontend::getCronTimeout() . '&&e(t+"php")})},5e3);') . "\n";
+			$strScripts .= "\n" . Template::generateInlineScript('setTimeout(function(){var e=function(e,t){try{var n=new XMLHttpRequest}catch(r){return}n.open("GET",e,!0),n.onreadystatechange=function(){this.readyState==4&&this.status==200&&typeof t=="function"&&t(this.responseText)},n.send()},t="system/cron/cron.";e(t+"txt",function(n){parseInt(n||0)<Math.round(+(new Date)/1e3)-' . Frontend::getCronTimeout() . '&&e(t+"php")})},5e3);') . "\n";
 		}
 
 		$arrReplace['[[TL_BODY]]'] = $strScripts;
@@ -740,7 +740,7 @@ abstract class Controller extends \System
 				}
 				else
 				{
-					$strScripts .= \Template::generateStyleTag(static::addStaticUrlTo($stylesheet), $options->media) . "\n";
+					$strScripts .= Template::generateStyleTag(static::addStaticUrlTo($stylesheet), $options->media) . "\n";
 				}
 			}
 		}
@@ -763,7 +763,7 @@ abstract class Controller extends \System
 				}
 				else
 				{
-					$strScripts .= \Template::generateStyleTag(static::addStaticUrlTo($stylesheet), $options->media) . "\n";
+					$strScripts .= Template::generateStyleTag(static::addStaticUrlTo($stylesheet), $options->media) . "\n";
 				}
 			}
 		}
@@ -798,7 +798,7 @@ abstract class Controller extends \System
 				}
 				else
 				{
-					$strScripts .= \Template::generateScriptTag(static::addStaticUrlTo($javascript), $options->async) . "\n";
+					$strScripts .= Template::generateScriptTag(static::addStaticUrlTo($javascript), $options->async) . "\n";
 				}
 			}
 
@@ -1559,7 +1559,7 @@ abstract class Controller extends \System
 
 		if ($objFiles === null)
 		{
-			if (!\Validator::isUuid($arrEnclosures[0]))
+			if (!Validator::isUuid($arrEnclosures[0]))
 			{
 				foreach (array('details', 'answer', 'text') as $key)
 				{

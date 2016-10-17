@@ -1099,7 +1099,7 @@ class Theme extends Backend
 			$strFolder = Config::get('uploadPath') .'/'. $strFolder;
 		}
 
-		if (\Validator::isInsecurePath($strFolder))
+		if (Validator::isInsecurePath($strFolder))
 		{
 			throw new \RuntimeException('Insecure path ' . $strFolder);
 		}
@@ -1174,7 +1174,7 @@ class Theme extends Backend
 			$strFolder = 'templates/' . $strFolder;
 		}
 
-		if (\Validator::isInsecurePath($strFolder))
+		if (Validator::isInsecurePath($strFolder))
 		{
 			throw new \RuntimeException('Insecure path ' . $strFolder);
 		}

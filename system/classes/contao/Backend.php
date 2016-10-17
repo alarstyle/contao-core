@@ -830,13 +830,13 @@ abstract class Backend extends Controller
 		if (isset($_GET['pn']))
 		{
 			// Check the path (thanks to Arnaud Buchoux)
-			if (\Validator::isInsecurePath(\Input::get('pn', true)))
+			if (Validator::isInsecurePath(Input::get('pn', true)))
 			{
-				throw new \RuntimeException('Insecure path ' . \Input::get('pn', true));
+				throw new \RuntimeException('Insecure path ' . Input::get('pn', true));
 			}
 
-			$objSession->set($strKey, \Input::get('pn', true));
-			\Controller::redirect(preg_replace('/&pn=[^&]*/', '', \Environment::get('request')));
+			$objSession->set($strKey, Input::get('pn', true));
+			Controller::redirect(preg_replace('/&pn=[^&]*/', '', Environment::get('request')));
 		}
 
 		$intNode = $objSession->get($strKey);
@@ -847,7 +847,7 @@ abstract class Backend extends Controller
 		}
 
 		// Check the path (thanks to Arnaud Buchoux)
-		if (\Validator::isInsecurePath($intNode))
+		if (Validator::isInsecurePath($intNode))
 		{
 			throw new \RuntimeException('Insecure path ' . $intNode);
 		}
@@ -986,13 +986,13 @@ abstract class Backend extends Controller
 		if (isset($_GET['fn']))
 		{
 			// Check the path (thanks to Arnaud Buchoux)
-			if (\Validator::isInsecurePath(\Input::get('fn', true)))
+			if (Validator::isInsecurePath(Input::get('fn', true)))
 			{
-				throw new \RuntimeException('Insecure path ' . \Input::get('fn', true));
+				throw new \RuntimeException('Insecure path ' . Input::get('fn', true));
 			}
 
-			$objSession->set($strKey, \Input::get('fn', true));
-			\Controller::redirect(preg_replace('/(&|\?)fn=[^&]*/', '', \Environment::get('request')));
+			$objSession->set($strKey, Input::get('fn', true));
+			\Controller::redirect(preg_replace('/(&|\?)fn=[^&]*/', '', Environment::get('request')));
 		}
 
 		$strNode = $objSession->get($strKey);
@@ -1003,7 +1003,7 @@ abstract class Backend extends Controller
 		}
 
 		// Check the path (thanks to Arnaud Buchoux)
-		if (\Validator::isInsecurePath($strNode))
+		if (Validator::isInsecurePath($strNode))
 		{
 			throw new \RuntimeException('Insecure path ' . $strNode);
 		}
@@ -1022,7 +1022,7 @@ abstract class Backend extends Controller
 		$arrLinks = array();
 
 		// Add root link
-		$arrLinks[] = \Image::getHtml('filemounts.gif') . ' <a href="' . \Controller::addToUrl('fn=') . '" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['selectAllNodes']).'">' . $GLOBALS['TL_LANG']['MSC']['filterAll'] . '</a>';
+		$arrLinks[] = Image::getHtml('filemounts.gif') . ' <a href="' . Controller::addToUrl('fn=') . '" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['selectAllNodes']).'">' . $GLOBALS['TL_LANG']['MSC']['filterAll'] . '</a>';
 
 		// Generate breadcrumb trail
 		foreach ($arrNodes as $strFolder)
@@ -1038,11 +1038,11 @@ abstract class Backend extends Controller
 			// No link for the active folder
 			if ($strPath == $strNode)
 			{
-				$arrLinks[] = \Image::getHtml('folderC.gif') . ' ' . $strFolder;
+				$arrLinks[] = Image::getHtml('folderC.gif') . ' ' . $strFolder;
 			}
 			else
 			{
-				$arrLinks[] = \Image::getHtml('folderC.gif') . ' <a href="' . \Controller::addToUrl('fn='.$strPath) . '" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['selectNode']).'">' . $strFolder . '</a>';
+				$arrLinks[] = Image::getHtml('folderC.gif') . ' <a href="' . Controller::addToUrl('fn='.$strPath) . '" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['selectNode']).'">' . $strFolder . '</a>';
 			}
 		}
 
@@ -1051,8 +1051,8 @@ abstract class Backend extends Controller
 		{
 			$objSession->set($strKey, '');
 
-			\System::log('Folder ID '.$strNode.' was not mounted', __METHOD__, TL_ERROR);
-			\Controller::redirect('contao/main.php?act=error');
+			System::log('Folder ID '.$strNode.' was not mounted', __METHOD__, TL_ERROR);
+			Controller::redirect('contao/main.php?act=error');
 		}
 
 		// Limit tree

@@ -122,7 +122,7 @@ class FormFileUpload extends \Contao\Editor implements \uploadable
 		}
 
 		// Invalid file name
-		if (!\Validator::isValidFileName($file['name']))
+		if (!Validator::isValidFileName($file['name']))
 		{
 			$this->addError($GLOBALS['TL_LANG']['ERR']['filename']);
 

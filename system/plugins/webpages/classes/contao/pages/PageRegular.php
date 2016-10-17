@@ -14,6 +14,7 @@ use Contao\Config;
 use Contao\Environment;
 use Contao\Frontend;
 use Contao\FrontendTemplate;
+use Contao\Template;
 
 /**
  * Provide methods to handle a regular front end page.
@@ -342,7 +343,7 @@ class PageRegular extends Frontend
 			// Add the layout specific CSS
 			if ($strFramework != '')
 			{
-				$this->Template->framework = \Template::generateInlineStyle($strFramework) . "\n";
+				$this->Template->framework = Template::generateInlineStyle($strFramework) . "\n";
 			}
 		}
 
@@ -371,12 +372,12 @@ class PageRegular extends Frontend
 		{
 			if ($objLayout->jSource == 'j_googleapis' || $objLayout->jSource == 'j_fallback')
 			{
-				$this->Template->mooScripts .= \Template::generateScriptTag('https://code.jquery.com/jquery-' . $GLOBALS['TL_ASSETS']['JQUERY'] . '.min.js') . "\n";
+				$this->Template->mooScripts .= Template::generateScriptTag('https://code.jquery.com/jquery-' . $GLOBALS['TL_ASSETS']['JQUERY'] . '.min.js') . "\n";
 
 				// Local fallback (thanks to DyaGa)
 				if ($objLayout->jSource == 'j_fallback')
 				{
-					$this->Template->mooScripts .= \Template::generateInlineScript('window.jQuery || document.write(\'<script src="' . TL_ASSETS_URL . 'assets/jquery/core/' . $GLOBALS['TL_ASSETS']['JQUERY'] . '/jquery.min.js">\x3C/script>\')') . "\n";
+					$this->Template->mooScripts .= Template::generateInlineScript('window.jQuery || document.write(\'<script src="' . TL_ASSETS_URL . 'assets/jquery/core/' . $GLOBALS['TL_ASSETS']['JQUERY'] . '/jquery.min.js">\x3C/script>\')') . "\n";
 				}
 			}
 			else
@@ -392,17 +393,17 @@ class PageRegular extends Frontend
 			{
 				if (version_compare($GLOBALS['TL_ASSETS']['MOOTOOLS'], '1.5.1', '>'))
 				{
-					$this->Template->mooScripts .= \Template::generateScriptTag('https://ajax.googleapis.com/ajax/libs/mootools/' . $GLOBALS['TL_ASSETS']['MOOTOOLS'] . '/mootools.min.js') . "\n";
+					$this->Template->mooScripts .= Template::generateScriptTag('https://ajax.googleapis.com/ajax/libs/mootools/' . $GLOBALS['TL_ASSETS']['MOOTOOLS'] . '/mootools.min.js') . "\n";
 				}
 				else
 				{
-					$this->Template->mooScripts .= \Template::generateScriptTag('https://ajax.googleapis.com/ajax/libs/mootools/' . $GLOBALS['TL_ASSETS']['MOOTOOLS'] . '/mootools-yui-compressed.js') . "\n";
+					$this->Template->mooScripts .= Template::generateScriptTag('https://ajax.googleapis.com/ajax/libs/mootools/' . $GLOBALS['TL_ASSETS']['MOOTOOLS'] . '/mootools-yui-compressed.js') . "\n";
 				}
 
 				// Local fallback (thanks to DyaGa)
 				if ($objLayout->mooSource == 'moo_fallback')
 				{
-					$this->Template->mooScripts .= \Template::generateInlineScript('window.MooTools || document.write(\'<script src="' . TL_ASSETS_URL . 'assets/mootools/core/' . $GLOBALS['TL_ASSETS']['MOOTOOLS'] . '/mootools-core.js">\x3C/script>\')') . "\n";
+					$this->Template->mooScripts .= Template::generateInlineScript('window.MooTools || document.write(\'<script src="' . TL_ASSETS_URL . 'assets/mootools/core/' . $GLOBALS['TL_ASSETS']['MOOTOOLS'] . '/mootools-core.js">\x3C/script>\')') . "\n";
 				}
 
 				$GLOBALS['TL_JAVASCRIPT'][] = 'assets/mootools/core/' . $GLOBALS['TL_ASSETS']['MOOTOOLS'] . '/mootools-more.js|static';
@@ -470,7 +471,7 @@ class PageRegular extends Frontend
 		// Google web fonts
 		if ($objLayout->webfonts != '')
 		{
-			$strStyleSheets .= \Template::generateStyleTag('https://fonts.googleapis.com/css?family=' . str_replace('|', '%7C', $objLayout->webfonts), 'all') . "\n";
+			$strStyleSheets .= Template::generateStyleTag('https://fonts.googleapis.com/css?family=' . str_replace('|', '%7C', $objLayout->webfonts), 'all') . "\n";
 		}
 
 		// Add the Contao CSS framework style sheets
@@ -526,12 +527,12 @@ class PageRegular extends Frontend
 
 							if ($objFile !== null)
 							{
-								$strStyleSheet = \Template::generateStyleTag(TL_ASSETS_URL . $objFile->path, $media);
+								$strStyleSheet = Template::generateStyleTag(TL_ASSETS_URL . $objFile->path, $media);
 							}
 						}
 						else
 						{
-							$strStyleSheet = \Template::generateStyleTag(TL_ASSETS_URL . 'assets/css/' . $objStylesheets->name . '.css', $media);
+							$strStyleSheet = Template::generateStyleTag(TL_ASSETS_URL . 'assets/css/' . $objStylesheets->name . '.css', $media);
 						}
 
 						if ($objStylesheets->cc)
@@ -632,7 +633,7 @@ class PageRegular extends Frontend
 		// Add the debug style sheet
 		if (Config::get('debugMode') && !Config::get('hideDebugBar'))
 		{
-			$strStyleSheets .= \Template::generateStyleTag($this->addStaticUrlTo('assets/contao/css/debug.css'), 'all') . "\n";
+			$strStyleSheets .= Template::generateStyleTag($this->addStaticUrlTo('assets/contao/css/debug.css'), 'all') . "\n";
 		}
 
 		// Always add conditional style sheets at the end
@@ -650,7 +651,7 @@ class PageRegular extends Frontend
 			{
 				while($objFeeds->next())
 				{
-					$strStyleSheets .= \Template::generateFeedTag(($objFeeds->feedBase ?: \Environment::get('base')) . 'share/' . $objFeeds->alias . '.xml', $objFeeds->format, $objFeeds->title) . "\n";
+					$strStyleSheets .= Template::generateFeedTag(($objFeeds->feedBase ?: \Environment::get('base')) . 'share/' . $objFeeds->alias . '.xml', $objFeeds->format, $objFeeds->title) . "\n";
 				}
 			}
 		}
@@ -664,7 +665,7 @@ class PageRegular extends Frontend
 			{
 				while($objFeeds->next())
 				{
-					$strStyleSheets .= \Template::generateFeedTag(($objFeeds->feedBase ?: \Environment::get('base')) . 'share/' . $objFeeds->alias . '.xml', $objFeeds->format, $objFeeds->title) . "\n";
+					$strStyleSheets .= Template::generateFeedTag(($objFeeds->feedBase ?: \Environment::get('base')) . 'share/' . $objFeeds->alias . '.xml', $objFeeds->format, $objFeeds->title) . "\n";
 				}
 			}
 		}

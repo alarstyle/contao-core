@@ -72,10 +72,10 @@ class Newsletter extends Backend
 
 				if ($objFiles === null)
 				{
-					if (!\Validator::isUuid($files[0]))
+					if (!Validator::isUuid($files[0]))
 					{
 						$blnAttachmentsFormatError = true;
-						\Message::addError($GLOBALS['TL_LANG']['ERR']['version2format']);
+						Message::addError($GLOBALS['TL_LANG']['ERR']['version2format']);
 					}
 				}
 				else
@@ -102,21 +102,21 @@ class Newsletter extends Backend
 		}
 
 		// Send newsletter
-		if (!$blnAttachmentsFormatError && \Input::get('token') != '' && \Input::get('token') == $this->Session->get('tl_newsletter_send'))
+		if (!$blnAttachmentsFormatError && Input::get('token') != '' && Input::get('token') == $this->Session->get('tl_newsletter_send'))
 		{
-			$referer = preg_replace('/&(amp;)?(start|mpc|token|recipient|preview)=[^&]*/', '', \Environment::get('request'));
+			$referer = preg_replace('/&(amp;)?(start|mpc|token|recipient|preview)=[^&]*/', '', Environment::get('request'));
 
 			// Preview
 			if (isset($_GET['preview']))
 			{
 				// Check the e-mail address
-				if (!\Validator::isEmail(\Input::get('recipient', true)))
+				if (!Validator::isEmail(Input::get('recipient', true)))
 				{
 					$_SESSION['TL_PREVIEW_MAIL_ERROR'] = true;
 					$this->redirect($referer);
 				}
 
-				$arrRecipient['email'] = urldecode(\Input::get('recipient', true));
+				$arrRecipient['email'] = urldecode(Input::get('recipient', true));
 
 				// Send
 				$objEmail = $this->generateEmailObject($objNewsletter, $arrAttachments);
@@ -495,7 +495,7 @@ class Newsletter extends Backend
 				foreach ($arrRecipients as $strRecipient)
 				{
 					// Skip invalid entries
-					if (!\Validator::isEmail($strRecipient))
+					if (!Validator::isEmail($strRecipient))
 					{
 						$this->log('Recipient address "' . $strRecipient . '" seems to be invalid and has been skipped', __METHOD__, TL_ERROR);
 

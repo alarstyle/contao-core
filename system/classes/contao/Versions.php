@@ -456,13 +456,13 @@ class Versions extends Controller
 						unset($tmp);
 
 						// Convert binary UUIDs to their hex equivalents (see #6365)
-						if ($blnIsBinary && \Validator::isBinaryUuid($to[$k]))
+						if ($blnIsBinary && Validator::isBinaryUuid($to[$k]))
 						{
-							$to[$k] = \StringUtil::binToUuid($to[$k]);
+							$to[$k] = StringUtil::binToUuid($to[$k]);
 						}
-						if ($blnIsBinary && \Validator::isBinaryUuid($from[$k]))
+						if ($blnIsBinary && Validator::isBinaryUuid($from[$k]))
 						{
-							$to[$k] = \StringUtil::binToUuid($from[$k]);
+							$to[$k] = StringUtil::binToUuid($from[$k]);
 						}
 
 						// Convert date fields

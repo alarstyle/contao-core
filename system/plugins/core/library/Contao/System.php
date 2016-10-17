@@ -1081,7 +1081,7 @@ abstract class System
 	 */
 	protected function isValidEmailAddress($strEmail)
 	{
-		return \Validator::isEmail($strEmail);
+		return Validator::isEmail($strEmail);
 	}
 
 

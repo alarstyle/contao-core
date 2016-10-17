@@ -91,7 +91,7 @@ class FileUpload extends Backend
 	 */
 	public function uploadTo($strTarget)
 	{
-		if ($strTarget == '' || \Validator::isInsecurePath($strTarget))
+		if ($strTarget == '' || Validator::isInsecurePath($strTarget))
 		{
 			throw new \InvalidArgumentException('Invalid target path ' . $strTarget);
 		}
@@ -117,9 +117,9 @@ class FileUpload extends Backend
 			}
 
 			// Invalid file name
-			if (!\Validator::isValidFileName($file['name']))
+			if (!Validator::isValidFileName($file['name']))
 			{
-				\Message::addError($GLOBALS['TL_LANG']['ERR']['filename']);
+				Message::addError($GLOBALS['TL_LANG']['ERR']['filename']);
 				$this->blnHasError = true;
 			}
 

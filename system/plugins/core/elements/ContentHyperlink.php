@@ -54,7 +54,7 @@ class ContentHyperlink extends \ContentElement
 
 			if ($objModel === null)
 			{
-				if (!\Validator::isUuid($this->singleSRC))
+				if (!Validator::isUuid($this->singleSRC))
 				{
 					$this->Template->text = '<p class="error">'.$GLOBALS['TL_LANG']['ERR']['version2format'].'</p>';
 				}

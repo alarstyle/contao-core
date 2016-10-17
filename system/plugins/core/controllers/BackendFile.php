@@ -103,9 +103,9 @@ class BackendFile extends Backend
 		foreach ($arrValues as $k=>$v)
 		{
 			// Can be a UUID or a path
-			if (\Validator::isStringUuid($v))
+			if (Validator::isStringUuid($v))
 			{
-				$arrValues[$k] = \StringUtil::uuidToBin($v);
+				$arrValues[$k] = StringUtil::uuidToBin($v);
 			}
 		}
 

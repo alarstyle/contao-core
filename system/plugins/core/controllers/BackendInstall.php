@@ -739,17 +739,17 @@ class BackendInstall extends Backend
 					$this->Template->usernameError = $GLOBALS['TL_LANG']['ERR']['extnd'];
 				}
 				// The username must not contain whitespace characters (see #4006)
-				elseif (strpos(\Input::post('username', true), ' ') !== false)
+				elseif (strpos(Input::post('username', true), ' ') !== false)
 				{
 					$this->Template->usernameError = sprintf($GLOBALS['TL_LANG']['ERR']['noSpace'], $GLOBALS['TL_LANG']['MSC']['username']);
 				}
 				// Validate the e-mail address (see #6003)
-				elseif (!\Validator::isEmail(\Input::post('email', true)))
+				elseif (!Validator::isEmail(Input::post('email', true)))
 				{
 					$this->Template->emailError = $GLOBALS['TL_LANG']['ERR']['email'];
 				}
 				// The passwords do not match
-				elseif (\Input::post('pass', true) != \Input::post('confirm_pass', true))
+				elseif (Input::post('pass', true) != Input::post('confirm_pass', true))
 				{
 					$this->Template->passwordError = $GLOBALS['TL_LANG']['ERR']['passwordMatch'];
 				}
