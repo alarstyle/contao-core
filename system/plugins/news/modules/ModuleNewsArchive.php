@@ -11,6 +11,7 @@
 namespace Contao;
 
 use Contao\Config;
+use Contao\Date;
 
 /**
  * Front end module "news archive".
@@ -115,7 +116,7 @@ class ModuleNewsArchive extends \ModuleNews
 			if ($intYear)
 			{
 				$strDate = $intYear;
-				$objDate = new \Date($strDate, 'Y');
+				$objDate = new Date($strDate, 'Y');
 				$intBegin = $objDate->yearBegin;
 				$intEnd = $objDate->yearEnd;
 				$this->headline .= ' ' . date('Y', $objDate->tstamp);
@@ -123,18 +124,18 @@ class ModuleNewsArchive extends \ModuleNews
 			elseif ($intMonth)
 			{
 				$strDate = $intMonth;
-				$objDate = new \Date($strDate, 'Ym');
+				$objDate = new Date($strDate, 'Ym');
 				$intBegin = $objDate->monthBegin;
 				$intEnd = $objDate->monthEnd;
-				$this->headline .= ' ' . \Date::parse('F Y', $objDate->tstamp);
+				$this->headline .= ' ' . Date::parse('F Y', $objDate->tstamp);
 			}
 			elseif ($intDay)
 			{
 				$strDate = $intDay;
-				$objDate = new \Date($strDate, 'Ymd');
+				$objDate = new Date($strDate, 'Ymd');
 				$intBegin = $objDate->dayBegin;
 				$intEnd = $objDate->dayEnd;
-				$this->headline .= ' ' . \Date::parse($objPage->dateFormat, $objDate->tstamp);
+				$this->headline .= ' ' . Date::parse($objPage->dateFormat, $objDate->tstamp);
 			}
 			elseif ($this->news_jumpToCurrent == 'all_items')
 			{

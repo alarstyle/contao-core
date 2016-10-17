@@ -11,6 +11,7 @@
 namespace Contao;
 
 use Contao\Config;
+use Contao\Date;
 use Contao\Input;
 use Contao\Environment;
 
@@ -162,7 +163,7 @@ class BackendSwitch extends Backend
 		}
 
 		$arrUsers = array();
-		$time = \Date::floorToMinute();
+		$time = Date::floorToMinute();
 
 		// Get the active front end users
 		$objUsers = $this->Database->prepare("SELECT username FROM tl_member WHERE username LIKE ? AND login='1' AND disable!='1' AND (start='' OR start<='$time') AND (stop='' OR stop>'" . ($time + 60) . "') ORDER BY username")

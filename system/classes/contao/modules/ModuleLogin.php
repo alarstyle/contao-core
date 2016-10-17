@@ -11,6 +11,7 @@
 namespace Contao\Modules;
 
 use Contao\Config;
+use Contao\Date;
 
 /**
  * Front end module "login".
@@ -176,7 +177,7 @@ class ModuleLogin extends AbstractModule
 				/** @var \PageModel $objPage */
 				global $objPage;
 
-				$this->Template->lastLogin = sprintf($GLOBALS['TL_LANG']['MSC']['lastLogin'][1], \Date::parse($objPage->datimFormat, $this->User->lastLogin));
+				$this->Template->lastLogin = sprintf($GLOBALS['TL_LANG']['MSC']['lastLogin'][1], Date::parse($objPage->datimFormat, $this->User->lastLogin));
 			}
 
 			return;

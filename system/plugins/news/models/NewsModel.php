@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Date;
 
 /**
  * Reads and writes news
@@ -185,7 +186,7 @@ class NewsModel extends \Model
 
 		if (!BE_USER_LOGGED_IN)
 		{
-			$time = \Date::floorToMinute();
+			$time = Date::floorToMinute();
 			$arrColumns[] = "($t.start='' OR $t.start<='$time') AND ($t.stop='' OR $t.stop>'" . ($time + 60) . "') AND $t.published='1'";
 		}
 
@@ -226,7 +227,7 @@ class NewsModel extends \Model
 		// Never return unpublished elements in the back end, so they don't end up in the RSS feed
 		if (!BE_USER_LOGGED_IN || TL_MODE == 'BE')
 		{
-			$time = \Date::floorToMinute();
+			$time = Date::floorToMinute();
 			$arrColumns[] = "($t.start='' OR $t.start<='$time') AND ($t.stop='' OR $t.stop>'" . ($time + 60) . "') AND $t.published='1'";
 		}
 
@@ -272,7 +273,7 @@ class NewsModel extends \Model
 
 		if (!BE_USER_LOGGED_IN)
 		{
-			$time = \Date::floorToMinute();
+			$time = Date::floorToMinute();
 			$arrColumns[] = "($t.start='' OR $t.start<='$time') AND ($t.stop='' OR $t.stop>'" . ($time + 60) . "') AND $t.published='1'";
 		}
 
@@ -295,7 +296,7 @@ class NewsModel extends \Model
 
 		if (!BE_USER_LOGGED_IN)
 		{
-			$time = \Date::floorToMinute();
+			$time = Date::floorToMinute();
 			$arrColumns[] = "($t.start='' OR $t.start<='$time') AND ($t.stop='' OR $t.stop>'" . ($time + 60) . "') AND $t.published='1'";
 		}
 
@@ -324,7 +325,7 @@ class NewsModel extends \Model
 
 		if (!BE_USER_LOGGED_IN)
 		{
-			$time = \Date::floorToMinute();
+			$time = Date::floorToMinute();
 			$arrColumns[] = "($t.start='' OR $t.start<='$time') AND ($t.stop='' OR $t.stop>'" . ($time + 60) . "') AND $t.published='1'";
 		}
 
@@ -366,7 +367,7 @@ class NewsModel extends \Model
 
 		if (!BE_USER_LOGGED_IN)
 		{
-			$time = \Date::floorToMinute();
+			$time = Date::floorToMinute();
 			$arrColumns[] = "($t.start='' OR $t.start<='$time') AND ($t.stop='' OR $t.stop>'" . ($time + 60) . "') AND $t.published='1'";
 		}
 
@@ -404,7 +405,7 @@ class NewsModel extends \Model
 
 		if (!BE_USER_LOGGED_IN)
 		{
-			$time = \Date::floorToMinute();
+			$time = Date::floorToMinute();
 			$arrColumns[] = "($t.start='' OR $t.start<='$time') AND ($t.stop='' OR $t.stop>'" . ($time + 60) . "') AND $t.published='1'";
 		}
 

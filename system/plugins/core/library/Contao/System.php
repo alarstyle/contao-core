@@ -847,7 +847,7 @@ abstract class System
 	 */
 	public static function parseDate($strFormat, $intTstamp=null)
 	{
-		return \Date::parse($strFormat, $intTstamp);
+		return Date::parse($strFormat, $intTstamp);
 	}
 
 

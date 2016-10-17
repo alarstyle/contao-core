@@ -12,6 +12,7 @@ namespace Contao\Drivers;
 
 use Contao\Config;
 use Contao\DataContainer;
+use Contao\Date;
 use Contao\Versions;
 
 
@@ -2040,7 +2041,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 			// Convert date formats into timestamps
 			if ($varValue != '' && in_array($arrData['eval']['rgxp'], array('date', 'time', 'datim')))
 			{
-				$objDate = new \Date($varValue, \Date::getFormatFromRgxp($arrData['eval']['rgxp']));
+				$objDate = new Date($varValue, Date::getFormatFromRgxp($arrData['eval']['rgxp']));
 				$varValue = $objDate->tstamp;
 			}
 

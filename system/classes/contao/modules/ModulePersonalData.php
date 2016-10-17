@@ -10,6 +10,7 @@
 
 namespace Contao\Modules;
 
+use Contao\Date;
 
 /**
  * Front end module "personal data".
@@ -231,7 +232,7 @@ class ModulePersonalData extends AbstractModule
 				{
 					try
 					{
-						$objDate = new \Date($varValue, \Date::getFormatFromRgxp($rgxp));
+						$objDate = new Date($varValue, Date::getFormatFromRgxp($rgxp));
 						$varValue = $objDate->tstamp;
 					}
 					catch (\OutOfBoundsException $e)

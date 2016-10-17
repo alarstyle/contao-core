@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Date;
 
 /**
  * Reads and writes content elements
@@ -387,7 +388,7 @@ class ContentModel extends \Model
 
 		if (!BE_USER_LOGGED_IN)
 		{
-			$time = \Date::floorToMinute();
+			$time = Date::floorToMinute();
 			$arrColumns[] = "($t.start='' OR $t.start<='$time') AND ($t.stop='' OR $t.stop>'" . ($time + 60) . "') AND $t.invisible=''";
 		}
 
@@ -425,7 +426,7 @@ class ContentModel extends \Model
 
 		if (!BE_USER_LOGGED_IN)
 		{
-			$time = \Date::floorToMinute();
+			$time = Date::floorToMinute();
 			$arrColumns[] = "($t.start='' OR $t.start<='$time') AND ($t.stop='' OR $t.stop>'" . ($time + 60) . "') AND $t.invisible=''";
 		}
 

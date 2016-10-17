@@ -11,6 +11,7 @@
 namespace Contao;
 
 use Contao\Config;
+use Contao\Date;
 use Contao\Modules\AbstractModule;
 
 
@@ -270,7 +271,7 @@ abstract class ModuleNews extends AbstractModule
 			switch ($field)
 			{
 				case 'date':
-					$return['date'] = \Date::parse($objPage->datimFormat, $objArticle->date);
+					$return['date'] = Date::parse($objPage->datimFormat, $objArticle->date);
 					break;
 
 				case 'author':

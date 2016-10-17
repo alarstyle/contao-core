@@ -520,15 +520,15 @@ class DC_Table extends DataContainer implements \listable, \editable
 			}
 			elseif ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$i]['eval']['rgxp'] == 'date')
 			{
-				$row[$i] = $value ? \Date::parse(Config::get('dateFormat'), $value) : '-';
+				$row[$i] = $value ? Date::parse(Config::get('dateFormat'), $value) : '-';
 			}
 			elseif ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$i]['eval']['rgxp'] == 'time')
 			{
-				$row[$i] = $value ? \Date::parse(Config::get('timeFormat'), $value) : '-';
+				$row[$i] = $value ? Date::parse(Config::get('timeFormat'), $value) : '-';
 			}
 			elseif ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$i]['eval']['rgxp'] == 'datim' || in_array($GLOBALS['TL_DCA'][$this->strTable]['fields'][$i]['flag'], array(5, 6, 7, 8, 9, 10)) || $i == 'tstamp')
 			{
-				$row[$i] = $value ? \Date::parse(Config::get('datimFormat'), $value) : '-';
+				$row[$i] = $value ? Date::parse(Config::get('datimFormat'), $value) : '-';
 			}
 			elseif ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$i]['inputType'] == 'checkbox' && !$GLOBALS['TL_DCA'][$this->strTable]['fields'][$i]['eval']['multiple'])
 			{
@@ -2901,7 +2901,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 		// Convert date formats into timestamps
 		if ($varValue != '' && in_array($arrData['eval']['rgxp'], array('date', 'time', 'datim')))
 		{
-			$objDate = new \Date($varValue, \Date::getFormatFromRgxp($arrData['eval']['rgxp']));
+			$objDate = new Date($varValue, Date::getFormatFromRgxp($arrData['eval']['rgxp']));
 			$varValue = $objDate->tstamp;
 		}
 
@@ -5300,7 +5300,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 						}
 						else
 						{
-							$objDate = new \Date($session['filter'][$filter][$field]);
+							$objDate = new Date($session['filter'][$filter][$field]);
 							$this->procedure[] = $field . ' BETWEEN ? AND ?';
 							$this->values[] = $objDate->dayBegin;
 							$this->values[] = $objDate->dayEnd;
@@ -5316,7 +5316,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 						}
 						else
 						{
-							$objDate = new \Date($session['filter'][$filter][$field]);
+							$objDate = new Date($session['filter'][$filter][$field]);
 							$this->procedure[] = $field . ' BETWEEN ? AND ?';
 							$this->values[] = $objDate->monthBegin;
 							$this->values[] = $objDate->monthEnd;
@@ -5332,7 +5332,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 						}
 						else
 						{
-							$objDate = new \Date($session['filter'][$filter][$field]);
+							$objDate = new Date($session['filter'][$filter][$field]);
 							$this->procedure[] = $field . ' BETWEEN ? AND ?';
 							$this->values[] = $objDate->yearBegin;
 							$this->values[] = $objDate->yearEnd;

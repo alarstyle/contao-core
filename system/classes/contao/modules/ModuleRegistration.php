@@ -223,7 +223,7 @@ class ModuleRegistration extends AbstractModule
 				{
 					try
 					{
-						$objDate = new \Date($varValue, \Date::getFormatFromRgxp($rgxp));
+						$objDate = new Date($varValue, Date::getFormatFromRgxp($rgxp));
 						$varValue = $objDate->tstamp;
 					}
 					catch (\OutOfBoundsException $e)

@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Date;
 
 /**
  * Reads and writes articles
@@ -169,7 +170,7 @@ class ArticleModel extends \Model
 
 		if (!BE_USER_LOGGED_IN)
 		{
-			$time = \Date::floorToMinute();
+			$time = Date::floorToMinute();
 			$arrColumns[] = "($t.start='' OR $t.start<='$time') AND ($t.stop='' OR $t.stop>'" . ($time + 60) . "') AND $t.published='1'";
 		}
 
@@ -192,7 +193,7 @@ class ArticleModel extends \Model
 
 		if (!BE_USER_LOGGED_IN)
 		{
-			$time = \Date::floorToMinute();
+			$time = Date::floorToMinute();
 			$arrColumns[] = "($t.start='' OR $t.start<='$time') AND ($t.stop='' OR $t.stop>'" . ($time + 60) . "') AND $t.published='1'";
 		}
 
@@ -233,7 +234,7 @@ class ArticleModel extends \Model
 
 		if (!BE_USER_LOGGED_IN)
 		{
-			$time = \Date::floorToMinute();
+			$time = Date::floorToMinute();
 			$arrColumns[] = "($t.start='' OR $t.start<='$time') AND ($t.stop='' OR $t.stop>'" . ($time + 60) . "') AND $t.published='1'";
 		}
 

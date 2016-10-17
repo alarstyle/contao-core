@@ -203,7 +203,7 @@ class tl_member_group extends Contao\Backend
 	public function addIcon($row, $label)
 	{
 		$image = 'mgroup';
-		$time = \Date::floorToMinute();
+		$time = \Contao\Date::floorToMinute();
 
 		$disabled = $row['start'] !== '' && $row['start'] > $time || $row['stop'] !== '' && $row['stop'] < $time;
 

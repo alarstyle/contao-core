@@ -499,7 +499,7 @@ class tl_member extends Contao\Backend
 	public function addIcon($row, $label, DataContainer $dc, $args)
 	{
 		$image = 'member';
-		$time = \Date::floorToMinute();
+		$time = \Contao\Date::floorToMinute();
 
 		$disabled = $row['start'] !== '' && $row['start'] > $time || $row['stop'] !== '' && $row['stop'] < $time;
 
