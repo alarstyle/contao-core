@@ -551,7 +551,7 @@ class tl_layout extends Contao\Backend
 			return array();
 		}
 
-		$objFeed = NewsFeedModel::findAll();
+		$objFeed = \COntao\Models\NewsFeedModel::findAll();
 
 		if ($objFeed === null)
 		{

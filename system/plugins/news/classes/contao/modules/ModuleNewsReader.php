@@ -8,17 +8,20 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Modules;
 
+use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\Input;
+use Contao\PluginLoader;
+use Contao\Models\NewsModel;
 
 /**
  * Front end module "news reader".
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ModuleNewsReader extends \ModuleNews
+class ModuleNewsReader extends ModuleNews
 {
 
 	/**
@@ -38,7 +41,7 @@ class ModuleNewsReader extends \ModuleNews
 		if (TL_MODE == 'BE')
 		{
 			/** @var \BackendTemplate|object $objTemplate */
-			$objTemplate = new \BackendTemplate('be_wildcard');
+			$objTemplate = new BackendTemplate('be_wildcard');
 
 			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['newsreader'][0]) . ' ###';
 			$objTemplate->title = $this->headline;
@@ -98,7 +101,7 @@ class ModuleNewsReader extends \ModuleNews
 		$this->Template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
 
 		// Get the news item
-		$objArticle = \NewsModel::findPublishedByParentAndIdOrAlias(\Input::get('items'), $this->news_archives);
+		$objArticle = NewsModel::findPublishedByParentAndIdOrAlias(Input::get('items'), $this->news_archives);
 
 		if (null === $objArticle)
 		{
@@ -123,7 +126,7 @@ class ModuleNewsReader extends \ModuleNews
 		}
 
 		// HOOK: comments extension required
-		if ($objArticle->noComments || !in_array('comments', \PluginLoader::getActive()))
+		if ($objArticle->noComments || !in_array('comments', PluginLoader::getActive()))
 		{
 			$this->Template->allowComments = false;
 

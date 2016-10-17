@@ -8,16 +8,19 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Modules;
 
+use Contao\BackendTemplate;
 use Contao\Date;
+use Contao\FrontendTemplate;
+use Contao\Input;
 
 /**
  * Front end module "news archive".
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ModuleNewsMenu extends \ModuleNews
+class ModuleNewsMenu extends ModuleNews
 {
 
 	/**
@@ -49,7 +52,7 @@ class ModuleNewsMenu extends \ModuleNews
 		if (TL_MODE == 'BE')
 		{
 			/** @var \BackendTemplate|object $objTemplate */
-			$objTemplate = new \BackendTemplate('be_wildcard');
+			$objTemplate = new BackendTemplate('be_wildcard');
 
 			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['newsmenu'][0]) . ' ###';
 			$objTemplate->title = $this->headline;
@@ -113,7 +116,7 @@ class ModuleNewsMenu extends \ModuleNews
 		$time = Date::floorToMinute();
 
 		/** @var \FrontendTemplate|object $objTemplate */
-		$objTemplate = new \FrontendTemplate('mod_newsmenu_year');
+		$objTemplate = new FrontendTemplate('mod_newsmenu_year');
 
 		$this->Template = $objTemplate;
 
@@ -217,7 +220,7 @@ class ModuleNewsMenu extends \ModuleNews
 		$time = Date::floorToMinute();
 
 		/** @var \FrontendTemplate|object $objTemplate */
-		$objTemplate = new \FrontendTemplate('mod_newsmenu_day');
+		$objTemplate = new FrontendTemplate('mod_newsmenu_day');
 
 		$this->Template = $objTemplate;
 
@@ -235,7 +238,7 @@ class ModuleNewsMenu extends \ModuleNews
 		// Create the date object
 		try
 		{
-			$this->Date = \Input::get('day') ? new Date(\Input::get('day'), 'Ymd') : new Date();
+			$this->Date = Input::get('day') ? new Date(Input::get('day'), 'Ymd') : new Date();
 		}
 		catch (\OutOfBoundsException $e)
 		{

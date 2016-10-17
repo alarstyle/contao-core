@@ -10,28 +10,6 @@
 
 
 /**
- * Register the classes
- */
-ClassLoader::addClasses(array
-(
-	// Classes
-	//'Contao\News'              => 'system/plugins/news/classes/News.php',
-
-	// Models
-	'Contao\NewsArchiveModel'  => 'system/plugins/news/models/NewsArchiveModel.php',
-	'Contao\NewsFeedModel'     => 'system/plugins/news/models/NewsFeedModel.php',
-	'Contao\NewsModel'         => 'system/plugins/news/models/NewsModel.php',
-
-	// Modules
-	'Contao\ModuleNews'        => 'system/plugins/news/modules/ModuleNews.php',
-	'Contao\ModuleNewsArchive' => 'system/plugins/news/modules/ModuleNewsArchive.php',
-	'Contao\ModuleNewsList'    => 'system/plugins/news/modules/ModuleNewsList.php',
-	'Contao\ModuleNewsMenu'    => 'system/plugins/news/modules/ModuleNewsMenu.php',
-	'Contao\ModuleNewsReader'  => 'system/plugins/news/modules/ModuleNewsReader.php',
-));
-
-
-/**
  * Register the templates
  */
 \Contao\TemplateLoader::addFiles(array

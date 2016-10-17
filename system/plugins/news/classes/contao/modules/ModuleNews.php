@@ -8,11 +8,19 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Modules;
 
 use Contao\Config;
 use Contao\Date;
-use Contao\Modules\AbstractModule;
+use Contao\Environment;
+use Contao\FrontendTemplate;
+use Contao\Input;
+use Contao\StringUtil;
+use Contao\Validator;
+use Contao\ContentModel;
+use Contao\PageModel;
+use Contao\FilesModel;
+use Contao\Models\NewsArchiveModel;
 
 
 /**
@@ -45,7 +53,7 @@ abstract class ModuleNews extends AbstractModule
 		}
 
 		$this->import('Contao\\FrontendUser', 'User');
-		$objArchive = \NewsArchiveModel::findMultipleByIds($arrArchives);
+		$objArchive = NewsArchiveModel::findMultipleByIds($arrArchives);
 		$arrArchives = array();
 
 		if ($objArchive !== null)
@@ -88,7 +96,7 @@ abstract class ModuleNews extends AbstractModule
 	protected function parseArticle($objArticle, $blnAddArchive=false, $strClass='', $intCount=0)
 	{
 		/** @var \FrontendTemplate|object $objTemplate */
-		$objTemplate = new \FrontendTemplate($this->news_template);
+		$objTemplate = new FrontendTemplate($this->news_template);
 		$objTemplate->setData($objArticle->row());
 
 		$objTemplate->class = (($objArticle->cssClass != '') ? ' ' . $objArticle->cssClass : '') . $strClass;
@@ -109,9 +117,9 @@ abstract class ModuleNews extends AbstractModule
 		{
 			$objTemplate->hasTeaser = true;
 
-			$objTemplate->teaser = \StringUtil::toHtml5($objArticle->teaser);
+			$objTemplate->teaser = StringUtil::toHtml5($objArticle->teaser);
 
-			$objTemplate->teaser = \StringUtil::encodeEmail($objTemplate->teaser);
+			$objTemplate->teaser = StringUtil::encodeEmail($objTemplate->teaser);
 		}
 
 		// Display the "read more" button for external/article links
@@ -129,7 +137,7 @@ abstract class ModuleNews extends AbstractModule
 			$objTemplate->text = function () use ($id)
 			{
 				$strText = '';
-				$objElement = \ContentModel::findPublishedByPidAndTable($id, 'tl_news');
+				$objElement = ContentModel::findPublishedByPidAndTable($id, 'tl_news');
 
 				if ($objElement !== null)
 				{
@@ -142,7 +150,7 @@ abstract class ModuleNews extends AbstractModule
 				return $strText;
 			};
 
-			$objTemplate->hasText = (\ContentModel::countPublishedByPidAndTable($objArticle->id, 'tl_news') > 0);
+			$objTemplate->hasText = (ContentModel::countPublishedByPidAndTable($objArticle->id, 'tl_news') > 0);
 		}
 
 		$arrMeta = $this->getMetaFields($objArticle);
@@ -161,11 +169,11 @@ abstract class ModuleNews extends AbstractModule
 		// Add an image
 		if ($objArticle->addImage && $objArticle->singleSRC != '')
 		{
-			$objModel = \FilesModel::findByUuid($objArticle->singleSRC);
+			$objModel = FilesModel::findByUuid($objArticle->singleSRC);
 
 			if ($objModel === null)
 			{
-				if (!\Validator::isUuid($objArticle->singleSRC))
+				if (!Validator::isUuid($objArticle->singleSRC))
 				{
 					$objTemplate->text = '<p class="error">'.$GLOBALS['TL_LANG']['ERR']['version2format'].'</p>';
 				}
@@ -281,16 +289,6 @@ abstract class ModuleNews extends AbstractModule
 						$return['author'] = $GLOBALS['TL_LANG']['MSC']['by'] . ' ' . $objAuthor->name;
 					}
 					break;
-
-				case 'comments':
-					if ($objArticle->noComments || !in_array('comments', \PluginLoader::getActive()) || $objArticle->source != 'default')
-					{
-						break;
-					}
-					$intTotal = \CommentsModel::countPublishedBySourceAndParent('tl_news', $objArticle->id);
-					$return['ccount'] = $intTotal;
-					$return['comments'] = sprintf($GLOBALS['TL_LANG']['MSC']['commentCount'], $intTotal);
-					break;
 			}
 		}
 
@@ -325,7 +323,7 @@ abstract class ModuleNews extends AbstractModule
 			case 'external':
 				if (substr($objItem->url, 0, 7) == 'mailto:')
 				{
-					self::$arrUrlCache[$strCacheKey] = \StringUtil::encodeEmail($objItem->url);
+					self::$arrUrlCache[$strCacheKey] = StringUtil::encodeEmail($objItem->url);
 				}
 				else
 				{
@@ -355,11 +353,11 @@ abstract class ModuleNews extends AbstractModule
 		// Link to the default page
 		if (self::$arrUrlCache[$strCacheKey] === null)
 		{
-			$objPage = \PageModel::findWithDetails($objItem->getRelated('pid')->jumpTo);
+			$objPage = PageModel::findWithDetails($objItem->getRelated('pid')->jumpTo);
 
 			if ($objPage === null)
 			{
-				self::$arrUrlCache[$strCacheKey] = ampersand(\Environment::get('request'), true);
+				self::$arrUrlCache[$strCacheKey] = ampersand(Environment::get('request'), true);
 			}
 			else
 			{
@@ -367,9 +365,9 @@ abstract class ModuleNews extends AbstractModule
 			}
 
 			// Add the current archive parameter (news archive)
-			if ($blnAddArchive && \Input::get('month') != '')
+			if ($blnAddArchive && Input::get('month') != '')
 			{
-				self::$arrUrlCache[$strCacheKey] .= '?' . 'month=' . \Input::get('month');
+				self::$arrUrlCache[$strCacheKey] .= '?' . 'month=' . Input::get('month');
 			}
 		}
 
@@ -402,7 +400,7 @@ abstract class ModuleNews extends AbstractModule
 		// Encode e-mail addresses
 		if (substr($objArticle->url, 0, 7) == 'mailto:')
 		{
-			$strArticleUrl = \StringUtil::encodeEmail($objArticle->url);
+			$strArticleUrl = StringUtil::encodeEmail($objArticle->url);
 		}
 
 		// Ampersand URIs

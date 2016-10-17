@@ -31,10 +31,10 @@ array_insert($GLOBALS['FE_MOD'], 2, array
 (
 	'news' => array
 	(
-		'newslist'    => 'ModuleNewsList',
-		'newsreader'  => 'ModuleNewsReader',
-		'newsarchive' => 'ModuleNewsArchive',
-		'newsmenu'    => 'ModuleNewsMenu'
+		'newslist'    => 'Contao\\Modules\\ModuleNewsList',
+		'newsreader'  => 'Contao\\Modules\\ModuleNewsReader',
+		'newsarchive' => 'Contao\\Modules\\ModuleNewsArchive',
+		'newsmenu'    => 'Contao\\Modules\\ModuleNewsMenu'
 	)
 ));
 

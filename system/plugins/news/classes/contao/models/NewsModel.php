@@ -8,7 +8,7 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Models;
 
 use Contao\Date;
 
@@ -155,7 +155,7 @@ use Contao\Date;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class NewsModel extends \Model
+class NewsModel extends \Contao\Model
 {
 
 	/**

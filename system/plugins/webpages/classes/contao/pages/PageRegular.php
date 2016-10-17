@@ -644,7 +644,7 @@ class PageRegular extends Frontend
 		// Add newsfeeds
 		if (!empty($newsfeeds) && is_array($newsfeeds))
 		{
-			$objFeeds = \NewsFeedModel::findByIds($newsfeeds);
+			$objFeeds = \Contao\Models\NewsFeedModel::findByIds($newsfeeds);
 
 			if ($objFeeds !== null)
 			{

@@ -10,6 +10,10 @@
 
 namespace Contao;
 
+use Contao\Models\NewsArchiveModel;
+use Contao\Models\NewsFeedModel;
+use Contao\Models\NewsModel;
+
 /**
  * Provide methods regarding news archives.
  *
@@ -79,7 +83,7 @@ class News extends Frontend
      */
     public function generateFeedsByArchive($intId)
     {
-        $objFeed = \NewsFeedModel::findByArchive($intId);
+        $objFeed = NewsFeedModel::findByArchive($intId);
 
         if ($objFeed !== null)
         {
@@ -266,7 +270,7 @@ class News extends Frontend
         $time = Date::floorToMinute();
 
         // Get all news archives
-        $objArchive = \NewsArchiveModel::findByProtected('');
+        $objArchive = NewsArchiveModel::findByProtected('');
 
         // Walk through each archive
         if ($objArchive !== null)
@@ -324,7 +328,7 @@ class News extends Frontend
                 $strUrl = $arrProcessed[$objArchive->jumpTo];
 
                 // Get the items
-                $objArticle = \NewsModel::findPublishedDefaultByPid($objArchive->id);
+                $objArticle = NewsModel::findPublishedDefaultByPid($objArchive->id);
 
                 if ($objArticle !== null)
                 {

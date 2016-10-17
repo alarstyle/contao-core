@@ -509,7 +509,7 @@ class InsertTags extends \Controller
 				case 'news_open':
 				case 'news_url':
 				case 'news_title':
-					if (($objNews = \NewsModel::findByIdOrAlias($elements[1])) === null)
+					if (($objNews = \Contao\NewsModel::findByIdOrAlias($elements[1])) === null)
 					{
 						break;
 					}
@@ -640,7 +640,7 @@ class InsertTags extends \Controller
 
 				// News teaser
 				case 'news_teaser':
-					$objTeaser = \NewsModel::findByIdOrAlias($elements[1]);
+					$objTeaser = \Contao\NewsModel::findByIdOrAlias($elements[1]);
 
 					if ($objTeaser !== null)
 					{
@@ -660,7 +660,7 @@ class InsertTags extends \Controller
 
 				// News feed URL
 				case 'news_feed':
-					$objFeed = \NewsFeedModel::findByPk($elements[1]);
+					$objFeed = \Contao\Models\NewsFeedModel::findByPk($elements[1]);
 
 					if ($objFeed !== null)
 					{

@@ -8,16 +8,21 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Modules;
 
+use Contao\BackendTemplate;
 use Contao\Config;
+use Contao\Input;
+use Contao\Pagination;
+use Contao\System;
+use Contao\Models\NewsModel;
 
 /**
  * Front end module "news list".
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ModuleNewsList extends \ModuleNews
+class ModuleNewsList extends ModuleNews
 {
 
 	/**
@@ -37,7 +42,7 @@ class ModuleNewsList extends \ModuleNews
 		if (TL_MODE == 'BE')
 		{
 			/** @var \BackendTemplate|object $objTemplate */
-			$objTemplate = new \BackendTemplate('be_wildcard');
+			$objTemplate = new BackendTemplate('be_wildcard');
 
 			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['newslist'][0]) . ' ###';
 			$objTemplate->title = $this->headline;
@@ -112,7 +117,7 @@ class ModuleNewsList extends \ModuleNews
 
 			// Get the current page
 			$id = 'page_n' . $this->id;
-			$page = (\Input::get($id) !== null) ? \Input::get($id) : 1;
+			$page = (Input::get($id) !== null) ? Input::get($id) : 1;
 
 			// Do not index or cache the page if the page number is outside the range
 			if ($page < 1 || $page > max(ceil($total/$this->perPage), 1))
@@ -137,7 +142,7 @@ class ModuleNewsList extends \ModuleNews
 			}
 
 			// Add the pagination menu
-			$objPagination = new \Pagination($total, $this->perPage, Config::get('maxPaginationLinks'), $id);
+			$objPagination = new Pagination($total, $this->perPage, Config::get('maxPaginationLinks'), $id);
 			$this->Template->pagination = $objPagination->generate("\n  ");
 		}
 
@@ -168,7 +173,7 @@ class ModuleNewsList extends \ModuleNews
 		{
 			foreach ($GLOBALS['TL_HOOKS']['newsListCountItems'] as $callback)
 			{
-				if (($intResult = \System::importStatic($callback[0])->{$callback[1]}($newsArchives, $blnFeatured, $this)) === false)
+				if (($intResult = System::importStatic($callback[0])->{$callback[1]}($newsArchives, $blnFeatured, $this)) === false)
 				{
 					continue;
 				}
@@ -180,7 +185,7 @@ class ModuleNewsList extends \ModuleNews
 			}
 		}
 
-		return \NewsModel::countPublishedByPids($newsArchives, $blnFeatured);
+		return NewsModel::countPublishedByPids($newsArchives, $blnFeatured);
 	}
 
 
@@ -201,18 +206,18 @@ class ModuleNewsList extends \ModuleNews
 		{
 			foreach ($GLOBALS['TL_HOOKS']['newsListFetchItems'] as $callback)
 			{
-				if (($objCollection = \System::importStatic($callback[0])->{$callback[1]}($newsArchives, $blnFeatured, $limit, $offset, $this)) === false)
+				if (($objCollection = System::importStatic($callback[0])->{$callback[1]}($newsArchives, $blnFeatured, $limit, $offset, $this)) === false)
 				{
 					continue;
 				}
 
-				if ($objCollection === null || $objCollection instanceof \Model\Collection)
+				if ($objCollection === null || $objCollection instanceof \Contao\Model\Collection)
 				{
 					return $objCollection;
 				}
 			}
 		}
 
-		return \NewsModel::findPublishedByPids($newsArchives, $blnFeatured, $limit, $offset);
+		return NewsModel::findPublishedByPids($newsArchives, $blnFeatured, $limit, $offset);
 	}
 }
