@@ -288,7 +288,7 @@ class RepositoryManager extends RepositoryBackendModule
 						if ($error) break;
 					} // foreach
 					// PATCH: purge the internal cache
-					$this->import('Automator');
+					$this->import('Contao\\Automator', 'Automator');
 					$this->Automator->purgeInternalCache();
 				} // if
 			} // if
@@ -454,7 +454,7 @@ class RepositoryManager extends RepositoryBackendModule
 						if ($error) break;
 					} // foreach
 					// PATCH: purge the internal cache
-					$this->import('Automator');
+					$this->import('Contao\\Automator', 'Automator');
 					$this->Automator->purgeInternalCache();
 				} // if
 			} // if
@@ -521,7 +521,7 @@ class RepositoryManager extends RepositoryBackendModule
 				else
 					$rep->f_stage = $rep->uist_showlog;
 				// PATCH: purge the internal cache
-				$this->import('Automator');
+				$this->import('Contao\\Automator', 'Automator');
 				$this->Automator->purgeInternalCache();
 			} // if
 		} else {

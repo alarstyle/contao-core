@@ -545,7 +545,7 @@ class tl_settings extends Contao\Backend
 			// Purge the internal cache (see #5016)
 			if ($blnPurgeCache)
 			{
-				$this->import('Automator');
+				$this->import('Contao\\Automator', 'Automator');
 				$this->Automator->purgeInternalCache();
 			}
 		}
@@ -608,7 +608,7 @@ class tl_settings extends Contao\Backend
 	{
 		if ($varValue != Config::get('coreOnlyMode'))
 		{
-			$this->import('Automator');
+			$this->import('Contao\\Automator', 'Automator');
 			$this->Automator->purgeInternalCache();
 		}
 
@@ -725,7 +725,7 @@ class tl_settings extends Contao\Backend
 	{
 		if ($varValue && $varValue !== Config::get('bypassCache'))
 		{
-			$this->import('Automator');
+			$this->import('Contao\\Automator', 'Automator');
 			$this->Automator->purgeInternalCache();
 		}
 

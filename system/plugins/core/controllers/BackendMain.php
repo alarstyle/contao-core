@@ -73,7 +73,7 @@ class BackendMain extends Backend
 			// Safe mode off
 			if (Input::get('smo'))
 			{
-				$this->import('Automator');
+				$this->import('Contao\\Automator', 'Automator');
 				$this->Automator->purgeInternalCache();
 				Config::persist('coreOnlyMode', false);
 				$this->redirect($this->getReferer());
@@ -89,7 +89,7 @@ class BackendMain extends Backend
 			// Build internal cache
 			if (Input::get('bic'))
 			{
-				$this->import('Automator');
+				$this->import('Contao\\Automator', 'Automator');
 				$this->Automator->generateInternalCache();
 				$this->redirect($this->getReferer());
 			}

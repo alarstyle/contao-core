@@ -691,15 +691,15 @@ abstract class Controller extends \System
 		// Add the syntax highlighter scripts
 		if (!empty($GLOBALS['TL_HIGHLIGHTER']) && is_array($GLOBALS['TL_HIGHLIGHTER']))
 		{
-			$objCombiner = new \Combiner();
+			$objCombiner = new Combiner();
 
 			foreach (array_unique($GLOBALS['TL_HIGHLIGHTER']) as $script)
 			{
 				$objCombiner->add($script);
 			}
 
-			$strScripts .= "\n" . \Template::generateScriptTag($objCombiner->getCombinedFile());
-			$strScripts .= "\n" . \Template::generateInlineScript('SyntaxHighlighter.defaults.toolbar=false;SyntaxHighlighter.all()') . "\n";
+			$strScripts .= "\n" . Template::generateScriptTag($objCombiner->getCombinedFile());
+			$strScripts .= "\n" . Template::generateInlineScript('SyntaxHighlighter.defaults.toolbar=false;SyntaxHighlighter.all()') . "\n";
 		}
 
 		// Command scheduler
@@ -711,7 +711,7 @@ abstract class Controller extends \System
 		$arrReplace['[[TL_BODY]]'] = $strScripts;
 		$strScripts = '';
 
-		$objCombiner = new \Combiner();
+		$objCombiner = new Combiner();
 
 		// Add the CSS framework style sheets
 		if (!empty($GLOBALS['TL_FRAMEWORK_CSS']) && is_array($GLOBALS['TL_FRAMEWORK_CSS']))
@@ -771,7 +771,7 @@ abstract class Controller extends \System
 		// Create the aggregated style sheet
 		if ($objCombiner->hasEntries())
 		{
-			$strScripts .= \Template::generateStyleTag($objCombiner->getCombinedFile(), 'all') . "\n";
+			$strScripts .= Template::generateStyleTag($objCombiner->getCombinedFile(), 'all') . "\n";
 		}
 
 		$arrReplace['[[TL_CSS]]'] = $strScripts;
@@ -780,12 +780,12 @@ abstract class Controller extends \System
 		// Add the internal scripts
 		if (!empty($GLOBALS['TL_JAVASCRIPT']) && is_array($GLOBALS['TL_JAVASCRIPT']))
 		{
-			$objCombiner = new \Combiner();
-			$objCombinerAsync = new \Combiner();
+			$objCombiner = new Combiner();
+			$objCombinerAsync = new Combiner();
 
 			foreach (array_unique($GLOBALS['TL_JAVASCRIPT']) as $javascript)
 			{
-				$options = \StringUtil::resolveFlaggedUrl($javascript);
+				$options = StringUtil::resolveFlaggedUrl($javascript);
 
 				if ($options->static)
 				{
@@ -805,12 +805,12 @@ abstract class Controller extends \System
 			// Create the aggregated script and add it before the non-static scripts (see #4890)
 			if ($objCombiner->hasEntries())
 			{
-				$strScripts = \Template::generateScriptTag($objCombiner->getCombinedFile()) . "\n" . $strScripts;
+				$strScripts = Template::generateScriptTag($objCombiner->getCombinedFile()) . "\n" . $strScripts;
 			}
 
 			if ($objCombinerAsync->hasEntries())
 			{
-				$strScripts = \Template::generateScriptTag($objCombinerAsync->getCombinedFile(), true) . "\n" . $strScripts;
+				$strScripts = Template::generateScriptTag($objCombinerAsync->getCombinedFile(), true) . "\n" . $strScripts;
 			}
 		}
 
@@ -1825,7 +1825,7 @@ abstract class Controller extends \System
 	 */
 	protected function removeOldFeeds($blnReturn=false)
 	{
-		$this->import('Automator');
+		$this->import('Contao\\Automator', 'Automator');
 		$this->Automator->purgeXmlFiles($blnReturn);
 	}
 

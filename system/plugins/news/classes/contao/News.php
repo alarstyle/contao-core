@@ -59,7 +59,7 @@ class News extends Frontend
      */
     public function generateFeeds()
     {
-        $this->import('Automator');
+        $this->import('Contao\\Automator', 'Automator');
         $this->Automator->purgeXmlFiles();
 
         $objFeed = NewsFeedModel::findAll();

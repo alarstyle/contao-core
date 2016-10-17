@@ -650,7 +650,7 @@ class tl_user extends \Contao\Backend
 
 			if (is_array($arrPurge))
 			{
-				$this->import('Automator');
+				$this->import('Contao\\Automator', 'Automator');
 
 				if (in_array('purge_session', $arrPurge))
 				{

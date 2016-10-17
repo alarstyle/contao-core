@@ -266,22 +266,22 @@ $GLOBALS['TL_PURGE'] = array
 	(
 		'index' => array
 		(
-			'callback' => array('Automator', 'purgeSearchTables'),
+			'callback' => array('Contao\\Automator', 'purgeSearchTables'),
 			'affected' => array('tl_search', 'tl_search_index')
 		),
 		'undo' => array
 		(
-			'callback' => array('Automator', 'purgeUndoTable'),
+			'callback' => array('Contao\\Automator', 'purgeUndoTable'),
 			'affected' => array('tl_undo')
 		),
 		'versions' => array
 		(
-			'callback' => array('Automator', 'purgeVersionTable'),
+			'callback' => array('Contao\\Automator', 'purgeVersionTable'),
 			'affected' => array('tl_version')
 		),
 		'log' => array
 		(
-			'callback' => array('Automator', 'purgeSystemLog'),
+			'callback' => array('Contao\\Automator', 'purgeSystemLog'),
 			'affected' => array('tl_log')
 		)
 	),
@@ -289,32 +289,32 @@ $GLOBALS['TL_PURGE'] = array
 	(
 		'images' => array
 		(
-			'callback' => array('Automator', 'purgeImageCache'),
+			'callback' => array('Contao\\Automator', 'purgeImageCache'),
 			'affected' => array('assets/images')
 		),
 		'scripts' => array
 		(
-			'callback' => array('Automator', 'purgeScriptCache'),
+			'callback' => array('Contao\\Automator', 'purgeScriptCache'),
 			'affected' => array('assets/js', 'assets/css')
 		),
 		'pages' => array
 		(
-			'callback' => array('Automator', 'purgePageCache'),
+			'callback' => array('Contao\\Automator', 'purgePageCache'),
 			'affected' => array('system/cache/html')
 		),
 		'search' => array
 		(
-			'callback' => array('Automator', 'purgeSearchCache'),
+			'callback' => array('Contao\\Automator', 'purgeSearchCache'),
 			'affected' => array('system/cache/search')
 		),
 		'internal' => array
 		(
-			'callback' => array('Automator', 'purgeInternalCache'),
+			'callback' => array('Contao\\Automator', 'purgeInternalCache'),
 			'affected' => array('system/cache/config', 'system/cache/dca', 'system/cache/language', 'system/cache/sql')
 		),
 		'temp' => array
 		(
-			'callback' => array('Automator', 'purgeTempFolder'),
+			'callback' => array('Contao\\Automator', 'purgeTempFolder'),
 			'affected' => array('system/tmp')
 		)
 	),
@@ -322,7 +322,7 @@ $GLOBALS['TL_PURGE'] = array
 	(
 		'xml' => array
 		(
-			'callback' => array('Automator', 'generateXmlFiles')
+			'callback' => array('Contao\\Automator', 'generateXmlFiles')
 		)
 	)
 );
@@ -354,19 +354,19 @@ $GLOBALS['TL_CRON'] = array
 (
 	'monthly' => array
 	(
-		array('Automator', 'purgeImageCache')
+		array('Contao\\Automator', 'purgeImageCache')
 	),
 	'weekly' => array
 	(
-		array('Automator', 'generateSitemap'),
-		array('Automator', 'purgeScriptCache'),
-		array('Automator', 'purgeSearchCache')
+		array('Contao\\Automator', 'generateSitemap'),
+		array('Contao\\Automator', 'purgeScriptCache'),
+		array('Contao\\Automator', 'purgeSearchCache')
 	),
 	'daily' => array
 	(
-		array('Automator', 'rotateLogs'),
-		array('Automator', 'purgeTempFolder'),
-		array('Automator', 'checkForUpdates')
+		array('Contao\\Automator', 'rotateLogs'),
+		array('Contao\\Automator', 'purgeTempFolder'),
+		array('Contao\\Automator', 'checkForUpdates')
 	),
 	'hourly' => array(),
 	'minutely' => array()

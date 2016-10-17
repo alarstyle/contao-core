@@ -35,7 +35,7 @@ use MatthiasMullie\Minify;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-abstract class Template extends \BaseTemplate
+abstract class Template extends BaseTemplate
 {
 
 	/**

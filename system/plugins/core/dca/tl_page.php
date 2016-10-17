@@ -1078,7 +1078,7 @@ class tl_page extends Contao\Backend
 
 		$varValue = standardize($varValue); // see #5096
 
-		$this->import('Automator');
+		$this->import('Contao\\Automator', 'Automator');
 		$arrFeeds = $this->Automator->purgeXmlFiles(true);
 
 		// Alias exists
@@ -1520,7 +1520,7 @@ class tl_page extends Contao\Backend
 	 */
 	public function updateSitemap(DataContainer $dc)
 	{
-		$this->import('Automator');
+		$this->import('Contao\\Automator', 'Automator');
 		$this->Automator->generateSitemap($dc->id);
 	}
 

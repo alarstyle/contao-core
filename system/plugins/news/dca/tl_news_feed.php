@@ -370,7 +370,7 @@ class tl_news_feed extends \Contao\Backend
 			$this->News->generateFeedsByArchive($id);
 		}
 
-		$this->import('Automator');
+		$this->import('Contao\\Automator', 'Automator');
 		$this->Automator->generateSitemap();
 
 		$this->Session->set('news_feed_updater', null);
@@ -450,7 +450,7 @@ class tl_news_feed extends \Contao\Backend
 
 		$varValue = standardize($varValue); // see #5096
 
-		$this->import('Automator');
+		$this->import('Contao\\Automator', 'Automator');
 		$arrFeeds = $this->Automator->purgeXmlFiles(true);
 
 		// Alias exists

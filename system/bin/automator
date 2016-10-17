@@ -31,12 +31,12 @@ require dirname(__DIR__) . '/initialize.php';
 $commands = array();
 
 // Find all public methods
-$class   = new ReflectionClass('Automator');
+$class   = new ReflectionClass('Contao\\Automator');
 $methods = $class->getMethods(ReflectionMethod::IS_PUBLIC);
 
 // Get the available commands
 foreach ($methods as $method) {
-	if ($method->class == 'Contao\Automator' && $method->name != '__construct') {
+	if ($method->class == 'Contao\\Automator' && $method->name != '__construct') {
 		$commands[] = $method->name;
 	}
 }
@@ -59,7 +59,7 @@ if (!in_array($argv[1], $commands)) {
 }
 
 // Run
-$automator = new Automator();
+$automator = new \Contao\Automator();
 $automator->{$argv[1]}();
 
 // Release the lock

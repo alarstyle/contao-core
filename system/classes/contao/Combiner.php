@@ -28,7 +28,7 @@ use Leafo\ScssPhp\Compiler;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class Combiner extends \System
+class Combiner extends System
 {
 
 	/**

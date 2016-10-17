@@ -100,7 +100,7 @@ use Contao\Validator;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-abstract class Editor extends \BaseTemplate
+abstract class Editor extends BaseTemplate
 {
 
 	/**

@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-abstract class BaseTemplate extends \Controller
+abstract class BaseTemplate extends Controller
 {
 
 	/**

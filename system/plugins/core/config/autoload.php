@@ -79,10 +79,7 @@ ClassLoader::addClasses(array
 	'Contao\FormTextField'             => 'system/plugins/core/forms/FormTextField.php',
 
 	// Library
-	'Contao\Automator'                 => 'system/plugins/core/library/Contao/Automator.php',
-	'Contao\BaseTemplate'              => 'system/plugins/core/library/Contao/BaseTemplate.php',
 	'Contao\ClassLoader'               => 'system/plugins/core/library/Contao/ClassLoader.php',
-	'Contao\Combiner'                  => 'system/plugins/core/library/Contao/Combiner.php',
 	'Contao\Controller'                => 'system/plugins/core/library/Contao/Controller.php',
 	'Contao\Dbafs'                     => 'system/plugins/core/library/Contao/Dbafs.php',
 	'Contao\DcaExtractor'              => 'system/plugins/core/library/Contao/DcaExtractor.php',

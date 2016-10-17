@@ -178,7 +178,7 @@ class tl_content_news extends \Contao\Backend
 			$this->News->generateFeedsByArchive($id);
 		}
 
-		$this->import('Automator');
+		$this->import('Contao\\Automator', 'Automator');
 		$this->Automator->generateSitemap();
 
 		$this->Session->set('news_feed_updater', null);
