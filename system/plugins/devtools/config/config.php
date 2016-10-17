@@ -16,18 +16,18 @@ $GLOBALS['BE_MOD']['devtools'] = array
 (
 	'autoload' => array
 	(
-		'callback'   => 'ModuleAutoload',
+		'callback'   => 'Contao\\ModuleAutoload',
 		'icon'       => 'system/plugins/devtools/assets/autoload.gif'
 	),
 	'extension' => array
 	(
 		'tables'     => array('tl_extension'),
-		'create'     => array('ModuleExtension', 'generate'),
+		'create'     => array('Contao\\ModuleExtension', 'generate'),
 		'icon'       => 'system/plugins/devtools/assets/extension.gif'
 	),
 	'labels' => array
 	(
-		'callback'   => 'ModuleLabels',
+		'callback'   => 'Contao\\ModuleLabels',
 		'icon'       => 'system/plugins/devtools/assets/labels.gif',
 		'stylesheet' => 'system/plugins/devtools/assets/labels.css'
 	)

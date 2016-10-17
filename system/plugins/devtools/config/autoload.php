@@ -10,18 +10,6 @@
 
 
 /**
- * Register the classes
- */
-ClassLoader::addClasses(array
-(
-	// Modules
-	'Contao\ModuleAutoload'  => 'system/plugins/devtools/modules/ModuleAutoload.php',
-	'Contao\ModuleExtension' => 'system/plugins/devtools/modules/ModuleExtension.php',
-	'Contao\ModuleLabels'    => 'system/plugins/devtools/modules/ModuleLabels.php',
-));
-
-
-/**
  * Register the templates
  */
 \Contao\TemplateLoader::addFiles(array
