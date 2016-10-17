@@ -26,7 +26,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormTextField extends \Editor
+class FormTextField extends \Contao\Editor
 {
 
 	/**

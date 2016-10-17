@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Editor;
 
 /**
  * Provide methods to handle front end forms.
@@ -519,7 +520,7 @@ class Form extends \Hybrid
 			{
 				if ($v === '')
 				{
-					$arrSet[$k] = \Editor::getEmptyValueByFieldType($GLOBALS['TL_DCA'][$this->targetTable]['fields'][$k]['sql']);
+					$arrSet[$k] = Editor::getEmptyValueByFieldType($GLOBALS['TL_DCA'][$this->targetTable]['fields'][$k]['sql']);
 				}
 			}
 

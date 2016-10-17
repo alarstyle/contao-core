@@ -174,7 +174,7 @@ class Theme extends Backend
   <h4>'.$GLOBALS['TL_LANG']['tl_theme']['tables_fields'].'</h4>';
 
 			// Find the XML file
-			$objArchive = new \ZipReader($strFile);
+			$objArchive = new ZipReader($strFile);
 
 			// Continue if there is no XML file
 			if ($objArchive->getFile('theme.xml') === false)
@@ -307,7 +307,7 @@ class Theme extends Backend
 			$xml = null;
 
 			// Open the archive
-			$objArchive = new \ZipReader($strZipFile);
+			$objArchive = new ZipReader($strZipFile);
 
 			// Extract all files
 			while ($objArchive->next())
@@ -324,7 +324,7 @@ class Theme extends Backend
 				// Limit file operations to files and the templates directory
 				if (strncmp($objArchive->file_name, 'files/', 6) !== 0 && strncmp($objArchive->file_name, 'tl_files/', 9) !== 0 && strncmp($objArchive->file_name, 'templates/', 10) !== 0)
 				{
-					\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['invalidFile'], $objArchive->file_name));
+					Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['invalidFile'], $objArchive->file_name));
 					continue;
 				}
 
@@ -335,14 +335,14 @@ class Theme extends Backend
 				}
 				catch (\Exception $e)
 				{
-					\Message::addError($e->getMessage());
+					Message::addError($e->getMessage());
 				}
 			}
 
 			// Continue if there is no XML file
 			if (!$xml instanceof \DOMDocument)
 			{
-				\Message::addError(sprintf($GLOBALS['TL_LANG']['tl_theme']['missing_xml'], basename($strZipFile)));
+				Message::addError(sprintf($GLOBALS['TL_LANG']['tl_theme']['missing_xml'], basename($strZipFile)));
 				continue;
 			}
 
@@ -733,7 +733,7 @@ class Theme extends Backend
 
 		// Generate the archive
 		$strTmp = md5(uniqid(mt_rand(), true));
-		$objArchive = new \ZipWriter('system/tmp/'. $strTmp);
+		$objArchive = new ZipWriter('system/tmp/'. $strTmp);
 
 		// Add the files
 		$this->addTableTlFiles($xml, $tables, $objTheme, $objArchive);
@@ -962,7 +962,7 @@ class Theme extends Backend
 	 * @param \Database\Result|object $objTheme
 	 * @param \ZipWriter              $objArchive
 	 */
-	protected function addTableTlFiles(\DOMDocument $xml, \DOMElement $tables, \Contao\Database\Result $objTheme, \ZipWriter $objArchive)
+	protected function addTableTlFiles(\DOMDocument $xml, \DOMElement $tables, \Contao\Database\Result $objTheme, ZipWriter $objArchive)
 	{
 		// Add the table
 		$table = $xml->createElement('table');
@@ -1082,7 +1082,7 @@ class Theme extends Backend
 	 *
 	 * @throws \Exception If the folder path is insecure
 	 */
-	protected function addFolderToArchive(\ZipWriter $objArchive, $strFolder, \DOMDocument $xml, \DOMElement $table, array $arrOrder=array())
+	protected function addFolderToArchive(ZipWriter $objArchive, $strFolder, \DOMDocument $xml, \DOMElement $table, array $arrOrder=array())
 	{
 		// Strip the custom upload folder name
 		$strFolder = preg_replace('@^'.preg_quote(Config::get('uploadPath'), '@').'/@', '', $strFolder);
@@ -1159,7 +1159,7 @@ class Theme extends Backend
 	 * @param \ZipWriter $objArchive
 	 * @param string     $strFolder
 	 */
-	protected function addTemplatesToArchive(\ZipWriter $objArchive, $strFolder)
+	protected function addTemplatesToArchive(ZipWriter $objArchive, $strFolder)
 	{
 		// Strip the templates folder name
 		$strFolder = preg_replace('@^templates/@', '', $strFolder);

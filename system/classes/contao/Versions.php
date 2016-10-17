@@ -288,7 +288,7 @@ class Versions extends Controller
 		// Reset fields added after storing the version to their default value (see #7755)
 		foreach (array_diff_key($arrFields, $data) as $k=>$v)
 		{
-			$data[$k] = \Editor::getEmptyValueByFieldType($GLOBALS['TL_DCA'][$this->strTable]['fields'][$k]['sql']);
+			$data[$k] = Editor::getEmptyValueByFieldType($GLOBALS['TL_DCA'][$this->strTable]['fields'][$k]['sql']);
 		}
 
 		$this->Database->prepare("UPDATE " . $this->strTable . " %s WHERE id=?")

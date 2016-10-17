@@ -22,7 +22,7 @@ use Contao\Config;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormPassword extends \Editor
+class FormPassword extends \Contao\Editor
 {
 
 	/**

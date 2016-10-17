@@ -18,7 +18,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormHtml extends \Editor
+class FormHtml extends \Contao\Editor
 {
 
 	/**

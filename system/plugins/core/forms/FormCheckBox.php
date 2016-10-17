@@ -18,7 +18,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormCheckBox extends \Editor
+class FormCheckBox extends \Contao\Editor
 {
 
 	/**

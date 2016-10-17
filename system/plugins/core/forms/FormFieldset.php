@@ -19,7 +19,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormFieldset extends \Editor
+class FormFieldset extends \Contao\Editor
 {
 
 	/**

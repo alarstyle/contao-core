@@ -18,7 +18,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormHeadline extends \Editor
+class FormHeadline extends \Contao\Editor
 {
 
 	/**

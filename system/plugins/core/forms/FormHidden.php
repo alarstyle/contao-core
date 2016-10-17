@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormHidden extends \Editor
+class FormHidden extends \Contao\Editor
 {
 
 	/**

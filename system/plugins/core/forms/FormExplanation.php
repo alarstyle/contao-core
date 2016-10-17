@@ -19,7 +19,7 @@ use Contao\Config;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormExplanation extends \Editor
+class FormExplanation extends \Contao\Editor
 {
 
 	/**

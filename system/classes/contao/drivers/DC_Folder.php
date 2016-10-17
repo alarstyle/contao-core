@@ -13,6 +13,7 @@ namespace Contao\Drivers;
 use Contao\Config;
 use Contao\DataContainer;
 use Contao\Date;
+use Contao\Editor;
 use Contao\Environment;
 use Contao\Versions;
 use Contao\RequestToken;
@@ -2126,7 +2127,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 				// Set the correct empty value (see #6284, #6373)
 				if ($varValue === '')
 				{
-					$varValue = \Editor::getEmptyValueByFieldType($GLOBALS['TL_DCA'][$this->strTable]['fields'][$this->strField]['sql']);
+					$varValue = Editor::getEmptyValueByFieldType($GLOBALS['TL_DCA'][$this->strTable]['fields'][$this->strField]['sql']);
 				}
 
 				$this->objActiveRecord->{$this->strField} = $varValue;

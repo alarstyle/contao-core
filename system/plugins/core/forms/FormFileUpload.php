@@ -24,7 +24,7 @@ use Contao\Config;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormFileUpload extends \Editor implements \uploadable
+class FormFileUpload extends \Contao\Editor implements \uploadable
 {
 
 	/**

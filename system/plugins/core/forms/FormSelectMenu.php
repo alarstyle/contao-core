@@ -22,7 +22,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormSelectMenu extends \Editor
+class FormSelectMenu extends \Contao\Editor
 {
 
 	/**

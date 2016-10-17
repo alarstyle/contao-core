@@ -121,9 +121,6 @@ ClassLoader::addClasses(array
 	'Contao\Template'                  => 'system/plugins/core/library/Contao/Template.php',
 	'Contao\User'                      => 'system/plugins/core/library/Contao/User.php',
 	'Contao\Validator'                 => 'system/plugins/core/library/Contao/Validator.php',
-	'Contao\Editor'                    => 'system/plugins/core/library/Contao/Editor.php',
-	'Contao\ZipReader'                 => 'system/plugins/core/library/Contao/ZipReader.php',
-	'Contao\ZipWriter'                 => 'system/plugins/core/library/Contao/ZipWriter.php',
 
 	// Models
 	'Contao\ArticleModel'              => 'system/plugins/core/models/ArticleModel.php',

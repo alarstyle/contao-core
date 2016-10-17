@@ -21,7 +21,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormCaptcha extends \Editor
+class FormCaptcha extends \Contao\Editor
 {
 
 	/**
