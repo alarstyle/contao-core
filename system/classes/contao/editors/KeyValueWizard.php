@@ -10,6 +10,7 @@
 
 namespace Contao\Editors;
 
+use Contao\Cache;
 
 /**
  * Provide methods to handle key value pairs.
@@ -151,12 +152,12 @@ class KeyValueWizard extends \Contao\Editor
 		}
 
 		// Initialize the tab index
-		if (!\Cache::has('tabindex'))
+		if (!Cache::has('tabindex'))
 		{
-			\Cache::set('tabindex', 1);
+			Cache::set('tabindex', 1);
 		}
 
-		$tabindex = \Cache::get('tabindex');
+		$tabindex = Cache::get('tabindex');
 
 		// Begin the table
 		$return = '<table class="tl_optionwizard" id="ctrl_'.$this->strId.'">
@@ -200,7 +201,7 @@ class KeyValueWizard extends \Contao\Editor
 		}
 
 		// Store the tab index
-		\Cache::set('tabindex', $tabindex);
+		Cache::set('tabindex', $tabindex);
 
 		return $return.'
   </tbody>

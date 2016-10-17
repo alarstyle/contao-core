@@ -10,6 +10,7 @@
 
 namespace Contao\Editors;
 
+use Contao\Cache;
 
 /**
  * Provide methods to handle modules of a page layout.
@@ -150,12 +151,12 @@ class ModuleWizard extends \Contao\Editor
 		}
 
 		// Initialize the tab index
-		if (!\Cache::has('tabindex'))
+		if (!Cache::has('tabindex'))
 		{
-			\Cache::set('tabindex', 1);
+			Cache::set('tabindex', 1);
 		}
 
-		$tabindex = \Cache::get('tabindex');
+		$tabindex = Cache::get('tabindex');
 
 		// Add the label and the return wizard
 		$return = '<table id="ctrl_'.$this->strId.'" class="tl_modulewizard">
@@ -226,7 +227,7 @@ class ModuleWizard extends \Contao\Editor
 		}
 
 		// Store the tab index
-		\Cache::set('tabindex', $tabindex);
+		Cache::set('tabindex', $tabindex);
 
 		return $return.'
   </tbody>

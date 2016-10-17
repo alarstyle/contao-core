@@ -126,7 +126,7 @@ class Combiner extends \System
 			// Create the style sheets and retry
 			if ($strType == self::CSS)
 			{
-				$this->import('StyleSheets');
+				$this->import('Contao\\StyleSheets', 'StyleSheets');
 				$this->StyleSheets->updateStyleSheets();
 
 				if (!file_exists(TL_ROOT . '/' . $strFile))

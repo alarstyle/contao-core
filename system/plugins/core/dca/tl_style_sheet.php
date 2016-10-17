@@ -269,7 +269,7 @@ class tl_style_sheet extends \Contao\Backend
 			return;
 		}
 
-		$this->import('StyleSheets');
+		$this->import('Contao\\StyleSheets', 'StyleSheets');
 
 		foreach ($session as $id)
 		{

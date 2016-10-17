@@ -1775,9 +1775,9 @@ abstract class Controller extends \System
 			$strKey = __METHOD__ . '-' . $intId->id;
 
 			// Try to load from cache
-			if (\Cache::has($strKey))
+			if (Cache::has($strKey))
 			{
-				return \Cache::get($strKey);
+				return Cache::get($strKey);
 			}
 
 			// Create a model from the database result
@@ -1785,7 +1785,7 @@ abstract class Controller extends \System
 			$objPage->setRow($intId->row());
 			$objPage->loadDetails();
 
-			\Cache::set($strKey, $objPage);
+			Cache::set($strKey, $objPage);
 
 			return $objPage;
 		}
@@ -1800,14 +1800,14 @@ abstract class Controller extends \System
 			$strKey = __METHOD__ . '-' . $intId;
 
 			// Try to load from cache
-			if (\Cache::has($strKey))
+			if (Cache::has($strKey))
 			{
-				return \Cache::get($strKey);
+				return Cache::get($strKey);
 			}
 
 			$objPage = \PageModel::findWithDetails($intId);
 
-			\Cache::set($strKey, $objPage);
+			Cache::set($strKey, $objPage);
 
 			return $objPage;
 		}

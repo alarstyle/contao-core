@@ -10,6 +10,7 @@
 
 namespace Contao\Editors;
 
+use Contao\Cache;
 use Contao\Config;
 
 /**
@@ -106,12 +107,12 @@ class ListWizard extends \Contao\Editor
 		}
 
 		// Initialize the tab index
-		if (!\Cache::has('tabindex'))
+		if (!Cache::has('tabindex'))
 		{
-			\Cache::set('tabindex', 1);
+			Cache::set('tabindex', 1);
 		}
 
-		$tabindex = \Cache::get('tabindex');
+		$tabindex = Cache::get('tabindex');
 		$return = '<ul id="ctrl_'.$this->strId.'" class="tl_listwizard" data-tabindex="'.$tabindex.'">';
 
 		// Add input fields
@@ -139,7 +140,7 @@ class ListWizard extends \Contao\Editor
 		}
 
 		// Store the tab index
-		\Cache::set('tabindex', $tabindex);
+		Cache::set('tabindex', $tabindex);
 
 		return $return.'
   </ul>';

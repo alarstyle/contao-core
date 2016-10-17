@@ -696,7 +696,7 @@ class tl_style extends \Contao\Backend
 			return;
 		}
 
-		$this->import('StyleSheets');
+		$this->import('Contao\\StyleSheets', 'StyleSheets');
 
 		foreach ($session as $id)
 		{
@@ -748,7 +748,7 @@ class tl_style extends \Contao\Backend
 					   ->execute(time(), $data['pid']);
 
 		// Update the CSS file
-		$this->import('StyleSheets');
+		$this->import('Contao\\StyleSheets', 'StyleSheets');
 		$this->StyleSheets->updateStyleSheet($data['pid']);
 	}
 
@@ -837,7 +837,7 @@ class tl_style extends \Contao\Backend
 
 		if ($objStylesheet->numRows)
 		{
-			$this->import('StyleSheets');
+			$this->import('Contao\\StyleSheets', 'StyleSheets');
 			$this->StyleSheets->updateStyleSheet($objStylesheet->pid);
 		}
 	}

@@ -35,8 +35,8 @@ $GLOBALS['BE_MOD'] = array
 			'tables'      => array('tl_theme', 'tl_module', 'tl_style_sheet', 'tl_style', 'tl_layout', 'tl_image_size', 'tl_image_size_item'),
 			'importTheme' => array('Theme', 'importTheme'),
 			'exportTheme' => array('Theme', 'exportTheme'),
-			'import'      => array('StyleSheets', 'importStyleSheet'),
-			'export'      => array('StyleSheets', 'exportStyleSheet')
+			'import'      => array('Contao\\StyleSheets', 'importStyleSheet'),
+			'export'      => array('Contao\\StyleSheets', 'exportStyleSheet')
 		),
 		'tpl_editor' => array
 		(
@@ -427,8 +427,6 @@ $GLOBALS['TL_ASSETS'] = array
 	'COLORPICKER'  => '1.4',
 	'DATEPICKER'   => '2.2.0',
 	'MEDIABOX'     => '1.4.6',
-	'SIMPLEMODAL'  => '1.2',
-	'SLIMBOX'      => '1.8'
 );
 
 

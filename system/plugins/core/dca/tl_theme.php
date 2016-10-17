@@ -299,7 +299,7 @@ class tl_theme extends \Contao\Backend
 	{
 		if ($this->Session->get('style_sheet_update_all'))
 		{
-			$this->import('StyleSheets');
+			$this->import('Contao\\StyleSheets', 'StyleSheets');
 			$this->StyleSheets->updateStyleSheets();
 		}
 
