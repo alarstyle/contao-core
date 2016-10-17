@@ -11,6 +11,7 @@
 namespace Contao;
 
 use Contao\Config;
+use Contao\StringUtil;
 
 /**
  * Class FormFileUpload
@@ -112,7 +113,7 @@ class FormFileUpload extends \Contao\Editor implements \uploadable
 		// Sanitize the filename
 		try
 		{
-			$file['name'] = \StringUtil::sanitizeFileName($file['name']);
+			$file['name'] = StringUtil::sanitizeFileName($file['name']);
 		}
 		catch (\InvalidArgumentException $e)
 		{
@@ -269,11 +270,11 @@ class FormFileUpload extends \Contao\Editor implements \uploadable
 							$objModel->hash   = md5_file(TL_ROOT . '/' . $strFile);
 							$objModel->save();
 
-							$strUuid = \StringUtil::binToUuid($objModel->uuid);
+							$strUuid = StringUtil::binToUuid($objModel->uuid);
 						}
 						else
 						{
-							$strUuid = \StringUtil::binToUuid(\Dbafs::addResource($strFile)->uuid);
+							$strUuid = StringUtil::binToUuid(\Dbafs::addResource($strFile)->uuid);
 						}
 
 						// Update the hash of the target folder

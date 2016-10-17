@@ -1096,7 +1096,7 @@ abstract class System
 	 */
 	public static function splitFriendlyName($strEmail)
 	{
-		return \StringUtil::splitFriendlyEmail($strEmail);
+		return StringUtil::splitFriendlyEmail($strEmail);
 	}
 
 

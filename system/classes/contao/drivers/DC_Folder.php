@@ -15,8 +15,10 @@ use Contao\DataContainer;
 use Contao\Date;
 use Contao\Editor;
 use Contao\Environment;
-use Contao\Versions;
+use Contao\Input;
 use Contao\RequestToken;
+use Contao\StringUtil;
+use Contao\Versions;
 
 
 /**
@@ -1774,10 +1776,10 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		}
 
 		// Process the request
-		if (\Input::post('FORM_SUBMIT') == 'tl_files')
+		if (Input::post('FORM_SUBMIT') == 'tl_files')
 		{
 			// Restore the basic entities (see #7170)
-			$strSource = \StringUtil::restoreBasicEntities(\Input::postRaw('source'));
+			$strSource = StringUtil::restoreBasicEntities(\Input::postRaw('source'));
 
 			// Save the file
 			if (md5($strContent) != md5($strSource))

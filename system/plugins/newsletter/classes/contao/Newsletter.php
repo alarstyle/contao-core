@@ -55,7 +55,7 @@ class Newsletter extends Backend
 		// Add default sender address
 		if ($objNewsletter->sender == '')
 		{
-			list($objNewsletter->senderName, $objNewsletter->sender) = \StringUtil::splitFriendlyEmail(Config::get('adminEmail'));
+			list($objNewsletter->senderName, $objNewsletter->sender) = StringUtil::splitFriendlyEmail(Config::get('adminEmail'));
 		}
 
 		$arrAttachments = array();
@@ -357,10 +357,10 @@ class Newsletter extends Backend
 	 *
 	 * @return string
 	 */
-	protected function sendNewsletter(\Email $objEmail, \Contao\Database\Result $objNewsletter, $arrRecipient, $text, $html, $css=null)
+	protected function sendNewsletter(Email $objEmail, \Contao\Database\Result $objNewsletter, $arrRecipient, $text, $html, $css=null)
 	{
 		// Prepare the text content
-		$objEmail->text = \StringUtil::parseSimpleTokens($text, $arrRecipient);
+		$objEmail->text = StringUtil::parseSimpleTokens($text, $arrRecipient);
 
 		if (!$objNewsletter->sendText)
 		{
@@ -371,11 +371,11 @@ class Newsletter extends Backend
 			}
 
 			/** @var \BackendTemplate|object $objTemplate */
-			$objTemplate = new \BackendTemplate($objNewsletter->template);
+			$objTemplate = new BackendTemplate($objNewsletter->template);
 			$objTemplate->setData($objNewsletter->row());
 
 			$objTemplate->title = $objNewsletter->subject;
-			$objTemplate->body = \StringUtil::parseSimpleTokens($html, $arrRecipient);
+			$objTemplate->body = StringUtil::parseSimpleTokens($html, $arrRecipient);
 			$objTemplate->charset = Config::get('characterSet');
 			$objTemplate->css = $css; // Backwards compatibility
 			$objTemplate->recipient = $arrRecipient['email'];

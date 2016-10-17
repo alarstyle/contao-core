@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\StringUtil;
 
 /**
  * Class FormHeadline
@@ -51,7 +52,7 @@ class FormHeadline extends \Contao\Editor
 	 */
 	public function generate()
 	{
-		$this->text = \StringUtil::toHtml5($this->text);
+		$this->text = StringUtil::toHtml5($this->text);
 
 		return $this->text;
 	}

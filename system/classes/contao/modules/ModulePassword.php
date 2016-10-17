@@ -10,6 +10,8 @@
 
 namespace Contao\Modules;
 
+use Contao\Idna;
+use Contao\StringUtil;
 
 /**
  * Front end module "lost password".
@@ -309,11 +311,11 @@ class ModulePassword extends AbstractModule
 
 		$objEmail->from = $GLOBALS['TL_ADMIN_EMAIL'];
 		$objEmail->fromName = $GLOBALS['TL_ADMIN_NAME'];
-		$objEmail->subject = sprintf($GLOBALS['TL_LANG']['MSC']['passwordSubject'], \Idna::decode(\Environment::get('host')));
-		$objEmail->text = \StringUtil::parseSimpleTokens($this->reg_password, $arrData);
+		$objEmail->subject = sprintf($GLOBALS['TL_LANG']['MSC']['passwordSubject'], Idna::decode(\Environment::get('host')));
+		$objEmail->text = StringUtil::parseSimpleTokens($this->reg_password, $arrData);
 		$objEmail->sendTo($objMember->email);
 
-		$this->log('A new password has been requested for user ID ' . $objMember->id . ' (' . \Idna::decodeEmail($objMember->email) . ')', __METHOD__, TL_ACCESS);
+		$this->log('A new password has been requested for user ID ' . $objMember->id . ' (' . Idna::decodeEmail($objMember->email) . ')', __METHOD__, TL_ACCESS);
 
 		// Check whether there is a jumpTo page
 		if (($objJumpTo = $this->objModel->getRelated('jumpTo')) !== null)

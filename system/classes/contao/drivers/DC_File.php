@@ -13,6 +13,7 @@ namespace Contao\Drivers;
 use Contao\Config;
 use Contao\DataContainer;
 use Contao\Date;
+use Contao\StringUtil;
 
 
 /**
@@ -396,7 +397,7 @@ class DC_File extends DataContainer implements \editable
 
 				if (!is_array($varValue))
 				{
-					$varValue = \StringUtil::binToUuid($varValue);
+					$varValue = StringUtil::binToUuid($varValue);
 				}
 				else
 				{
@@ -418,7 +419,7 @@ class DC_File extends DataContainer implements \editable
 
 				if (!is_array($varValue))
 				{
-					$varValue = \StringUtil::restoreBasicEntities($varValue);
+					$varValue = StringUtil::restoreBasicEntities($varValue);
 				}
 				else
 				{

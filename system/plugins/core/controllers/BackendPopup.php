@@ -12,6 +12,7 @@ namespace Contao;
 
 use Contao\Config;
 use Contao\Date;
+use Contao\StringUtil;
 
 /**
  * Pop-up file preview (file manager).
@@ -108,7 +109,7 @@ class BackendPopup extends Backend
 
 		if ($objModel !== null)
 		{
-			$objTemplate->uuid = \StringUtil::binToUuid($objModel->uuid); // see #5211
+			$objTemplate->uuid = StringUtil::binToUuid($objModel->uuid); // see #5211
 		}
 
 		// Add the file info

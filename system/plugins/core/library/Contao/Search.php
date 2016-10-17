@@ -151,13 +151,13 @@ class Search
 		// Get the description
 		if (preg_match('/<meta[^>]+name="description"[^>]+content="([^"]*)"[^>]*>/i', $strHead, $tags))
 		{
-			$arrData['description'] = trim(preg_replace('/ +/', ' ', \StringUtil::decodeEntities($tags[1])));
+			$arrData['description'] = trim(preg_replace('/ +/', ' ', StringUtil::decodeEntities($tags[1])));
 		}
 
 		// Get the keywords
 		if (preg_match('/<meta[^>]+name="keywords"[^>]+content="([^"]*)"[^>]*>/i', $strHead, $tags))
 		{
-			$arrData['keywords'] = trim(preg_replace('/ +/', ' ', \StringUtil::decodeEntities($tags[1])));
+			$arrData['keywords'] = trim(preg_replace('/ +/', ' ', StringUtil::decodeEntities($tags[1])));
 		}
 
 		// Read the title and alt attributes
@@ -172,7 +172,7 @@ class Search
 
 		// Put everything together
 		$arrSet['text'] = $arrData['title'] . ' ' . $arrData['description'] . ' ' . $strBody . ' ' . $arrData['keywords'];
-		$arrSet['text'] = trim(preg_replace('/ +/', ' ', \StringUtil::decodeEntities($arrSet['text'])));
+		$arrSet['text'] = trim(preg_replace('/ +/', ' ', StringUtil::decodeEntities($arrSet['text'])));
 
 		// Calculate the checksum
 		$arrSet['checksum'] = md5($arrSet['text']);
@@ -307,7 +307,7 @@ class Search
 	{
 		// Clean the keywords
 		$strKeywords = utf8_strtolower($strKeywords);
-		$strKeywords = \StringUtil::decodeEntities($strKeywords);
+		$strKeywords = StringUtil::decodeEntities($strKeywords);
 
 		if (function_exists('mb_eregi_replace'))
 		{

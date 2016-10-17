@@ -11,7 +11,10 @@
 namespace Contao\Editors;
 
 use Contao\Config;
+use Contao\Environment;
 use Contao\Image;
+use Contao\Input;
+use Contao\StringUtil;
 
 /**
  * Provide methods to handle input field "file tree".
@@ -114,7 +117,7 @@ class FileTree extends \Contao\Editor
 		}
 		elseif (strpos($varInput, ',') === false)
 		{
-			$varInput = \StringUtil::uuidToBin($varInput);
+			$varInput = StringUtil::uuidToBin($varInput);
 
 			return $this->multiple ? array($varInput) : $varInput;
 		}
@@ -122,7 +125,7 @@ class FileTree extends \Contao\Editor
 		{
 			$arrValue = array_filter(explode(',', $varInput));
 
-			return $this->multiple ? array_map('StringUtil::uuidToBin', $arrValue) : \StringUtil::uuidToBin($arrValue[0]);
+			return $this->multiple ? array_map('StringUtil::uuidToBin', $arrValue) : StringUtil::uuidToBin($arrValue[0]);
 		}
 	}
 
@@ -308,15 +311,15 @@ class FileTree extends \Contao\Editor
 
 		foreach ($arrValues as $k=>$v)
 		{
-			$return .= '<li data-id="'.\StringUtil::binToUuid($k).'">'.$v.'</li>';
+			$return .= '<li data-id="'.StringUtil::binToUuid($k).'">'.$v.'</li>';
 		}
 
 		$return .= '</ul>
-    <p><a href="contao/file.php?do='.\Input::get('do').'&amp;table='.$this->strTable.'&amp;field='.$this->strField.'&amp;act=show&amp;id='.$this->activeRecord->id.'&amp;value='.implode(',', array_keys($arrSet)).'&amp;rt='.REQUEST_TOKEN.'" class="tl_submit" onclick="Backend.openModalSelector({\'width\':768,\'title\':\''.specialchars(str_replace("'", "\\'", $GLOBALS['TL_DCA'][$this->strTable]['fields'][$this->strField]['label'][0])).'\',\'url\':this.href,\'id\':\''.$this->strId.'\'});return false">'.$GLOBALS['TL_LANG']['MSC']['changeSelection'].'</a></p>' . ($blnHasOrder ? '
+    <p><a href="contao/file.php?do='.Input::get('do').'&amp;table='.$this->strTable.'&amp;field='.$this->strField.'&amp;act=show&amp;id='.$this->activeRecord->id.'&amp;value='.implode(',', array_keys($arrSet)).'&amp;rt='.REQUEST_TOKEN.'" class="tl_submit" onclick="Backend.openModalSelector({\'width\':768,\'title\':\''.specialchars(str_replace("'", "\\'", $GLOBALS['TL_DCA'][$this->strTable]['fields'][$this->strField]['label'][0])).'\',\'url\':this.href,\'id\':\''.$this->strId.'\'});return false">'.$GLOBALS['TL_LANG']['MSC']['changeSelection'].'</a></p>' . ($blnHasOrder ? '
     <script>Backend.makeMultiSrcSortable("sort_'.$this->strId.'", "ctrl_'.$this->strOrderId.'")</script>' : '') . '
   </div>';
 
-		if (!\Environment::get('isAjaxRequest'))
+		if (!Environment::get('isAjaxRequest'))
 		{
 			$return = '<div>' . $return . '</div>';
 		}

@@ -656,20 +656,6 @@ class PageRegular extends Frontend
 			}
 		}
 
-		// Add calendarfeeds
-		if (!empty($calendarfeeds) && is_array($calendarfeeds))
-		{
-			$objFeeds = \CalendarFeedModel::findByIds($calendarfeeds);
-
-			if ($objFeeds !== null)
-			{
-				while($objFeeds->next())
-				{
-					$strStyleSheets .= Template::generateFeedTag(($objFeeds->feedBase ?: \Environment::get('base')) . 'share/' . $objFeeds->alias . '.xml', $objFeeds->format, $objFeeds->title) . "\n";
-				}
-			}
-		}
-
 		// Add a placeholder for dynamic <head> tags (see #4203)
 		$strHeadTags = '[[TL_HEAD]]';
 

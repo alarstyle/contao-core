@@ -11,6 +11,7 @@
 namespace Contao;
 
 use Contao\Config;
+use Contao\StringUtil;
 
 /**
  * Class FormExplanation
@@ -53,7 +54,7 @@ class FormExplanation extends \Contao\Editor
 	 */
 	public function generate()
 	{
-		$this->text = \StringUtil::toHtml5($this->text);
+		$this->text = StringUtil::toHtml5($this->text);
 
 		// Add the static files URL to images
 		if (TL_FILES_URL != '')
@@ -62,6 +63,6 @@ class FormExplanation extends \Contao\Editor
 			$this->text = str_replace(' src="' . $path, ' src="' . TL_FILES_URL . $path, $this->text);
 		}
 
-		return \StringUtil::encodeEmail($this->text);
+		return StringUtil::encodeEmail($this->text);
 	}
 }

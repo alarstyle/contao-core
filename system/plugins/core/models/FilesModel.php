@@ -11,6 +11,8 @@
 namespace Contao;
 
 use Contao\Database;
+use Contao\StringUtil;
+use Contao\Validator;
 
 /**
  * Reads and writes file entries
@@ -174,7 +176,7 @@ class FilesModel extends \Model
 		// Convert UUIDs to binary
 		if (Validator::isStringUuid($strUuid))
 		{
-			$strUuid = \StringUtil::uuidToBin($strUuid);
+			$strUuid = StringUtil::uuidToBin($strUuid);
 		}
 
 		return static::findOneBy(array("$t.uuid=UNHEX(?)"), bin2hex($strUuid), $arrOptions);
@@ -203,7 +205,7 @@ class FilesModel extends \Model
 			// Convert UUIDs to binary
 			if (Validator::isStringUuid($v))
 			{
-				$v = \StringUtil::uuidToBin($v);
+				$v = StringUtil::uuidToBin($v);
 			}
 
 			$arrUuids[$k] = "UNHEX('" . bin2hex($v) . "')";

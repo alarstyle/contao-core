@@ -738,13 +738,13 @@ class Versions extends Controller
 	{
 		if (!is_array($var))
 		{
-			return $binary ? \StringUtil::binToUuid($var) : $var;
+			return $binary ? StringUtil::binToUuid($var) : $var;
 		}
 		elseif (!is_array(current($var)))
 		{
 			if ($binary)
 			{
-				$var = array_map(function ($v) { return $v ? \StringUtil::binToUuid($v) : ''; }, $var);
+				$var = array_map(function ($v) { return $v ? StringUtil::binToUuid($v) : ''; }, $var);
 			}
 
 			return implode(', ', $var);

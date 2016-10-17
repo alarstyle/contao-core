@@ -179,7 +179,7 @@ class Email
 				break;
 
 			case 'text':
-				$this->strText = \StringUtil::decodeEntities($varValue);
+				$this->strText = StringUtil::decodeEntities($varValue);
 				break;
 
 			case 'html':
@@ -477,7 +477,7 @@ class Email
 		// Add the administrator e-mail as default sender
 		if ($this->strSender == '')
 		{
-			list($this->strSenderName, $this->strSender) = \StringUtil::splitFriendlyEmail(Config::get('adminEmail'));
+			list($this->strSenderName, $this->strSender) = StringUtil::splitFriendlyEmail(Config::get('adminEmail'));
 		}
 
 		// Sender
@@ -545,16 +545,16 @@ class Email
 		{
 			if (!is_array($varRecipients))
 			{
-				$varRecipients = \StringUtil::splitCsv($varRecipients);
+				$varRecipients = StringUtil::splitCsv($varRecipients);
 			}
 
 			// Support friendly name addresses and internationalized domain names
 			foreach ($varRecipients as $v)
 			{
-				list($strName, $strEmail) = \StringUtil::splitFriendlyEmail($v);
+				list($strName, $strEmail) = StringUtil::splitFriendlyEmail($v);
 
 				$strName = trim($strName, ' "');
-				$strEmail = \Idna::encodeEmail($strEmail);
+				$strEmail = Idna::encodeEmail($strEmail);
 
 				if ($strName != '')
 				{

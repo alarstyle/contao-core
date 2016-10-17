@@ -25,7 +25,7 @@ if (version_compare(PHP_VERSION, '7.0', '>=')) {
  *
  * @deprecated Use the StringUtil class instead
  */
-class String extends \StringUtil
+class String extends StringUtil
 {
 
 	/**

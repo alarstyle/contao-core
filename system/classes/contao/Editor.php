@@ -986,7 +986,7 @@ abstract class Editor extends BaseTemplate
 
 				// Check whether the current value is a valid friendly name e-mail address
 				case 'friendly':
-					list ($strName, $varInput) = \StringUtil::splitFriendlyEmail($varInput);
+					list ($strName, $varInput) = StringUtil::splitFriendlyEmail($varInput);
 					// no break;
 
 				// Check whether the current value is a valid e-mail address

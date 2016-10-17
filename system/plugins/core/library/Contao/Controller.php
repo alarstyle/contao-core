@@ -727,7 +727,7 @@ abstract class Controller extends \System
 		{
 			foreach (array_unique($GLOBALS['TL_CSS']) as $stylesheet)
 			{
-				$options = \StringUtil::resolveFlaggedUrl($stylesheet);
+				$options = StringUtil::resolveFlaggedUrl($stylesheet);
 
 				if ($options->static)
 				{
@@ -750,7 +750,7 @@ abstract class Controller extends \System
 		{
 			foreach (array_unique($GLOBALS['TL_USER_CSS']) as $stylesheet)
 			{
-				$options = \StringUtil::resolveFlaggedUrl($stylesheet);
+				$options = StringUtil::resolveFlaggedUrl($stylesheet);
 
 				if ($options->static)
 				{
@@ -1856,7 +1856,7 @@ abstract class Controller extends \System
 	 */
 	public static function restoreBasicEntities($strBuffer)
 	{
-		return \StringUtil::restoreBasicEntities($strBuffer);
+		return StringUtil::restoreBasicEntities($strBuffer);
 	}
 
 
@@ -1953,7 +1953,7 @@ abstract class Controller extends \System
 	 */
 	protected function parseSimpleTokens($strBuffer, $arrData)
 	{
-		return \StringUtil::parseSimpleTokens($strBuffer, $arrData);
+		return StringUtil::parseSimpleTokens($strBuffer, $arrData);
 	}
 
 

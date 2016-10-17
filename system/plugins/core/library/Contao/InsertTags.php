@@ -49,7 +49,7 @@ class InsertTags extends \Controller
 		// Preserve insert tags
 		if (Config::get('disableInsertTags'))
 		{
-			return \StringUtil::restoreBasicEntities($strBuffer);
+			return StringUtil::restoreBasicEntities($strBuffer);
 		}
 
 		$tags = preg_split('/{{(([^{}]*|(?R))*)}}/', $strBuffer, -1, PREG_SPLIT_DELIM_CAPTURE);
@@ -135,7 +135,7 @@ class InsertTags extends \Controller
 						break;
 					}
 
-					$strEmail = \StringUtil::encodeEmail($elements[1]);
+					$strEmail = StringUtil::encodeEmail($elements[1]);
 
 					// Replace the tag
 					switch (strtolower($elements[0]))
@@ -355,7 +355,7 @@ class InsertTags extends \Controller
 
 								if (strncasecmp($strUrl, 'mailto:', 7) === 0)
 								{
-									$strUrl = \StringUtil::encodeEmail($strUrl);
+									$strUrl = StringUtil::encodeEmail($strUrl);
 								}
 								break;
 
@@ -630,11 +630,11 @@ class InsertTags extends \Controller
 
 				// Article teaser
 				case 'article_teaser':
-					$objTeaser = \ArticleModel::findByIdOrAlias($elements[1]);
+					$objTeaser = \Contao\ArticleModel::findByIdOrAlias($elements[1]);
 
 					if ($objTeaser !== null)
 					{
-						$arrCache[$strTag] = \StringUtil::toHtml5($this->replaceInsertTags($objTeaser->teaser, $blnCache));
+						$arrCache[$strTag] = StringUtil::toHtml5($this->replaceInsertTags($objTeaser->teaser, $blnCache));
 					}
 					break;
 
@@ -644,7 +644,7 @@ class InsertTags extends \Controller
 
 					if ($objTeaser !== null)
 					{
-						$arrCache[$strTag] = \StringUtil::toHtml5($this->replaceInsertTags($objTeaser->teaser, $blnCache));
+						$arrCache[$strTag] = StringUtil::toHtml5($this->replaceInsertTags($objTeaser->teaser, $blnCache));
 					}
 					break;
 
@@ -654,23 +654,13 @@ class InsertTags extends \Controller
 
 					if ($objTeaser !== null)
 					{
-						$arrCache[$strTag] = \StringUtil::toHtml5($this->replaceInsertTags($objTeaser->teaser, $blnCache));
+						$arrCache[$strTag] = StringUtil::toHtml5($this->replaceInsertTags($objTeaser->teaser, $blnCache));
 					}
 					break;
 
 				// News feed URL
 				case 'news_feed':
 					$objFeed = \Contao\Models\NewsFeedModel::findByPk($elements[1]);
-
-					if ($objFeed !== null)
-					{
-						$arrCache[$strTag] = $objFeed->feedBase . 'share/' . $objFeed->alias . '.xml';
-					}
-					break;
-
-				// Calendar feed URL
-				case 'calendar_feed':
-					$objFeed = \CalendarFeedModel::findByPk($elements[1]);
 
 					if ($objFeed !== null)
 					{
@@ -872,7 +862,7 @@ class InsertTags extends \Controller
 					if (strpos($elements[1], '?') !== false)
 					{
 						$arrChunks = explode('?', urldecode($elements[1]), 2);
-						$strSource = \StringUtil::decodeEntities($arrChunks[1]);
+						$strSource = StringUtil::decodeEntities($arrChunks[1]);
 						$strSource = str_replace('[&]', '&', $strSource);
 						$arrParams = explode('&', $strSource);
 
@@ -1034,7 +1024,7 @@ class InsertTags extends \Controller
 					if (strpos($elements[1], '?') !== false)
 					{
 						$arrChunks = explode('?', urldecode($elements[1]));
-						$strSource = \StringUtil::decodeEntities($arrChunks[1]);
+						$strSource = StringUtil::decodeEntities($arrChunks[1]);
 						$strSource = str_replace('[&]', '&', $strSource);
 						$arrParams = explode('&', $strSource);
 
@@ -1120,15 +1110,15 @@ class InsertTags extends \Controller
 							break;
 
 						case 'encodeEmail':
-							$arrCache[$strTag] = \StringUtil::$flag($arrCache[$strTag]);
+							$arrCache[$strTag] = StringUtil::$flag($arrCache[$strTag]);
 							break;
 
 						case 'number_format':
-							$arrCache[$strTag] = \System::getFormattedNumber($arrCache[$strTag], 0);
+							$arrCache[$strTag] = System::getFormattedNumber($arrCache[$strTag], 0);
 							break;
 
 						case 'currency_format':
-							$arrCache[$strTag] = \System::getFormattedNumber($arrCache[$strTag], 2);
+							$arrCache[$strTag] = System::getFormattedNumber($arrCache[$strTag], 2);
 							break;
 
 						case 'readable_size':
@@ -1188,6 +1178,6 @@ class InsertTags extends \Controller
 			$strBuffer .= $arrCache[$strTag];
 		}
 
-		return \StringUtil::restoreBasicEntities($strBuffer);
+		return StringUtil::restoreBasicEntities($strBuffer);
 	}
 }

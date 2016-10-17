@@ -12,6 +12,9 @@ namespace Contao\Modules;
 
 use Contao\Config;
 use Contao\Date;
+use Contao\Email;
+use Contao\Idna;
+use Contao\StringUtil;
 
 /**
  * Front end module "registration".
@@ -403,12 +406,12 @@ class ModuleRegistration extends AbstractModule
 			// Backwards compatibility
 			$arrTokenData['channel'] = $arrTokenData['channels'];
 
-			$objEmail = new \Email();
+			$objEmail = new Email();
 
 			$objEmail->from = $GLOBALS['TL_ADMIN_EMAIL'];
 			$objEmail->fromName = $GLOBALS['TL_ADMIN_NAME'];
-			$objEmail->subject = sprintf($GLOBALS['TL_LANG']['MSC']['emailSubject'], \Idna::decode(\Environment::get('host')));
-			$objEmail->text = \StringUtil::parseSimpleTokens($this->reg_text, $arrTokenData);
+			$objEmail->subject = sprintf($GLOBALS['TL_LANG']['MSC']['emailSubject'], Idna::decode(\Environment::get('host')));
+			$objEmail->text = StringUtil::parseSimpleTokens($this->reg_text, $arrTokenData);
 			$objEmail->sendTo($arrData['email']);
 		}
 

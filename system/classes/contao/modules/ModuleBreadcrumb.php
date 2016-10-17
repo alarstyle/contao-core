@@ -10,6 +10,7 @@
 
 namespace Contao\Modules;
 
+use Contao\StringUtil;
 
 /**
  * Front end module "breadcrumb".
@@ -112,7 +113,7 @@ class ModuleBreadcrumb extends AbstractModule
 
 					if (strncasecmp($href, 'mailto:', 7) === 0)
 					{
-						$href = \StringUtil::encodeEmail($href);
+						$href = StringUtil::encodeEmail($href);
 					}
 					break;
 

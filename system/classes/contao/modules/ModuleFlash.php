@@ -11,6 +11,8 @@
 namespace Contao\Modules;
 
 use Contao\Config;
+use Contao\Environment;
+use Contao\StringUtil;
 
 /**
  * Front end module "flash".
@@ -83,8 +85,8 @@ class ModuleFlash extends AbstractModule
 		$this->Template->transparent = $this->transparent ? true : false;
 		$this->Template->interactive = $this->interactive ? true : false;
 		$this->Template->flashId = $this->flashID ?: 'swf_' . $this->id;
-		$this->Template->fsCommand = '  ' . preg_replace('/[\n\r]/', "\n  ", \StringUtil::decodeEntities($this->flashJS));
-		$this->Template->flashvars = 'URL=' . \Environment::get('base');
+		$this->Template->fsCommand = '  ' . preg_replace('/[\n\r]/', "\n  ", StringUtil::decodeEntities($this->flashJS));
+		$this->Template->flashvars = 'URL=' . Environment::get('base');
 		$this->Template->version = $this->version ?: '6.0.0';
 
 		$size = deserialize($this->size);
@@ -103,7 +105,7 @@ class ModuleFlash extends AbstractModule
 
 		if (strlen($this->flashvars))
 		{
-			$this->Template->flashvars .= '&' . \StringUtil::decodeEntities($this->flashvars);
+			$this->Template->flashvars .= '&' . StringUtil::decodeEntities($this->flashvars);
 		}
 	}
 }

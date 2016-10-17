@@ -12,6 +12,7 @@ namespace Contao\Modules;
 
 use Contao\Frontend;
 use Contao\FrontendTemplate;
+use Contao\StringUtil;
 
 /**
  * Parent class for front end modules.
@@ -404,7 +405,7 @@ abstract class AbstractModule extends Frontend
 
 						if (strncasecmp($href, 'mailto:', 7) === 0)
 						{
-							$href = \StringUtil::encodeEmail($href);
+							$href = StringUtil::encodeEmail($href);
 						}
 						break;
 

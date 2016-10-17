@@ -261,7 +261,7 @@ abstract class DataContainer extends Backend
 		// Convert insert tags in src attributes (see #5965)
 		if (isset($arrData['eval']['rte']) && strncmp($arrData['eval']['rte'], 'tiny', 4) === 0)
 		{
-			$this->varValue = \StringUtil::insertTagToSrc($this->varValue);
+			$this->varValue = StringUtil::insertTagToSrc($this->varValue);
 		}
 
 		/** @var \Editor $objEditor */
@@ -344,7 +344,7 @@ abstract class DataContainer extends Backend
 					// Convert file paths in src attributes (see #5965)
 					if ($varValue && isset($arrData['eval']['rte']) && strncmp($arrData['eval']['rte'], 'tiny', 4) === 0)
 					{
-						$varValue = \StringUtil::srcToInsertTag($varValue);
+						$varValue = StringUtil::srcToInsertTag($varValue);
 					}
 
 					// Save the current value

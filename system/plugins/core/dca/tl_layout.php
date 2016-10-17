@@ -97,7 +97,7 @@ $GLOBALS['TL_DCA']['tl_layout'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array('rows', 'cols', 'addJQuery', 'addMooTools', 'static'),
-		'default'                     => '{title_legend},name;{header_legend},rows;{column_legend},cols;{sections_legend:hide},sections,sPosition;{webfonts_legend:hide},webfonts;{style_legend},stylesheet,external,loadingOrder;{picturefill_legend:hide},picturefill;{feed_legend:hide},newsfeeds,calendarfeeds;{modules_legend},modules;{expert_legend:hide},template,viewport,titleTag,cssClass,onload,head;{jquery_legend},addJQuery;{mootools_legend},addMooTools;{script_legend:hide},analytics,script;{static_legend},static'
+		'default'                     => '{title_legend},name;{header_legend},rows;{column_legend},cols;{sections_legend:hide},sections,sPosition;{webfonts_legend:hide},webfonts;{style_legend},stylesheet,external,loadingOrder;{picturefill_legend:hide},picturefill;{feed_legend:hide},newsfeeds;{modules_legend},modules;{expert_legend:hide},template,viewport,titleTag,cssClass,onload,head;{jquery_legend},addJQuery;{mootools_legend},addMooTools;{script_legend:hide},analytics,script;{static_legend},static'
 	),
 
 	// Subpalettes
@@ -265,15 +265,6 @@ $GLOBALS['TL_DCA']['tl_layout'] = array
 			'exclude'                 => true,
 			'inputType'               => 'checkbox',
 			'options_callback'        => array('tl_layout', 'getNewsfeeds'),
-			'eval'                    => array('multiple'=>true),
-			'sql'                     => "blob NULL"
-		),
-		'calendarfeeds' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_layout']['calendarfeeds'],
-			'exclude'                 => true,
-			'inputType'               => 'checkbox',
-			'options_callback'        => array('tl_layout', 'getCalendarfeeds'),
 			'eval'                    => array('multiple'=>true),
 			'sql'                     => "blob NULL"
 		),
@@ -552,36 +543,6 @@ class tl_layout extends Contao\Backend
 		}
 
 		$objFeed = \COntao\Models\NewsFeedModel::findAll();
-
-		if ($objFeed === null)
-		{
-			return array();
-		}
-
-		$return = array();
-
-		while ($objFeed->next())
-		{
-			$return[$objFeed->id] = $objFeed->title;
-		}
-
-		return $return;
-	}
-
-
-	/**
-	 * Return all calendars with XML feeds
-	 *
-	 * @return array
-	 */
-	public function getCalendarfeeds()
-	{
-		if (!in_array('calendar', PluginLoader::getActive()))
-		{
-			return array();
-		}
-
-		$objFeed = CalendarFeedModel::findAll();
 
 		if ($objFeed === null)
 		{

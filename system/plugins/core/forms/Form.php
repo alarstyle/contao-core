@@ -11,6 +11,7 @@
 namespace Contao;
 
 use Contao\Editor;
+use Contao\StringUtil;
 
 /**
  * Provide methods to handle front end forms.
@@ -375,7 +376,7 @@ class Form extends \Hybrid
 				}
 			}
 
-			$recipients = \StringUtil::splitCsv($this->recipient);
+			$recipients = StringUtil::splitCsv($this->recipient);
 
 			// Format recipients
 			foreach ($recipients as $k=>$v)
@@ -438,7 +439,7 @@ class Form extends \Hybrid
 			// Attach CSV file
 			if ($this->format == 'csv')
 			{
-				$email->attachFileFromString(\StringUtil::decodeEntities('"' . implode('";"', $keys) . '"' . "\n" . '"' . implode('";"', $values) . '"'), 'form.csv', 'text/comma-separated-values');
+				$email->attachFileFromString(StringUtil::decodeEntities('"' . implode('";"', $keys) . '"' . "\n" . '"' . implode('";"', $values) . '"'), 'form.csv', 'text/comma-separated-values');
 			}
 
 			$uploaded = '';
@@ -460,7 +461,7 @@ class Form extends \Hybrid
 			}
 
 			$uploaded = strlen(trim($uploaded)) ? "\n\n---\n" . $uploaded : '';
-			$email->text = \StringUtil::decodeEntities(trim($message)) . $uploaded . "\n\n";
+			$email->text = StringUtil::decodeEntities(trim($message)) . $uploaded . "\n\n";
 
 			// Send the e-mail
 			try
