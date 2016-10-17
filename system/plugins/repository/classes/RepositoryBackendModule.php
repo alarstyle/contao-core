@@ -17,6 +17,8 @@
  */
 require_once dirname(dirname(__FILE__)).'/classes/RepositorySettings.php';
 
+use Contao\Config;
+
 
 /**
  * Implements the front end interface

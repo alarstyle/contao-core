@@ -10,20 +10,6 @@
 
 
 /**
- * Register the classes
- */
-ClassLoader::addClasses(array
-(
-	// Classes
-	'Repository'              => 'system/plugins/repository/classes/Repository.php',
-	'RepositoryBackendModule' => 'system/plugins/repository/classes/RepositoryBackendModule.php',
-	'RepositoryBackendTheme'  => 'system/plugins/repository/classes/RepositoryBackendTheme.php',
-	'RepositoryCatalog'       => 'system/plugins/repository/classes/RepositoryCatalog.php',
-	'RepositoryManager'       => 'system/plugins/repository/classes/RepositoryManager.php',
-));
-
-
-/**
  * Register the templates
  */
 \Contao\TemplateLoader::addFiles(array

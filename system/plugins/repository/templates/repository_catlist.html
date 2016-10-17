@@ -76,7 +76,7 @@ $state_options = &$GLOBALS['TL_LANG']['tl_repository_state_options'];
       <div class="tl_panel">
 
         <div class="tl_submit_panel tl_subpanel">
-          <input type="image" name="filter" id="filter" src="<?= TL_FILES_URL ?>system/themes/<?= Backend::getTheme() ?>/images/reload.gif" class="tl_img_submit" title="<?= $text['apply'] ?>" alt="<?= $text['apply'] ?>">
+          <input type="image" name="filter" id="filter" src="<?= TL_FILES_URL ?>system/themes/<?= \Contao\Backend::getTheme() ?>/images/reload.gif" class="tl_img_submit" title="<?= $text['apply'] ?>" alt="<?= $text['apply'] ?>">
         </div>
 
         <div class="tl_limit tl_subpanel">
@@ -112,7 +112,7 @@ $state_options = &$GLOBALS['TL_LANG']['tl_repository_state_options'];
   <div class="extension_container">
     <?php if (count($rep->extensions) < 1): ?>
       <p><?= $text['noextensionsfound'] ?></p>
-      <?php if (!Config::get('repository_unsafe_catalog')): ?>
+      <?php if (!\Contao\Config::get('repository_unsafe_catalog')): ?>
         <p class="tl_info"><?= $GLOBALS['TL_LANG']['tl_repository']['showIncompatible'] ?></p>
       <?php endif; ?>
     <?php else: ?>
@@ -134,7 +134,7 @@ $state_options = &$GLOBALS['TL_LANG']['tl_repository_state_options'];
           </tr>
           <tr class="info">
             <th><?= $text['releasedate'][0] ?></th>
-            <td><?= Date::parse(Config::get('dateFormat'), $ext->releasedate) ?></td>
+            <td><?= \Contao\Date::parse(\Contao\Config::get('dateFormat'), $ext->releasedate) ?></td>
             <th><?= $text['approvedForLabel'] ?></th>
             <td><?php printf($text['approvedForText'], Repository::formatCoreVersion($ext->coreminversion), Repository::formatCoreVersion($ext->coremaxversion)); ?></td>
           </tr>

@@ -11,6 +11,7 @@
  * @copyright Peter Koch 2008-2010
  */
 
+use Contao\Config;
 
 /**
  * Implements the extension catalog
