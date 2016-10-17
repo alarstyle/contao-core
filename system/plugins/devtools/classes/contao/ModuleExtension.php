@@ -10,7 +10,12 @@
 
 namespace Contao;
 
+use Contao\BackendTemplate;
 use Contao\Config;
+use Contao\File;
+use Contao\Input;
+use Contao\Message;
+use Contao\Model;
 
 /**
  * Back end module "extension".
@@ -52,7 +57,7 @@ class ModuleExtension extends \Contao\BackendModule
 	protected function compile()
 	{
 		// Create files
-		if (\Input::post('FORM_SUBMIT') == 'tl_extension')
+		if (Input::post('FORM_SUBMIT') == 'tl_extension')
 		{
 			$objModule = $this->Database->prepare("SELECT * FROM tl_extension WHERE id=?")
 							  ->limit(1)
@@ -68,11 +73,11 @@ class ModuleExtension extends \Contao\BackendModule
 
 			// config/config.php
 			$tplConfig = $this->newTemplate('dev_config', $objModule);
-			\File::putContent('system/plugins/' . $objModule->folder . '/config/config.php', $tplConfig->parse());
+			File::putContent('system/plugins/' . $objModule->folder . '/config/config.php', $tplConfig->parse());
 
 			// config/autoload.ini
 			$tplConfig = $this->newTemplate('dev_ini', $objModule);
-			\File::putContent('system/plugins/' . $objModule->folder . '/config/autoload.ini', $tplConfig->parse());
+			File::putContent('system/plugins/' . $objModule->folder . '/config/autoload.ini', $tplConfig->parse());
 
 			// Back end
 			if ($objModule->addBeMod)
@@ -85,7 +90,7 @@ class ModuleExtension extends \Contao\BackendModule
 					$tplClass = $this->newTemplate('dev_beClass', $objModule);
 					$tplClass->class = $strClass;
 
-					\File::putContent('system/plugins/' . $objModule->folder . '/' . $this->guessSubfolder($strClass) . '/' . $strClass . '.php', $tplClass->parse());
+					File::putContent('system/plugins/' . $objModule->folder . '/' . $this->guessSubfolder($strClass) . '/' . $strClass . '.php', $tplClass->parse());
 				}
 
 				$arrTables = array_filter(trimsplit(',', $objModule->beTables));
@@ -96,7 +101,7 @@ class ModuleExtension extends \Contao\BackendModule
 					$tplTable = $this->newTemplate('dev_dca', $objModule);
 					$tplTable->table = $strTable;
 
-					\File::putContent('system/plugins/' . $objModule->folder . '/dca/' . $strTable . '.php', $tplTable->parse());
+					File::putContent('system/plugins/' . $objModule->folder . '/dca/' . $strTable . '.php', $tplTable->parse());
 				}
 
 				$arrTemplates = array_filter(trimsplit(',', $objModule->beTemplates));
@@ -105,7 +110,7 @@ class ModuleExtension extends \Contao\BackendModule
 				foreach ($arrTemplates as $strTemplate)
 				{
 					$tplTemplate = $this->newTemplate('dev_beTemplate', $objModule);
-					\File::putContent('system/plugins/' . $objModule->folder . '/templates/' . $strTemplate . '.html', $tplTemplate->parse());
+					File::putContent('system/plugins/' . $objModule->folder . '/templates/' . $strTemplate . '.html', $tplTemplate->parse());
 				}
 			}
 
@@ -123,7 +128,7 @@ class ModuleExtension extends \Contao\BackendModule
 					$tplClass->class = $strClass;
 					$tplClass->extends = $this->guessParentClass($strClass);
 
-					\File::putContent('system/plugins/' . $objModule->folder . '/' . $this->guessSubfolder($strClass) . '/' . $strClass . '.php', $tplClass->parse());
+					File::putContent('system/plugins/' . $objModule->folder . '/' . $this->guessSubfolder($strClass) . '/' . $strClass . '.php', $tplClass->parse());
 				}
 
 				$arrTables = array_filter(trimsplit(',', $objModule->feTables));
@@ -134,19 +139,19 @@ class ModuleExtension extends \Contao\BackendModule
 					$tplTable = $this->newTemplate('dev_feDca', $objModule);
 					$tplTable->table = $strTable;
 
-					\File::putContent('system/plugins/' . $objModule->folder . '/dca/' . $strTable . '.php', $tplTable->parse());
+					File::putContent('system/plugins/' . $objModule->folder . '/dca/' . $strTable . '.php', $tplTable->parse());
 				}
 
 				// Models
 				foreach ($arrTables as $strTable)
 				{
-					$strModel = \Model::getClassFromTable($strTable);
+					$strModel = Model::getClassFromTable($strTable);
 
 					$tplTable = $this->newTemplate('dev_model', $objModule);
 					$tplTable->table = $strTable;
 					$tplTable->class = $strModel;
 
-					\File::putContent('system/plugins/' . $objModule->folder . '/models/' . $strModel . '.php', $tplTable->parse());
+					File::putContent('system/plugins/' . $objModule->folder . '/models/' . $strModel . '.php', $tplTable->parse());
 				}
 
 				$arrTemplates = array_filter(trimsplit(',', $objModule->feTemplates));
@@ -155,7 +160,7 @@ class ModuleExtension extends \Contao\BackendModule
 				foreach ($arrTemplates as $strTemplate)
 				{
 					$tplTemplate = $this->newTemplate('dev_feTemplate', $objModule);
-					$objTemplate = new \File('system/plugins/' . $objModule->folder . '/templates/' . $strTemplate . '.html', true);
+					$objTemplate = new File('system/plugins/' . $objModule->folder . '/templates/' . $strTemplate . '.html', true);
 					$objTemplate->write($tplTemplate->parse());
 					$objTemplate->close();
 				}
@@ -172,13 +177,13 @@ class ModuleExtension extends \Contao\BackendModule
 					$tplLanguage = $this->newTemplate('dev_default', $objModule);
 					$tplLanguage->language = $strLanguage;
 
-					\File::putContent('system/plugins/' . $objModule->folder . '/languages/' . $strLanguage . '/default.php', $tplLanguage->parse());
+					File::putContent('system/plugins/' . $objModule->folder . '/languages/' . $strLanguage . '/default.php', $tplLanguage->parse());
 
 					// languages/xx/modules.php
 					$tplLanguage = $this->newTemplate('dev_modules', $objModule);
 					$tplLanguage->language = $strLanguage;
 
-					\File::putContent('system/plugins/' . $objModule->folder . '/languages/' . $strLanguage . '/modules.php', $tplLanguage->parse());
+					File::putContent('system/plugins/' . $objModule->folder . '/languages/' . $strLanguage . '/modules.php', $tplLanguage->parse());
 
 					// languages/xx/<table>.php
 					foreach ($arrTables as $strTable)
@@ -187,21 +192,21 @@ class ModuleExtension extends \Contao\BackendModule
 						$tplLanguage->language = $strLanguage;
 						$tplLanguage->table = $strTable;
 
-						\File::putContent('system/plugins/' . $objModule->folder . '/languages/' . $strLanguage . '/' . $strTable . '.php', $tplLanguage->parse());
+						File::putContent('system/plugins/' . $objModule->folder . '/languages/' . $strLanguage . '/' . $strTable . '.php', $tplLanguage->parse());
 					}
 				}
 			}
 
 			// Public folder
 			$tplConfig = $this->newTemplate('dev_htaccess', $objModule);
-			\File::putContent('system/plugins/' . $objModule->folder . '/assets/.htaccess', $tplConfig->parse());
+			File::putContent('system/plugins/' . $objModule->folder . '/assets/.htaccess', $tplConfig->parse());
 
 			// Confirm and reload
-			\Message::addConfirmation($GLOBALS['TL_LANG']['tl_extension']['confirm']);
+			Message::addConfirmation($GLOBALS['TL_LANG']['tl_extension']['confirm']);
 			$this->reload();
 		}
 
-		$this->Template->base = \Environment::get('base');
+		$this->Template->base = Environment::get('base');
 		$this->Template->href = $this->getReferer(true);
 		$this->Template->title = specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']);
 		$this->Template->action = ampersand(\Environment::get('request'));
@@ -225,7 +230,7 @@ class ModuleExtension extends \Contao\BackendModule
 	protected function newTemplate($strTemplate, \Contao\Database\Result $objModule)
 	{
 		/** @var \BackendTemplate|object $objTemplate */
-		$objTemplate = new \BackendTemplate($strTemplate);
+		$objTemplate = new BackendTemplate($strTemplate);
 
 		$objTemplate->folder = $objModule->folder;
 		$objTemplate->author = str_replace(array('[', ']'), array('<', '>'), $objModule->author);

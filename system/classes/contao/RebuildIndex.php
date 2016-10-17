@@ -26,7 +26,7 @@ class RebuildIndex extends Backend implements \executable
 	 */
 	public function isActive()
 	{
-		return (Config::get('enableSearch') && \Input::get('act') == 'index');
+		return (Config::get('enableSearch') && Input::get('act') == 'index');
 	}
 
 
@@ -46,7 +46,7 @@ class RebuildIndex extends Backend implements \executable
 
 		/** @var \BackendTemplate|object $objTemplate */
 		$objTemplate = new BackendTemplate('be_rebuild_index');
-		$objTemplate->action = ampersand(\Environment::get('request'));
+		$objTemplate->action = ampersand(Environment::get('request'));
 		$objTemplate->indexHeadline = $GLOBALS['TL_LANG']['tl_maintenance']['searchIndex'];
 		$objTemplate->isActive = $this->isActive();
 
@@ -58,12 +58,12 @@ class RebuildIndex extends Backend implements \executable
 		}
 
 		// Rebuild the index
-		if (\Input::get('act') == 'index')
+		if (Input::get('act') == 'index')
 		{
 			// Check the request token (see #4007)
-			if (!isset($_GET['rt']) || !\RequestToken::validate(\Input::get('rt')))
+			if (!isset($_GET['rt']) || !RequestToken::validate(Input::get('rt')))
 			{
-				$this->Session->set('INVALID_TOKEN_URL', \Environment::get('request'));
+				$this->Session->set('INVALID_TOKEN_URL', Environment::get('request'));
 				$this->redirect('contao/confirm.php');
 			}
 
@@ -101,11 +101,11 @@ class RebuildIndex extends Backend implements \executable
 						   ->execute(($time - Config::get('sessionTimeout')), $strHash);
 
 			// Log in the front end user
-			if (is_numeric(\Input::get('user')) && \Input::get('user') > 0)
+			if (is_numeric(Input::get('user')) && Input::get('user') > 0)
 			{
 				// Insert a new session
 				$this->Database->prepare("INSERT INTO tl_session (pid, tstamp, name, sessionID, ip, hash) VALUES (?, ?, ?, ?, ?, ?)")
-							   ->execute(\Input::get('user'), $time, 'FE_USER_AUTH', session_id(), \Environment::get('ip'), $strHash);
+							   ->execute(Input::get('user'), $time, 'FE_USER_AUTH', session_id(), Environment::get('ip'), $strHash);
 
 				// Set the cookie
 				$this->setCookie('FE_USER_AUTH', $strHash, ($time + Config::get('sessionTimeout')), null, null, false, true);
@@ -116,7 +116,7 @@ class RebuildIndex extends Backend implements \executable
 			{
 				// Unset the cookies
 				$this->setCookie('FE_USER_AUTH', $strHash, ($time - 86400), null, null, false, true);
-				$this->setCookie('FE_AUTO_LOGIN', \Input::cookie('FE_AUTO_LOGIN'), ($time - 86400), null, null, false, true);
+				$this->setCookie('FE_AUTO_LOGIN', Input::cookie('FE_AUTO_LOGIN'), ($time - 86400), null, null, false, true);
 			}
 
 			$strBuffer = '';

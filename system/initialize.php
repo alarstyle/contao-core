@@ -164,14 +164,14 @@ $objConfig = Contao\Config::getInstance();
 /**
  * Set the website path (backwards compatibility)
  */
-Contao\Config::set('websitePath', TL_PATH);
+\Contao\Config::set('websitePath', TL_PATH);
 
 
 /**
  * Initialize the Input and RequestToken class
  */
-Input::initialize();
-RequestToken::initialize();
+\Contao\Input::initialize();
+\Contao\RequestToken::initialize();
 
 
 /**

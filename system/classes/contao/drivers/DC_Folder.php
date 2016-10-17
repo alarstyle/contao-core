@@ -13,7 +13,9 @@ namespace Contao\Drivers;
 use Contao\Config;
 use Contao\DataContainer;
 use Contao\Date;
+use Contao\Environment;
 use Contao\Versions;
+use Contao\RequestToken;
 
 
 /**
@@ -90,9 +92,9 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		// Check the request token (see #4007)
 		if (isset($_GET['act']))
 		{
-			if (!isset($_GET['rt']) || !\RequestToken::validate(\Input::get('rt')))
+			if (!isset($_GET['rt']) || !RequestToken::validate(\Input::get('rt')))
 			{
-				$this->Session->set('INVALID_TOKEN_URL', \Environment::get('request'));
+				$this->Session->set('INVALID_TOKEN_URL', Environment::get('request'));
 				$this->redirect('contao/confirm.php');
 			}
 		}

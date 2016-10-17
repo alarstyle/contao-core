@@ -11,6 +11,11 @@
 namespace Contao;
 
 use Contao\Config;
+use Contao\Environment;
+use Contao\Files;
+use Contao\System;
+use Contao\Input;
+use Contao\Message;
 
 /**
  * Back end module "autoload files".
@@ -32,10 +37,10 @@ class ModuleAutoload extends \Contao\BackendModule
 	 */
 	protected function compile()
 	{
-		\System::loadLanguageFile('tl_autoload');
+		System::loadLanguageFile('tl_autoload');
 
 		// Process the request
-		if (\Input::post('FORM_SUBMIT') == 'tl_autoload')
+		if (Input::post('FORM_SUBMIT') == 'tl_autoload')
 		{
 			$this->createAutoloadFiles();
 			$this->reload();
@@ -55,12 +60,12 @@ class ModuleAutoload extends \Contao\BackendModule
 		}
 
 		$this->Template->modules = $arrModules;
-		$this->Template->messages = \Message::generate();
+		$this->Template->messages = Message::generate();
 		$this->Template->href = $this->getReferer(true);
 		$this->Template->title = specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']);
 		$this->Template->button = $GLOBALS['TL_LANG']['MSC']['backBT'];
 		$this->Template->headline = $GLOBALS['TL_LANG']['tl_autoload']['headline'];
-		$this->Template->action = ampersand(\Environment::get('request'));
+		$this->Template->action = ampersand(Environment::get('request'));
 		$this->Template->available = $GLOBALS['TL_LANG']['tl_autoload']['available'];
 		$this->Template->xplAvailable = $GLOBALS['TL_LANG']['tl_autoload']['xplAvailable'];
 		$this->Template->selectAll = $GLOBALS['TL_LANG']['MSC']['selectAll'];
@@ -77,11 +82,11 @@ class ModuleAutoload extends \Contao\BackendModule
 	 */
 	protected function createAutoloadFiles()
 	{
-		$arrModules = \Input::post('modules');
+		$arrModules = Input::post('modules');
 
 		if (empty($arrModules))
 		{
-			\Message::addError($GLOBALS['TL_LANG']['tl_autoload']['emptySelection']);
+			Message::addError($GLOBALS['TL_LANG']['tl_autoload']['emptySelection']);
 
 			return;
 		}
@@ -91,9 +96,9 @@ class ModuleAutoload extends \Contao\BackendModule
 		foreach ($arrModules as $strModule)
 		{
 			// The autoload.php file exists
-			if (!\Input::post('override') && file_exists(TL_ROOT . '/system/plugins/' . $strModule . '/config/autoload.php'))
+			if (!Input::post('override') && file_exists(TL_ROOT . '/system/plugins/' . $strModule . '/config/autoload.php'))
 			{
-				\Message::addInfo(sprintf($GLOBALS['TL_LANG']['tl_autoload']['autoloadExists'], $strModule));
+				Message::addInfo(sprintf($GLOBALS['TL_LANG']['tl_autoload']['autoloadExists'], $strModule));
 
 				continue;
 			}
@@ -114,7 +119,7 @@ class ModuleAutoload extends \Contao\BackendModule
 			// Create the autoload.ini file if it does not yet exist
 			if (!file_exists(TL_ROOT . '/system/plugins/' . $strModule . '/config/autoload.ini'))
 			{
-				$objIni = new \File('system/plugins/devtools/templates/dev_ini.html', true);
+				$objIni = new File('system/plugins/devtools/templates/dev_ini.html', true);
 				$objIni->copyTo('system/plugins/' . $strModule . '/config/autoload.ini');
 			}
 
@@ -280,7 +285,7 @@ class ModuleAutoload extends \Contao\BackendModule
 				continue;
 			}
 
-			$objFile = new \File('system/plugins/' . $strModule . '/config/autoload.php', true);
+			$objFile = new File('system/plugins/' . $strModule . '/config/autoload.php', true);
 			$objFile->write(
 <<<EOT
 <?php
@@ -392,7 +397,7 @@ EOT
 			}
 
 			$objFile->close();
-			\Message::addConfirmation(sprintf($GLOBALS['TL_LANG']['tl_autoload']['autoloadConfirm'], $strModule));
+			Message::addConfirmation(sprintf($GLOBALS['TL_LANG']['tl_autoload']['autoloadConfirm'], $strModule));
 		}
 	}
 }

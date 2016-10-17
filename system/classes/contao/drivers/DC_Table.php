@@ -18,6 +18,7 @@ use Contao\Date;
 use Contao\Editor;
 use Contao\Input;
 use Contao\Pagination;
+use Contao\RequestToken;
 use Contao\System;
 use Contao\Versions;
 
@@ -129,9 +130,9 @@ class DC_Table extends DataContainer implements \listable, \editable
 		// Check the request token (see #4007)
 		if (isset($_GET['act']))
 		{
-			if (!isset($_GET['rt']) || !\RequestToken::validate(\Input::get('rt')))
+			if (!isset($_GET['rt']) || !RequestToken::validate(\Input::get('rt')))
 			{
-				$this->Session->set('INVALID_TOKEN_URL', \Environment::get('request'));
+				$this->Session->set('INVALID_TOKEN_URL', Environment::get('request'));
 				$this->redirect('contao/confirm.php');
 			}
 		}

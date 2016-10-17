@@ -112,8 +112,6 @@ ClassLoader::addClasses(array
 	'Contao\PluginLoader'              => 'system/plugins/core/library/Contao/PluginLoader.php',
 	'Contao\Pagination'                => 'system/plugins/core/library/Contao/Pagination.php',
 	'Contao\Picture'                   => 'system/plugins/core/library/Contao/Picture.php',
-	'Contao\Request'                   => 'system/plugins/core/library/Contao/Request.php',
-	'Contao\RequestToken'              => 'system/plugins/core/library/Contao/RequestToken.php',
 	'Contao\Search'                    => 'system/plugins/core/library/Contao/Search.php',
 	'Contao\Session'                   => 'system/plugins/core/library/Contao/Session.php',
 	'Contao\SortedIterator'            => 'system/plugins/core/library/Contao/SortedIterator.php',

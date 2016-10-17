@@ -11,6 +11,9 @@
 namespace Contao;
 
 use Contao\Config;
+use Contao\Environment;
+use Contao\System;
+use Contao\Input;
 
 /**
  * Back end module "missing labels".
@@ -32,10 +35,10 @@ class ModuleLabels extends \Contao\BackendModule
 	 */
 	protected function compile()
 	{
-		\System::loadLanguageFile('tl_labels');
+		System::loadLanguageFile('tl_labels');
 
 		$this->Template->label = $GLOBALS['TL_LANG']['tl_labels']['label'][0];
-		$this->Template->headline = sprintf($GLOBALS['TL_LANG']['tl_labels']['headline'], \Input::get('id'));
+		$this->Template->headline = sprintf($GLOBALS['TL_LANG']['tl_labels']['headline'], Input::get('id'));
 		$this->Template->help = (Config::get('showHelp') && strlen($GLOBALS['TL_LANG']['tl_labels']['label'][1])) ? $GLOBALS['TL_LANG']['tl_labels']['label'][1] : '';
 		$this->Template->submit = specialchars($GLOBALS['TL_LANG']['tl_labels']['submitBT']);
 
@@ -52,21 +55,21 @@ class ModuleLabels extends \Contao\BackendModule
 		}
 
 		$this->Template->options = $strOptions;
-		$this->Template->base = \Environment::get('base');
+		$this->Template->base = Environment::get('base');
 		$this->Template->button = $GLOBALS['TL_LANG']['MSC']['backBT'];
 		$this->Template->selectAll = $GLOBALS['TL_LANG']['MSC']['selectAll'];
 		$this->Template->title = specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']);
-		$this->Template->href = (\Input::post('FORM_SUBMIT') == 'tl_labels') ? \Environment::get('request') : $this->getReferer(true);
-		$this->Template->action = ampersand(\Environment::get('request'));
+		$this->Template->href = (Input::post('FORM_SUBMIT') == 'tl_labels') ? Environment::get('request') : $this->getReferer(true);
+		$this->Template->action = ampersand(Environment::get('request'));
 		$this->Template->warning = $GLOBALS['TL_LANG']['tl_labels']['warning'];
 		$this->Template->error = $GLOBALS['TL_LANG']['tl_labels']['error'];
 		$this->Template->ok = $GLOBALS['TL_LANG']['tl_labels']['ok'];
 
 		// Find missing labels
-		if (\Input::post('FORM_SUBMIT') == 'tl_labels')
+		if (Input::post('FORM_SUBMIT') == 'tl_labels')
 		{
 			$arrLang = array();
-			$lng = \Input::post('language');
+			$lng = Input::post('language');
 
 			foreach (scan(TL_ROOT . '/system/plugins') as $strDir)
 			{
@@ -102,12 +105,12 @@ class ModuleLabels extends \Contao\BackendModule
 
 					// Include English file
 					$GLOBALS['TL_LANG'] = array();
-					\System::convertXlfToPhp($strPath . '/' . $strFile, 'en', true);
+					System::convertXlfToPhp($strPath . '/' . $strFile, 'en', true);
 					$arrOld = $GLOBALS['TL_LANG'];
 
 					// Include foreign file
 					$GLOBALS['TL_LANG'] = array();
-					\System::convertXlfToPhp($strLang . '/' . $strFile, $lng, true);
+					System::convertXlfToPhp($strLang . '/' . $strFile, $lng, true);
 					$arrNew = $GLOBALS['TL_LANG'];
 
 					// Restore the former labels
@@ -129,7 +132,7 @@ class ModuleLabels extends \Contao\BackendModule
 			}
 
 			$this->Template->files = $arrLang;
-			$this->Template->headline .= ' - ' . $arrLanguages[\Input::post('language')];
+			$this->Template->headline .= ' - ' . $arrLanguages[Input::post('language')];
 		}
 	}
 }
