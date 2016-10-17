@@ -26,7 +26,7 @@ ClassLoader::addClasses(array
 /**
  * Register the templates
  */
-TemplateLoader::addFiles(array
+\Contao\TemplateLoader::addFiles(array
 (
 	'repository_catlist' => 'system/plugins/repository/templates',
 	'repository_catview' => 'system/plugins/repository/templates',

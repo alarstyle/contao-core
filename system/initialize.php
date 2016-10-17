@@ -24,10 +24,9 @@ define('TL_ROOT', dirname(__DIR__));
 /**
  * Define the login status constants in the back end (see #4099, #5279)
  */
-if (TL_MODE == 'BE')
-{
-	define('BE_USER_LOGGED_IN', false);
-	define('FE_USER_LOGGED_IN', false);
+if (TL_MODE == 'BE') {
+    define('BE_USER_LOGGED_IN', false);
+    define('FE_USER_LOGGED_IN', false);
 }
 
 define('TL_REFERER_ID', substr(md5(TL_START), 0, 8));
@@ -36,9 +35,8 @@ define('TL_REFERER_ID', substr(md5(TL_START), 0, 8));
 /**
  * Define the TL_SCRIPT constant (backwards compatibility)
  */
-if (!defined('TL_SCRIPT'))
-{
-	define('TL_SCRIPT', null);
+if (!defined('TL_SCRIPT')) {
+    define('TL_SCRIPT', null);
 }
 
 
@@ -79,13 +77,12 @@ require TL_ROOT . '/system/classes/contao/Config.php';
 require TL_ROOT . '/system/plugins/core/library/Contao/ClassLoader.php';
 class_alias('Contao\\ClassLoader', 'ClassLoader');
 
-require TL_ROOT . '/system/plugins/core/library/Contao/TemplateLoader.php';
-class_alias('Contao\\TemplateLoader', 'TemplateLoader');
+require TL_ROOT . '/system/classes/contao/TemplateLoader.php';
 
 require TL_ROOT . '/system/plugins/core/library/Contao/PluginLoader.php';
 class_alias('Contao\\PluginLoader', 'PluginLoader');
 
-Contao\Config::preload(); // see #5872
+\Contao\Config::preload(); // see #5872
 
 
 /**
@@ -94,7 +91,6 @@ Contao\Config::preload(); // see #5872
 @ini_set('display_errors', (Contao\Config::get('displayErrors') ? 1 : 0));
 error_reporting((Contao\Config::get('displayErrors') || Contao\Config::get('logErrors')) ? Contao\Config::get('errorReporting') : 0);
 set_error_handler('__error', Contao\Config::get('errorReporting'));
-
 
 
 /**
@@ -106,62 +102,49 @@ require_once TL_ROOT . '/vendor/autoload.php';
 /**
  * Try to load the modules
  */
-try
-{
-	ClassLoader::scanAndRegister();
+try {
+    \Contao\ClassLoader::scanAndRegister();
 
-	$loader = new \Composer\Autoload\ClassLoader();
-	foreach (Contao\PluginLoader::getActive() as $module)
-	{
+    $loader = new \Composer\Autoload\ClassLoader();
 
-		//var_dump(TL_ROOT);
+    $loader->addPsr4('', TL_ROOT . '/system/classes');
+    foreach (\Contao\PluginLoader::getActive() as $module) {
+        $loader->addPsr4('', TL_ROOT . '/system/plugins/' . $module . '/classes');
+    }
 
-		$loader->addPsr4('', TL_ROOT . '/system/plugins/' . $module . '/classes');
-	}
+    // activate the autoloader
+    $loader->register();
 
-	// activate the autoloader
-	$loader->register();
-
-	// to enable searching the include path (eg. for PEAR packages)
-	$loader->setUseIncludePath(true);
+    // to enable searching the include path (eg. for PEAR packages)
+    $loader->setUseIncludePath(true);
+} catch (UnresolvableDependenciesException $e) {
+    die($e->getMessage()); // see #6343
 }
-catch (UnresolvableDependenciesException $e)
-{
-	die($e->getMessage()); // see #6343
-}
-
 
 
 /**
  * Override some SwiftMailer defaults
  */
-Swift::init(function ()
-{
-	$preferences = Swift_Preferences::getInstance();
+Swift::init(function () {
+    $preferences = Swift_Preferences::getInstance();
 
-	if (!Contao\Config::get('useFTP'))
-	{
-		$preferences->setTempDir(TL_ROOT . '/system/tmp')->setCacheType('disk');
-	}
+    if (!Contao\Config::get('useFTP')) {
+        $preferences->setTempDir(TL_ROOT . '/system/tmp')->setCacheType('disk');
+    }
 
-	$preferences->setCharset(Contao\Config::get('characterSet'));
+    $preferences->setCharset(Contao\Config::get('characterSet'));
 });
 
 
 /**
  * Define the relative path to the installation (see #5339)
  */
-if (file_exists(TL_ROOT . '/system/config/pathconfig.php') && TL_SCRIPT != 'contao/install.php')
-{
-	define('TL_PATH', include TL_ROOT . '/system/config/pathconfig.php');
-}
-elseif (TL_MODE == 'BE')
-{
-	define('TL_PATH', preg_replace('/\/contao\/[a-z]+\.php$/i', '', Environment::get('scriptName')));
-}
-else
-{
-	define('TL_PATH', null); // cannot be reliably determined
+if (file_exists(TL_ROOT . '/system/config/pathconfig.php') && TL_SCRIPT != 'contao/install.php') {
+    define('TL_PATH', include TL_ROOT . '/system/config/pathconfig.php');
+} elseif (TL_MODE == 'BE') {
+    define('TL_PATH', preg_replace('/\/contao\/[a-z]+\.php$/i', '', Environment::get('scriptName')));
+} else {
+    define('TL_PATH', null); // cannot be reliably determined
 }
 
 
@@ -194,22 +177,19 @@ RequestToken::initialize();
 /**
  * Set the default language
  */
-if (!isset($_SESSION['TL_LANGUAGE']))
-{
-	// Check the user languages
-	$langs = Environment::get('httpAcceptLanguage');
-	array_push($langs, 'en'); // see #6533
+if (!isset($_SESSION['TL_LANGUAGE'])) {
+    // Check the user languages
+    $langs = Environment::get('httpAcceptLanguage');
+    array_push($langs, 'en'); // see #6533
 
-	foreach ($langs as $lang)
-	{
-		if (is_dir(TL_ROOT . '/system/plugins/core/languages/' . str_replace('-', '_', $lang)))
-		{
-			$_SESSION['TL_LANGUAGE'] = $lang;
-			break;
-		}
-	}
+    foreach ($langs as $lang) {
+        if (is_dir(TL_ROOT . '/system/plugins/core/languages/' . str_replace('-', '_', $lang))) {
+            $_SESSION['TL_LANGUAGE'] = $lang;
+            break;
+        }
+    }
 
-	unset($langs, $lang);
+    unset($langs, $lang);
 }
 
 $GLOBALS['TL_LANGUAGE'] = $_SESSION['TL_LANGUAGE'];
@@ -218,18 +198,16 @@ $GLOBALS['TL_LANGUAGE'] = $_SESSION['TL_LANGUAGE'];
 /**
  * Show the "incomplete installation" message
  */
-if (!$objConfig->isComplete() && TL_SCRIPT != 'contao/install.php')
-{
-	die_nicely('be_incomplete', 'The installation has not been completed. Open the Contao install tool to continue.');
+if (!$objConfig->isComplete() && TL_SCRIPT != 'contao/install.php') {
+    die_nicely('be_incomplete', 'The installation has not been completed. Open the Contao install tool to continue.');
 }
 
 
 /**
  * Always show error messages if logged into the install tool (see #5001)
  */
-if (Input::cookie('TL_INSTALL_AUTH') && !empty($_SESSION['TL_INSTALL_AUTH']) && Input::cookie('TL_INSTALL_AUTH') == $_SESSION['TL_INSTALL_AUTH'] && $_SESSION['TL_INSTALL_EXPIRE'] > time())
-{
-	Contao\Config::set('displayErrors', 1);
+if (Input::cookie('TL_INSTALL_AUTH') && !empty($_SESSION['TL_INSTALL_AUTH']) && Input::cookie('TL_INSTALL_AUTH') == $_SESSION['TL_INSTALL_AUTH'] && $_SESSION['TL_INSTALL_EXPIRE'] > time()) {
+    Contao\Config::set('displayErrors', 1);
 }
 
 
@@ -243,49 +221,41 @@ if (Input::cookie('TL_INSTALL_AUTH') && !empty($_SESSION['TL_INSTALL_AUTH']) && 
 /**
  * Set the mbstring encoding
  */
-if (USE_MBSTRING && function_exists('mb_regex_encoding'))
-{
-	mb_regex_encoding(Contao\Config::get('characterSet'));
+if (USE_MBSTRING && function_exists('mb_regex_encoding')) {
+    mb_regex_encoding(Contao\Config::get('characterSet'));
 }
 
 
 /**
  * HOOK: add custom logic (see #5665)
  */
-if (isset($GLOBALS['TL_HOOKS']['initializeSystem']) && is_array($GLOBALS['TL_HOOKS']['initializeSystem']))
-{
-	foreach ($GLOBALS['TL_HOOKS']['initializeSystem'] as $callback)
-	{
-		System::importStatic($callback[0])->{$callback[1]}();
-	}
+if (isset($GLOBALS['TL_HOOKS']['initializeSystem']) && is_array($GLOBALS['TL_HOOKS']['initializeSystem'])) {
+    foreach ($GLOBALS['TL_HOOKS']['initializeSystem'] as $callback) {
+        System::importStatic($callback[0])->{$callback[1]}();
+    }
 }
 
 
 /**
  * Include the custom initialization file
  */
-if (file_exists(TL_ROOT . '/system/config/initconfig.php'))
-{
-	include TL_ROOT . '/system/config/initconfig.php';
+if (file_exists(TL_ROOT . '/system/config/initconfig.php')) {
+    include TL_ROOT . '/system/config/initconfig.php';
 }
 
 
 /**
  * Check the request token upon POST requests
  */
-if ($_POST && !RequestToken::validate(Input::post('REQUEST_TOKEN')))
-{
-	// Force a JavaScript redirect upon Ajax requests (IE requires absolute link)
-	if (Environment::get('isAjaxRequest'))
-	{
-		header('HTTP/1.1 204 No Content');
-		header('X-Ajax-Location: ' . Environment::get('base') . 'contao/');
-	}
-	else
-	{
-		header('HTTP/1.1 400 Bad Request');
-		die_nicely('be_referer', 'Invalid request token. Please <a href="javascript:window.location.href=window.location.href">go back</a> and try again.');
-	}
+if ($_POST && !RequestToken::validate(Input::post('REQUEST_TOKEN'))) {
+    // Force a JavaScript redirect upon Ajax requests (IE requires absolute link)
+    if (Environment::get('isAjaxRequest')) {
+        header('HTTP/1.1 204 No Content');
+        header('X-Ajax-Location: ' . Environment::get('base') . 'contao/');
+    } else {
+        header('HTTP/1.1 400 Bad Request');
+        die_nicely('be_referer', 'Invalid request token. Please <a href="javascript:window.location.href=window.location.href">go back</a> and try again.');
+    }
 
-	exit;
+    exit;
 }

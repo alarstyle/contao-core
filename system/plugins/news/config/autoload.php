@@ -34,7 +34,7 @@ ClassLoader::addClasses(array
 /**
  * Register the templates
  */
-TemplateLoader::addFiles(array
+\Contao\TemplateLoader::addFiles(array
 (
 	'mod_newsarchive'   => 'system/plugins/news/templates/modules',
 	'mod_newslist'      => 'system/plugins/news/templates/modules',

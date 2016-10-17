@@ -8,17 +8,20 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Modules;
 
+use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\Input;
+use Contao\StringUtil;
+use Contao\Models\NewsletterModel;
 
 /**
  * Front end module "newsletter reader".
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ModuleNewsletterReader extends \Module
+class ModuleNewsletterReader extends AbstractModule
 {
 
 	/**
@@ -38,7 +41,7 @@ class ModuleNewsletterReader extends \Module
 		if (TL_MODE == 'BE')
 		{
 			/** @var \BackendTemplate|object $objTemplate */
-			$objTemplate = new \BackendTemplate('be_wildcard');
+			$objTemplate = new BackendTemplate('be_wildcard');
 
 			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['nl_reader'][0]) . ' ###';
 			$objTemplate->title = $this->headline;
@@ -90,18 +93,18 @@ class ModuleNewsletterReader extends \Module
 	 */
 	protected function compile()
 	{
-		/** @var \PageModel $objPage */
+		/** @var \Contao\PageModel $objPage */
 		global $objPage;
 
 		$this->Template->content = '';
 		$this->Template->referer = 'javascript:history.go(-1)';
 		$this->Template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
 
-		$objNewsletter = \NewsletterModel::findSentByParentAndIdOrAlias(\Input::get('items'), $this->nl_channels);
+		$objNewsletter = NewsletterModel::findSentByParentAndIdOrAlias(Input::get('items'), $this->nl_channels);
 
 		if (null === $objNewsletter)
 		{
-			/** @var \PageError404 $objHandler */
+			/** @var \Contao\PageError404 $objHandler */
 			$objHandler = new $GLOBALS['TL_PTY']['error_404']();
 			$objHandler->generate($objPage->id);
 		}
@@ -130,10 +133,10 @@ class ModuleNewsletterReader extends \Module
 
 		// Parse simple tokens and insert tags
 		$strContent = $this->replaceInsertTags($strContent);
-		$strContent = \StringUtil::parseSimpleTokens($strContent, array());
+		$strContent = StringUtil::parseSimpleTokens($strContent, array());
 
 		// Encode e-mail addresses
-		$strContent = \StringUtil::encodeEmail($strContent);
+		$strContent = StringUtil::encodeEmail($strContent);
 
 		$this->Template->content = $strContent;
 		$this->Template->subject = $objNewsletter->subject;

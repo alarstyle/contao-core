@@ -377,7 +377,7 @@ class tl_templates extends \Contao\Backend
 		$objCurrentFile = new File($dc->id, true);
 		$strName = $objCurrentFile->filename;
 		$strExtension = $objCurrentFile->extension;
-		$arrTemplates = TemplateLoader::getFiles();
+		$arrTemplates = \Contao\TemplateLoader::getFiles();
 		$blnOverridesAnotherTpl = isset($arrTemplates[$strName]);
 
 		$strPrefix = '';

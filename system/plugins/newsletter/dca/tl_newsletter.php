@@ -419,9 +419,9 @@ class tl_newsletter extends \Contao\Backend
 	public function listNewsletters($arrRow)
 	{
 		return '
-<div class="cte_type ' . (($arrRow['sent'] && $arrRow['date']) ? 'published' : 'unpublished') . '"><strong>' . $arrRow['subject'] . '</strong> - ' . (($arrRow['sent'] && $arrRow['date']) ? sprintf($GLOBALS['TL_LANG']['tl_newsletter']['sentOn'], Date::parse(Config::get('datimFormat'), $arrRow['date'])) : $GLOBALS['TL_LANG']['tl_newsletter']['notSent']) . '</div>
-<div class="limit_height' . (!Config::get('doNotCollapse') ? ' h128' : '') . '">' . (!$arrRow['sendText'] ? '
-' . StringUtil::insertTagToSrc($arrRow['content']) . '<hr>' : '' ) . '
+<div class="cte_type ' . (($arrRow['sent'] && $arrRow['date']) ? 'published' : 'unpublished') . '"><strong>' . $arrRow['subject'] . '</strong> - ' . (($arrRow['sent'] && $arrRow['date']) ? sprintf($GLOBALS['TL_LANG']['tl_newsletter']['sentOn'], \Contao\Date::parse(\Contao\Config::get('datimFormat'), $arrRow['date'])) : $GLOBALS['TL_LANG']['tl_newsletter']['notSent']) . '</div>
+<div class="limit_height' . (!\Contao\Config::get('doNotCollapse') ? ' h128' : '') . '">' . (!$arrRow['sendText'] ? '
+' . \Contao\StringUtil::insertTagToSrc($arrRow['content']) . '<hr>' : '' ) . '
 <pre style="white-space:pre-wrap">' . $arrRow['text'] . '</pre>
 </div>' . "\n";
 	}

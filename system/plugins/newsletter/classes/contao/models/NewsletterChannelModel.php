@@ -8,7 +8,7 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Models;
 
 
 /**
@@ -65,7 +65,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class NewsletterChannelModel extends \Model
+class NewsletterChannelModel extends \Contao\Model
 {
 
 	/**

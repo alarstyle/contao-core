@@ -121,7 +121,6 @@ ClassLoader::addClasses(array
 	'Contao\StringUtil'                => 'system/plugins/core/library/Contao/StringUtil.php',
 	'Contao\System'                    => 'system/plugins/core/library/Contao/System.php',
 	'Contao\Template'                  => 'system/plugins/core/library/Contao/Template.php',
-	'Contao\TemplateLoader'            => 'system/plugins/core/library/Contao/TemplateLoader.php',
 	'Contao\User'                      => 'system/plugins/core/library/Contao/User.php',
 	'Contao\Validator'                 => 'system/plugins/core/library/Contao/Validator.php',
 	'Contao\Editor'                    => 'system/plugins/core/library/Contao/Editor.php',
@@ -153,7 +152,7 @@ ClassLoader::addClasses(array
 /**
  * Register the templates
  */
-TemplateLoader::addFiles(array
+\Contao\TemplateLoader::addFiles(array
 (
 	'analytics_google'    => 'system/plugins/core/templates/analytics',
 	'analytics_piwik'     => 'system/plugins/core/templates/analytics',

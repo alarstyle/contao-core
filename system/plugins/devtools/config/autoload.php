@@ -24,7 +24,7 @@ ClassLoader::addClasses(array
 /**
  * Register the templates
  */
-TemplateLoader::addFiles(array
+\Contao\TemplateLoader::addFiles(array
 (
 	'dev_autoload'   => 'system/plugins/devtools/templates',
 	'dev_beClass'    => 'system/plugins/devtools/templates',

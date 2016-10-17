@@ -22,9 +22,9 @@ setTimeout(function() {
   window.tinymce && tinymce.init({
     skin: 'contao',
     selector: '#<?php echo $selector; ?>',
-    language: '<?php echo Backend::getTinyMceLanguage(); ?>',
+    language: '<?php echo \Contao\Backend::getTinyMceLanguage(); ?>',
     element_format: 'html',
-    document_base_url: '<?php echo Environment::get('base'); ?>',
+    document_base_url: '<?php echo \Contao\Environment::get('base'); ?>',
     entities: '160,nbsp,60,lt,62,gt,173,shy',
     setup: function(editor) {
       editor.getElement().removeAttribute('required');
@@ -38,7 +38,7 @@ setTimeout(function() {
       Backend.openModalBrowser(field_name, url, type, win);
     },
     templates: [
-      <?php echo Backend::getTinyTemplates(); ?>
+      <?php echo \Contao\Backend::getTinyTemplates(); ?>
     ],
     doctype: '<!DOCTYPE html PUBLIC \'-//W3C//DTD HTML 3.2//EN\'>',
     plugins: 'autosave charmap code fullscreen image link lists paste searchreplace tabfocus table template visualblocks',

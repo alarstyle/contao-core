@@ -10,30 +10,9 @@
 
 
 /**
- * Register the classes
- */
-ClassLoader::addClasses(array
-(
-	// Classes
-	'Contao\Newsletter'                => 'system/plugins/newsletter/classes/Newsletter.php',
-
-	// Models
-	'Contao\NewsletterChannelModel'    => 'system/plugins/newsletter/models/NewsletterChannelModel.php',
-	'Contao\NewsletterModel'           => 'system/plugins/newsletter/models/NewsletterModel.php',
-	'Contao\NewsletterRecipientsModel' => 'system/plugins/newsletter/models/NewsletterRecipientsModel.php',
-
-	// Modules
-	'Contao\ModuleNewsletterList'      => 'system/plugins/newsletter/modules/ModuleNewsletterList.php',
-	'Contao\ModuleNewsletterReader'    => 'system/plugins/newsletter/modules/ModuleNewsletterReader.php',
-	'Contao\ModuleSubscribe'           => 'system/plugins/newsletter/modules/ModuleSubscribe.php',
-	'Contao\ModuleUnsubscribe'         => 'system/plugins/newsletter/modules/ModuleUnsubscribe.php',
-));
-
-
-/**
  * Register the templates
  */
-TemplateLoader::addFiles(array
+\Contao\TemplateLoader::addFiles(array
 (
 	'mod_newsletter'        => 'system/plugins/newsletter/templates/modules',
 	'mod_newsletter_list'   => 'system/plugins/newsletter/templates/modules',

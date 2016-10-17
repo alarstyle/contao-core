@@ -88,7 +88,7 @@ abstract class BaseTemplate extends \Controller
 			}
 			elseif ($this->strParent == $strCurrent)
 			{
-				$this->strDefault = \TemplateLoader::getDefaultPath($this->strParent);
+				$this->strDefault = TemplateLoader::getDefaultPath($this->strParent);
 			}
 
 			ob_end_clean();

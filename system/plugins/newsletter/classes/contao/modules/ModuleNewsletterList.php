@@ -8,17 +8,21 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Modules;
 
+use Contao\BackendTemplate;
 use Contao\Config;
+use Contao\Date;
+use Contao\Environment;
 use Contao\Input;
+use Contao\Models\NewsletterModel;
 
 /**
  * Front end module "newsletter list".
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ModuleNewsletterList extends \Module
+class ModuleNewsletterList extends AbstractModule
 {
 
 	/**
@@ -38,7 +42,7 @@ class ModuleNewsletterList extends \Module
 		if (TL_MODE == 'BE')
 		{
 			/** @var \BackendTemplate|object $objTemplate */
-			$objTemplate = new \BackendTemplate('be_wildcard');
+			$objTemplate = new BackendTemplate('be_wildcard');
 
 			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['nl_list'][0]) . ' ###';
 			$objTemplate->title = $this->headline;
@@ -72,8 +76,8 @@ class ModuleNewsletterList extends \Module
 		$arrJumpTo = array();
 		$arrNewsletter = array();
 
-		$strRequest = ampersand(\Environment::get('request'), true);
-		$objNewsletter = \NewsletterModel::findSentByPids($this->nl_channels);
+		$strRequest = ampersand(Environment::get('request'), true);
+		$objNewsletter = NewsletterModel::findSentByPids($this->nl_channels);
 
 		if ($objNewsletter !== null)
 		{

@@ -29,7 +29,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['newsletter'] = array
 	'label'                   => &$GLOBALS['TL_LANG']['tl_member']['newsletter'],
 	'exclude'                 => true,
 	'inputType'               => 'checkbox',
-	'options_callback'        => array('Newsletter', 'getNewsletters'),
+	'options_callback'        => array('Contao\\Newsletter', 'getNewsletters'),
 	'eval'                    => array('multiple'=>true, 'feEditable'=>true, 'feGroup'=>'newsletter'),
 	'save_callback' => array
 	(

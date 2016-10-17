@@ -391,7 +391,7 @@ class ModuleRegistration extends AbstractModule
 				// Replace the wildcard
 				if (!empty($arrData['newsletter']))
 				{
-					$objChannels = \NewsletterChannelModel::findByIds($arrData['newsletter']);
+					$objChannels = Contao\Models\NewsletterChannelModel::findByIds($arrData['newsletter']);
 
 					if ($objChannels !== null)
 					{

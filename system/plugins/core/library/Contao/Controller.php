@@ -66,16 +66,16 @@ abstract class Controller extends \System
 
 			if ($objPage->templateGroup != '')
 			{
-				if (\Validator::isInsecurePath($objPage->templateGroup))
+				if (Validator::isInsecurePath($objPage->templateGroup))
 				{
 					throw new \RuntimeException('Invalid path ' . $objPage->templateGroup);
 				}
 
-				return \TemplateLoader::getPath($strTemplate, $strFormat, $objPage->templateGroup);
+				return TemplateLoader::getPath($strTemplate, $strFormat, $objPage->templateGroup);
 			}
 		}
 
-		return \TemplateLoader::getPath($strTemplate, $strFormat);
+		return TemplateLoader::getPath($strTemplate, $strFormat);
 	}
 
 
@@ -91,7 +91,7 @@ abstract class Controller extends \System
 		$arrTemplates = array();
 
 		// Get the default templates
-		foreach (\TemplateLoader::getPrefixedFiles($strPrefix) as $strTemplate)
+		foreach (TemplateLoader::getPrefixedFiles($strPrefix) as $strTemplate)
 		{
 			$arrTemplates[$strTemplate][] = 'root';
 		}

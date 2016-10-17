@@ -377,7 +377,7 @@ EOT
 /**
  * Register the templates
  */
-TemplateLoader::addFiles(array
+\Contao\TemplateLoader::addFiles(array
 (
 EOT
 				);

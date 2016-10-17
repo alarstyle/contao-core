@@ -11,6 +11,8 @@
 namespace Contao;
 
 use Contao\Config;
+use Contao\Models\NewsletterChannelModel;
+use Contao\Models\NewsletterModel;
 
 /**
  * Provide methods to handle newsletters.
@@ -845,7 +847,7 @@ class Newsletter extends Backend
 	 */
 	public function getNewsletters($objModule)
 	{
-		$objNewsletter = \NewsletterChannelModel::findAll();
+		$objNewsletter = NewsletterChannelModel::findAll();
 
 		if ($objNewsletter === null)
 		{
@@ -908,7 +910,7 @@ class Newsletter extends Backend
 		$time = Date::floorToMinute();
 
 		// Get all channels
-		$objNewsletter = \NewsletterChannelModel::findAll();
+		$objNewsletter = NewsletterChannelModel::findAll();
 
 		// Walk through each channel
 		if ($objNewsletter !== null)
@@ -965,7 +967,7 @@ class Newsletter extends Backend
 				$strUrl = $arrProcessed[$objNewsletter->jumpTo];
 
 				// Get the items
-				$objItem = \NewsletterModel::findSentByPid($objNewsletter->id);
+				$objItem = NewsletterModel::findSentByPid($objNewsletter->id);
 
 				if ($objItem !== null)
 				{
