@@ -93,7 +93,7 @@ class FileTree extends \Contao\Editor
 		// Store the order value
 		if ($this->orderField != '')
 		{
-			$arrNew = array_map('StringUtil::uuidToBin', explode(',', \Input::post($this->strOrderName)));
+			$arrNew = array_map('Contao\\StringUtil::uuidToBin', explode(',', \Input::post($this->strOrderName)));
 
 			// Only proceed if the value has changed
 			if ($arrNew !== $this->{$this->orderField})
@@ -125,7 +125,7 @@ class FileTree extends \Contao\Editor
 		{
 			$arrValue = array_filter(explode(',', $varInput));
 
-			return $this->multiple ? array_map('StringUtil::uuidToBin', $arrValue) : StringUtil::uuidToBin($arrValue[0]);
+			return $this->multiple ? array_map('Contao\\StringUtil::uuidToBin', $arrValue) : StringUtil::uuidToBin($arrValue[0]);
 		}
 	}
 
@@ -300,8 +300,8 @@ class FileTree extends \Contao\Editor
 		Config::set('loadGoogleFonts', true);
 
 		// Convert the binary UUIDs
-		$strSet = implode(',', array_map('StringUtil::binToUuid', $arrSet));
-		$strOrder = $blnHasOrder ? implode(',', array_map('StringUtil::binToUuid', $this->{$this->orderField})) : '';
+		$strSet = implode(',', array_map('Contao\\StringUtil::binToUuid', $arrSet));
+		$strOrder = $blnHasOrder ? implode(',', array_map('Contao\\StringUtil::binToUuid', $this->{$this->orderField})) : '';
 
 		$return = '<input type="hidden" name="'.$this->strName.'" id="ctrl_'.$this->strId.'" value="'.$strSet.'">' . ($blnHasOrder ? '
   <input type="hidden" name="'.$this->strOrderName.'" id="ctrl_'.$this->strOrderId.'" value="'.$strOrder.'">' : '') . '
