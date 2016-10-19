@@ -113,7 +113,6 @@ ClassLoader::addClasses(array
 	'Contao\Session'                   => 'system/plugins/core/library/Contao/Session.php',
 	'Contao\SortedIterator'            => 'system/plugins/core/library/Contao/SortedIterator.php',
 	'Contao\System'                    => 'system/plugins/core/library/Contao/System.php',
-	'Contao\User'                      => 'system/plugins/core/library/Contao/User.php',
 
 	// Models
 	'Contao\ArticleModel'              => 'system/plugins/core/models/ArticleModel.php',

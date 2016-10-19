@@ -433,13 +433,7 @@ $GLOBALS['TL_ASSETS'] = array
 /**
  * Other global arrays
  */
-$GLOBALS['TL_MODELS'] = array();
-$GLOBALS['TL_PERMISSIONS'] = array();
+$GLOBALS['TL_MODELS'] = [];
+$GLOBALS['TL_PERMISSIONS'] = [];
 
-$GLOBALS['BE_HEADER_MENU'] =
-[
-	function()
-	{
-		return 'Hello';
-	}
-];
+$GLOBALS['BE_MENU'] = [];

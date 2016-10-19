@@ -53,18 +53,15 @@
         <?= $this->headerMenu ?>
     </ul>
     <div id="tmenu">
-        <span class="header_user_container"><a
-                href="<?= $this->base ?>contao/main.php?do=login&amp;ref=<?= TL_REFERER_ID ?>" class="header_user"
-                title="<?= $this->account ?>"><?= $this->username ?></a></span>
-        <span class="header_preview_container"><a href="contao/preview.php<?= $this->frontendFile ?>"
-                                                  target="_blank" class="header_preview"
-                                                  title="<?= $this->previewTitle ?>" accesskey="f"><?= $this->
-            preview ?></a></span>
-        <span class="header_home_container"><a href="<?= $this->base ?>contao/main.php" class="header_home"
-                                               title="<?= $this->homeTitle ?>" accesskey="h"><?= $this->home ?></a></span>
-        <span class="header_logout_container"><a href="<?= $this->base ?>contao/" class="header_logout"
-                                                 title="<?= $this->logoutTitle ?>" accesskey="q"><?= $this->logout
-            ?></a></span>
+        <a href="<?= $this->base ?>contao/main.php?do=login&amp;ref=<?= TL_REFERER_ID ?>" class="header_user"
+            title="<?= $this->account ?>"><?= $this->username ?></a>
+        <a href="contao/preview.php<?= $this->frontendFile ?>"
+            target="_blank" class="header_preview"
+            title="<?= $this->previewTitle ?>"><?= $this->preview ?></a>
+        <a href="<?= $this->base ?>contao/main.php" class="header_home"
+            title="<?= $this->homeTitle ?>"><?= $this->home ?></a>
+        <a href="<?= $this->base ?>contao/" class="header_logout"
+            title="<?= $this->logoutTitle ?>"><?= $this->logout ?></a>
     </div>
 </div>
 

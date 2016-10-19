@@ -107,7 +107,7 @@ abstract class User extends \System
 
 	/**
 	 * Object instance (Singleton)
-	 * @var \User
+	 * @var User
 	 */
 	protected static $objInstance;
 

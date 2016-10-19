@@ -212,14 +212,11 @@ class BackendMain extends Backend
 		}
 
 		$this->Template->headerMenu = '';
-		if (isset($GLOBALS['BE_HEADER_MENU']))
-		{
-			foreach($GLOBALS['BE_HEADER_MENU'] as $headerMenuItem)
-			{
-				if (is_callable($headerMenuItem))
-				{
-					$this->Template->headerMenu .= '<li>' . $headerMenuItem() . '</li>';
-				}
+		foreach(BackendSections::get('HEADER_MENU') as $headerMenuItem) {
+			if (is_callable($headerMenuItem)) {
+				$this->Template->headerMenu .= '<li>' . $headerMenuItem() . '</li>';
+			} elseif (is_string($headerMenuItem)) {
+				$this->Template->headerMenu .= '<li>' . $headerMenuItem . '</li>';
 			}
 		}
 
@@ -232,9 +229,9 @@ class BackendMain extends Backend
 		$this->Template->preview = $GLOBALS['TL_LANG']['MSC']['fePreview'];
 		$this->Template->previewTitle = specialchars($GLOBALS['TL_LANG']['MSC']['fePreviewTitle']);
 		$this->Template->pageOffset = Input::cookie('BE_PAGE_OFFSET');
-		$this->Template->logout = $GLOBALS['TL_LANG']['MSC']['logoutBT'];
-		$this->Template->logoutTitle = specialchars($GLOBALS['TL_LANG']['MSC']['logoutBTTitle']);
-		$this->Template->backendModules = $GLOBALS['TL_LANG']['MSC']['backendModules'];
+		$this->Template->logout = Lang::get('MSC::logoutBT');
+		$this->Template->logoutTitle = specialchars(Lang::get('MSC::logoutBTTitle'));
+		$this->Template->backendModules = Lang::get('MSC::backendModules');
 		$this->Template->username = $GLOBALS['TL_LANG']['MSC']['user'] . ' ' . $GLOBALS['TL_USERNAME'];
 		$this->Template->request = ampersand(\Environment::get('request'));
 		$this->Template->top = $GLOBALS['TL_LANG']['MSC']['backToTop'];

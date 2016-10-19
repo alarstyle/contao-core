@@ -20,7 +20,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FrontendUser extends \User
+class FrontendUser extends User
 {
 
 	/**
