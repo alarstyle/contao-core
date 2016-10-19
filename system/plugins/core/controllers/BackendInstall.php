@@ -340,9 +340,9 @@ class BackendInstall extends Backend
 		$_SESSION['TL_INSTALL_EXPIRE'] = 0;
 
 		// The password has been generated with crypt()
-		if (\Encryption::test(Config::get('installPassword')))
+		if (Encryption::test(Config::get('installPassword')))
 		{
-			if (\Encryption::verify(Input::postUnsafeRaw('password'), Config::get('installPassword')))
+			if (Encryption::verify(Input::postUnsafeRaw('password'), Config::get('installPassword')))
 			{
 				$this->setAuthCookie();
 				Config::persist('installCount', 0);
@@ -358,7 +358,7 @@ class BackendInstall extends Backend
 			if ($blnAuthenticated)
 			{
 				// Store a crypt() version of the password
-				$strPassword = \Encryption::hash(Input::postUnsafeRaw('password'));
+				$strPassword = Encryption::hash(Input::postUnsafeRaw('password'));
 				Config::persist('installPassword', $strPassword);
 
 				$this->setAuthCookie();
@@ -397,7 +397,7 @@ class BackendInstall extends Backend
 		// Save the password
 		else
 		{
-			$strPassword = \Encryption::hash($strPassword);
+			$strPassword = Encryption::hash($strPassword);
 			Config::persist('installPassword', $strPassword);
 
 			$this->reload();
@@ -767,10 +767,10 @@ class BackendInstall extends Backend
 				elseif (Input::post('name') != '' && Input::post('email', true) != '' && Input::post('username', true) != '')
 				{
 					$time = time();
-					$strPassword = \Encryption::hash(Input::post('pass', true));
+					$strPassword = Encryption::hash(Input::post('pass', true));
 
 					$this->Database->prepare("INSERT INTO tl_user (tstamp, name, email, username, password, language, admin, showHelp, useRTE, useCE, thumbnails, dateAdded) VALUES ($time, ?, ?, ?, ?, ?, 1, 1, 1, 1, 1, $time)")
-								   ->execute(\Input::post('name'), \Input::post('email', true), \Input::post('username', true), $strPassword, str_replace('-', '_', $GLOBALS['TL_LANGUAGE']));
+								   ->execute(Input::post('name'), Input::post('email', true), Input::post('username', true), $strPassword, str_replace('-', '_', $GLOBALS['TL_LANGUAGE']));
 
 					Config::persist('adminEmail', Input::post('email', true));
 

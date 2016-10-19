@@ -11,6 +11,7 @@
 namespace Contao\Modules;
 
 use Contao\Date;
+use Contao\Encryption;
 
 /**
  * Front end module "personal data".
@@ -291,7 +292,7 @@ class ModulePersonalData extends AbstractModule
 					// Encrypt the value (see #7815)
 					if ($arrData['eval']['encrypt'])
 					{
-						$varValue = \Encryption::encrypt($varValue);
+						$varValue = Encryption::encrypt($varValue);
 					}
 
 					// Set the new value

@@ -423,7 +423,7 @@ class tl_files extends Contao\Backend
 			return;
 		}
 
-		if (is_dir(TL_ROOT . '/' . $dc->id) || !in_array(strtolower(substr($dc->id, strrpos($dc->id, '.') + 1)), trimsplit(',', strtolower(Config::get('validImageTypes')))))
+		if (is_dir(TL_ROOT . '/' . $dc->id) || !in_array(strtolower(substr($dc->id, strrpos($dc->id, '.') + 1)), trimsplit(',', strtolower(\Contao\Config::get('validImageTypes')))))
 		{
 			$GLOBALS['TL_DCA'][$dc->table]['palettes'] = str_replace(',importantPartX,importantPartY,importantPartWidth,importantPartHeight', '', $GLOBALS['TL_DCA'][$dc->table]['palettes']);
 		}
@@ -614,7 +614,7 @@ class tl_files extends Contao\Backend
 
 		$objFile = new File($strDecoded, true);
 
-		if (!in_array($objFile->extension, trimsplit(',', strtolower(Config::get('editableFiles')))))
+		if (!in_array($objFile->extension, trimsplit(',', strtolower(\Contao\Config::get('editableFiles')))))
 		{
 			return Image::getHtml(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
 		}
@@ -707,7 +707,7 @@ class tl_files extends Contao\Backend
 <div class="' . $GLOBALS['TL_DCA'][$dc->table]['fields'][$dc->field]['eval']['tl_class'] . ' cbx">
   <div id="ctrl_' . $dc->field . '" class="tl_checkbox_single_container">
     <input type="hidden" name="' . $dc->inputName . '" value=""><input type="checkbox" name="' . $dc->inputName . '" id="opt_' . $dc->field . '_0" class="tl_checkbox" value="1"' . ($blnProtected ? ' checked="checked"' : '') . ' onfocus=""> <label for="opt_' . $dc->field . '_0">' . $GLOBALS['TL_LANG']['tl_files']['protected'][0] . '</label>
-  </div>' . (Config::get('showHelp') ? '
+  </div>' . (\Contao\Config::get('showHelp') ? '
   <p class="tl_help tl_tip">' . $GLOBALS['TL_LANG']['tl_files']['protected'][1] . '</p>' : '') . '
 </div>';
 	}

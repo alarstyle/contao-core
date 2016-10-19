@@ -138,7 +138,7 @@ class FormPassword extends \Contao\Editor
 		{
 			$this->blnSubmitInput = true;
 
-			return \Encryption::hash($varInput);
+			return Encryption::hash($varInput);
 		}
 
 		return '';

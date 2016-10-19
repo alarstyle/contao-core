@@ -253,7 +253,7 @@ class BackendMain extends Backend
 		$this->Template->maintenanceOff = specialchars($GLOBALS['TL_LANG']['MSC']['maintenanceOff']);
 		$this->Template->maintenanceHref = $this->addToUrl('mmo=1');
 		$this->Template->buildCacheLink = $GLOBALS['TL_LANG']['MSC']['buildCacheLink'];
-		$this->Template->buildCacheText = $GLOBALS['TL_LANG']['MSC']['buildCacheText'];
+		$this->Template->buildCacheText = Lang::get('MSC::buildCacheText');
 		$this->Template->buildCacheHref = $this->addToUrl('bic=1');
 		$this->Template->isPopup = Input::get('popup');
 

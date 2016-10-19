@@ -252,7 +252,7 @@ class InsertTags extends \Controller
 						// Decrypt the value
 						if ($GLOBALS['TL_DCA']['tl_member']['fields'][$elements[1]]['eval']['encrypt'])
 						{
-							$value = \Encryption::decrypt($value);
+							$value = Encryption::decrypt($value);
 						}
 
 						$rgxp = $GLOBALS['TL_DCA']['tl_member']['fields'][$elements[1]]['eval']['rgxp'];

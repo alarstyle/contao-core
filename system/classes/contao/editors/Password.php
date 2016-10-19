@@ -10,7 +10,9 @@
 
 namespace Contao\Editors;
 
-use COntao\Config;
+use Contao\Config;
+use Contao\Encryption;
+use Contao\Message;
 
 /**
  * Provide methods to handle password fields.
@@ -132,9 +134,9 @@ class Password extends \Contao\Editor
 		if (!$this->hasErrors())
 		{
 			$this->blnSubmitInput = true;
-			\Message::addConfirmation($GLOBALS['TL_LANG']['MSC']['pw_changed']);
+			Message::addConfirmation($GLOBALS['TL_LANG']['MSC']['pw_changed']);
 
-			return \Encryption::hash($varInput);
+			return Encryption::hash($varInput);
 		}
 
 		return '';

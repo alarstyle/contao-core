@@ -439,8 +439,8 @@ class Versions extends Controller
 						// Decrypt the values
 						if ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$k]['eval']['encrypt'])
 						{
-							$to[$k] = \Encryption::decrypt($to[$k]);
-							$from[$k] = \Encryption::decrypt($from[$k]);
+							$to[$k] = Encryption::decrypt($to[$k]);
+							$from[$k] = Encryption::decrypt($from[$k]);
 						}
 
 						// Convert serialized arrays into strings

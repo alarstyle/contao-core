@@ -10,6 +10,7 @@
 
 namespace Contao\Modules;
 
+use \Contao\Encryption;
 
 /**
  * Front end module "change password".
@@ -146,9 +147,9 @@ class ModuleChangePassword extends AbstractModule
 				// Validate the old password
 				if ($strKey == 'oldPassword')
 				{
-					if (\Encryption::test($objMember->password))
+					if (Encryption::test($objMember->password))
 					{
-						$blnAuthenticated = \Encryption::verify($objEditor->value, $objMember->password);
+						$blnAuthenticated = Encryption::verify($objEditor->value, $objMember->password);
 					}
 					else
 					{

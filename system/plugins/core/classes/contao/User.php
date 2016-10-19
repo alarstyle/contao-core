@@ -378,19 +378,19 @@ abstract class User extends \System
 		}
 
 		// The password has been generated with crypt()
-		if (\Encryption::test($this->password))
+		if (Encryption::test($this->password))
 		{
-			$blnAuthenticated = \Encryption::verify(\Input::postUnsafeRaw('password'), $this->password);
+			$blnAuthenticated = Encryption::verify(Input::postUnsafeRaw('password'), $this->password);
 		}
 		else
 		{
 			list($strPassword, $strSalt) = explode(':', $this->password);
-			$blnAuthenticated = ($strSalt == '') ? ($strPassword === sha1(\Input::postUnsafeRaw('password'))) : ($strPassword === sha1($strSalt . \Input::postUnsafeRaw('password')));
+			$blnAuthenticated = ($strSalt == '') ? ($strPassword === sha1(Input::postUnsafeRaw('password'))) : ($strPassword === sha1($strSalt . \Input::postUnsafeRaw('password')));
 
 			// Store a SHA-512 encrpyted version of the password
 			if ($blnAuthenticated)
 			{
-				$this->password = \Encryption::hash(\Input::postUnsafeRaw('password'));
+				$this->password = Encryption::hash(Input::postUnsafeRaw('password'));
 			}
 		}
 

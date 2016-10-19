@@ -10,6 +10,7 @@
 
 namespace Contao\Modules;
 
+use \Contao\Encryption;
 
 /**
  * Front end module "close account".
@@ -85,9 +86,9 @@ class ModuleCloseAccount extends AbstractModule
 			if (!$objEditor->hasErrors())
 			{
 				// The password has been generated with crypt()
-				if (\Encryption::test($this->User->password))
+				if (Encryption::test($this->User->password))
 				{
-					$blnAuthenticated = \Encryption::verify($objEditor->value, $this->User->password);
+					$blnAuthenticated = Encryption::verify($objEditor->value, $this->User->password);
 				}
 				else
 				{

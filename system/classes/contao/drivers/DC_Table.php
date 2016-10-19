@@ -16,6 +16,7 @@ use Contao\Config;
 use Contao\DataContainer;
 use Contao\Date;
 use Contao\Editor;
+use Contao\Encryption;
 use Contao\Input;
 use Contao\Pagination;
 use Contao\RequestToken;
@@ -466,7 +467,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 			// Decrypt the value
 			if ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$i]['eval']['encrypt'])
 			{
-				$value = \Encryption::decrypt($value);
+				$value = Encryption::decrypt($value);
 			}
 
 			$class = (($count++ % 2) == 0) ? ' class="tl_bg"' : '';
@@ -667,7 +668,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 				// Encrypt the default value (see #3740)
 				if ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$k]['eval']['encrypt'])
 				{
-					$this->set[$k] = \Encryption::encrypt($this->set[$k]);
+					$this->set[$k] = Encryption::encrypt($this->set[$k]);
 				}
 			}
 		}
@@ -914,7 +915,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 						// Encrypt the default value (see #3740)
 						if ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$k]['eval']['encrypt'])
 						{
-							$v = \Encryption::encrypt($v);
+							$v = Encryption::encrypt($v);
 						}
 					}
 
@@ -1132,7 +1133,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 							// Encrypt the default value (see #3740)
 							if ($GLOBALS['TL_DCA'][$v]['fields'][$kk]['eval']['encrypt'])
 							{
-								$vv = \Encryption::encrypt($vv);
+								$vv = Encryption::encrypt($vv);
 							}
 						}
 
@@ -3697,7 +3698,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 			// Decrypt the value
 			if ($GLOBALS['TL_DCA'][$table]['fields'][$v]['eval']['encrypt'])
 			{
-				$objRow->$v = \Encryption::decrypt(deserialize($objRow->$v));
+				$objRow->$v = Encryption::decrypt(deserialize($objRow->$v));
 			}
 
 			if (strpos($v, ':') !== false)
@@ -4190,7 +4191,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 					{
 						if ($GLOBALS['TL_DCA'][$table]['fields'][$k]['eval']['encrypt'])
 						{
-							$row[$i][$k] = \Encryption::decrypt(deserialize($v));
+							$row[$i][$k] = Encryption::decrypt(deserialize($v));
 						}
 					}
 
@@ -4576,7 +4577,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 					// Decrypt the value
 					if ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$v]['eval']['encrypt'])
 					{
-						$row[$v] = \Encryption::decrypt(deserialize($row[$v]));
+						$row[$v] = Encryption::decrypt(deserialize($row[$v]));
 					}
 
 					if (strpos($v, ':') !== false)

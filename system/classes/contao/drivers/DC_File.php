@@ -13,6 +13,7 @@ namespace Contao\Drivers;
 use Contao\Config;
 use Contao\DataContainer;
 use Contao\Date;
+use Contao\Input;
 use Contao\StringUtil;
 
 
@@ -32,7 +33,7 @@ class DC_File extends DataContainer implements \editable
 	public function __construct($strTable)
 	{
 		parent::__construct();
-		$this->intId = \Input::get('id');
+		$this->intId = Input::get('id');
 
 		// Check whether the table is defined
 		if ($strTable == '' || !isset($GLOBALS['TL_DCA'][$strTable]))
@@ -322,7 +323,7 @@ class DC_File extends DataContainer implements \editable
 <p class="tl_error">'.$GLOBALS['TL_LANG']['ERR']['general'].'</p>' : '').$return;
 
 		// Reload the page to prevent _POST variables from being sent twice
-		if (\Input::post('FORM_SUBMIT') == $this->strTable && !$this->noReload)
+		if (Input::post('FORM_SUBMIT') == $this->strTable && !$this->noReload)
 		{
 			// Call onsubmit_callback
 			if (is_array($GLOBALS['TL_DCA'][$this->strTable]['config']['onsubmit_callback']))

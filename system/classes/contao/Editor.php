@@ -11,6 +11,7 @@
 namespace Contao;
 
 use Contao\Date;
+use Contao\Encryption;
 use Contao\Validator;
 
 /**
@@ -229,7 +230,7 @@ abstract class Editor extends BaseTemplate
 				// Decrypt the value if it is encrypted
 				if ($this->arrConfiguration['encrypt'])
 				{
-					$this->varValue = \Encryption::decrypt($this->varValue);
+					$this->varValue = Encryption::decrypt($this->varValue);
 				}
 				break;
 
@@ -373,7 +374,7 @@ abstract class Editor extends BaseTemplate
 				// Encrypt the value
 				if ($this->arrConfiguration['encrypt'])
 				{
-					return \Encryption::encrypt($this->varValue);
+					return Encryption::encrypt($this->varValue);
 				}
 				elseif ($this->arrConfiguration['nullIfEmpty'] && $this->varValue == '')
 				{

@@ -118,7 +118,7 @@ class Feed
 	 *
 	 * @param \FeedItem $objItem The feed item object
 	 */
-	public function addItem(\FeedItem $objItem)
+	public function addItem(FeedItem $objItem)
 	{
 		$this->arrItems[] = $objItem;
 	}

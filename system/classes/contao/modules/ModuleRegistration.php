@@ -13,7 +13,9 @@ namespace Contao\Modules;
 use Contao\Config;
 use Contao\Date;
 use Contao\Email;
+use Contao\Encryption;
 use Contao\Idna;
+use Contao\Input;
 use Contao\StringUtil;
 
 /**
@@ -214,7 +216,7 @@ class ModuleRegistration extends AbstractModule
 				$varValue = $objEditor->value;
 
 				// Check whether the password matches the username
-				if ($objEditor instanceof \FormPassword && \Encryption::verify(\Input::post('username'), $varValue))
+				if ($objEditor instanceof \FormPassword && Encryption::verify(Input::post('username'), $varValue))
 				{
 					$objEditor->addError($GLOBALS['TL_LANG']['ERR']['passwordName']);
 				}
@@ -282,7 +284,7 @@ class ModuleRegistration extends AbstractModule
 					// Encrypt the value (see #7815)
 					if ($arrData['eval']['encrypt'])
 					{
-						$varValue = \Encryption::encrypt($varValue);
+						$varValue = Encryption::encrypt($varValue);
 					}
 
 					// Set the new value
