@@ -20,6 +20,10 @@ define('TL_START', microtime(true));
  */
 define('TL_ROOT', dirname(__DIR__));
 
+if (!defined('TL_MODE')) {
+    define('TL_MODE', 'temp');
+}
+
 
 /**
  * Define the login status constants in the back end (see #4099, #5279)

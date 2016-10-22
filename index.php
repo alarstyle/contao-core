@@ -13,7 +13,7 @@ define('TL_SCRIPT', 'index.php');
 
 // Initialize the system
 define('TL_MODE', 'FE');
-require __DIR__ . '/system/initialize.php';
+require_once __DIR__ . '/system/initialize.php';
 
 
 // Run the controller

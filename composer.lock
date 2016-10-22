@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3d1a697ff6da4451225cfe780222c41d",
-    "content-hash": "d8b3a8af35be0b86188e385f38330962",
+    "hash": "ef381dab99914cc32845b8839b3e9e9d",
+    "content-hash": "6c942e43c9546198549a8a5ea5075eee",
     "packages": [
         {
             "name": "contao-components/compass",
@@ -305,6 +305,57 @@
                 "stylesheet"
             ],
             "time": "2015-12-30 05:47:36"
+        },
+        {
+            "name": "phpixie/image",
+            "version": "3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPixie/Image.git",
+                "reference": "12da972555fa567b21bb5cb72fbdcfbabf16760f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPixie/Image/zipball/12da972555fa567b21bb5cb72fbdcfbabf16760f",
+                "reference": "12da972555fa567b21bb5cb72fbdcfbabf16760f",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpixie/test": "~3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PHPixie\\": "src/PHPixie",
+                    "PHPixie\\Tests\\": "tests/PHPixie/Tests"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Tsiupa",
+                    "email": "draconyster@gmail.com",
+                    "homepage": "http://dracony.org"
+                }
+            ],
+            "description": "PHPixie imageprocessing library",
+            "homepage": "http://phpixie.com",
+            "keywords": [
+                "ImageMagick",
+                "gd",
+                "gmagick",
+                "image",
+                "imagick"
+            ],
+            "time": "2016-06-05 21:32:36"
         },
         {
             "name": "phpspec/php-diff",

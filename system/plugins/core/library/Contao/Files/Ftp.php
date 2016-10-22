@@ -11,13 +11,14 @@
 namespace Contao\Files;
 
 use Contao\Config;
+use Contao\Files;
 
 /**
  * Manage files via FTP ("Safe Mode Hack")
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class Ftp extends \Files
+class Ftp extends Files
 {
 
 	/**

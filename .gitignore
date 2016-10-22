@@ -31,6 +31,9 @@ nbproject/
 /system/tmp/*
 /templates/*
 /vendor/
+/resized/*
+!/resized/.htaccess
+!/resized/index.php
 
 # See contao/core#7576
 !/assets/css/index.html

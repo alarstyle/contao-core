@@ -70,16 +70,10 @@ abstract class Files
 				self::$objInstance = new \Files\Ftp();
 			}
 
-			// HOOK: use the smhextended module
-			elseif (Config::get('useSmhExtended') && in_array('smhextended', \PluginLoader::getActive()))
-			{
-				self::$objInstance = new \SMHExtended();
-			}
-
 			// Use PHP to modify files
 			else
 			{
-				self::$objInstance = new \Files\Php();
+				self::$objInstance = new Files\Php();
 			}
 		}
 

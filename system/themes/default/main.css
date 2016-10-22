@@ -671,12 +671,10 @@ body.popup {
 
 /* Container */
 #container {
-  width: 960px;
   margin: 0 auto; }
 
 .popup #container {
-  padding: 0;
-  width: 741px; }
+  padding: 0; }
 
 /* Left */
 #left {
@@ -689,14 +687,12 @@ body.popup {
 
 /* Main */
 #main {
-  width: 741px;
   padding: 1px;
   margin-left: 10px;
   background: #fff;
-  border: 1px solid #bbb;
-  float: left;
   border-radius: 3px;
-  box-shadow: 0 3px 6px #ccc; }
+  box-shadow: 0 3px 6px #ccc;
+  margin-left: 220px; }
 
 .popup #main {
   padding: 0;
