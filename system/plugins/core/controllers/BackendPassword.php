@@ -11,6 +11,7 @@
 namespace Contao;
 
 use Contao\Config;
+use Contao\Message;
 
 /**
  * Back end help wizard.
@@ -57,17 +58,17 @@ class BackendPassword extends Backend
 			// The passwords do not match
 			if ($pw != $cnf)
 			{
-				\Message::addError($GLOBALS['TL_LANG']['ERR']['passwordMatch']);
+				Message::addError($GLOBALS['TL_LANG']['ERR']['passwordMatch']);
 			}
 			// Password too short
 			elseif (utf8_strlen($pw) < Config::get('minPasswordLength'))
 			{
-				\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['passwordLength'], Config::get('minPasswordLength')));
+				Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['passwordLength'], Config::get('minPasswordLength')));
 			}
 			// Password and username are the same
 			elseif ($pw == $this->User->username)
 			{
-				\Message::addError($GLOBALS['TL_LANG']['ERR']['passwordName']);
+				Message::addError($GLOBALS['TL_LANG']['ERR']['passwordName']);
 			}
 			// Save the data
 			else
@@ -103,7 +104,7 @@ class BackendPassword extends Backend
 					$objUser->password = Encryption::hash($pw);
 					$objUser->save();
 
-					\Message::addConfirmation($GLOBALS['TL_LANG']['MSC']['pw_changed']);
+					Message::addConfirmation($GLOBALS['TL_LANG']['MSC']['pw_changed']);
 					$this->redirect('contao/main.php');
 				}
 			}
@@ -112,7 +113,7 @@ class BackendPassword extends Backend
 		}
 
 		$objTemplate->theme = \Backend::getTheme();
-		$objTemplate->messages = \Message::generate();
+		$objTemplate->messages = Message::generate();
 		$objTemplate->base = \Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($GLOBALS['TL_LANG']['MSC']['pw_new']);

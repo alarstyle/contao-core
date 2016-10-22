@@ -110,7 +110,7 @@ class FileUpload extends Backend
 			}
 			catch (\InvalidArgumentException $e)
 			{
-				\Message::addError($GLOBALS['TL_LANG']['ERR']['filename']);
+				Message::addError($GLOBALS['TL_LANG']['ERR']['filename']);
 				$this->blnHasError = true;
 
 				continue;
@@ -128,17 +128,17 @@ class FileUpload extends Backend
 			{
 				if ($file['error'] == 1 || $file['error'] == 2)
 				{
-					\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filesize'], $maxlength_kb_readable));
+					Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filesize'], $maxlength_kb_readable));
 					$this->blnHasError = true;
 				}
 				elseif ($file['error'] == 3)
 				{
-					\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filepartial'], $file['name']));
+					Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filepartial'], $file['name']));
 					$this->blnHasError = true;
 				}
 				elseif ($file['error'] > 0)
 				{
-					\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['fileerror'], $file['error'], $file['name']));
+					Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['fileerror'], $file['error'], $file['name']));
 					$this->blnHasError = true;
 				}
 			}
@@ -146,7 +146,7 @@ class FileUpload extends Backend
 			// File is too big
 			elseif ($file['size'] > $maxlength_kb)
 			{
-				\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filesize'], $maxlength_kb_readable));
+				Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filesize'], $maxlength_kb_readable));
 				$this->blnHasError = true;
 			}
 
@@ -158,7 +158,7 @@ class FileUpload extends Backend
 				// File type not allowed
 				if (!in_array($strExtension, trimsplit(',', strtolower(Config::get('uploadTypes')))))
 				{
-					\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filetype'], $strExtension));
+					Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filetype'], $strExtension));
 					$this->blnHasError = true;
 				}
 				else
@@ -308,7 +308,7 @@ class FileUpload extends Backend
 		// The image is too big to be handled by the GD library
 		if ($objFile->isGdImage && ($arrImageSize[0] > Config::get('gdMaxImgWidth') || $arrImageSize[1] > Config::get('gdMaxImgHeight')))
 		{
-			\Message::addInfo(sprintf($GLOBALS['TL_LANG']['MSC']['fileExceeds'], $objFile->basename));
+			Message::addInfo(sprintf($GLOBALS['TL_LANG']['MSC']['fileExceeds'], $objFile->basename));
 			$this->log('File "' . $strImage . '" is too big to be resized automatically', __METHOD__, TL_FILES);
 
 			return false;
@@ -338,7 +338,7 @@ class FileUpload extends Backend
 		if ($blnResize)
 		{
 			\Image::resize($strImage, $arrImageSize[0], $arrImageSize[1]);
-			\Message::addInfo(sprintf($GLOBALS['TL_LANG']['MSC']['fileResized'], $objFile->basename));
+			Message::addInfo(sprintf($GLOBALS['TL_LANG']['MSC']['fileResized'], $objFile->basename));
 			$this->log('File "' . $strImage . '" was scaled down to the maximum dimensions', __METHOD__, TL_FILES);
 			$this->blnHasResized = true;
 

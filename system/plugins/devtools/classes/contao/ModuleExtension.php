@@ -212,7 +212,7 @@ class ModuleExtension extends \Contao\BackendModule
 		$this->Template->action = ampersand(\Environment::get('request'));
 		$this->Template->selectAll = $GLOBALS['TL_LANG']['MSC']['selectAll'];
 		$this->Template->button = $GLOBALS['TL_LANG']['MSC']['backBT'];
-		$this->Template->message = \Message::generate();
+		$this->Template->message = Message::generate();
 		$this->Template->submit = specialchars($GLOBALS['TL_LANG']['tl_extension']['make'][0]);
 		$this->Template->headline = sprintf($GLOBALS['TL_LANG']['tl_extension']['headline'], \Input::get('id'));
 		$this->Template->explain = $GLOBALS['TL_LANG']['tl_extension']['make'][1];

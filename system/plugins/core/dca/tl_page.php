@@ -941,8 +941,8 @@ class tl_page extends Contao\Backend
 		}
 
 		$this->import('Contao\\Messages', 'Messages');
-		Message::addRaw($this->Messages->languageFallback());
-		Message::addRaw($this->Messages->topLevelRoot());
+		\Contao\Message::addRaw($this->Messages->languageFallback());
+		\Contao\Message::addRaw($this->Messages->topLevelRoot());
 	}
 
 

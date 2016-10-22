@@ -10,7 +10,10 @@
 
 namespace Contao\Modules;
 
+use \Contao\BackendTemplate;
 use \Contao\Encryption;
+use \Contao\Environment;
+use \Contao\Message;
 
 /**
  * Front end module "change password".
@@ -37,7 +40,7 @@ class ModuleChangePassword extends AbstractModule
 		if (TL_MODE == 'BE')
 		{
 			/** @var \BackendTemplate|object $objTemplate */
-			$objTemplate = new \BackendTemplate('be_wildcard');
+			$objTemplate = new BackendTemplate('be_wildcard');
 
 			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['changePassword'][0]) . ' ###';
 			$objTemplate->title = $this->headline;
@@ -206,14 +209,14 @@ class ModuleChangePassword extends AbstractModule
 				$this->jumpToOrReload($objJumpTo->row());
 			}
 
-			\Message::addConfirmation($GLOBALS['TL_LANG']['MSC']['newPasswordSet']);
+			Message::addConfirmation($GLOBALS['TL_LANG']['MSC']['newPasswordSet']);
 			$this->reload();
 		}
 
-		$this->Template->action = \Environment::get('indexFreeRequest');
+		$this->Template->action = Environment::get('indexFreeRequest');
 		$this->Template->slabel = specialchars($GLOBALS['TL_LANG']['MSC']['changePassword']);
 		$this->Template->rowLast = 'row_' . $row . ' row_last' . ((($row % 2) == 0) ? ' even' : ' odd');
 		$this->Template->tableless = $this->tableless;
-		$this->Template->message = \Message::generate(false, true);
+		$this->Template->message = Message::generate(false, true);
 	}
 }

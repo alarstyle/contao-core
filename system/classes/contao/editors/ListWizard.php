@@ -12,6 +12,7 @@ namespace Contao\Editors;
 
 use Contao\Cache;
 use Contao\Config;
+use Contao\Message;
 
 /**
  * Provide methods to handle list items.
@@ -180,7 +181,7 @@ class ListWizard extends \Contao\Editor
 
 			if (empty($arrUploaded))
 			{
-				\Message::addError($GLOBALS['TL_LANG']['ERR']['all_fields']);
+				Message::addError($GLOBALS['TL_LANG']['ERR']['all_fields']);
 				$this->reload();
 			}
 
@@ -193,7 +194,7 @@ class ListWizard extends \Contao\Editor
 
 				if ($objFile->extension != 'csv')
 				{
-					\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filetype'], $objFile->extension));
+					Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filetype'], $objFile->extension));
 					continue;
 				}
 
@@ -240,7 +241,7 @@ class ListWizard extends \Contao\Editor
 <div id="tl_buttons">
 <a href="'.ampersand(str_replace('&key=list', '', \Environment::get('request'))).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
 </div>
-'.\Message::generate().'
+'.Message::generate().'
 <form action="'.ampersand(\Environment::get('request'), true).'" id="tl_list_import" class="tl_form" method="post" enctype="multipart/form-data">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_list_import">

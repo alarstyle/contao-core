@@ -46,7 +46,7 @@ class Theme extends Backend
 
 				if (empty($arrUploaded))
 				{
-					\Message::addError($GLOBALS['TL_LANG']['ERR']['all_fields']);
+					Message::addError($GLOBALS['TL_LANG']['ERR']['all_fields']);
 					$this->reload();
 				}
 
@@ -57,7 +57,7 @@ class Theme extends Backend
 					// Skip folders
 					if (is_dir(TL_ROOT . '/' . $strFile))
 					{
-						\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['importFolder'], basename($strFile)));
+						Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['importFolder'], basename($strFile)));
 						continue;
 					}
 
@@ -66,7 +66,7 @@ class Theme extends Backend
 					// Skip anything but .cto files
 					if ($objFile->extension != 'cto')
 					{
-						\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filetype'], $objFile->extension));
+						Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filetype'], $objFile->extension));
 						continue;
 					}
 
@@ -81,7 +81,7 @@ class Theme extends Backend
 			// Check whether there are any files
 			if (empty($arrFiles))
 			{
-				\Message::addError($GLOBALS['TL_LANG']['ERR']['all_fields']);
+				Message::addError($GLOBALS['TL_LANG']['ERR']['all_fields']);
 				$this->reload();
 			}
 
@@ -116,7 +116,7 @@ class Theme extends Backend
 <div id="tl_buttons">
 <a href="'.ampersand(str_replace('&key=importTheme', '', \Environment::get('request'))).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
 </div>
-'.\Message::generate().'
+'.Message::generate().'
 <form action="'.ampersand(\Environment::get('request'), true).'" id="tl_theme_import" class="tl_form" method="post" enctype="multipart/form-data">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_theme_import">
@@ -155,7 +155,7 @@ class Theme extends Backend
 <div id="tl_buttons">
 <a href="'.ampersand(str_replace('&key=importTheme', '', \Environment::get('request'))).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
 </div>
-'.\Message::generate().'
+'.Message::generate().'
 <form action="'.ampersand(\Environment::get('request'), true).'" id="tl_theme_import" class="tl_form" method="post">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_theme_import">
@@ -669,7 +669,7 @@ class Theme extends Backend
 			$this->StyleSheets->updateStyleSheets();
 
 			// Notify the user
-			\Message::addConfirmation(sprintf($GLOBALS['TL_LANG']['tl_theme']['theme_imported'], basename($strZipFile)));
+			Message::addConfirmation(sprintf($GLOBALS['TL_LANG']['tl_theme']['theme_imported'], basename($strZipFile)));
 
 			// HOOK: add custom logic
 			if (isset($GLOBALS['TL_HOOKS']['extractThemeFiles']) && is_array($GLOBALS['TL_HOOKS']['extractThemeFiles']))

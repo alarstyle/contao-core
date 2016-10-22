@@ -333,7 +333,7 @@ abstract class User extends \System
 			// Return if the user still cannot be loaded
 			if (!$blnLoaded || $this->findBy('username', \Input::post('username', true)) == false)
 			{
-				\Message::addError($GLOBALS['TL_LANG']['ERR']['invalidLogin']);
+				Message::addError($GLOBALS['TL_LANG']['ERR']['invalidLogin']);
 				$this->log('Could not find user "' . \Input::post('username', true) . '"', __METHOD__, TL_ACCESS);
 
 				return false;
@@ -357,7 +357,7 @@ abstract class User extends \System
 
 			// Add a log entry and the error message, because checkAccountStatus() will not be called (see #4444)
 			$this->log('User "' . $this->username . '" has been locked for ' . ceil(Config::get('lockPeriod') / 60) . ' minutes', __METHOD__, TL_ACCESS);
-			\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['accountLocked'], ceil((($this->locked + Config::get('lockPeriod')) - $time) / 60)));
+			Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['accountLocked'], ceil((($this->locked + Config::get('lockPeriod')) - $time) / 60)));
 
 			// Send admin notification
 			if (Config::get('adminEmail') != '')
@@ -416,7 +416,7 @@ abstract class User extends \System
 			--$this->loginCount;
 			$this->save();
 
-			\Message::addError($GLOBALS['TL_LANG']['ERR']['invalidLogin']);
+			Message::addError($GLOBALS['TL_LANG']['ERR']['invalidLogin']);
 			$this->log('Invalid password submitted for username "' . $this->username . '"', __METHOD__, TL_ACCESS);
 
 			return false;
@@ -462,7 +462,7 @@ abstract class User extends \System
 		// Check whether the account is locked
 		if (($this->locked + Config::get('lockPeriod')) > $time)
 		{
-			\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['accountLocked'], ceil((($this->locked + Config::get('lockPeriod')) - $time) / 60)));
+			Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['accountLocked'], ceil((($this->locked + Config::get('lockPeriod')) - $time) / 60)));
 
 			return false;
 		}
@@ -470,7 +470,7 @@ abstract class User extends \System
 		// Check whether the account is disabled
 		elseif ($this->disable)
 		{
-			\Message::addError($GLOBALS['TL_LANG']['ERR']['invalidLogin']);
+			Message::addError($GLOBALS['TL_LANG']['ERR']['invalidLogin']);
 			$this->log('The account has been disabled', __METHOD__, TL_ACCESS);
 
 			return false;
@@ -479,7 +479,7 @@ abstract class User extends \System
 		// Check wether login is allowed (front end only)
 		elseif ($this instanceof FrontendUser && !$this->login)
 		{
-			\Message::addError($GLOBALS['TL_LANG']['ERR']['invalidLogin']);
+			Message::addError($GLOBALS['TL_LANG']['ERR']['invalidLogin']);
 			$this->log('User "' . $this->username . '" is not allowed to log in', __METHOD__, TL_ACCESS);
 
 			return false;
@@ -492,7 +492,7 @@ abstract class User extends \System
 
 			if ($this->start != '' && $this->start > $time)
 			{
-				\Message::addError($GLOBALS['TL_LANG']['ERR']['invalidLogin']);
+				Message::addError($GLOBALS['TL_LANG']['ERR']['invalidLogin']);
 				$this->log('The account was not active yet (activation date: ' . Date::parse(Config::get('dateFormat'), $this->start) . ')', __METHOD__, TL_ACCESS);
 
 				return false;
@@ -500,7 +500,7 @@ abstract class User extends \System
 
 			if ($this->stop != '' && $this->stop <= ($time + 60))
 			{
-				\Message::addError($GLOBALS['TL_LANG']['ERR']['invalidLogin']);
+				Message::addError($GLOBALS['TL_LANG']['ERR']['invalidLogin']);
 				$this->log('The account was not active anymore (deactivation date: ' . Date::parse(Config::get('dateFormat'), $this->stop) . ')', __METHOD__, TL_ACCESS);
 
 				return false;

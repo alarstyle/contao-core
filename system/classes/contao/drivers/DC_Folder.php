@@ -16,6 +16,7 @@ use Contao\Date;
 use Contao\Editor;
 use Contao\Environment;
 use Contao\Input;
+use Contao\Message;
 use Contao\RequestToken;
 use Contao\StringUtil;
 use Contao\Versions;
@@ -356,7 +357,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 <a href="'.$this->addToUrl($hrfNew).'" class="'.$clsNew.'" title="'.specialchars($ttlNew).'" accesskey="n" onclick="">'.$lblNew.'</a>
 <a href="'.$this->addToUrl('&amp;act=paste&amp;mode=move').'" class="header_new" title="'.specialchars($GLOBALS['TL_LANG'][$this->strTable]['move'][1]).'" onclick="">'.$GLOBALS['TL_LANG'][$this->strTable]['move'][0].'</a> ' : '') . ($blnClipboard ? '
 <a href="'.$this->addToUrl('clipboard=1').'" class="header_clipboard" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['clearClipboard']).'" accesskey="x">'.$GLOBALS['TL_LANG']['MSC']['clearClipboard'].'</a> ' : $this->generateGlobalButtons()) . '
-</div>' . \Message::generate(true) . ((\Input::get('act') == 'select') ? '
+</div>' . Message::generate(true) . ((\Input::get('act') == 'select') ? '
 
 <form action="'.ampersand(\Environment::get('request'), true).'" id="tl_select" class="tl_form'.((\Input::get('act') == 'select') ? ' unselectable' : '').'" method="post" novalidate>
 <div class="tl_formbody">
@@ -535,7 +536,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		// Do not move if the target exists and would be overriden (not possible for folders anyway)
 		if (file_exists(TL_ROOT . '/' . $destination))
 		{
-			\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filetarget'], basename($source), dirname($destination)));
+			Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filetarget'], basename($source), dirname($destination)));
 		}
 		else
 		{
@@ -952,7 +953,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 
 				if (empty($arrUploaded) && !$objUploader->hasError())
 				{
-					\Message::addError($GLOBALS['TL_LANG']['ERR']['emptyUpload']);
+					Message::addError($GLOBALS['TL_LANG']['ERR']['emptyUpload']);
 					$this->reload();
 				}
 
@@ -1009,7 +1010,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 				// Do not purge the html folder (see #2898)
 				if (\Input::post('uploadNback') && !$objUploader->hasResized())
 				{
-					\Message::reset();
+					Message::reset();
 					$this->redirect($this->getReferer());
 				}
 
@@ -1044,7 +1045,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 <div id="tl_buttons">
 <a href="'.$this->getReferer(true).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b" onclick="">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
 </div>
-'.\Message::generate().'
+'.Message::generate().'
 <form action="'.ampersand(\Environment::get('request'), true).'" id="'.$this->strTable.'" class="tl_form" method="post"'.(!empty($this->onsubmit) ? ' onsubmit="'.implode(' ', $this->onsubmit).'"' : '').' enctype="multipart/form-data">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_upload">
@@ -1278,7 +1279,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 <div id="tl_buttons">
 <a href="'.$this->getReferer(true).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b" onclick="">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
 </div>
-'.\Message::generate().'
+'.Message::generate().'
 <form action="'.ampersand(\Environment::get('request'), true).'" id="'.$this->strTable.'" class="tl_form" method="post"'.(!empty($this->onsubmit) ? ' onsubmit="'.implode(' ', $this->onsubmit).'"' : '').'>
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="'.specialchars($this->strTable).'">
@@ -1340,7 +1341,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 			// Redirect
 			if (\Input::post('saveNclose'))
 			{
-				\Message::reset();
+				Message::reset();
 				\System::setCookie('BE_PAGE_OFFSET', 0, 0);
 				$this->redirect($this->getReferer());
 			}
@@ -1874,7 +1875,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 <div id="tl_buttons">
 <a href="'.$this->getReferer(true).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b" onclick="">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
 </div>
-'.\Message::generate().'
+'.Message::generate().'
 <form action="'.ampersand(\Environment::get('request'), true).'" id="tl_files" class="tl_form" method="post">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_files">
@@ -2211,13 +2212,13 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		fclose($fh);
 
 		// Confirm
-		\Message::addConfirmation($GLOBALS['TL_LANG']['tl_files']['syncComplete']);
+		Message::addConfirmation($GLOBALS['TL_LANG']['tl_files']['syncComplete']);
 
 		$return = '
 <div id="tl_buttons">
 <a href="'.$this->getReferer(true).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b" onclick="">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
 </div>
-'.\Message::generate().'
+'.Message::generate().'
 <div id="sync-results">
   <p class="left">' . sprintf($GLOBALS['TL_LANG']['tl_files']['syncResult'], \System::getFormattedNumber($arrCounts['Added'], 0), \System::getFormattedNumber($arrCounts['Changed'], 0), \System::getFormattedNumber($arrCounts['Unchanged'], 0), \System::getFormattedNumber($arrCounts['Moved'], 0), \System::getFormattedNumber($arrCounts['Deleted'], 0)) . '</p>
   <p class="right"><input type="checkbox" id="show-hidden" class="tl_checkbox" onclick="Backend.toggleUnchanged()"> <label for="show-hidden">' . $GLOBALS['TL_LANG']['tl_files']['syncShowUnchanged'] . '</label></p>

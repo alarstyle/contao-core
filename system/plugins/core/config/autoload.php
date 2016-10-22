@@ -99,7 +99,6 @@ ClassLoader::addClasses(array
 	'Contao\Image'                     => 'system/plugins/core/library/Contao/Image.php',
 	'Contao\Input'                     => 'system/plugins/core/library/Contao/Input.php',
 	'Contao\InsertTags'                => 'system/plugins/core/library/Contao/InsertTags.php',
-	'Contao\Message'                   => 'system/plugins/core/library/Contao/Message.php',
 	'Contao\Model\Collection'          => 'system/plugins/core/library/Contao/Model/Collection.php',
 	'Contao\Model\QueryBuilder'        => 'system/plugins/core/library/Contao/Model/QueryBuilder.php',
 	'Contao\Model\Registry'            => 'system/plugins/core/library/Contao/Model/Registry.php',

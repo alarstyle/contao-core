@@ -12,6 +12,7 @@ namespace Contao\Modules;
 
 use Contao\Date;
 use Contao\Encryption;
+use Contao\Message;
 
 /**
  * Front end module "personal data".
@@ -370,7 +371,7 @@ class ModulePersonalData extends AbstractModule
 				$this->jumpToOrReload($objJumpTo->row());
 			}
 
-			\Message::addConfirmation($GLOBALS['TL_LANG']['MSC']['savedData']);
+			Message::addConfirmation($GLOBALS['TL_LANG']['MSC']['savedData']);
 			$this->reload();
 		}
 
@@ -394,6 +395,6 @@ class ModulePersonalData extends AbstractModule
 		$this->Template->action = \Environment::get('indexFreeRequest');
 		$this->Template->enctype = $hasUpload ? 'multipart/form-data' : 'application/x-www-form-urlencoded';
 		$this->Template->rowLast = 'row_' . $row . ((($row % 2) == 0) ? ' even' : ' odd');
-		$this->Template->message = \Message::generate(false, true);
+		$this->Template->message = Message::generate(false, true);
 	}
 }

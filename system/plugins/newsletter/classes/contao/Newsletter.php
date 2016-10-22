@@ -123,7 +123,7 @@ class Newsletter extends Backend
 				$this->sendNewsletter($objEmail, $objNewsletter, $arrRecipient, $text, $html);
 
 				// Redirect
-				\Message::addConfirmation(sprintf($GLOBALS['TL_LANG']['tl_newsletter']['confirm'], 1));
+				Message::addConfirmation(sprintf($GLOBALS['TL_LANG']['tl_newsletter']['confirm'], 1));
 				$this->redirect($referer);
 			}
 
@@ -135,7 +135,7 @@ class Newsletter extends Backend
 			if ($objTotal->count < 1)
 			{
 				$this->Session->set('tl_newsletter_send', null);
-				\Message::addError($GLOBALS['TL_LANG']['tl_newsletter']['error']);
+				Message::addError($GLOBALS['TL_LANG']['tl_newsletter']['error']);
 				$this->redirect($referer);
 			}
 
@@ -185,7 +185,7 @@ class Newsletter extends Backend
 				if (!empty($_SESSION['REJECTED_RECIPIENTS']))
 				{
 					$intRejected = count($_SESSION['REJECTED_RECIPIENTS']);
-					\Message::addInfo(sprintf($GLOBALS['TL_LANG']['tl_newsletter']['rejected'], $intRejected));
+					Message::addInfo(sprintf($GLOBALS['TL_LANG']['tl_newsletter']['rejected'], $intRejected));
 					$intTotal -= $intRejected;
 
 					foreach ($_SESSION['REJECTED_RECIPIENTS'] as $strRecipient)
@@ -197,7 +197,7 @@ class Newsletter extends Backend
 					}
 				}
 
-				\Message::addConfirmation(sprintf($GLOBALS['TL_LANG']['tl_newsletter']['confirm'], $intTotal));
+				Message::addConfirmation(sprintf($GLOBALS['TL_LANG']['tl_newsletter']['confirm'], $intTotal));
 
 				echo '<script>setTimeout(\'window.location="' . \Environment::get('base') . $referer . '"\',1000)</script>';
 				echo '<a href="' . \Environment::get('base') . $referer . '">Please click here to proceed if you are not using JavaScript</a>';
@@ -226,7 +226,7 @@ class Newsletter extends Backend
 <div id="tl_buttons">
 <a href="'.$this->getReferer(true).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
 </div>
-'.\Message::generate().'
+'.Message::generate().'
 <form action="'.TL_SCRIPT.'" id="tl_newsletter_send" class="tl_form" method="get">
 <div class="tl_formbody_edit tl_newsletter_send">
 <input type="hidden" name="do" value="' . \Input::get('do') . '">
@@ -444,7 +444,7 @@ class Newsletter extends Backend
 
 			if (empty($arrUploaded))
 			{
-				\Message::addError($GLOBALS['TL_LANG']['ERR']['all_fields']);
+				Message::addError($GLOBALS['TL_LANG']['ERR']['all_fields']);
 				$this->reload();
 			}
 
@@ -458,7 +458,7 @@ class Newsletter extends Backend
 
 				if ($objFile->extension != 'csv')
 				{
-					\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filetype'], $objFile->extension));
+					Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filetype'], $objFile->extension));
 					continue;
 				}
 
@@ -517,11 +517,11 @@ class Newsletter extends Backend
 				}
 			}
 
-			\Message::addConfirmation(sprintf($GLOBALS['TL_LANG']['tl_newsletter_recipients']['confirm'], $intTotal));
+			Message::addConfirmation(sprintf($GLOBALS['TL_LANG']['tl_newsletter_recipients']['confirm'], $intTotal));
 
 			if ($intInvalid > 0)
 			{
-				\Message::addInfo(sprintf($GLOBALS['TL_LANG']['tl_newsletter_recipients']['invalid'], $intInvalid));
+				Message::addInfo(sprintf($GLOBALS['TL_LANG']['tl_newsletter_recipients']['invalid'], $intInvalid));
 			}
 
 			\System::setCookie('BE_PAGE_OFFSET', 0, 0);
@@ -533,7 +533,7 @@ class Newsletter extends Backend
 <div id="tl_buttons">
 <a href="'.ampersand(str_replace('&key=import', '', \Environment::get('request'))).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
 </div>
-'.\Message::generate().'
+'.Message::generate().'
 <form action="'.ampersand(\Environment::get('request'), true).'" id="tl_recipients_import" class="tl_form" method="post" enctype="multipart/form-data">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_recipients_import">

@@ -14,7 +14,9 @@ use Contao\Config;
 use Contao\DataContainer;
 use Contao\Date;
 use Contao\Input;
+use Contao\Message;
 use Contao\StringUtil;
+use Contao\System;
 
 
 /**
@@ -269,7 +271,7 @@ class DC_File extends DataContainer implements \editable
 		// Check whether the target file is writeable
 		if (!$this->Files->is_writeable('system/config/localconfig.php'))
 		{
-			\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['notWriteable'], 'system/config/localconfig.php'));
+			Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['notWriteable'], 'system/config/localconfig.php'));
 		}
 
 		// Submit buttons
@@ -312,7 +314,7 @@ class DC_File extends DataContainer implements \editable
 <div id="tl_buttons">
 <a href="'.$this->getReferer(true).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b" onclick="">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
 </div>
-'.\Message::generate().'
+'.Message::generate().'
 <form action="'.ampersand(\Environment::get('request'), true).'" id="'.$this->strTable.'" class="tl_form" method="post"'.(!empty($this->onsubmit) ? ' onsubmit="'.implode(' ', $this->onsubmit).'"' : '').'>
 
 <div class="tl_formbody_edit">
@@ -345,8 +347,8 @@ class DC_File extends DataContainer implements \editable
 			// Reload
 			if (\Input::post('saveNclose'))
 			{
-				\Message::reset();
-				\System::setCookie('BE_PAGE_OFFSET', 0, 0);
+				Message::reset();
+				System::setCookie('BE_PAGE_OFFSET', 0, 0);
 				$this->redirect($this->getReferer());
 			}
 
