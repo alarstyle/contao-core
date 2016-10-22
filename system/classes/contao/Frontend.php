@@ -58,19 +58,19 @@ abstract class Frontend extends \Controller
 	public static function getPageIdFromUrl()
 	{
 
-		if (\Environment::get('request') == '')
+		if (Environment::get('request') == '')
 		{
 			return null;
 		}
 
 		// Get the request string without the index.php fragment
-		if (\Environment::get('request') == 'index.php')
+		if (Environment::get('request') == 'index.php')
 		{
 			$strRequest = '';
 		}
 		else
 		{
-			list($strRequest) = explode('?', str_replace('index.php/', '', \Environment::get('request')), 2);
+			list($strRequest) = explode('?', str_replace('index.php/', '', Environment::get('request')), 2);
 		}
 
 		// URL decode here (see #6232)
@@ -218,7 +218,7 @@ abstract class Frontend extends \Controller
 			}
 		}
 
-		$host = \Environment::get('host');
+		$host = Environment::get('host');
 
 		// The language is set in the URL
 		if (Config::get('addLanguageToUrl') && !empty($_GET['language']))
@@ -237,7 +237,7 @@ abstract class Frontend extends \Controller
 		// No language given
 		else
 		{
-			$accept_language = \Environment::get('httpAcceptLanguage');
+			$accept_language = Environment::get('httpAcceptLanguage');
 
 			// Find the matching root pages (thanks to Andreas Schempp)
 			$objRootPage = \PageModel::findFirstPublishedRootByHostAndLanguage($host, $accept_language);
@@ -246,7 +246,7 @@ abstract class Frontend extends \Controller
 			if ($objRootPage === null)
 			{
 				header('HTTP/1.1 404 Not Found');
-				System::log('No root page found (host "' . Environment::get('host') . '", languages "'.implode(', ', \Environment::get('httpAcceptLanguage')).'")', __METHOD__, TL_ERROR);
+				System::log('No root page found (host "' . Environment::get('host') . '", languages "'.implode(', ', Environment::get('httpAcceptLanguage')).'")', __METHOD__, TL_ERROR);
 				die_nicely('be_no_root', 'No root page found');
 			}
 
@@ -406,7 +406,7 @@ abstract class Frontend extends \Controller
 			return false;
 		}
 
-		$hash = sha1(session_id() . (!Config::get('disableIpCheck') ? \Environment::get('ip') : '') . $strCookie);
+		$hash = sha1(session_id() . (!Config::get('disableIpCheck') ? Environment::get('ip') : '') . $strCookie);
 
 		// Validate the cookie hash
 		if ($cookie == $hash)
@@ -415,7 +415,7 @@ abstract class Frontend extends \Controller
 			$objSession = \SessionModel::findByHashAndName($hash, $strCookie);
 
 			// Validate the session ID and timeout
-			if ($objSession !== null && $objSession->sessionID == session_id() && (Config::get('disableIpCheck') || $objSession->ip == \Environment::get('ip')) && ($objSession->tstamp + Config::get('sessionTimeout')) > time())
+			if ($objSession !== null && $objSession->sessionID == session_id() && (Config::get('disableIpCheck') || $objSession->ip == Environment::get('ip')) && ($objSession->tstamp + Config::get('sessionTimeout')) > time())
 			{
 				// Disable the cache if a back end user is logged in
 				if (TL_MODE == 'FE' && $strCookie == 'BE_USER_AUTH')

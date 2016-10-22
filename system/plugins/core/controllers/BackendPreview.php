@@ -49,7 +49,7 @@ class BackendPreview extends Backend
 		/** @var \BackendTemplate|object $objTemplate */
 		$objTemplate = new BackendTemplate('be_preview');
 
-		$objTemplate->base = \Environment::get('base');
+		$objTemplate->base = Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($GLOBALS['TL_LANG']['MSC']['fePreview']);
 		$objTemplate->charset = Config::get('characterSet');
@@ -57,7 +57,7 @@ class BackendPreview extends Backend
 
 		if (Input::get('url'))
 		{
-			$objTemplate->url = \Environment::get('base') . Input::get('url');
+			$objTemplate->url = Environment::get('base') . Input::get('url');
 		}
 		elseif (Input::get('page'))
 		{

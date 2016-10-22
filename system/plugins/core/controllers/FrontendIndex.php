@@ -84,7 +84,7 @@ class FrontendIndex extends Frontend
 			$objHandler->generate($pageId);
 		}
 		// Throw a 404 error if URL rewriting is active and the URL contains the index.php fragment
-		elseif (Config::get('rewriteURL') && strncmp(\Environment::get('request'), 'index.php/', 10) === 0)
+		elseif (Config::get('rewriteURL') && strncmp(Environment::get('request'), 'index.php/', 10) === 0)
 		{
 			$this->User->authenticate();
 
@@ -119,7 +119,7 @@ class FrontendIndex extends Frontend
 				}
 			}
 
-			$strHost = \Environment::get('host');
+			$strHost = Environment::get('host');
 
 			// Look for a root page whose domain name matches the host name
 			if (isset($arrPages[$strHost]))
@@ -182,7 +182,7 @@ class FrontendIndex extends Frontend
 				$regex = '#^' . $objPage->id . '[$/.]#';
 			}
 
-			if (preg_match($regex, \Environment::get('request')))
+			if (preg_match($regex, Environment::get('request')))
 			{
 				$this->User->authenticate();
 				$objHandler = new $GLOBALS['TL_PTY']['error_404']();
@@ -233,11 +233,11 @@ class FrontendIndex extends Frontend
 		if ($objPage->domain != '')
 		{
 			// Load an error 404 page object
-			if ($objPage->domain != \Environment::get('host'))
+			if ($objPage->domain != Environment::get('host'))
 			{
 				$this->User->authenticate();
 				$objHandler = new $GLOBALS['TL_PTY']['error_404']();
-				$objHandler->generate($objPage->id, $objPage->domain, \Environment::get('host'));
+				$objHandler->generate($objPage->id, $objPage->domain, Environment::get('host'));
 			}
 		}
 
@@ -393,7 +393,7 @@ class FrontendIndex extends Frontend
 		$strCacheFile = null;
 
 		// Check for a mobile layout
-		if (\Input::cookie('TL_VIEW') == 'mobile' || (\Environment::get('agent')->mobile && \Input::cookie('TL_VIEW') != 'desktop'))
+		if (\Input::cookie('TL_VIEW') == 'mobile' || (Environment::get('agent')->mobile && \Input::cookie('TL_VIEW') != 'desktop'))
 		{
 			$strMd5CacheKey = md5($strCacheKey . '.mobile');
 			$strCacheFile = TL_ROOT . '/system/cache/html/' . substr($strMd5CacheKey, 0, 1) . '/' . $strMd5CacheKey . '.html';
@@ -465,10 +465,10 @@ class FrontendIndex extends Frontend
 		$session = $this->Session->getData();
 
 		// Set the new referer
-		if (!isset($_GET['file']) && !isset($_GET['id']) && $session['referer']['current'] != \Environment::get('requestUri'))
+		if (!isset($_GET['file']) && !isset($_GET['id']) && $session['referer']['current'] != Environment::get('requestUri'))
 		{
 			$session['referer']['last'] = $session['referer']['current'];
-			$session['referer']['current'] = substr(\Environment::get('requestUri'), strlen(TL_PATH) + 1);
+			$session['referer']['current'] = substr(Environment::get('requestUri'), strlen(TL_PATH) + 1);
 		}
 
 		// Store the session data

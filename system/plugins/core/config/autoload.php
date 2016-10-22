@@ -85,8 +85,6 @@ ClassLoader::addClasses(array
 	'Contao\DcaExtractor'              => 'system/plugins/core/library/Contao/DcaExtractor.php',
 	'Contao\DcaLoader'                 => 'system/plugins/core/library/Contao/DcaLoader.php',
 	'Contao\DiffRenderer'              => 'system/plugins/core/library/Contao/DiffRenderer.php',
-	'Contao\Email'                     => 'system/plugins/core/library/Contao/Email.php',
-	'Contao\Environment'               => 'system/plugins/core/library/Contao/Environment.php',
 	'Contao\File'                      => 'system/plugins/core/library/Contao/File.php',
 	'Contao\Files\Ftp'                 => 'system/plugins/core/library/Contao/Files/Ftp.php',
 	'Contao\Files\Php'                 => 'system/plugins/core/library/Contao/Files/Php.php',

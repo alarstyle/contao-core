@@ -10,6 +10,7 @@
 
 namespace Contao\Modules;
 
+use Contao\Environment;
 use Contao\StringUtil;
 
 /**
@@ -87,7 +88,7 @@ class ModuleBreadcrumb extends AbstractModule
 			(
 				'isRoot'   => true,
 				'isActive' => false,
-				'href'     => (($objFirstPage !== null) ? $objFirstPage->getFrontendUrl() : \Environment::get('base')),
+				'href'     => (($objFirstPage !== null) ? $objFirstPage->getFrontendUrl() : Environment::get('base')),
 				'title'    => specialchars($objPages->pageTitle ?: $objPages->title, true),
 				'link'     => $objPages->title,
 				'data'     => $objFirstPage->row(),

@@ -200,7 +200,7 @@ class PageRegular extends Frontend
 	 */
 	protected function getPageLayout($objPage)
 	{
-		$blnMobile = ($objPage->mobileLayout && \Environment::get('agent')->mobile);
+		$blnMobile = ($objPage->mobileLayout && Environment::get('agent')->mobile);
 
 		// Set the cookie
 		if (isset($_GET['toggle_view']))
@@ -651,7 +651,7 @@ class PageRegular extends Frontend
 			{
 				while($objFeeds->next())
 				{
-					$strStyleSheets .= Template::generateFeedTag(($objFeeds->feedBase ?: \Environment::get('base')) . 'share/' . $objFeeds->alias . '.xml', $objFeeds->format, $objFeeds->title) . "\n";
+					$strStyleSheets .= Template::generateFeedTag(($objFeeds->feedBase ?: Environment::get('base')) . 'share/' . $objFeeds->alias . '.xml', $objFeeds->format, $objFeeds->title) . "\n";
 				}
 			}
 		}

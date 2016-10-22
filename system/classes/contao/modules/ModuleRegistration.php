@@ -14,6 +14,7 @@ use Contao\Config;
 use Contao\Date;
 use Contao\Email;
 use Contao\Encryption;
+use Contao\Environment;
 use Contao\Idna;
 use Contao\Input;
 use Contao\StringUtil;
@@ -343,7 +344,7 @@ class ModuleRegistration extends AbstractModule
 		$this->Template->categories = $arrGroups;
 		$this->Template->formId = 'tl_registration';
 		$this->Template->slabel = specialchars($GLOBALS['TL_LANG']['MSC']['register']);
-		$this->Template->action = \Environment::get('indexFreeRequest');
+		$this->Template->action = Environment::get('indexFreeRequest');
 		$this->Template->captcha = $arrFields['captcha']['captcha']; // backwards compatibility
 	}
 
@@ -374,8 +375,8 @@ class ModuleRegistration extends AbstractModule
 		{
 			// Prepare the simple token data
 			$arrTokenData = $arrData;
-			$arrTokenData['domain'] = \Idna::decode(\Environment::get('host'));
-			$arrTokenData['link'] = \Idna::decode(\Environment::get('base')) . \Environment::get('request') . (strpos(\Environment::get('request'), '?') !== false ? '&' : '?') . 'token=' . $arrData['activation'];
+			$arrTokenData['domain'] = Idna::decode(Environment::get('host'));
+			$arrTokenData['link'] = Idna::decode(Environment::get('base')) . Environment::get('request') . (strpos(Environment::get('request'), '?') !== false ? '&' : '?') . 'token=' . $arrData['activation'];
 			$arrTokenData['channels'] = '';
 
 			if (in_array('newsletter', \PluginLoader::getActive()))
@@ -412,7 +413,7 @@ class ModuleRegistration extends AbstractModule
 
 			$objEmail->from = $GLOBALS['TL_ADMIN_EMAIL'];
 			$objEmail->fromName = $GLOBALS['TL_ADMIN_NAME'];
-			$objEmail->subject = sprintf($GLOBALS['TL_LANG']['MSC']['emailSubject'], Idna::decode(\Environment::get('host')));
+			$objEmail->subject = sprintf($GLOBALS['TL_LANG']['MSC']['emailSubject'], Idna::decode(Environment::get('host')));
 			$objEmail->text = StringUtil::parseSimpleTokens($this->reg_text, $arrTokenData);
 			$objEmail->sendTo($arrData['email']);
 		}
@@ -527,7 +528,7 @@ class ModuleRegistration extends AbstractModule
 		}
 
 		// Log activity
-		$this->log('User account ID ' . $objMember->id . ' (' . \Idna::decodeEmail($objMember->email) . ') has been activated', __METHOD__, TL_ACCESS);
+		$this->log('User account ID ' . $objMember->id . ' (' . Idna::decodeEmail($objMember->email) . ') has been activated', __METHOD__, TL_ACCESS);
 
 		// Redirect to the jumpTo page
 		if (($objTarget = $this->objModel->getRelated('reg_jumpTo')) !== null)
@@ -550,11 +551,11 @@ class ModuleRegistration extends AbstractModule
 	 */
 	protected function sendAdminNotification($intId, $arrData)
 	{
-		$objEmail = new \Email();
+		$objEmail = new Email();
 
 		$objEmail->from = $GLOBALS['TL_ADMIN_EMAIL'];
 		$objEmail->fromName = $GLOBALS['TL_ADMIN_NAME'];
-		$objEmail->subject = sprintf($GLOBALS['TL_LANG']['MSC']['adminSubject'], \Idna::decode(\Environment::get('host')));
+		$objEmail->subject = sprintf($GLOBALS['TL_LANG']['MSC']['adminSubject'], Idna::decode(Environment::get('host')));
 
 		$strData = "\n\n";
 

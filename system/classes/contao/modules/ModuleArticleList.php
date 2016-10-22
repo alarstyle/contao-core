@@ -10,6 +10,7 @@
 
 namespace Contao\Modules;
 
+use Contao\Environment;
 
 /**
  * Front end module "article list".
@@ -70,7 +71,7 @@ class ModuleArticleList extends AbstractModule
 		$articles = array();
 		$id = $objPage->id;
 
-		$this->Template->request = \Environment::get('request');
+		$this->Template->request = Environment::get('request');
 
 		// Show the articles of a different page
 		if ($this->defineRoot && $this->rootPage > 0)

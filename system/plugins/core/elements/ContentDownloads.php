@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Environment;
 use Contao\Input;
 
 /**
@@ -147,7 +148,7 @@ class ContentDownloads extends \ContentElement
 					$arrMeta['title'] = specialchars($objFile->basename);
 				}
 
-				$strHref = \Environment::get('request');
+				$strHref = Environment::get('request');
 
 				// Remove an existing file parameter (see #5683)
 				if (preg_match('/(&(amp;)?|\?)file=/', $strHref))
@@ -223,7 +224,7 @@ class ContentDownloads extends \ContentElement
 						$arrMeta['title'] = specialchars($objFile->basename);
 					}
 
-					$strHref = \Environment::get('request');
+					$strHref = Environment::get('request');
 
 					// Remove an existing file parameter (see #5683)
 					if (preg_match('/(&(amp;)?|\?)file=/', $strHref))

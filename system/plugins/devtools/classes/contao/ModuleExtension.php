@@ -12,6 +12,7 @@ namespace Contao;
 
 use Contao\BackendTemplate;
 use Contao\Config;
+use Contao\Environment;
 use Contao\File;
 use Contao\Input;
 use Contao\Message;
@@ -209,7 +210,7 @@ class ModuleExtension extends \Contao\BackendModule
 		$this->Template->base = Environment::get('base');
 		$this->Template->href = $this->getReferer(true);
 		$this->Template->title = specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']);
-		$this->Template->action = ampersand(\Environment::get('request'));
+		$this->Template->action = ampersand(Environment::get('request'));
 		$this->Template->selectAll = $GLOBALS['TL_LANG']['MSC']['selectAll'];
 		$this->Template->button = $GLOBALS['TL_LANG']['MSC']['backBT'];
 		$this->Template->message = Message::generate();

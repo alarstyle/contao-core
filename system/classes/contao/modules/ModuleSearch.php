@@ -11,6 +11,7 @@
 namespace Contao\Modules;
 
 use Contao\Config;
+use Contao\Environment;
 use Contao\StringUtil;
 
 /**
@@ -93,7 +94,7 @@ class ModuleSearch extends AbstractModule
 		$objFormTemplate->matchAll = specialchars($GLOBALS['TL_LANG']['MSC']['matchAll']);
 		$objFormTemplate->matchAny = specialchars($GLOBALS['TL_LANG']['MSC']['matchAny']);
 		$objFormTemplate->id = false;
-		$objFormTemplate->action = ampersand(\Environment::get('indexFreeRequest'));
+		$objFormTemplate->action = ampersand(Environment::get('indexFreeRequest'));
 
 		// Redirect page
 		if ($this->jumpTo && ($objTarget = $this->objModel->getRelated('jumpTo')) !== null)

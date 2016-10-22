@@ -35,19 +35,19 @@ class PageError404 extends Frontend
 		// Add a log entry
 		if ($blnUnusedGet)
 		{
-			$this->log('The request for page ID "' . $pageId . '" contained unused GET parameters: "' . implode('", "', \Input::getUnusedGet()) . '" (' . \Environment::get('base') . \Environment::get('request') . ')', __METHOD__, TL_ERROR);
+			$this->log('The request for page ID "' . $pageId . '" contained unused GET parameters: "' . implode('", "', \Input::getUnusedGet()) . '" (' . Environment::get('base') . Environment::get('request') . ')', __METHOD__, TL_ERROR);
 		}
 		elseif ($strDomain !== null || $strHost !== null)
 		{
-			$this->log('Page ID "' . $pageId . '" was requested via "' . $strHost . '" but can only be accessed via "' . $strDomain . '" (' . \Environment::get('base') . \Environment::get('request') . ')', __METHOD__, TL_ERROR);
+			$this->log('Page ID "' . $pageId . '" was requested via "' . $strHost . '" but can only be accessed via "' . $strDomain . '" (' . Environment::get('base') . Environment::get('request') . ')', __METHOD__, TL_ERROR);
 		}
 		elseif ($pageId != 'favicon.ico' && $pageId != 'robots.txt')
 		{
-			$this->log('No active page for page ID "' . $pageId . '", host "' . \Environment::get('host') . '" and languages "' . implode(', ', \Environment::get('httpAcceptLanguage')) . '" (' . \Environment::get('base') . \Environment::get('request') . ')', __METHOD__, TL_ERROR);
+			$this->log('No active page for page ID "' . $pageId . '", host "' . Environment::get('host') . '" and languages "' . implode(', ', Environment::get('httpAcceptLanguage')) . '" (' . Environment::get('base') . Environment::get('request') . ')', __METHOD__, TL_ERROR);
 		}
 
 		// Check the search index (see #3761)
-		\Search::removeEntry(\Environment::get('base') . \Environment::get('request'));
+		\Search::removeEntry(Environment::get('base') . Environment::get('request'));
 
 		// Find the matching root page
 		$objRootPage = $this->getRootPageFromUrl();
@@ -62,7 +62,7 @@ class PageError404 extends Frontend
 			}
 			else
 			{
-				$strRequest = str_replace('index.php/', '', \Environment::get('request'));
+				$strRequest = str_replace('index.php/', '', Environment::get('request'));
 			}
 
 			// Only redirect if there is no language fragment (see #4669)

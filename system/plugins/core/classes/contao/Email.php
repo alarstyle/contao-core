@@ -428,7 +428,7 @@ class Email
 
 				$arrCid = array();
 				$arrMatches = array();
-				$strBase = \Environment::get('base');
+				$strBase = Environment::get('base');
 
 				// Thanks to @ofriedrich and @aschempp (see #4562)
 				preg_match_all('/<[a-z][a-z0-9]*\b[^>]*((src=|background=|url\()["\']??)(.+\.(jpe?g|png|gif|bmp|tiff?|swf))(["\' ]??(\)??))[^>]*>/Ui', $this->strHtml, $arrMatches);

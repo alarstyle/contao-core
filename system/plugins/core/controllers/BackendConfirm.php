@@ -11,6 +11,7 @@
 namespace Contao;
 
 use Contao\Config;
+use Contao\Environment;
 
 /**
  * Confirm an invalid token URL.
@@ -141,7 +142,7 @@ class BackendConfirm extends Backend
 		$objTemplate->cancel = $GLOBALS['TL_LANG']['MSC']['cancelBT'];
 		$objTemplate->continue = $GLOBALS['TL_LANG']['MSC']['continue'];
 		$objTemplate->theme = \Backend::getTheme();
-		$objTemplate->base = \Environment::get('base');
+		$objTemplate->base = Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($GLOBALS['TL_LANG']['MSC']['invalidTokenUrl']);
 		$objTemplate->charset = Config::get('characterSet');

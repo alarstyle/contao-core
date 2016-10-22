@@ -12,6 +12,7 @@ namespace Contao\Modules;
 
 use Contao\Date;
 use Contao\Encryption;
+use Contao\Environment;
 use Contao\Message;
 
 /**
@@ -392,7 +393,7 @@ class ModulePersonalData extends AbstractModule
 		$this->Template->categories = $arrGroups;
 		$this->Template->formId = 'tl_member_' . $this->id;
 		$this->Template->slabel = specialchars($GLOBALS['TL_LANG']['MSC']['saveData']);
-		$this->Template->action = \Environment::get('indexFreeRequest');
+		$this->Template->action = Environment::get('indexFreeRequest');
 		$this->Template->enctype = $hasUpload ? 'multipart/form-data' : 'application/x-www-form-urlencoded';
 		$this->Template->rowLast = 'row_' . $row . ((($row % 2) == 0) ? ' even' : ' odd');
 		$this->Template->message = Message::generate(false, true);

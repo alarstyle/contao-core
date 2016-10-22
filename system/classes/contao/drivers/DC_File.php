@@ -13,6 +13,7 @@ namespace Contao\Drivers;
 use Contao\Config;
 use Contao\DataContainer;
 use Contao\Date;
+use Contao\Environment;
 use Contao\Input;
 use Contao\Message;
 use Contao\StringUtil;
@@ -120,7 +121,7 @@ class DC_File extends DataContainer implements \editable
 		$return = '';
 		$ajaxId = null;
 
-		if (\Environment::get('isAjaxRequest'))
+		if (Environment::get('isAjaxRequest'))
 		{
 			$ajaxId = func_get_arg(1);
 		}
@@ -195,7 +196,7 @@ class DC_File extends DataContainer implements \editable
 				{
 					if ($vv == '[EOF]')
 					{
-						if ($blnAjax && \Environment::get('isAjaxRequest'))
+						if ($blnAjax && Environment::get('isAjaxRequest'))
 						{
 							return $strAjax . '<input type="hidden" name="FORM_FIELDS[]" value="'.specialchars($this->strPalette).'">';
 						}
@@ -209,7 +210,7 @@ class DC_File extends DataContainer implements \editable
 					if (preg_match('/^\[.*\]$/', $vv))
 					{
 						$thisId = 'sub_' . substr($vv, 1, -1);
-						$blnAjax = ($ajaxId == $thisId && \Environment::get('isAjaxRequest')) ? true : false;
+						$blnAjax = ($ajaxId == $thisId && Environment::get('isAjaxRequest')) ? true : false;
 						$return .= "\n  " . '<div id="'.$thisId.'">';
 
 						continue;
@@ -315,7 +316,7 @@ class DC_File extends DataContainer implements \editable
 <a href="'.$this->getReferer(true).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b" onclick="">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
 </div>
 '.Message::generate().'
-<form action="'.ampersand(\Environment::get('request'), true).'" id="'.$this->strTable.'" class="tl_form" method="post"'.(!empty($this->onsubmit) ? ' onsubmit="'.implode(' ', $this->onsubmit).'"' : '').'>
+<form action="'.ampersand(Environment::get('request'), true).'" id="'.$this->strTable.'" class="tl_form" method="post"'.(!empty($this->onsubmit) ? ' onsubmit="'.implode(' ', $this->onsubmit).'"' : '').'>
 
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="'.specialchars($this->strTable).'">

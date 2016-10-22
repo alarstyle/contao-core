@@ -11,6 +11,7 @@
 namespace Contao;
 
 use Contao\Config;
+use Contao\Environment;
 use Contao\Input;
 
 /**
@@ -87,7 +88,7 @@ class ContentDownload extends \ContentElement
 			$this->linkTitle = specialchars($objFile->basename);
 		}
 
-		$strHref = \Environment::get('request');
+		$strHref = Environment::get('request');
 
 		// Remove an existing file parameter (see #5683)
 		if (preg_match('/(&(amp;)?|\?)file=/', $strHref))

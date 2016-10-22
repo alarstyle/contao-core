@@ -11,6 +11,7 @@
 namespace Contao;
 
 use Contao\Config;
+use Contao\Email;
 use Contao\Models\NewsletterChannelModel;
 use Contao\Models\NewsletterModel;
 
@@ -199,17 +200,17 @@ class Newsletter extends Backend
 
 				Message::addConfirmation(sprintf($GLOBALS['TL_LANG']['tl_newsletter']['confirm'], $intTotal));
 
-				echo '<script>setTimeout(\'window.location="' . \Environment::get('base') . $referer . '"\',1000)</script>';
-				echo '<a href="' . \Environment::get('base') . $referer . '">Please click here to proceed if you are not using JavaScript</a>';
+				echo '<script>setTimeout(\'window.location="' . Environment::get('base') . $referer . '"\',1000)</script>';
+				echo '<a href="' . Environment::get('base') . $referer . '">Please click here to proceed if you are not using JavaScript</a>';
 			}
 
 			// Redirect to the next cycle
 			else
 			{
-				$url = preg_replace('/&(amp;)?(start|mpc|recipient)=[^&]*/', '', \Environment::get('request')) . '&start=' . ($intStart + $intPages) . '&mpc=' . $intPages;
+				$url = preg_replace('/&(amp;)?(start|mpc|recipient)=[^&]*/', '', Environment::get('request')) . '&start=' . ($intStart + $intPages) . '&mpc=' . $intPages;
 
-				echo '<script>setTimeout(\'window.location="' . \Environment::get('base') . $url . '"\',' . ($intTimeout * 1000) . ')</script>';
-				echo '<a href="' . \Environment::get('base') . $url . '">Please click here to proceed if you are not using JavaScript</a>';
+				echo '<script>setTimeout(\'window.location="' . Environment::get('base') . $url . '"\',' . ($intTimeout * 1000) . ')</script>';
+				echo '<a href="' . Environment::get('base') . $url . '">Please click here to proceed if you are not using JavaScript</a>';
 			}
 
 			echo '</div></div>';
@@ -318,7 +319,7 @@ class Newsletter extends Backend
 	 */
 	protected function generateEmailObject(\Contao\Database\Result $objNewsletter, $arrAttachments)
 	{
-		$objEmail = new \Email();
+		$objEmail = new Email();
 
 		$objEmail->from = $objNewsletter->sender;
 		$objEmail->subject = $objNewsletter->subject;
@@ -531,10 +532,10 @@ class Newsletter extends Backend
 		// Return form
 		return '
 <div id="tl_buttons">
-<a href="'.ampersand(str_replace('&key=import', '', \Environment::get('request'))).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
+<a href="'.ampersand(str_replace('&key=import', '', Environment::get('request'))).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
 </div>
 '.Message::generate().'
-<form action="'.ampersand(\Environment::get('request'), true).'" id="tl_recipients_import" class="tl_form" method="post" enctype="multipart/form-data">
+<form action="'.ampersand(Environment::get('request'), true).'" id="tl_recipients_import" class="tl_form" method="post" enctype="multipart/form-data">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_recipients_import">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">
@@ -627,7 +628,7 @@ class Newsletter extends Backend
 			if ($objRecipient->count < 1)
 			{
 				$this->Database->prepare("INSERT INTO tl_newsletter_recipients SET pid=?, tstamp=$time, email=?, addedOn=$time, ip=?")
-							   ->execute($intNewsletter, $arrData['email'], $this->anonymizeIp(\Environment::get('ip')));
+							   ->execute($intNewsletter, $arrData['email'], $this->anonymizeIp(Environment::get('ip')));
 			}
 		}
 	}
@@ -742,7 +743,7 @@ class Newsletter extends Backend
 			if ($objRecipient->count < 1)
 			{
 				$this->Database->prepare("INSERT INTO tl_newsletter_recipients SET pid=?, tstamp=$time, email=?, active=?, addedOn=?, ip=?")
-							   ->execute($intId, $objUser->email, ($objUser->disable ? '' : 1), ($blnIsFrontend ? $time : ''), ($blnIsFrontend ? $this->anonymizeIp(\Environment::get('ip')) : ''));
+							   ->execute($intId, $objUser->email, ($objUser->disable ? '' : 1), ($blnIsFrontend ? $time : ''), ($blnIsFrontend ? $this->anonymizeIp(Environment::get('ip')) : ''));
 			}
 		}
 

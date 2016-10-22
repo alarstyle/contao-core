@@ -11,6 +11,7 @@
 namespace Contao\Editors;
 
 use Contao\Cache;
+use Contao\Environment;
 
 /**
  * Provide methods to handle modules of a page layout.
@@ -146,7 +147,7 @@ class ModuleWizard extends \Contao\Editor
 			// Reload the page
 			if (is_numeric(\Input::get('cid')) && \Input::get('id') == $this->currentRecord)
 			{
-				$this->redirect(preg_replace('/&(amp;)?cid=[^&]*/i', '', preg_replace('/&(amp;)?' . preg_quote($strCommand, '/') . '=[^&]*/i', '', \Environment::get('request'))));
+				$this->redirect(preg_replace('/&(amp;)?cid=[^&]*/i', '', preg_replace('/&(amp;)?' . preg_quote($strCommand, '/') . '=[^&]*/i', '', Environment::get('request'))));
 			}
 		}
 

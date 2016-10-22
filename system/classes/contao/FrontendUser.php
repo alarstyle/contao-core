@@ -61,8 +61,8 @@ class FrontendUser extends User
 	{
 		parent::__construct();
 
-		$this->strIp = \Environment::get('ip');
-		$this->strHash = \Input::cookie($this->strCookie);
+		$this->strIp = Environment::get('ip');
+		$this->strHash = Input::cookie($this->strCookie);
 	}
 
 
@@ -73,7 +73,7 @@ class FrontendUser extends User
 	{
 		$session = $this->Session->getData();
 
-		if (!isset($_GET['file']) && !isset($_GET['id']) && $session['referer']['current'] != \Environment::get('requestUri') && !\Environment::get('isAjaxRequest'))
+		if (!isset($_GET['file']) && !isset($_GET['id']) && $session['referer']['current'] != Environment::get('requestUri') && !Environment::get('isAjaxRequest'))
 		{
 			$key = null;
 
@@ -85,7 +85,7 @@ class FrontendUser extends User
 			if ($key !== null)
 			{
 				$session[$key]['last'] = $session[$key]['current'];
-				$session[$key]['current'] = substr(\Environment::get('requestUri'), strlen(TL_PATH) + 1);
+				$session[$key]['current'] = substr(Environment::get('requestUri'), strlen(TL_PATH) + 1);
 
 				$this->Session->setData($session);
 			}

@@ -176,13 +176,13 @@ abstract class System
 		$strUa = 'N/A';
 		$strIp = '127.0.0.1';
 
-		if (\Environment::get('httpUserAgent'))
+		if (Environment::get('httpUserAgent'))
 		{
-			$strUa = \Environment::get('httpUserAgent');
+			$strUa = Environment::get('httpUserAgent');
 		}
-		if (\Environment::get('remoteAddr'))
+		if (Environment::get('remoteAddr'))
 		{
-			$strIp = static::anonymizeIp(\Environment::get('ip'));
+			$strIp = static::anonymizeIp(Environment::get('ip'));
 		}
 
 		Database::getInstance()->prepare("INSERT INTO tl_log (tstamp, source, action, username, text, func, ip, browser) VALUES(?, ?, ?, ?, ?, ?, ?, ?)")
@@ -230,7 +230,7 @@ abstract class System
 		}
 
 		// Determine current or last
-		$strUrl = ($session['current'] != \Environment::get('request')) ? $session['current'] : $session['last'];
+		$strUrl = ($session['current'] != Environment::get('request')) ? $session['current'] : $session['last'];
 
 		// Remove "toggle" and "toggle all" parameters
 		$return = preg_replace('/(&(amp;)?|\?)p?tg=[^& ]*/i', '', $strUrl);
@@ -238,13 +238,13 @@ abstract class System
 		// Fallback to the generic referer in the front end
 		if ($return == '' && TL_MODE == 'FE')
 		{
-			$return = \Environment::get('httpReferer');
+			$return = Environment::get('httpReferer');
 		}
 
 		// Fallback to the current URL if there is no referer
 		if ($return == '')
 		{
-			$return = (TL_MODE == 'BE') ? 'contao/main.php' : \Environment::get('url');
+			$return = (TL_MODE == 'BE') ? 'contao/main.php' : Environment::get('url');
 		}
 
 		// Do not urldecode here!
@@ -1111,7 +1111,7 @@ abstract class System
 	 */
 	public static function getIndexFreeRequest($blnAmpersand=true)
 	{
-		return ampersand(\Environment::get('indexFreeRequest'), $blnAmpersand);
+		return ampersand(Environment::get('indexFreeRequest'), $blnAmpersand);
 	}
 
 

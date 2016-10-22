@@ -10,6 +10,7 @@
 
 namespace Contao\Editors;
 
+use Contao\Environment;
 
 /**
  * Provide methods to handle sortable checkboxes.
@@ -107,7 +108,7 @@ class CheckBoxWizard extends \Contao\Editor
 			$this->Database->prepare("UPDATE " . $this->strTable . " SET " . $this->strField . "=? WHERE id=?")
 						   ->execute(serialize($this->varValue), $this->currentRecord);
 
-			$this->redirect(preg_replace('/&(amp;)?cid=[^&]*/i', '', preg_replace('/&(amp;)?' . preg_quote($strCommand, '/') . '=[^&]*/i', '', \Environment::get('request'))));
+			$this->redirect(preg_replace('/&(amp;)?cid=[^&]*/i', '', preg_replace('/&(amp;)?' . preg_quote($strCommand, '/') . '=[^&]*/i', '', Environment::get('request'))));
 		}
 
 		// Sort options

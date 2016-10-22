@@ -10,6 +10,7 @@
 
 namespace Contao\Modules;
 
+use Contao\Environment;
 
 /**
  * Front end module "quick link".
@@ -137,7 +138,7 @@ class ModuleQuicklink extends AbstractModule
 		}
 
 		$this->Template->items = $items;
-		$this->Template->request = ampersand(\Environment::get('request'), true);
+		$this->Template->request = ampersand(Environment::get('request'), true);
 		$this->Template->title = $this->customLabel ?: $GLOBALS['TL_LANG']['MSC']['quicklink'];
 		$this->Template->button = specialchars($GLOBALS['TL_LANG']['MSC']['go']);
 	}

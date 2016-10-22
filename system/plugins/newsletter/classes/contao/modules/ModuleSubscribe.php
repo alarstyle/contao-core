@@ -136,7 +136,7 @@ class ModuleSubscribe extends AbstractModule
 		$this->Template->submit = specialchars($GLOBALS['TL_LANG']['MSC']['subscribe']);
 		$this->Template->channelsLabel = $GLOBALS['TL_LANG']['MSC']['nl_channels'];
 		$this->Template->emailLabel = $GLOBALS['TL_LANG']['MSC']['emailAddress'];
-		$this->Template->action = \Environment::get('indexFreeRequest');
+		$this->Template->action = Environment::get('indexFreeRequest');
 		$this->Template->formId = 'tl_subscribe';
 		$this->Template->id = $this->id;
 		$this->Template->hasError = $blnHasError;
@@ -272,7 +272,7 @@ class ModuleSubscribe extends AbstractModule
 			$objRecipient->email = $varInput;
 			$objRecipient->active = '';
 			$objRecipient->addedOn = $time;
-			$objRecipient->ip = $this->anonymizeIp(\Environment::get('ip'));
+			$objRecipient->ip = $this->anonymizeIp(Environment::get('ip'));
 			$objRecipient->token = $strToken;
 			$objRecipient->confirmed = '';
 
@@ -285,15 +285,15 @@ class ModuleSubscribe extends AbstractModule
 		// Prepare the simple token data
 		$arrData = array();
 		$arrData['token'] = $strToken;
-		$arrData['domain'] = Idna::decode(\Environment::get('host'));
-		$arrData['link'] = Idna::decode(\Environment::get('base')) . \Environment::get('request') . (strpos(Environment::get('request'), '?') !== false ? '&' : '?') . 'token=' . $strToken;
+		$arrData['domain'] = Idna::decode(Environment::get('host'));
+		$arrData['link'] = Idna::decode(Environment::get('base')) . Environment::get('request') . (strpos(Environment::get('request'), '?') !== false ? '&' : '?') . 'token=' . $strToken;
 		$arrData['channel'] = $arrData['channels'] = implode("\n", $objChannel->fetchEach('title'));
 
 		// Activation e-mail
 		$objEmail = new Email();
 		$objEmail->from = $GLOBALS['TL_ADMIN_EMAIL'];
 		$objEmail->fromName = $GLOBALS['TL_ADMIN_NAME'];
-		$objEmail->subject = sprintf($GLOBALS['TL_LANG']['MSC']['nl_subject'], Idna::decode(\Environment::get('host')));
+		$objEmail->subject = sprintf($GLOBALS['TL_LANG']['MSC']['nl_subject'], Idna::decode(Environment::get('host')));
 		$objEmail->text = StringUtil::parseSimpleTokens($this->nl_subscribe, $arrData);
 		$objEmail->sendTo($varInput);
 

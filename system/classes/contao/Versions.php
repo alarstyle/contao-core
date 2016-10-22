@@ -519,7 +519,7 @@ class Versions extends Controller
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($GLOBALS['TL_LANG']['MSC']['showDifferences']);
 		$objTemplate->charset = Config::get('characterSet');
-		$objTemplate->action = ampersand(\Environment::get('request'));
+		$objTemplate->action = ampersand(Environment::get('request'));
 
 		Config::set('debugMode', false);
 		$objTemplate->output();
@@ -554,7 +554,7 @@ class Versions extends Controller
 		return '
 <div class="tl_version_panel">
 
-<form action="'.ampersand(\Environment::get('request'), true).'" id="tl_version" class="tl_form" method="post">
+<form action="'.ampersand(Environment::get('request'), true).'" id="tl_version" class="tl_form" method="post">
 <div class="tl_formbody">
 <input type="hidden" name="FORM_SUBMIT" value="tl_version">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">
@@ -664,7 +664,7 @@ class Versions extends Controller
 			return sprintf($this->strEditUrl, $this->intPid);
 		}
 
-		$strUrl = \Environment::get('request');
+		$strUrl = Environment::get('request');
 
 		// Save the real edit URL if the visibility is toggled via Ajax
 		if (preg_match('/&(amp;)?state=/', $strUrl))

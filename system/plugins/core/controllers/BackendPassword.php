@@ -11,6 +11,7 @@
 namespace Contao;
 
 use Contao\Config;
+use Contao\Environment;
 use Contao\Message;
 
 /**
@@ -114,11 +115,11 @@ class BackendPassword extends Backend
 
 		$objTemplate->theme = \Backend::getTheme();
 		$objTemplate->messages = Message::generate();
-		$objTemplate->base = \Environment::get('base');
+		$objTemplate->base = Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($GLOBALS['TL_LANG']['MSC']['pw_new']);
 		$objTemplate->charset = Config::get('characterSet');
-		$objTemplate->action = ampersand(\Environment::get('request'));
+		$objTemplate->action = ampersand(Environment::get('request'));
 		$objTemplate->headline = $GLOBALS['TL_LANG']['MSC']['pw_change'];
 		$objTemplate->submitButton = specialchars($GLOBALS['TL_LANG']['MSC']['continue']);
 		$objTemplate->password = $GLOBALS['TL_LANG']['MSC']['password'][0];

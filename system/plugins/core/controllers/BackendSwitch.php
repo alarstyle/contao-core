@@ -47,7 +47,7 @@ class BackendSwitch extends Backend
 	 */
 	public function run()
 	{
-		if (\Environment::get('isAjaxRequest'))
+		if (Environment::get('isAjaxRequest'))
 		{
 			$this->getDatalistOptions();
 		}

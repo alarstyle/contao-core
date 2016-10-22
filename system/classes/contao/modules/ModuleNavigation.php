@@ -11,6 +11,7 @@
 namespace Contao\Modules;
 
 use Contao\Config;
+use Contao\Environment;
 
 /**
  * Front end module "navigation".
@@ -95,7 +96,7 @@ class ModuleNavigation extends AbstractModule
 			}
 		}
 
-		$this->Template->request = ampersand(\Environment::get('indexFreeRequest'));
+		$this->Template->request = ampersand(Environment::get('indexFreeRequest'));
 		$this->Template->items = $this->renderNavigation($trail[$level], 1, $host, $lang);
 	}
 }

@@ -12,6 +12,7 @@ namespace Contao;
 
 use Contao\Config;
 use Contao\Date;
+use Contao\Environment;
 use Contao\Input;
 
 /**
@@ -823,7 +824,7 @@ class BackendInstall extends Backend
 	protected function setAuthCookie()
 	{
 		$_SESSION['TL_INSTALL_EXPIRE'] = (time() + 300);
-		$_SESSION['TL_INSTALL_AUTH'] = md5(uniqid(mt_rand(), true) . (!Config::get('disableIpCheck') ? \Environment::get('ip') : '') . session_id());
+		$_SESSION['TL_INSTALL_AUTH'] = md5(uniqid(mt_rand(), true) . (!Config::get('disableIpCheck') ? Environment::get('ip') : '') . session_id());
 		$this->setCookie('TL_INSTALL_AUTH', $_SESSION['TL_INSTALL_AUTH'], $_SESSION['TL_INSTALL_EXPIRE'], null, null, false, true);
 	}
 
@@ -865,11 +866,11 @@ class BackendInstall extends Backend
 	protected function outputAndExit()
 	{
 		$this->Template->theme = \Backend::getTheme();
-		$this->Template->base = \Environment::get('base');
+		$this->Template->base = Environment::get('base');
 		$this->Template->language = $GLOBALS['TL_LANGUAGE'];
 		$this->Template->charset = Config::get('characterSet');
 		$this->Template->pageOffset = Input::cookie('BE_PAGE_OFFSET');
-		$this->Template->action = ampersand(\Environment::get('request'));
+		$this->Template->action = ampersand(Environment::get('request'));
 		$this->Template->noCookies = $GLOBALS['TL_LANG']['MSC']['noCookies'];
 		$this->Template->title = specialchars($GLOBALS['TL_LANG']['tl_install']['installTool'][0]);
 		$this->Template->expandNode = $GLOBALS['TL_LANG']['MSC']['expandNode'];

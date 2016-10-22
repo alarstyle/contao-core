@@ -114,7 +114,7 @@ class News extends Frontend
         }
 
         $strType = ($arrFeed['format'] == 'atom') ? 'generateAtom' : 'generateRss';
-        $strLink = $arrFeed['feedBase'] ?: \Environment::get('base');
+        $strLink = $arrFeed['feedBase'] ?: Environment::get('base');
         $strFile = $arrFeed['feedName'];
 
         $objFeed = new Feed($strFile);

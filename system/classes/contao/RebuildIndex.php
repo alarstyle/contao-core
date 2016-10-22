@@ -94,7 +94,7 @@ class RebuildIndex extends Backend implements \executable
 			$this->setCookie('FE_PREVIEW', 0, ($time - 86400));
 
 			// Calculate the hash
-			$strHash = sha1(session_id() . (!Config::get('disableIpCheck') ? \Environment::get('ip') : '') . 'FE_USER_AUTH');
+			$strHash = sha1(session_id() . (!Config::get('disableIpCheck') ? Environment::get('ip') : '') . 'FE_USER_AUTH');
 
 			// Remove old sessions
 			$this->Database->prepare("DELETE FROM tl_session WHERE tstamp<? OR hash=?")

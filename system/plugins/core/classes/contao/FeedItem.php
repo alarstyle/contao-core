@@ -121,7 +121,7 @@ class FeedItem
 
 		if ($strUrl === null)
 		{
-			$strUrl = \Environment::get('base');
+			$strUrl = Environment::get('base');
 		}
 
 		$objFile = new \File($strFile, true);

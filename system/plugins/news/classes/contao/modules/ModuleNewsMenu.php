@@ -12,6 +12,7 @@ namespace Contao\Modules;
 
 use Contao\BackendTemplate;
 use Contao\Date;
+use Contao\Environment;
 use Contao\FrontendTemplate;
 use Contao\Input;
 
@@ -70,7 +71,7 @@ class ModuleNewsMenu extends ModuleNews
 			return '';
 		}
 
-		$this->strUrl = preg_replace('/\?.*$/', '', \Environment::get('request'));
+		$this->strUrl = preg_replace('/\?.*$/', '', Environment::get('request'));
 
 		if ($this->jumpTo && ($objTarget = $this->objModel->getRelated('jumpTo')) !== null)
 		{

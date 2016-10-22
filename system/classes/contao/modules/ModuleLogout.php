@@ -10,6 +10,7 @@
 
 namespace Contao\Modules;
 
+use Contao\Environment;
 
 /**
  * Front end module "logout".
@@ -54,7 +55,7 @@ class ModuleLogout extends AbstractModule
 		}
 
 		$this->import('Contao\\FrontendUser', 'User');
-		$strRedirect = \Environment::get('base');
+		$strRedirect = Environment::get('base');
 
 		// Redirect to last page visited
 		if ($this->redirectBack && !empty($_SESSION['LAST_PAGE_VISITED']))

@@ -207,7 +207,7 @@ class FrontendTemplate extends Template
 			}
 			else
 			{
-				$strCacheKey = \Environment::get('host') . '/' . \Environment::get('request');
+				$strCacheKey = Environment::get('host') . '/' . Environment::get('request');
 			}
 
 			// HOOK: add custom logic
@@ -223,7 +223,7 @@ class FrontendTemplate extends Template
 			// Add a suffix if there is a mobile layout (see #7826)
 			if ($objPage->mobileLayout > 0)
 			{
-				if (\Input::cookie('TL_VIEW') == 'mobile' || (\Environment::get('agent')->mobile && \Input::cookie('TL_VIEW') != 'desktop'))
+				if (\Input::cookie('TL_VIEW') == 'mobile' || (Environment::get('agent')->mobile && \Input::cookie('TL_VIEW') != 'desktop'))
 				{
 					$strCacheKey .= '.mobile';
 				}
@@ -308,7 +308,7 @@ class FrontendTemplate extends Template
 				{
 					$arrData = array
 					(
-						'url' => \Environment::get('base') . \Environment::get('request'),
+						'url' => Environment::get('base') . Environment::get('request'),
 						'content' => $this->strBuffer,
 						'title' => $objPage->pageTitle ?: $objPage->title,
 						'protected' => ($objPage->protected ? '1' : ''),

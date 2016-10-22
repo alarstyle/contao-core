@@ -3,6 +3,7 @@
 namespace Contao;
 
 use Contao\Config;
+use Contao\Environment;
 use Contao\Input;
 
 /**
@@ -79,7 +80,7 @@ class BackendLogin extends Backend
         $objTemplate->languages = System::getLanguages(true);
         $objTemplate->title = specialchars($strHeadline);
         $objTemplate->charset = Config::get('characterSet');
-        $objTemplate->action = ampersand(\Environment::get('request'));
+        $objTemplate->action = ampersand(Environment::get('request'));
         $objTemplate->headline = $strHeadline;
         $objTemplate->curUsername = Input::post('username') ?: '';
         $objTemplate->uClass = ($_POST && empty($_POST['username'])) ? ' class="login_error"' : '';

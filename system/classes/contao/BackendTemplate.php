@@ -55,7 +55,7 @@ class BackendTemplate extends Template
 	public function output()
 	{
 		// User agent class (see #3074 and #6277)
-		$this->ua = \Environment::get('agent')->class;
+		$this->ua = Environment::get('agent')->class;
 
 		// Style sheets
 		if (!empty($GLOBALS['TL_CSS']) && is_array($GLOBALS['TL_CSS']))

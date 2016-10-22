@@ -18,10 +18,10 @@ System::loadLanguageFile('tl_files');
 /**
  * Overwrite some settings
  */
-if (Input::get('do') == 'tpl_editor')
+if (\Contao\Input::get('do') == 'tpl_editor')
 {
-	Config::set('uploadPath', 'templates');
-	Config::set('editableFiles', Config::get('templateFiles'));
+	\Contao\Config::set('uploadPath', 'templates');
+	\Contao\Config::set('editableFiles', \Contao\Config::get('templateFiles'));
 }
 
 
@@ -35,7 +35,7 @@ $GLOBALS['TL_DCA']['tl_templates'] = array
 	'config' => array
 	(
 		'dataContainer'               => 'Folder',
-		'validFileTypes'              => Config::get('templateFiles'),
+		'validFileTypes'              => \Contao\Config::get('templateFiles'),
 		'closed'                      => true,
 		'onload_callback' => array
 		(
@@ -282,7 +282,7 @@ class tl_templates extends \Contao\Backend
 		}
 
 		$arrAllTemplates = array();
-		$arrAllowed = trimsplit(',', strtolower(Config::get('templateFiles')));
+		$arrAllowed = trimsplit(',', strtolower(\Contao\Config::get('templateFiles')));
 
 		// Get all templates
 		foreach (PluginLoader::getActive() as $strModule)
@@ -345,12 +345,12 @@ class tl_templates extends \Contao\Backend
 <div class="tl_tbox">
 <div>
   <h3><label for="ctrl_original">'.$GLOBALS['TL_LANG']['tl_templates']['original'][0].'</label></h3>
-  <select name="original" id="ctrl_original" class="tl_select tl_chosen" onfocus="">'.$strAllTemplates.'</select>'.(($GLOBALS['TL_LANG']['tl_templates']['original'][1] && Config::get('showHelp')) ? '
+  <select name="original" id="ctrl_original" class="tl_select tl_chosen" onfocus="">'.$strAllTemplates.'</select>'.(($GLOBALS['TL_LANG']['tl_templates']['original'][1] && \Contao\Config::get('showHelp')) ? '
   <p class="tl_help tl_tip">'.$GLOBALS['TL_LANG']['tl_templates']['original'][1].'</p>' : '').'
 </div>
 <div>
   <h3><label for="ctrl_target">'.$GLOBALS['TL_LANG']['tl_templates']['target'][0].'</label></h3>
-  <select name="target" id="ctrl_target" class="tl_select" onfocus=""><option value="templates">templates</option>'. $this->getTargetFolders('templates') .'</select>'.(($GLOBALS['TL_LANG']['tl_templates']['target'][1] && Config::get('showHelp')) ? '
+  <select name="target" id="ctrl_target" class="tl_select" onfocus=""><option value="templates">templates</option>'. $this->getTargetFolders('templates') .'</select>'.(($GLOBALS['TL_LANG']['tl_templates']['target'][1] && \Contao\Config::get('showHelp')) ? '
   <p class="tl_help tl_tip">'.$GLOBALS['TL_LANG']['tl_templates']['target'][1].'</p>' : '').'
 </div>
 </div>
@@ -467,9 +467,9 @@ class tl_templates extends \Contao\Backend
 		$objTemplate->base = Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($GLOBALS['TL_LANG']['MSC']['showDifferences']);
-		$objTemplate->charset = Config::get('characterSet');
+		$objTemplate->charset = \Contao\Config::get('characterSet');
 
-		Config::set('debugMode', false);
+		\Contao\Config::set('debugMode', false);
 
 		$objTemplate->output();
 		exit;

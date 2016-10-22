@@ -101,8 +101,8 @@ class BackendUser extends User
 	{
 		parent::__construct();
 
-		$this->strIp = \Environment::get('ip');
-		$this->strHash = \Input::cookie($this->strCookie);
+		$this->strIp = Environment::get('ip');
+		$this->strHash = Input::cookie($this->strCookie);
 	}
 
 
@@ -113,7 +113,7 @@ class BackendUser extends User
 	{
 		$session = $this->Session->getData();
 
-		if (!isset($_GET['act']) && !isset($_GET['key']) && !isset($_GET['token']) && !isset($_GET['state']) && \Input::get('do') != 'feRedirect' && !\Environment::get('isAjaxRequest'))
+		if (!isset($_GET['act']) && !isset($_GET['key']) && !isset($_GET['token']) && !isset($_GET['state']) && Input::get('do') != 'feRedirect' && !Environment::get('isAjaxRequest'))
 		{
 			$key = null;
 
@@ -151,7 +151,7 @@ class BackendUser extends User
 					$session[$key][TL_REFERER_ID] = end($session[$key]);
 				}
 
-				$session[$key][TL_REFERER_ID]['current'] = substr(\Environment::get('requestUri'), strlen(TL_PATH) + 1);
+				$session[$key][TL_REFERER_ID]['current'] = substr(Environment::get('requestUri'), strlen(TL_PATH) + 1);
 
 				$this->Session->setData($session);
 			}
@@ -230,7 +230,7 @@ class BackendUser extends User
 		// Redirect to the last page visited upon login
 		if (TL_SCRIPT == 'contao/main.php' || TL_SCRIPT == 'contao/preview.php')
 		{
-			$strRedirect .= '?referer=' . base64_encode(\Environment::get('request'));
+			$strRedirect .= '?referer=' . base64_encode(Environment::get('request'));
 		}
 
 		\Controller::redirect($strRedirect);
@@ -516,11 +516,11 @@ class BackendUser extends User
 		$session = $this->Session->getData();
 
 		// Toggle nodes
-		if (\Input::get('mtg'))
+		if (Input::get('mtg'))
 		{
-			$session['backend_modules'][\Input::get('mtg')] = (isset($session['backend_modules'][\Input::get('mtg')]) && $session['backend_modules'][\Input::get('mtg')] == 0) ? 1 : 0;
+			$session['backend_modules'][Input::get('mtg')] = (isset($session['backend_modules'][Input::get('mtg')]) && $session['backend_modules'][\Input::get('mtg')] == 0) ? 1 : 0;
 			$this->Session->setData($session);
-			\Controller::redirect(preg_replace('/(&(amp;)?|\?)mtg=[^& ]*/i', '', \Environment::get('request')));
+			Controller::redirect(preg_replace('/(&(amp;)?|\?)mtg=[^& ]*/i', '', Environment::get('request')));
 		}
 
 		$arrInactiveModules = \PluginLoader::getDisabled();

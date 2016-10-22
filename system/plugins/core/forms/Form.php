@@ -11,6 +11,8 @@
 namespace Contao;
 
 use Contao\Editor;
+use Contao\Email;
+use Contao\Environment;
 use Contao\StringUtil;
 
 /**
@@ -258,7 +260,7 @@ class Form extends \Hybrid
 		}
 
 		// Add a warning to the page title
-		if ($doNotSubmit && !\Environment::get('isAjaxRequest'))
+		if ($doNotSubmit && !Environment::get('isAjaxRequest'))
 		{
 			/** @var \PageModel $objPage */
 			global $objPage;
@@ -298,7 +300,7 @@ class Form extends \Hybrid
 		$this->Template->attributes = $strAttributes;
 		$this->Template->enctype = $hasUpload ? 'multipart/form-data' : 'application/x-www-form-urlencoded';
 		$this->Template->formId = $formId;
-		$this->Template->action = \Environment::get('indexFreeRequest');
+		$this->Template->action = Environment::get('indexFreeRequest');
 		$this->Template->maxFileSize = $hasUpload ? $this->objModel->getMaxUploadFileSize() : false;
 		$this->Template->novalidate = $this->novalidate ? ' novalidate' : '';
 
@@ -384,7 +386,7 @@ class Form extends \Hybrid
 				$recipients[$k] = str_replace(array('[', ']', '"'), array('<', '>', ''), $v);
 			}
 
-			$email = new \Email();
+			$email = new Email();
 
 			// Get subject and message
 			if ($this->format == 'email')
@@ -452,7 +454,7 @@ class Form extends \Hybrid
 					// Add a link to the uploaded file
 					if ($file['uploaded'])
 					{
-						$uploaded .= "\n" . \Environment::get('base') . str_replace(TL_ROOT . '/', '', dirname($file['tmp_name'])) . '/' . rawurlencode($file['name']);
+						$uploaded .= "\n" . Environment::get('base') . str_replace(TL_ROOT . '/', '', dirname($file['tmp_name'])) . '/' . rawurlencode($file['name']);
 						continue;
 					}
 
@@ -557,7 +559,7 @@ class Form extends \Hybrid
 		}
 		else
 		{
-			$this->log('Form "' . $this->title . '" has been submitted by ' . \System::anonymizeIp(\Environment::get('ip')) . '.', __METHOD__, TL_FORMS);
+			$this->log('Form "' . $this->title . '" has been submitted by ' . \System::anonymizeIp(Environment::get('ip')) . '.', __METHOD__, TL_FORMS);
 		}
 
 		// Check whether there is a jumpTo page

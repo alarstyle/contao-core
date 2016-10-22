@@ -13,6 +13,7 @@ namespace Contao;
 use Contao\Config;
 use Contao\Database;
 use Contao\Date;
+use Contao\Environment;
 
 /**
  * Reads and writes pages
@@ -920,7 +921,7 @@ class PageModel extends \Model
 
 		if (strncmp($strUrl, 'http://', 7) !== 0 && strncmp($strUrl, 'https://', 8) !== 0)
 		{
-			$strUrl = ($this->rootUseSSL ? 'https://' : 'http://') . \Environment::get('host') . TL_PATH . '/' . $strUrl;
+			$strUrl = ($this->rootUseSSL ? 'https://' : 'http://') . Environment::get('host') . TL_PATH . '/' . $strUrl;
 		}
 
 		return $strUrl;

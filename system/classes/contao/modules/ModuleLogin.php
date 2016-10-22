@@ -12,6 +12,7 @@ namespace Contao\Modules;
 
 use Contao\Config;
 use Contao\Date;
+use Contao\Environment;
 
 /**
  * Front end module "login".
@@ -66,7 +67,7 @@ class ModuleLogin extends AbstractModule
 			}
 
 			$this->import('Contao\\FrontendUser', 'User');
-			$strRedirect = \Environment::get('request');
+			$strRedirect = Environment::get('request');
 
 			// Redirect to the last page visited
 			if ($this->redirectBack && $_SESSION['LAST_PAGE_VISITED'] != '')
@@ -124,7 +125,7 @@ class ModuleLogin extends AbstractModule
 			global $objPage;
 
 			$this->import('Contao\\FrontendUser', 'User');
-			$strRedirect = \Environment::get('request');
+			$strRedirect = Environment::get('request');
 
 			// Redirect to last page visited
 			if ($this->redirectBack && strlen($_SESSION['LAST_PAGE_VISITED']))
@@ -135,7 +136,7 @@ class ModuleLogin extends AbstractModule
 			// Redirect home if the page is protected
 			elseif ($objPage->protected)
 			{
-				$strRedirect = \Environment::get('base');
+				$strRedirect = Environment::get('base');
 			}
 
 			// Logout and redirect
@@ -170,7 +171,7 @@ class ModuleLogin extends AbstractModule
 
 			$this->Template->slabel = specialchars($GLOBALS['TL_LANG']['MSC']['logout']);
 			$this->Template->loggedInAs = sprintf($GLOBALS['TL_LANG']['MSC']['loggedInAs'], $this->User->username);
-			$this->Template->action = ampersand(\Environment::get('indexFreeRequest'));
+			$this->Template->action = ampersand(Environment::get('indexFreeRequest'));
 
 			if ($this->User->lastLogin > 0)
 			{
@@ -209,7 +210,7 @@ class ModuleLogin extends AbstractModule
 		$this->Template->hasError = $blnHasError;
 		$this->Template->username = $GLOBALS['TL_LANG']['MSC']['username'];
 		$this->Template->password = $GLOBALS['TL_LANG']['MSC']['password'][0];
-		$this->Template->action = ampersand(\Environment::get('indexFreeRequest'));
+		$this->Template->action = ampersand(Environment::get('indexFreeRequest'));
 		$this->Template->slabel = specialchars($GLOBALS['TL_LANG']['MSC']['login']);
 		$this->Template->value = specialchars(\Input::post('username'));
 		$this->Template->autologin = ($this->autologin && Config::get('autologin') > 0);

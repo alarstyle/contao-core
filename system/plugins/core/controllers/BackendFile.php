@@ -11,6 +11,7 @@
 namespace Contao;
 
 use Contao\Config;
+use Contao\Environment;
 
 /**
  * Back end file picker.
@@ -56,7 +57,7 @@ class BackendFile extends Backend
 		$objTemplate->main = '';
 
 		// Ajax request
-		if ($_POST && \Environment::get('isAjaxRequest'))
+		if ($_POST && Environment::get('isAjaxRequest'))
 		{
 			$this->objAjax = new \Ajax(\Input::post('action'));
 			$this->objAjax->executePreActions();
@@ -91,12 +92,12 @@ class BackendFile extends Backend
 		}
 
 		// AJAX request
-		if ($_POST && \Environment::get('isAjaxRequest'))
+		if ($_POST && Environment::get('isAjaxRequest'))
 		{
 			$this->objAjax->executePostActions($objDca);
 		}
 
-		$this->Session->set('filePickerRef', \Environment::get('request'));
+		$this->Session->set('filePickerRef', Environment::get('request'));
 		$arrValues = array_filter(explode(',', \Input::get('value')));
 
 		// Convert UUIDs to binary
@@ -134,13 +135,13 @@ class BackendFile extends Backend
 
 		$objTemplate->main = $objFileTree->generate();
 		$objTemplate->theme = \Backend::getTheme();
-		$objTemplate->base = \Environment::get('base');
+		$objTemplate->base = Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($GLOBALS['TL_LANG']['MSC']['filepicker']);
 		$objTemplate->charset = Config::get('characterSet');
 		$objTemplate->addSearch = false;
 		$objTemplate->search = $GLOBALS['TL_LANG']['MSC']['search'];
-		$objTemplate->action = ampersand(\Environment::get('request'));
+		$objTemplate->action = ampersand(Environment::get('request'));
 		$objTemplate->value = $this->Session->get('file_selector_search');
 		$objTemplate->breadcrumb = $GLOBALS['TL_DCA']['tl_files']['list']['sorting']['breadcrumb'];
 
@@ -153,7 +154,7 @@ class BackendFile extends Backend
 		if (\Input::get('switch') && $this->User->hasAccess('page', 'modules'))
 		{
 			$objTemplate->switch = $GLOBALS['TL_LANG']['MSC']['pagePicker'];
-			$objTemplate->switchHref = str_replace('contao/file.php', 'contao/page.php', ampersand(\Environment::get('request')));
+			$objTemplate->switchHref = str_replace('contao/file.php', 'contao/page.php', ampersand(Environment::get('request')));
 		}
 
 		Config::set('debugMode', false);

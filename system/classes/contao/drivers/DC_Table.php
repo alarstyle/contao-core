@@ -17,6 +17,7 @@ use Contao\DataContainer;
 use Contao\Date;
 use Contao\Editor;
 use Contao\Encryption;
+use Contao\Environment;
 use Contao\Input;
 use Contao\Message;
 use Contao\Pagination;
@@ -172,15 +173,15 @@ class DC_Table extends DataContainer implements \listable, \editable
 
 			if (isset($_POST['edit']))
 			{
-				$this->redirect(str_replace('act=select', 'act=editAll', \Environment::get('request')));
+				$this->redirect(str_replace('act=select', 'act=editAll', Environment::get('request')));
 			}
 			elseif (isset($_POST['delete']))
 			{
-				$this->redirect(str_replace('act=select', 'act=deleteAll', \Environment::get('request')));
+				$this->redirect(str_replace('act=select', 'act=deleteAll', Environment::get('request')));
 			}
 			elseif (isset($_POST['override']))
 			{
-				$this->redirect(str_replace('act=select', 'act=overrideAll', \Environment::get('request')));
+				$this->redirect(str_replace('act=select', 'act=overrideAll', Environment::get('request')));
 			}
 			elseif (isset($_POST['cut']) || isset($_POST['copy']))
 			{
@@ -197,7 +198,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 				// Support copyAll in the list view (see #7499)
 				if (isset($_POST['copy']) && $GLOBALS['TL_DCA'][$strTable]['list']['sorting']['mode'] < 4)
 				{
-					$this->redirect(str_replace('act=select', 'act=copyAll', \Environment::get('request')));
+					$this->redirect(str_replace('act=select', 'act=copyAll', Environment::get('request')));
 				}
 
 				$this->redirect($this->getReferer());
@@ -259,10 +260,10 @@ class DC_Table extends DataContainer implements \listable, \editable
 		}
 
 		// Store the current referer
-		if (!empty($this->ctable) && !\Input::get('act') && !\Input::get('key') && !\Input::get('token') && TL_SCRIPT == 'contao/main.php' && !\Environment::get('isAjaxRequest'))
+		if (!empty($this->ctable) && !\Input::get('act') && !\Input::get('key') && !\Input::get('token') && TL_SCRIPT == 'contao/main.php' && !Environment::get('isAjaxRequest'))
 		{
 			$session = $this->Session->get('referer');
-			$session[TL_REFERER_ID][$this->strTable] = substr(\Environment::get('requestUri'), strlen(TL_PATH) + 1);
+			$session[TL_REFERER_ID][$this->strTable] = substr(Environment::get('requestUri'), strlen(TL_PATH) + 1);
 			$this->Session->set('referer', $session);
 		}
 	}
@@ -1904,7 +1905,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 				{
 					if ($vv == '[EOF]')
 					{
-						if ($blnAjax && \Environment::get('isAjaxRequest'))
+						if ($blnAjax && Environment::get('isAjaxRequest'))
 						{
 							return $strAjax . '<input type="hidden" name="FORM_FIELDS[]" value="'.specialchars($this->strPalette).'">';
 						}
@@ -1918,7 +1919,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 					if (preg_match('/^\[.*\]$/', $vv))
 					{
 						$thisId = 'sub_' . substr($vv, 1, -1);
-						$blnAjax = ($ajaxId == $thisId && \Environment::get('isAjaxRequest')) ? true : false;
+						$blnAjax = ($ajaxId == $thisId && Environment::get('isAjaxRequest')) ? true : false;
 						$return .= "\n" . '<div id="'.$thisId.'">';
 
 						continue;
@@ -2032,7 +2033,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 <a href="'.$this->getReferer(true).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b" onclick="">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>') . '
 </div>
 '.Message::generate().'
-<form action="'.ampersand(\Environment::get('request'), true).'" id="'.$this->strTable.'" class="tl_form" method="post" enctype="' . ($this->blnUploadable ? 'multipart/form-data' : 'application/x-www-form-urlencoded') . '"'.(!empty($this->onsubmit) ? ' onsubmit="'.implode(' ', $this->onsubmit).'"' : '').'>
+<form action="'.ampersand(Environment::get('request'), true).'" id="'.$this->strTable.'" class="tl_form" method="post" enctype="' . ($this->blnUploadable ? 'multipart/form-data' : 'application/x-www-form-urlencoded') . '"'.(!empty($this->onsubmit) ? ' onsubmit="'.implode(' ', $this->onsubmit).'"' : '').'>
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="'.specialchars($this->strTable).'">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">
@@ -2212,7 +2213,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 		$session = $this->Session->getData();
 		$ids = $session['CURRENT']['IDS'];
 
-		if ($intId != '' && \Environment::get('isAjaxRequest'))
+		if ($intId != '' && Environment::get('isAjaxRequest'))
 		{
 			$ids = array($intId);
 		}
@@ -2301,7 +2302,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 
 					if ($v == '[EOF]')
 					{
-						if ($blnAjax && \Environment::get('isAjaxRequest'))
+						if ($blnAjax && Environment::get('isAjaxRequest'))
 						{
 							return $strAjax . '<input type="hidden" name="FORM_FIELDS_'.$id.'[]" value="'.specialchars(implode(',', $formFields)).'">';
 						}
@@ -2315,7 +2316,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 					if (preg_match('/^\[.*\]$/', $v))
 					{
 						$thisId = 'sub_' . substr($v, 1, -1) . '_' . $id;
-						$blnAjax = ($ajaxId == $thisId && \Environment::get('isAjaxRequest')) ? true : false;
+						$blnAjax = ($ajaxId == $thisId && Environment::get('isAjaxRequest')) ? true : false;
 						$return .= "\n  " . '<div id="'.$thisId.'">';
 
 						continue;
@@ -2460,7 +2461,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 			// Add the form
 			$return = '
 
-<form action="'.ampersand(\Environment::get('request'), true).'" id="'.$this->strTable.'" class="tl_form" method="post" enctype="' . ($this->blnUploadable ? 'multipart/form-data' : 'application/x-www-form-urlencoded') . '">
+<form action="'.ampersand(Environment::get('request'), true).'" id="'.$this->strTable.'" class="tl_form" method="post" enctype="' . ($this->blnUploadable ? 'multipart/form-data' : 'application/x-www-form-urlencoded') . '">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="'.$this->strTable.'">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">'.($this->noReload ? '
@@ -2541,7 +2542,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 			// Return the select menu
 			$return .= '
 
-<form action="'.ampersand(\Environment::get('request'), true).'&amp;fields=1" id="'.$this->strTable.'_all" class="tl_form" method="post">
+<form action="'.ampersand(Environment::get('request'), true).'&amp;fields=1" id="'.$this->strTable.'_all" class="tl_form" method="post">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="'.$this->strTable.'_all">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">'.($blnIsError ? '
@@ -2769,7 +2770,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 			// Add the form
 			$return = '
 
-<form action="'.ampersand(\Environment::get('request'), true).'" id="'.$this->strTable.'" class="tl_form" method="post" enctype="' . ($this->blnUploadable ? 'multipart/form-data' : 'application/x-www-form-urlencoded') . '">
+<form action="'.ampersand(Environment::get('request'), true).'" id="'.$this->strTable.'" class="tl_form" method="post" enctype="' . ($this->blnUploadable ? 'multipart/form-data' : 'application/x-www-form-urlencoded') . '">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="'.$this->strTable.'">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">'.($this->noReload ? '
@@ -2850,7 +2851,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 			// Return the select menu
 			$return .= '
 
-<form action="'.ampersand(\Environment::get('request'), true).'&amp;fields=1" id="'.$this->strTable.'_all" class="tl_form" method="post">
+<form action="'.ampersand(Environment::get('request'), true).'&amp;fields=1" id="'.$this->strTable.'_all" class="tl_form" method="post">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="'.$this->strTable.'_all">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">'.($blnIsError ? '
@@ -3292,7 +3293,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 			}
 
 			$this->Session->setData($session);
-			$this->redirect(preg_replace('/(&(amp;)?|\?)ptg=[^& ]*/i', '', \Environment::get('request')));
+			$this->redirect(preg_replace('/(&(amp;)?|\?)ptg=[^& ]*/i', '', Environment::get('request')));
 		}
 
 		// Return if a mandatory field (id, pid, sorting) is missing
@@ -3418,7 +3419,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 
 		$return .= ((\Input::get('act') == 'select') ? '
 
-<form action="'.ampersand(\Environment::get('request'), true).'" id="tl_select" class="tl_form'.((\Input::get('act') == 'select') ? ' unselectable' : '').'" method="post" novalidate>
+<form action="'.ampersand(Environment::get('request'), true).'" id="tl_select" class="tl_form'.((\Input::get('act') == 'select') ? ' unselectable' : '').'" method="post" novalidate>
 <div class="tl_formbody">
 <input type="hidden" name="FORM_SUBMIT" value="tl_select">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">' : '').($blnClipboard ? '
@@ -3538,7 +3539,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 	 */
 	public function ajaxTreeView($id, $level)
 	{
-		if (!\Environment::get('isAjaxRequest'))
+		if (!Environment::get('isAjaxRequest'))
 		{
 			return '';
 		}
@@ -3627,7 +3628,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 			$session[$node][\Input::get('ptg')] = (isset($session[$node][\Input::get('ptg')]) && $session[$node][\Input::get('ptg')] == 1) ? 0 : 1;
 			$this->Session->setData($session);
 
-			$this->redirect(preg_replace('/(&(amp;)?|\?)ptg=[^& ]*/i', '', \Environment::get('request')));
+			$this->redirect(preg_replace('/(&(amp;)?|\?)ptg=[^& ]*/i', '', Environment::get('request')));
 		}
 
 		$objRow = $this->Database->prepare("SELECT * FROM " . $table . " WHERE id=?")
@@ -3909,7 +3910,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 
 		$return .= ((\Input::get('act') == 'select') ? '
 
-<form action="'.ampersand(\Environment::get('request'), true).'" id="tl_select" class="tl_form'.((\Input::get('act') == 'select') ? ' unselectable' : '').'" method="post" novalidate>
+<form action="'.ampersand(Environment::get('request'), true).'" id="tl_select" class="tl_form'.((\Input::get('act') == 'select') ? ' unselectable' : '').'" method="post" novalidate>
 <div class="tl_formbody">
 <input type="hidden" name="FORM_SUBMIT" value="tl_select">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">' : '').($blnClipboard ? '
@@ -4500,7 +4501,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 			$result = $objRow->fetchAllAssoc();
 			$return .= ((\Input::get('act') == 'select') ? '
 
-<form action="'.ampersand(\Environment::get('request'), true).'" id="tl_select" class="tl_form'.((\Input::get('act') == 'select') ? ' unselectable' : '').'" method="post" novalidate>
+<form action="'.ampersand(Environment::get('request'), true).'" id="tl_select" class="tl_form'.((\Input::get('act') == 'select') ? ' unselectable' : '').'" method="post" novalidate>
 <div class="tl_formbody">
 <input type="hidden" name="FORM_SUBMIT" value="tl_select">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">' : '').'
@@ -4895,7 +4896,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 		}
 
 		$return = '
-<form action="'.ampersand(\Environment::get('request'), true).'" class="tl_form" method="post">
+<form action="'.ampersand(Environment::get('request'), true).'" class="tl_form" method="post">
 <div class="tl_formbody">
 <input type="hidden" name="FORM_SUBMIT" value="tl_filters">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">

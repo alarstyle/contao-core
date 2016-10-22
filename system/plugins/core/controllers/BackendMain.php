@@ -11,6 +11,7 @@
 namespace Contao;
 
 use Contao\Config;
+use Contao\Environment;
 use Contao\Input;
 
 /**
@@ -53,7 +54,7 @@ class BackendMain extends Backend
 		if ($this->User->pwChange)
 		{
 			$objSession = $this->Database->prepare("SELECT su FROM tl_session WHERE hash=?")
-										 ->execute(sha1(session_id() . (!Config::get('disableIpCheck') ? \Environment::get('ip') : '') . 'BE_USER_AUTH'));
+										 ->execute(sha1(session_id() . (!Config::get('disableIpCheck') ? Environment::get('ip') : '') . 'BE_USER_AUTH'));
 
 			if (!$objSession->su)
 			{
@@ -233,7 +234,7 @@ class BackendMain extends Backend
 		$this->Template->logoutTitle = specialchars(Lang::get('MSC::logoutBTTitle'));
 		$this->Template->backendModules = Lang::get('MSC::backendModules');
 		$this->Template->username = $GLOBALS['TL_LANG']['MSC']['user'] . ' ' . $GLOBALS['TL_USERNAME'];
-		$this->Template->request = ampersand(\Environment::get('request'));
+		$this->Template->request = ampersand(Environment::get('request'));
 		$this->Template->top = $GLOBALS['TL_LANG']['MSC']['backToTop'];
 		$this->Template->modules = $this->User->navigation();
 		$this->Template->home = $GLOBALS['TL_LANG']['MSC']['home'];

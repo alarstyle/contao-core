@@ -12,6 +12,7 @@ namespace Contao;
 
 use Contao\Config;
 use Contao\Drivers\DC_Table;
+use Contao\Environment;
 
 /**
  * Back end help wizard.
@@ -137,7 +138,7 @@ class BackendHelp extends Backend
 		}
 
 		$objTemplate->theme = \Backend::getTheme();
-		$objTemplate->base = \Environment::get('base');
+		$objTemplate->base = Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($GLOBALS['TL_LANG']['MSC']['helpWizardTitle']);
 		$objTemplate->charset = Config::get('characterSet');

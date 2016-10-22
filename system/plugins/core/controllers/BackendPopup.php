@@ -12,6 +12,7 @@ namespace Contao;
 
 use Contao\Config;
 use Contao\Date;
+use Contao\Environment;
 use Contao\StringUtil;
 
 /**
@@ -131,7 +132,7 @@ class BackendPopup extends Backend
 				$objTemplate->src = $this->urlEncode($this->strFile);
 			}
 
-			$objTemplate->href = ampersand(\Environment::get('request'), true) . '&amp;download=1';
+			$objTemplate->href = ampersand(Environment::get('request'), true) . '&amp;download=1';
 			$objTemplate->filesize = $this->getReadableSize($objFile->filesize) . ' (' . number_format($objFile->filesize, 0, $GLOBALS['TL_LANG']['MSC']['decimalSeparator'], $GLOBALS['TL_LANG']['MSC']['thousandsSeparator']) . ' Byte)';
 		}
 
@@ -142,7 +143,7 @@ class BackendPopup extends Backend
 		$objTemplate->atime = Date::parse(Config::get('datimFormat'), $objFile->atime);
 		$objTemplate->path = specialchars($this->strFile);
 		$objTemplate->theme = \Backend::getTheme();
-		$objTemplate->base = \Environment::get('base');
+		$objTemplate->base = Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($this->strFile);
 		$objTemplate->charset = Config::get('characterSet');

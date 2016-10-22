@@ -10,6 +10,7 @@
 
 namespace Contao\Modules;
 
+use Contao\Environment;
 
 /**
  * Front end module "custom navigation".
@@ -154,7 +155,7 @@ class ModuleCustomnav extends AbstractModule
 				$trail = in_array($objModel->id, $objPage->trail);
 
 				// Active page
-				if ($objPage->id == $objModel->id && $href == \Environment::get('request'))
+				if ($objPage->id == $objModel->id && $href == Environment::get('request'))
 				{
 					$strClass = trim($objModel->cssClass);
 					$row = $objModel->row();
@@ -214,7 +215,7 @@ class ModuleCustomnav extends AbstractModule
 
 		$objTemplate->items = $items;
 
-		$this->Template->request = \Environment::get('indexFreeRequest');
+		$this->Template->request = Environment::get('indexFreeRequest');
 		$this->Template->items = !empty($items) ? $objTemplate->parse() : '';
 	}
 }

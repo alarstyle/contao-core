@@ -11,6 +11,7 @@
 namespace Contao\Editors;
 
 use Contao\Config;
+use Contao\Environment;
 use Contao\Image;
 
 /**
@@ -157,7 +158,7 @@ class FileSelector extends \Contao\Editor
 	 */
 	public function generateAjax($folder, $strField, $level, $mount=false)
 	{
-		if (!\Environment::get('isAjaxRequest'))
+		if (!Environment::get('isAjaxRequest'))
 		{
 			return '';
 		}
@@ -251,7 +252,7 @@ class FileSelector extends \Contao\Editor
 		{
 			$session[$node][\Input::get($flag.'tg')] = (isset($session[$node][\Input::get($flag.'tg')]) && $session[$node][\Input::get($flag.'tg')] == 1) ? 0 : 1;
 			$this->Session->setData($session);
-			$this->redirect(preg_replace('/(&(amp;)?|\?)'.$flag.'tg=[^& ]*/i', '', \Environment::get('request')));
+			$this->redirect(preg_replace('/(&(amp;)?|\?)'.$flag.'tg=[^& ]*/i', '', Environment::get('request')));
 		}
 
 		$return = '';

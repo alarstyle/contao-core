@@ -11,6 +11,7 @@
 namespace Contao\Editors;
 
 use Contao\Config;
+use Contao\Environment;
 
 /**
  * Provide methods to handle input field "page tree".
@@ -192,7 +193,7 @@ class PageTree extends \Contao\Editor
     <script>Backend.makeMultiSrcSortable("sort_'.$this->strId.'", "ctrl_'.$this->strOrderId.'")</script>' : '') . '
   </div>';
 
-		if (!\Environment::get('isAjaxRequest'))
+		if (!Environment::get('isAjaxRequest'))
 		{
 			$return = '<div>' . $return . '</div>';
 		}

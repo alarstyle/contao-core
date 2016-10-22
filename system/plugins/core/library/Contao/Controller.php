@@ -904,7 +904,7 @@ abstract class Controller extends \System
 			$strRequest .= '&amp;ref=' . TL_REFERER_ID;
 		}
 
-		$queries = preg_split('/&(amp;)?/i', \Environment::get('queryString'));
+		$queries = preg_split('/&(amp;)?/i', Environment::get('queryString'));
 
 		// Overwrite existing parameters
 		foreach ($queries as $k=>$v)
@@ -938,10 +938,10 @@ abstract class Controller extends \System
 			exit;
 		}
 
-		$strLocation = \Environment::get('uri');
+		$strLocation = Environment::get('uri');
 
 		// Ajax request
-		if (\Environment::get('isAjaxRequest'))
+		if (Environment::get('isAjaxRequest'))
 		{
 			header('HTTP/1.1 204 No Content');
 			header('X-Ajax-Location: ' . $strLocation);
@@ -974,11 +974,11 @@ abstract class Controller extends \System
 		// Make the location an absolute URL
 		if (!preg_match('@^https?://@i', $strLocation))
 		{
-			$strLocation = \Environment::get('base') . ltrim($strLocation, '/');
+			$strLocation = Environment::get('base') . ltrim($strLocation, '/');
 		}
 
 		// Ajax request
-		if (\Environment::get('isAjaxRequest'))
+		if (Environment::get('isAjaxRequest'))
 		{
 			header('HTTP/1.1 204 No Content');
 			header('X-Ajax-Location: ' . $strLocation);
@@ -1090,7 +1090,7 @@ abstract class Controller extends \System
 		}
 
 		// Add the domain if it differs from the current one (see #3765 and #6927)
-		if ($blnFixDomain && !empty($arrRow['domain']) && $arrRow['domain'] != \Environment::get('host'))
+		if ($blnFixDomain && !empty($arrRow['domain']) && $arrRow['domain'] != Environment::get('host'))
 		{
 			$strUrl = ($arrRow['rootUseSSL'] ? 'https://' : 'http://') . $arrRow['domain'] . TL_PATH . '/' . $strUrl;
 		}
@@ -1121,7 +1121,7 @@ abstract class Controller extends \System
 	{
 		if ($strBase == '')
 		{
-			$strBase = \Environment::get('base');
+			$strBase = Environment::get('base');
 		}
 
 		$search = $blnHrefOnly ? 'href' : 'href|src';
@@ -1245,7 +1245,7 @@ abstract class Controller extends \System
 		// Make sure the URL is absolute (see #4332)
 		if (strncmp($strUrl, 'http://', 7) !== 0 && strncmp($strUrl, 'https://', 8) !== 0)
 		{
-			$strUrl = \Environment::get('base') . $strUrl;
+			$strUrl = Environment::get('base') . $strUrl;
 		}
 
 		if (!$blnReturn)
@@ -1606,7 +1606,7 @@ abstract class Controller extends \System
 				}
 
 				$objFile = new \File($objFiles->path, true);
-				$strHref = \Environment::get('request');
+				$strHref = Environment::get('request');
 
 				// Remove an existing file parameter (see #5683)
 				if (preg_match('/(&(amp;)?|\?)file=/', $strHref))

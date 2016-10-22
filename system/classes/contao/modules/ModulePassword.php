@@ -10,6 +10,8 @@
 
 namespace Contao\Modules;
 
+use Contao\Email;
+use Contao\Environment;
 use Contao\Idna;
 use Contao\StringUtil;
 
@@ -166,7 +168,7 @@ class ModulePassword extends AbstractModule
 		$this->Template->formId = 'tl_lost_password';
 		$this->Template->username = specialchars($GLOBALS['TL_LANG']['MSC']['username']);
 		$this->Template->email = specialchars($GLOBALS['TL_LANG']['MSC']['emailAddress']);
-		$this->Template->action = \Environment::get('indexFreeRequest');
+		$this->Template->action = Environment::get('indexFreeRequest');
 		$this->Template->slabel = specialchars($GLOBALS['TL_LANG']['MSC']['requestPassword']);
 		$this->Template->rowLast = 'row_' . $row . ' row_last' . ((($row % 2) == 0) ? ' even' : ' odd');
 		$this->Template->tableless = $this->tableless;
@@ -281,7 +283,7 @@ class ModulePassword extends AbstractModule
 
 		$this->Template->formId = $strToken;
 		$this->Template->fields = $objEditor->parse();
-		$this->Template->action = \Environment::get('indexFreeRequest');
+		$this->Template->action = Environment::get('indexFreeRequest');
 		$this->Template->slabel = specialchars($GLOBALS['TL_LANG']['MSC']['setNewPassword']);
 		$this->Template->tableless = $this->tableless;
 	}
@@ -303,15 +305,15 @@ class ModulePassword extends AbstractModule
 
 		// Prepare the simple token data
 		$arrData = $objMember->row();
-		$arrData['domain'] = \Idna::decode(\Environment::get('host'));
-		$arrData['link'] = \Idna::decode(\Environment::get('base')) . \Environment::get('request') . (strpos(\Environment::get('request'), '?') !== false ? '&' : '?') . 'token=' . $confirmationId;
+		$arrData['domain'] = Idna::decode(Environment::get('host'));
+		$arrData['link'] = Idna::decode(Environment::get('base')) . Environment::get('request') . (strpos(Environment::get('request'), '?') !== false ? '&' : '?') . 'token=' . $confirmationId;
 
 		// Send e-mail
-		$objEmail = new \Email();
+		$objEmail = new Email();
 
 		$objEmail->from = $GLOBALS['TL_ADMIN_EMAIL'];
 		$objEmail->fromName = $GLOBALS['TL_ADMIN_NAME'];
-		$objEmail->subject = sprintf($GLOBALS['TL_LANG']['MSC']['passwordSubject'], Idna::decode(\Environment::get('host')));
+		$objEmail->subject = sprintf($GLOBALS['TL_LANG']['MSC']['passwordSubject'], Idna::decode(Environment::get('host')));
 		$objEmail->text = StringUtil::parseSimpleTokens($this->reg_password, $arrData);
 		$objEmail->sendTo($objMember->email);
 

@@ -708,10 +708,10 @@ class InsertTags extends \Controller
 
 				// Mobile/desktop toggle (see #6469)
 				case 'toggle_view':
-					$strUrl = ampersand(\Environment::get('request'));
+					$strUrl = ampersand(Environment::get('request'));
 					$strGlue = (strpos($strUrl, '?') === false) ? '?' : '&amp;';
 
-					if (\Input::cookie('TL_VIEW') == 'mobile' || (\Environment::get('agent')->mobile && \Input::cookie('TL_VIEW') != 'desktop'))
+					if (Input::cookie('TL_VIEW') == 'mobile' || (Environment::get('agent')->mobile && \Input::cookie('TL_VIEW') != 'desktop'))
 					{
 						$arrCache[$strTag] = '<a href="' . $strUrl . $strGlue . 'toggle_view=desktop" class="toggle_desktop" title="' . specialchars($GLOBALS['TL_LANG']['MSC']['toggleDesktop'][1]) . '">' . $GLOBALS['TL_LANG']['MSC']['toggleDesktop'][0] . '</a>';
 					}
@@ -761,27 +761,27 @@ class InsertTags extends \Controller
 					switch ($elements[1])
 					{
 						case 'host':
-							$arrCache[$strTag] = \Idna::decode(\Environment::get('host'));
+							$arrCache[$strTag] = Idna::decode(Environment::get('host'));
 							break;
 
 						case 'http_host':
-							$arrCache[$strTag] = \Idna::decode(\Environment::get('httpHost'));
+							$arrCache[$strTag] = Idna::decode(Environment::get('httpHost'));
 							break;
 
 						case 'url':
-							$arrCache[$strTag] = \Idna::decode(\Environment::get('url'));
+							$arrCache[$strTag] = Idna::decode(Environment::get('url'));
 							break;
 
 						case 'path':
-							$arrCache[$strTag] = \Idna::decode(\Environment::get('base'));
+							$arrCache[$strTag] = Idna::decode(Environment::get('base'));
 							break;
 
 						case 'request':
-							$arrCache[$strTag] = \Environment::get('indexFreeRequest');
+							$arrCache[$strTag] = Environment::get('indexFreeRequest');
 							break;
 
 						case 'ip':
-							$arrCache[$strTag] = \Environment::get('ip');
+							$arrCache[$strTag] = Environment::get('ip');
 							break;
 
 						case 'referer':
@@ -821,7 +821,7 @@ class InsertTags extends \Controller
 
 				// User agent
 				case 'ua':
-					$ua = \Environment::get('agent');
+					$ua = Environment::get('agent');
 
 					if ($elements[1] != '')
 					{

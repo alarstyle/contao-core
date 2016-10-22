@@ -11,6 +11,7 @@
 namespace Contao\Pages;
 
 use Contao\Config;
+use Contao\Environment;
 use Contao\Frontend;
 
 /**
@@ -47,7 +48,7 @@ class PageForward extends Frontend
 		}
 
 		$strGet = '';
-		$strQuery = \Environment::get('queryString');
+		$strQuery = Environment::get('queryString');
 		$arrQuery = array();
 
 		// Extract the query string keys (see #5867)

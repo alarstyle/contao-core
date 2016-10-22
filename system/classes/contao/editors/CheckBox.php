@@ -10,6 +10,8 @@
 
 namespace Contao\Editors;
 
+use Contao\Environment;
+use Contao\Input;
 
 /**
  * Provide methods to handle check boxes.
@@ -95,12 +97,12 @@ class CheckBox extends \Contao\Editor
 		$state = $this->Session->get('checkbox_groups');
 
 		// Toggle the checkbox group
-		if (\Input::get('cbc'))
+		if (Input::get('cbc'))
 		{
-			$state[\Input::get('cbc')] = (isset($state[\Input::get('cbc')]) && $state[\Input::get('cbc')] == 1) ? 0 : 1;
+			$state[Input::get('cbc')] = (isset($state[Input::get('cbc')]) && $state[Input::get('cbc')] == 1) ? 0 : 1;
 			$this->Session->set('checkbox_groups', $state);
 
-			$this->redirect(preg_replace('/(&(amp;)?|\?)cbc=[^& ]*/i', '', \Environment::get('request')));
+			$this->redirect(preg_replace('/(&(amp;)?|\?)cbc=[^& ]*/i', '', Environment::get('request')));
 		}
 
 		$blnFirst = true;
