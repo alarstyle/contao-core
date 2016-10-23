@@ -10,6 +10,8 @@
 
 namespace Contao;
 
+use Contao\Models\ArticleModel;
+use Contao\Models\ContentModel;
 use Contao\Models\NewsArchiveModel;
 use Contao\Models\NewsFeedModel;
 use Contao\Models\NewsModel;

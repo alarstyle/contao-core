@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Models\ArticleModel;
 
 /**
  * Front end module "article list".
@@ -27,7 +28,7 @@ class ModuleArticlenav extends AbstractModule
 
 	/**
 	 * Articles
-	 * @var \ArticleModel[]
+	 * @var ArticleModel[]
 	 */
 	protected $objArticles;
 
@@ -56,7 +57,7 @@ class ModuleArticlenav extends AbstractModule
 		/** @var \PageModel $objPage */
 		global $objPage;
 
-		$this->objArticles = \ArticleModel::findPublishedWithTeaserByPidAndColumn($objPage->id, $this->strColumn);
+		$this->objArticles = ArticleModel::findPublishedWithTeaserByPidAndColumn($objPage->id, $this->strColumn);
 
 		// Return if there are no articles
 		if ($this->objArticles === null)
@@ -72,7 +73,7 @@ class ModuleArticlenav extends AbstractModule
 				return '';
 			}
 
-			/** @var \ArticleModel $objArticle */
+			/** @var ArticleModel $objArticle */
 			$objArticle = $this->objArticles->current();
 			$strAlias = $objArticle->alias != '' ? $objArticle->alias : $objArticle->id;
 

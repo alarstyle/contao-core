@@ -66,8 +66,6 @@ ClassLoader::addClasses(array
 	'Contao\SortedIterator'            => 'system/plugins/core/library/Contao/SortedIterator.php',
 
 	// Models
-	'Contao\ArticleModel'              => 'system/plugins/core/models/ArticleModel.php',
-	'Contao\ContentModel'              => 'system/plugins/core/models/ContentModel.php',
 	'Contao\FilesModel'                => 'system/plugins/core/models/FilesModel.php',
 	'Contao\FormFieldModel'            => 'system/plugins/core/models/FormFieldModel.php',
 	'Contao\FormModel'                 => 'system/plugins/core/models/FormModel.php',

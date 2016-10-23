@@ -8,9 +8,10 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Models;
 
 use Contao\Date;
+use Contao\Model;
 
 /**
  * Reads and writes content elements
@@ -353,7 +354,7 @@ use Contao\Date;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ContentModel extends \Model
+class ContentModel extends Model
 {
 
 	/**

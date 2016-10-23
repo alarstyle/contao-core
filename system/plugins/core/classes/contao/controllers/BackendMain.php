@@ -19,6 +19,7 @@ use Contao\Environment;
 use Contao\Input;
 use Contao\Lang;
 use Contao\Message;
+use Contao\Models\ArticleModel;
 use Contao\System;
 use Contao\Versions;
 
@@ -284,7 +285,7 @@ class BackendMain extends Backend
 			// Articles
 			elseif (Input::get('do') == 'article')
 			{
-				if (($objArticle = \ArticleModel::findByPk(CURRENT_ID)) !== null)
+				if (($objArticle = ArticleModel::findByPk(CURRENT_ID)) !== null)
 				{
 					$this->Template->frontendFile = '?page=' . $objArticle->pid;
 				}

@@ -10,8 +10,10 @@
 
 namespace Contao;
 
-use Contao\Modules\AbstractModule;
 use Contao\Elements\ContentElement;
+use Contao\Models\ArticleModel;
+use Contao\Models\ContentModel;
+use Contao\Modules\AbstractModule;
 
 /**
  * Abstract parent class for Controllers
@@ -198,7 +200,7 @@ abstract class Controller extends System
 		{
 
 			// Show all articles (no else block here, see #4740)
-			$objArticles = \ArticleModel::findPublishedByPidAndColumn($objPage->id, $strColumn);
+			$objArticles = ArticleModel::findPublishedByPidAndColumn($objPage->id, $strColumn);
 
 			if ($objArticles === null)
 			{
@@ -325,7 +327,7 @@ abstract class Controller extends System
 				return '';
 			}
 
-			$objRow = \ArticleModel::findByIdOrAliasAndPid($varId, (!$blnIsInsertTag ? $objPage->id : null));
+			$objRow = ArticleModel::findByIdOrAliasAndPid($varId, (!$blnIsInsertTag ? $objPage->id : null));
 
 			if ($objRow === null)
 			{
@@ -385,7 +387,7 @@ abstract class Controller extends System
 				return '';
 			}
 
-			$objRow = \ContentModel::findByPk($intId);
+			$objRow = ContentModel::findByPk($intId);
 
 			if ($objRow === null)
 			{

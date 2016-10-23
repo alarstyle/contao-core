@@ -10,6 +10,7 @@
 
 namespace Contao\Elements;
 
+use Contao\Models\ContentModel;
 
 /**
  * Front end content element "alias".
@@ -26,7 +27,7 @@ class ContentAlias extends ContentElement
 	 */
 	public function generate()
 	{
-		$objElement = \ContentModel::findByPk($this->cteAlias);
+		$objElement = ContentModel::findByPk($this->cteAlias);
 
 		if ($objElement === null)
 		{

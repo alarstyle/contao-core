@@ -8,7 +8,7 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Models;
 
 use Contao\Date;
 
@@ -143,7 +143,7 @@ class ArticleModel extends \Model
 		}
 
 		// Create a dummy model
-		return new \ArticleModel();
+		return new ArticleModel();
 	}
 
 
@@ -213,7 +213,7 @@ class ArticleModel extends \Model
 	public static function findPublishedByPidAndColumn($intPid, $strColumn, array $arrOptions=array())
 	{
 		// Create a dummy collection
-		return static::createCollection(array( new \ArticleModel() ), static::$strTable);
+		return static::createCollection(array( new ArticleModel() ), static::$strTable);
 	}
 
 

@@ -177,7 +177,6 @@ $GLOBALS['TL_CTE'] = array
 	)
 );
 
-
 /**
  * Back end form fields
  */
@@ -437,3 +436,6 @@ $GLOBALS['TL_MODELS'] = [];
 $GLOBALS['TL_PERMISSIONS'] = [];
 
 $GLOBALS['BE_MENU'] = [];
+
+
+$GLOBALS['TL_MODELS']['tl_content'] = 'Contao\\Models\\ContentModel';

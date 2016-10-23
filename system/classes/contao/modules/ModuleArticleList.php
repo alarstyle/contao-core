@@ -11,6 +11,7 @@
 namespace Contao\Modules;
 
 use Contao\Environment;
+use Contao\Models\ArticleModel;
 
 /**
  * Front end module "article list".
@@ -86,7 +87,7 @@ class ModuleArticleList extends AbstractModule
 		}
 
 		// Get published articles
-		$objArticles = \ArticleModel::findPublishedByPidAndColumn($id, $this->inColumn);
+		$objArticles = ArticleModel::findPublishedByPidAndColumn($id, $this->inColumn);
 
 		if ($objArticles === null)
 		{

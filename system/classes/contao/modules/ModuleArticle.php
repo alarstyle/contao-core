@@ -10,6 +10,7 @@
 
 namespace Contao\Modules;
 
+use Contao\Models\ContentModel;
 
 /**
  * Provides methodes to handle articles.
@@ -70,7 +71,7 @@ class ModuleArticle extends AbstractModule
 		global $objPage;
 
 		$arrElements = array();
-		$objCte = \ContentModel::findPublishedByPidAndTable($objPage->id, 'tl_page');
+		$objCte = ContentModel::findPublishedByPidAndTable($objPage->id, 'tl_page');
 
 		if ($objCte !== null)
 		{

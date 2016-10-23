@@ -10,6 +10,8 @@
 
 namespace Contao;
 
+use Contao\Models\ArticleModel;
+use Contao\Models\NewsModel;
 
 /**
  * A static class to replace insert tags
@@ -436,40 +438,6 @@ class InsertTags extends \Controller
 					$arrCache[$strTag] = $this->replaceInsertTags($this->getForm($elements[1]), $blnCache);
 					break;
 
-				// Article
-				case 'article':
-				case 'article_open':
-				case 'article_url':
-				case 'article_title':
-					if (($objArticle = \ArticleModel::findByIdOrAlias($elements[1])) === null || ($objPid = $objArticle->getRelated('pid')) === null)
-					{
-						break;
-					}
-
-					/** @var \PageModel $objPid */
-					$strUrl = $objPid->getFrontendUrl('/articles/' . (strlen($objArticle->alias) ? $objArticle->alias : $objArticle->id));
-
-					// Replace the tag
-					switch (strtolower($elements[0]))
-					{
-						case 'article':
-							$arrCache[$strTag] = sprintf('<a href="%s" title="%s">%s</a>', $strUrl, specialchars($objArticle->title), $objArticle->title);
-							break;
-
-						case 'article_open':
-							$arrCache[$strTag] = sprintf('<a href="%s" title="%s">', $strUrl, specialchars($objArticle->title));
-							break;
-
-						case 'article_url':
-							$arrCache[$strTag] = $strUrl;
-							break;
-
-						case 'article_title':
-							$arrCache[$strTag] = specialchars($objArticle->title);
-							break;
-					}
-					break;
-
 				// FAQ
 				case 'faq':
 				case 'faq_open':
@@ -509,7 +477,7 @@ class InsertTags extends \Controller
 				case 'news_open':
 				case 'news_url':
 				case 'news_title':
-					if (($objNews = \Contao\NewsModel::findByIdOrAlias($elements[1])) === null)
+					if (($objNews = NewsModel::findByIdOrAlias($elements[1])) === null)
 					{
 						break;
 					}
@@ -530,7 +498,7 @@ class InsertTags extends \Controller
 					}
 					elseif ($objNews->source == 'article')
 					{
-						if (($objArticle = \ArticleModel::findByPk($objNews->articleId, array('eager'=>true))) !== null && ($objPid = $objArticle->getRelated('pid')) !== null)
+						if (($objArticle = ArticleModel::findByPk($objNews->articleId, array('eager'=>true))) !== null && ($objPid = $objArticle->getRelated('pid')) !== null)
 						{
 							/** @var \PageModel $objPid */
 							$strUrl = $objPid->getFrontendUrl('/articles/' . ($objArticle->alias != '' ? $objArticle->alias : $objArticle->id));
@@ -592,7 +560,7 @@ class InsertTags extends \Controller
 					}
 					elseif ($objEvent->source == 'article')
 					{
-						if (($objArticle = \ArticleModel::findByPk($objEvent->articleId, array('eager'=>true))) !== null && ($objPid = $objArticle->getRelated('pid')) !== null)
+						if (($objArticle = ArticleModel::findByPk($objEvent->articleId, array('eager'=>true))) !== null && ($objPid = $objArticle->getRelated('pid')) !== null)
 						{
 							/** @var \PageModel $objPid */
 							$strUrl = $objPid->getFrontendUrl('/articles/' . ($objArticle->alias != '' ? $objArticle->alias : $objArticle->id));
@@ -630,7 +598,7 @@ class InsertTags extends \Controller
 
 				// Article teaser
 				case 'article_teaser':
-					$objTeaser = \Contao\ArticleModel::findByIdOrAlias($elements[1]);
+					$objTeaser = ArticleModel::findByIdOrAlias($elements[1]);
 
 					if ($objTeaser !== null)
 					{

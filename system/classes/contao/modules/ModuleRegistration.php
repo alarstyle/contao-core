@@ -15,10 +15,12 @@ use Contao\Date;
 use Contao\Email;
 use Contao\Encryption;
 use Contao\Environment;
+use Contao\FrontendTemplate;
 use Contao\Idna;
 use Contao\Input;
 use Contao\StringUtil;
 use Contao\System;
+use Contao\Versions;
 
 /**
  * Front end module "registration".
@@ -99,7 +101,7 @@ class ModuleRegistration extends AbstractModule
 		}
 
 		// Activate account
-		if (\Input::get('token') != '')
+		if (Input::get('token') != '')
 		{
 			$this->activateAcount();
 
@@ -143,7 +145,7 @@ class ModuleRegistration extends AbstractModule
 				'tableless' => $this->tableless
 			);
 
-			/** @var \FormCaptcha $strClass */
+			/** @var FormCaptcha $strClass */
 			$strClass = $GLOBALS['TL_FFL']['captcha'];
 
 			// Fallback to default if the class is not defined
@@ -152,10 +154,10 @@ class ModuleRegistration extends AbstractModule
 				$strClass = 'FormCaptcha';
 			}
 
-			/** @var \FormCaptcha $objCaptcha */
+			/** @var FormCaptcha $objCaptcha */
 			$objCaptcha = new $strClass($arrCaptcha);
 
-			if (\Input::post('FORM_SUBMIT') == 'tl_registration')
+			if (Input::post('FORM_SUBMIT') == 'tl_registration')
 			{
 				$objCaptcha->validate();
 
@@ -212,7 +214,7 @@ class ModuleRegistration extends AbstractModule
 			}
 
 			// Validate input
-			if (\Input::post('FORM_SUBMIT') == 'tl_registration')
+			if (Input::post('FORM_SUBMIT') == 'tl_registration')
 			{
 				$objEditor->validate();
 				$varValue = $objEditor->value;
@@ -322,7 +324,7 @@ class ModuleRegistration extends AbstractModule
 		$this->Template->hasError = $doNotSubmit;
 
 		// Create new user if there are no errors
-		if (\Input::post('FORM_SUBMIT') == 'tl_registration' && !$doNotSubmit)
+		if (Input::post('FORM_SUBMIT') == 'tl_registration' && !$doNotSubmit)
 		{
 			$this->createNewUser($arrUser);
 		}
@@ -398,7 +400,7 @@ class ModuleRegistration extends AbstractModule
 				// Replace the wildcard
 				if (!empty($arrData['newsletter']))
 				{
-					$objChannels = Contao\Models\NewsletterChannelModel::findByIds($arrData['newsletter']);
+					$objChannels = \Contao\Models\NewsletterChannelModel::findByIds($arrData['newsletter']);
 
 					if ($objChannels !== null)
 					{
@@ -503,7 +505,7 @@ class ModuleRegistration extends AbstractModule
 
 		$this->Template = $objTemplate;
 
-		$objMember = \MemberModel::findOneByActivation(\Input::get('token'));
+		$objMember = \MemberModel::findOneByActivation(Input::get('token'));
 
 		if ($objMember === null)
 		{

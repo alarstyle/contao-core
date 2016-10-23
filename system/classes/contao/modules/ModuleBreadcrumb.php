@@ -11,6 +11,7 @@
 namespace Contao\Modules;
 
 use Contao\Environment;
+use Contao\Models\ArticleModel;
 use Contao\StringUtil;
 
 /**
@@ -165,7 +166,7 @@ class ModuleBreadcrumb extends AbstractModule
 				$strArticle = $strSection;
 			}
 
-			$objArticle = \ArticleModel::findByIdOrAlias($strArticle);
+			$objArticle = ArticleModel::findByIdOrAlias($strArticle);
 			$strAlias = $objArticle->alias != '' ? $objArticle->alias : $objArticle->id;
 
 			if ($objArticle->inColumn != 'main')

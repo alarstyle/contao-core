@@ -20,6 +20,7 @@ use Contao\Validator;
 use Contao\ContentModel;
 use Contao\PageModel;
 use Contao\FilesModel;
+use Contao\Models\ArticleModel;
 use Contao\Models\NewsArchiveModel;
 
 
@@ -342,7 +343,7 @@ abstract class ModuleNews extends AbstractModule
 
 			// Link to an article
 			case 'article':
-				if (($objArticle = \ArticleModel::findByPk($objItem->articleId, array('eager'=>true))) !== null && ($objPid = $objArticle->getRelated('pid')) !== null)
+				if (($objArticle = ArticleModel::findByPk($objItem->articleId, array('eager'=>true))) !== null && ($objPid = $objArticle->getRelated('pid')) !== null)
 				{
 					/** @var \PageModel $objPid */
 					self::$arrUrlCache[$strCacheKey] = ampersand($objPid->getFrontendUrl('/articles/' . ($objArticle->alias != '' ? $objArticle->alias : $objArticle->id)));
