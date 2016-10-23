@@ -38,8 +38,8 @@ namespace Contao;
  * @property \Contao\Database\Installer                $Installer   The database installer object
  * @property \Contao\Database\Updater                  $Updater     The database updater object
  * @property Messages                                  $Messages    The messages object
- * @property \News                                     $News        The news object
- * @property \Session                                  $Session     The session object
+ * @property News                                      $News        The news object
+ * @property Session                                   $Session     The session object
  * @property \StyleSheets                              $StyleSheets The style sheets object
  * @property \BackendTemplate|\FrontendTemplate|object $Template    The template object
  * @property \BackendUser|\FrontendUser                $User        The user object
@@ -209,9 +209,9 @@ abstract class System
 	 */
 	public static function getReferer($blnEncodeAmpersands=false, $strTable=null)
 	{
-		$ref = \Input::get('ref');
-		$key = \Input::get('popup') ? 'popupReferer' : 'referer';
-		$session = \Session::getInstance()->get($key);
+		$ref = Input::get('ref');
+		$key = Input::get('popup') ? 'popupReferer' : 'referer';
+		$session = Session::getInstance()->get($key);
 
 		// Unique referer ID
 		if ($ref && isset($session[$ref]))

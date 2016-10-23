@@ -85,7 +85,6 @@ ClassLoader::addClasses(array
 	'Contao\Model\Registry'            => 'system/plugins/core/library/Contao/Model/Registry.php',
 	'Contao\Model'                     => 'system/plugins/core/library/Contao/Model.php',
 	'Contao\PluginLoader'              => 'system/plugins/core/library/Contao/PluginLoader.php',
-	'Contao\Session'                   => 'system/plugins/core/library/Contao/Session.php',
 	'Contao\SortedIterator'            => 'system/plugins/core/library/Contao/SortedIterator.php',
 
 	// Models

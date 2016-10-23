@@ -30,7 +30,7 @@ class Session
 
 	/**
 	 * Object instance (Singleton)
-	 * @var \Session
+	 * @var Session
 	 */
 	protected static $objInstance;
 
@@ -94,7 +94,7 @@ class Session
 	/**
 	 * Return the object instance (Singleton)
 	 *
-	 * @return \Session The object instance
+	 * @return Session The object instance
 	 */
 	public static function getInstance()
 	{

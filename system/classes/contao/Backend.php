@@ -824,7 +824,7 @@ abstract class Backend extends Controller
 	 */
 	public static function addPagesBreadcrumb($strKey='tl_page_node')
 	{
-		$objSession = \Session::getInstance();
+		$objSession = Session::getInstance();
 
 		// Set a new node
 		if (isset($_GET['pn']))
@@ -980,7 +980,7 @@ abstract class Backend extends Controller
 	 */
 	public static function addFilesBreadcrumb($strKey='tl_files_node')
 	{
-		$objSession = \Session::getInstance();
+		$objSession = Session::getInstance();
 
 		// Set a new node
 		if (isset($_GET['fn']))
