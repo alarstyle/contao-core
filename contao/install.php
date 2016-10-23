@@ -21,5 +21,5 @@ require dirname(__DIR__) . '/system/initialize.php';
 error_reporting(Config::get('errorReporting'));
 
 // Run the controller
-$controller = new BackendInstall;
+$controller = new \Contao\Controllers\BackendInstall;
 $controller->run();

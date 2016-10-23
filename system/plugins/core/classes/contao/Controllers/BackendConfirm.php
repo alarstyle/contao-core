@@ -8,10 +8,13 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Controllers;
 
+use Contao\Backend;
+use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\Environment;
+use Contao\System;
 
 /**
  * Confirm an invalid token URL.
@@ -37,8 +40,8 @@ class BackendConfirm extends Backend
 
 		$this->User->authenticate();
 
-		\System::loadLanguageFile('default');
-		\System::loadLanguageFile('modules');
+		System::loadLanguageFile('default');
+		System::loadLanguageFile('modules');
 	}
 
 
@@ -105,7 +108,7 @@ class BackendConfirm extends Backend
 			}
 		}
 
-		\System::loadLanguageFile($arrInfo['table']);
+		System::loadLanguageFile($arrInfo['table']);
 
 		// Override the action label
 		if (isset($arrInfo['clipboard']))
@@ -141,7 +144,7 @@ class BackendConfirm extends Backend
 		$objTemplate->explain = $GLOBALS['TL_LANG']['ERR']['invalidTokenUrl'];
 		$objTemplate->cancel = $GLOBALS['TL_LANG']['MSC']['cancelBT'];
 		$objTemplate->continue = $GLOBALS['TL_LANG']['MSC']['continue'];
-		$objTemplate->theme = \Backend::getTheme();
+		$objTemplate->theme = Backend::getTheme();
 		$objTemplate->base = Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($GLOBALS['TL_LANG']['MSC']['invalidTokenUrl']);

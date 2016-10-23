@@ -8,10 +8,18 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Controllers;
 
+use Contao\Ajax;
+use Contao\Backend;
+use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\Environment;
+use Contao\Input;
+use Contao\Model;
+use Contao\StringUtil;
+use Contao\System;
+use Contao\Validator;
 
 /**
  * Back end file picker.
@@ -43,7 +51,7 @@ class BackendFile extends Backend
 		parent::__construct();
 
 		$this->User->authenticate();
-		\System::loadLanguageFile('default');
+		System::loadLanguageFile('default');
 	}
 
 
@@ -59,15 +67,15 @@ class BackendFile extends Backend
 		// Ajax request
 		if ($_POST && Environment::get('isAjaxRequest'))
 		{
-			$this->objAjax = new \Ajax(\Input::post('action'));
+			$this->objAjax = new Ajax(Input::post('action'));
 			$this->objAjax->executePreActions();
 		}
 
-		$strTable = \Input::get('table');
-		$strField = \Input::get('field');
+		$strTable = Input::get('table');
+		$strField = Input::get('field');
 
 		// Define the current ID
-		define('CURRENT_ID', (\Input::get('table') ? $this->Session->get('CURRENT_ID') : \Input::get('id')));
+		define('CURRENT_ID', (Input::get('table') ? $this->Session->get('CURRENT_ID') : Input::get('id')));
 
 		$this->loadDataContainer($strTable);
 		$strDriver = 'DC_' . $GLOBALS['TL_DCA'][$strTable]['config']['dataContainer'];
@@ -78,11 +86,11 @@ class BackendFile extends Backend
 		if ($this->Database->tableExists($strTable))
 		{
 			/** @var \Model $strModel */
-			$strModel = \Model::getClassFromTable($strTable);
+			$strModel = Model::getClassFromTable($strTable);
 
 			if (class_exists($strModel))
 			{
-				$objModel = $strModel::findByPk(\Input::get('id'));
+				$objModel = $strModel::findByPk(Input::get('id'));
 
 				if ($objModel !== null)
 				{
@@ -98,7 +106,7 @@ class BackendFile extends Backend
 		}
 
 		$this->Session->set('filePickerRef', Environment::get('request'));
-		$arrValues = array_filter(explode(',', \Input::get('value')));
+		$arrValues = array_filter(explode(',', Input::get('value')));
 
 		// Convert UUIDs to binary
 		foreach ($arrValues as $k=>$v)
@@ -134,7 +142,7 @@ class BackendFile extends Backend
 		$objFileTree = new $strClass($strClass::getAttributesFromDca($GLOBALS['TL_DCA'][$strTable]['fields'][$strField], $strField, $arrValues, $strField, $strTable, $objDca));
 
 		$objTemplate->main = $objFileTree->generate();
-		$objTemplate->theme = \Backend::getTheme();
+		$objTemplate->theme = Backend::getTheme();
 		$objTemplate->base = Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($GLOBALS['TL_LANG']['MSC']['filepicker']);
@@ -151,7 +159,7 @@ class BackendFile extends Backend
 			$objTemplate->managerHref = 'contao/main.php?do=files&amp;popup=1';
 		}
 
-		if (\Input::get('switch') && $this->User->hasAccess('page', 'modules'))
+		if (Input::get('switch') && $this->User->hasAccess('page', 'modules'))
 		{
 			$objTemplate->switch = $GLOBALS['TL_LANG']['MSC']['pagePicker'];
 			$objTemplate->switchHref = str_replace('contao/file.php', 'contao/page.php', ampersand(Environment::get('request')));

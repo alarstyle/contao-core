@@ -235,7 +235,7 @@ class Config
 
         // Make sure the file has been written (see #4483)
         if (!filesize(TL_ROOT . '/system/tmp/' . $strTemp)) {
-            \System::log('The local configuration file could not be written. Have your reached your quota limit?', __METHOD__, TL_ERROR);
+            System::log('The local configuration file could not be written. Have your reached your quota limit?', __METHOD__, TL_ERROR);
 
             return;
         }

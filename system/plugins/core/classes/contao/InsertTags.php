@@ -214,7 +214,7 @@ class InsertTags extends \Controller
 							break;
 					}
 
-					\System::loadLanguageFile($file);
+					System::loadLanguageFile($file);
 
 					if (count($keys) == 2)
 					{
@@ -974,7 +974,7 @@ class InsertTags extends \Controller
 						// Picture
 						else
 						{
-							$picture = \Picture::create($strFile, array(0, 0, $size))->getTemplateData();
+							$picture = Picture::create($strFile, array(0, 0, $size))->getTemplateData();
 							$picture['alt'] = $alt;
 							$picture['class'] = $class;
 							$pictureTemplate = new FrontendTemplate($strTemplate);
@@ -1122,7 +1122,7 @@ class InsertTags extends \Controller
 							break;
 
 						case 'readable_size':
-							$arrCache[$strTag] = \System::getReadableSize($arrCache[$strTag]);
+							$arrCache[$strTag] = System::getReadableSize($arrCache[$strTag]);
 							break;
 
 						case 'flatten':

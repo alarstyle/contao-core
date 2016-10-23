@@ -14,6 +14,7 @@ use Contao\Config;
 use Contao\Database;
 use Contao\Date;
 use Contao\Environment;
+use Contao\System;
 
 /**
  * Reads and writes pages
@@ -855,7 +856,7 @@ class PageModel extends \Model
 		elseif (TL_MODE == 'FE' && $this->type != 'root')
 		{
 			header('HTTP/1.1 404 Not Found');
-			\System::log('Page ID "'. $this->id .'" does not belong to a root page', __METHOD__, TL_ERROR);
+			System::log('Page ID "'. $this->id .'" does not belong to a root page', __METHOD__, TL_ERROR);
 			die_nicely('be_no_root', 'No root page found');
 		}
 

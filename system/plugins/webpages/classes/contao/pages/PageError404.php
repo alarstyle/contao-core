@@ -13,6 +13,7 @@ namespace Contao\Pages;
 use Contao\Config;
 use Contao\Environment;
 use Contao\Frontend;
+use Contao\Search;
 
 /**
  * Provide methods to handle an error 404 page.
@@ -47,7 +48,7 @@ class PageError404 extends Frontend
 		}
 
 		// Check the search index (see #3761)
-		\Search::removeEntry(Environment::get('base') . Environment::get('request'));
+		Search::removeEntry(Environment::get('base') . Environment::get('request'));
 
 		// Find the matching root page
 		$objRootPage = $this->getRootPageFromUrl();

@@ -417,7 +417,7 @@ class Versions extends Controller
 			// Only continue if both version numbers are set
 			if ($intTo > 0 && $intFrom > 0)
 			{
-				\System::loadLanguageFile($this->strTable);
+				System::loadLanguageFile($this->strTable);
 				$this->loadDataContainer($this->strTable);
 
 				// Get the order fields

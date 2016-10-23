@@ -67,7 +67,7 @@ $GLOBALS['TL_DCA']['tl_settings'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['timeZone'],
 			'inputType'               => 'select',
-			'options'                 => System::getTimeZones(),
+			'options'                 => \Contao\System::getTimeZones(),
 			'eval'                    => array('chosen'=>true, 'tl_class'=>'w50')
 		),
 		'adminEmail' => array
@@ -530,14 +530,14 @@ class tl_settings extends Contao\Backend
 				{
 					if ($blnActive)
 					{
-						$blnPurgeCache = System::disableModule($strModule);
+						$blnPurgeCache = \Contao\System::disableModule($strModule);
 					}
 				}
 				else
 				{
 					if (!$blnActive)
 					{
-						$blnPurgeCache = System::enableModule($strModule);
+						$blnPurgeCache = \Contao\System::enableModule($strModule);
 					}
 				}
 			}
@@ -589,7 +589,7 @@ class tl_settings extends Contao\Backend
 
 		// Add the help text
 		$return .= '
-  </fieldset>' . (Config::get('showHelp') ? '
+  </fieldset>' . (\Contao\Config::get('showHelp') ? '
   <p class="tl_help tl_tip">' . $GLOBALS['TL_LANG']['tl_settings'][$dc->field][1] . '</p>' : '') . '
 </div>';
 
@@ -606,7 +606,7 @@ class tl_settings extends Contao\Backend
 	 */
 	public function changeCoreOnlyMode($varValue)
 	{
-		if ($varValue != Config::get('coreOnlyMode'))
+		if ($varValue != \Contao\Config::get('coreOnlyMode'))
 		{
 			$this->import('Contao\\Automator', 'Automator');
 			$this->Automator->purgeInternalCache();
@@ -723,7 +723,7 @@ class tl_settings extends Contao\Backend
 	 */
 	public function purgeInternalCache($varValue)
 	{
-		if ($varValue && $varValue !== Config::get('bypassCache'))
+		if ($varValue && $varValue !== \Contao\Config::get('bypassCache'))
 		{
 			$this->import('Contao\\Automator', 'Automator');
 			$this->Automator->purgeInternalCache();

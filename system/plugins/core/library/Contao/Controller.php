@@ -32,7 +32,7 @@ use Contao\Modules\AbstractModule;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-abstract class Controller extends \System
+abstract class Controller extends System
 {
 
 	/**
@@ -494,7 +494,7 @@ abstract class Controller extends \System
 	 */
 	protected function getSpellcheckerString()
 	{
-		\System::loadLanguageFile('languages');
+		System::loadLanguageFile('languages');
 
 		$return = array();
 		$langs = scan(TL_ROOT . '/system/plugins/core/languages');
@@ -1449,8 +1449,8 @@ abstract class Controller extends \System
 
 		try
 		{
-			$src = \Image::create($arrItem['singleSRC'], $size)->executeResize()->getResizedPath();
-			$picture = \Picture::create($arrItem['singleSRC'], $size)->getTemplateData();
+			$src = Image::create($arrItem['singleSRC'], $size)->executeResize()->getResizedPath();
+			$picture = Picture::create($arrItem['singleSRC'], $size)->getTemplateData();
 
 			if ($src !== $arrItem['singleSRC'])
 			{
@@ -1459,7 +1459,7 @@ abstract class Controller extends \System
 		}
 		catch (\Exception $e)
 		{
-			\System::log('Image "' . $arrItem['singleSRC'] . '" could not be processed: ' . $e->getMessage(), __METHOD__, TL_ERROR);
+			System::log('Image "' . $arrItem['singleSRC'] . '" could not be processed: ' . $e->getMessage(), __METHOD__, TL_ERROR);
 
 			$src = '';
 			$picture = array('img'=>array('src'=>'', 'srcset'=>''), 'sources'=>array());
@@ -1506,7 +1506,7 @@ abstract class Controller extends \System
 					// Do not add the TL_FILES_URL to external URLs (see #4923)
 					if (strncmp($arrItem['imageUrl'], 'http://', 7) !== 0 && strncmp($arrItem['imageUrl'], 'https://', 8) !== 0)
 					{
-						$objTemplate->$strHrefKey = TL_FILES_URL . \System::urlEncode($arrItem['imageUrl']);
+						$objTemplate->$strHrefKey = TL_FILES_URL . System::urlEncode($arrItem['imageUrl']);
 					}
 
 					$objTemplate->attributes = ' data-lightbox="' . substr($strLightboxId, 9, -1) . '"';
@@ -1521,7 +1521,7 @@ abstract class Controller extends \System
 		// Fullsize view
 		elseif ($arrItem['fullsize'] && TL_MODE == 'FE')
 		{
-			$objTemplate->$strHrefKey = TL_FILES_URL . \System::urlEncode($arrItem['singleSRC']);
+			$objTemplate->$strHrefKey = TL_FILES_URL . System::urlEncode($arrItem['singleSRC']);
 			$objTemplate->attributes = ' data-lightbox="' . substr($strLightboxId, 9, -1) . '"';
 		}
 
@@ -1614,7 +1614,7 @@ abstract class Controller extends \System
 					$strHref = preg_replace('/(&(amp;)?|\?)file=[^&]+/', '', $strHref);
 				}
 
-				$strHref .= (strpos($strHref, '?') !== false ? '&amp;' : '?') . 'file=' . \System::urlEncode($objFiles->path);
+				$strHref .= (strpos($strHref, '?') !== false ? '&amp;' : '?') . 'file=' . System::urlEncode($objFiles->path);
 
 				$arrMeta = Frontend::getMetaData($objFiles->meta, $objPage->language);
 

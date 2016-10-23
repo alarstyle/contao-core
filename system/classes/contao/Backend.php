@@ -358,7 +358,7 @@ abstract class Backend extends Controller
 			}
 
 			// Load the language and DCA file
-			\System::loadLanguageFile($strTable);
+			System::loadLanguageFile($strTable);
 			$this->loadDataContainer($strTable);
 
 			// Include all excluded fields which are allowed for the current user
@@ -771,7 +771,7 @@ abstract class Backend extends Controller
 				{
 					foreach ($GLOBALS['TL_HOOKS']['addFileMetaInformationToRequest'] as $callback)
 					{
-						if (($val = \System::importStatic($callback[0])->{$callback[1]}($strPtable, $intPid)) !== false)
+						if (($val = System::importStatic($callback[0])->{$callback[1]}($strPtable, $intPid)) !== false)
 						{
 							$objPage = $val;
 						}
@@ -909,15 +909,15 @@ abstract class Backend extends Controller
 		{
 			$objSession->set($strKey, 0);
 
-			\System::log('Page ID '.$intNode.' was not mounted', __METHOD__, TL_ERROR);
-			\Controller::redirect('contao/main.php?act=error');
+			System::log('Page ID '.$intNode.' was not mounted', __METHOD__, TL_ERROR);
+			Controller::redirect('contao/main.php?act=error');
 		}
 
 		// Limit tree
 		$GLOBALS['TL_DCA']['tl_page']['list']['sorting']['root'] = array($intNode);
 
 		// Add root link
-		$arrLinks[] = \Image::getHtml('pagemounts.gif') . ' <a href="' . \Controller::addToUrl('pn=0') . '" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['selectAllNodes']).'">' . $GLOBALS['TL_LANG']['MSC']['filterAll'] . '</a>';
+		$arrLinks[] = \Image::getHtml('pagemounts.gif') . ' <a href="' . Controller::addToUrl('pn=0') . '" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['selectAllNodes']).'">' . $GLOBALS['TL_LANG']['MSC']['filterAll'] . '</a>';
 		$arrLinks = array_reverse($arrLinks);
 
 		// Insert breadcrumb menu

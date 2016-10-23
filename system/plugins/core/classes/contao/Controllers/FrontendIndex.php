@@ -8,12 +8,14 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Controllers;
 
 use Contao\Config;
 use Contao\Environment;
+use Contao\Frontend;
 use Contao\Input;
 use Contao\StringUtil;
+use Contao\System;
 
 /**
  * Main front end controller.
@@ -475,7 +477,7 @@ class FrontendIndex extends Frontend
 		$this->Session->setData($session);
 
 		// Load the default language file (see #2644)
-		\System::loadLanguageFile('default');
+		System::loadLanguageFile('default');
 
 		// Replace the insert tags and then re-replace the request_token tag in case a form element has been loaded via insert tag
 		$strBuffer = $this->replaceInsertTags($strBuffer, false);

@@ -8,10 +8,15 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Controllers;
 
+use Contao\Ajax;
+use Contao\Backend;
+use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\Environment;
+use Contao\Input;
+use Contao\System;
 
 /**
  * Back end page picker.
@@ -43,7 +48,7 @@ class BackendPage extends Backend
 		parent::__construct();
 
 		$this->User->authenticate();
-		\System::loadLanguageFile('default');
+		System::loadLanguageFile('default');
 	}
 
 
@@ -67,7 +72,7 @@ class BackendPage extends Backend
 		$strField = Input::get('field');
 
 		// Define the current ID
-		define('CURRENT_ID', (\Input::get('table') ? $this->Session->get('CURRENT_ID') : \Input::get('id')));
+		define('CURRENT_ID', (Input::get('table') ? $this->Session->get('CURRENT_ID') : Input::get('id')));
 
 		$this->loadDataContainer($strTable);
 		$strDriver = 'DC_' . $GLOBALS['TL_DCA'][$strTable]['config']['dataContainer'];
@@ -82,7 +87,7 @@ class BackendPage extends Backend
 
 			if (class_exists($strModel))
 			{
-				$objModel = $strModel::findByPk(\Input::get('id'));
+				$objModel = $strModel::findByPk(Input::get('id'));
 
 				if ($objModel !== null)
 				{
@@ -98,7 +103,7 @@ class BackendPage extends Backend
 		}
 
 		$this->Session->set('filePickerRef', Environment::get('request'));
-		$arrValues = array_filter(explode(',', \Input::get('value')));
+		$arrValues = array_filter(explode(',', Input::get('value')));
 
 		// Call the load_callback
 		if (is_array($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['load_callback']))
@@ -124,7 +129,7 @@ class BackendPage extends Backend
 		$objPageTree = new $strClass($strClass::getAttributesFromDca($GLOBALS['TL_DCA'][$strTable]['fields'][$strField], $strField, $arrValues, $strField, $strTable, $objDca));
 
 		$objTemplate->main = $objPageTree->generate();
-		$objTemplate->theme = \Backend::getTheme();
+		$objTemplate->theme = Backend::getTheme();
 		$objTemplate->base = Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker']);
@@ -141,7 +146,7 @@ class BackendPage extends Backend
 			$objTemplate->managerHref = 'contao/main.php?do=page&amp;popup=1';
 		}
 
-		if (\Input::get('switch') && $this->User->hasAccess('files', 'modules'))
+		if (Input::get('switch') && $this->User->hasAccess('files', 'modules'))
 		{
 			$objTemplate->switch = $GLOBALS['TL_LANG']['MSC']['filePicker'];
 			$objTemplate->switchHref = str_replace('contao/page.php', 'contao/file.php', ampersand(Environment::get('request')));

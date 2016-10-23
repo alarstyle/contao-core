@@ -14,6 +14,7 @@ use \Contao\BackendTemplate;
 use \Contao\Encryption;
 use \Contao\Environment;
 use \Contao\Message;
+use \Contao\System;
 
 /**
  * Front end module "change password".
@@ -73,7 +74,7 @@ class ModuleChangePassword extends AbstractModule
 
 		$GLOBALS['TL_LANGUAGE'] = $objPage->language;
 
-		\System::loadLanguageFile('tl_member');
+		System::loadLanguageFile('tl_member');
 		$this->loadDataContainer('tl_member');
 
 		// Old password editor

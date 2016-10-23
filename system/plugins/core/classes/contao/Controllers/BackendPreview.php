@@ -8,11 +8,14 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Controllers;
 
+use Contao\Backend;
+use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\Environment;
 use Contao\Input;
+use Contao\System;
 
 /**
  * Set up the front end preview frames.
@@ -37,7 +40,7 @@ class BackendPreview extends Backend
 		parent::__construct();
 
 		$this->User->authenticate();
-		\System::loadLanguageFile('default');
+		System::loadLanguageFile('default');
 	}
 
 
@@ -69,7 +72,7 @@ class BackendPreview extends Backend
 		}
 
 		// Switch to a particular member (see #6546)
-		if (\Input::get('user') && $this->User->isAdmin)
+		if (Input::get('user') && $this->User->isAdmin)
 		{
 			$objUser = \MemberModel::findByUsername(Input::get('user'));
 

@@ -8,8 +8,10 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Controllers;
 
+use Contao\Frontend;
+use Contao\Input;
 
 /**
  * Share a page via a social network.
@@ -24,21 +26,21 @@ class FrontendShare extends Frontend
 	 */
 	public function run()
 	{
-		switch (\Input::get('p'))
+		switch (Input::get('p'))
 		{
 			case 'facebook':
-				$query  = '?u=' . rawurlencode(\Input::get('u', true));
+				$query  = '?u=' . rawurlencode(Input::get('u', true));
 				header('Location: https://www.facebook.com/sharer/sharer.php' . $query);
 				exit; break;
 
 			case 'twitter':
-				$query  = '?url=' . rawurlencode(\Input::get('u', true));
-				$query .= '&text=' . rawurlencode(\Input::get('t', true));
+				$query  = '?url=' . rawurlencode(Input::get('u', true));
+				$query .= '&text=' . rawurlencode(Input::get('t', true));
 				header('Location: https://twitter.com/intent/tweet' . $query);
 				exit; break;
 
 			case 'gplus':
-				$query  = '?url=' . rawurlencode(\Input::get('u', true));
+				$query  = '?url=' . rawurlencode(Input::get('u', true));
 				header('Location: https://plus.google.com/share' . $query);
 				exit; break;
 

@@ -17,5 +17,5 @@ require_once __DIR__ . '/system/initialize.php';
 
 
 // Run the controller
-$controller = new FrontendIndex;
+$controller = new \Contao\Controllers\FrontendIndex;
 $controller->run();

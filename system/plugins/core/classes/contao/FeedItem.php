@@ -128,7 +128,7 @@ class FeedItem
 
 		$this->arrData['enclosure'][] = array
 		(
-			'url' => $strUrl . \System::urlEncode($strFile),
+			'url' => $strUrl . System::urlEncode($strFile),
 			'length' => $objFile->size,
 			'type' => $objFile->mime
 		);

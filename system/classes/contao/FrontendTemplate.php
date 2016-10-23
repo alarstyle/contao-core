@@ -317,7 +317,7 @@ class FrontendTemplate extends Template
 						'language' => $objPage->language
 					);
 
-					\Search::indexPage($arrData);
+					Search::indexPage($arrData);
 				}
 			}
 		}

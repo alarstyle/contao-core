@@ -235,7 +235,7 @@ $GLOBALS['TL_DCA']['tl_content'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_content']['size'],
 			'exclude'                 => true,
 			'inputType'               => 'imageSize',
-			'options'                 => System::getImageSizes(),
+			'options'                 => \Contao\System::getImageSizes(),
 			'reference'               => &$GLOBALS['TL_LANG']['MSC'],
 			'eval'                    => array('rgxp'=>'natural', 'includeBlankOption'=>true, 'nospace'=>true, 'helpwizard'=>true, 'tl_class'=>'w50'),
 			'sql'                     => "varchar(64) NOT NULL default ''"
@@ -1330,7 +1330,7 @@ class tl_content extends Contao\Backend
 		// Edit the result
 		if ($objArticle->numRows)
 		{
-			System::loadLanguageFile('tl_article');
+			\Contao\System::loadLanguageFile('tl_article');
 
 			while ($objArticle->next())
 			{

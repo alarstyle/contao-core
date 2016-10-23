@@ -8,9 +8,11 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Controllers;
 
 use Contao\Config;
+use Contao\File;
+use Contao\Frontend;
 
 /**
  * Command scheduler controller.
@@ -159,6 +161,6 @@ class FrontendCron extends Frontend
 	 */
 	protected function updateCronTxt($time)
 	{
-		\File::putContent('system/cron/cron.txt', $time);
+		File::putContent('system/cron/cron.txt', $time);
 	}
 }

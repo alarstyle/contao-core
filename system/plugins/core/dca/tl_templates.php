@@ -12,7 +12,7 @@
 /**
  * Load default language file
  */
-System::loadLanguageFile('tl_files');
+\Contao\System::loadLanguageFile('tl_files');
 
 
 /**

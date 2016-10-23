@@ -539,7 +539,7 @@ $GLOBALS['TL_DCA']['tl_module'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_module']['imgSize'],
 			'exclude'                 => true,
 			'inputType'               => 'imageSize',
-			'options'                 => System::getImageSizes(),
+			'options'                 => \Contao\System::getImageSizes(),
 			'reference'               => &$GLOBALS['TL_LANG']['MSC'],
 			'eval'                    => array('rgxp'=>'natural', 'includeBlankOption'=>true, 'nospace'=>true, 'helpwizard'=>true, 'tl_class'=>'w50'),
 			'sql'                     => "varchar(64) NOT NULL default ''"
@@ -832,7 +832,7 @@ class tl_module extends Contao\Backend
 	{
 		$return = array();
 
-		System::loadLanguageFile('tl_member');
+		\Contao\System::loadLanguageFile('tl_member');
 		$this->loadDataContainer('tl_member');
 
 		foreach ($GLOBALS['TL_DCA']['tl_member']['fields'] as $k=>$v)

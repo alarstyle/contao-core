@@ -12,6 +12,7 @@ namespace Contao\Modules;
 
 use Contao\Config;
 use Contao\Date;
+use Contao\Pagination;
 
 /**
  * Front end module "rss reader".
@@ -151,7 +152,7 @@ class ModuleRssReader extends AbstractModule
 			$offset = (($page - 1) * $this->perPage);
 			$limit = $this->perPage + $offset;
 
-			$objPagination = new \Pagination(count($arrItems), $this->perPage, Config::get('maxPaginationLinks'), $id);
+			$objPagination = new Pagination(count($arrItems), $this->perPage, Config::get('maxPaginationLinks'), $id);
 			$this->Template->pagination = $objPagination->generate("\n  ");
 		}
 

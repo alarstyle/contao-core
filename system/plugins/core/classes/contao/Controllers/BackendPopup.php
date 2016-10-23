@@ -8,12 +8,18 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Controllers;
 
+use Contao\Backend;
+use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\Date;
+use Contao\Dbafs;
 use Contao\Environment;
+use Contao\Folder;
+use Contao\Input;
 use Contao\StringUtil;
+use Contao\System;
 
 /**
  * Pop-up file preview (file manager).
@@ -45,9 +51,9 @@ class BackendPopup extends Backend
 		parent::__construct();
 
 		$this->User->authenticate();
-		\System::loadLanguageFile('default');
+		System::loadLanguageFile('default');
 
-		$strFile = \Input::get('src', true);
+		$strFile = Input::get('src', true);
 		$strFile = base64_decode($strFile);
 		$strFile = preg_replace('@^/+@', '', rawurldecode($strFile));
 
@@ -90,7 +96,7 @@ class BackendPopup extends Backend
 		}
 
 		// Open the download dialogue
-		if (\Input::get('download'))
+		if (Input::get('download'))
 		{
 			$objFile = new \File($this->strFile, true);
 			$objFile->sendToBrowser();
@@ -102,9 +108,9 @@ class BackendPopup extends Backend
 		// Add the resource (see #6880)
 		if (($objModel = \FilesModel::findByPath($this->strFile)) === null)
 		{
-			if (\Dbafs::shouldBeSynchronized($this->strFile))
+			if (Dbafs::shouldBeSynchronized($this->strFile))
 			{
-				$objModel = \Dbafs::addResource($this->strFile);
+				$objModel = Dbafs::addResource($this->strFile);
 			}
 		}
 
@@ -116,7 +122,7 @@ class BackendPopup extends Backend
 		// Add the file info
 		if (is_dir(TL_ROOT . '/' . $this->strFile))
 		{
-			$objFile = new \Folder($this->strFile, true);
+			$objFile = new Folder($this->strFile, true);
 			$objTemplate->filesize = $this->getReadableSize($objFile->size) . ' (' . number_format($objFile->size, 0, $GLOBALS['TL_LANG']['MSC']['decimalSeparator'], $GLOBALS['TL_LANG']['MSC']['thousandsSeparator']) . ' Byte)';
 		}
 		else
@@ -142,7 +148,7 @@ class BackendPopup extends Backend
 		$objTemplate->mtime = Date::parse(Config::get('datimFormat'), $objFile->mtime);
 		$objTemplate->atime = Date::parse(Config::get('datimFormat'), $objFile->atime);
 		$objTemplate->path = specialchars($this->strFile);
-		$objTemplate->theme = \Backend::getTheme();
+		$objTemplate->theme = Backend::getTheme();
 		$objTemplate->base = Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($this->strFile);

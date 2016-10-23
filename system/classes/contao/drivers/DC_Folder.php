@@ -19,6 +19,7 @@ use Contao\Input;
 use Contao\Message;
 use Contao\RequestToken;
 use Contao\StringUtil;
+use Contao\System;
 use Contao\Versions;
 
 
@@ -1342,7 +1343,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 			if (\Input::post('saveNclose'))
 			{
 				Message::reset();
-				\System::setCookie('BE_PAGE_OFFSET', 0, 0);
+				System::setCookie('BE_PAGE_OFFSET', 0, 0);
 				$this->redirect($this->getReferer());
 			}
 
@@ -1621,7 +1622,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 			{
 				if (\Input::post('saveNclose'))
 				{
-					\System::setCookie('BE_PAGE_OFFSET', 0, 0);
+					System::setCookie('BE_PAGE_OFFSET', 0, 0);
 					$this->redirect($this->getReferer());
 				}
 
@@ -1814,7 +1815,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 
 			if (\Input::post('saveNclose'))
 			{
-				\System::setCookie('BE_PAGE_OFFSET', 0, 0);
+				System::setCookie('BE_PAGE_OFFSET', 0, 0);
 				$this->redirect($this->getReferer());
 			}
 
@@ -2220,7 +2221,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 </div>
 '.Message::generate().'
 <div id="sync-results">
-  <p class="left">' . sprintf($GLOBALS['TL_LANG']['tl_files']['syncResult'], \System::getFormattedNumber($arrCounts['Added'], 0), \System::getFormattedNumber($arrCounts['Changed'], 0), \System::getFormattedNumber($arrCounts['Unchanged'], 0), \System::getFormattedNumber($arrCounts['Moved'], 0), \System::getFormattedNumber($arrCounts['Deleted'], 0)) . '</p>
+  <p class="left">' . sprintf($GLOBALS['TL_LANG']['tl_files']['syncResult'], System::getFormattedNumber($arrCounts['Added'], 0), System::getFormattedNumber($arrCounts['Changed'], 0), System::getFormattedNumber($arrCounts['Unchanged'], 0), System::getFormattedNumber($arrCounts['Moved'], 0), System::getFormattedNumber($arrCounts['Deleted'], 0)) . '</p>
   <p class="right"><input type="checkbox" id="show-hidden" class="tl_checkbox" onclick="Backend.toggleUnchanged()"> <label for="show-hidden">' . $GLOBALS['TL_LANG']['tl_files']['syncShowUnchanged'] . '</label></p>
   <div class="clear"></div>
 </div>

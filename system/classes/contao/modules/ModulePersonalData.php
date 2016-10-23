@@ -14,6 +14,7 @@ use Contao\Date;
 use Contao\Encryption;
 use Contao\Environment;
 use Contao\Message;
+use Contao\System;
 
 /**
  * Front end module "personal data".
@@ -77,7 +78,7 @@ class ModulePersonalData extends AbstractModule
 
 		$GLOBALS['TL_LANGUAGE'] = $objPage->language;
 
-		\System::loadLanguageFile('tl_member');
+		System::loadLanguageFile('tl_member');
 		$this->loadDataContainer('tl_member');
 
 		// Call onload_callback (e.g. to check permissions)

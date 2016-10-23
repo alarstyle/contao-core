@@ -14,6 +14,7 @@ use Contao\Email;
 use Contao\Environment;
 use Contao\Idna;
 use Contao\StringUtil;
+use Contao\System;
 
 /**
  * Front end module "lost password".
@@ -65,7 +66,7 @@ class ModulePassword extends AbstractModule
 
 		$GLOBALS['TL_LANGUAGE'] = $objPage->language;
 
-		\System::loadLanguageFile('tl_member');
+		System::loadLanguageFile('tl_member');
 		$this->loadDataContainer('tl_member');
 
 		// Set new password

@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\System;
 
 /**
  * Front end content element "table".
@@ -57,7 +58,7 @@ class ContentTable extends \ContentElement
 
 					if (\Input::cookie($co) == '')
 					{
-						\System::setCookie($co, $i . '|' . $so, 0);
+						System::setCookie($co, $i . '|' . $so, 0);
 					}
 				}
 

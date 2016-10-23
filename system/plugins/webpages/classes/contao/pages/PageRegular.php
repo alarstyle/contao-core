@@ -14,6 +14,7 @@ use Contao\Config;
 use Contao\Environment;
 use Contao\Frontend;
 use Contao\FrontendTemplate;
+use Contao\System;
 use Contao\Template;
 
 /**
@@ -35,7 +36,7 @@ class PageRegular extends Frontend
 		$GLOBALS['TL_KEYWORDS'] = '';
 		$GLOBALS['TL_LANGUAGE'] = $objPage->language;
 
-		\System::loadLanguageFile('default');
+		System::loadLanguageFile('default');
 
 		// Static URLs
 		$this->setStaticUrls();

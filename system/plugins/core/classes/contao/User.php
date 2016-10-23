@@ -102,7 +102,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-abstract class User extends \System
+abstract class User extends System
 {
 
 	/**
@@ -301,7 +301,7 @@ abstract class User extends \System
 	 */
 	public function login()
 	{
-		\System::loadLanguageFile('default');
+		System::loadLanguageFile('default');
 
 		// Do not continue if username or password are missing
 		if (empty($_POST['username']) || empty($_POST['password']))

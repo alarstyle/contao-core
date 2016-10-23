@@ -402,11 +402,11 @@ class Image
 		{
 			foreach ($GLOBALS['TL_HOOKS']['executeResize'] as $callback)
 			{
-				$return = \System::importStatic($callback[0])->{$callback[1]}($this);
+				$return = System::importStatic($callback[0])->{$callback[1]}($this);
 
 				if (is_string($return))
 				{
-					$this->resizedPath = \System::urlEncode($return);
+					$this->resizedPath = System::urlEncode($return);
 
 					return $this;
 				}
@@ -431,12 +431,12 @@ class Image
 					\Files::getInstance()->copy($this->getOriginalPath(), $this->getTargetPath());
 				}
 
-				$this->resizedPath = \System::urlEncode($this->getTargetPath());
+				$this->resizedPath = System::urlEncode($this->getTargetPath());
 
 				return $this;
 			}
 
-			$this->resizedPath = \System::urlEncode($this->getOriginalPath());
+			$this->resizedPath = System::urlEncode($this->getOriginalPath());
 
 			return $this;
 		}
@@ -449,7 +449,7 @@ class Image
 			{
 				if (file_exists(TL_ROOT . '/' . $this->getTargetPath()) && $this->fileObj->mtime <= filemtime(TL_ROOT . '/' . $this->getTargetPath()))
 				{
-					$this->resizedPath = \System::urlEncode($this->getTargetPath());
+					$this->resizedPath = System::urlEncode($this->getTargetPath());
 
 					return $this;
 				}
@@ -462,12 +462,12 @@ class Image
 				if ($this->getTargetPath())
 				{
 					\Files::getInstance()->copy($this->getCacheName(), $this->getTargetPath());
-					$this->resizedPath = \System::urlEncode($this->getTargetPath());
+					$this->resizedPath = System::urlEncode($this->getTargetPath());
 
 					return $this;
 				}
 
-				$this->resizedPath = \System::urlEncode($this->getCacheName());
+				$this->resizedPath = System::urlEncode($this->getCacheName());
 
 				return $this;
 			}
@@ -478,11 +478,11 @@ class Image
 		{
 			foreach ($GLOBALS['TL_HOOKS']['getImage'] as $callback)
 			{
-				$return = \System::importStatic($callback[0])->{$callback[1]}($this->getOriginalPath(), $this->getTargetWidth(), $this->getTargetHeight(), $this->getResizeMode(), $this->getCacheName(), $this->fileObj, $this->getTargetPath(), $this);
+				$return = System::importStatic($callback[0])->{$callback[1]}($this->getOriginalPath(), $this->getTargetWidth(), $this->getTargetHeight(), $this->getResizeMode(), $this->getCacheName(), $this->fileObj, $this->getTargetPath(), $this);
 
 				if (is_string($return))
 				{
-					$this->resizedPath = \System::urlEncode($return);
+					$this->resizedPath = System::urlEncode($return);
 
 					return $this;
 				}
@@ -495,7 +495,7 @@ class Image
 		// Return the path to the original image if it cannot be handled
 		if (!$this->fileObj->isImage || $svgNotPossible || $gdNotPossible)
 		{
-			$this->resizedPath = \System::urlEncode($this->getOriginalPath());
+			$this->resizedPath = System::urlEncode($this->getOriginalPath());
 
 			return $this;
 		}
@@ -520,12 +520,12 @@ class Image
 		if ($this->getTargetPath())
 		{
 			\Files::getInstance()->copy($this->getCacheName(), $this->getTargetPath());
-			$this->resizedPath = \System::urlEncode($this->getTargetPath());
+			$this->resizedPath = System::urlEncode($this->getTargetPath());
 
 			return $this;
 		}
 
-		$this->resizedPath = \System::urlEncode($this->getCacheName());
+		$this->resizedPath = System::urlEncode($this->getCacheName());
 
 		return $this;
 	}
@@ -859,7 +859,7 @@ class Image
 		$objFile = new \File($src, true);
 		$static = (strncmp($src, 'assets/', 7) === 0) ? TL_ASSETS_URL : TL_FILES_URL;
 
-		return '<img src="' . $static . \System::urlEncode($src) . '" width="' . $objFile->width . '" height="' . $objFile->height . '" alt="' . specialchars($alt) . '"' . (($attributes != '') ? ' ' . $attributes : '') . '>';
+		return '<img src="' . $static . System::urlEncode($src) . '" width="' . $objFile->width . '" height="' . $objFile->height . '" alt="' . specialchars($alt) . '"' . (($attributes != '') ? ' ' . $attributes : '') . '>';
 	}
 
 
@@ -971,7 +971,7 @@ class Image
 		}
 		catch (\Exception $e)
 		{
-			\System::log('Image "' . $image . '" could not be processed: ' . $e->getMessage(), __METHOD__, TL_ERROR);
+			System::log('Image "' . $image . '" could not be processed: ' . $e->getMessage(), __METHOD__, TL_ERROR);
 		}
 
 		return null;

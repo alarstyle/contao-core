@@ -8,12 +8,15 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Controllers;
 
+use Contao\Backend;
+use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\Date;
 use Contao\Input;
 use Contao\Environment;
+use Contao\System;
 
 /**
  * Switch accounts in the front end preview.
@@ -38,7 +41,7 @@ class BackendSwitch extends Backend
 		parent::__construct();
 
 		$this->User->authenticate();
-		\System::loadLanguageFile('default');
+		System::loadLanguageFile('default');
 	}
 
 
@@ -168,7 +171,7 @@ class BackendSwitch extends Backend
 		// Get the active front end users
 		$objUsers = $this->Database->prepare("SELECT username FROM tl_member WHERE username LIKE ? AND login='1' AND disable!='1' AND (start='' OR start<='$time') AND (stop='' OR stop>'" . ($time + 60) . "') ORDER BY username")
 								   ->limit(10)
-								   ->execute(str_replace('%', '', \Input::post('value')) . '%');
+								   ->execute(str_replace('%', '', Input::post('value')) . '%');
 
 		if ($objUsers->numRows)
 		{

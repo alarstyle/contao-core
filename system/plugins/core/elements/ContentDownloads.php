@@ -12,6 +12,7 @@ namespace Contao;
 
 use Contao\Environment;
 use Contao\Input;
+use Contao\System;
 
 /**
  * Front end content element "downloads".
@@ -156,7 +157,7 @@ class ContentDownloads extends \ContentElement
 					$strHref = preg_replace('/(&(amp;)?|\?)file=[^&]+/', '', $strHref);
 				}
 
-				$strHref .= (strpos($strHref, '?') !== false ? '&amp;' : '?') . 'file=' . \System::urlEncode($objFiles->path);
+				$strHref .= (strpos($strHref, '?') !== false ? '&amp;' : '?') . 'file=' . System::urlEncode($objFiles->path);
 
 				// Add the image
 				$files[$objFiles->path] = array
@@ -232,7 +233,7 @@ class ContentDownloads extends \ContentElement
 						$strHref = preg_replace('/(&(amp;)?|\?)file=[^&]+/', '', $strHref);
 					}
 
-					$strHref .= (strpos($strHref, '?') !== false ? '&amp;' : '?') . 'file=' . \System::urlEncode($objSubfiles->path);
+					$strHref .= (strpos($strHref, '?') !== false ? '&amp;' : '?') . 'file=' . System::urlEncode($objSubfiles->path);
 
 					// Add the image
 					$files[$objSubfiles->path] = array

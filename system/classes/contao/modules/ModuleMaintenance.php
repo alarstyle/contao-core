@@ -10,6 +10,7 @@
 
 namespace Contao\Modules;
 
+use Contao\System;
 
 /**
  * Back end module "maintenance".
@@ -33,7 +34,7 @@ class ModuleMaintenance extends \Contao\BackendModule
 	 */
 	protected function compile()
 	{
-		\System::loadLanguageFile('tl_maintenance');
+		System::loadLanguageFile('tl_maintenance');
 
 		$this->Template->content = '';
 		$this->Template->href = $this->getReferer(true);

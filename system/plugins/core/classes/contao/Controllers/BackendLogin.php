@@ -1,10 +1,14 @@
 <?php
 
-namespace Contao;
+namespace Contao\Controllers;
 
+use Contao\Backend;
+use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\Environment;
 use Contao\Input;
+use Contao\Message;
+use Contao\System;
 
 /**
  * Handle back end logins and logouts.
@@ -32,9 +36,9 @@ class BackendLogin extends Backend
             $strUrl = 'contao/main.php';
 
             // Redirect to the last page visited
-            if (\Input::get('referer', true) != '')
+            if (Input::get('referer', true) != '')
             {
-                $strUrl = base64_decode(\Input::get('referer', true));
+                $strUrl = base64_decode(Input::get('referer', true));
             }
 
             $this->redirect($strUrl);
@@ -52,8 +56,8 @@ class BackendLogin extends Backend
             $this->reload();
         }
 
-        \System::loadLanguageFile('default');
-        \System::loadLanguageFile('tl_user');
+        System::loadLanguageFile('default');
+        System::loadLanguageFile('tl_user');
     }
 
 

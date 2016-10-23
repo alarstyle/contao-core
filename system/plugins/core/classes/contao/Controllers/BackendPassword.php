@@ -8,11 +8,16 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Controllers;
 
+use Contao\Backend;
+use Contao\BackendTemplate;
 use Contao\Config;
+use Contao\Encryption;
 use Contao\Environment;
+use Contao\Input;
 use Contao\Message;
+use Contao\System;
 
 /**
  * Back end help wizard.
@@ -38,8 +43,8 @@ class BackendPassword extends Backend
 
 		$this->User->authenticate();
 
-		\System::loadLanguageFile('default');
-		\System::loadLanguageFile('modules');
+		System::loadLanguageFile('default');
+		System::loadLanguageFile('modules');
 	}
 
 
@@ -51,10 +56,10 @@ class BackendPassword extends Backend
 		/** @var \BackendTemplate|object $objTemplate */
 		$objTemplate = new BackendTemplate('be_password');
 
-		if (\Input::post('FORM_SUBMIT') == 'tl_password')
+		if (Input::post('FORM_SUBMIT') == 'tl_password')
 		{
-			$pw = \Input::postUnsafeRaw('password');
-			$cnf = \Input::postUnsafeRaw('confirm');
+			$pw = Input::postUnsafeRaw('password');
+			$cnf = Input::postUnsafeRaw('confirm');
 
 			// The passwords do not match
 			if ($pw != $cnf)
@@ -113,7 +118,7 @@ class BackendPassword extends Backend
 			$this->reload();
 		}
 
-		$objTemplate->theme = \Backend::getTheme();
+		$objTemplate->theme = Backend::getTheme();
 		$objTemplate->messages = Message::generate();
 		$objTemplate->base = Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];

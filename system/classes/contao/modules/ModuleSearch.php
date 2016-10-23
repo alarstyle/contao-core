@@ -12,6 +12,8 @@ namespace Contao\Modules;
 
 use Contao\Config;
 use Contao\Environment;
+use Contao\Pagination;
+use Contao\Search;
 use Contao\StringUtil;
 
 /**
@@ -167,7 +169,7 @@ class ModuleSearch extends AbstractModule
 			{
 				try
 				{
-					$objSearch = \Search::searchFor($strKeywords, ($strQueryType == 'or'), $arrPages, 0, 0, $blnFuzzy);
+					$objSearch = Search::searchFor($strKeywords, ($strQueryType == 'or'), $arrPages, 0, 0, $blnFuzzy);
 					$arrResult = $objSearch->fetchAllAssoc();
 				}
 				catch (\Exception $e)
@@ -248,7 +250,7 @@ class ModuleSearch extends AbstractModule
 				// Pagination menu
 				if ($to < $count || $from > 1)
 				{
-					$objPagination = new \Pagination($count, $per_page, Config::get('maxPaginationLinks'), $id);
+					$objPagination = new Pagination($count, $per_page, Config::get('maxPaginationLinks'), $id);
 					$this->Template->pagination = $objPagination->generate("\n  ");
 				}
 

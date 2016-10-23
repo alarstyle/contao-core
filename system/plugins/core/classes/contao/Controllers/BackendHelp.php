@@ -8,11 +8,15 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Controllers;
 
+use Contao\Backend;
+use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\Drivers\DC_Table;
 use Contao\Environment;
+use Contao\Input;
+use Contao\System;
 
 /**
  * Back end help wizard.
@@ -38,8 +42,8 @@ class BackendHelp extends Backend
 
 		$this->User->authenticate();
 
-		\System::loadLanguageFile('default');
-		\System::loadLanguageFile('modules');
+		System::loadLanguageFile('default');
+		System::loadLanguageFile('modules');
 	}
 
 
@@ -48,10 +52,10 @@ class BackendHelp extends Backend
 	 */
 	public function run()
 	{
-		$table = \Input::get('table');
-		$field = \Input::get('field');
+		$table = Input::get('table');
+		$field = Input::get('field');
 
-		\System::loadLanguageFile($table);
+		System::loadLanguageFile($table);
 		$this->loadDataContainer($table);
 
 		/** @var \BackendTemplate|object $objTemplate */
@@ -124,7 +128,7 @@ class BackendHelp extends Backend
 		// Add an explanation
 		if (isset($arrData['explanation']))
 		{
-			\System::loadLanguageFile('explain');
+			System::loadLanguageFile('explain');
 			$key = $arrData['explanation'];
 
 			if (!is_array($GLOBALS['TL_LANG']['XPL'][$key]))
@@ -137,7 +141,7 @@ class BackendHelp extends Backend
 			}
 		}
 
-		$objTemplate->theme = \Backend::getTheme();
+		$objTemplate->theme = Backend::getTheme();
 		$objTemplate->base = Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($GLOBALS['TL_LANG']['MSC']['helpWizardTitle']);

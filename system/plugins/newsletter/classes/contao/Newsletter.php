@@ -14,6 +14,7 @@ use Contao\Config;
 use Contao\Email;
 use Contao\Models\NewsletterChannelModel;
 use Contao\Models\NewsletterModel;
+use Contao\System;
 
 /**
  * Provide methods to handle newsletters.
@@ -525,7 +526,7 @@ class Newsletter extends Backend
 				Message::addInfo(sprintf($GLOBALS['TL_LANG']['tl_newsletter_recipients']['invalid'], $intInvalid));
 			}
 
-			\System::setCookie('BE_PAGE_OFFSET', 0, 0);
+			System::setCookie('BE_PAGE_OFFSET', 0, 0);
 			$this->reload();
 		}
 

@@ -16,5 +16,5 @@ define('TL_MODE', 'FE');
 require dirname(__DIR__) . '/initialize.php';
 
 // Run the controller
-$controller = new FrontendCron;
+$controller = new \Contao\Controllers\FrontendCron;
 $controller->run();

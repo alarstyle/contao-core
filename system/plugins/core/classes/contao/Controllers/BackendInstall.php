@@ -8,12 +8,18 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Controllers;
 
+use Contao\Backend;
+use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\Date;
+use Contao\Encryption;
 use Contao\Environment;
+use Contao\File;
 use Contao\Input;
+use Contao\System;
+use Contao\Validator;
 
 /**
  * Back end install tool.
@@ -44,8 +50,8 @@ class BackendInstall extends Backend
 
 		$this->setStaticUrls();
 
-		\System::loadLanguageFile('default');
-		\System::loadLanguageFile('tl_install');
+		System::loadLanguageFile('default');
+		System::loadLanguageFile('tl_install');
 	}
 
 
@@ -93,7 +99,7 @@ class BackendInstall extends Backend
 		}
 
 		// Log in the user
-		if (\Input::post('FORM_SUBMIT') == 'tl_login')
+		if (Input::post('FORM_SUBMIT') == 'tl_login')
 		{
 			$this->loginUser();
 		}
@@ -354,7 +360,7 @@ class BackendInstall extends Backend
 		else
 		{
 			list($strPassword, $strSalt) = explode(':', Config::get('installPassword'));
-			$blnAuthenticated = ($strSalt == '') ? ($strPassword === sha1(Input::postUnsafeRaw('password'))) : ($strPassword === sha1($strSalt . \Input::postUnsafeRaw('password')));
+			$blnAuthenticated = ($strSalt == '') ? ($strPassword === sha1(Input::postUnsafeRaw('password'))) : ($strPassword === sha1($strSalt . Input::postUnsafeRaw('password')));
 
 			if ($blnAuthenticated)
 			{
@@ -449,11 +455,11 @@ class BackendInstall extends Backend
 		$this->Template->database = Config::get('dbDatabase');
 
 		// Store the database connection parameters
-		if (\Input::post('FORM_SUBMIT') == 'tl_database_login')
+		if (Input::post('FORM_SUBMIT') == 'tl_database_login')
 		{
 			foreach (preg_grep('/^db/', array_keys($_POST)) as $strKey)
 			{
-				if ($strKey == 'dbPass' && \Input::postUnsafeRaw($strKey) == '*****')
+				if ($strKey == 'dbPass' && Input::postUnsafeRaw($strKey) == '*****')
 				{
 					continue;
 				}
@@ -528,7 +534,7 @@ class BackendInstall extends Backend
 	 */
 	protected function storeCollation()
 	{
-		if (\Input::post('FORM_SUBMIT') == 'tl_collation')
+		if (Input::post('FORM_SUBMIT') == 'tl_collation')
 		{
 			$strCharset = strtolower(Config::get('dbCharset'));
 			$strCollation = Input::post('dbCollation');
@@ -674,10 +680,10 @@ class BackendInstall extends Backend
 
 		// Process the request after the select menu has been generated
 		// so the options show up even if the import throws an Exception
-		if (\Input::post('FORM_SUBMIT') == 'tl_tutorial')
+		if (Input::post('FORM_SUBMIT') == 'tl_tutorial')
 		{
 			$this->Template->emptySelection = true;
-			$strTemplate = \Input::post('template');
+			$strTemplate = Input::post('template');
 
 			// Template selected
 			if ($strTemplate != '' && in_array($strTemplate, $arrTemplates))
@@ -732,10 +738,10 @@ class BackendInstall extends Backend
 			{
 				$this->Template->adminCreated = true;
 			}
-			elseif (\Input::post('FORM_SUBMIT') == 'tl_admin')
+			elseif (Input::post('FORM_SUBMIT') == 'tl_admin')
 			{
 				// Do not allow special characters in usernames
-				if (preg_match('/[#()\/<=>]/', \Input::post('username', true)))
+				if (preg_match('/[#()\/<=>]/', Input::post('username', true)))
 				{
 					$this->Template->usernameError = $GLOBALS['TL_LANG']['ERR']['extnd'];
 				}
@@ -785,9 +791,9 @@ class BackendInstall extends Backend
 					$this->reload();
 				}
 
-				$this->Template->adminName = \Input::post('name');
-				$this->Template->adminEmail = \Input::post('email', true);
-				$this->Template->adminUser = \Input::post('username', true);
+				$this->Template->adminName = Input::post('name');
+				$this->Template->adminEmail = Input::post('email', true);
+				$this->Template->adminUser = Input::post('username', true);
 			}
 		}
 		catch (\Exception $e)
@@ -812,7 +818,7 @@ class BackendInstall extends Backend
 		{
 			if (!file_exists(TL_ROOT . '/system/config/' . $file . '.php'))
 			{
-				\File::putContent('system/config/'. $file .'.php', '<?php' . "\n\n// Put your custom configuration here\n");
+				File::putContent('system/config/'. $file .'.php', '<?php' . "\n\n// Put your custom configuration here\n");
 			}
 		}
 	}
@@ -865,7 +871,7 @@ class BackendInstall extends Backend
 	 */
 	protected function outputAndExit()
 	{
-		$this->Template->theme = \Backend::getTheme();
+		$this->Template->theme = Backend::getTheme();
 		$this->Template->base = Environment::get('base');
 		$this->Template->language = $GLOBALS['TL_LANGUAGE'];
 		$this->Template->charset = Config::get('characterSet');
@@ -912,7 +918,7 @@ class BackendInstall extends Backend
 		{
 			$this->enableSafeMode();
 
-			if (\Input::post('FORM_SUBMIT') == 'tl_28update')
+			if (Input::post('FORM_SUBMIT') == 'tl_28update')
 			{
 				$this->import('Contao\\Database\\Updater', 'Updater');
 				$this->Updater->run28Update();
@@ -934,7 +940,7 @@ class BackendInstall extends Backend
 		{
 			$this->enableSafeMode();
 
-			if (\Input::post('FORM_SUBMIT') == 'tl_29update')
+			if (Input::post('FORM_SUBMIT') == 'tl_29update')
 			{
 				$this->import('Contao\\Database\\Updater', 'Updater');
 				$this->Updater->run29Update();
@@ -962,7 +968,7 @@ class BackendInstall extends Backend
 				{
 					$this->enableSafeMode();
 
-					if (\Input::post('FORM_SUBMIT') == 'tl_292update')
+					if (Input::post('FORM_SUBMIT') == 'tl_292update')
 					{
 						$this->import('Contao\\Database\\Updater', 'Updater');
 						$this->Updater->run292Update();
@@ -986,7 +992,7 @@ class BackendInstall extends Backend
 		{
 			$this->enableSafeMode();
 
-			if (\Input::post('FORM_SUBMIT') == 'tl_210update')
+			if (Input::post('FORM_SUBMIT') == 'tl_210update')
 			{
 				$this->import('Contao\\Database\\Updater', 'Updater');
 				$this->Updater->run210Update();
@@ -1009,7 +1015,7 @@ class BackendInstall extends Backend
 		{
 			$this->enableSafeMode();
 
-			if (\Input::post('FORM_SUBMIT') == 'tl_30update')
+			if (Input::post('FORM_SUBMIT') == 'tl_30update')
 			{
 				$this->import('Contao\\Database\\Updater', 'Updater');
 				$this->Updater->run300Update();
@@ -1019,7 +1025,7 @@ class BackendInstall extends Backend
 			// Disable the tasks extension (see #4907)
 			if (is_dir(TL_ROOT . '/system/plugins/tasks'))
 			{
-				\System::disableModule('tasks');
+				System::disableModule('tasks');
 			}
 
 			// Reset the upload path if it has been changed already (see #5560 and #5870)
@@ -1091,7 +1097,7 @@ class BackendInstall extends Backend
 		{
 			$this->enableSafeMode();
 
-			if (\Input::post('FORM_SUBMIT') == 'tl_31update')
+			if (Input::post('FORM_SUBMIT') == 'tl_31update')
 			{
 				$this->import('Contao\\Database\\Updater', 'Updater');
 				$this->Updater->run31Update();
@@ -1128,7 +1134,7 @@ class BackendInstall extends Backend
 			{
 				$this->enableSafeMode();
 
-				if (\Input::post('FORM_SUBMIT') == 'tl_32update')
+				if (Input::post('FORM_SUBMIT') == 'tl_32update')
 				{
 					$this->import('Contao\\Database\\Updater', 'Updater');
 					$this->Updater->run32Update();
@@ -1151,7 +1157,7 @@ class BackendInstall extends Backend
 		{
 			$this->enableSafeMode();
 
-			if (\Input::post('FORM_SUBMIT') == 'tl_33update')
+			if (Input::post('FORM_SUBMIT') == 'tl_33update')
 			{
 				$this->import('Contao\\Database\\Updater', 'Updater');
 				$this->Updater->run33Update();
@@ -1186,7 +1192,7 @@ class BackendInstall extends Backend
 			{
 				$this->enableSafeMode();
 
-				if (\Input::post('FORM_SUBMIT') == 'tl_35update')
+				if (Input::post('FORM_SUBMIT') == 'tl_35update')
 				{
 					$this->import('Contao\\Database\\Updater', 'Updater');
 					$this->Updater->run35Update();

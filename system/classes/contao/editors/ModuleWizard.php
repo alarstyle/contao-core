@@ -12,6 +12,7 @@ namespace Contao\Editors;
 
 use Contao\Cache;
 use Contao\Environment;
+use Contao\System;
 
 /**
  * Provide methods to handle modules of a page layout.
@@ -171,7 +172,7 @@ class ModuleWizard extends \Contao\Editor
   <tbody class="sortable" data-tabindex="'.$tabindex.'">';
 
 		// Load the tl_article language file
-		\System::loadLanguageFile('tl_article');
+		System::loadLanguageFile('tl_article');
 
 		// Add the input fields
 		for ($i=0, $c=count($this->varValue); $i<$c; $i++)

@@ -270,7 +270,7 @@ class Theme extends Backend
 			{
 				foreach ($GLOBALS['TL_HOOKS']['compareThemeFiles'] as $callback)
 				{
-					$return .= \System::importStatic($callback[0])->{$callback[1]}($xml, $objArchive);
+					$return .= System::importStatic($callback[0])->{$callback[1]}($xml, $objArchive);
 				}
 			}
 
@@ -678,14 +678,14 @@ class Theme extends Backend
 
 				foreach ($GLOBALS['TL_HOOKS']['extractThemeFiles'] as $callback)
 				{
-					\System::importStatic($callback[0])->{$callback[1]}($xml, $objArchive, $intThemeId, $arrMapper);
+					System::importStatic($callback[0])->{$callback[1]}($xml, $objArchive, $intThemeId, $arrMapper);
 				}
 			}
 
 			unset($tl_files, $tl_theme, $tl_style_sheet, $tl_style, $tl_module, $tl_layout, $tl_image_size, $tl_image_size_item);
 		}
 
-		\System::setCookie('BE_PAGE_OFFSET', 0, 0);
+		System::setCookie('BE_PAGE_OFFSET', 0, 0);
 		$this->Session->remove('uploaded_themes');
 
 		// Redirect
@@ -746,7 +746,7 @@ class Theme extends Backend
 		{
 			foreach ($GLOBALS['TL_HOOKS']['exportTheme'] as $callback)
 			{
-				\System::importStatic($callback[0])->{$callback[1]}($xml, $objArchive, $objTheme->id);
+				System::importStatic($callback[0])->{$callback[1]}($xml, $objArchive, $objTheme->id);
 			}
 		}
 

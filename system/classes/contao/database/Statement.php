@@ -11,7 +11,7 @@
 namespace Contao\Database;
 
 use Contao\Config;
-
+use Contao\System;
 
 /**
  * Create and execute queries
@@ -412,7 +412,7 @@ abstract class Statement
 			$arrData['returned'] = sprintf('%s row(s) returned', $objResult->numRows);
 		}
 
-		$arrData['duration'] = \System::getFormattedNumber((($this->intQueryEnd - $this->intQueryStart) * 1000), 3) . ' ms';
+		$arrData['duration'] = System::getFormattedNumber((($this->intQueryEnd - $this->intQueryStart) * 1000), 3) . ' ms';
 		$GLOBALS['TL_DEBUG']['database_queries'][] = $arrData;
 	}
 

@@ -12,7 +12,7 @@
 /**
  * Load tl_user language file
  */
-System::loadLanguageFile('tl_user');
+\Contao\System::loadLanguageFile('tl_user');
 
 
 /**
@@ -330,7 +330,7 @@ class tl_user_group extends \Contao\Backend
 				$included[] = $strFile;
 				$strTable = substr($strFile, 0, -4);
 
-				System::loadLanguageFile($strTable);
+				\Contao\System::loadLanguageFile($strTable);
 				$this->loadDataContainer($strTable);
 			}
 		}

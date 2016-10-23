@@ -23,21 +23,6 @@ ClassLoader::addNamespaces(array
  */
 ClassLoader::addClasses(array
 (
-	// Controllers
-	'Contao\BackendConfirm'            => 'system/plugins/core/controllers/BackendConfirm.php',
-	'Contao\BackendFile'               => 'system/plugins/core/controllers/BackendFile.php',
-	'Contao\BackendHelp'               => 'system/plugins/core/controllers/BackendHelp.php',
-	'Contao\BackendLogin'              => 'system/plugins/core/controllers/BackendLogin.php',
-	'Contao\BackendInstall'            => 'system/plugins/core/controllers/BackendInstall.php',
-	'Contao\BackendMain'               => 'system/plugins/core/controllers/BackendMain.php',
-	'Contao\BackendPage'               => 'system/plugins/core/controllers/BackendPage.php',
-	'Contao\BackendPassword'           => 'system/plugins/core/controllers/BackendPassword.php',
-	'Contao\BackendPopup'              => 'system/plugins/core/controllers/BackendPopup.php',
-	'Contao\BackendPreview'            => 'system/plugins/core/controllers/BackendPreview.php',
-	'Contao\BackendSwitch'             => 'system/plugins/core/controllers/BackendSwitch.php',
-	'Contao\FrontendCron'              => 'system/plugins/core/controllers/FrontendCron.php',
-	'Contao\FrontendIndex'             => 'system/plugins/core/controllers/FrontendIndex.php',
-	'Contao\FrontendShare'             => 'system/plugins/core/controllers/FrontendShare.php',
 
 	// Elements
 	'Contao\ContentAlias'              => 'system/plugins/core/elements/ContentAlias.php',
@@ -84,7 +69,6 @@ ClassLoader::addClasses(array
 	'Contao\Dbafs'                     => 'system/plugins/core/library/Contao/Dbafs.php',
 	'Contao\DcaExtractor'              => 'system/plugins/core/library/Contao/DcaExtractor.php',
 	'Contao\DcaLoader'                 => 'system/plugins/core/library/Contao/DcaLoader.php',
-	'Contao\DiffRenderer'              => 'system/plugins/core/library/Contao/DiffRenderer.php',
 	'Contao\File'                      => 'system/plugins/core/library/Contao/File.php',
 	'Contao\Files\Ftp'                 => 'system/plugins/core/library/Contao/Files/Ftp.php',
 	'Contao\Files\Php'                 => 'system/plugins/core/library/Contao/Files/Php.php',
@@ -96,18 +80,13 @@ ClassLoader::addClasses(array
 	'Contao\Idna'                      => 'system/plugins/core/library/Contao/Idna.php',
 	'Contao\Image'                     => 'system/plugins/core/library/Contao/Image.php',
 	'Contao\Input'                     => 'system/plugins/core/library/Contao/Input.php',
-	'Contao\InsertTags'                => 'system/plugins/core/library/Contao/InsertTags.php',
 	'Contao\Model\Collection'          => 'system/plugins/core/library/Contao/Model/Collection.php',
 	'Contao\Model\QueryBuilder'        => 'system/plugins/core/library/Contao/Model/QueryBuilder.php',
 	'Contao\Model\Registry'            => 'system/plugins/core/library/Contao/Model/Registry.php',
 	'Contao\Model'                     => 'system/plugins/core/library/Contao/Model.php',
 	'Contao\PluginLoader'              => 'system/plugins/core/library/Contao/PluginLoader.php',
-	'Contao\Pagination'                => 'system/plugins/core/library/Contao/Pagination.php',
-	'Contao\Picture'                   => 'system/plugins/core/library/Contao/Picture.php',
-	'Contao\Search'                    => 'system/plugins/core/library/Contao/Search.php',
 	'Contao\Session'                   => 'system/plugins/core/library/Contao/Session.php',
 	'Contao\SortedIterator'            => 'system/plugins/core/library/Contao/SortedIterator.php',
-	'Contao\System'                    => 'system/plugins/core/library/Contao/System.php',
 
 	// Models
 	'Contao\ArticleModel'              => 'system/plugins/core/models/ArticleModel.php',

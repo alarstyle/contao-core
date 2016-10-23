@@ -14,6 +14,7 @@ use Contao\Editor;
 use Contao\Email;
 use Contao\Environment;
 use Contao\StringUtil;
+use Contao\System;
 
 /**
  * Provide methods to handle front end forms.
@@ -559,7 +560,7 @@ class Form extends \Hybrid
 		}
 		else
 		{
-			$this->log('Form "' . $this->title . '" has been submitted by ' . \System::anonymizeIp(Environment::get('ip')) . '.', __METHOD__, TL_FORMS);
+			$this->log('Form "' . $this->title . '" has been submitted by ' . System::anonymizeIp(Environment::get('ip')) . '.', __METHOD__, TL_FORMS);
 		}
 
 		// Check whether there is a jumpTo page

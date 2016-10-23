@@ -20,7 +20,7 @@ namespace Contao;
  *
  * Usage:
  *
- *     class MyClass extends \System
+ *     class MyClass extends System
  *     {
  *         public function __construct()
  *         {

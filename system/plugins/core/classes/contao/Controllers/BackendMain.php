@@ -8,11 +8,19 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Controllers;
 
+use Contao\Ajax;
+use Contao\Backend;
+use Contao\BackendSections;
+use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\Environment;
 use Contao\Input;
+use Contao\Lang;
+use Contao\Message;
+use Contao\System;
+use Contao\Versions;
 
 /**
  * Main back end controller.
@@ -96,8 +104,8 @@ class BackendMain extends Backend
 			}
 		}
 
-		\System::loadLanguageFile('default');
-		\System::loadLanguageFile('modules');
+		System::loadLanguageFile('default');
+		System::loadLanguageFile('modules');
 	}
 
 
@@ -129,9 +137,9 @@ class BackendMain extends Backend
 			$this->Template->title = $GLOBALS['TL_LANG']['MSC']['home'];
 		}
 		// Open a module
-		elseif (\Input::get('do'))
+		elseif (Input::get('do'))
 		{
-			$this->Template->main .= $this->getBackendModule(\Input::get('do'));
+			$this->Template->main .= $this->getBackendModule(Input::get('do'));
 			$this->Template->title = $this->Template->headline;
 		}
 
@@ -206,7 +214,7 @@ class BackendMain extends Backend
 		}
 
 		// File picker reference
-		if (\Input::get('popup') && \Input::get('act') != 'show' && (\Input::get('do') == 'page' && $this->User->hasAccess('page', 'modules') || \Input::get('do') == 'files' && $this->User->hasAccess('files', 'modules')) && $this->Session->get('filePickerRef'))
+		if (Input::get('popup') && Input::get('act') != 'show' && (Input::get('do') == 'page' && $this->User->hasAccess('page', 'modules') || \Input::get('do') == 'files' && $this->User->hasAccess('files', 'modules')) && $this->Session->get('filePickerRef'))
 		{
 			$this->Template->managerHref = ampersand($this->Session->get('filePickerRef'));
 			$this->Template->manager = (strpos($this->Session->get('filePickerRef'), 'contao/page.php') !== false) ? $GLOBALS['TL_LANG']['MSC']['pagePickerHome'] : $GLOBALS['TL_LANG']['MSC']['filePickerHome'];

@@ -178,7 +178,7 @@ $GLOBALS['TL_DCA']['tl_user'] = array
 			'exclude'                 => true,
 			'filter'                  => true,
 			'inputType'               => 'select',
-			'options'                 => System::getLanguages(true),
+			'options'                 => \Contao\System::getLanguages(true),
 			'eval'                    => array('rgxp'=>'locale', 'tl_class'=>'w50'),
 			'sql'                     => "varchar(5) NOT NULL default ''"
 		),
@@ -233,7 +233,7 @@ $GLOBALS['TL_DCA']['tl_user'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['MSC']['password'],
 			'exclude'                 => true,
 			'inputType'               => 'password',
-			'eval'                    => array('mandatory'=>true, 'preserveTags'=>true, 'minlength'=>Config::get('minPasswordLength')),
+			'eval'                    => array('mandatory'=>true, 'preserveTags'=>true, 'minlength'=>\Contao\Config::get('minPasswordLength')),
 			'sql'                     => "varchar(128) NOT NULL default ''"
 		),
 		'pwChange' => array
@@ -515,7 +515,7 @@ class tl_user extends \Contao\Backend
 	 *
 	 * @return string
 	 */
-	public function addIcon($row, $label, DataContainer $dc, $args)
+	public function addIcon($row, $label, \Contao\DataContainer $dc, $args)
 	{
 		$image = $row['admin'] ? 'admin' :  'user';
 		$time = \Contao\Date::floorToMinute();

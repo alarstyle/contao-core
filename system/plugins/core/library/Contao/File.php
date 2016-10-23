@@ -59,7 +59,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class File extends \System
+class File extends System
 {
 
 	/**
