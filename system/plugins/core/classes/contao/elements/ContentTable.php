@@ -8,7 +8,7 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Elements;
 
 use Contao\System;
 
@@ -17,7 +17,7 @@ use Contao\System;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ContentTable extends \ContentElement
+class ContentTable extends ContentElement
 {
 
 	/**

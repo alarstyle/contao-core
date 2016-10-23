@@ -8,7 +8,7 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Elements;
 
 
 /**
@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ContentImage extends \ContentElement
+class ContentImage extends ContentElement
 {
 
 	/**

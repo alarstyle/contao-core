@@ -11,7 +11,7 @@
 namespace Contao;
 
 use Contao\Modules\AbstractModule;
-
+use Contao\Elements\ContentElement;
 
 /**
  * Abstract parent class for Controllers
@@ -405,7 +405,7 @@ abstract class Controller extends System
 			$objRow->space = null;
 		}
 
-		$strClass = \ContentElement::findClass($objRow->type);
+		$strClass = ContentElement::findClass($objRow->type);
 
 		// Return if the class does not exist
 		if (!class_exists($strClass))
@@ -417,7 +417,7 @@ abstract class Controller extends System
 
 		$objRow->typePrefix = 'ce_';
 
-		/** @var \ContentElement $objElement */
+		/** @var ContentElement $objElement */
 		$objElement = new $strClass($objRow, $strColumn);
 		$strBuffer = $objElement->generate();
 

@@ -8,7 +8,7 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Elements;
 
 use Contao\Config;
 use Contao\Environment;
@@ -20,7 +20,7 @@ use Contao\System;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ContentDownload extends \ContentElement
+class ContentDownload extends ContentElement
 {
 
 	/**

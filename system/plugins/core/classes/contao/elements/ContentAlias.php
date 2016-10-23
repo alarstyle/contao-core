@@ -8,7 +8,7 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Elements;
 
 
 /**
@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ContentAlias extends \ContentElement
+class ContentAlias extends ContentElement
 {
 
 	/**
@@ -44,7 +44,7 @@ class ContentAlias extends \ContentElement
 		$objElement->id = $this->id;
 		$objElement->typePrefix = 'ce_';
 
-		/** @var \ContentElement $objElement */
+		/** @var ContentElement $objElement */
 		$objElement = new $strClass($objElement);
 
 		// Overwrite spacing and CSS ID

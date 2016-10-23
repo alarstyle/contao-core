@@ -8,22 +8,22 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Elements;
 
 
 /**
- * Front end content element "slider" (wrapper stop).
+ * Front end content element "slider" (wrapper start).
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ContentSliderStop extends \ContentElement
+class ContentSliderStart extends ContentElement
 {
 
 	/**
 	 * Template
 	 * @var string
 	 */
-	protected $strTemplate = 'ce_slider_stop';
+	protected $strTemplate = 'ce_slider_start';
 
 
 	/**
@@ -39,10 +39,10 @@ class ContentSliderStop extends \ContentElement
 			$objTemplate = new \BackendTemplate($this->strTemplate);
 
 			$this->Template = $objTemplate;
+			$this->Template->title = $this->headline;
 		}
 
-		// Previous and next labels
-		$this->Template->previous = $GLOBALS['TL_LANG']['MSC']['previous'];
-		$this->Template->next = $GLOBALS['TL_LANG']['MSC']['next'];
+		// Slider configuration
+		$this->Template->config = $this->sliderDelay . ',' . $this->sliderSpeed . ',' . $this->sliderStartSlide . ',' . $this->sliderContinuous;
 	}
 }

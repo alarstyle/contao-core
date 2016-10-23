@@ -8,7 +8,7 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Elements;
 
 use Contao\Config;
 use Contao\StringUtil;
@@ -18,7 +18,7 @@ use Contao\StringUtil;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ContentText extends \ContentElement
+class ContentText extends ContentElement
 {
 
 	/**

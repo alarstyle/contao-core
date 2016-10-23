@@ -140,40 +140,40 @@ $GLOBALS['TL_CTE'] = array
 (
 	'texts' => array
 	(
-		'headline'        => 'ContentHeadline',
-		'text'            => 'ContentText',
-		'html'            => 'ContentHtml',
-		'list'            => 'ContentList',
-		'table'           => 'ContentTable',
-		'code'            => 'ContentCode',
-		'markdown'        => 'ContentMarkdown'
+		'headline'        => 'Contao\\Elements\\ContentHeadline',
+		'text'            => 'Contao\\Elements\\ContentText',
+		'html'            => 'Contao\\Elements\\ContentHtml',
+		'list'            => 'Contao\\Elements\\ContentList',
+		'table'           => 'Contao\\Elements\\ContentTable',
+		'code'            => 'Contao\\Elements\\ContentCode',
+		'markdown'        => 'Contao\\Elements\\ContentMarkdown'
 	),
 	'slider' => array
 	(
-		'sliderStart'     => 'ContentSliderStart',
-		'sliderStop'      => 'ContentSliderStop'
+		'sliderStart'     => 'Contao\\Elements\\ContentSliderStart',
+		'sliderStop'      => 'Contao\\Elements\\ContentSliderStop'
 	),
 	'links' => array
 	(
-		'hyperlink'       => 'ContentHyperlink',
-		'toplink'         => 'ContentToplink'
+		'hyperlink'       => 'Contao\\Elements\\ContentHyperlink',
+		'toplink'         => 'Contao\\Elements\\ContentToplink'
 	),
 	'media' => array
 	(
-		'image'           => 'ContentImage',
-		'player'          => 'ContentMedia',
-		'youtube'         => 'ContentYouTube'
+		'image'           => 'Contao\\Elements\\ContentImage',
+		'player'          => 'Contao\\Elements\\ContentMedia',
+		'youtube'         => 'Contao\\Elements\\ContentYouTube'
 	),
 	'files' => array
 	(
-		'download'        => 'ContentDownload',
-		'downloads'       => 'ContentDownloads'
+		'download'        => 'Contao\\Elements\\ContentDownload',
+		'downloads'       => 'Contao\\Elements\\ContentDownloads'
 	),
 	'includes' => array
 	(
-		'alias'           => 'ContentAlias',
-		'form'            => 'Form',
-		'module'          => 'ContentModule',
+		'alias'           => 'Contao\\Elements\\ContentAlias',
+		'form'            => 'Contao\\Elements\\Form',
+		'module'          => 'Contao\\Elements\\ContentModule',
 	)
 );
 

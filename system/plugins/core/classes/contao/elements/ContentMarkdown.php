@@ -8,7 +8,7 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Elements;
 
 use Contao\Config;
 
@@ -17,7 +17,7 @@ use Contao\Config;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ContentMarkdown extends \ContentElement
+class ContentMarkdown extends ContentElement
 {
 
 	/**

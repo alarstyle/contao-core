@@ -8,7 +8,7 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Elements;
 
 use Contao\Environment;
 
@@ -17,7 +17,7 @@ use Contao\Environment;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ContentToplink extends \ContentElement
+class ContentToplink extends ContentElement
 {
 
 	/**

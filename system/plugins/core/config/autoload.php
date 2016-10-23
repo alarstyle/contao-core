@@ -24,28 +24,6 @@ ClassLoader::addNamespaces(array
 ClassLoader::addClasses(array
 (
 
-	// Elements
-	'Contao\ContentAlias'              => 'system/plugins/core/elements/ContentAlias.php',
-	'Contao\ContentCode'               => 'system/plugins/core/elements/ContentCode.php',
-	'Contao\ContentDownload'           => 'system/plugins/core/elements/ContentDownload.php',
-	'Contao\ContentDownloads'          => 'system/plugins/core/elements/ContentDownloads.php',
-	'Contao\ContentElement'            => 'system/plugins/core/elements/ContentElement.php',
-	'Contao\ContentGallery'            => 'system/plugins/core/elements/ContentGallery.php',
-	'Contao\ContentHeadline'           => 'system/plugins/core/elements/ContentHeadline.php',
-	'Contao\ContentHtml'               => 'system/plugins/core/elements/ContentHtml.php',
-	'Contao\ContentHyperlink'          => 'system/plugins/core/elements/ContentHyperlink.php',
-	'Contao\ContentImage'              => 'system/plugins/core/elements/ContentImage.php',
-	'Contao\ContentList'               => 'system/plugins/core/elements/ContentList.php',
-	'Contao\ContentMarkdown'           => 'system/plugins/core/elements/ContentMarkdown.php',
-	'Contao\ContentMedia'              => 'system/plugins/core/elements/ContentMedia.php',
-	'Contao\ContentModule'             => 'system/plugins/core/elements/ContentModule.php',
-	'Contao\ContentSliderStart'        => 'system/plugins/core/elements/ContentSliderStart.php',
-	'Contao\ContentSliderStop'         => 'system/plugins/core/elements/ContentSliderStop.php',
-	'Contao\ContentTable'              => 'system/plugins/core/elements/ContentTable.php',
-	'Contao\ContentText'               => 'system/plugins/core/elements/ContentText.php',
-	'Contao\ContentToplink'            => 'system/plugins/core/elements/ContentToplink.php',
-	'Contao\ContentYouTube'            => 'system/plugins/core/elements/ContentYouTube.php',
-
 	// Forms
 	'Contao\Form'                      => 'system/plugins/core/forms/Form.php',
 	'Contao\FormCaptcha'               => 'system/plugins/core/forms/FormCaptcha.php',
