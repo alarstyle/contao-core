@@ -439,3 +439,5 @@ $GLOBALS['BE_MENU'] = [];
 
 
 $GLOBALS['TL_MODELS']['tl_content'] = 'Contao\\Models\\ContentModel';
+$GLOBALS['TL_MODELS']['tl_user'] = 'Contao\\Models\\UserModel';
+$GLOBALS['TL_MODELS']['tl_user_group'] = 'Contao\\Models\\UserGroupModel';

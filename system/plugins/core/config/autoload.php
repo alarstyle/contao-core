@@ -80,8 +80,6 @@ ClassLoader::addClasses(array
 	'Contao\StyleModel'                => 'system/plugins/core/models/StyleModel.php',
 	'Contao\StyleSheetModel'           => 'system/plugins/core/models/StyleSheetModel.php',
 	'Contao\ThemeModel'                => 'system/plugins/core/models/ThemeModel.php',
-	'Contao\UserGroupModel'            => 'system/plugins/core/models/UserGroupModel.php',
-	'Contao\UserModel'                 => 'system/plugins/core/models/UserModel.php',
 ));
 
 

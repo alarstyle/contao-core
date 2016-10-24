@@ -17,6 +17,7 @@ use Contao\Encryption;
 use Contao\Environment;
 use Contao\Input;
 use Contao\Message;
+use Contao\Models\UserModel;
 use Contao\System;
 
 /**
@@ -105,7 +106,7 @@ class BackendPassword extends Backend
 						}
 					}
 
-					$objUser = \UserModel::findByPk($this->User->id);
+					$objUser = UserModel::findByPk($this->User->id);
 					$objUser->pwChange = '';
 					$objUser->password = Encryption::hash($pw);
 					$objUser->save();

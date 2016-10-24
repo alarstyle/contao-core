@@ -455,7 +455,7 @@ class tl_templates extends \Contao\Backend
 		}
 
 		/** @var BackendTemplate|object $objTemplate */
-		$objTemplate = new BackendTemplate('be_diff');
+		$objTemplate = new \Contao\BackendTemplate('be_diff');
 
 		// Template variables
 		$objTemplate->staticTo = $dc->id;
@@ -463,7 +463,7 @@ class tl_templates extends \Contao\Backend
 		$objTemplate->from = $strCompareName;
 		$objTemplate->showLabel = specialchars($GLOBALS['TL_LANG']['MSC']['showDifferences']);
 		$objTemplate->content = $strBuffer;
-		$objTemplate->theme = Backend::getTheme();
+		$objTemplate->theme = \Contao\Backend::getTheme();
 		$objTemplate->base = Environment::get('base');
 		$objTemplate->language = $GLOBALS['TL_LANGUAGE'];
 		$objTemplate->title = specialchars($GLOBALS['TL_LANG']['MSC']['showDifferences']);
