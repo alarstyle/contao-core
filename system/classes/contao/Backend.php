@@ -893,7 +893,7 @@ abstract class Backend extends Controller
 				}
 				else
 				{
-					$arrLinks[] = Backend::addPageIcon($objPage->row(), '', null, '', true) . ' <a href="' . \Controller::addToUrl('pn='.$objPage->id) . '" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['selectNode']).'">' . $objPage->title . '</a>';
+					$arrLinks[] = Backend::addPageIcon($objPage->row(), '', null, '', true) . ' <a href="' . Controller::addToUrl('pn='.$objPage->id) . '" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['selectNode']).'">' . $objPage->title . '</a>';
 				}
 
 				// Do not show the mounted pages
@@ -951,8 +951,8 @@ abstract class Backend extends Controller
 			$row['protected'] = true;
 		}
 
-		$image = \Controller::getPageStatusIcon((object) $row);
-		$imageAttribute = trim($imageAttribute . ' data-icon="' . \Controller::getPageStatusIcon((object) array_merge($row, array('published'=>'1'))) . '" data-icon-disabled="' . \Controller::getPageStatusIcon((object) array_merge($row, array('published'=>''))) . '"');
+		$image = Controller::getPageStatusIcon((object) $row);
+		$imageAttribute = trim($imageAttribute . ' data-icon="' . Controller::getPageStatusIcon((object) array_merge($row, array('published'=>'1'))) . '" data-icon-disabled="' . Controller::getPageStatusIcon((object) array_merge($row, array('published'=>''))) . '"');
 
 		// Return the image only
 		if ($blnReturnImage)
@@ -967,7 +967,7 @@ abstract class Backend extends Controller
 		}
 
 		// Add the breadcrumb link
-		$label = '<a href="' . \Controller::addToUrl('pn='.$row['id']) . '" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['selectNode']).'">' . $label . '</a>';
+		$label = '<a href="' . Controller::addToUrl('pn='.$row['id']) . '" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['selectNode']).'">' . $label . '</a>';
 
 		// Return the image
 		return '<a href="contao/main.php?do=feRedirect&amp;page='.$row['id'].'" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['view']).'"' . (($dc->table != 'tl_page') ? ' class="tl_gray"' : '') . ' target="_blank">'.Image::getHtml($image, '', $imageAttribute).'</a> '.$label;
@@ -995,7 +995,7 @@ abstract class Backend extends Controller
 			}
 
 			$objSession->set($strKey, Input::get('fn', true));
-			\Controller::redirect(preg_replace('/(&|\?)fn=[^&]*/', '', Environment::get('request')));
+			Controller::redirect(preg_replace('/(&|\?)fn=[^&]*/', '', Environment::get('request')));
 		}
 
 		$strNode = $objSession->get($strKey);

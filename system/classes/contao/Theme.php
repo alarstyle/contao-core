@@ -378,9 +378,9 @@ class Theme extends Backend
 				{
 					$strCustomized = $this->customizeUploadPath($strFolder);
 
-					if (\Dbafs::shouldBeSynchronized($strCustomized))
+					if (Dbafs::shouldBeSynchronized($strCustomized))
 					{
-						\Dbafs::addResource($strCustomized);
+						Dbafs::addResource($strCustomized);
 					}
 				}
 			}

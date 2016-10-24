@@ -13,6 +13,7 @@ namespace Contao\Drivers;
 use Contao\Config;
 use Contao\DataContainer;
 use Contao\Date;
+use Contao\Dbafs;
 use Contao\Editor;
 use Contao\Environment;
 use Contao\Image;
@@ -548,20 +549,20 @@ class DC_Folder extends DataContainer implements \listable, \editable
 			// Update the database AFTER the file has been moved
 			if ($this->blnIsDbAssisted)
 			{
-				$syncSource = \Dbafs::shouldBeSynchronized($source);
-				$syncTarget = \Dbafs::shouldBeSynchronized($destination);
+				$syncSource = Dbafs::shouldBeSynchronized($source);
+				$syncTarget = Dbafs::shouldBeSynchronized($destination);
 
 				if ($syncSource && $syncTarget)
 				{
-					\Dbafs::moveResource($source, $destination);
+					Dbafs::moveResource($source, $destination);
 				}
 				elseif ($syncSource)
 				{
-					\Dbafs::deleteResource($source);
+					Dbafs::deleteResource($source);
 				}
 				elseif ($syncTarget)
 				{
-					\Dbafs::addResource($destination);
+					Dbafs::addResource($destination);
 				}
 			}
 
@@ -717,16 +718,16 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		// Update the database AFTER the file has been copied
 		if ($this->blnIsDbAssisted)
 		{
-			$syncSource = \Dbafs::shouldBeSynchronized($source);
-			$syncTarget = \Dbafs::shouldBeSynchronized($destination);
+			$syncSource = Dbafs::shouldBeSynchronized($source);
+			$syncTarget = Dbafs::shouldBeSynchronized($destination);
 
 			if ($syncSource && $syncTarget)
 			{
-				\Dbafs::copyResource($source, $destination);
+				Dbafs::copyResource($source, $destination);
 			}
 			elseif ($syncTarget)
 			{
-				\Dbafs::addResource($destination);
+				Dbafs::addResource($destination);
 			}
 		}
 
@@ -848,9 +849,9 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		}
 
 		// Update the database AFTER the resource has been deleted
-		if ($this->blnIsDbAssisted && \Dbafs::shouldBeSynchronized($source))
+		if ($this->blnIsDbAssisted && Dbafs::shouldBeSynchronized($source))
 		{
-			\Dbafs::deleteResource($source);
+			Dbafs::deleteResource($source);
 		}
 
 		// Add a log entry
@@ -949,7 +950,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		if (\Input::post('FORM_SUBMIT') == 'tl_upload')
 		{
 			// Generate the DB entries
-			if ($this->blnIsDbAssisted && \Dbafs::shouldBeSynchronized($strFolder))
+			if ($this->blnIsDbAssisted && Dbafs::shouldBeSynchronized($strFolder))
 			{
 				// Upload the files
 				$arrUploaded = $objUploader->uploadTo($strFolder);
@@ -974,7 +975,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 					}
 					else
 					{
-						\Dbafs::addResource($strFile);
+						Dbafs::addResource($strFile);
 					}
 				}
 			}
@@ -1002,9 +1003,9 @@ class DC_Folder extends DataContainer implements \listable, \editable
 			}
 
 			// Update the hash of the target folder
-			if ($this->blnIsDbAssisted && \Dbafs::shouldBeSynchronized($strFolder))
+			if ($this->blnIsDbAssisted && Dbafs::shouldBeSynchronized($strFolder))
 			{
-				\Dbafs::updateFolderHashes($strFolder);
+				Dbafs::updateFolderHashes($strFolder);
 			}
 
 			// Redirect or reload
@@ -1094,7 +1095,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		$objVersions = null;
 
 		// Add the versioning routines
-		if ($this->blnIsDbAssisted && \Dbafs::shouldBeSynchronized($this->intId))
+		if ($this->blnIsDbAssisted && Dbafs::shouldBeSynchronized($this->intId))
 		{
 			if (stristr($this->intId, '__new__') === false)
 			{
@@ -1233,7 +1234,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		}
 
 		// Versions overview
-		if ($GLOBALS['TL_DCA'][$this->strTable]['config']['enableVersioning'] && !$GLOBALS['TL_DCA'][$this->strTable]['config']['hideVersionMenu'] && $this->blnIsDbAssisted && \Dbafs::shouldBeSynchronized($this->intId))
+		if ($GLOBALS['TL_DCA'][$this->strTable]['config']['enableVersioning'] && !$GLOBALS['TL_DCA'][$this->strTable]['config']['hideVersionMenu'] && $this->blnIsDbAssisted && Dbafs::shouldBeSynchronized($this->intId))
 		{
 			$version = $objVersions->renderDropdown();
 		}
@@ -1419,7 +1420,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 				$objVersions = null;
 
 				// Get the DB entry
-				if ($this->blnIsDbAssisted && \Dbafs::shouldBeSynchronized($id))
+				if ($this->blnIsDbAssisted && Dbafs::shouldBeSynchronized($id))
 				{
 					$objModel = FilesModel::findByPath($id);
 
@@ -1734,7 +1735,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		$objVersions = null;
 
 		// Add the versioning routines
-		if ($this->blnIsDbAssisted && \Dbafs::shouldBeSynchronized($this->intId))
+		if ($this->blnIsDbAssisted && Dbafs::shouldBeSynchronized($this->intId))
 		{
 			$objMeta = FilesModel::findByPath($objFile->value);
 
@@ -1999,9 +2000,9 @@ class DC_Folder extends DataContainer implements \listable, \editable
 			if (stristr($this->intId, '__new__') !== false)
 			{
 				// Update the database
-				if ($this->blnIsDbAssisted && \Dbafs::shouldBeSynchronized($this->strPath . '/' . $varValue . $this->strExtension))
+				if ($this->blnIsDbAssisted && Dbafs::shouldBeSynchronized($this->strPath . '/' . $varValue . $this->strExtension))
 				{
-					$this->objActiveRecord = \Dbafs::addResource($this->strPath . '/' . $varValue . $this->strExtension);
+					$this->objActiveRecord = Dbafs::addResource($this->strPath . '/' . $varValue . $this->strExtension);
 				}
 
 				$this->log('Folder "'.$this->strPath.'/'.$varValue.$this->strExtension.'" has been created', __METHOD__, TL_FILES);
@@ -2011,20 +2012,20 @@ class DC_Folder extends DataContainer implements \listable, \editable
 				// Update the database
 				if ($this->blnIsDbAssisted)
 				{
-					$syncSource = \Dbafs::shouldBeSynchronized($this->strPath . '/' . $this->varValue . $this->strExtension);
-					$syncTarget = \Dbafs::shouldBeSynchronized($this->strPath . '/' . $varValue . $this->strExtension);
+					$syncSource = Dbafs::shouldBeSynchronized($this->strPath . '/' . $this->varValue . $this->strExtension);
+					$syncTarget = Dbafs::shouldBeSynchronized($this->strPath . '/' . $varValue . $this->strExtension);
 
 					if ($syncSource && $syncTarget)
 					{
-						\Dbafs::moveResource($this->strPath . '/' . $this->varValue . $this->strExtension, $this->strPath . '/' . $varValue . $this->strExtension);
+						Dbafs::moveResource($this->strPath . '/' . $this->varValue . $this->strExtension, $this->strPath . '/' . $varValue . $this->strExtension);
 					}
 					elseif ($syncSource)
 					{
-						\Dbafs::deleteResource($this->strPath . '/' . $this->varValue . $this->strExtension);
+						Dbafs::deleteResource($this->strPath . '/' . $this->varValue . $this->strExtension);
 					}
 					elseif ($syncTarget)
 					{
-						\Dbafs::addResource($this->strPath . '/' . $varValue . $this->strExtension);
+						Dbafs::addResource($this->strPath . '/' . $varValue . $this->strExtension);
 					}
 				}
 
@@ -2169,7 +2170,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		}
 
 		// Synchronize
-		$strLog = \Dbafs::syncFiles();
+		$strLog = Dbafs::syncFiles();
 
 		// Show the results
 		$arrMessages = array();

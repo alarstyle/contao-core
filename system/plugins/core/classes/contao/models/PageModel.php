@@ -10,6 +10,7 @@
 
 namespace Contao\Models;
 
+use Contao\Controller;
 use Contao\Config;
 use Contao\Database;
 use Contao\Date;
@@ -906,7 +907,7 @@ class PageModel extends Model
 			@trigger_error('Using PageModel::getFrontendUrl() with $strForceLang has been deprecated and will no longer work in Contao 5.0.', E_USER_DEPRECATED);
 		}
 
-		return \Controller::generateFrontendUrl($this->loadDetails()->row(), $strParams, $strForceLang, true);
+		return Controller::generateFrontendUrl($this->loadDetails()->row(), $strParams, $strForceLang, true);
 	}
 
 
@@ -919,7 +920,7 @@ class PageModel extends Model
 	 */
 	public function getAbsoluteUrl($strParams=null)
 	{
-		$strUrl = \Controller::generateFrontendUrl($this->loadDetails()->row(), $strParams, null, true);
+		$strUrl = Controller::generateFrontendUrl($this->loadDetails()->row(), $strParams, null, true);
 
 		if (strncmp($strUrl, 'http://', 7) !== 0 && strncmp($strUrl, 'https://', 8) !== 0)
 		{

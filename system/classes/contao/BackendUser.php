@@ -234,7 +234,7 @@ class BackendUser extends User
 			$strRedirect .= '?referer=' . base64_encode(Environment::get('request'));
 		}
 
-		\Controller::redirect($strRedirect);
+		Controller::redirect($strRedirect);
 
 		return false;
 	}
@@ -534,7 +534,7 @@ class BackendUser extends User
 				$arrModules[$strGroupName]['icon'] = 'modMinus.gif';
 				$arrModules[$strGroupName]['title'] = specialchars($GLOBALS['TL_LANG']['MSC']['collapseNode']);
 				$arrModules[$strGroupName]['label'] = (($label = is_array($GLOBALS['TL_LANG']['MOD'][$strGroupName]) ? $GLOBALS['TL_LANG']['MOD'][$strGroupName][0] : $GLOBALS['TL_LANG']['MOD'][$strGroupName]) != false) ? $label : $strGroupName;
-				$arrModules[$strGroupName]['href'] = \Controller::addToUrl('mtg=' . $strGroupName);
+				$arrModules[$strGroupName]['href'] = Controller::addToUrl('mtg=' . $strGroupName);
 
 				// Do not show the modules if the group is closed
 				if (!$blnShowAll && isset($session['backend_modules'][$strGroupName]) && $session['backend_modules'][$strGroupName] < 1)

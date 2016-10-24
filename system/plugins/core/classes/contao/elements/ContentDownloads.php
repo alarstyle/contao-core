@@ -10,6 +10,7 @@
 
 namespace Contao\Elements;
 
+use Contao\Controller;
 use Contao\Environment;
 use Contao\Input;
 use Contao\System;
@@ -87,7 +88,7 @@ class ContentDownloads extends ContentElement
 			{
 				if ($file == $this->objFiles->path || dirname($file) == $this->objFiles->path)
 				{
-					\Controller::sendFileToBrowser($file);
+					Controller::sendFileToBrowser($file);
 				}
 			}
 

@@ -25,7 +25,7 @@ use Contao\Models\PageModel;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class InsertTags extends \Controller
+class InsertTags extends Controller
 {
 
 	/**

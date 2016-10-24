@@ -24,7 +24,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class DcaLoader extends \Controller
+class DcaLoader extends Controller
 {
 
 	/**
@@ -77,7 +77,7 @@ class DcaLoader extends \Controller
 		}
 		else
 		{
-			foreach (\PluginLoader::getActive() as $strModule)
+			foreach (PluginLoader::getActive() as $strModule)
 			{
 				$strFile = 'system/plugins/' . $strModule . '/dca/' . $this->strTable . '.php';
 

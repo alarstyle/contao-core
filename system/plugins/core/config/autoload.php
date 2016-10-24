@@ -26,10 +26,7 @@ ClassLoader::addClasses(array
 
 	// Library
 	'Contao\ClassLoader'               => 'system/plugins/core/library/Contao/ClassLoader.php',
-	'Contao\Controller'                => 'system/plugins/core/library/Contao/Controller.php',
-	'Contao\Dbafs'                     => 'system/plugins/core/library/Contao/Dbafs.php',
 	'Contao\DcaExtractor'              => 'system/plugins/core/library/Contao/DcaExtractor.php',
-	'Contao\DcaLoader'                 => 'system/plugins/core/library/Contao/DcaLoader.php',
 	'Contao\File'                      => 'system/plugins/core/library/Contao/File.php',
 	'Contao\Files'                     => 'system/plugins/core/library/Contao/Files.php',
 	'Contao\Folder'                    => 'system/plugins/core/library/Contao/Folder.php',

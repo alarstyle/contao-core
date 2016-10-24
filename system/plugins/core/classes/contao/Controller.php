@@ -1218,7 +1218,7 @@ abstract class Controller extends System
 	 */
 	public static function loadDataContainer($strTable, $blnNoCache=false)
 	{
-		$loader = new \DcaLoader($strTable);
+		$loader = new DcaLoader($strTable);
 		$loader->load($blnNoCache);
 	}
 

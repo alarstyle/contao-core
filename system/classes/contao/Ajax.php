@@ -305,9 +305,9 @@ class Ajax extends Backend
 					{
 						foreach ($varValue as $k=>$v)
 						{
-							if (\Dbafs::shouldBeSynchronized($v))
+							if (Dbafs::shouldBeSynchronized($v))
 							{
-								$varValue[$k] = \Dbafs::addResource($v)->uuid;
+								$varValue[$k] = Dbafs::addResource($v)->uuid;
 							}
 						}
 					}

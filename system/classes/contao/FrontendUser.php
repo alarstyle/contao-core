@@ -183,7 +183,7 @@ class FrontendUser extends User
 						$this->log('User "' . $this->username . '" was logged in automatically', __METHOD__, TL_ACCESS);
 
 						// Reload the page
-						\Controller::reload();
+						Controller::reload();
 
 						return true;
 					}

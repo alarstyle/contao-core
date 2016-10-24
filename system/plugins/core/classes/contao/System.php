@@ -862,7 +862,7 @@ abstract class System
 	 */
 	public static function addToUrl($strRequest)
 	{
-		return \Controller::addToUrl($strRequest);
+		return Controller::addToUrl($strRequest);
 	}
 
 
@@ -873,7 +873,7 @@ abstract class System
 	 */
 	public static function reload()
 	{
-		\Controller::reload();
+		Controller::reload();
 	}
 
 
@@ -887,7 +887,7 @@ abstract class System
 	 */
 	public static function redirect($strLocation, $intStatus=303)
 	{
-		\Controller::redirect($strLocation, $intStatus);
+		Controller::redirect($strLocation, $intStatus);
 	}
 
 
