@@ -34,8 +34,6 @@ ClassLoader::addClasses(array
 	'Contao\Files\Ftp'                 => 'system/plugins/core/library/Contao/Files/Ftp.php',
 	'Contao\Files\Php'                 => 'system/plugins/core/library/Contao/Files/Php.php',
 	'Contao\Files'                     => 'system/plugins/core/library/Contao/Files.php',
-	'Contao\Filter\SqlFiles'           => 'system/plugins/core/library/Contao/Filter/SqlFiles.php',
-	'Contao\Filter\SyncExclude'        => 'system/plugins/core/library/Contao/Filter/SyncExclude.php',
 	'Contao\Folder'                    => 'system/plugins/core/library/Contao/Folder.php',
 	'Contao\GdImage'                   => 'system/plugins/core/library/Contao/GdImage.php',
 	'Contao\Idna'                      => 'system/plugins/core/library/Contao/Idna.php',

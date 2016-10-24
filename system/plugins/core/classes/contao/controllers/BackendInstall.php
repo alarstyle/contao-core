@@ -20,6 +20,7 @@ use Contao\File;
 use Contao\Input;
 use Contao\System;
 use Contao\Validator;
+use Contao\Filter\SqlFiles;
 
 /**
  * Back end install tool.
@@ -652,7 +653,7 @@ class BackendInstall extends Backend
 	{
 		/** @var \SplFileInfo[] $objFiles */
 		$objFiles = new \RecursiveIteratorIterator(
-			new \Filter\SqlFiles(
+			new SqlFiles(
 				new \RecursiveDirectoryIterator(
 					TL_ROOT . '/templates',
 					\FilesystemIterator::UNIX_PATHS|\FilesystemIterator::FOLLOW_SYMLINKS|\FilesystemIterator::SKIP_DOTS
