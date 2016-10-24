@@ -427,6 +427,10 @@ $GLOBALS['TL_DCA']['tl_form_field'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
+
+use Contao\Forms\FormHidden;
+use Contao\StringUtil;
+
 class tl_form_field extends Contao\Backend
 {
 

@@ -8,32 +8,34 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Forms;
 
+use Contao\Config;
 use Contao\StringUtil;
 
 /**
- * Class FormHeadline
+ * Class FormExplanation
  *
  * @property string $text
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormHeadline extends \Contao\Editor
+class FormExplanation extends \Contao\Editor
 {
 
 	/**
 	 * Template
+	 *
 	 * @var string
 	 */
-	protected $strTemplate = 'form_headline';
+	protected $strTemplate = 'form_explanation';
 
 	/**
 	 * The CSS class prefix
 	 *
 	 * @var string
 	 */
-	protected $strPrefix = 'widget widget-headline';
+	protected $strPrefix = 'widget widget-explanation';
 
 
 	/**
@@ -54,6 +56,13 @@ class FormHeadline extends \Contao\Editor
 	{
 		$this->text = StringUtil::toHtml5($this->text);
 
-		return $this->text;
+		// Add the static files URL to images
+		if (TL_FILES_URL != '')
+		{
+			$path = Config::get('uploadPath') . '/';
+			$this->text = str_replace(' src="' . $path, ' src="' . TL_FILES_URL . $path, $this->text);
+		}
+
+		return StringUtil::encodeEmail($this->text);
 	}
 }

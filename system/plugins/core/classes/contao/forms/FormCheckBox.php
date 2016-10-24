@@ -8,18 +8,17 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Forms;
 
 
 /**
- * Class FormRadioButton
+ * Class FormCheckBox
  *
- * @property boolean $mandatory
- * @property array   $options
+ * @property array $options
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormRadioButton extends \Contao\Editor
+class FormCheckBox extends \Contao\Editor
 {
 
 	/**
@@ -34,7 +33,7 @@ class FormRadioButton extends \Contao\Editor
 	 *
 	 * @var string
 	 */
-	protected $strTemplate = 'form_radio';
+	protected $strTemplate = 'form_checkbox';
 
 	/**
 	 * Error message
@@ -48,31 +47,19 @@ class FormRadioButton extends \Contao\Editor
 	 *
 	 * @var string
 	 */
-	protected $strPrefix = 'widget widget-radio';
+	protected $strPrefix = 'widget widget-checkbox';
 
 
 	/**
 	 * Add specific attributes
 	 *
-	 * @param string $strKey   The attribute key
+	 * @param string $strKey   The attribute name
 	 * @param mixed  $varValue The attribute value
 	 */
 	public function __set($strKey, $varValue)
 	{
 		switch ($strKey)
 		{
-			case 'mandatory':
-				if ($varValue)
-				{
-					$this->arrAttributes['required'] = 'required';
-				}
-				else
-				{
-					unset($this->arrAttributes['required']);
-				}
-				parent::__set($strKey, $varValue);
-				break;
-
 			case 'options':
 				$this->arrOptions = deserialize($varValue);
 				break;
@@ -93,7 +80,7 @@ class FormRadioButton extends \Contao\Editor
 	/**
 	 * Return a parameter
 	 *
-	 * @param string $strKey The parameter name
+	 * @param string $strKey The parameter key
 	 *
 	 * @return mixed The parameter value
 	 */
@@ -109,18 +96,74 @@ class FormRadioButton extends \Contao\Editor
 
 
 	/**
-	 * Check for a valid option (see #4383)
+	 * Check the options if the field is mandatory
 	 */
 	public function validate()
 	{
-		$varValue = $this->getPost($this->strName);
+		$mandatory = $this->mandatory;
+		$options = $this->getPost($this->strName);
 
-		if (!empty($varValue) && !$this->isValidOption($varValue))
+		// Check if there is at least one value
+		if ($mandatory && is_array($options))
 		{
-			$this->addError(sprintf($GLOBALS['TL_LANG']['ERR']['invalid'], (is_array($varValue) ? implode(', ', $varValue) : $varValue)));
+			foreach ($options as $option)
+			{
+				if (strlen($option))
+				{
+					$this->mandatory = false;
+					break;
+				}
+			}
 		}
 
-		parent::validate();
+		$varInput = $this->validator($options);
+
+		// Check for a valid option (see #4383)
+		if (!empty($varInput) && !$this->isValidOption($varInput))
+		{
+			$this->addError(sprintf($GLOBALS['TL_LANG']['ERR']['invalid'], (is_array($varInput) ? implode(', ', $varInput) : $varInput)));
+		}
+
+		// Add class "error"
+		if ($this->hasErrors())
+		{
+			$this->class = 'error';
+		}
+		else
+		{
+			$this->varValue = $varInput;
+		}
+
+		// Reset the property
+		if ($mandatory)
+		{
+			$this->mandatory = true;
+		}
+
+		// Clear result if nothing has been submitted
+		if (!isset($_POST[$this->strName]))
+		{
+			$this->varValue = '';
+		}
+	}
+
+
+	/**
+	 * Return all attributes as string
+	 *
+	 * @param array $arrStrip An optional array with attributes to strip
+	 *
+	 * @return string The attributes string
+	 */
+	public function getAttributes($arrStrip=array())
+	{
+		// The "required" attribute only makes sense for single checkboxes
+		if (count($this->arrOptions) == 1 && $this->mandatory)
+		{
+			$this->arrAttributes['required'] = 'required';
+		}
+
+		return parent::getAttributes($arrStrip);
 	}
 
 
@@ -159,7 +202,7 @@ class FormRadioButton extends \Contao\Editor
 				$arrOptions[] = array
 				(
 					'type'       => 'option',
-					'name'       => $this->strName,
+					'name'       => $this->strName . ((count($this->arrOptions) > 1) ? '[]' : ''),
 					'id'         => $this->strId . '_' . $i,
 					'value'      => $arrOption['value'],
 					'checked'    => $this->isChecked($arrOption),
@@ -207,8 +250,8 @@ class FormRadioButton extends \Contao\Editor
 
 		foreach ($this->arrOptions as $i=>$arrOption)
 		{
-			$strOptions .= sprintf('<span><input type="radio" name="%s" id="opt_%s" class="radio" value="%s"%s%s> <label id="lbl_%s" for="opt_%s">%s</label></span> ',
-									$this->strName,
+			$strOptions .= sprintf('<span><input type="checkbox" name="%s" id="opt_%s" class="checkbox" value="%s"%s%s> <label id="lbl_%s" for="opt_%s">%s</label></span> ',
+									$this->strName . ((count($this->arrOptions) > 1) ? '[]' : ''),
 									$this->strId.'_'.$i,
 									$arrOption['value'],
 									$this->isChecked($arrOption),
@@ -220,7 +263,7 @@ class FormRadioButton extends \Contao\Editor
 
 		if ($this->strLabel != '')
 		{
-			return sprintf('<fieldset id="ctrl_%s" class="radio_container%s"><legend>%s%s%s</legend>%s<input type="hidden" name="%s" value="">%s</fieldset>',
+			return sprintf('<fieldset id="ctrl_%s" class="checkbox_container%s"><legend>%s%s%s</legend>%s<input type="hidden" name="%s" value="">%s</fieldset>',
 							$this->strId,
 							(($this->strClass != '') ? ' ' . $this->strClass : ''),
 							($this->mandatory ? '<span class="invisible">'.$GLOBALS['TL_LANG']['MSC']['mandatory'].' </span>' : ''),
@@ -232,7 +275,7 @@ class FormRadioButton extends \Contao\Editor
 		}
 		else
 		{
-	        return sprintf('<fieldset id="ctrl_%s" class="radio_container%s">%s<input type="hidden" name="%s" value="">%s</fieldset>',
+			return sprintf('<fieldset id="ctrl_%s" class="checkbox_container%s">%s<input type="hidden" name="%s" value="">%s</fieldset>',
 							$this->strId,
 							(($this->strClass != '') ? ' ' . $this->strClass : ''),
 							$this->strError,

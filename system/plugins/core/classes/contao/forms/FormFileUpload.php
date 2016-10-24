@@ -8,9 +8,10 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Forms;
 
 use Contao\Config;
+use Contao\Dbafs;
 use Contao\StringUtil;
 use Contao\Models\FilesModel;
 
@@ -259,7 +260,7 @@ class FormFileUpload extends \Contao\Editor implements \uploadable
 					$strFile = $strUploadFolder . '/' . $file['name'];
 
 					// Generate the DB entries
-					if (\Dbafs::shouldBeSynchronized($strFile))
+					if (Dbafs::shouldBeSynchronized($strFile))
 					{
 						$objModel = FilesModel::findByPath($strFile);
 
@@ -275,11 +276,11 @@ class FormFileUpload extends \Contao\Editor implements \uploadable
 						}
 						else
 						{
-							$strUuid = StringUtil::binToUuid(\Dbafs::addResource($strFile)->uuid);
+							$strUuid = StringUtil::binToUuid(Dbafs::addResource($strFile)->uuid);
 						}
 
 						// Update the hash of the target folder
-						\Dbafs::updateFolderHashes($strUploadFolder);
+						Dbafs::updateFolderHashes($strUploadFolder);
 					}
 
 					// Add the session entry (see #6986)

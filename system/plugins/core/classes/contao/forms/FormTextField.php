@@ -8,8 +8,9 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Forms;
 
+use Contao\Idna;
 
 /**
  * Class FormTextField
@@ -116,11 +117,11 @@ class FormTextField extends \Contao\Editor
 				// Hide the Punycode format (see #2750)
 				if ($this->rgxp == 'url')
 				{
-					return \Idna::decode($this->varValue);
+					return Idna::decode($this->varValue);
 				}
 				elseif ($this->rgxp == 'email' || $this->rgxp == 'friendly')
 				{
-					return \Idna::decodeEmail($this->varValue);
+					return Idna::decodeEmail($this->varValue);
 				}
 				else
 				{
@@ -189,11 +190,11 @@ class FormTextField extends \Contao\Editor
 		// Convert to Punycode format (see #5571)
 		if ($this->rgxp == 'url')
 		{
-			$varInput = \Idna::encodeUrl($varInput);
+			$varInput = Idna::encodeUrl($varInput);
 		}
 		elseif ($this->rgxp == 'email' || $this->rgxp == 'friendly')
 		{
-			$varInput = \Idna::encodeEmail($varInput);
+			$varInput = Idna::encodeEmail($varInput);
 		}
 
 		return parent::validator($varInput);

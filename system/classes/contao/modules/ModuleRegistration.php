@@ -16,6 +16,7 @@ use Contao\Email;
 use Contao\Encryption;
 use Contao\Environment;
 use Contao\FrontendTemplate;
+use Contao\Forms\FormPassword;
 use Contao\Idna;
 use Contao\Input;
 use Contao\Models\FilesModel;
@@ -153,7 +154,7 @@ class ModuleRegistration extends AbstractModule
 			// Fallback to default if the class is not defined
 			if (!class_exists($strClass))
 			{
-				$strClass = 'FormCaptcha';
+				$strClass = 'Contao\\Fomrs\\FormCaptcha';
 			}
 
 			/** @var FormCaptcha $objCaptcha */
@@ -210,7 +211,7 @@ class ModuleRegistration extends AbstractModule
 			$objEditor->rowClass = 'row_' . $i . (($i == 0) ? ' row_first' : '') . ((($i % 2) == 0) ? ' even' : ' odd');
 
 			// Increase the row count if its a password field
-			if ($objEditor instanceof \FormPassword)
+			if ($objEditor instanceof FormPassword)
 			{
 				$objEditor->rowClassConfirm = 'row_' . ++$i . ((($i % 2) == 0) ? ' even' : ' odd');
 			}
@@ -222,7 +223,7 @@ class ModuleRegistration extends AbstractModule
 				$varValue = $objEditor->value;
 
 				// Check whether the password matches the username
-				if ($objEditor instanceof \FormPassword && Encryption::verify(Input::post('username'), $varValue))
+				if ($objEditor instanceof FormPassword && Encryption::verify(Input::post('username'), $varValue))
 				{
 					$objEditor->addError($GLOBALS['TL_LANG']['ERR']['passwordName']);
 				}

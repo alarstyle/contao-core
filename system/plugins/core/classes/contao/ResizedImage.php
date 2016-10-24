@@ -70,6 +70,10 @@ class ResizedImage
 
         $originalPath = implode('', array_slice($parts, 0, -3)) . '.' . $extension;
 
+        if (!file_exists(TL_ROOT . '/' . $originalPath)) {
+            return null;
+        }
+
         if (static::generateKey($originalPath, $width, $height) !== $key) {
             return null;
         }

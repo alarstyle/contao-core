@@ -14,6 +14,7 @@ use \Contao\BackendTemplate;
 use \Contao\Encryption;
 use \Contao\Environment;
 use \Contao\Message;
+use \Contao\Forms\FormPassword;
 use \Contao\Models\MemberModel;
 use \Contao\System;
 
@@ -133,7 +134,7 @@ class ModuleChangePassword extends AbstractModule
 			$objEditor->rowClass = 'row_' . $row . (($row == 0) ? ' row_first' : '') . ((($row % 2) == 0) ? ' even' : ' odd');
 
 			// Increase the row count if it is a password field
-			if ($objEditor instanceof \FormPassword)
+			if ($objEditor instanceof FormPassword)
 			{
 				$objEditor->rowClassConfirm = 'row_' . ++$row . ((($row % 2) == 0) ? ' even' : ' odd');
 			}

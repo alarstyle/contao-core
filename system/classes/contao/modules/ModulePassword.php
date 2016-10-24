@@ -12,9 +12,11 @@ namespace Contao\Modules;
 
 use Contao\Email;
 use Contao\Environment;
+use Contao\FrontendTemplate;
 use Contao\Idna;
 use Contao\StringUtil;
 use Contao\System;
+use Contao\Versions;
 use Contao\Models\MemberModel;
 
 /**
@@ -217,7 +219,7 @@ class ModulePassword extends AbstractModule
 		// Fallback to default if the class is not defined
 		if (!class_exists($strClass))
 		{
-			$strClass = 'FormPassword';
+			$strClass = 'Contao\\Forms\\FormPassword';
 		}
 
 		/** @var \Editor $objEditor */

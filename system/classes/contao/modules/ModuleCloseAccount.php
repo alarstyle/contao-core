@@ -10,9 +10,10 @@
 
 namespace Contao\Modules;
 
-use \Contao\Encryption;
-use \Contao\Environment;
-use \Contao\Models\MemberModel;
+use Contao\Encryption;
+use Contao\Environment;
+use Contao\Models\MemberModel;
+use Contao\Forms\FormTextField;
 
 /**
  * Front end module "close account".
@@ -76,7 +77,7 @@ class ModuleCloseAccount extends AbstractModule
 			'eval' => array('hideInput'=>true, 'preserveTags'=>true, 'mandatory'=>true, 'required'=>true, 'tableless'=>$this->tableless)
 		);
 
-		$objEditor = new \FormTextField(\FormTextField::getAttributesFromDca($arrField, $arrField['name']));
+		$objEditor = new FormTextField(FormTextField::getAttributesFromDca($arrField, $arrField['name']));
 		$objEditor->rowClass = 'row_0 row_first even';
 
 		// Validate editor

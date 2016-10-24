@@ -8,8 +8,9 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Forms;
 
+use Contao\Validator;
 use Contao\Models\FilesModel;
 
 /**

@@ -8,9 +8,10 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Forms;
 
 use Contao\Config;
+use Contao\Encryption;
 
 /**
  * Class FormPassword

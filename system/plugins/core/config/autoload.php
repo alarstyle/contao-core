@@ -24,23 +24,6 @@ ClassLoader::addNamespaces(array
 ClassLoader::addClasses(array
 (
 
-	// Forms
-	'Contao\Form'                      => 'system/plugins/core/forms/Form.php',
-	'Contao\FormCaptcha'               => 'system/plugins/core/forms/FormCaptcha.php',
-	'Contao\FormCheckBox'              => 'system/plugins/core/forms/FormCheckBox.php',
-	'Contao\FormExplanation'           => 'system/plugins/core/forms/FormExplanation.php',
-	'Contao\FormFieldset'              => 'system/plugins/core/forms/FormFieldset.php',
-	'Contao\FormFileUpload'            => 'system/plugins/core/forms/FormFileUpload.php',
-	'Contao\FormHeadline'              => 'system/plugins/core/forms/FormHeadline.php',
-	'Contao\FormHidden'                => 'system/plugins/core/forms/FormHidden.php',
-	'Contao\FormHtml'                  => 'system/plugins/core/forms/FormHtml.php',
-	'Contao\FormPassword'              => 'system/plugins/core/forms/FormPassword.php',
-	'Contao\FormRadioButton'           => 'system/plugins/core/forms/FormRadioButton.php',
-	'Contao\FormSelectMenu'            => 'system/plugins/core/forms/FormSelectMenu.php',
-	'Contao\FormSubmit'                => 'system/plugins/core/forms/FormSubmit.php',
-	'Contao\FormTextArea'              => 'system/plugins/core/forms/FormTextArea.php',
-	'Contao\FormTextField'             => 'system/plugins/core/forms/FormTextField.php',
-
 	// Library
 	'Contao\ClassLoader'               => 'system/plugins/core/library/Contao/ClassLoader.php',
 	'Contao\Controller'                => 'system/plugins/core/library/Contao/Controller.php',

@@ -215,20 +215,20 @@ $GLOBALS['BE_FFL'] = array
  */
 $GLOBALS['TL_FFL'] = array
 (
-	'headline'    => 'FormHeadline',
-	'explanation' => 'FormExplanation',
-	'html'        => 'FormHtml',
-	'fieldset'    => 'FormFieldset',
-	'text'        => 'FormTextField',
-	'password'    => 'FormPassword',
-	'textarea'    => 'FormTextArea',
-	'select'      => 'FormSelectMenu',
-	'radio'       => 'FormRadioButton',
-	'checkbox'    => 'FormCheckBox',
-	'upload'      => 'FormFileUpload',
-	'hidden'      => 'FormHidden',
-	'captcha'     => 'FormCaptcha',
-	'submit'      => 'FormSubmit'
+	'headline'    => 'Contao\\Forms\\FormHeadline',
+	'explanation' => 'Contao\\Forms\\FormExplanation',
+	'html'        => 'Contao\\Forms\\FormHtml',
+	'fieldset'    => 'Contao\\Forms\\FormFieldset',
+	'text'        => 'Contao\\Forms\\FormTextField',
+	'password'    => 'Contao\\Forms\\FormPassword',
+	'textarea'    => 'Contao\\Forms\\FormTextArea',
+	'select'      => 'Contao\\Forms\\FormSelectMenu',
+	'radio'       => 'Contao\\Forms\\FormRadioButton',
+	'checkbox'    => 'Contao\\Forms\\FormCheckBox',
+	'upload'      => 'Contao\\Forms\\FormFileUpload',
+	'hidden'      => 'Contao\\Forms\\FormHidden',
+	'captcha'     => 'Contao\\Forms\\FormCaptcha',
+	'submit'      => 'Contao\\Forms\\FormSubmit'
 );
 
 

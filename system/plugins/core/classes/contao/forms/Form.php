@@ -8,11 +8,13 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Forms;
 
+use Contao\BackendTemplate;
 use Contao\Editor;
 use Contao\Email;
 use Contao\Environment;
+use Contao\Forms\FormHidden;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Models\FormFieldModel;
@@ -39,7 +41,7 @@ use Contao\Models\FormFieldModel;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class Form extends \Hybrid
+class Form extends \Contao\Hybrid
 {
 
 	/**
@@ -83,7 +85,7 @@ class Form extends \Hybrid
 		if (TL_MODE == 'BE')
 		{
 			/** @var \BackendTemplate|object $objTemplate */
-			$objTemplate = new \BackendTemplate('be_wildcard');
+			$objTemplate = new BackendTemplate('be_wildcard');
 
 			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['CTE']['form'][0]) . ' ###';
 			$objTemplate->id = $this->id;
@@ -238,7 +240,7 @@ class Form extends \Hybrid
 					$hasUpload = true;
 				}
 
-				if ($objEditor instanceof \FormHidden)
+				if ($objEditor instanceof FormHidden)
 				{
 					$this->Template->hidden .= $objEditor->parse();
 					--$max_row;

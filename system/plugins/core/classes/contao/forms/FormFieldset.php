@@ -8,8 +8,9 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Forms;
 
+use Contao\BackendTemplate;
 
 /**
  * Class FormFieldset
@@ -52,7 +53,7 @@ class FormFieldset extends \Contao\Editor
 		if (TL_MODE == 'BE')
 		{
 			/** @var \BackendTemplate|object $objTemplate */
-			$objTemplate = new \BackendTemplate('be_wildcard');
+			$objTemplate = new BackendTemplate('be_wildcard');
 
 			if ($this->fsType == 'fsStart')
 			{
