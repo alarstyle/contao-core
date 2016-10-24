@@ -18,6 +18,7 @@ use Contao\System;
 use Contao\Template;
 use Contao\Models\ModuleModel;
 use Contao\Models\StyleSheetModel;
+use Contao\Models\LayoutModel;
 
 /**
  * Provide methods to handle a regular front end page.
@@ -231,7 +232,7 @@ class PageRegular extends Frontend
 		}
 
 		$intId = ($blnMobile && $objPage->mobileLayout) ? $objPage->mobileLayout : $objPage->layout;
-		$objLayout = \LayoutModel::findByPk($intId);
+		$objLayout = LayoutModel::findByPk($intId);
 
 		// Die if there is no layout
 		if (null === $objLayout)

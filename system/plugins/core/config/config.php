@@ -448,3 +448,6 @@ $GLOBALS['TL_MODELS']['tl_session'] = 'Contao\\Models\\SessionModel';
 $GLOBALS['TL_MODELS']['tl_page'] = 'Contao\\Models\\PageModel';
 $GLOBALS['TL_MODELS']['tl_module'] = 'Contao\\Models\\ModuleModel';
 $GLOBALS['TL_MODELS']['tl_member'] = 'Contao\\Models\\MemberModel';
+$GLOBALS['TL_MODELS']['tl_member_group'] = 'Contao\\Models\\MemberGroupModel';
+$GLOBALS['TL_MODELS']['tl_layout'] = 'Contao\\Models\\LayoutModel';
+$GLOBALS['TL_MODELS']['tl_image_size'] = 'Contao\\Models\\ImageSizeModel';

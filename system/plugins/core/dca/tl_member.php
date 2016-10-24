@@ -451,6 +451,7 @@ if (TL_MODE == 'FE')
  */
 
 use Contao\DataContainer;
+use Contao\Models\MemberGroupModel;
 
 class tl_member extends Contao\Backend
 {

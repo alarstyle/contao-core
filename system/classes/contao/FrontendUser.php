@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Models\MemberGroupModel;
 
 /**
  * Provide methods to manage front end users.
@@ -319,7 +320,7 @@ class FrontendUser extends User
 		}
 
 		// Skip inactive groups
-		if (($objGroups = \MemberGroupModel::findAllActive()) !== null)
+		if (($objGroups = MemberGroupModel::findAllActive()) !== null)
 		{
 			$this->groups = array_intersect($this->groups, $objGroups->fetchEach('id'));
 		}
@@ -327,7 +328,7 @@ class FrontendUser extends User
 		// Get the group login page
 		if ($this->groups[0] > 0)
 		{
-			$objGroup = \MemberGroupModel::findPublishedById($this->groups[0]);
+			$objGroup = MemberGroupModel::findPublishedById($this->groups[0]);
 
 			if ($objGroup !== null && $objGroup->redirect && $objGroup->jumpTo)
 			{

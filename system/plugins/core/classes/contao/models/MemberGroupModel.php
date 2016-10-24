@@ -8,10 +8,11 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Models;
 
 use Contao\Database;
 use Contao\Date;
+use Contao\Model;
 
 /**
  * Reads and writes member groups
@@ -59,7 +60,7 @@ use Contao\Date;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class MemberGroupModel extends \Model
+class MemberGroupModel extends Model
 {
 
 	/**

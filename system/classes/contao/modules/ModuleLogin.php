@@ -13,7 +13,8 @@ namespace Contao\Modules;
 use Contao\Config;
 use Contao\Date;
 use Contao\Environment;
-use \Contao\Models\MemberModel;
+use Contao\Models\MemberGroupModel;
+use Contao\Models\MemberModel;
 
 /**
  * Front end module "login".
@@ -93,7 +94,7 @@ class ModuleLogin extends AbstractModule
 
 					if (!empty($arrGroups) && is_array($arrGroups))
 					{
-						$objGroupPage = \MemberGroupModel::findFirstActiveWithJumpToByIds($arrGroups);
+						$objGroupPage = MemberGroupModel::findFirstActiveWithJumpToByIds($arrGroups);
 
 						if ($objGroupPage !== null)
 						{

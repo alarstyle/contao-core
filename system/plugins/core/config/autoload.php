@@ -63,16 +63,12 @@ ClassLoader::addClasses(array
 	'Contao\Model\Registry'            => 'system/plugins/core/library/Contao/Model/Registry.php',
 	'Contao\Model'                     => 'system/plugins/core/library/Contao/Model.php',
 	'Contao\PluginLoader'              => 'system/plugins/core/library/Contao/PluginLoader.php',
-	'Contao\SortedIterator'            => 'system/plugins/core/library/Contao/SortedIterator.php',
 
 	// Models
 	'Contao\FilesModel'                => 'system/plugins/core/models/FilesModel.php',
 	'Contao\FormFieldModel'            => 'system/plugins/core/models/FormFieldModel.php',
 	'Contao\FormModel'                 => 'system/plugins/core/models/FormModel.php',
 	'Contao\ImageSizeItemModel'        => 'system/plugins/core/models/ImageSizeItemModel.php',
-	'Contao\ImageSizeModel'            => 'system/plugins/core/models/ImageSizeModel.php',
-	'Contao\LayoutModel'               => 'system/plugins/core/models/LayoutModel.php',
-	'Contao\MemberGroupModel'          => 'system/plugins/core/models/MemberGroupModel.php',
 ));
 
 

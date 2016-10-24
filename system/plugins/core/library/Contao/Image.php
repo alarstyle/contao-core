@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Models\ImageSizeModel;
 
 /**
  * Resizes images
@@ -913,7 +914,7 @@ class Image
 		}
 
 		// Load the image size from the database if $size is an ID
-		elseif (($imageSize = \ImageSizeModel::findByPk($size)) !== null)
+		elseif (($imageSize = ImageSizeModel::findByPk($size)) !== null)
 		{
 			$imageObj->setTargetWidth($imageSize->width)
 					 ->setTargetHeight($imageSize->height)

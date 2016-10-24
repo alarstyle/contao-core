@@ -294,7 +294,7 @@ class tl_templates extends \Contao\Backend
 			}
 
 			/** @var SplFileInfo[] $objFiles */
-			$objFiles = new SortedIterator(
+			$objFiles = new \Contao\SortedIterator(
 				new RecursiveIteratorIterator(
 					new RecursiveDirectoryIterator(
 						TL_ROOT . '/system/plugins/' . $strModule . '/templates',
