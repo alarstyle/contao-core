@@ -524,7 +524,7 @@ class BackendUser extends User
 			Controller::redirect(preg_replace('/(&(amp;)?|\?)mtg=[^& ]*/i', '', Environment::get('request')));
 		}
 
-		$arrInactiveModules = \PluginLoader::getDisabled();
+		$arrInactiveModules = PluginLoader::getDisabled();
 		$blnCheckInactiveModules = is_array($arrInactiveModules);
 
 		foreach ($GLOBALS['BE_MOD'] as $strGroupName=>$arrGroupModules)

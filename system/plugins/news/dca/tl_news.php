@@ -481,7 +481,7 @@ class tl_news extends \Contao\Backend
 	public function checkPermission()
 	{
 		// HOOK: comments extension required
-		if (!in_array('comments', PluginLoader::getActive()))
+		if (!in_array('comments', \Contao\PluginLoader::getActive()))
 		{
 			$key = array_search('allowComments', $GLOBALS['TL_DCA']['tl_news']['list']['sorting']['headerFields']);
 			unset($GLOBALS['TL_DCA']['tl_news']['list']['sorting']['headerFields'][$key]);

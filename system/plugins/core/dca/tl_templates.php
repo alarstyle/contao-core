@@ -146,6 +146,7 @@ $GLOBALS['TL_DCA']['tl_templates'] = array
  * @author Leo Feyer <https://github.com/leofeyer>
  */
 use Contao\Image;
+use Contao\PluginLoader;
 
 class tl_templates extends \Contao\Backend
 {

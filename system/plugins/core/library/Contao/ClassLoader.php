@@ -213,7 +213,7 @@ class ClassLoader
 		}
 		else
 		{
-			foreach (\PluginLoader::getActive() as $module)
+			foreach (PluginLoader::getActive() as $module)
 			{
 				$strFilePath = TL_ROOT . '/system/plugins/' . $module . '/config/autoload.php';
 

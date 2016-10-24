@@ -21,6 +21,7 @@ use Contao\Idna;
 use Contao\Input;
 use Contao\Models\FilesModel;
 use Contao\Models\MemberModel;
+use Contao\PluginLoader;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Versions;
@@ -385,7 +386,7 @@ class ModuleRegistration extends AbstractModule
 			$arrTokenData['link'] = Idna::decode(Environment::get('base')) . Environment::get('request') . (strpos(Environment::get('request'), '?') !== false ? '&' : '?') . 'token=' . $arrData['activation'];
 			$arrTokenData['channels'] = '';
 
-			if (in_array('newsletter', \PluginLoader::getActive()))
+			if (in_array('newsletter', PluginLoader::getActive()))
 			{
 				// Make sure newsletter is an array
 				if (!is_array($arrData['newsletter']))

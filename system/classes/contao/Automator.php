@@ -468,7 +468,7 @@ class Automator extends System
 		$objCacheFile = new \File('system/cache/config/autoload.php', true);
 		$objCacheFile->write('<?php '); // add one space to prevent the "unexpected $end" error
 
-		foreach (\PluginLoader::getActive() as $strModule)
+		foreach (PluginLoader::getActive() as $strModule)
 		{
 			$strFile = 'system/plugins/' . $strModule . '/config/autoload.php';
 
@@ -485,8 +485,8 @@ class Automator extends System
 		$objCacheFile = new \File('system/cache/config/plugins.php', true);
 		$objCacheFile->write("<?php\n\n");
 
-		$objCacheFile->append(sprintf("static::\$active = %s;\n", var_export(\PluginLoader::getActive(), true)));
-		$objCacheFile->append(sprintf("static::\$disabled = %s;", var_export(\PluginLoader::getDisabled(), true)));
+		$objCacheFile->append(sprintf("static::\$active = %s;\n", var_export(PluginLoader::getActive(), true)));
+		$objCacheFile->append(sprintf("static::\$disabled = %s;", var_export(PluginLoader::getDisabled(), true)));
 
 		// Close the file (moves it to its final destination)
 		$objCacheFile->close();
@@ -495,7 +495,7 @@ class Automator extends System
 		$objCacheFile = new \File('system/cache/config/config.php', true);
 		$objCacheFile->write('<?php '); // add one space to prevent the "unexpected $end" error
 
-		foreach (\PluginLoader::getActive() as $strModule)
+		foreach (PluginLoader::getActive() as $strModule)
 		{
 			$strFile = 'system/plugins/' . $strModule . '/config/config.php';
 
@@ -545,7 +545,7 @@ class Automator extends System
 		$arrFiles = array();
 
 		// Parse all active modules
-		foreach (\PluginLoader::getActive() as $strModule)
+		foreach (PluginLoader::getActive() as $strModule)
 		{
 			$strDir = 'system/plugins/' . $strModule . '/dca';
 
@@ -573,7 +573,7 @@ class Automator extends System
 			$objCacheFile->write('<?php '); // add one space to prevent the "unexpected $end" error
 
 			// Parse all active modules
-			foreach (\PluginLoader::getActive() as $strModule)
+			foreach (PluginLoader::getActive() as $strModule)
 			{
 				$strFile = 'system/plugins/' . $strModule . '/dca/' . $strName . '.php';
 
@@ -624,7 +624,7 @@ class Automator extends System
 			$arrFiles = array();
 
 			// Parse all active modules
-			foreach (\PluginLoader::getActive() as $strModule)
+			foreach (PluginLoader::getActive() as $strModule)
 			{
 				$strDir = 'system/plugins/' . $strModule . '/languages/' . $strLanguage;
 
@@ -670,7 +670,7 @@ class Automator extends System
 				$objCacheFile->write(sprintf($strHeader, $strLanguage));
 
 				// Parse all active modules and append to the cache file
-				foreach (\PluginLoader::getActive() as $strModule)
+				foreach (PluginLoader::getActive() as $strModule)
 				{
 					$strFile = 'system/plugins/' . $strModule . '/languages/' . $strLanguage . '/' . $strName;
 
@@ -703,7 +703,7 @@ class Automator extends System
 		$arrExtracts = array();
 
 		// Only check the active modules (see #4541)
-		foreach (\PluginLoader::getActive() as $strModule)
+		foreach (PluginLoader::getActive() as $strModule)
 		{
 			$strDir = 'system/plugins/' . $strModule . '/dca';
 

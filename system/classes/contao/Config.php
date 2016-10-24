@@ -130,7 +130,7 @@ class Config
             include TL_ROOT . '/' . $strCacheFile;
         } else {
             // Get the module configuration files
-            foreach (\PluginLoader::getActive() as $strModule) {
+            foreach (PluginLoader::getActive() as $strModule) {
                 $strFile = TL_ROOT . '/system/plugins/' . $strModule . '/config/config.php';
                 if (file_exists($strFile)) {
                     include $strFile;
@@ -309,7 +309,7 @@ class Config
      */
     public function getActiveModules()
     {
-        return \PluginLoader::getActive();
+        return PluginLoader::getActive();
     }
 
 

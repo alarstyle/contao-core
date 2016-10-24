@@ -12,7 +12,7 @@ namespace Contao\Database;
 
 use Contao\Config;
 use Contao\Controller;
-
+use Contao\PluginLoader;
 
 /**
  * Compares the existing database structure with the DCA table settings and
@@ -334,7 +334,7 @@ class Installer extends Controller
 		$return = array();
 
 		// Only check the active modules (see #4541)
-		foreach (\PluginLoader::getActive() as $strModule)
+		foreach (PluginLoader::getActive() as $strModule)
 		{
 			if (strncmp($strModule, '.', 1) === 0 || strncmp($strModule, '__', 2) === 0)
 			{

@@ -453,6 +453,7 @@ if (TL_MODE == 'FE')
 use Contao\DataContainer;
 use Contao\Models\MemberGroupModel;
 use Contao\Image;
+use Contao\PluginLoader;
 
 class tl_member extends Contao\Backend
 {

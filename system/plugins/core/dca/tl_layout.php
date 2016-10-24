@@ -458,6 +458,7 @@ $GLOBALS['TL_DCA']['tl_layout'] = array
  * @author Leo Feyer <https://github.com/leofeyer>
  */
 use Contao\Image;
+use Contao\PluginLoader;
 
 class tl_layout extends Contao\Backend
 {
@@ -537,7 +538,7 @@ class tl_layout extends Contao\Backend
 			return array();
 		}
 
-		$objFeed = \COntao\Models\NewsFeedModel::findAll();
+		$objFeed = \Contao\Models\NewsFeedModel::findAll();
 
 		if ($objFeed === null)
 		{

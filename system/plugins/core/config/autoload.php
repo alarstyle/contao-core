@@ -31,7 +31,6 @@ ClassLoader::addClasses(array
 	'Contao\Files'                     => 'system/plugins/core/library/Contao/Files.php',
 	'Contao\Folder'                    => 'system/plugins/core/library/Contao/Folder.php',
 	'Contao\Input'                     => 'system/plugins/core/library/Contao/Input.php',
-	'Contao\PluginLoader'              => 'system/plugins/core/library/Contao/PluginLoader.php',
 ));
 
 
