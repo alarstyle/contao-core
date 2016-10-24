@@ -10,13 +10,15 @@
 
 namespace Contao;
 
+use Contao\Models\PageModel;
+use Contao\Models\SessionModel;
 
 /**
  * Provide methods to manage front end controllers.
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-abstract class Frontend extends \Controller
+abstract class Frontend extends Controller
 {
 
 	/**
@@ -223,7 +225,7 @@ abstract class Frontend extends \Controller
 		// The language is set in the URL
 		if (Config::get('addLanguageToUrl') && !empty($_GET['language']))
 		{
-			$objRootPage = \PageModel::findFirstPublishedRootByHostAndLanguage($host, \Input::get('language'));
+			$objRootPage = PageModel::findFirstPublishedRootByHostAndLanguage($host, \Input::get('language'));
 
 			// No matching root page found
 			if ($objRootPage === null)
@@ -240,7 +242,7 @@ abstract class Frontend extends \Controller
 			$accept_language = Environment::get('httpAcceptLanguage');
 
 			// Find the matching root pages (thanks to Andreas Schempp)
-			$objRootPage = \PageModel::findFirstPublishedRootByHostAndLanguage($host, $accept_language);
+			$objRootPage = PageModel::findFirstPublishedRootByHostAndLanguage($host, $accept_language);
 
 			// No matching root page found
 			if ($objRootPage === null)
@@ -379,7 +381,7 @@ abstract class Frontend extends \Controller
 		{
 			if ($intId != $objPage->id || $blnForceRedirect)
 			{
-				if (($objNextPage = \PageModel::findPublishedById($intId)) !== null)
+				if (($objNextPage = PageModel::findPublishedById($intId)) !== null)
 				{
 					$this->redirect($objNextPage->getFrontendUrl($strParams, $strForceLang));
 				}
@@ -412,7 +414,7 @@ abstract class Frontend extends \Controller
 		if ($cookie == $hash)
 		{
 			// Try to find the session
-			$objSession = \SessionModel::findByHashAndName($hash, $strCookie);
+			$objSession = SessionModel::findByHashAndName($hash, $strCookie);
 
 			// Validate the session ID and timeout
 			if ($objSession !== null && $objSession->sessionID == session_id() && (Config::get('disableIpCheck') || $objSession->ip == Environment::get('ip')) && ($objSession->tstamp + Config::get('sessionTimeout')) > time())

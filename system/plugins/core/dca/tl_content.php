@@ -806,7 +806,10 @@ if (Input::get('do') == 'page')
  * @author Leo Feyer <https://github.com/leofeyer>
  */
 use Contao\DataContainer;
+use Contao\Input;
 use Contao\Models\ContentModel;
+use Contao\Models\PageModel;
+use Contao\StringUtil;
 
 class tl_content extends Contao\Backend
 {

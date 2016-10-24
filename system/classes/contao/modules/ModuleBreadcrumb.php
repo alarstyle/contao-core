@@ -12,6 +12,7 @@ namespace Contao\Modules;
 
 use Contao\Environment;
 use Contao\Models\ArticleModel;
+use Contao\Models\PageModel;
 use Contao\StringUtil;
 
 /**
@@ -68,7 +69,7 @@ class ModuleBreadcrumb extends AbstractModule
 		$items = array();
 
 		// Get all pages up to the root page
-		$objPages = \PageModel::findParentsById($objPage->pid);
+		$objPages = PageModel::findParentsById($objPage->pid);
 
 		if ($objPages !== null)
 		{
@@ -83,7 +84,7 @@ class ModuleBreadcrumb extends AbstractModule
 		// Get the first active regular page and display it instead of the root page
 		if ($type == 'root')
 		{
-			$objFirstPage = \PageModel::findFirstPublishedByPid($objPages->id);
+			$objFirstPage = PageModel::findFirstPublishedByPid($objPages->id);
 
 			$items[] = array
 			(
@@ -120,7 +121,7 @@ class ModuleBreadcrumb extends AbstractModule
 					break;
 
 				case 'forward':
-					if (($objNext = $pages[$i]->getRelated('jumpTo')) !== null || ($objNext = \PageModel::findFirstPublishedRegularByPid($pages[$i]->id)) !== null)
+					if (($objNext = $pages[$i]->getRelated('jumpTo')) !== null || ($objNext = PageModel::findFirstPublishedRegularByPid($pages[$i]->id)) !== null)
 					{
 						/** @var \PageModel $objNext */
 						$href = $objNext->getFrontendUrl();

@@ -13,6 +13,7 @@ namespace Contao\Pages;
 use Contao\Config;
 use Contao\Environment;
 use Contao\Frontend;
+use Contao\Models\PageModel;
 
 /**
  * Provide methods to handle a forward page.
@@ -36,7 +37,7 @@ class PageForward extends Frontend
 		}
 		else
 		{
-			$objNextPage = \PageModel::findFirstPublishedRegularByPid($objPage->id);
+			$objNextPage = PageModel::findFirstPublishedRegularByPid($objPage->id);
 		}
 
 		// Forward page does not exist

@@ -8,9 +8,10 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Models;
 
 use Contao\Database;
+use Contao\Model;
 
 /**
  * Reads and writes style sheets
@@ -73,7 +74,7 @@ use Contao\Database;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class StyleSheetModel extends \Model
+class StyleSheetModel extends Model
 {
 
 	/**

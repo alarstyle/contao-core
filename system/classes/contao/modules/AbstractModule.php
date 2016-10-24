@@ -14,6 +14,7 @@ use Contao\Environment;
 use Contao\Frontend;
 use Contao\FrontendTemplate;
 use Contao\StringUtil;
+use Contao\Models\PageModel;
 
 /**
  * Parent class for front end modules.
@@ -335,7 +336,7 @@ abstract class AbstractModule extends Frontend
 	protected function renderNavigation($pid, $level=1, $host=null, $language=null)
 	{
 		// Get all active subpages
-		$objSubpages = \PageModel::findPublishedSubpagesWithoutGuestsByPid($pid, $this->showHidden, $this instanceof \ModuleSitemap);
+		$objSubpages = PageModel::findPublishedSubpagesWithoutGuestsByPid($pid, $this->showHidden, $this instanceof \ModuleSitemap);
 
 		if ($objSubpages === null)
 		{
@@ -418,7 +419,7 @@ abstract class AbstractModule extends Frontend
 						}
 						else
 						{
-							$objNext = \PageModel::findFirstPublishedRegularByPid($objSubpage->id);
+							$objNext = PageModel::findFirstPublishedRegularByPid($objSubpage->id);
 						}
 
 						// Hide the link if the target page is invisible

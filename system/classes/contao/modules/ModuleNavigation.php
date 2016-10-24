@@ -12,6 +12,7 @@ namespace Contao\Modules;
 
 use Contao\Config;
 use Contao\Environment;
+use Contao\Models\PageModel;
 
 /**
  * Front end module "navigation".
@@ -81,7 +82,7 @@ class ModuleNavigation extends AbstractModule
 		// Overwrite the domain and language if the reference page belongs to a differnt root page (see #3765)
 		if ($this->defineRoot && $this->rootPage > 0)
 		{
-			$objRootPage = \PageModel::findWithDetails($this->rootPage);
+			$objRootPage = PageModel::findWithDetails($this->rootPage);
 
 			// Set the language
 			if (Config::get('addLanguageToUrl') && $objRootPage->rootLanguage != $objPage->rootLanguage)

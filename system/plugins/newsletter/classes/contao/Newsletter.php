@@ -14,6 +14,7 @@ use Contao\Config;
 use Contao\Email;
 use Contao\Models\NewsletterChannelModel;
 use Contao\Models\NewsletterModel;
+use Contao\Models\PageModel;
 use Contao\System;
 
 /**
@@ -933,7 +934,7 @@ class Newsletter extends Backend
 				// Get the URL of the jumpTo page
 				if (!isset($arrProcessed[$objNewsletter->jumpTo]))
 				{
-					$objParent = \PageModel::findWithDetails($objNewsletter->jumpTo);
+					$objParent = PageModel::findWithDetails($objNewsletter->jumpTo);
 
 					// The target page does not exist
 					if ($objParent === null)

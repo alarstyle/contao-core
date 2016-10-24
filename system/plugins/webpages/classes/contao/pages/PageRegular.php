@@ -16,6 +16,7 @@ use Contao\Frontend;
 use Contao\FrontendTemplate;
 use Contao\System;
 use Contao\Template;
+use Contao\Models\StyleSheetModel;
 
 /**
  * Provide methods to handle a regular front end page.
@@ -422,12 +423,6 @@ class PageRegular extends Frontend
 			$GLOBALS['TL_JAVASCRIPT'][] = 'assets/mootools/core/' . $GLOBALS['TL_ASSETS']['MOOTOOLS'] . '/mootools-core.js|static';
 		}
 
-		// Picturefill
-		if ($objLayout->picturefill)
-		{
-			$GLOBALS['TL_JAVASCRIPT'][] = 'assets/respimage/' . $GLOBALS['TL_ASSETS']['RESPIMAGE'] . '/respimage.min.js|static';
-		}
-
 		// Check whether TL_APPEND_JS exists (see #4890)
 		if (!empty($arrAppendJs))
 		{
@@ -502,7 +497,7 @@ class PageRegular extends Frontend
 		// User style sheets
 		if (is_array($arrStyleSheets) && strlen($arrStyleSheets[0]))
 		{
-			$objStylesheets = \StyleSheetModel::findByIds($arrStyleSheets);
+			$objStylesheets = StyleSheetModel::findByIds($arrStyleSheets);
 
 			if ($objStylesheets !== null)
 			{

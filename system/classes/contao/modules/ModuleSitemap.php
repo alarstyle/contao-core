@@ -11,6 +11,7 @@
 namespace Contao\Modules;
 
 use Contao\Config;
+use Contao\Models\PageModel;
 
 /**
  * Front end module "sitemap".
@@ -72,7 +73,7 @@ class ModuleSitemap extends AbstractModule
 		// Overwrite the domain and language if the reference page belongs to a differnt root page (see #3765)
 		else
 		{
-			$objRootPage = \PageModel::findWithDetails($this->rootPage);
+			$objRootPage = PageModel::findWithDetails($this->rootPage);
 
 			// Set the language
 			if (Config::get('addLanguageToUrl') && $objRootPage->rootLanguage != $objPage->rootLanguage)

@@ -25,7 +25,7 @@ use Contao\RequestToken;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Versions;
-
+use Contao\Models\PageModel;
 
 /**
  * Provide methods to modify the database.
@@ -3564,7 +3564,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 		// Check protected pages
 		if ($table == 'tl_page')
 		{
-			$objParent = \PageModel::findWithDetails($id);
+			$objParent = PageModel::findWithDetails($id);
 			$blnProtected = $objParent->protected ? true : false;
 		}
 

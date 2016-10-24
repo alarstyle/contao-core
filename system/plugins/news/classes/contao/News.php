@@ -15,6 +15,7 @@ use Contao\Models\ContentModel;
 use Contao\Models\NewsArchiveModel;
 use Contao\Models\NewsFeedModel;
 use Contao\Models\NewsModel;
+use Contao\Models\PageModel;
 
 /**
  * Provide methods regarding news archives.
@@ -156,7 +157,7 @@ class News extends Frontend
                 // Get the jumpTo URL
                 if (!isset($arrUrls[$jumpTo]))
                 {
-                    $objParent = \PageModel::findWithDetails($jumpTo);
+                    $objParent = PageModel::findWithDetails($jumpTo);
 
                     // A jumpTo page is set but does no longer exist (see #5781)
                     if ($objParent === null)
@@ -294,7 +295,7 @@ class News extends Frontend
                 // Get the URL of the jumpTo page
                 if (!isset($arrProcessed[$objArchive->jumpTo]))
                 {
-                    $objParent = \PageModel::findWithDetails($objArchive->jumpTo);
+                    $objParent = PageModel::findWithDetails($objArchive->jumpTo);
 
                     // The target page does not exist
                     if ($objParent === null)

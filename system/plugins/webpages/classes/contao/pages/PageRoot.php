@@ -11,6 +11,7 @@
 namespace Contao\Pages;
 
 use Contao\Frontend;
+use Contao\Models\PageModel;
 
 /**
  * Provide methods to handle a website root page.
@@ -31,7 +32,7 @@ class PageRoot extends Frontend
 	 */
 	public function generate($pageId, $blnReturn=false, $blnPreferAlias=false)
 	{
-		$objNextPage = \PageModel::findFirstPublishedByPid($pageId);
+		$objNextPage = PageModel::findFirstPublishedByPid($pageId);
 
 		// No published pages yet
 		if (null === $objNextPage)

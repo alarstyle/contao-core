@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Models\PageModel;
 
 /**
  * Provide methods to manage back end controllers.
@@ -673,7 +674,7 @@ abstract class Backend extends Controller
 
 			if ($objPage === null)
 			{
-				$objPage = new \PageModel($objPages);
+				$objPage = new PageModel($objPages);
 			}
 
 			if ($objPage->type == 'regular')
@@ -742,27 +743,27 @@ abstract class Backend extends Controller
 		switch ($strPtable)
 		{
 			case 'tl_article':
-				$objPage = \PageModel::findOneBy(array('tl_page.id=(SELECT pid FROM tl_article WHERE id=?)'), $intPid);
+				$objPage = PageModel::findOneBy(array('tl_page.id=(SELECT pid FROM tl_article WHERE id=?)'), $intPid);
 				break;
 
 			case 'tl_news':
-				$objPage = \PageModel::findOneBy(array('tl_page.id=(SELECT jumpTo FROM tl_news_archive WHERE id=(SELECT pid FROM tl_news WHERE id=?))'), $intPid);
+				$objPage = PageModel::findOneBy(array('tl_page.id=(SELECT jumpTo FROM tl_news_archive WHERE id=(SELECT pid FROM tl_news WHERE id=?))'), $intPid);
 				break;
 
 			case 'tl_news_archive':
-				$objPage = \PageModel::findOneBy(array('tl_page.id=(SELECT jumpTo FROM tl_news_archive WHERE id=?)'), $intPid);
+				$objPage = PageModel::findOneBy(array('tl_page.id=(SELECT jumpTo FROM tl_news_archive WHERE id=?)'), $intPid);
 				break;
 
 			case 'tl_calendar_events':
-				$objPage = \PageModel::findOneBy(array('tl_page.id=(SELECT jumpTo FROM tl_calendar WHERE id=(SELECT pid FROM tl_calendar_events WHERE id=?))'), $intPid);
+				$objPage = PageModel::findOneBy(array('tl_page.id=(SELECT jumpTo FROM tl_calendar WHERE id=(SELECT pid FROM tl_calendar_events WHERE id=?))'), $intPid);
 				break;
 
 			case 'tl_calendar':
-				$objPage = \PageModel::findOneBy(array('tl_page.id=(SELECT jumpTo FROM tl_calendar WHERE id=?)'), $intPid);
+				$objPage = PageModel::findOneBy(array('tl_page.id=(SELECT jumpTo FROM tl_calendar WHERE id=?)'), $intPid);
 				break;
 
 			case 'tl_faq_category':
-				$objPage = \PageModel::findOneBy(array('tl_page.id=(SELECT jumpTo FROM tl_faq_category WHERE id=?)'), $intPid);
+				$objPage = PageModel::findOneBy(array('tl_page.id=(SELECT jumpTo FROM tl_faq_category WHERE id=?)'), $intPid);
 				break;
 
 			default:
@@ -782,9 +783,9 @@ abstract class Backend extends Controller
 						return;
 					}
 
-					if (is_object($objPage) && !($objPage instanceof \PageModel))
+					if (is_object($objPage) && !($objPage instanceof PageModel))
 					{
-						$objPage = \PageModel::findByPk($objPage->id);
+						$objPage = PageModel::findByPk($objPage->id);
 					}
 				}
 				break;
@@ -1086,7 +1087,7 @@ abstract class Backend extends Controller
 
 		foreach ($this->eliminateNestedPages($this->User->pagemounts) as $page)
 		{
-			$objPage = \PageModel::findWithDetails($page);
+			$objPage = PageModel::findWithDetails($page);
 
 			// Root page mounted
 			if ($objPage->type == 'root')

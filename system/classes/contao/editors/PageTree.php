@@ -12,6 +12,7 @@ namespace Contao\Editors;
 
 use Contao\Config;
 use Contao\Environment;
+use Contao\Models\PageModel;
 
 /**
  * Provide methods to handle input field "page tree".
@@ -136,7 +137,7 @@ class PageTree extends \Contao\Editor
 
 		if (!empty($this->varValue)) // Can be an array
 		{
-			$objPages = \PageModel::findMultipleByIds((array)$this->varValue);
+			$objPages = PageModel::findMultipleByIds((array)$this->varValue);
 
 			if ($objPages !== null)
 			{

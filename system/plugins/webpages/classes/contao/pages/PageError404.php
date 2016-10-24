@@ -14,6 +14,7 @@ use Contao\Config;
 use Contao\Environment;
 use Contao\Frontend;
 use Contao\Search;
+use Contao\Models\PageModel;
 
 /**
  * Provide methods to handle an error 404 page.
@@ -82,7 +83,7 @@ class PageError404 extends Frontend
 		}
 
 		// Look for a 404 page
-		$obj404 = \PageModel::find404ByPid($objRootPage->id);
+		$obj404 = PageModel::find404ByPid($objRootPage->id);
 
 		// Die if there is no page at all
 		if (null === $obj404)
@@ -116,7 +117,7 @@ class PageError404 extends Frontend
 		}
 
 		// Forward to another page
-		$objNextPage = \PageModel::findPublishedById($obj404->jumpTo);
+		$objNextPage = PageModel::findPublishedById($obj404->jumpTo);
 
 		if (null === $objNextPage)
 		{

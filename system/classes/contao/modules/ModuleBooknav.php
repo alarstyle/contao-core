@@ -10,6 +10,7 @@
 
 namespace Contao\Modules;
 
+use Contao\Models\PageModel;
 
 /**
  * Front end module "book navigation".
@@ -184,7 +185,7 @@ class ModuleBooknav extends AbstractModule
 	 */
 	protected function getBookPages($intParentId, $groups, $time)
 	{
-		$objPages = \PageModel::findPublishedSubpagesWithoutGuestsByPid($intParentId, $this->showHidden);
+		$objPages = PageModel::findPublishedSubpagesWithoutGuestsByPid($intParentId, $this->showHidden);
 
 		if ($objPages === null)
 		{

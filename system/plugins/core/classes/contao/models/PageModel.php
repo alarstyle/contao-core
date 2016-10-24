@@ -8,12 +8,13 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Models;
 
 use Contao\Config;
 use Contao\Database;
 use Contao\Date;
 use Contao\Environment;
+use Contao\Model;
 use Contao\System;
 
 /**
@@ -246,7 +247,7 @@ use Contao\System;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class PageModel extends \Model
+class PageModel extends Model
 {
 
 	/**
@@ -750,7 +751,7 @@ class PageModel extends \Model
 		else
 		{
 			// Load all parent pages
-			$objParentPage = \PageModel::findParentsById($pid);
+			$objParentPage = PageModel::findParentsById($pid);
 
 			if ($objParentPage !== null)
 			{

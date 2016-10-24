@@ -8,8 +8,9 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Models;
 
+use Contao\Model;
 
 /**
  * Reads and writes sessions
@@ -56,7 +57,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class SessionModel extends \Model
+class SessionModel extends Model
 {
 
 	/**

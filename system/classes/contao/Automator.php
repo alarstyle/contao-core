@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Models\PageModel;
 
 /**
  * Provide methods to run automated jobs.
@@ -509,7 +510,7 @@ class Automator extends System
 
 		// Generate the page mapping array
 		$arrMapper = array();
-		$objPages = \PageModel::findPublishedRootPages();
+		$objPages = PageModel::findPublishedRootPages();
 
 		if ($objPages !== null)
 		{

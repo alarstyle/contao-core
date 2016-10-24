@@ -16,6 +16,7 @@ use Contao\Frontend;
 use Contao\Input;
 use Contao\StringUtil;
 use Contao\System;
+use Contao\Models\PageModel;
 
 /**
  * Main front end controller.
@@ -96,7 +97,7 @@ class FrontendIndex extends Frontend
 		}
 
 		// Get the current page object(s)
-		$objPage = \PageModel::findPublishedByIdOrAlias($pageId);
+		$objPage = PageModel::findPublishedByIdOrAlias($pageId);
 
 		// Check the URL and language of each page if there are multiple results
 		if ($objPage !== null && $objPage->count() > 1)

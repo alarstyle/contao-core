@@ -75,11 +75,6 @@ ClassLoader::addClasses(array
 	'Contao\MemberGroupModel'          => 'system/plugins/core/models/MemberGroupModel.php',
 	'Contao\MemberModel'               => 'system/plugins/core/models/MemberModel.php',
 	'Contao\ModuleModel'               => 'system/plugins/core/models/ModuleModel.php',
-	'Contao\PageModel'                 => 'system/plugins/core/models/PageModel.php',
-	'Contao\SessionModel'              => 'system/plugins/core/models/SessionModel.php',
-	'Contao\StyleModel'                => 'system/plugins/core/models/StyleModel.php',
-	'Contao\StyleSheetModel'           => 'system/plugins/core/models/StyleSheetModel.php',
-	'Contao\ThemeModel'                => 'system/plugins/core/models/ThemeModel.php',
 ));
 
 

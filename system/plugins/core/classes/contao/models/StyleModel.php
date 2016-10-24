@@ -8,8 +8,9 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Models;
 
+use Contao\Model;
 
 /**
  * Reads and writes format definitions
@@ -261,7 +262,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class StyleModel extends \Model
+class StyleModel extends Model
 {
 
 	/**

@@ -11,6 +11,7 @@
 namespace Contao\Modules;
 
 use Contao\Environment;
+use Contao\Models\PageModel;
 
 /**
  * Front end module "quick link".
@@ -72,7 +73,7 @@ class ModuleQuicklink extends AbstractModule
 	protected function compile()
 	{
 		// Get all active pages
-		$objPages = \PageModel::findPublishedRegularWithoutGuestsByIds($this->pages);
+		$objPages = PageModel::findPublishedRegularWithoutGuestsByIds($this->pages);
 
 		// Return if there are no pages
 		if ($objPages === null)
@@ -116,7 +117,7 @@ class ModuleQuicklink extends AbstractModule
 					break;
 
 				case 'forward':
-					if (($objNext = $objPage->getRelated('jumpTo')) !== null || ($objNext = \PageModel::findFirstPublishedRegularByPid($objPage->id)) !== null)
+					if (($objNext = $objPage->getRelated('jumpTo')) !== null || ($objNext = PageModel::findFirstPublishedRegularByPid($objPage->id)) !== null)
 					{
 						/** @var \PageModel $objNext */
 						$href = $objNext->getFrontendUrl();

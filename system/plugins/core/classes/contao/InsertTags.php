@@ -12,6 +12,7 @@ namespace Contao;
 
 use Contao\Models\ArticleModel;
 use Contao\Models\NewsModel;
+use Contao\Models\PageModel;
 
 /**
  * A static class to replace insert tags
@@ -342,7 +343,7 @@ class InsertTags extends \Controller
 							$elements[1] = $this->User->loginPage;
 						}
 
-						$objNextPage = \PageModel::findByIdOrAlias($elements[1]);
+						$objNextPage = PageModel::findByIdOrAlias($elements[1]);
 
 						if ($objNextPage === null)
 						{
@@ -369,7 +370,7 @@ class InsertTags extends \Controller
 								}
 								else
 								{
-									$objNext = \PageModel::findFirstPublishedRegularByPid($objNextPage->id);
+									$objNext = PageModel::findFirstPublishedRegularByPid($objNextPage->id);
 								}
 
 								if ($objNext !== null)
@@ -937,17 +938,6 @@ class InsertTags extends \Controller
 							}
 
 							$arrCache[$strTag] = '<img src="' . TL_FILES_URL . $src . '" ' . $dimensions . ' alt="' . specialchars($alt) . '"' . (($class != '') ? ' class="' . specialchars($class) . '"' : '') . '>';
-						}
-
-						// Picture
-						else
-						{
-							$picture = Picture::create($strFile, array(0, 0, $size))->getTemplateData();
-							$picture['alt'] = $alt;
-							$picture['class'] = $class;
-							$pictureTemplate = new FrontendTemplate($strTemplate);
-							$pictureTemplate->setData($picture);
-							$arrCache[$strTag] = $pictureTemplate->parse();
 						}
 
 						// Add a lightbox link

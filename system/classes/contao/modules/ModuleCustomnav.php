@@ -11,6 +11,7 @@
 namespace Contao\Modules;
 
 use Contao\Environment;
+use Contao\Models\PageModel;
 
 /**
  * Front end module "custom navigation".
@@ -81,7 +82,7 @@ class ModuleCustomnav extends AbstractModule
 		}
 
 		// Get all active pages
-		$objPages = \PageModel::findPublishedRegularWithoutGuestsByIds($this->pages);
+		$objPages = PageModel::findPublishedRegularWithoutGuestsByIds($this->pages);
 
 		// Return if there are no pages
 		if ($objPages === null)
@@ -139,7 +140,7 @@ class ModuleCustomnav extends AbstractModule
 						break;
 
 					case 'forward':
-						if (($objNext = $objModel->getRelated('jumpTo')) !== null || ($objNext = \PageModel::findFirstPublishedRegularByPid($objModel->id)) !== null)
+						if (($objNext = $objModel->getRelated('jumpTo')) !== null || ($objNext = PageModel::findFirstPublishedRegularByPid($objModel->id)) !== null)
 						{
 							/** @var \PageModel $objNext */
 							$href = $objNext->getFrontendUrl();

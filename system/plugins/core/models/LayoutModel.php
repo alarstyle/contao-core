@@ -36,7 +36,7 @@ namespace Contao;
  * @property string  $modules
  * @property string  $template
  * @property string  $webfonts
- * @property boolean $picturefill
+
  * @property string  $viewport
  * @property string  $titleTag
  * @property string  $cssClass

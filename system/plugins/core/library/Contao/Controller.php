@@ -14,6 +14,7 @@ use Contao\Elements\ContentElement;
 use Contao\Models\ArticleModel;
 use Contao\Models\ContentModel;
 use Contao\Modules\AbstractModule;
+use Contao\Models\PageModel;
 
 /**
  * Abstract parent class for Controllers
@@ -116,7 +117,7 @@ abstract class Controller extends System
 			// Try to select the themes (see #5210)
 			try
 			{
-				$objTheme = \ThemeModel::findAll(array('order'=>'name'));
+				$objTheme = \Contao\Models\ThemeModel::findAll(array('order'=>'name'));
 			}
 			catch (\Exception $e)
 			{
@@ -572,7 +573,7 @@ abstract class Controller extends System
 	 *
 	 * @return boolean True if the element is visible
 	 */
-	public static function isVisibleElement(\Model $objElement)
+	public static function isVisibleElement(Model $objElement)
 	{
 		$blnReturn = true;
 
@@ -1040,7 +1041,7 @@ abstract class Controller extends System
 
 		if (!isset($arrRow['rootId']))
 		{
-			$row = \PageModel::findWithDetails($arrRow['id']);
+			$row = PageModel::findWithDetails($arrRow['id']);
 
 			$arrRow['rootId'] = $row->rootId;
 
@@ -1235,7 +1236,7 @@ abstract class Controller extends System
 			return '';
 		}
 
-		$objPage = \PageModel::findWithDetails($intPage);
+		$objPage = PageModel::findWithDetails($intPage);
 
 		if ($varArticle !== null)
 		{
@@ -1452,7 +1453,6 @@ abstract class Controller extends System
 		try
 		{
 			$src = Image::create($arrItem['singleSRC'], $size)->executeResize()->getResizedPath();
-			$picture = Picture::create($arrItem['singleSRC'], $size)->getTemplateData();
 
 			if ($src !== $arrItem['singleSRC'])
 			{
@@ -1464,8 +1464,10 @@ abstract class Controller extends System
 			System::log('Image "' . $arrItem['singleSRC'] . '" could not be processed: ' . $e->getMessage(), __METHOD__, TL_ERROR);
 
 			$src = '';
-			$picture = array('img'=>array('src'=>'', 'srcset'=>''), 'sources'=>array());
+
 		}
+
+		$picture = array('img'=>array('src'=>'', 'srcset'=>''), 'sources'=>array());
 
 		// Image dimensions
 		if (($imgSize = $objFile->imageSize) !== false)

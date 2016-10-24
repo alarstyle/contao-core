@@ -637,6 +637,7 @@ if (Input::get('popup'))
  * @author Leo Feyer <https://github.com/leofeyer>
  */
 use Contao\DataContainer;
+use Contao\Models\PageModel;
 
 class tl_page extends Contao\Backend
 {
