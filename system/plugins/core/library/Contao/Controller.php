@@ -15,6 +15,7 @@ use Contao\Models\ArticleModel;
 use Contao\Models\ContentModel;
 use Contao\Modules\AbstractModule;
 use Contao\Models\PageModel;
+use Contao\Models\ModuleModel;
 
 /**
  * Abstract parent class for Controllers
@@ -252,7 +253,7 @@ abstract class Controller extends System
 			}
 			else
 			{
-				$objRow = \ModuleModel::findByPk($intId);
+				$objRow = ModuleModel::findByPk($intId);
 
 				if ($objRow === null)
 				{

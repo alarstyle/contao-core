@@ -8,8 +8,9 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Models;
 
+use Contao\Model;
 
 /**
  * Reads and writes front end modules
@@ -491,7 +492,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ModuleModel extends \Model
+class ModuleModel extends Model
 {
 
 	/**

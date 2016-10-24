@@ -446,3 +446,4 @@ $GLOBALS['TL_MODELS']['tl_style_sheet'] = 'Contao\\Models\\StyleSheetModel';
 $GLOBALS['TL_MODELS']['tl_style'] = 'Contao\\Models\\StyleModel';
 $GLOBALS['TL_MODELS']['tl_session'] = 'Contao\\Models\\SessionModel';
 $GLOBALS['TL_MODELS']['tl_page'] = 'Contao\\Models\\PageModel';
+$GLOBALS['TL_MODELS']['tl_module'] = 'Contao\\Models\\ModuleModel';

@@ -74,7 +74,6 @@ ClassLoader::addClasses(array
 	'Contao\LayoutModel'               => 'system/plugins/core/models/LayoutModel.php',
 	'Contao\MemberGroupModel'          => 'system/plugins/core/models/MemberGroupModel.php',
 	'Contao\MemberModel'               => 'system/plugins/core/models/MemberModel.php',
-	'Contao\ModuleModel'               => 'system/plugins/core/models/ModuleModel.php',
 ));
 
 

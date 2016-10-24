@@ -16,6 +16,7 @@ use Contao\Frontend;
 use Contao\FrontendTemplate;
 use Contao\System;
 use Contao\Template;
+use Contao\Models\ModuleModel;
 use Contao\Models\StyleSheetModel;
 
 /**
@@ -82,7 +83,7 @@ class PageRegular extends Frontend
 		}
 
 		// Get all modules in a single DB query
-		$objModules = \ModuleModel::findMultipleByIds($arrModuleIds);
+		$objModules = ModuleModel::findMultipleByIds($arrModuleIds);
 
 		if ($objModules !== null || $arrModules[0]['mod'] == 0) // see #4137
 		{
