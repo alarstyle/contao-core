@@ -13,6 +13,7 @@ namespace Contao\Editors;
 use Contao\Config;
 use Contao\Environment;
 use Contao\Models\PageModel;
+use Contao\Image;
 
 /**
  * Provide methods to handle input field "page tree".
@@ -144,7 +145,7 @@ class PageTree extends \Contao\Editor
 				while ($objPages->next())
 				{
 					$arrSet[] = $objPages->id;
-					$arrValues[$objPages->id] = \Image::getHtml($this->getPageStatusIcon($objPages)) . ' ' . $objPages->title . ' (' . $objPages->alias . '/' . ')';
+					$arrValues[$objPages->id] = Image::getHtml($this->getPageStatusIcon($objPages)) . ' ' . $objPages->title . ' (' . $objPages->alias . '/' . ')';
 				}
 			}
 

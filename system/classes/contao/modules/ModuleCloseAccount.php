@@ -12,6 +12,7 @@ namespace Contao\Modules;
 
 use Contao\Encryption;
 use Contao\Environment;
+use Contao\Idna;
 use Contao\Models\MemberModel;
 use Contao\Forms\FormTextField;
 
@@ -125,7 +126,7 @@ class ModuleCloseAccount extends AbstractModule
 				if ($this->reg_close == 'close_delete')
 				{
 					$objMember->delete();
-					$this->log('User account ID ' . $this->User->id . ' (' . \Idna::decodeEmail($this->User->email) . ') has been deleted', __METHOD__, TL_ACCESS);
+					$this->log('User account ID ' . $this->User->id . ' (' . Idna::decodeEmail($this->User->email) . ') has been deleted', __METHOD__, TL_ACCESS);
 				}
 				// Deactivate the account
 				else
@@ -133,7 +134,7 @@ class ModuleCloseAccount extends AbstractModule
 					$objMember->disable = 1;
 					$objMember->tstamp = time();
 					$objMember->save();
-					$this->log('User account ID ' . $this->User->id . ' (' . \Idna::decodeEmail($this->User->email) . ') has been deactivated', __METHOD__, TL_ACCESS);
+					$this->log('User account ID ' . $this->User->id . ' (' . Idna::decodeEmail($this->User->email) . ') has been deactivated', __METHOD__, TL_ACCESS);
 				}
 
 				$this->User->logout();

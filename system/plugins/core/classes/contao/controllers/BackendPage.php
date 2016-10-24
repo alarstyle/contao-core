@@ -83,7 +83,7 @@ class BackendPage extends Backend
 		if ($this->Database->tableExists($strTable))
 		{
 			/** @var \Model $strModel $strModel */
-			$strModel = \Model::getClassFromTable($strTable);
+			$strModel = Model::getClassFromTable($strTable);
 
 			if (class_exists($strModel))
 			{

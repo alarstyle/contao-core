@@ -1008,7 +1008,7 @@ abstract class Editor extends BaseTemplate
 
 					foreach ($arrEmails as $strEmail)
 					{
-						$strEmail = \Idna::encodeEmail($strEmail);
+						$strEmail = Idna::encodeEmail($strEmail);
 
 						if (!Validator::isEmail($strEmail))
 						{

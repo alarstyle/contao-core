@@ -184,12 +184,12 @@ abstract class AbstractModule extends Frontend
 	 */
 	public function __construct($objModule, $strColumn='main')
 	{
-		if ($objModule instanceof \Model || $objModule instanceof \Model\Collection)
+		if ($objModule instanceof \Contao\Model || $objModule instanceof \Contao\Model\Collection)
 		{
 			/** @var \ModuleModel $objModel */
 			$objModel = $objModule;
 
-			if ($objModel instanceof \Model\Collection)
+			if ($objModel instanceof \Contao\Model\Collection)
 			{
 				$objModel = $objModel->current();
 			}

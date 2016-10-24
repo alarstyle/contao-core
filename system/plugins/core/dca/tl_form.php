@@ -285,6 +285,8 @@ $GLOBALS['TL_DCA']['tl_form'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
+use Contao\Image;
+
 class tl_form extends Contao\Backend
 {
 

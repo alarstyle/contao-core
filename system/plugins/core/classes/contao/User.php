@@ -364,7 +364,7 @@ abstract class User extends System
 			{
 				$objEmail = new Email();
 				$objEmail->subject = $GLOBALS['TL_LANG']['MSC']['lockedAccount'][0];
-				$objEmail->text = sprintf($GLOBALS['TL_LANG']['MSC']['lockedAccount'][1], $this->username, ((TL_MODE == 'FE') ? $this->firstname . " " . $this->lastname : $this->name), \Idna::decode(Environment::get('base')), ceil(Config::get('lockPeriod') / 60));
+				$objEmail->text = sprintf($GLOBALS['TL_LANG']['MSC']['lockedAccount'][1], $this->username, ((TL_MODE == 'FE') ? $this->firstname . " " . $this->lastname : $this->name), Idna::decode(Environment::get('base')), ceil(Config::get('lockPeriod') / 60));
 				$objEmail->sendTo(Config::get('adminEmail'));
 			}
 

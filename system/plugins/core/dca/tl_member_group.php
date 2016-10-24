@@ -178,6 +178,7 @@ $GLOBALS['TL_DCA']['tl_member_group'] = array
  */
 
 use Contao\DataContainer;
+use Contao\Image;
 
 class tl_member_group extends Contao\Backend
 {

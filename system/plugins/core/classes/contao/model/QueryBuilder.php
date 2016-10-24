@@ -10,6 +10,7 @@
 
 namespace Contao\Model;
 
+use Contao\DcaExtractor;
 
 /**
  * The class reads the relation meta data from the DCA and creates the necessary
@@ -29,7 +30,7 @@ class QueryBuilder
 	 */
 	public static function find(array $arrOptions)
 	{
-		$objBase = \DcaExtractor::getInstance($arrOptions['table']);
+		$objBase = DcaExtractor::getInstance($arrOptions['table']);
 
 		if (!$objBase->hasRelations())
 		{
@@ -49,7 +50,7 @@ class QueryBuilder
 					if ($arrConfig['type'] == 'hasOne' || $arrConfig['type'] == 'belongsTo')
 					{
 						++$intCount;
-						$objRelated = \DcaExtractor::getInstance($arrConfig['table']);
+						$objRelated = DcaExtractor::getInstance($arrConfig['table']);
 
 						foreach (array_keys($objRelated->getFields()) as $strField)
 						{

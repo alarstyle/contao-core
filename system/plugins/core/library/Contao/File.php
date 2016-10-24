@@ -274,8 +274,8 @@ class File extends System
 							{
 								$this->arrImageSize = array
 								(
-									\Image::getPixelValue($svgElement->getAttribute('width')),
-									\Image::getPixelValue($svgElement->getAttribute('height'))
+									Image::getPixelValue($svgElement->getAttribute('width')),
+									Image::getPixelValue($svgElement->getAttribute('height'))
 								);
 							}
 
@@ -760,7 +760,7 @@ class File extends System
 			return false;
 		}
 
-		$return = \Image::resize($this->strFile, $width, $height, $mode);
+		$return = Image::resize($this->strFile, $width, $height, $mode);
 
 		if ($return)
 		{

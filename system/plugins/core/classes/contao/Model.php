@@ -10,6 +10,8 @@
 
 namespace Contao;
 
+use Contao\Model\Registry;
+use Contao\Model\QueryBuilder;
 
 /**
  * Reads objects from and writes them to to the database
@@ -136,7 +138,7 @@ abstract class Model
 				}
 			}
 
-			$objRegistry = \Model\Registry::getInstance();
+			$objRegistry = Registry::getInstance();
 
 			$this->setRow($arrData); // see #5439
 			$objRegistry->register($this);
@@ -438,7 +440,7 @@ abstract class Model
 		$arrFields = $objDatabase->getFieldNames(static::$strTable);
 
 		// The model is in the registry
-		if (\Model\Registry::getInstance()->isRegistered($this))
+		if (Registry::getInstance()->isRegistered($this))
 		{
 			$arrSet = array();
 			$arrRow = $this->row();
@@ -513,7 +515,7 @@ abstract class Model
 			$this->postSave(self::INSERT);
 			$this->arrModified = array(); // reset after postSave()
 
-			\Model\Registry::getInstance()->register($this);
+			Registry::getInstance()->register($this);
 		}
 
 		return $this;
@@ -570,7 +572,7 @@ abstract class Model
 		if ($intAffected)
 		{
 			// Unregister the model
-			\Model\Registry::getInstance()->unregister($this);
+			Registry::getInstance()->unregister($this);
 
 			// Remove the primary key (see #6162)
 			$this->arrData[static::$strPk] = null;
@@ -682,7 +684,7 @@ abstract class Model
 	 */
 	public function detach($blnKeepClone=true)
 	{
-		\Model\Registry::getInstance()->unregister($this);
+		Registry::getInstance()->unregister($this);
 
 		if ($blnKeepClone)
 		{
@@ -696,7 +698,7 @@ abstract class Model
 	 */
 	public function attach()
 	{
-		\Model\Registry::getInstance()->register($this);
+		Registry::getInstance()->register($this);
 	}
 
 
@@ -705,7 +707,7 @@ abstract class Model
 	 *
 	 * @param \Model\Registry|\Contao\Model\Registry $registry The model registry
 	 */
-	public function onRegister(\Model\Registry $registry)
+	public function onRegister(Registry $registry)
 	{
 		// Register aliases to unique fields
 		foreach (static::getUniqueFields() as $strColumn)
@@ -725,7 +727,7 @@ abstract class Model
 	 *
 	 * @param \Model\Registry|\Contao\Model\Registry $registry The model registry
 	 */
-	public function onUnregister(\Model\Registry $registry)
+	public function onUnregister(Registry $registry)
 	{
 		// Unregister aliases to unique fields
 		foreach (static::getUniqueFields() as $strColumn)
@@ -765,7 +767,7 @@ abstract class Model
 		// Try to load from the registry
 		if (empty($arrOptions))
 		{
-			$objModel = \Model\Registry::getInstance()->fetch(static::$strTable, $varValue);
+			$objModel = Registry::getInstance()->fetch(static::$strTable, $varValue);
 
 			if ($objModel !== null)
 			{
@@ -803,7 +805,7 @@ abstract class Model
 		// Try to load from the registry
 		if (is_numeric($varId) && empty($arrOptions))
 		{
-			$objModel = \Model\Registry::getInstance()->fetch(static::$strTable, $varId);
+			$objModel = Registry::getInstance()->fetch(static::$strTable, $varId);
 
 			if ($objModel !== null)
 			{
@@ -853,7 +855,7 @@ abstract class Model
 		{
 			if (empty($arrOptions))
 			{
-				$arrRegistered[$intId] = \Model\Registry::getInstance()->fetch(static::$strTable, $intId);
+				$arrRegistered[$intId] = Registry::getInstance()->fetch(static::$strTable, $intId);
 			}
 
 			if (!isset($arrRegistered[$intId]))
@@ -874,7 +876,7 @@ abstract class Model
 					'column' => array("$t.id IN(" . implode(',', array_map('intval', $arrUnregistered)) . ")"),
 					'value'  => null,
 					'order'  => Database::getInstance()->findInSet("$t.id", $arrIds),
-					'return' => 'Collection'
+					'return' => 'Contao\\Model\\Collection'
 				),
 
 				$arrOptions
@@ -949,7 +951,7 @@ abstract class Model
 			(
 				'column' => $strColumn,
 				'value'  => $varValue,
-				'return' => $blnModel ? 'Model' : 'Collection'
+				'return' => $blnModel ? 'Contao\\Model' : 'Contao\\Collection'
 			),
 
 			$arrOptions
@@ -972,7 +974,7 @@ abstract class Model
 		(
 			array
 			(
-				'return' => 'Collection'
+				'return' => 'Contao\\Collection'
 			),
 
 			$arrOptions
@@ -1048,7 +1050,7 @@ abstract class Model
 			if (count($arrColumn) == 1 && ($arrColumn[0] == static::$strPk || in_array($arrColumn[0], static::getUniqueFields())))
 			{
 				$varKey = is_array($arrOptions['value']) ? $arrOptions['value'][0] : $arrOptions['value'];
-				$objModel = \Model\Registry::getInstance()->fetch(static::$strTable, $varKey, $arrColumn[0]);
+				$objModel = Registry::getInstance()->fetch(static::$strTable, $varKey, $arrColumn[0]);
 
 				if ($objModel !== null)
 				{
@@ -1091,7 +1093,7 @@ abstract class Model
 		// Try to load from the registry
 		if ($arrOptions['return'] == 'Model')
 		{
-			$objModel = \Model\Registry::getInstance()->fetch(static::$strTable, $objResult->{static::$strPk});
+			$objModel = Registry::getInstance()->fetch(static::$strTable, $objResult->{static::$strPk});
 
 			if ($objModel !== null)
 			{
@@ -1223,7 +1225,7 @@ abstract class Model
 	 */
 	protected static function buildFindQuery(array $arrOptions)
 	{
-		return \Model\QueryBuilder::find($arrOptions);
+		return QueryBuilder::find($arrOptions);
 	}
 
 
@@ -1236,7 +1238,7 @@ abstract class Model
 	 */
 	protected static function buildCountQuery(array $arrOptions)
 	{
-		return \Model\QueryBuilder::count($arrOptions);
+		return QueryBuilder::count($arrOptions);
 	}
 
 

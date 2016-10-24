@@ -10,6 +10,7 @@
 
 namespace Contao\Editors;
 
+use Contao\Image;
 
 /**
  * Provide methods to handle radio button tables.
@@ -113,7 +114,7 @@ class RadioTable extends \Contao\Editor
 
 				if (strlen($value))
 				{
-					$label = \Image::getHtml($value.'.gif', $label, 'title="'.specialchars($label).'"');
+					$label = Image::getHtml($value.'.gif', $label, 'title="'.specialchars($label).'"');
 					$return .= '
       <td><input type="radio" name="'.$this->strName.'" id="'.$this->strName.'_'.$i.'_'.$j.'" class="tl_radio" value="'.specialchars($value).'" onfocus=""'.$this->isChecked($this->arrOptions[$j]).$this->getAttributes().'> <label for="'.$this->strName.'_'.$i.'_'.$j.'">'.$label.'</label></td>';
 				}

@@ -10,6 +10,7 @@
 
 namespace Contao\Editors;
 
+use Contao\Idna;
 
 /**
  * Provide methods to handle text fields.
@@ -120,11 +121,11 @@ class TextField extends \Contao\Editor
 			// Convert to Punycode format (see #5571)
 			if ($this->rgxp == 'url')
 			{
-				$varInput = \Idna::encodeUrl($varInput);
+				$varInput = Idna::encodeUrl($varInput);
 			}
 			elseif ($this->rgxp == 'email' || $this->rgxp == 'friendly')
 			{
-				$varInput = \Idna::encodeEmail($varInput);
+				$varInput = Idna::encodeEmail($varInput);
 			}
 		}
 
@@ -146,11 +147,11 @@ class TextField extends \Contao\Editor
 			// Hide the Punycode format (see #2750)
 			if ($this->rgxp == 'url')
 			{
-				$this->varValue = \Idna::decode($this->varValue);
+				$this->varValue = Idna::decode($this->varValue);
 			}
 			elseif ($this->rgxp == 'email' || $this->rgxp == 'friendly')
 			{
-				$this->varValue = \Idna::decodeEmail($this->varValue);
+				$this->varValue = Idna::decodeEmail($this->varValue);
 			}
 
 			return sprintf('<input type="%s" name="%s" id="ctrl_%s" class="tl_text%s" value="%s"%s onfocus="">%s',

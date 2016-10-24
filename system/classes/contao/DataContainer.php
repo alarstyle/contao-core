@@ -190,13 +190,13 @@ abstract class DataContainer extends Backend
 		// Toggle line wrap (textarea)
 		if ($arrData['inputType'] == 'textarea' && !isset($arrData['eval']['rte']))
 		{
-			$xlabel .= ' ' . \Image::getHtml('wrap.gif', $GLOBALS['TL_LANG']['MSC']['wordWrap'], 'title="' . specialchars($GLOBALS['TL_LANG']['MSC']['wordWrap']) . '" class="toggleWrap" onclick="Backend.toggleWrap(\'ctrl_'.$this->strInputName.'\')"');
+			$xlabel .= ' ' . Image::getHtml('wrap.gif', $GLOBALS['TL_LANG']['MSC']['wordWrap'], 'title="' . specialchars($GLOBALS['TL_LANG']['MSC']['wordWrap']) . '" class="toggleWrap" onclick="Backend.toggleWrap(\'ctrl_'.$this->strInputName.'\')"');
 		}
 
 		// Add the help wizard
 		if ($arrData['eval']['helpwizard'])
 		{
-			$xlabel .= ' <a href="contao/help.php?table='.$this->strTable.'&amp;field='.$this->strField.'" title="' . specialchars($GLOBALS['TL_LANG']['MSC']['helpWizard']) . '" onclick="Backend.openModalIframe({\'width\':735,\'height\':405,\'title\':\''.specialchars(str_replace("'", "\\'", $arrData['label'][0])).'\',\'url\':this.href});return false">'.\Image::getHtml('about.gif', $GLOBALS['TL_LANG']['MSC']['helpWizard'], 'style="vertical-align:text-bottom"').'</a>';
+			$xlabel .= ' <a href="contao/help.php?table='.$this->strTable.'&amp;field='.$this->strField.'" title="' . specialchars($GLOBALS['TL_LANG']['MSC']['helpWizard']) . '" onclick="Backend.openModalIframe({\'width\':735,\'height\':405,\'title\':\''.specialchars(str_replace("'", "\\'", $arrData['label'][0])).'\',\'url\':this.href});return false">'.Image::getHtml('about.gif', $GLOBALS['TL_LANG']['MSC']['helpWizard'], 'style="vertical-align:text-bottom"').'</a>';
 		}
 
 		// Add a custom xlabel
@@ -385,7 +385,7 @@ abstract class DataContainer extends Backend
 					break;
 			}
 
-			$wizard .= ' ' . \Image::getHtml('assets/mootools/datepicker/' . $GLOBALS['TL_ASSETS']['DATEPICKER'] . '/icon.gif', '', 'title="'.specialchars($GLOBALS['TL_LANG']['MSC']['datepicker']).'" id="toggle_' . $objEditor->id . '" style="vertical-align:-6px;cursor:pointer"') . '
+			$wizard .= ' ' . Image::getHtml('assets/mootools/datepicker/' . $GLOBALS['TL_ASSETS']['DATEPICKER'] . '/icon.gif', '', 'title="'.specialchars($GLOBALS['TL_LANG']['MSC']['datepicker']).'" id="toggle_' . $objEditor->id . '" style="vertical-align:-6px;cursor:pointer"') . '
   <script>
     window.addEvent("domready", function() {
       new Picker.Date($("ctrl_' . $objEditor->id . '"), {
@@ -408,7 +408,7 @@ abstract class DataContainer extends Backend
 			// Support single fields as well (see #5240)
 			$strKey = $arrData['eval']['multiple'] ? $this->strField . '_0' : $this->strField;
 
-			$wizard .= ' ' . \Image::getHtml('pickcolor.gif', $GLOBALS['TL_LANG']['MSC']['colorpicker'], 'style="vertical-align:top;cursor:pointer" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['colorpicker']).'" id="moo_' . $this->strField . '"') . '
+			$wizard .= ' ' . Image::getHtml('pickcolor.gif', $GLOBALS['TL_LANG']['MSC']['colorpicker'], 'style="vertical-align:top;cursor:pointer" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['colorpicker']).'" id="moo_' . $this->strField . '"') . '
   <script>
     window.addEvent("domready", function() {
       new MooRainbow("moo_' . $this->strField . '", {
@@ -516,7 +516,7 @@ abstract class DataContainer extends Backend
 				{
 					if ($objFile->width > 699 || $objFile->height > 524 || !$objFile->width || !$objFile->height)
 					{
-						$image = \Image::get($objFile->path, 699, 524, 'box');
+						$image = Image::get($objFile->path, 699, 524, 'box');
 					}
 					else
 					{
@@ -529,7 +529,7 @@ abstract class DataContainer extends Backend
 				$strPreview = '
 
 <div id="' . $ctrl . '" class="tl_edit_preview" data-original-width="' . $objFile->viewWidth . '" data-original-height="' . $objFile->viewHeight . '">
-' . \Image::getHtml($image) . '
+' . Image::getHtml($image) . '
 </div>';
 
 				// Add the script to mark the important part
@@ -686,11 +686,11 @@ abstract class DataContainer extends Backend
 			{
 				if ($k == 'show')
 				{
-					$return .= '<a href="'.$this->addToUrl($v['href'].'&amp;id='.$arrRow['id'].'&amp;popup=1').'" title="'.specialchars($title).'" onclick="Backend.openModalIframe({\'width\':768,\'title\':\''.specialchars(str_replace("'", "\\'", sprintf($GLOBALS['TL_LANG'][$strTable]['show'][1], $arrRow['id']))).'\',\'url\':this.href});return false"'.$attributes.'>'.\Image::getHtml($v['icon'], $label).'</a> ';
+					$return .= '<a href="'.$this->addToUrl($v['href'].'&amp;id='.$arrRow['id'].'&amp;popup=1').'" title="'.specialchars($title).'" onclick="Backend.openModalIframe({\'width\':768,\'title\':\''.specialchars(str_replace("'", "\\'", sprintf($GLOBALS['TL_LANG'][$strTable]['show'][1], $arrRow['id']))).'\',\'url\':this.href});return false"'.$attributes.'>'.Image::getHtml($v['icon'], $label).'</a> ';
 				}
 				else
 				{
-					$return .= '<a href="'.$this->addToUrl($v['href'].'&amp;id='.$arrRow['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.\Image::getHtml($v['icon'], $label).'</a> ';
+					$return .= '<a href="'.$this->addToUrl($v['href'].'&amp;id='.$arrRow['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($v['icon'], $label).'</a> ';
 				}
 
 				continue;
@@ -704,16 +704,16 @@ abstract class DataContainer extends Backend
 				$label = $GLOBALS['TL_LANG'][$strTable][$dir][0] ?: $dir;
 				$title = $GLOBALS['TL_LANG'][$strTable][$dir][1] ?: $dir;
 
-				$label = \Image::getHtml($dir.'.gif', $label);
+				$label = Image::getHtml($dir.'.gif', $label);
 				$href = $v['href'] ?: '&amp;act=move';
 
 				if ($dir == 'up')
 				{
-					$return .= ((is_numeric($strPrevious) && (!in_array($arrRow['id'], $arrRootIds) || empty($GLOBALS['TL_DCA'][$strTable]['list']['sorting']['root']))) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$arrRow['id']).'&amp;sid='.intval($strPrevious).'" title="'.specialchars($title).'"'.$attributes.'>'.$label.'</a> ' : \Image::getHtml('up_.gif')).' ';
+					$return .= ((is_numeric($strPrevious) && (!in_array($arrRow['id'], $arrRootIds) || empty($GLOBALS['TL_DCA'][$strTable]['list']['sorting']['root']))) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$arrRow['id']).'&amp;sid='.intval($strPrevious).'" title="'.specialchars($title).'"'.$attributes.'>'.$label.'</a> ' : Image::getHtml('up_.gif')).' ';
 					continue;
 				}
 
-				$return .= ((is_numeric($strNext) && (!in_array($arrRow['id'], $arrRootIds) || empty($GLOBALS['TL_DCA'][$strTable]['list']['sorting']['root']))) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$arrRow['id']).'&amp;sid='.intval($strNext).'" title="'.specialchars($title).'"'.$attributes.'>'.$label.'</a> ' : \Image::getHtml('down_.gif')).' ';
+				$return .= ((is_numeric($strNext) && (!in_array($arrRow['id'], $arrRootIds) || empty($GLOBALS['TL_DCA'][$strTable]['list']['sorting']['root']))) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$arrRow['id']).'&amp;sid='.intval($strNext).'" title="'.specialchars($title).'"'.$attributes.'>'.$label.'</a> ' : Image::getHtml('down_.gif')).' ';
 			}
 		}
 

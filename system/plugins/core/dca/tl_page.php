@@ -638,6 +638,7 @@ if (Input::get('popup'))
  */
 use Contao\DataContainer;
 use Contao\Models\PageModel;
+use Contao\Image;
 
 class tl_page extends Contao\Backend
 {

@@ -18,6 +18,8 @@ use Contao\Date;
 use Contao\Editor;
 use Contao\Encryption;
 use Contao\Environment;
+use Contao\Idna;
+use Contao\Image;
 use Contao\Input;
 use Contao\Message;
 use Contao\Pagination;
@@ -542,7 +544,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 			}
 			elseif ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$i]['eval']['rgxp'] == 'email')
 			{
-				$row[$i] = \Idna::decodeEmail($value);
+				$row[$i] = Idna::decodeEmail($value);
 			}
 			elseif ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$i]['inputType'] == 'textarea' && ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$i]['eval']['allowHtml'] || $GLOBALS['TL_DCA'][$this->strTable]['fields'][$i]['eval']['preserveTags']))
 			{
@@ -3326,7 +3328,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 
 		$label = $GLOBALS['TL_DCA'][$table]['config']['label'];
 		$icon = $GLOBALS['TL_DCA'][$table]['list']['sorting']['icon'] ?: 'pagemounts.gif';
-		$label = \Image::getHtml($icon).' <label>'.$label.'</label>';
+		$label = Image::getHtml($icon).' <label>'.$label.'</label>';
 
 		// Begin buttons container
 		$return = '
@@ -3458,7 +3460,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 			}
 			else
 			{
-				$imagePasteInto = \Image::getHtml('pasteinto.gif', $GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][0]);
+				$imagePasteInto = Image::getHtml('pasteinto.gif', $GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][0]);
 				$_buttons = '<a href="'.$this->addToUrl('act='.$arrClipboard['mode'].'&amp;mode=2&amp;pid=0'.(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars($GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][0]).'" onclick="">'.$imagePasteInto.'</a> ';
 			}
 		}
@@ -3693,7 +3695,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 			$folderAttribute = '';
 			$img = ($session[$node][$id] == 1) ? 'folMinus.gif' : 'folPlus.gif';
 			$alt = ($session[$node][$id] == 1) ? $GLOBALS['TL_LANG']['MSC']['collapseNode'] : $GLOBALS['TL_LANG']['MSC']['expandNode'];
-			$return .= '<a href="'.$this->addToUrl('ptg='.$id).'" title="'.specialchars($alt).'" onclick="return AjaxRequest.toggleStructure(this,\''.$node.'_'.$id.'\','.$level.','.$GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['mode'].')">'.\Image::getHtml($img, '', 'style="margin-right:2px"').'</a>';
+			$return .= '<a href="'.$this->addToUrl('ptg='.$id).'" title="'.specialchars($alt).'" onclick="return AjaxRequest.toggleStructure(this,\''.$node.'_'.$id.'\','.$level.','.$GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['mode'].')">'.Image::getHtml($img, '', 'style="margin-right:2px"').'</a>';
 		}
 
 		foreach ($showFields as $k=>$v)
@@ -3754,7 +3756,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 		}
 		else
 		{
-			$return .= \Image::getHtml('iconPLAIN.gif', '') . ' ' . $label;
+			$return .= Image::getHtml('iconPLAIN.gif', '') . ' ' . $label;
 		}
 
 		$return .= '</div> <div class="tl_right">';
@@ -3788,20 +3790,20 @@ class DC_Table extends DataContainer implements \listable, \editable
 			}
 			else
 			{
-				$imagePasteAfter = \Image::getHtml('pasteafter.gif', sprintf($GLOBALS['TL_LANG'][$this->strTable]['pasteafter'][1], $id));
-				$imagePasteInto = \Image::getHtml('pasteinto.gif', sprintf($GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][1], $id));
+				$imagePasteAfter = Image::getHtml('pasteafter.gif', sprintf($GLOBALS['TL_LANG'][$this->strTable]['pasteafter'][1], $id));
+				$imagePasteInto = Image::getHtml('pasteinto.gif', sprintf($GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][1], $id));
 
 				// Regular tree (on cut: disable buttons of the page all its childs to avoid circular references)
 				if ($GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['mode'] == 5)
 				{
-					$_buttons .= ($arrClipboard['mode'] == 'cut' && ($blnCircularReference || $arrClipboard['id'] == $id) || $arrClipboard['mode'] == 'cutAll' && ($blnCircularReference || in_array($id, $arrClipboard['id'])) || (!empty($GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['root']) && !$GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['rootPaste'] && in_array($id, $this->root))) ? \Image::getHtml('pasteafter_.gif').' ' : '<a href="'.$this->addToUrl('act='.$arrClipboard['mode'].'&amp;mode=1&amp;pid='.$id.(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars(sprintf($GLOBALS['TL_LANG'][$this->strTable]['pasteafter'][1], $id)).'" onclick="">'.$imagePasteAfter.'</a> ';
-					$_buttons .= ($arrClipboard['mode'] == 'cut' && ($blnCircularReference || $arrClipboard['id'] == $id) || $arrClipboard['mode'] == 'cutAll' && ($blnCircularReference || in_array($id, $arrClipboard['id']))) ? \Image::getHtml('pasteinto_.gif').' ' : '<a href="'.$this->addToUrl('act='.$arrClipboard['mode'].'&amp;mode=2&amp;pid='.$id.(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars(sprintf($GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][1], $id)).'" onclick="">'.$imagePasteInto.'</a> ';
+					$_buttons .= ($arrClipboard['mode'] == 'cut' && ($blnCircularReference || $arrClipboard['id'] == $id) || $arrClipboard['mode'] == 'cutAll' && ($blnCircularReference || in_array($id, $arrClipboard['id'])) || (!empty($GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['root']) && !$GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['rootPaste'] && in_array($id, $this->root))) ? Image::getHtml('pasteafter_.gif').' ' : '<a href="'.$this->addToUrl('act='.$arrClipboard['mode'].'&amp;mode=1&amp;pid='.$id.(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars(sprintf($GLOBALS['TL_LANG'][$this->strTable]['pasteafter'][1], $id)).'" onclick="">'.$imagePasteAfter.'</a> ';
+					$_buttons .= ($arrClipboard['mode'] == 'cut' && ($blnCircularReference || $arrClipboard['id'] == $id) || $arrClipboard['mode'] == 'cutAll' && ($blnCircularReference || in_array($id, $arrClipboard['id']))) ? Image::getHtml('pasteinto_.gif').' ' : '<a href="'.$this->addToUrl('act='.$arrClipboard['mode'].'&amp;mode=2&amp;pid='.$id.(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars(sprintf($GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][1], $id)).'" onclick="">'.$imagePasteInto.'</a> ';
 				}
 
 				// Extended tree
 				else
 				{
-					$_buttons .= ($this->strTable == $table) ? (($arrClipboard['mode'] == 'cut' && ($blnCircularReference || $arrClipboard['id'] == $id) || $arrClipboard['mode'] == 'cutAll' && ($blnCircularReference || in_array($id, $arrClipboard['id']))) ? \Image::getHtml('pasteafter_.gif') : '<a href="'.$this->addToUrl('act='.$arrClipboard['mode'].'&amp;mode=1&amp;pid='.$id.(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars(sprintf($GLOBALS['TL_LANG'][$this->strTable]['pasteafter'][1], $id)).'" onclick="">'.$imagePasteAfter.'</a> ') : '';
+					$_buttons .= ($this->strTable == $table) ? (($arrClipboard['mode'] == 'cut' && ($blnCircularReference || $arrClipboard['id'] == $id) || $arrClipboard['mode'] == 'cutAll' && ($blnCircularReference || in_array($id, $arrClipboard['id']))) ? Image::getHtml('pasteafter_.gif') : '<a href="'.$this->addToUrl('act='.$arrClipboard['mode'].'&amp;mode=1&amp;pid='.$id.(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars(sprintf($GLOBALS['TL_LANG'][$this->strTable]['pasteafter'][1], $id)).'" onclick="">'.$imagePasteAfter.'</a> ') : '';
 					$_buttons .= ($this->strTable != $table) ? '<a href="'.$this->addToUrl('act='.$arrClipboard['mode'].'&amp;mode=2&amp;pid='.$id.(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars(sprintf($GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][1], $id)).'" onclick="">'.$imagePasteInto.'</a> ' : '';
 				}
 			}
@@ -3930,9 +3932,9 @@ class DC_Table extends DataContainer implements \listable, \editable
 			$this->import('Contao\\BackendUser', 'User');
 
 			// Header
-			$imagePasteNew = \Image::getHtml('new.gif', $GLOBALS['TL_LANG'][$this->strTable]['pastenew'][0]);
-			$imagePasteAfter = \Image::getHtml('pasteafter.gif', $GLOBALS['TL_LANG'][$this->strTable]['pasteafter'][0]);
-			$imageEditHeader = \Image::getHtml('header.gif', $GLOBALS['TL_LANG'][$this->strTable]['editheader'][0]);
+			$imagePasteNew = Image::getHtml('new.gif', $GLOBALS['TL_LANG'][$this->strTable]['pastenew'][0]);
+			$imagePasteAfter = Image::getHtml('pasteafter.gif', $GLOBALS['TL_LANG'][$this->strTable]['pasteafter'][0]);
+			$imageEditHeader = Image::getHtml('header.gif', $GLOBALS['TL_LANG'][$this->strTable]['editheader'][0]);
 
 			$return .= '
 <div class="tl_content_right">'.((\Input::get('act') == 'select') ? '
@@ -4186,8 +4188,8 @@ class DC_Table extends DataContainer implements \listable, \editable
 				for ($i=0, $c=count($row); $i<$c; $i++)
 				{
 					$this->current[] = $row[$i]['id'];
-					$imagePasteAfter = \Image::getHtml('pasteafter.gif', sprintf($GLOBALS['TL_LANG'][$this->strTable]['pasteafter'][1], $row[$i]['id']));
-					$imagePasteNew = \Image::getHtml('new.gif', sprintf($GLOBALS['TL_LANG'][$this->strTable]['pastenew'][1], $row[$i]['id']));
+					$imagePasteAfter = Image::getHtml('pasteafter.gif', sprintf($GLOBALS['TL_LANG'][$this->strTable]['pasteafter'][1], $row[$i]['id']));
+					$imagePasteNew = Image::getHtml('new.gif', sprintf($GLOBALS['TL_LANG'][$this->strTable]['pastenew'][1], $row[$i]['id']));
 
 					// Decrypt encrypted value
 					foreach ($row[$i] as $k=>$v)
@@ -4247,7 +4249,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 							// Prevent circular references
 							if ($blnClipboard && $arrClipboard['mode'] == 'cut' && $row[$i]['id'] == $arrClipboard['id'] || $blnMultiboard && $arrClipboard['mode'] == 'cutAll' && in_array($row[$i]['id'], $arrClipboard['id']))
 							{
-								$return .= ' ' . \Image::getHtml('pasteafter_.gif');
+								$return .= ' ' . Image::getHtml('pasteafter_.gif');
 							}
 
 							// Copy/move multiple
@@ -4265,7 +4267,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 							// Drag handle
 							if (!$GLOBALS['TL_DCA'][$this->strTable]['config']['notSortable'])
 							{
-								$return .= ' ' . \Image::getHtml('drag.gif', '', 'class="drag-handle" title="' . sprintf($GLOBALS['TL_LANG'][$this->strTable]['cut'][1], $row[$i]['id']) . '"');
+								$return .= ' ' . Image::getHtml('drag.gif', '', 'class="drag-handle" title="' . sprintf($GLOBALS['TL_LANG'][$this->strTable]['cut'][1], $row[$i]['id']) . '"');
 							}
 						}
 					}

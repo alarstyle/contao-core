@@ -11,7 +11,7 @@
 namespace Contao;
 
 use MatthiasMullie\Minify;
-
+use Contao\Model\Registry;
 
 /**
  * Parses and outputs template files
@@ -358,7 +358,7 @@ abstract class Template extends BaseTemplate
 			count($GLOBALS['TL_DEBUG']['database_queries']),
 			$intReturned,
 			$intAffected,
-			\Model\Registry::getInstance()->count()
+			Registry::getInstance()->count()
 		);
 
 		ksort($GLOBALS['TL_DEBUG']);

@@ -243,6 +243,8 @@ $GLOBALS['TL_DCA']['tl_user_group'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
+use Contao\Image;
+
 class tl_user_group extends \Contao\Backend
 {
 

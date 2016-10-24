@@ -810,6 +810,7 @@ use Contao\Input;
 use Contao\Models\ContentModel;
 use Contao\Models\PageModel;
 use Contao\StringUtil;
+use Contao\Image;
 
 class tl_content extends Contao\Backend
 {

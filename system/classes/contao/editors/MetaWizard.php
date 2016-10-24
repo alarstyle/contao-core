@@ -10,6 +10,7 @@
 
 namespace Contao\Editors;
 
+use Contao\Image;
 
 /**
  * Provide methods to handle file meta information.
@@ -133,7 +134,7 @@ class MetaWizard extends \Contao\Editor
 				$return .= '
     <li class="' . (($count%2 == 0) ? 'even' : 'odd') . '" data-language="' . $lang . '">';
 
-				$return .= '<span class="lang">' . (isset($languages[$lang]) ? $languages[$lang] : $lang) . ' ' . \Image::getHtml('delete.gif', '', 'class="tl_metawizard_img" onclick="Backend.metaDelete(this)"') . '</span>';
+				$return .= '<span class="lang">' . (isset($languages[$lang]) ? $languages[$lang] : $lang) . ' ' . Image::getHtml('delete.gif', '', 'class="tl_metawizard_img" onclick="Backend.metaDelete(this)"') . '</span>';
 
 				// Take the fields from the DCA (see #4327)
 				foreach ($this->metaFields as $field=>$attributes)

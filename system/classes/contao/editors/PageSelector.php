@@ -12,6 +12,7 @@ namespace Contao\Editors;
 
 use Contao\Config;
 use Contao\Environment;
+use Contao\Image;
 
 /**
  * Provide methods to handle input field "page tree".
@@ -233,7 +234,7 @@ class PageSelector extends \Contao\Editor
 
 		// Return the tree
 		return '<ul class="tl_listing tree_view picker_selector'.(($this->strClass != '') ? ' ' . $this->strClass : '').'" id="'.$this->strId.'">
-    <li class="tl_folder_top"><div class="tl_left">'.\Image::getHtml($GLOBALS['TL_DCA']['tl_page']['list']['sorting']['icon'] ?: 'pagemounts.gif').' '.(Config::get('websiteTitle') ?: 'Contao Open Source CMS').'</div> <div class="tl_right">&nbsp;</div><div style="clear:both"></div></li><li class="parent" id="'.$this->strId.'_parent"><ul>'.$tree.$strReset.'
+    <li class="tl_folder_top"><div class="tl_left">'.Image::getHtml($GLOBALS['TL_DCA']['tl_page']['list']['sorting']['icon'] ?: 'pagemounts.gif').' '.(Config::get('websiteTitle') ?: 'Contao Open Source CMS').'</div> <div class="tl_right">&nbsp;</div><div style="clear:both"></div></li><li class="parent" id="'.$this->strId.'_parent"><ul>'.$tree.$strReset.'
   </ul></li></ul>';
 	}
 
@@ -367,7 +368,7 @@ class PageSelector extends \Contao\Editor
 			$folderAttribute = '';
 			$img = $blnIsOpen ? 'folMinus.gif' : 'folPlus.gif';
 			$alt = $blnIsOpen ? $GLOBALS['TL_LANG']['MSC']['collapseNode'] : $GLOBALS['TL_LANG']['MSC']['expandNode'];
-			$return .= '<a href="'.$this->addToUrl($flag.'tg='.$id).'" title="'.specialchars($alt).'" onclick="return AjaxRequest.togglePagetree(this,\''.$xtnode.'_'.$id.'\',\''.$this->strField.'\',\''.$this->strName.'\','.$level.')">'.\Image::getHtml($img, '', 'style="margin-right:2px"').'</a>';
+			$return .= '<a href="'.$this->addToUrl($flag.'tg='.$id).'" title="'.specialchars($alt).'" onclick="return AjaxRequest.togglePagetree(this,\''.$xtnode.'_'.$id.'\',\''.$this->strField.'\',\''.$this->strName.'\','.$level.')">'.Image::getHtml($img, '', 'style="margin-right:2px"').'</a>';
 		}
 
 		// Set the protection status
@@ -376,11 +377,11 @@ class PageSelector extends \Contao\Editor
 		// Add the current page
 		if (!empty($childs))
 		{
-			$return .= \Image::getHtml($this->getPageStatusIcon($objPage), '', $folderAttribute).' <a href="' . $this->addToUrl('pn='.$objPage->id) . '" title="'.specialchars($objPage->title . ' (' . $objPage->alias . '/' . ')').'">'.(($objPage->type == 'root') ? '<strong>' : '').$objPage->title.(($objPage->type == 'root') ? '</strong>' : '').'</a></div> <div class="tl_right">';
+			$return .= Image::getHtml($this->getPageStatusIcon($objPage), '', $folderAttribute).' <a href="' . $this->addToUrl('pn='.$objPage->id) . '" title="'.specialchars($objPage->title . ' (' . $objPage->alias . '/' . ')').'">'.(($objPage->type == 'root') ? '<strong>' : '').$objPage->title.(($objPage->type == 'root') ? '</strong>' : '').'</a></div> <div class="tl_right">';
 		}
 		else
 		{
-			$return .= \Image::getHtml($this->getPageStatusIcon($objPage), '', $folderAttribute).' '.(($objPage->type == 'root') ? '<strong>' : '').$objPage->title.(($objPage->type == 'root') ? '</strong>' : '').'</div> <div class="tl_right">';
+			$return .= Image::getHtml($this->getPageStatusIcon($objPage), '', $folderAttribute).' '.(($objPage->type == 'root') ? '<strong>' : '').$objPage->title.(($objPage->type == 'root') ? '</strong>' : '').'</div> <div class="tl_right">';
 		}
 
 		// Add checkbox or radio button

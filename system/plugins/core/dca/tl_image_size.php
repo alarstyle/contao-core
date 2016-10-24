@@ -198,6 +198,8 @@ $GLOBALS['TL_DCA']['tl_image_size'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
+use Contao\Image;
+
 class tl_image_size extends Contao\Backend
 {
 

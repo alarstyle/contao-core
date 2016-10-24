@@ -10,6 +10,8 @@
 
 namespace Contao;
 
+use Contao\Files\Ftp;
+use Contao\Files\Php;
 
 /**
  * A wrapper class for accessing the file system
@@ -67,13 +69,13 @@ abstract class Files
 			// Use FTP to modify files
 			if (Config::get('useFTP'))
 			{
-				self::$objInstance = new \Files\Ftp();
+				self::$objInstance = new Ftp();
 			}
 
 			// Use PHP to modify files
 			else
 			{
-				self::$objInstance = new Files\Php();
+				self::$objInstance = new Php();
 			}
 		}
 

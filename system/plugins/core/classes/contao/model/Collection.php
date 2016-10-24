@@ -10,6 +10,7 @@
 
 namespace Contao\Model;
 
+use Contao\Model;
 
 /**
  * The class handles traversing a set of models and lazy loads the database
@@ -53,7 +54,7 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate
 
 		foreach ($arrModels as $objModel)
 		{
-			if (!$objModel instanceof \Model)
+			if (!$objModel instanceof Model)
 			{
 				throw new \InvalidArgumentException('Invalid type: ' . gettype($objModel));
 			}
@@ -133,7 +134,7 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate
 	public static function createFromDbResult(\Contao\Database\Result $objResult, $strTable)
 	{
 		$arrModels = array();
-		$strClass = \Contao\Model::getClassFromTable($strTable);
+		$strClass = Model::getClassFromTable($strTable);
 
 		while ($objResult->next())
 		{

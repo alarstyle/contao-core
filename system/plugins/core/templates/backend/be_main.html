@@ -93,7 +93,7 @@
                 <?php foreach ($this->modules as $strGroup=>$arrModules): ?>
                 <li class="tl_level_1_group<?= $arrModules['class'] ?>"><a href="<?= $arrModules['href'] ?>"
                                                                            title="<?= $arrModules['title'] ?>"
-                                                                           onclick="return AjaxRequest.toggleNavigation(this,'<?= $strGroup ?>')"><?= Image::getHtml($arrModules['icon']) ?><?= $arrModules['label'] ?></a>
+                                                                           onclick="return AjaxRequest.toggleNavigation(this,'<?= $strGroup ?>')"><?= \Contao\Image::getHtml($arrModules['icon']) ?><?= $arrModules['label'] ?></a>
                 </li>
                 <?php if ($arrModules['modules']): ?>
                 <li class="tl_parent" id="<?= $strGroup ?>">

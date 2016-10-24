@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Model\Registry;
 use Contao\Models\FilesModel;
 use Contao\Models\PageModel;
 
@@ -666,7 +667,7 @@ abstract class Backend extends Controller
 		}
 
 		$arrPages = array();
-		$objRegistry = \Model\Registry::getInstance();
+		$objRegistry = Registry::getInstance();
 
 		// Recursively walk through all subpages
 		while ($objPages->next())
@@ -919,7 +920,7 @@ abstract class Backend extends Controller
 		$GLOBALS['TL_DCA']['tl_page']['list']['sorting']['root'] = array($intNode);
 
 		// Add root link
-		$arrLinks[] = \Image::getHtml('pagemounts.gif') . ' <a href="' . Controller::addToUrl('pn=0') . '" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['selectAllNodes']).'">' . $GLOBALS['TL_LANG']['MSC']['filterAll'] . '</a>';
+		$arrLinks[] = Image::getHtml('pagemounts.gif') . ' <a href="' . Controller::addToUrl('pn=0') . '" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['selectAllNodes']).'">' . $GLOBALS['TL_LANG']['MSC']['filterAll'] . '</a>';
 		$arrLinks = array_reverse($arrLinks);
 
 		// Insert breadcrumb menu
@@ -956,7 +957,7 @@ abstract class Backend extends Controller
 		// Return the image only
 		if ($blnReturnImage)
 		{
-			return \Image::getHtml($image, '', $imageAttribute);
+			return Image::getHtml($image, '', $imageAttribute);
 		}
 
 		// Mark root pages
@@ -969,7 +970,7 @@ abstract class Backend extends Controller
 		$label = '<a href="' . \Controller::addToUrl('pn='.$row['id']) . '" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['selectNode']).'">' . $label . '</a>';
 
 		// Return the image
-		return '<a href="contao/main.php?do=feRedirect&amp;page='.$row['id'].'" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['view']).'"' . (($dc->table != 'tl_page') ? ' class="tl_gray"' : '') . ' target="_blank">'.\Image::getHtml($image, '', $imageAttribute).'</a> '.$label;
+		return '<a href="contao/main.php?do=feRedirect&amp;page='.$row['id'].'" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['view']).'"' . (($dc->table != 'tl_page') ? ' class="tl_gray"' : '') . ' target="_blank">'.Image::getHtml($image, '', $imageAttribute).'</a> '.$label;
 	}
 
 

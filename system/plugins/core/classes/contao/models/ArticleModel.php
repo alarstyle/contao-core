@@ -11,6 +11,7 @@
 namespace Contao\Models;
 
 use Contao\Date;
+use Contao\Model;
 
 /**
  * Reads and writes articles
@@ -115,7 +116,7 @@ use Contao\Date;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ArticleModel extends \Model
+class ArticleModel extends Model
 {
 
 	/**

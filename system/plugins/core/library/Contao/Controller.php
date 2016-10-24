@@ -1646,7 +1646,7 @@ abstract class Controller extends System
 					'caption'   => $arrMeta['caption'],
 					'href'      => $strHref,
 					'filesize'  => static::getReadableSize($objFile->filesize),
-					'icon'      => \Image::getPath($objFile->icon),
+					'icon'      => Image::getPath($objFile->icon),
 					'mime'      => $objFile->mime,
 					'meta'      => $arrMeta,
 					'extension' => $objFile->extension,

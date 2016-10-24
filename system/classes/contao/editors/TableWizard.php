@@ -13,6 +13,7 @@ namespace Contao\Editors;
 use Contao\Cache;
 use Contao\Environment;
 use Contao\Message;
+use Contao\Image;
 
 /**
  * Provide methods to handle table fields.
@@ -174,7 +175,7 @@ class TableWizard extends \Contao\Editor
 			// Add column buttons
 			foreach ($arrColButtons as $button)
 			{
-				$return .= '<a href="'.$this->addToUrl('&amp;'.$strCommand.'='.$button.'&amp;cid='.$i.'&amp;id='.$this->currentRecord).'" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['tw_'.$button]).'" onclick="Backend.tableWizard(this,\''.$button.'\',\'ctrl_'.$this->strId.'\');return false">'.\Image::getHtml(substr($button, 1).'.gif', $GLOBALS['TL_LANG']['MSC']['tw_'.$button], 'class="tl_tablewizard_img"').'</a> ';
+				$return .= '<a href="'.$this->addToUrl('&amp;'.$strCommand.'='.$button.'&amp;cid='.$i.'&amp;id='.$this->currentRecord).'" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['tw_'.$button]).'" onclick="Backend.tableWizard(this,\''.$button.'\',\'ctrl_'.$this->strId.'\');return false">'.Image::getHtml(substr($button, 1).'.gif', $GLOBALS['TL_LANG']['MSC']['tw_'.$button], 'class="tl_tablewizard_img"').'</a> ';
 			}
 
 			$return .= '</td>';
@@ -209,11 +210,11 @@ class TableWizard extends \Contao\Editor
 
 				if ($button == 'rdrag')
 				{
-					$return .= \Image::getHtml('drag.gif', '', 'class="drag-handle" title="' . sprintf($GLOBALS['TL_LANG']['MSC']['move']) . '"');
+					$return .= Image::getHtml('drag.gif', '', 'class="drag-handle" title="' . sprintf($GLOBALS['TL_LANG']['MSC']['move']) . '"');
 				}
 				else
 				{
-					$return .= '<a href="'.$this->addToUrl('&amp;'.$strCommand.'='.$button.'&amp;cid='.$i.'&amp;id='.$this->currentRecord).'"' . $class . ' title="'.specialchars($GLOBALS['TL_LANG']['MSC']['tw_'.$button]).'" onclick="Backend.tableWizard(this,\''.$button.'\',\'ctrl_'.$this->strId.'\');return false">'.\Image::getHtml(substr($button, 1).'.gif', $GLOBALS['TL_LANG']['MSC']['tw_'.$button], 'class="tl_tablewizard_img"').'</a> ';
+					$return .= '<a href="'.$this->addToUrl('&amp;'.$strCommand.'='.$button.'&amp;cid='.$i.'&amp;id='.$this->currentRecord).'"' . $class . ' title="'.specialchars($GLOBALS['TL_LANG']['MSC']['tw_'.$button]).'" onclick="Backend.tableWizard(this,\''.$button.'\',\'ctrl_'.$this->strId.'\');return false">'.Image::getHtml(substr($button, 1).'.gif', $GLOBALS['TL_LANG']['MSC']['tw_'.$button], 'class="tl_tablewizard_img"').'</a> ';
 				}
 			}
 

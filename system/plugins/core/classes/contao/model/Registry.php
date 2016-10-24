@@ -10,6 +10,7 @@
 
 namespace Contao\Model;
 
+use Contao\Model;
 
 /**
  * Handle a set of models
@@ -93,12 +94,12 @@ class Registry implements \Countable
 	 * @param mixed   $varKey   The key
 	 * @param string  $strAlias An optional alias
 	 *
-	 * @return \Model|null The model or null
+	 * @return Model|null The model or null
 	 */
 	public function fetch($strTable, $varKey, $strAlias=null)
 	{
-		/** @var \Model $strClass */
-		$strClass = \Model::getClassFromTable($strTable);
+		/** @var Model $strClass */
+		$strClass = Model::getClassFromTable($strTable);
 		$strPk    = $strClass::getPk();
 
 		// Search by PK (most common case)
@@ -149,7 +150,7 @@ class Registry implements \Countable
 	 *
 	 * @throws \RuntimeException If the instance exists already
 	 */
-	public function register(\Model $objModel)
+	public function register(Model $objModel)
 	{
 		$intObjectId = spl_object_hash($objModel);
 
@@ -193,7 +194,7 @@ class Registry implements \Countable
 	 *
 	 * @param \Model|\Contao\Model $objModel The model object
 	 */
-	public function unregister(\Model $objModel)
+	public function unregister(Model $objModel)
 	{
 		$intObjectId = spl_object_hash($objModel);
 
@@ -222,7 +223,7 @@ class Registry implements \Countable
 	 *
 	 * @return boolean True if the model is registered
 	 */
-	public function isRegistered(\Model $objModel)
+	public function isRegistered(Model $objModel)
 	{
 		$intObjectId = spl_object_hash($objModel);
 
@@ -239,7 +240,7 @@ class Registry implements \Countable
 	 *
 	 * @throws \RuntimeException If the alias is already registered
 	 */
-	public function registerAlias(\Model $objModel, $strAlias, $varValue)
+	public function registerAlias(Model $objModel, $strAlias, $varValue)
 	{
 		$strTable = $objModel->getTable();
 		$strPk    = $objModel->getPk();
@@ -263,7 +264,7 @@ class Registry implements \Countable
 	 *
 	 * @throws \InvalidArgumentException If the alias is not registered
 	 */
-	public function unregisterAlias(\Model $objModel, $strAlias, $varValue)
+	public function unregisterAlias(Model $objModel, $strAlias, $varValue)
 	{
 		$strTable = $objModel->getTable();
 
@@ -288,7 +289,7 @@ class Registry implements \Countable
 	 *
 	 * @return boolean True if the alias is registered
 	 */
-	public function isRegisteredAlias(\Model $objModel, $strAlias, $varValue)
+	public function isRegisteredAlias(Model $objModel, $strAlias, $varValue)
 	{
 		$strTable = $objModel->getTable();
 

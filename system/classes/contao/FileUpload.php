@@ -337,7 +337,7 @@ class FileUpload extends Backend
 		// Resized successfully
 		if ($blnResize)
 		{
-			\Image::resize($strImage, $arrImageSize[0], $arrImageSize[1]);
+			Image::resize($strImage, $arrImageSize[0], $arrImageSize[1]);
 			Message::addInfo(sprintf($GLOBALS['TL_LANG']['MSC']['fileResized'], $objFile->basename));
 			$this->log('File "' . $strImage . '" was scaled down to the maximum dimensions', __METHOD__, TL_FILES);
 			$this->blnHasResized = true;

@@ -14,6 +14,7 @@ use Contao\Environment;
 use Contao\Input;
 use Contao\System;
 use Contao\Models\FilesModel;
+use Contao\Image;
 
 /**
  * Front end content element "downloads".
@@ -171,7 +172,7 @@ class ContentDownloads extends ContentElement
 					'caption'   => $arrMeta['caption'],
 					'href'      => $strHref,
 					'filesize'  => $this->getReadableSize($objFile->filesize, 1),
-					'icon'      => \Image::getPath($objFile->icon),
+					'icon'      => Image::getPath($objFile->icon),
 					'mime'      => $objFile->mime,
 					'meta'      => $arrMeta,
 					'extension' => $objFile->extension,
@@ -247,7 +248,7 @@ class ContentDownloads extends ContentElement
 						'caption'   => $arrMeta['caption'],
 						'href'      => $strHref,
 						'filesize'  => $this->getReadableSize($objFile->filesize, 1),
-						'icon'      => \Image::getPath($objFile->icon),
+						'icon'      => Image::getPath($objFile->icon),
 						'mime'      => $objFile->mime,
 						'meta'      => $arrMeta,
 						'extension' => $objFile->extension,

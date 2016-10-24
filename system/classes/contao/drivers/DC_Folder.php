@@ -15,6 +15,7 @@ use Contao\DataContainer;
 use Contao\Date;
 use Contao\Editor;
 use Contao\Environment;
+use Contao\Image;
 use Contao\Input;
 use Contao\Message;
 use Contao\RequestToken;
@@ -350,7 +351,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 			$hrfNew = $GLOBALS['TL_DCA'][$this->strTable]['list']['new']['href'];
 		}
 
-		$imagePasteInto = \Image::getHtml('pasteinto.gif', $GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][0]);
+		$imagePasteInto = Image::getHtml('pasteinto.gif', $GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][0]);
 
 		// Build the tree
 		$return = '
@@ -377,7 +378,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 </div>' : '').'
 
 <ul class="tl_listing">
-  <li class="tl_folder_top"><div class="tl_left">'.\Image::getHtml('filemounts.gif').' '.$GLOBALS['TL_LANG']['MSC']['filetree'].'</div> <div class="tl_right">'.(($blnClipboard && empty($this->arrFilemounts) && !is_array($GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['root']) && $GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['root'] !== false) ? '<a href="'.$this->addToUrl('&amp;act='.$arrClipboard['mode'].'&amp;mode=2&amp;pid='.Config::get('uploadPath').(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars($GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][1]).'" onclick="">'.$imagePasteInto.'</a>' : '&nbsp;').'</div><div style="clear:both"></div></li>'.$return.'
+  <li class="tl_folder_top"><div class="tl_left">'.Image::getHtml('filemounts.gif').' '.$GLOBALS['TL_LANG']['MSC']['filetree'].'</div> <div class="tl_right">'.(($blnClipboard && empty($this->arrFilemounts) && !is_array($GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['root']) && $GLOBALS['TL_DCA'][$this->strTable]['list']['sorting']['root'] !== false) ? '<a href="'.$this->addToUrl('&amp;act='.$arrClipboard['mode'].'&amp;mode=2&amp;pid='.Config::get('uploadPath').(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars($GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][1]).'" onclick="">'.$imagePasteInto.'</a>' : '&nbsp;').'</div><div style="clear:both"></div></li>'.$return.'
 </ul>
 
 </div>';
@@ -2404,7 +2405,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 			{
 				$img = ($session['filetree'][$md5] == 1) ? 'folMinus.gif' : 'folPlus.gif';
 				$alt = ($session['filetree'][$md5] == 1) ? $GLOBALS['TL_LANG']['MSC']['collapseNode'] : $GLOBALS['TL_LANG']['MSC']['expandNode'];
-				$return .= '<a href="'.$this->addToUrl('tg='.$md5).'" title="'.specialchars($alt).'" onclick=" return AjaxRequest.toggleFileManager(this, \'filetree_'.$md5.'\', \''.$currentFolder.'\', '.$level.')">'.\Image::getHtml($img, '', 'style="margin-right:2px"').'</a>';
+				$return .= '<a href="'.$this->addToUrl('tg='.$md5).'" title="'.specialchars($alt).'" onclick=" return AjaxRequest.toggleFileManager(this, \'filetree_'.$md5.'\', \''.$currentFolder.'\', '.$level.')">'.Image::getHtml($img, '', 'style="margin-right:2px"').'</a>';
 			}
 
 			$protected = ($blnProtected === true || array_search('.htaccess', $content) !== false) ? true : false;
@@ -2412,13 +2413,13 @@ class DC_Folder extends DataContainer implements \listable, \editable
 
 			// Add the current folder
 			$strFolderNameEncoded = utf8_convert_encoding(specialchars(basename($currentFolder)), Config::get('characterSet'));
-			$return .= \Image::getHtml($folderImg, '').'<strong>'.$strFolderNameEncoded.'</strong></div> <div class="tl_right">';
+			$return .= Image::getHtml($folderImg, '').'<strong>'.$strFolderNameEncoded.'</strong></div> <div class="tl_right">';
 
 			// Paste buttons
 			if ($arrClipboard !== false && \Input::get('act') != 'select')
 			{
-				$imagePasteInto = \Image::getHtml('pasteinto.gif', $GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][0]);
-				$return .= (($arrClipboard['mode'] == 'cut' || $arrClipboard['mode'] == 'copy') && preg_match('/^' . preg_quote($arrClipboard['id'], '/') . '/i', $currentFolder)) ? \Image::getHtml('pasteinto_.gif') : '<a href="'.$this->addToUrl('act='.$arrClipboard['mode'].'&amp;mode=2&amp;pid='.$currentEncoded.(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars($GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][1]).'" onclick="">'.$imagePasteInto.'</a> ';
+				$imagePasteInto = Image::getHtml('pasteinto.gif', $GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][0]);
+				$return .= (($arrClipboard['mode'] == 'cut' || $arrClipboard['mode'] == 'copy') && preg_match('/^' . preg_quote($arrClipboard['id'], '/') . '/i', $currentFolder)) ? Image::getHtml('pasteinto_.gif') : '<a href="'.$this->addToUrl('act='.$arrClipboard['mode'].'&amp;mode=2&amp;pid='.$currentEncoded.(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')).'" title="'.specialchars($GLOBALS['TL_LANG'][$this->strTable]['pasteinto'][1]).'" onclick="">'.$imagePasteInto.'</a> ';
 			}
 			// Default buttons
 			else
@@ -2432,7 +2433,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 				// Upload button
 				if (!$GLOBALS['TL_DCA'][$this->strTable]['config']['closed'] && !$GLOBALS['TL_DCA'][$this->strTable]['config']['notCreatable'] && \Input::get('act') != 'select')
 				{
-					$return .= ' <a href="'.$this->addToUrl('&amp;act=move&amp;mode=2&amp;pid='.$currentEncoded).'" title="'.specialchars(sprintf($GLOBALS['TL_LANG']['tl_files']['uploadFF'], $currentEncoded)).'">'.\Image::getHtml('new.gif', $GLOBALS['TL_LANG'][$this->strTable]['move'][0]).'</a>';
+					$return .= ' <a href="'.$this->addToUrl('&amp;act=move&amp;mode=2&amp;pid='.$currentEncoded).'" title="'.specialchars(sprintf($GLOBALS['TL_LANG']['tl_files']['uploadFF'], $currentEncoded)).'">'.Image::getHtml('new.gif', $GLOBALS['TL_LANG'][$this->strTable]['move'][0]).'</a>';
 				}
 			}
 
@@ -2491,7 +2492,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 
 					if (Config::get('thumbnails') && ($objFile->isSvgImage || $objFile->height <= Config::get('gdMaxImgHeight') && $objFile->width <= Config::get('gdMaxImgWidth')))
 					{
-						$thumbnail .= '<br>' . \Image::getHtml(\Image::get($currentEncoded, 400, (($objFile->height && $objFile->height < 50) ? $objFile->height : 50), 'box'), '', 'style="margin:0 0 2px -19px"');
+						$thumbnail .= '<br>' . Image::getHtml(Image::get($currentEncoded, 400, (($objFile->height && $objFile->height < 50) ? $objFile->height : 50), 'box'), '', 'style="margin:0 0 2px -19px"');
 					}
 				}
 				else
@@ -2505,11 +2506,11 @@ class DC_Folder extends DataContainer implements \listable, \editable
 			// No popup links for templates and in the popup file manager
 			if ($this->strTable == 'tl_templates' || \Input::get('popup'))
 			{
-				$return .= \Image::getHtml($objFile->icon).' '.$strFileNameEncoded.$thumbnail.'</div> <div class="tl_right">';
+				$return .= Image::getHtml($objFile->icon).' '.$strFileNameEncoded.$thumbnail.'</div> <div class="tl_right">';
 			}
 			else
 			{
-				$return .= '<a href="'. $currentEncoded.'" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['view']).'" target="_blank">' . \Image::getHtml($objFile->icon, $objFile->mime).'</a> '.$strFileNameEncoded.$thumbnail.'</div> <div class="tl_right">';
+				$return .= '<a href="'. $currentEncoded.'" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['view']).'" target="_blank">' . Image::getHtml($objFile->icon, $objFile->mime).'</a> '.$strFileNameEncoded.$thumbnail.'</div> <div class="tl_right">';
 			}
 
 			// Buttons

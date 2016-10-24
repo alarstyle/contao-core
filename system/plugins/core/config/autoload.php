@@ -31,18 +31,9 @@ ClassLoader::addClasses(array
 	'Contao\DcaExtractor'              => 'system/plugins/core/library/Contao/DcaExtractor.php',
 	'Contao\DcaLoader'                 => 'system/plugins/core/library/Contao/DcaLoader.php',
 	'Contao\File'                      => 'system/plugins/core/library/Contao/File.php',
-	'Contao\Files\Ftp'                 => 'system/plugins/core/library/Contao/Files/Ftp.php',
-	'Contao\Files\Php'                 => 'system/plugins/core/library/Contao/Files/Php.php',
 	'Contao\Files'                     => 'system/plugins/core/library/Contao/Files.php',
 	'Contao\Folder'                    => 'system/plugins/core/library/Contao/Folder.php',
-	'Contao\GdImage'                   => 'system/plugins/core/library/Contao/GdImage.php',
-	'Contao\Idna'                      => 'system/plugins/core/library/Contao/Idna.php',
-	'Contao\Image'                     => 'system/plugins/core/library/Contao/Image.php',
 	'Contao\Input'                     => 'system/plugins/core/library/Contao/Input.php',
-	'Contao\Model\Collection'          => 'system/plugins/core/library/Contao/Model/Collection.php',
-	'Contao\Model\QueryBuilder'        => 'system/plugins/core/library/Contao/Model/QueryBuilder.php',
-	'Contao\Model\Registry'            => 'system/plugins/core/library/Contao/Model/Registry.php',
-	'Contao\Model'                     => 'system/plugins/core/library/Contao/Model.php',
 	'Contao\PluginLoader'              => 'system/plugins/core/library/Contao/PluginLoader.php',
 ));
 

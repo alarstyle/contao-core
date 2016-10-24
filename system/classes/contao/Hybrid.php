@@ -86,7 +86,7 @@ abstract class Hybrid extends Frontend
 		parent::__construct();
 
 		// Store the parent element (see #4556)
-		if ($objElement instanceof Model || $objElement instanceof \Contao\Model\Collection)
+		if ($objElement instanceof \Contao\Model || $objElement instanceof \Contao\Model\Collection)
 		{
 			/** @var \ContentModel|\ModuleModel|\FormModel $objModel */
 			$objModel = $objElement;
@@ -105,7 +105,7 @@ abstract class Hybrid extends Frontend
 		}
 
 		/** @var \Model $strModelClass */
-		$strModelClass = \Model::getClassFromTable($this->strTable);
+		$strModelClass = Model::getClassFromTable($this->strTable);
 
 		// Load the model
 		if (class_exists($strModelClass))

@@ -540,10 +540,10 @@ class Image
 	 */
 	protected function executeResizeGd()
 	{
-		$sourceImage = \GdImage::fromFile($this->fileObj);
+		$sourceImage = GdImage::fromFile($this->fileObj);
 
 		$coordinates = $this->computeResize();
-		$newImage = \GdImage::fromDimensions($coordinates['width'], $coordinates['height']);
+		$newImage = GdImage::fromDimensions($coordinates['width'], $coordinates['height']);
 
 		$sourceImage->copyTo($newImage, $coordinates['target_x'], $coordinates['target_y'], $coordinates['target_width'], $coordinates['target_height']);
 

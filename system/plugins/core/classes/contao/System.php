@@ -1021,7 +1021,7 @@ abstract class System
 	 */
 	protected function idnaEncode($strDomain)
 	{
-		return \Idna::encode($strDomain);
+		return Idna::encode($strDomain);
 	}
 
 
@@ -1036,7 +1036,7 @@ abstract class System
 	 */
 	protected function idnaDecode($strDomain)
 	{
-		return \Idna::decode($strDomain);
+		return Idna::decode($strDomain);
 	}
 
 
@@ -1051,7 +1051,7 @@ abstract class System
 	 */
 	protected function idnaEncodeEmail($strEmail)
 	{
-		return \Idna::encodeEmail($strEmail);
+		return Idna::encodeEmail($strEmail);
 	}
 
 
@@ -1066,7 +1066,7 @@ abstract class System
 	 */
 	protected function idnaEncodeUrl($strUrl)
 	{
-		return \Idna::encodeUrl($strUrl);
+		return Idna::encodeUrl($strUrl);
 	}
 
 
@@ -1126,6 +1126,6 @@ abstract class System
 	 */
 	public static function getModelClassFromTable($strTable)
 	{
-		return \Model::getClassFromTable($strTable);
+		return Model::getClassFromTable($strTable);
 	}
 }

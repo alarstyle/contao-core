@@ -164,7 +164,7 @@ class FileTree extends \Contao\Editor
 					{
 						if ($objFiles->type == 'folder')
 						{
-							$arrValues[$objFiles->uuid] = \Image::getHtml('folderC.gif') . ' ' . $objFiles->path;
+							$arrValues[$objFiles->uuid] = Image::getHtml('folderC.gif') . ' ' . $objFiles->path;
 						}
 						else
 						{
@@ -184,7 +184,7 @@ class FileTree extends \Contao\Editor
 							}
 							else
 							{
-								$arrValues[$objFiles->uuid] = \Image::getHtml($objFile->icon) . ' ' . $strInfo;
+								$arrValues[$objFiles->uuid] = Image::getHtml($objFile->icon) . ' ' . $strInfo;
 							}
 						}
 					}
@@ -221,10 +221,10 @@ class FileTree extends \Contao\Editor
 
 										if (($objFile->isSvgImage || $objFile->height <= Config::get('gdMaxImgHeight') && $objFile->width <= Config::get('gdMaxImgWidth')) && $objFile->viewWidth && $objFile->viewHeight)
 										{
-											$image = \Image::get($objSubfiles->path, 80, 60, 'center_center');
+											$image = Image::get($objSubfiles->path, 80, 60, 'center_center');
 										}
 
-										$arrValues[$objSubfiles->uuid] = \Image::getHtml($image, '', 'class="gimage" title="' . specialchars($strInfo) . '"');
+										$arrValues[$objSubfiles->uuid] = Image::getHtml($image, '', 'class="gimage" title="' . specialchars($strInfo) . '"');
 									}
 								}
 								else
@@ -232,7 +232,7 @@ class FileTree extends \Contao\Editor
 									// Only show allowed download types
 									if (in_array($objFile->extension, $allowedDownload) && !preg_match('/^meta(_[a-z]{2})?\.txt$/', $objFile->basename))
 									{
-										$arrValues[$objSubfiles->uuid] = \Image::getHtml($objFile->icon) . ' ' . $strInfo;
+										$arrValues[$objSubfiles->uuid] = Image::getHtml($objFile->icon) . ' ' . $strInfo;
 									}
 								}
 							}
@@ -262,7 +262,7 @@ class FileTree extends \Contao\Editor
 								// Only show allowed download types
 								if (in_array($objFile->extension, $allowedDownload) && !preg_match('/^meta(_[a-z]{2})?\.txt$/', $objFile->basename))
 								{
-									$arrValues[$objFiles->uuid] = \Image::getHtml($objFile->icon) . ' ' . $strInfo;
+									$arrValues[$objFiles->uuid] = Image::getHtml($objFile->icon) . ' ' . $strInfo;
 								}
 							}
 						}
