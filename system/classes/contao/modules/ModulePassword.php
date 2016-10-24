@@ -15,6 +15,7 @@ use Contao\Environment;
 use Contao\Idna;
 use Contao\StringUtil;
 use Contao\System;
+use Contao\Models\MemberModel;
 
 /**
  * Front end module "lost password".
@@ -148,11 +149,11 @@ class ModulePassword extends AbstractModule
 		{
 			if ($this->reg_skipName)
 			{
-				$objMember = \MemberModel::findActiveByEmailAndUsername(\Input::post('email', true), null);
+				$objMember = MemberModel::findActiveByEmailAndUsername(\Input::post('email', true), null);
 			}
 			else
 			{
-				$objMember = \MemberModel::findActiveByEmailAndUsername(\Input::post('email', true), \Input::post('username'));
+				$objMember = MemberModel::findActiveByEmailAndUsername(\Input::post('email', true), \Input::post('username'));
 			}
 
 			if ($objMember === null)
@@ -181,7 +182,7 @@ class ModulePassword extends AbstractModule
 	 */
 	protected function setNewPassword()
 	{
-		$objMember = \MemberModel::findOneByActivation(\Input::get('token'));
+		$objMember = MemberModel::findOneByActivation(\Input::get('token'));
 
 		if ($objMember === null || $objMember->login == '')
 		{
@@ -300,7 +301,7 @@ class ModulePassword extends AbstractModule
 		$confirmationId = md5(uniqid(mt_rand(), true));
 
 		// Store the confirmation ID
-		$objMember = \MemberModel::findByPk($objMember->id);
+		$objMember = MemberModel::findByPk($objMember->id);
 		$objMember->activation = $confirmationId;
 		$objMember->save();
 

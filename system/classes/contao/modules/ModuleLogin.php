@@ -13,6 +13,7 @@ namespace Contao\Modules;
 use Contao\Config;
 use Contao\Date;
 use Contao\Environment;
+use \Contao\Models\MemberModel;
 
 /**
  * Front end module "login".
@@ -84,7 +85,7 @@ class ModuleLogin extends AbstractModule
 				}
 
 				// Overwrite the jumpTo page with an individual group setting
-				$objMember = \MemberModel::findByUsername(\Input::post('username'));
+				$objMember = MemberModel::findByUsername(\Input::post('username'));
 
 				if ($objMember !== null)
 				{

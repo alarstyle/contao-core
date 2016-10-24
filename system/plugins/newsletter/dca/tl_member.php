@@ -18,7 +18,7 @@ $GLOBALS['TL_DCA']['tl_member']['palettes']['default'] = str_replace('assignDir;
 /**
  * Add load callback
  */
-$GLOBALS['TL_DCA']['tl_member']['config']['onload_callback'][] = array('Newsletter', 'updateAccount');
+$GLOBALS['TL_DCA']['tl_member']['config']['onload_callback'][] = array('Contao\\Newsletter', 'updateAccount');
 
 
 /**
@@ -33,7 +33,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['newsletter'] = array
 	'eval'                    => array('multiple'=>true, 'feEditable'=>true, 'feGroup'=>'newsletter'),
 	'save_callback' => array
 	(
-		array('Newsletter', 'synchronize')
+		array('Contao\\Newsletter', 'synchronize')
 	),
 	'sql'                     => "blob NULL"
 );

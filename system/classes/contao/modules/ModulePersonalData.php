@@ -14,6 +14,7 @@ use Contao\Date;
 use Contao\Encryption;
 use Contao\Environment;
 use Contao\Message;
+use Contao\Models\MemberModel;
 use Contao\System;
 
 /**

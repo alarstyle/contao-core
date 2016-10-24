@@ -16,6 +16,7 @@ use Contao\Config;
 use Contao\Date;
 use Contao\Input;
 use Contao\Environment;
+use Contao\Models\MemberModel;
 use Contao\System;
 
 /**
@@ -106,7 +107,7 @@ class BackendSwitch extends Backend
 			   // Log in the front end user
 				if (Input::post('user'))
 				{
-					$objUser = \MemberModel::findByUsername(Input::post('user'));
+					$objUser = MemberModel::findByUsername(Input::post('user'));
 
 					if ($objUser !== null)
 					{

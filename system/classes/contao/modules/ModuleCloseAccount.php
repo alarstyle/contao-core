@@ -12,6 +12,7 @@ namespace Contao\Modules;
 
 use \Contao\Encryption;
 use \Contao\Environment;
+use \Contao\Models\MemberModel;
 
 /**
  * Front end module "close account".
@@ -117,7 +118,7 @@ class ModuleCloseAccount extends AbstractModule
 					}
 				}
 
-				$objMember = \MemberModel::findByPk($this->User->id);
+				$objMember = MemberModel::findByPk($this->User->id);
 
 				// Remove the account
 				if ($this->reg_close == 'close_delete')

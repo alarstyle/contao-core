@@ -15,6 +15,7 @@ use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\Environment;
 use Contao\Input;
+use Contao\Models\MemberModel;
 use Contao\System;
 
 /**
@@ -74,7 +75,7 @@ class BackendPreview extends Backend
 		// Switch to a particular member (see #6546)
 		if (Input::get('user') && $this->User->isAdmin)
 		{
-			$objUser = \MemberModel::findByUsername(Input::get('user'));
+			$objUser = MemberModel::findByUsername(Input::get('user'));
 
 			if ($objUser !== null)
 			{

@@ -18,6 +18,7 @@ use Contao\Environment;
 use Contao\FrontendTemplate;
 use Contao\Idna;
 use Contao\Input;
+use Contao\Models\MemberModel;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Versions;
@@ -428,7 +429,7 @@ class ModuleRegistration extends AbstractModule
 		}
 
 		// Create the user
-		$objNewUser = new \MemberModel();
+		$objNewUser = new MemberModel();
 		$objNewUser->setRow($arrData);
 		$objNewUser->save();
 
@@ -505,7 +506,7 @@ class ModuleRegistration extends AbstractModule
 
 		$this->Template = $objTemplate;
 
-		$objMember = \MemberModel::findOneByActivation(Input::get('token'));
+		$objMember = MemberModel::findOneByActivation(Input::get('token'));
 
 		if ($objMember === null)
 		{
