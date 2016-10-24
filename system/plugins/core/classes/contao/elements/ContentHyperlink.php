@@ -11,6 +11,7 @@
 namespace Contao\Elements;
 
 use Contao\StringUtil;
+use Contao\Models\FilesModel;
 
 /**
  * Front end content element "hyperlink".
@@ -51,7 +52,7 @@ class ContentHyperlink extends ContentElement
 		// Use an image instead of the title
 		if ($this->useImage && $this->singleSRC != '')
 		{
-			$objModel = \FilesModel::findByUuid($this->singleSRC);
+			$objModel = FilesModel::findByUuid($this->singleSRC);
 
 			if ($objModel === null)
 			{

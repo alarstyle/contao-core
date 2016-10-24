@@ -13,6 +13,7 @@ namespace Contao\Editors;
 use Contao\Config;
 use Contao\Environment;
 use Contao\Image;
+use Contao\Models\FilesModel;
 
 /**
  * Provide methods to handle input field "file tree".
@@ -465,7 +466,7 @@ class FileSelector extends \Contao\Editor
 			return;
 		}
 
-		$objFiles = \FilesModel::findMultipleByIds($this->varValue);
+		$objFiles = FilesModel::findMultipleByIds($this->varValue);
 
 		if ($objFiles !== null)
 		{

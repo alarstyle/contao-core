@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Models\FilesModel;
 
 /**
  * Creates, reads, writes and deletes files
@@ -598,7 +599,7 @@ class File extends System
 	{
 		if ($this->objModel === null && \Dbafs::shouldBeSynchronized($this->strFile))
 		{
-			$this->objModel = \FilesModel::findByPath($this->strFile);
+			$this->objModel = FilesModel::findByPath($this->strFile);
 		}
 
 		return $this->objModel;

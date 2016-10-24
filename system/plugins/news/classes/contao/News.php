@@ -16,6 +16,7 @@ use Contao\Models\NewsArchiveModel;
 use Contao\Models\NewsFeedModel;
 use Contao\Models\NewsModel;
 use Contao\Models\PageModel;
+use Contao\Models\FilesModel;
 
 /**
  * Provide methods regarding news archives.

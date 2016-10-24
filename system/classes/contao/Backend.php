@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Models\FilesModel;
 use Contao\Models\PageModel;
 
 /**
@@ -724,7 +725,7 @@ abstract class Backend extends Controller
 	 */
 	public static function addFileMetaInformationToRequest($strUuid, $strPtable, $intPid)
 	{
-		$objFile = \FilesModel::findByUuid($strUuid);
+		$objFile = FilesModel::findByUuid($strUuid);
 
 		if ($objFile === null)
 		{

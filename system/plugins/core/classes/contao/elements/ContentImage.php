@@ -10,6 +10,7 @@
 
 namespace Contao\Elements;
 
+use Contao\Models\FilesModel;
 
 /**
  * Front end content element "image".
@@ -38,7 +39,7 @@ class ContentImage extends ContentElement
 			return '';
 		}
 
-		$objFile = \FilesModel::findByUuid($this->singleSRC);
+		$objFile = FilesModel::findByUuid($this->singleSRC);
 
 		if ($objFile === null)
 		{

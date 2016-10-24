@@ -15,6 +15,7 @@ use Contao\Email;
 use Contao\Environment;
 use Contao\StringUtil;
 use Contao\System;
+use Contao\Models\FormFieldModel;
 
 /**
  * Provide methods to handle front end forms.
@@ -121,7 +122,7 @@ class Form extends \Hybrid
 
 		// Get all form fields
 		$arrFields = array();
-		$objFields = \FormFieldModel::findPublishedByPid($this->id);
+		$objFields = FormFieldModel::findPublishedByPid($this->id);
 
 		if ($objFields !== null)
 		{

@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Models\FilesModel;
 
 /**
  * Provide methods to manage back end users.
@@ -493,7 +494,7 @@ class BackendUser extends User
 		// Convert the file mounts into paths (backwards compatibility)
 		if (!$this->isAdmin && !empty($this->filemounts))
 		{
-			$objFiles = \FilesModel::findMultipleByUuids($this->filemounts);
+			$objFiles = FilesModel::findMultipleByUuids($this->filemounts);
 
 			if ($objFiles !== null)
 			{

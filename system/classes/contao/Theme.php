@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Models\FilesModel;
 
 /**
  * Provide methods to handle themes.
@@ -981,7 +982,7 @@ class Theme extends Backend
 
 		if (!empty($arrFolders) && is_array($arrFolders))
 		{
-			$objFolders = \FilesModel::findMultipleByUuids($arrFolders);
+			$objFolders = FilesModel::findMultipleByUuids($arrFolders);
 
 			if ($objFolders !== null)
 			{
@@ -1022,7 +1023,7 @@ class Theme extends Backend
 			// Replace the IDs of singleSRC fields with their path (see #4952)
 			elseif ($GLOBALS['TL_DCA'][$t]['fields'][$k]['inputType'] == 'fileTree' && !$GLOBALS['TL_DCA'][$t]['fields'][$k]['eval']['multiple'])
 			{
-				$objFile = \FilesModel::findByUuid($v);
+				$objFile = FilesModel::findByUuid($v);
 
 				if ($objFile !== null)
 				{
@@ -1041,7 +1042,7 @@ class Theme extends Backend
 
 				if (!empty($arrFiles) && is_array($arrFiles))
 				{
-					$objFiles = \FilesModel::findMultipleByUuids($arrFiles);
+					$objFiles = FilesModel::findMultipleByUuids($arrFiles);
 
 					if ($objFiles !== null)
 					{
@@ -1130,7 +1131,7 @@ class Theme extends Backend
 
 				$arrRow = array();
 				$objFile = new \File($strFolder .'/'. $strFile, true);
-				$objModel = \FilesModel::findByPath($strFolder .'/'. $strFile);
+				$objModel = FilesModel::findByPath($strFolder .'/'. $strFile);
 
 				if ($objModel !== null)
 				{

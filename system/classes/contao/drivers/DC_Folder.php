@@ -21,6 +21,7 @@ use Contao\RequestToken;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Versions;
+use Contao\Models\FilesModel;
 
 
 /**
@@ -960,7 +961,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 
 				foreach ($arrUploaded as $strFile)
 				{
-					$objFile = \FilesModel::findByPath($strFile);
+					$objFile = FilesModel::findByPath($strFile);
 
 					// Existing file is being replaced (see #4818)
 					if ($objFile !== null)
@@ -1096,11 +1097,11 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		{
 			if (stristr($this->intId, '__new__') === false)
 			{
-				$objModel = \FilesModel::findByPath($this->intId);
+				$objModel = FilesModel::findByPath($this->intId);
 
 				if ($objModel === null)
 				{
-					$objModel = \Dbafs::addResource($this->intId);
+					$objModel = Dbafs::addResource($this->intId);
 				}
 
 				$this->objActiveRecord = $objModel;
@@ -1419,7 +1420,7 @@ class DC_Folder extends DataContainer implements \listable, \editable
 				// Get the DB entry
 				if ($this->blnIsDbAssisted && \Dbafs::shouldBeSynchronized($id))
 				{
-					$objModel = \FilesModel::findByPath($id);
+					$objModel = FilesModel::findByPath($id);
 
 					if ($objModel === null)
 					{
@@ -1734,11 +1735,11 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		// Add the versioning routines
 		if ($this->blnIsDbAssisted && \Dbafs::shouldBeSynchronized($this->intId))
 		{
-			$objMeta = \FilesModel::findByPath($objFile->value);
+			$objMeta = FilesModel::findByPath($objFile->value);
 
 			if ($objMeta === null)
 			{
-				$objMeta = \Dbafs::addResource($objFile->value);
+				$objMeta = Dbafs::addResource($objFile->value);
 			}
 
 			$objVersions = new Versions($this->strTable, $objMeta->id);

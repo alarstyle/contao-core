@@ -63,12 +63,6 @@ ClassLoader::addClasses(array
 	'Contao\Model\Registry'            => 'system/plugins/core/library/Contao/Model/Registry.php',
 	'Contao\Model'                     => 'system/plugins/core/library/Contao/Model.php',
 	'Contao\PluginLoader'              => 'system/plugins/core/library/Contao/PluginLoader.php',
-
-	// Models
-	'Contao\FilesModel'                => 'system/plugins/core/models/FilesModel.php',
-	'Contao\FormFieldModel'            => 'system/plugins/core/models/FormFieldModel.php',
-	'Contao\FormModel'                 => 'system/plugins/core/models/FormModel.php',
-	'Contao\ImageSizeItemModel'        => 'system/plugins/core/models/ImageSizeItemModel.php',
 ));
 
 

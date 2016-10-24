@@ -18,6 +18,7 @@ use Contao\Environment;
 use Contao\FrontendTemplate;
 use Contao\Idna;
 use Contao\Input;
+use Contao\Models\FilesModel;
 use Contao\Models\MemberModel;
 use Contao\StringUtil;
 use Contao\System;
@@ -436,7 +437,7 @@ class ModuleRegistration extends AbstractModule
 		// Assign home directory
 		if ($this->reg_assignDir)
 		{
-			$objHomeDir = \FilesModel::findByUuid($this->reg_homeDir);
+			$objHomeDir = FilesModel::findByUuid($this->reg_homeDir);
 
 			if ($objHomeDir !== null)
 			{
@@ -452,7 +453,7 @@ class ModuleRegistration extends AbstractModule
 				// Create the user folder
 				new \Folder($objHomeDir->path . '/' . $strUserDir);
 
-				$objUserDir = \FilesModel::findByPath($objHomeDir->path . '/' . $strUserDir);
+				$objUserDir = FilesModel::findByPath($objHomeDir->path . '/' . $strUserDir);
 
 				// Save the folder ID
 				$objNewUser->assignDir = 1;

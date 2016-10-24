@@ -223,6 +223,8 @@ $GLOBALS['TL_DCA']['tl_theme'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
+use Contao\Models\FilesModel;
+
 class tl_theme extends \Contao\Backend
 {
 

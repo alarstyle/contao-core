@@ -25,6 +25,7 @@ use Contao\RequestToken;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Versions;
+use Contao\Models\FilesModel;
 use Contao\Models\PageModel;
 
 /**
@@ -3950,7 +3951,7 @@ class DC_Table extends DataContainer implements \listable, \editable
 				// Translate UUIDs to paths
 				if ($GLOBALS['TL_DCA'][$this->ptable]['fields'][$v]['inputType'] == 'fileTree')
 				{
-					$objFiles = \FilesModel::findMultipleByUuids((array) $_v);
+					$objFiles = FilesModel::findMultipleByUuids((array) $_v);
 
 					if ($objFiles !== null)
 					{

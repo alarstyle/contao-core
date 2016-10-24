@@ -12,6 +12,7 @@ namespace Contao;
 
 use Contao\Config;
 use Contao\Email;
+use Contao\Models\FilesModel;
 use Contao\Models\NewsletterChannelModel;
 use Contao\Models\NewsletterModel;
 use Contao\Models\PageModel;
@@ -71,7 +72,7 @@ class Newsletter extends Backend
 
 			if (!empty($files) && is_array($files))
 			{
-				$objFiles = \FilesModel::findMultipleByUuids($files);
+				$objFiles = FilesModel::findMultipleByUuids($files);
 
 				if ($objFiles === null)
 				{

@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Models\FilesModel;
 
 /**
  * Provides string manipulation methods
@@ -682,7 +683,7 @@ class StringUtil
 				continue;
 			}
 
-			$file = \FilesModel::findByPath($paths[$i+3]);
+			$file = FilesModel::findByPath($paths[$i+3]);
 
 			if ($file !== null)
 			{
@@ -719,7 +720,7 @@ class StringUtil
 				continue;
 			}
 
-			$file = \FilesModel::findByUuid($paths[$i+4]);
+			$file = FilesModel::findByUuid($paths[$i+4]);
 
 			if ($file !== null)
 			{

@@ -12,6 +12,7 @@ namespace Contao\Database;
 
 use Contao\Config;
 use Contao\Controller;
+use Contao\Models\FilesModel;
 
 /**
  * Adjust the database if the system is updated.
@@ -756,7 +757,7 @@ class Updater extends Controller
 			// Numeric ID to UUID
 			if ($objHelper->isNumeric)
 			{
-				$objFile = \FilesModel::findByPk($objHelper->value);
+				$objFile = FilesModel::findByPk($objHelper->value);
 
 				$objDatabase->prepare("UPDATE $table SET $field=? WHERE id=?")
 							->execute($objFile->uuid, $objRow->id);
@@ -765,7 +766,7 @@ class Updater extends Controller
 			// Path to UUID
 			else
 			{
-				$objFile = \FilesModel::findByPath($objHelper->value);
+				$objFile = FilesModel::findByPath($objHelper->value);
 
 				$objDatabase->prepare("UPDATE $table SET $field=? WHERE id=?")
 							->execute($objFile->uuid, $objRow->id);
@@ -819,14 +820,14 @@ class Updater extends Controller
 				// Numeric ID to UUID
 				if ($objHelper->isNumeric)
 				{
-					$objFile = \FilesModel::findByPk($objHelper->value[$k]);
+					$objFile = FilesModel::findByPk($objHelper->value[$k]);
 					$arrValues[$k] = $objFile->uuid;
 				}
 
 				// Path to UUID
 				else
 				{
-					$objFile = \FilesModel::findByPath($objHelper->value[$k]);
+					$objFile = FilesModel::findByPath($objHelper->value[$k]);
 					$arrValues[$k] = $objFile->uuid;
 				}
 			}

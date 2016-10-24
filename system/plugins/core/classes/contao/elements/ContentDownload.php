@@ -14,6 +14,7 @@ use Contao\Config;
 use Contao\Environment;
 use Contao\Input;
 use Contao\System;
+use Contao\Models\FilesModel;
 
 /**
  * Front end content element "download".
@@ -43,7 +44,7 @@ class ContentDownload extends ContentElement
 			return '';
 		}
 
-		$objFile = \FilesModel::findByUuid($this->singleSRC);
+		$objFile = FilesModel::findByUuid($this->singleSRC);
 
 		if ($objFile === null)
 		{

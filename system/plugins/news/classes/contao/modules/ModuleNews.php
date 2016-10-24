@@ -17,9 +17,9 @@ use Contao\FrontendTemplate;
 use Contao\Input;
 use Contao\StringUtil;
 use Contao\Validator;
-use Contao\ContentModel;
-use Contao\PageModel;
-use Contao\FilesModel;
+use Contao\Models\ContentModel;
+use Contao\Models\PageModel;
+use Contao\Models\FilesModel;;
 use Contao\Models\ArticleModel;
 use Contao\Models\NewsArchiveModel;
 

@@ -10,6 +10,7 @@
 
 namespace Contao\Elements;
 
+use Contao\Models\FilesModel;
 
 /**
  * Content element "YouTube".
@@ -70,7 +71,7 @@ class ContentYouTube extends ContentElement
 		// Optional poster
 		if ($this->posterSRC != '')
 		{
-			if (($objFile = \FilesModel::findByUuid($this->posterSRC)) !== null)
+			if (($objFile = FilesModel::findByUuid($this->posterSRC)) !== null)
 			{
 				$this->Template->poster = $objFile->path;
 			}

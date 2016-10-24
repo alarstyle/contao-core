@@ -20,6 +20,7 @@ use Contao\Folder;
 use Contao\Input;
 use Contao\StringUtil;
 use Contao\System;
+use Contao\Models\FilesModel;
 
 /**
  * Pop-up file preview (file manager).
@@ -106,7 +107,7 @@ class BackendPopup extends Backend
 		$objTemplate = new BackendTemplate('be_popup');
 
 		// Add the resource (see #6880)
-		if (($objModel = \FilesModel::findByPath($this->strFile)) === null)
+		if (($objModel = FilesModel::findByPath($this->strFile)) === null)
 		{
 			if (Dbafs::shouldBeSynchronized($this->strFile))
 			{

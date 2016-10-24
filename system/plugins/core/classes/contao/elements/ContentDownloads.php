@@ -13,6 +13,7 @@ namespace Contao\Elements;
 use Contao\Environment;
 use Contao\Input;
 use Contao\System;
+use Contao\Models\FilesModel;
 
 /**
  * Front end content element "downloads".
@@ -64,7 +65,7 @@ class ContentDownloads extends ContentElement
 		}
 
 		// Get the file entries from the database
-		$this->objFiles = \FilesModel::findMultipleByUuids($this->multiSRC);
+		$this->objFiles = FilesModel::findMultipleByUuids($this->multiSRC);
 
 		if ($this->objFiles === null)
 		{
@@ -183,7 +184,7 @@ class ContentDownloads extends ContentElement
 			// Folders
 			else
 			{
-				$objSubfiles = \FilesModel::findByPid($objFiles->uuid);
+				$objSubfiles = FilesModel::findByPid($objFiles->uuid);
 
 				if ($objSubfiles === null)
 				{

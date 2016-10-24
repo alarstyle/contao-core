@@ -13,9 +13,11 @@ namespace Contao;
 use Contao\Elements\ContentElement;
 use Contao\Models\ArticleModel;
 use Contao\Models\ContentModel;
-use Contao\Modules\AbstractModule;
+use Contao\Models\FilesModel;
+use Contao\Models\FormModel;
 use Contao\Models\PageModel;
 use Contao\Models\ModuleModel;
+use Contao\Modules\AbstractModule;
 
 /**
  * Abstract parent class for Controllers
@@ -465,7 +467,7 @@ abstract class Controller extends System
 				return '';
 			}
 
-			$objRow = \FormModel::findByIdOrAlias($varId);
+			$objRow = FormModel::findByIdOrAlias($varId);
 
 			if ($objRow === null)
 			{
@@ -1560,7 +1562,7 @@ abstract class Controller extends System
 			return;
 		}
 
-		$objFiles = \FilesModel::findMultipleByUuids($arrEnclosures);
+		$objFiles = FilesModel::findMultipleByUuids($arrEnclosures);
 
 		if ($objFiles === null)
 		{

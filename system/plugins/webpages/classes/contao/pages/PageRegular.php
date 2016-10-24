@@ -16,6 +16,7 @@ use Contao\Frontend;
 use Contao\FrontendTemplate;
 use Contao\System;
 use Contao\Template;
+use Contao\Models\FilesModel;
 use Contao\Models\ModuleModel;
 use Contao\Models\StyleSheetModel;
 use Contao\Models\LayoutModel;
@@ -521,7 +522,7 @@ class PageRegular extends Frontend
 						// External style sheet
 						if ($objStylesheets->type == 'external')
 						{
-							$objFile = \FilesModel::findByPk($objStylesheets->singleSRC);
+							$objFile = FilesModel::findByPk($objStylesheets->singleSRC);
 
 							if ($objFile !== null)
 							{
@@ -545,7 +546,7 @@ class PageRegular extends Frontend
 						// External style sheet
 						if ($objStylesheets->type == 'external')
 						{
-							$objFile = \FilesModel::findByPk($objStylesheets->singleSRC);
+							$objFile = FilesModel::findByPk($objStylesheets->singleSRC);
 
 							if ($objFile !== null)
 							{
@@ -599,7 +600,7 @@ class PageRegular extends Frontend
 			}
 
 			// Get the file entries from the database
-			$objFiles = \FilesModel::findMultipleByUuids($arrExternal);
+			$objFiles = FilesModel::findMultipleByUuids($arrExternal);
 
 			if ($objFiles !== null)
 			{

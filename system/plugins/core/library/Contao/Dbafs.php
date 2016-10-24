@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Models\FilesModel;
 
 /**
  * Handles the database assisted file system (DBAFS)
@@ -80,7 +81,7 @@ class Dbafs
 		unset($arrChunks);
 
 		$objModel  = null;
-		$objModels = \FilesModel::findMultipleByPaths($arrPaths);
+		$objModels = FilesModel::findMultipleByPaths($arrPaths);
 
 		// Unset the entries in $arrPaths if the DB entry exists
 		if ($objModels !== null)
@@ -159,7 +160,7 @@ class Dbafs
 			{
 				$objFile = new \File($strPath, true);
 
-				$objModel = new \FilesModel();
+				$objModel = new FilesModel();
 				$objModel->pid       = $strPid;
 				$objModel->tstamp    = time();
 				$objModel->name      = $objFile->name;
@@ -176,7 +177,7 @@ class Dbafs
 			{
 				$objFolder = new \Folder($strPath);
 
-				$objModel = new \FilesModel();
+				$objModel = new FilesModel();
 				$objModel->pid       = $strPid;
 				$objModel->tstamp    = time();
 				$objModel->name      = $objFolder->name;
@@ -217,7 +218,7 @@ class Dbafs
 	 */
 	public static function moveResource($strSource, $strDestination)
 	{
-		$objFile = \FilesModel::findByPath($strSource);
+		$objFile = FilesModel::findByPath($strSource);
 
 		// If there is no entry, directly add the destination
 		if ($objFile === null)
@@ -234,7 +235,7 @@ class Dbafs
 		}
 		else
 		{
-			$objFolder = \FilesModel::findByPath($strFolder);
+			$objFolder = FilesModel::findByPath($strFolder);
 
 			if ($objFolder === null)
 			{
@@ -252,7 +253,7 @@ class Dbafs
 		// Update all child records
 		if ($objFile->type == 'folder')
 		{
-			$objFiles = \FilesModel::findMultipleByBasepath($strSource . '/');
+			$objFiles = FilesModel::findMultipleByBasepath($strSource . '/');
 
 			if ($objFiles !== null)
 			{
@@ -309,7 +310,7 @@ class Dbafs
 		}
 		else
 		{
-			$objFolder = \FilesModel::findByPath($strFolder);
+			$objFolder = FilesModel::findByPath($strFolder);
 
 			if ($objFolder === null)
 			{
@@ -329,7 +330,7 @@ class Dbafs
 		// Update all child records
 		if ($objFile->type == 'folder')
 		{
-			$objFiles = \FilesModel::findMultipleByBasepath($strSource . '/');
+			$objFiles = FilesModel::findMultipleByBasepath($strSource . '/');
 
 			if ($objFiles !== null)
 			{
@@ -370,7 +371,7 @@ class Dbafs
 	 */
 	public static function deleteResource($strResource)
 	{
-		$objModel = \FilesModel::findByPath($strResource);
+		$objModel = FilesModel::findByPath($strResource);
 
 		// Remove the resource
 		if ($objModel !== null)
@@ -379,7 +380,7 @@ class Dbafs
 		}
 
 		// Look for subfolders and files
-		$objFiles = \FilesModel::findMultipleByBasepath($strResource . '/');
+		$objFiles = FilesModel::findMultipleByBasepath($strResource . '/');
 
 		// Remove subfolders and files as well
 		if ($objFiles !== null)
@@ -437,7 +438,7 @@ class Dbafs
 		foreach (array_reverse($arrPaths) as $strPath)
 		{
 			$objFolder = new \Folder($strPath);
-			$objModel  = \FilesModel::findByPath($strPath);
+			$objModel  = FilesModel::findByPath($strPath);
 
 			// The DB entry does not yet exist
 			if ($objModel === null)
@@ -509,7 +510,7 @@ class Dbafs
 			// Get all subfiles in a single query
 			if ($objFile->isDir())
 			{
-				$objSubfiles = \FilesModel::findMultipleFilesByFolder($strRelpath);
+				$objSubfiles = FilesModel::findMultipleFilesByFolder($strRelpath);
 
 				if ($objSubfiles !== null)
 				{
@@ -527,7 +528,7 @@ class Dbafs
 			}
 			else
 			{
-				$objModel = \FilesModel::findByPath($strRelpath);
+				$objModel = FilesModel::findByPath($strRelpath);
 			}
 
 			if ($objModel === null)
@@ -545,7 +546,7 @@ class Dbafs
 				}
 				else
 				{
-					$objParent = \FilesModel::findByPath($strParent);
+					$objParent = FilesModel::findByPath($strParent);
 
 					if ($objParent === null)
 					{
@@ -560,7 +561,7 @@ class Dbafs
 				{
 					$objFile = new \File($strRelpath, true);
 
-					$objModel = new \FilesModel();
+					$objModel = new FilesModel();
 					$objModel->pid       = $strPid;
 					$objModel->tstamp    = time();
 					$objModel->name      = $objFile->name;
@@ -576,7 +577,7 @@ class Dbafs
 				{
 					$objFolder = new \Folder($strRelpath);
 
-					$objModel = new \FilesModel();
+					$objModel = new FilesModel();
 					$objModel->pid       = $strPid;
 					$objModel->tstamp    = time();
 					$objModel->name      = $objFolder->name;
@@ -606,7 +607,7 @@ class Dbafs
 		}
 
 		// Check for left-over entries in the DB
-		$objFiles = \FilesModel::findByFound('');
+		$objFiles = FilesModel::findByFound('');
 
 		if ($objFiles !== null)
 		{
@@ -616,7 +617,7 @@ class Dbafs
 			/** @var \Model\Collection|\FilesModel $objFiles */
 			while ($objFiles->next())
 			{
-				$objFound = \FilesModel::findBy(array('hash=?', 'found=2'), $objFiles->hash);
+				$objFound = FilesModel::findBy(array('hash=?', 'found=2'), $objFiles->hash);
 
 				if ($objFound !== null)
 				{
@@ -681,7 +682,7 @@ class Dbafs
 			{
 				foreach ($arrPidUpdate as $from=>$to)
 				{
-					$objChildren = \FilesModel::findByPid($from);
+					$objChildren = FilesModel::findByPid($from);
 
 					if ($objChildren !== null)
 					{

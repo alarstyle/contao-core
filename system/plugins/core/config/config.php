@@ -451,3 +451,7 @@ $GLOBALS['TL_MODELS']['tl_member'] = 'Contao\\Models\\MemberModel';
 $GLOBALS['TL_MODELS']['tl_member_group'] = 'Contao\\Models\\MemberGroupModel';
 $GLOBALS['TL_MODELS']['tl_layout'] = 'Contao\\Models\\LayoutModel';
 $GLOBALS['TL_MODELS']['tl_image_size'] = 'Contao\\Models\\ImageSizeModel';
+$GLOBALS['TL_MODELS']['tl_image_size_item'] = 'Contao\\Models\\ImageSizeItemModel';
+$GLOBALS['TL_MODELS']['tl_form'] = 'Contao\\Models\\FormModel';
+$GLOBALS['TL_MODELS']['tl_form_field'] = 'Contao\\Models\\FormFieldModel';
+$GLOBALS['TL_MODELS']['tl_files'] = 'Contao\\Models\\FilesModel';

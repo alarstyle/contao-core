@@ -8,9 +8,10 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Models;
 
 use Contao\Database;
+use Contao\Model;
 use Contao\StringUtil;
 use Contao\Validator;
 
@@ -89,7 +90,7 @@ use Contao\Validator;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FilesModel extends \Model
+class FilesModel extends Model
 {
 
 	/**

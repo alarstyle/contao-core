@@ -13,6 +13,7 @@ namespace Contao\Modules;
 use Contao\Config;
 use Contao\Environment;
 use Contao\StringUtil;
+use Contao\Models\FilesModel;
 
 /**
  * Front end module "flash".

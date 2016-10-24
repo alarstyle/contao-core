@@ -12,6 +12,7 @@ namespace Contao\Elements;
 
 use Contao\Config;
 use Contao\StringUtil;
+use Contao\Models\FilesModel;
 
 /**
  * Front end content element "text".
@@ -48,7 +49,7 @@ class ContentText extends ContentElement
 		// Add an image
 		if ($this->addImage && $this->singleSRC != '')
 		{
-			$objModel = \FilesModel::findByUuid($this->singleSRC);
+			$objModel = FilesModel::findByUuid($this->singleSRC);
 
 			if ($objModel === null)
 			{

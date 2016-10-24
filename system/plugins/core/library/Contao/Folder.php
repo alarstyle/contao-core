@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Models\FilesModel;
 
 /**
  * Creates, reads, writes and deletes folders
@@ -186,7 +187,7 @@ class Folder extends System
 		// Update the database
 		if (\Dbafs::shouldBeSynchronized($this->strFolder))
 		{
-			$objFiles = \FilesModel::findMultipleByBasepath($this->strFolder . '/');
+			$objFiles = FilesModel::findMultipleByBasepath($this->strFolder . '/');
 
 			if ($objFiles !== null)
 			{
@@ -357,7 +358,7 @@ class Folder extends System
 	{
 		if ($this->objModel === null && \Dbafs::shouldBeSynchronized($this->strFolder))
 		{
-			$this->objModel = \FilesModel::findByPath($this->strFolder);
+			$this->objModel = FilesModel::findByPath($this->strFolder);
 		}
 
 		return $this->objModel;

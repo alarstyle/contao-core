@@ -12,6 +12,7 @@ namespace Contao;
 
 use Contao\Config;
 use Contao\StringUtil;
+use Contao\Models\FilesModel;
 
 /**
  * Class FormFileUpload
@@ -213,7 +214,7 @@ class FormFileUpload extends \Contao\Editor implements \uploadable
 					}
 				}
 
-				$objUploadFolder = \FilesModel::findByUuid($intUploadFolder);
+				$objUploadFolder = FilesModel::findByUuid($intUploadFolder);
 
 				// The upload folder could not be found
 				if ($objUploadFolder === null)
@@ -260,7 +261,7 @@ class FormFileUpload extends \Contao\Editor implements \uploadable
 					// Generate the DB entries
 					if (\Dbafs::shouldBeSynchronized($strFile))
 					{
-						$objModel = \FilesModel::findByPath($strFile);
+						$objModel = FilesModel::findByPath($strFile);
 
 						// Existing file is being replaced (see #4818)
 						if ($objModel !== null)

@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Models\FilesModel;
 
 /**
  * Provide methods to handle versioning.
@@ -73,7 +74,7 @@ class Versions extends Controller
 		// Store the path if it is an editable file
 		if ($strTable == 'tl_files')
 		{
-			$objFile = \FilesModel::findByPk($intPid);
+			$objFile = FilesModel::findByPk($intPid);
 
 			if ($objFile !== null && in_array($objFile->extension, trimsplit(',', strtolower(Config::get('editableFiles')))))
 			{

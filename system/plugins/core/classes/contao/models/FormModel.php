@@ -8,10 +8,11 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Models;
 
 use Contao\Config;
 use Contao\Database;
+use Contao\Model;
 
 /**
  * Reads and writes forms
@@ -99,7 +100,7 @@ use Contao\Database;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormModel extends \Model
+class FormModel extends Model
 {
 
 	/**

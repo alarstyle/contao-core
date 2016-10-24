@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Models\FilesModel;
 
 /**
  * Class FormSubmit
@@ -104,7 +105,7 @@ class FormSubmit extends \Contao\Editor
 	{
 		if ($this->imageSubmit && $this->singleSRC != '')
 		{
-			$objModel = \FilesModel::findByUuid($this->singleSRC);
+			$objModel = FilesModel::findByUuid($this->singleSRC);
 
 			if ($objModel === null)
 			{

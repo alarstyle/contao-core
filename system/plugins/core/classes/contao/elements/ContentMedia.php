@@ -10,6 +10,7 @@
 
 namespace Contao\Elements;
 
+use Contao\Models\FilesModel;
 
 /**
  * Content element "mediaelement".
@@ -51,7 +52,7 @@ class ContentMedia extends ContentElement
 			return '';
 		}
 
-		$objFiles = \FilesModel::findMultipleByUuidsAndExtensions($source, array('mp4','m4v','mov','wmv','webm','ogv','m4a','mp3','wma','mpeg','wav','ogg'));
+		$objFiles = FilesModel::findMultipleByUuidsAndExtensions($source, array('mp4','m4v','mov','wmv','webm','ogv','m4a','mp3','wma','mpeg','wav','ogg'));
 
 		if ($objFiles === null)
 		{
@@ -104,7 +105,7 @@ class ContentMedia extends ContentElement
 		// Optional poster
 		if ($this->posterSRC != '')
 		{
-			if (($objFile = \FilesModel::findByUuid($this->posterSRC)) !== null)
+			if (($objFile = FilesModel::findByUuid($this->posterSRC)) !== null)
 			{
 				$this->Template->poster = $objFile->path;
 			}

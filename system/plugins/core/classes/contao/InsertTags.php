@@ -11,6 +11,7 @@
 namespace Contao;
 
 use Contao\Models\ArticleModel;
+use Contao\Models\FilesModel;
 use Contao\Models\NewsModel;
 use Contao\Models\PageModel;
 
@@ -881,7 +882,7 @@ class InsertTags extends \Controller
 					if (Validator::isUuid($strFile))
 					{
 						// Handle UUIDs
-						$objFile = \FilesModel::findByUuid($strFile);
+						$objFile = FilesModel::findByUuid($strFile);
 
 						if ($objFile === null)
 						{
@@ -894,7 +895,7 @@ class InsertTags extends \Controller
 					elseif (is_numeric($strFile))
 					{
 						// Handle numeric IDs (see #4805)
-						$objFile = \FilesModel::findByPk($strFile);
+						$objFile = FilesModel::findByPk($strFile);
 
 						if ($objFile === null)
 						{
@@ -965,7 +966,7 @@ class InsertTags extends \Controller
 				case 'file':
 					if (Validator::isUuid($elements[1]))
 					{
-						$objFile = \FilesModel::findByUuid($elements[1]);
+						$objFile = FilesModel::findByUuid($elements[1]);
 
 						if ($objFile !== null)
 						{

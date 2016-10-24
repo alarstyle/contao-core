@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Models\FilesModel;
 use Contao\Models\ImageSizeModel;
 
 /**
@@ -922,7 +923,7 @@ class Image
 					 ->setZoomLevel($imageSize->zoom);
 		}
 
-		$fileRecord = \FilesModel::findByPath($image->path);
+		$fileRecord = FilesModel::findByPath($image->path);
 
 		// Set the important part
 		if ($fileRecord !== null && $fileRecord->importantPartWidth && $fileRecord->importantPartHeight)

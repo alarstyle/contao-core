@@ -8,8 +8,9 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Models;
 
+use Contao\Model;
 
 /**
  * Reads and writes form fields
@@ -165,7 +166,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FormFieldModel extends \Model
+class FormFieldModel extends Model
 {
 
 	/**

@@ -15,6 +15,7 @@ use Contao\Environment;
 use Contao\Image;
 use Contao\Input;
 use Contao\StringUtil;
+use Contao\Models\FilesModel;
 
 /**
  * Provide methods to handle input field "file tree".
@@ -143,7 +144,7 @@ class FileTree extends \Contao\Editor
 
 		if (!empty($this->varValue)) // Can be an array
 		{
-			$objFiles = \FilesModel::findMultipleByUuids((array)$this->varValue);
+			$objFiles = FilesModel::findMultipleByUuids((array)$this->varValue);
 			$allowedDownload = trimsplit(',', strtolower(Config::get('allowedDownload')));
 
 			if ($objFiles !== null)
@@ -193,7 +194,7 @@ class FileTree extends \Contao\Editor
 					{
 						if ($objFiles->type == 'folder')
 						{
-							$objSubfiles = \FilesModel::findByPid($objFiles->uuid);
+							$objSubfiles = FilesModel::findByPid($objFiles->uuid);
 
 							if ($objSubfiles === null)
 							{
