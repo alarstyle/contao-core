@@ -12,7 +12,7 @@
 /**
  * Dynamically add the permission check and parent table
  */
-if (Input::get('do') == 'news')
+if (\Contao\Input::get('do') == 'news')
 {
 	$GLOBALS['TL_DCA']['tl_content']['config']['ptable'] = 'tl_news';
 	$GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('tl_content_news', 'checkPermission');
@@ -26,6 +26,8 @@ if (Input::get('do') == 'news')
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
+use Contao\Input;
+
 class tl_content_news extends \Contao\Backend
 {
 

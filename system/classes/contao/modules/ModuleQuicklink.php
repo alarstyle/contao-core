@@ -11,6 +11,7 @@
 namespace Contao\Modules;
 
 use Contao\Environment;
+use Contao\Input;
 use Contao\Models\PageModel;
 
 /**
@@ -50,9 +51,9 @@ class ModuleQuicklink extends AbstractModule
 		}
 
 		// Redirect to selected page
-		if (\Input::post('FORM_SUBMIT') == 'tl_quicklink')
+		if (Input::post('FORM_SUBMIT') == 'tl_quicklink')
 		{
-			$this->redirect(\Input::post('target', true));
+			$this->redirect(Input::post('target', true));
 		}
 
 		// Always return an array (see #4616)

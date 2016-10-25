@@ -10,6 +10,7 @@
 
 namespace Contao\Elements;
 
+use Contao\Input;
 use Contao\System;
 
 /**
@@ -56,7 +57,7 @@ class ContentTable extends ContentElement
 					$co = 'TS_TABLE_' . $this->id;
 					$so = ($this->sortOrder == 'descending') ? 'desc' : 'asc';
 
-					if (\Input::cookie($co) == '')
+					if (Input::cookie($co) == '')
 					{
 						System::setCookie($co, $i . '|' . $so, 0);
 					}

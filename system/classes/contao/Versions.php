@@ -166,7 +166,7 @@ class Versions extends Controller
 
 		if ($this->strPath !== null)
 		{
-			$objFile = new \File($this->strPath, true);
+			$objFile = new File($this->strPath, true);
 
 			if ($objFile->extension == 'svgz')
 			{
@@ -273,7 +273,7 @@ class Versions extends Controller
 		// Restore the content
 		if ($this->strPath !== null)
 		{
-			$objFile = new \File($this->strPath, true);
+			$objFile = new File($this->strPath, true);
 			$objFile->write($data['content']);
 			$objFile->close();
 		}
@@ -377,15 +377,15 @@ class Versions extends Controller
 			}
 
 			// To
-			if (\Input::post('to') && isset($arrVersions[\Input::post('to')]))
+			if (Input::post('to') && isset($arrVersions[Input::post('to')]))
 			{
-				$intTo = \Input::post('to');
-				$to = deserialize($arrVersions[\Input::post('to')]['data']);
+				$intTo = Input::post('to');
+				$to = deserialize($arrVersions[Input::post('to')]['data']);
 			}
-			elseif (\Input::get('to') && isset($arrVersions[\Input::get('to')]))
+			elseif (Input::get('to') && isset($arrVersions[Input::get('to')]))
 			{
-				$intTo = \Input::get('to');
-				$to = deserialize($arrVersions[\Input::get('to')]['data']);
+				$intTo = Input::get('to');
+				$to = deserialize($arrVersions[Input::get('to')]['data']);
 			}
 			else
 			{
@@ -394,15 +394,15 @@ class Versions extends Controller
 			}
 
 			// From
-			if (\Input::post('from') && isset($arrVersions[\Input::post('from')]))
+			if (Input::post('from') && isset($arrVersions[Input::post('from')]))
 			{
-				$intFrom = \Input::post('from');
-				$from = deserialize($arrVersions[\Input::post('from')]['data']);
+				$intFrom = Input::post('from');
+				$from = deserialize($arrVersions[Input::post('from')]['data']);
 			}
-			elseif (\Input::get('from') && isset($arrVersions[\Input::get('from')]))
+			elseif (Input::get('from') && isset($arrVersions[Input::get('from')]))
 			{
-				$intFrom = \Input::get('from');
-				$from = deserialize($arrVersions[\Input::get('from')]['data']);
+				$intFrom = Input::get('from');
+				$from = deserialize($arrVersions[Input::get('from')]['data']);
 			}
 			elseif ($objVersions->numRows > $intIndex)
 			{
@@ -422,7 +422,7 @@ class Versions extends Controller
 				$this->loadDataContainer($this->strTable);
 
 				// Get the order fields
-				$objDcaExtractor = \DcaExtractor::getInstance($this->strTable);
+				$objDcaExtractor = DcaExtractor::getInstance($this->strTable);
 				$arrOrder = $objDcaExtractor->getOrderFields();
 
 				// Find the changed fields and highlight the changes
@@ -588,7 +588,7 @@ class Versions extends Controller
 								->execute($objUser->id);
 
 		$intLast   = ceil($objTotal->count / 30);
-		$intPage   = (\Input::get('vp') !== null) ? \Input::get('vp') : 1;
+		$intPage   = (Input::get('vp') !== null) ? Input::get('vp') : 1;
 		$intOffset = ($intPage - 1) * 30;
 
 		// Validate the page number

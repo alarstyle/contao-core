@@ -120,7 +120,7 @@ class BackendUser extends User
 
 			if (TL_SCRIPT == 'contao/main.php')
 			{
-				$key = \Input::get('popup') ? 'popupReferer' : 'referer';
+				$key = Input::get('popup') ? 'popupReferer' : 'referer';
 			}
 
 			if ($key !== null)
@@ -135,7 +135,7 @@ class BackendUser extends User
 					array_shift($session[$key]);
 				}
 
-				$ref = \Input::get('ref');
+				$ref = Input::get('ref');
 
 				if ($ref != '' && isset($session[$key][$ref]))
 				{
@@ -519,7 +519,7 @@ class BackendUser extends User
 		// Toggle nodes
 		if (Input::get('mtg'))
 		{
-			$session['backend_modules'][Input::get('mtg')] = (isset($session['backend_modules'][Input::get('mtg')]) && $session['backend_modules'][\Input::get('mtg')] == 0) ? 1 : 0;
+			$session['backend_modules'][Input::get('mtg')] = (isset($session['backend_modules'][Input::get('mtg')]) && $session['backend_modules'][Input::get('mtg')] == 0) ? 1 : 0;
 			$this->Session->setData($session);
 			Controller::redirect(preg_replace('/(&(amp;)?|\?)mtg=[^& ]*/i', '', Environment::get('request')));
 		}
@@ -564,7 +564,7 @@ class BackendUser extends User
 							$arrModules[$strGroupName]['modules'][$strModuleName]['href'] = TL_SCRIPT . '?do=' . $strModuleName . '&amp;ref=' . TL_REFERER_ID;
 
 							// Mark the active module and its group
-							if (\Input::get('do') == $strModuleName)
+							if (Input::get('do') == $strModuleName)
 							{
 								$arrModules[$strGroupName]['class'] = ' trail';
 								$arrModules[$strGroupName]['modules'][$strModuleName]['class'] .= ' active';

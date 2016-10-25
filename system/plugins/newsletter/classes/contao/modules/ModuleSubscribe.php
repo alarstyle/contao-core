@@ -85,7 +85,7 @@ class ModuleSubscribe extends AbstractModule
 		}
 
 		// Activate e-mail address
-		if (\Input::get('token'))
+		if (Input::get('token'))
 		{
 			$this->activateRecipient();
 
@@ -93,7 +93,7 @@ class ModuleSubscribe extends AbstractModule
 		}
 
 		// Subscribe
-		if (\Input::post('FORM_SUBMIT') == 'tl_subscribe')
+		if (Input::post('FORM_SUBMIT') == 'tl_subscribe')
 		{
 			$this->addRecipient();
 		}
@@ -154,7 +154,7 @@ class ModuleSubscribe extends AbstractModule
 		$this->Template = $objTemplate;
 
 		// Check the token
-		$objRecipient = NewsletterRecipientsModel::findByToken(\Input::get('token'));
+		$objRecipient = NewsletterRecipientsModel::findByToken(Input::get('token'));
 
 		if ($objRecipient === null)
 		{

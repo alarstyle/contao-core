@@ -346,7 +346,7 @@ class DC_File extends DataContainer implements \editable
 			}
 
 			// Reload
-			if (\Input::post('saveNclose'))
+			if (Input::post('saveNclose'))
 			{
 				Message::reset();
 				System::setCookie('BE_PAGE_OFFSET', 0, 0);
@@ -379,7 +379,7 @@ class DC_File extends DataContainer implements \editable
 	 */
 	protected function save($varValue)
 	{
-		if (\Input::post('FORM_SUBMIT') != $this->strTable)
+		if (Input::post('FORM_SUBMIT') != $this->strTable)
 		{
 			return;
 		}
@@ -510,13 +510,13 @@ class DC_File extends DataContainer implements \editable
 				$trigger = Config::get($name);
 
 				// Overwrite the trigger if the page is not reloaded
-				if (\Input::post('FORM_SUBMIT') == $this->strTable)
+				if (Input::post('FORM_SUBMIT') == $this->strTable)
 				{
-					$key = (\Input::get('act') == 'editAll') ? $name.'_'.$this->intId : $name;
+					$key = (Input::get('act') == 'editAll') ? $name.'_'.$this->intId : $name;
 
 					if (!$GLOBALS['TL_DCA'][$this->strTable]['fields'][$name]['eval']['submitOnChange'])
 					{
-						$trigger = \Input::post($key);
+						$trigger = Input::post($key);
 					}
 				}
 

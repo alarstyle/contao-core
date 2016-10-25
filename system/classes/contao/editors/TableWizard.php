@@ -11,9 +11,14 @@
 namespace Contao\Editors;
 
 use Contao\Cache;
+use Contao\DataContainer;
 use Contao\Environment;
+use Contao\Versions;
 use Contao\Message;
+use Contao\System;
 use Contao\Image;
+use Contao\Input;
+use Contao\File;
 
 /**
  * Provide methods to handle table fields.
@@ -89,54 +94,54 @@ class TableWizard extends \Contao\Editor
 		$strCommand = 'cmd_' . $this->strField;
 
 		// Change the order
-		if (\Input::get($strCommand) && is_numeric(\Input::get('cid')) && \Input::get('id') == $this->currentRecord)
+		if (Input::get($strCommand) && is_numeric(Input::get('cid')) && Input::get('id') == $this->currentRecord)
 		{
 			$this->import('Contao\\Database', 'Database');
 
-			switch (\Input::get($strCommand))
+			switch (Input::get($strCommand))
 			{
 					case 'ccopy':
 					for ($i=0, $c=count($this->varValue); $i<$c; $i++)
 					{
-						$this->varValue[$i] = array_duplicate($this->varValue[$i], \Input::get('cid'));
+						$this->varValue[$i] = array_duplicate($this->varValue[$i], Input::get('cid'));
 					}
 					break;
 
 				case 'cmovel':
 					for ($i=0, $c=count($this->varValue); $i<$c; $i++)
 					{
-						$this->varValue[$i] = array_move_up($this->varValue[$i], \Input::get('cid'));
+						$this->varValue[$i] = array_move_up($this->varValue[$i], Input::get('cid'));
 					}
 					break;
 
 				case 'cmover':
 					for ($i=0, $c=count($this->varValue); $i<$c; $i++)
 					{
-						$this->varValue[$i] = array_move_down($this->varValue[$i], \Input::get('cid'));
+						$this->varValue[$i] = array_move_down($this->varValue[$i], Input::get('cid'));
 					}
 					break;
 
 				case 'cdelete':
 					for ($i=0, $c=count($this->varValue); $i<$c; $i++)
 					{
-						$this->varValue[$i] = array_delete($this->varValue[$i], \Input::get('cid'));
+						$this->varValue[$i] = array_delete($this->varValue[$i], Input::get('cid'));
 					}
 					break;
 
 				case 'rcopy':
-					$this->varValue = array_duplicate($this->varValue, \Input::get('cid'));
+					$this->varValue = array_duplicate($this->varValue, Input::get('cid'));
 					break;
 
 				case 'rup':
-					$this->varValue = array_move_up($this->varValue, \Input::get('cid'));
+					$this->varValue = array_move_up($this->varValue, Input::get('cid'));
 					break;
 
 				case 'rdown':
-					$this->varValue = array_move_down($this->varValue, \Input::get('cid'));
+					$this->varValue = array_move_down($this->varValue, Input::get('cid'));
 					break;
 
 				case 'rdelete':
-					$this->varValue = array_delete($this->varValue, \Input::get('cid'));
+					$this->varValue = array_delete($this->varValue, Input::get('cid'));
 					break;
 			}
 
@@ -244,7 +249,7 @@ class TableWizard extends \Contao\Editor
 	 */
 	public function importTable(DataContainer $dc)
 	{
-		if (\Input::get('key') != 'table')
+		if (Input::get('key') != 'table')
 		{
 			return '';
 		}
@@ -262,7 +267,7 @@ class TableWizard extends \Contao\Editor
 		$objUploader = new $class();
 
 		// Import CSS
-		if (\Input::post('FORM_SUBMIT') == 'tl_table_import')
+		if (Input::post('FORM_SUBMIT') == 'tl_table_import')
 		{
 			$arrUploaded = $objUploader->uploadTo('system/tmp');
 
@@ -277,7 +282,7 @@ class TableWizard extends \Contao\Editor
 
 			foreach ($arrUploaded as $strCsvFile)
 			{
-				$objFile = new \File($strCsvFile, true);
+				$objFile = new File($strCsvFile, true);
 
 				if ($objFile->extension != 'csv')
 				{
@@ -286,7 +291,7 @@ class TableWizard extends \Contao\Editor
 				}
 
 				// Get separator
-				switch (\Input::post('separator'))
+				switch (Input::post('separator'))
 				{
 					case 'semicolon':
 						$strSeparator = ';';
@@ -309,7 +314,7 @@ class TableWizard extends \Contao\Editor
 				}
 			}
 
-			$objVersions = new Versions($dc->table, \Input::get('id'));
+			$objVersions = new Versions($dc->table, Input::get('id'));
 			$objVersions->create();
 
 			$this->Database->prepare("UPDATE " . $dc->table . " SET tableitems=? WHERE id=?")

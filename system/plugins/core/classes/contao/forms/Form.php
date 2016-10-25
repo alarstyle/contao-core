@@ -14,7 +14,7 @@ use Contao\BackendTemplate;
 use Contao\Editor;
 use Contao\Email;
 use Contao\Environment;
-use Contao\Forms\FormHidden;
+use Contao\Input;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Models\FormFieldModel;
@@ -207,7 +207,7 @@ class Form extends \Contao\Hybrid
 				}
 
 				// Validate the input
-				if (\Input::post('FORM_SUBMIT') == $formId)
+				if (Input::post('FORM_SUBMIT') == $formId)
 				{
 					$objEditor->validate();
 
@@ -258,7 +258,7 @@ class Form extends \Contao\Hybrid
 		}
 
 		// Process the form data
-		if (\Input::post('FORM_SUBMIT') == $formId && !$doNotSubmit)
+		if (Input::post('FORM_SUBMIT') == $formId && !$doNotSubmit)
 		{
 			$this->processFormData($arrSubmitted, $arrLabels, $arrFields);
 		}
@@ -404,14 +404,14 @@ class Form extends \Contao\Hybrid
 			$email->fromName = $GLOBALS['TL_ADMIN_NAME'];
 
 			// Get the "reply to" address
-			if (strlen(\Input::post('email', true)))
+			if (strlen(Input::post('email', true)))
 			{
-				$replyTo = \Input::post('email', true);
+				$replyTo = Input::post('email', true);
 
 				// Add name
-				if (strlen(\Input::post('name')))
+				if (strlen(Input::post('name')))
 				{
-					$replyTo = '"' . \Input::post('name') . '" <' . $replyTo . '>';
+					$replyTo = '"' . Input::post('name') . '" <' . $replyTo . '>';
 				}
 
 				$email->replyTo($replyTo);
@@ -426,7 +426,7 @@ class Form extends \Contao\Hybrid
 			// Send copy to sender
 			if (strlen($arrSubmitted['cc']))
 			{
-				$email->sendCc(\Input::post('email', true));
+				$email->sendCc(Input::post('email', true));
 				unset($_SESSION['FORM_DATA']['cc']);
 			}
 
@@ -538,7 +538,7 @@ class Form extends \Contao\Hybrid
 		// Store all values in the session
 		foreach (array_keys($_POST) as $key)
 		{
-			$_SESSION['FORM_DATA'][$key] = $this->allowTags ? \Input::postHtml($key, true) : \Input::post($key, true);
+			$_SESSION['FORM_DATA'][$key] = $this->allowTags ? Input::postHtml($key, true) : Input::post($key, true);
 		}
 
 		$arrFiles = $_SESSION['FILES'];
@@ -594,7 +594,7 @@ class Form extends \Contao\Hybrid
 	 */
 	protected function initializeSession($formId)
 	{
-		if (\Input::post('FORM_SUBMIT') != $formId)
+		if (Input::post('FORM_SUBMIT') != $formId)
 		{
 			return;
 		}

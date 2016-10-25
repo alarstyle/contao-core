@@ -12,9 +12,11 @@ namespace Contao\Modules;
 
 use Contao\Config;
 use Contao\Environment;
+use Contao\Input;
 use Contao\Pagination;
 use Contao\Search;
 use Contao\StringUtil;
+use Contao\File;
 
 /**
  * Front end module "search".
@@ -67,22 +69,22 @@ class ModuleSearch extends AbstractModule
 		// Mark the x and y parameter as used (see #4277)
 		if (isset($_GET['x']))
 		{
-			\Input::get('x');
-			\Input::get('y');
+			Input::get('x');
+			Input::get('y');
 		}
 
 		// Trigger the search module from a custom form
-		if (!isset($_GET['keywords']) && \Input::post('FORM_SUBMIT') == 'tl_search')
+		if (!isset($_GET['keywords']) && Input::post('FORM_SUBMIT') == 'tl_search')
 		{
-			$_GET['keywords'] = \Input::post('keywords');
-			$_GET['query_type'] = \Input::post('query_type');
-			$_GET['per_page'] = \Input::post('per_page');
+			$_GET['keywords'] = Input::post('keywords');
+			$_GET['query_type'] = Input::post('query_type');
+			$_GET['per_page'] = Input::post('per_page');
 		}
 
 		$blnFuzzy = $this->fuzzy;
-		$strQueryType = \Input::get('query_type') ?: $this->queryType;
+		$strQueryType = Input::get('query_type') ?: $this->queryType;
 
-		$strKeywords = trim(\Input::get('keywords'));
+		$strKeywords = trim(Input::get('keywords'));
 
 		/** @var \FrontendTemplate|object $objFormTemplate */
 		$objFormTemplate = new FrontendTemplate((($this->searchType == 'advanced') ? 'mod_search_advanced' : 'mod_search_simple'));
@@ -152,7 +154,7 @@ class ModuleSearch extends AbstractModule
 			// Load the cached result
 			if (file_exists(TL_ROOT . '/' . $strCacheFile))
 			{
-				$objFile = new \File($strCacheFile, true);
+				$objFile = new File($strCacheFile, true);
 
 				if ($objFile->mtime > time() - 1800)
 				{
@@ -178,7 +180,7 @@ class ModuleSearch extends AbstractModule
 					$arrResult = array();
 				}
 
-				\File::putContent($strCacheFile, json_encode($arrResult));
+				File::putContent($strCacheFile, json_encode($arrResult));
 			}
 
 			$query_endtime = microtime(true);
@@ -233,8 +235,8 @@ class ModuleSearch extends AbstractModule
 			if ($this->perPage > 0)
 			{
 				$id = 'page_s' . $this->id;
-				$page = (\Input::get($id) !== null) ? \Input::get($id) : 1;
-				$per_page = \Input::get('per_page') ?: $this->perPage;
+				$page = (Input::get($id) !== null) ? Input::get($id) : 1;
+				$per_page = Input::get('per_page') ?: $this->perPage;
 
 				// Do not index or cache the page if the page number is outside the range
 				if ($page < 1 || $page > max(ceil($count/$per_page), 1))

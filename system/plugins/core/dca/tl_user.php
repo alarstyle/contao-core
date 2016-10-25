@@ -438,6 +438,7 @@ $GLOBALS['TL_DCA']['tl_user'] = array
  */
 use \Contao\Backend;
 use Contao\Image;
+use Contao\Input;
 
 class tl_user extends \Contao\Backend
 {

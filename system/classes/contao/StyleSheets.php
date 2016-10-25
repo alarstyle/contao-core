@@ -46,7 +46,7 @@ class StyleSheets extends Backend
 		}
 
 		// Delete the CSS file
-		if (\Input::get('act') == 'delete')
+		if (Input::get('act') == 'delete')
 		{
 			$this->import('Contao\\Files', 'Files');
 			$this->Files->delete('assets/css/' . $objStyleSheet->name . '.css');
@@ -93,7 +93,7 @@ class StyleSheets extends Backend
 				continue;
 			}
 
-			$objFile = new \File('assets/css/' . $file, true);
+			$objFile = new File('assets/css/' . $file, true);
 
 			// Delete the old style sheet
 			if ($objFile->extension == 'css' && !in_array($objFile->filename, $arrStyleSheets))
@@ -169,7 +169,7 @@ class StyleSheets extends Backend
 		uksort($vars, 'length_sort_desc');
 
 		// Create the file
-		$objFile = new \File('assets/css/' . $row['name'] . '.css', true);
+		$objFile = new File('assets/css/' . $row['name'] . '.css', true);
 		$objFile->write('/* ' . $row['name'] . ".css */\n");
 
 		$objDefinitions = $this->Database->prepare("SELECT * FROM tl_style WHERE pid=? AND invisible!='1' ORDER BY sorting")
@@ -1083,7 +1083,7 @@ class StyleSheets extends Backend
 	 */
 	public function importStyleSheet()
 	{
-		if (\Input::get('key') != 'import')
+		if (Input::get('key') != 'import')
 		{
 			return '';
 		}
@@ -1101,7 +1101,7 @@ class StyleSheets extends Backend
 		$objUploader = new $class();
 
 		// Import CSS
-		if (\Input::post('FORM_SUBMIT') == 'tl_style_sheet_import')
+		if (Input::post('FORM_SUBMIT') == 'tl_style_sheet_import')
 		{
 			$arrUploaded = $objUploader->uploadTo('system/tmp');
 
@@ -1120,7 +1120,7 @@ class StyleSheets extends Backend
 					continue;
 				}
 
-				$objFile = new \File($strCssFile, true);
+				$objFile = new File($strCssFile, true);
 
 				// Check the file extension
 				if ($objFile->extension != 'css')
@@ -1135,7 +1135,7 @@ class StyleSheets extends Backend
 
 				// Create the new style sheet
 				$objStyleSheet = $this->Database->prepare("INSERT INTO tl_style_sheet (pid, tstamp, name, media) VALUES (?, ?, ?, ?)")
-												->execute(\Input::get('id'), time(), $strName, array('all'));
+												->execute(Input::get('id'), time(), $strName, array('all'));
 
 				$insertId = $objStyleSheet->insertId;
 
@@ -1412,7 +1412,7 @@ class StyleSheets extends Backend
 		uksort($vars, 'length_sort_desc');
 
 		// Create the file
-		$objFile = new \File('system/tmp/' . md5(uniqid(mt_rand(), true)), true);
+		$objFile = new File('system/tmp/' . md5(uniqid(mt_rand(), true)), true);
 		$objFile->write('');
 
 		// Add the media query (see #7560)
@@ -2272,7 +2272,7 @@ class StyleSheets extends Backend
 	{
 		if ($arrParent['embedImages'] > 0 && file_exists(TL_ROOT . '/' . $strImage))
 		{
-			$objImage = new \File($strImage, true);
+			$objImage = new File($strImage, true);
 			$strMime = $objImage->extension;
 
 			// Adjust the mime types

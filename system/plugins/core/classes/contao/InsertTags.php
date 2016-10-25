@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Input;
 use Contao\Models\ArticleModel;
 use Contao\Models\FilesModel;
 use Contao\Models\NewsModel;
@@ -673,7 +674,7 @@ class InsertTags extends Controller
 
 				// POST data
 				case 'post':
-					$arrCache[$strTag] = \Input::post($elements[1]);
+					$arrCache[$strTag] = Input::post($elements[1]);
 					break;
 
 				// Mobile/desktop toggle (see #6469)
@@ -681,7 +682,7 @@ class InsertTags extends Controller
 					$strUrl = ampersand(Environment::get('request'));
 					$strGlue = (strpos($strUrl, '?') === false) ? '?' : '&amp;';
 
-					if (Input::cookie('TL_VIEW') == 'mobile' || (Environment::get('agent')->mobile && \Input::cookie('TL_VIEW') != 'desktop'))
+					if (Input::cookie('TL_VIEW') == 'mobile' || (Environment::get('agent')->mobile && Input::cookie('TL_VIEW') != 'desktop'))
 					{
 						$arrCache[$strTag] = '<a href="' . $strUrl . $strGlue . 'toggle_view=desktop" class="toggle_desktop" title="' . specialchars($GLOBALS['TL_LANG']['MSC']['toggleDesktop'][1]) . '">' . $GLOBALS['TL_LANG']['MSC']['toggleDesktop'][0] . '</a>';
 					}
@@ -930,7 +931,7 @@ class InsertTags extends Controller
 							$dimensions = '';
 							$imageObj = Image::create($strFile, array($width, $height, $mode));
 							$src = $imageObj->executeResize()->getResizedPath();
-							$objFile = new \File(rawurldecode($src), true);
+							$objFile = new File(rawurldecode($src), true);
 
 							// Add the image dimensions
 							if (($imgSize = $objFile->imageSize) !== false)
@@ -976,7 +977,7 @@ class InsertTags extends Controller
 					}
 
 					$arrGet = $_GET;
-					\Input::resetCache();
+					Input::resetCache();
 					$strFile = $elements[1];
 
 					// Take arguments and add them to the $_GET array
@@ -1012,7 +1013,7 @@ class InsertTags extends Controller
 					}
 
 					$_GET = $arrGet;
-					\Input::resetCache();
+					Input::resetCache();
 					break;
 
 				// HOOK: pass unknown tags to callback functions

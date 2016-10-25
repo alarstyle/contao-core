@@ -78,9 +78,6 @@ set_exception_handler('__exception');
  */
 require TL_ROOT . '/system/classes/contao/Config.php';
 
-require TL_ROOT . '/system/plugins/core/library/Contao/ClassLoader.php';
-class_alias('Contao\\ClassLoader', 'ClassLoader');
-
 require TL_ROOT . '/system/classes/contao/TemplateLoader.php';
 
 require TL_ROOT . '/system/classes/contao/PluginLoader.php';
@@ -106,8 +103,6 @@ require_once TL_ROOT . '/vendor/autoload.php';
  * Try to load the modules
  */
 try {
-    \Contao\ClassLoader::scanAndRegister();
-
     $loader = new \Composer\Autoload\ClassLoader();
 
     $loader->addPsr4('', TL_ROOT . '/system/classes');
@@ -209,7 +204,7 @@ if (!$objConfig->isComplete() && TL_SCRIPT != 'contao/install.php') {
 /**
  * Always show error messages if logged into the install tool (see #5001)
  */
-if (Input::cookie('TL_INSTALL_AUTH') && !empty($_SESSION['TL_INSTALL_AUTH']) && Input::cookie('TL_INSTALL_AUTH') == $_SESSION['TL_INSTALL_AUTH'] && $_SESSION['TL_INSTALL_EXPIRE'] > time()) {
+if (\Contao\Input::cookie('TL_INSTALL_AUTH') && !empty($_SESSION['TL_INSTALL_AUTH']) && \Contao\Input::cookie('TL_INSTALL_AUTH') == $_SESSION['TL_INSTALL_AUTH'] && $_SESSION['TL_INSTALL_EXPIRE'] > time()) {
     Contao\Config::set('displayErrors', 1);
 }
 
@@ -250,7 +245,7 @@ if (file_exists(TL_ROOT . '/system/config/initconfig.php')) {
 /**
  * Check the request token upon POST requests
  */
-if ($_POST && !\Contao\RequestToken::validate(Input::post('REQUEST_TOKEN'))) {
+if ($_POST && !\Contao\RequestToken::validate(\Contao\Input::post('REQUEST_TOKEN'))) {
     // Force a JavaScript redirect upon Ajax requests (IE requires absolute link)
     if (Environment::get('isAjaxRequest')) {
         header('HTTP/1.1 204 No Content');

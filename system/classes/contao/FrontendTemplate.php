@@ -102,7 +102,7 @@ class FrontendTemplate extends Template
 		}
 
 		// Check whether all $_GET parameters have been used (see #4277)
-		if ($blnCheckRequest && \Input::hasUnusedGet())
+		if ($blnCheckRequest && Input::hasUnusedGet())
 		{
 			throw new \UnusedArgumentsException();
 		}
@@ -223,7 +223,7 @@ class FrontendTemplate extends Template
 			// Add a suffix if there is a mobile layout (see #7826)
 			if ($objPage->mobileLayout > 0)
 			{
-				if (\Input::cookie('TL_VIEW') == 'mobile' || (Environment::get('agent')->mobile && \Input::cookie('TL_VIEW') != 'desktop'))
+				if (Input::cookie('TL_VIEW') == 'mobile' || (Environment::get('agent')->mobile && Input::cookie('TL_VIEW') != 'desktop'))
 				{
 					$strCacheKey .= '.mobile';
 				}
@@ -251,7 +251,7 @@ class FrontendTemplate extends Template
 
 			// Create the cache file
 			$strMd5CacheKey = md5($strCacheKey);
-			$objFile = new \File('system/cache/html/' . substr($strMd5CacheKey, 0, 1) . '/' . $strMd5CacheKey . '.html', true);
+			$objFile = new File('system/cache/html/' . substr($strMd5CacheKey, 0, 1) . '/' . $strMd5CacheKey . '.html', true);
 			$objFile->write($strHeader);
 			$objFile->append($this->minifyHtml($strBuffer), '');
 			$objFile->close();

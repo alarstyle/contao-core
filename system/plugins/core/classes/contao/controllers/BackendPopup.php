@@ -99,7 +99,7 @@ class BackendPopup extends Backend
 		// Open the download dialogue
 		if (Input::get('download'))
 		{
-			$objFile = new \File($this->strFile, true);
+			$objFile = new File($this->strFile, true);
 			$objFile->sendToBrowser();
 		}
 
@@ -128,7 +128,7 @@ class BackendPopup extends Backend
 		}
 		else
 		{
-			$objFile = new \File($this->strFile, true);
+			$objFile = new File($this->strFile, true);
 
 			// Image
 			if ($objFile->isImage)

@@ -13,6 +13,7 @@ namespace Contao\Modules;
 use Contao\Config;
 use Contao\Date;
 use Contao\Environment;
+use Contao\Input;
 use Contao\Models\MemberGroupModel;
 use Contao\Models\MemberModel;
 
@@ -59,7 +60,7 @@ class ModuleLogin extends AbstractModule
 		}
 
 		// Login
-		if (\Input::post('FORM_SUBMIT') == 'tl_login')
+		if (Input::post('FORM_SUBMIT') == 'tl_login')
 		{
 			// Check whether username and password are set
 			if (empty($_POST['username']) || empty($_POST['password']))
@@ -86,7 +87,7 @@ class ModuleLogin extends AbstractModule
 				}
 
 				// Overwrite the jumpTo page with an individual group setting
-				$objMember = MemberModel::findByUsername(\Input::post('username'));
+				$objMember = MemberModel::findByUsername(Input::post('username'));
 
 				if ($objMember !== null)
 				{
@@ -108,7 +109,7 @@ class ModuleLogin extends AbstractModule
 			if (isset($_POST['autologin']) && !$this->autologin)
 			{
 				unset($_POST['autologin']);
-				\Input::setPost('autologin', null);
+				Input::setPost('autologin', null);
 			}
 
 			// Login and redirect
@@ -121,7 +122,7 @@ class ModuleLogin extends AbstractModule
 		}
 
 		// Logout and redirect to the website root if the current page is protected
-		if (\Input::post('FORM_SUBMIT') == 'tl_logout')
+		if (Input::post('FORM_SUBMIT') == 'tl_logout')
 		{
 			/** @var \PageModel $objPage */
 			global $objPage;
@@ -214,7 +215,7 @@ class ModuleLogin extends AbstractModule
 		$this->Template->password = $GLOBALS['TL_LANG']['MSC']['password'][0];
 		$this->Template->action = ampersand(Environment::get('indexFreeRequest'));
 		$this->Template->slabel = specialchars($GLOBALS['TL_LANG']['MSC']['login']);
-		$this->Template->value = specialchars(\Input::post('username'));
+		$this->Template->value = specialchars(Input::post('username'));
 		$this->Template->autologin = ($this->autologin && Config::get('autologin') > 0);
 		$this->Template->autoLabel = $GLOBALS['TL_LANG']['MSC']['autologin'];
 	}

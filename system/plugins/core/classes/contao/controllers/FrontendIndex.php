@@ -141,7 +141,7 @@ class FrontendIndex extends Frontend
 			}
 
 			// Try to find a page matching the language parameter
-			elseif (($lang = \Input::get('language')) && isset($arrLangs[$lang]))
+			elseif (($lang = Input::get('language')) && isset($arrLangs[$lang]))
 			{
 				$objNewPage = $arrLangs[$lang];
 			}
@@ -225,7 +225,7 @@ class FrontendIndex extends Frontend
 		}
 
 		// Check wether the language matches the root page language
-		if (Config::get('addLanguageToUrl') && \Input::get('language') != $objPage->rootLanguage)
+		if (Config::get('addLanguageToUrl') && Input::get('language') != $objPage->rootLanguage)
 		{
 			$this->User->authenticate();
 			$objHandler = new $GLOBALS['TL_PTY']['error_404']();
@@ -396,7 +396,7 @@ class FrontendIndex extends Frontend
 		$strCacheFile = null;
 
 		// Check for a mobile layout
-		if (\Input::cookie('TL_VIEW') == 'mobile' || (Environment::get('agent')->mobile && \Input::cookie('TL_VIEW') != 'desktop'))
+		if (Input::cookie('TL_VIEW') == 'mobile' || (Environment::get('agent')->mobile && Input::cookie('TL_VIEW') != 'desktop'))
 		{
 			$strMd5CacheKey = md5($strCacheKey . '.mobile');
 			$strCacheFile = TL_ROOT . '/system/cache/html/' . substr($strMd5CacheKey, 0, 1) . '/' . $strMd5CacheKey . '.html';

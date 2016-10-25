@@ -789,7 +789,7 @@ $GLOBALS['TL_DCA']['tl_content'] = array
 /**
  * Dynamically add the permission check and parent table (see #5241)
  */
-if (Input::get('do') == 'page')
+if (\Contao\Input::get('do') == 'page')
 {
 	$GLOBALS['TL_DCA']['tl_content']['config']['ptable'] = 'tl_page';
 	foreach ($GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'] as $index=>$item) {

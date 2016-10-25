@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Input;
 
 /**
  * Provide methodes to render a pagination menu.
@@ -146,9 +147,9 @@ class Pagination
 		$this->lblLast = $GLOBALS['TL_LANG']['MSC']['last'];
 		$this->lblTotal = $GLOBALS['TL_LANG']['MSC']['totalPages'];
 
-		if (\Input::get($strParameter) > 0)
+		if (Input::get($strParameter) > 0)
 		{
-			$this->intPage = \Input::get($strParameter);
+			$this->intPage = Input::get($strParameter);
 		}
 
 		$this->strParameter = $strParameter;

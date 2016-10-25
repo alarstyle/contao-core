@@ -13,6 +13,7 @@ namespace Contao\Modules;
 use Contao\Encryption;
 use Contao\Environment;
 use Contao\Idna;
+use Contao\Input;
 use Contao\Models\MemberModel;
 use Contao\Forms\FormTextField;
 
@@ -82,7 +83,7 @@ class ModuleCloseAccount extends AbstractModule
 		$objEditor->rowClass = 'row_0 row_first even';
 
 		// Validate editor
-		if (\Input::post('FORM_SUBMIT') == 'tl_close_account')
+		if (Input::post('FORM_SUBMIT') == 'tl_close_account')
 		{
 			$objEditor->validate();
 

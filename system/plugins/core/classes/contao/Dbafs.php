@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\File;
 use Contao\Filter\SyncExclude;
 use Contao\Models\FilesModel;
 
@@ -159,7 +160,7 @@ class Dbafs
 			// Create the file or folder
 			if (is_file(TL_ROOT . '/' . $strPath))
 			{
-				$objFile = new \File($strPath, true);
+				$objFile = new File($strPath, true);
 
 				$objModel = new FilesModel();
 				$objModel->pid       = $strPid;
@@ -176,7 +177,7 @@ class Dbafs
 			}
 			else
 			{
-				$objFolder = new \Folder($strPath);
+				$objFolder = new Folder($strPath);
 
 				$objModel = new FilesModel();
 				$objModel->pid       = $strPid;
@@ -438,7 +439,7 @@ class Dbafs
 		// Store the hash of each folder
 		foreach (array_reverse($arrPaths) as $strPath)
 		{
-			$objFolder = new \Folder($strPath);
+			$objFolder = new Folder($strPath);
 			$objModel  = FilesModel::findByPath($strPath);
 
 			// The DB entry does not yet exist
@@ -498,7 +499,7 @@ class Dbafs
 		$strLog = 'system/tmp/' . md5(uniqid(mt_rand(), true));
 
 		// Open the log file
-		$objLog = new \File($strLog, true);
+		$objLog = new File($strLog, true);
 		$objLog->truncate();
 
 		$arrModels = array();
@@ -560,7 +561,7 @@ class Dbafs
 				// Create the file or folder
 				if (is_file(TL_ROOT . '/' . $strRelpath))
 				{
-					$objFile = new \File($strRelpath, true);
+					$objFile = new File($strRelpath, true);
 
 					$objModel = new FilesModel();
 					$objModel->pid       = $strPid;
@@ -576,7 +577,7 @@ class Dbafs
 				}
 				else
 				{
-					$objFolder = new \Folder($strRelpath);
+					$objFolder = new Folder($strRelpath);
 
 					$objModel = new FilesModel();
 					$objModel->pid       = $strPid;
@@ -594,7 +595,7 @@ class Dbafs
 			else
 			{
 				// Check whether the MD5 hash has changed
-				$objResource = $objFile->isDir() ? new \Folder($strRelpath) : new \File($strRelpath, true);
+				$objResource = $objFile->isDir() ? new Folder($strRelpath) : new File($strRelpath, true);
 				$strType = ($objModel->hash != $objResource->hash) ? 'Changed' : 'Unchanged';
 
 				// Add a log entry

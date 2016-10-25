@@ -12,6 +12,7 @@ namespace Contao\Database;
 
 use Contao\Config;
 use Contao\Controller;
+use Contao\DcaExtractor;
 use Contao\PluginLoader;
 
 /**
@@ -295,7 +296,7 @@ class Installer extends Controller
 				}
 
 				$strTable = substr($strFile, 0, -4);
-				$objExtract = \DcaExtractor::getInstance($strTable);
+				$objExtract = DcaExtractor::getInstance($strTable);
 
 				if ($objExtract->isDbTable())
 				{

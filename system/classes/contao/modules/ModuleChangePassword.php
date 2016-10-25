@@ -13,6 +13,7 @@ namespace Contao\Modules;
 use \Contao\BackendTemplate;
 use \Contao\Encryption;
 use \Contao\Environment;
+use Contao\Input;
 use \Contao\Message;
 use \Contao\Forms\FormPassword;
 use \Contao\Models\MemberModel;
@@ -146,7 +147,7 @@ class ModuleChangePassword extends AbstractModule
 			$$strVar = $objEditor;
 
 			// Validate the editor
-			if (\Input::post('FORM_SUBMIT') == 'tl_change_password')
+			if (Input::post('FORM_SUBMIT') == 'tl_change_password')
 			{
 				$objEditor->validate();
 
@@ -184,7 +185,7 @@ class ModuleChangePassword extends AbstractModule
 		$this->Template->hasError = $doNotSubmit;
 
 		// Store the new password
-		if (\Input::post('FORM_SUBMIT') == 'tl_change_password' && !$doNotSubmit)
+		if (Input::post('FORM_SUBMIT') == 'tl_change_password' && !$doNotSubmit)
         {
 			$objMember->tstamp = time();
 			$objMember->password = $objNewPassword->value;

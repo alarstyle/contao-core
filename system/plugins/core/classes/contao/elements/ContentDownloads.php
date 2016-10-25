@@ -12,6 +12,7 @@ namespace Contao\Elements;
 
 use Contao\Controller;
 use Contao\Environment;
+use Contao\File;
 use Contao\Input;
 use Contao\System;
 use Contao\Models\FilesModel;
@@ -79,7 +80,7 @@ class ContentDownloads extends ContentElement
 			return '';
 		}
 
-		$file = \Input::get('file', true);
+		$file = Input::get('file', true);
 
 		// Send the file to the browser and do not send a 404 header (see #4632)
 		if ($file != '' && !preg_match('/^meta(_[a-z]{2})?\.txt$/', basename($file)))
@@ -125,7 +126,7 @@ class ContentDownloads extends ContentElement
 			// Single files
 			if ($objFiles->type == 'file')
 			{
-				$objFile = new \File($objFiles->path, true);
+				$objFile = new File($objFiles->path, true);
 
 				if (!in_array($objFile->extension, $allowedDownload) || preg_match('/^meta(_[a-z]{2})?\.txt$/', $objFile->basename))
 				{
@@ -201,7 +202,7 @@ class ContentDownloads extends ContentElement
 						continue;
 					}
 
-					$objFile = new \File($objSubfiles->path, true);
+					$objFile = new File($objSubfiles->path, true);
 
 					if (!in_array($objFile->extension, $allowedDownload) || preg_match('/^meta(_[a-z]{2})?\.txt$/', $objFile->basename))
 					{

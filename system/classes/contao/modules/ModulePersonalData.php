@@ -14,6 +14,7 @@ use Contao\Date;
 use Contao\Encryption;
 use Contao\Environment;
 use Contao\Forms\FormPassword;
+use Contao\Input;
 use Contao\Message;
 use Contao\Models\MemberModel;
 use Contao\System;
@@ -226,7 +227,7 @@ class ModulePersonalData extends AbstractModule
 			}
 
 			// Validate the form data
-			if (\Input::post('FORM_SUBMIT') == 'tl_member_' . $this->id)
+			if (Input::post('FORM_SUBMIT') == 'tl_member_' . $this->id)
 			{
 				$objEditor->validate();
 				$varValue = $objEditor->value;
@@ -340,7 +341,7 @@ class ModulePersonalData extends AbstractModule
 		$this->Template->hasError = $doNotSubmit;
 
 		// Redirect or reload if there was no error
-		if (\Input::post('FORM_SUBMIT') == 'tl_member_' . $this->id && !$doNotSubmit)
+		if (Input::post('FORM_SUBMIT') == 'tl_member_' . $this->id && !$doNotSubmit)
 		{
 			// HOOK: updated personal data
 			if (isset($GLOBALS['TL_HOOKS']['updatePersonalData']) && is_array($GLOBALS['TL_HOOKS']['updatePersonalData']))

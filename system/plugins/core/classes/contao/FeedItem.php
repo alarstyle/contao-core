@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\File;
 
 /**
  * Creates items to be appended to RSS or Atom feeds
@@ -124,7 +125,7 @@ class FeedItem
 			$strUrl = Environment::get('base');
 		}
 
-		$objFile = new \File($strFile, true);
+		$objFile = new File($strFile, true);
 
 		$this->arrData['enclosure'][] = array
 		(

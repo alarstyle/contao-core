@@ -10,6 +10,7 @@
 
 namespace Contao\Elements;
 
+use Contao\File;
 use Contao\Models\FilesModel;
 use Contao\Image;
 
@@ -67,7 +68,7 @@ class ContentMedia extends ContentElement
 
 			while ($objFiles->next())
 			{
-				$objFile = new \File($objFiles->path, true);
+				$objFile = new File($objFiles->path, true);
 				$return .= '<li>' . Image::getHtml($objFile->icon, '', 'class="mime_icon"') . ' <span>' . $objFile->name . '</span> <span class="size">(' . $this->getReadableSize($objFile->size) . ')</span></li>';
 			}
 
@@ -148,7 +149,7 @@ class ContentMedia extends ContentElement
 				$strTitle = $objFiles->name;
 			}
 
-			$objFile = new \File($objFiles->path, true);
+			$objFile = new File($objFiles->path, true);
 			$objFile->title = specialchars($strTitle);
 
 			$arrFiles[$objFile->extension] = $objFile;

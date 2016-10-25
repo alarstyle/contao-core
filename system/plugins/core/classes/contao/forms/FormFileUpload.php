@@ -12,6 +12,7 @@ namespace Contao\Forms;
 
 use Contao\Config;
 use Contao\Dbafs;
+use Contao\File;
 use Contao\StringUtil;
 use Contao\Models\FilesModel;
 
@@ -162,7 +163,7 @@ class FormFileUpload extends \Contao\Editor implements \uploadable
 			return;
 		}
 
-		$objFile = new \File($file['name'], true);
+		$objFile = new File($file['name'], true);
 		$uploadTypes = trimsplit(',', strtolower($this->extensions));
 
 		// File type is not allowed

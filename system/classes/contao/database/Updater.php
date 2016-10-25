@@ -13,6 +13,7 @@ namespace Contao\Database;
 use Contao\Config;
 use Contao\Controller;
 use Contao\Models\FilesModel;
+use Contao\File;
 
 /**
  * Adjust the database if the system is updated.
@@ -237,7 +238,7 @@ class Updater extends Controller
 			{
 				if (!file_exists(TL_ROOT . '/system/plugins/' . $strFolder . '/html/.htaccess'))
 				{
-					\File::putContent('system/plugins/' . $strFolder . '/html/.htaccess', "<IfModule !mod_authz_core.c>\n  Order allow,deny\n  Allow from all\n</IfModule>\n<IfModule mod_authz_core.c>\n  Require all granted\n</IfModule>");
+					File::putContent('system/plugins/' . $strFolder . '/html/.htaccess', "<IfModule !mod_authz_core.c>\n  Order allow,deny\n  Allow from all\n</IfModule>\n<IfModule mod_authz_core.c>\n  Require all granted\n</IfModule>");
 				}
 			}
 		}
@@ -555,7 +556,7 @@ class Updater extends Controller
 		// Folders
 		foreach ($arrFolders as $strFolder)
 		{
-			$objFolder = new \Folder($strFolder);
+			$objFolder = new Folder($strFolder);
 			$strUuid = $this->Database->getUuid();
 
 			$this->Database->prepare("INSERT INTO tl_files (pid, tstamp, uuid, name, type, path, hash) VALUES (?, ?, ?, ?, 'folder', ?, ?)")
@@ -583,7 +584,7 @@ class Updater extends Controller
 				}
 			}
 
-			$objFile = new \File($strFile, true);
+			$objFile = new File($strFile, true);
 			$strUuid = $this->Database->getUuid();
 
 			$this->Database->prepare("INSERT INTO tl_files (pid, tstamp, uuid, name, type, path, extension, hash) VALUES (?, ?, ?, ?, 'file', ?, ?, ?)")

@@ -26,7 +26,7 @@ class PurgeData extends Backend implements \executable
 	 */
 	public function isActive()
 	{
-		return (\Input::post('FORM_SUBMIT') == 'tl_purge');
+		return (Input::post('FORM_SUBMIT') == 'tl_purge');
 	}
 
 
@@ -62,9 +62,9 @@ class PurgeData extends Backend implements \executable
 		}
 
 		// Run the jobs
-		if (\Input::post('FORM_SUBMIT') == 'tl_purge')
+		if (Input::post('FORM_SUBMIT') == 'tl_purge')
 		{
-			$purge = \Input::post('purge');
+			$purge = Input::post('purge');
 
 			if (!empty($purge) && is_array($purge))
 			{

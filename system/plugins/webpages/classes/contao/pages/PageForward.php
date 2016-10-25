@@ -13,6 +13,7 @@ namespace Contao\Pages;
 use Contao\Config;
 use Contao\Environment;
 use Contao\Frontend;
+use Contao\Input;
 use Contao\Models\PageModel;
 
 /**
@@ -84,11 +85,11 @@ class PageForward extends Frontend
 				// Ignore the auto_item parameter (see #5886)
 				if ($key == 'auto_item')
 				{
-					$strGet .= '/' . \Input::get($key);
+					$strGet .= '/' . Input::get($key);
 				}
 				else
 				{
-					$strGet .= '/' . $key . '/' . \Input::get($key);
+					$strGet .= '/' . $key . '/' . Input::get($key);
 				}
 			}
 		}

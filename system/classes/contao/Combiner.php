@@ -219,7 +219,7 @@ class Combiner extends System
 				{
 					$strPath = 'assets/' . $strTarget . '/' . str_replace('/', '_', $arrFile['name']) . $this->strMode;
 
-					$objFile = new \File($strPath, true);
+					$objFile = new File($strPath, true);
 					$objFile->write($this->handleScssLess($content, $arrFile));
 					$objFile->close();
 
@@ -256,7 +256,7 @@ class Combiner extends System
 		}
 
 		// Create the file
-		$objFile = new \File('assets/' . $strTarget . '/' . $strKey . $this->strMode, true);
+		$objFile = new File('assets/' . $strTarget . '/' . $strKey . $this->strMode, true);
 		$objFile->truncate();
 
 		foreach ($this->arrFiles as $arrFile)
@@ -291,7 +291,7 @@ class Combiner extends System
 		// Create a gzipped version
 		if (Config::get('gzipScripts') && function_exists('gzencode'))
 		{
-			\File::putContent('assets/' . $strTarget . '/' . $strKey . $this->strMode . '.gz', gzencode(file_get_contents(TL_ROOT . '/assets/' . $strTarget . '/' . $strKey . $this->strMode), 9));
+			File::putContent('assets/' . $strTarget . '/' . $strKey . $this->strMode . '.gz', gzencode(file_get_contents(TL_ROOT . '/assets/' . $strTarget . '/' . $strKey . $this->strMode), 9));
 		}
 
 		return $strUrl . 'assets/' . $strTarget . '/' . $strKey . $this->strMode;

@@ -136,7 +136,7 @@ class File extends System
 			throw new \Exception(sprintf('Directory "%s" is not a file', $strFile));
 		}
 
-		$this->import('Files');
+		$this->import('Contao\\Files', 'Files');
 
 		$this->strFile = $strFile;
 		$this->blnDoNotCreate = $blnDoNotCreate;
@@ -431,7 +431,7 @@ class File extends System
 		// Create the folder
 		if (!is_dir(TL_ROOT . '/' . $strFolder))
 		{
-			new \Folder($strFolder);
+			new Folder($strFolder);
 		}
 
 		// Open the file
@@ -572,7 +572,7 @@ class File extends System
 				// Create the parent folder
 				if (!is_dir(TL_ROOT . '/' . $strFolder))
 				{
-					new \Folder($strFolder);
+					new Folder($strFolder);
 				}
 			}
 
@@ -672,7 +672,7 @@ class File extends System
 		// Create the parent folder if it does not exist
 		if (!is_dir(TL_ROOT . '/' . $strParent))
 		{
-			new \Folder($strParent);
+			new Folder($strParent);
 		}
 
 		$return = $this->Files->rename($this->strFile, $strNewName);
@@ -721,7 +721,7 @@ class File extends System
 		// Create the parent folder if it does not exist
 		if (!is_dir(TL_ROOT . '/' . $strParent))
 		{
-			new \Folder($strParent);
+			new Folder($strParent);
 		}
 
 		$this->Files->copy($this->strFile, $strNewName);

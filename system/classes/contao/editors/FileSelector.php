@@ -10,10 +10,13 @@
 
 namespace Contao\Editors;
 
+use Contao\Backend;
 use Contao\Config;
 use Contao\Environment;
 use Contao\Image;
+use Contao\Input;
 use Contao\Models\FilesModel;
+use Contao\File;
 
 /**
  * Provide methods to handle input field "file tree".
@@ -71,9 +74,9 @@ class FileSelector extends \Contao\Editor
 		}
 
 		// Add the breadcrumb menu
-		if (\Input::get('do') != 'files')
+		if (Input::get('do') != 'files')
 		{
-			\Backend::addFilesBreadcrumb('tl_files_picker');
+			Backend::addFilesBreadcrumb('tl_files_picker');
 		}
 
 		$tree = '';
@@ -249,9 +252,9 @@ class FileSelector extends \Contao\Editor
 		$xtnode = 'tree_' . $this->strTable . '_' . $this->strName;
 
 		// Get session data and toggle nodes
-		if (\Input::get($flag.'tg'))
+		if (Input::get($flag.'tg'))
 		{
-			$session[$node][\Input::get($flag.'tg')] = (isset($session[$node][\Input::get($flag.'tg')]) && $session[$node][\Input::get($flag.'tg')] == 1) ? 0 : 1;
+			$session[$node][Input::get($flag.'tg')] = (isset($session[$node][Input::get($flag.'tg')]) && $session[$node][Input::get($flag.'tg')] == 1) ? 0 : 1;
 			$this->Session->setData($session);
 			$this->redirect(preg_replace('/(&(amp;)?|\?)'.$flag.'tg=[^& ]*/i', '', Environment::get('request')));
 		}
@@ -384,7 +387,7 @@ class FileSelector extends \Contao\Editor
 				$currentFile = str_replace(TL_ROOT . '/', '', $files[$h]);
 				$currentEncoded = $this->urlEncode($currentFile);
 
-				$objFile = new \File($currentFile, true);
+				$objFile = new File($currentFile, true);
 
 				// Check file extension
 				if (is_array($allowedExtensions) && !in_array($objFile->extension, $allowedExtensions))
@@ -461,7 +464,7 @@ class FileSelector extends \Contao\Editor
 		}
 
 		// Ignore the numeric IDs when in switch mode (TinyMCE)
-		if (\Input::get('switch'))
+		if (Input::get('switch'))
 		{
 			return;
 		}

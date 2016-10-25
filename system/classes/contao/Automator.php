@@ -50,7 +50,7 @@ class Automator extends System
 		$objDatabase->execute("TRUNCATE TABLE tl_search_index");
 
 		// Purge the cache folder
-		$objFolder = new \Folder('system/cache/search');
+		$objFolder = new Folder('system/cache/search');
 		$objFolder->purge();
 
 		// Add a log entry
@@ -114,11 +114,11 @@ class Automator extends System
 			if ($dir != 'index.html' && strncmp($dir, '.', 1) !== 0)
 			{
 				// Purge the folder
-				$objFolder = new \Folder('assets/images/' . $dir);
+				$objFolder = new Folder('assets/images/' . $dir);
 				$objFolder->purge();
 
 				// Restore the index.html file
-				$objFile = new \File('templates/index.html', true);
+				$objFile = new File('templates/index.html', true);
 				$objFile->copyTo('assets/images/' . $dir . '/index.html');
 			}
 		}
@@ -140,11 +140,11 @@ class Automator extends System
 		foreach (array('assets/js', 'assets/css') as $dir)
 		{
 			// Purge the folder
-			$objFolder = new \Folder($dir);
+			$objFolder = new Folder($dir);
 			$objFolder->purge();
 
 			// Restore the index.html file
-			$objFile = new \File('templates/index.html', true);
+			$objFile = new File('templates/index.html', true);
 			$objFile->copyTo($dir . '/index.html');
 		}
 
@@ -166,7 +166,7 @@ class Automator extends System
 	public function purgePageCache()
 	{
 		// Purge the folder
-		$objFolder = new \Folder('system/cache/html');
+		$objFolder = new Folder('system/cache/html');
 		$objFolder->purge();
 
 		// Add a log entry
@@ -180,7 +180,7 @@ class Automator extends System
 	public function purgeSearchCache()
 	{
 		// Purge the folder
-		$objFolder = new \Folder('system/cache/search');
+		$objFolder = new Folder('system/cache/search');
 		$objFolder->purge();
 
 		// Add a log entry
@@ -199,7 +199,7 @@ class Automator extends System
 			foreach (array('config', 'dca', 'language', 'sql') as $dir)
 			{
 				// Purge the folder
-				$objFolder = new \Folder('system/cache/' . $dir);
+				$objFolder = new Folder('system/cache/' . $dir);
 				$objFolder->delete();
 			}
 		}
@@ -215,11 +215,11 @@ class Automator extends System
 	public function purgeTempFolder()
 	{
 		// Purge the folder
-		$objFolder = new \Folder('system/tmp');
+		$objFolder = new Folder('system/tmp');
 		$objFolder->purge();
 
 		// Restore the .gitignore file
-		$objFile = new \File('system/logs/.gitignore', true);
+		$objFile = new File('system/logs/.gitignore', true);
 		$objFile->copyTo('system/tmp/.gitignore');
 
 		// Add a log entry
@@ -293,7 +293,7 @@ class Automator extends System
 					continue; // see #6652
 				}
 
-				$objFile = new \File('share/' . $file, true);
+				$objFile = new File('share/' . $file, true);
 
 				if ($objFile->extension == 'xml' && !in_array($objFile->filename, $arrFeeds))
 				{
@@ -369,7 +369,7 @@ class Automator extends System
 		// Create the XML file
 		while ($objRoot->next())
 		{
-			$objFile = new \File('share/' . $objRoot->sitemapName . '.xml', true);
+			$objFile = new File('share/' . $objRoot->sitemapName . '.xml', true);
 
 			$objFile->truncate();
 			$objFile->append('<?xml version="1.0" encoding="UTF-8"?>');
@@ -416,7 +416,7 @@ class Automator extends System
 
 		foreach ($arrFiles as $strFile)
 		{
-			$objFile = new \File('system/logs/' . $strFile . '.9', true);
+			$objFile = new File('system/logs/' . $strFile . '.9', true);
 
 			// Delete the oldest file
 			if ($objFile->exists())
@@ -431,13 +431,13 @@ class Automator extends System
 
 				if (file_exists(TL_ROOT . '/' . $strGzName))
 				{
-					$objFile = new \File($strGzName, true);
+					$objFile = new File($strGzName, true);
 					$objFile->renameTo('system/logs/' . $strFile . '.' . ($i+1));
 				}
 			}
 
 			// Add .1 to the latest file
-			$objFile = new \File('system/logs/' . $strFile, true);
+			$objFile = new File('system/logs/' . $strFile, true);
 			$objFile->renameTo('system/logs/' . $strFile . '.1');
 		}
 	}
@@ -465,7 +465,7 @@ class Automator extends System
 	public function generateConfigCache()
 	{
 		// Generate the class/template laoder cache file
-		$objCacheFile = new \File('system/cache/config/autoload.php', true);
+		$objCacheFile = new File('system/cache/config/autoload.php', true);
 		$objCacheFile->write('<?php '); // add one space to prevent the "unexpected $end" error
 
 		foreach (PluginLoader::getActive() as $strModule)
@@ -482,7 +482,7 @@ class Automator extends System
 		$objCacheFile->close();
 
 		// Generate the module loader cache file
-		$objCacheFile = new \File('system/cache/config/plugins.php', true);
+		$objCacheFile = new File('system/cache/config/plugins.php', true);
 		$objCacheFile->write("<?php\n\n");
 
 		$objCacheFile->append(sprintf("static::\$active = %s;\n", var_export(PluginLoader::getActive(), true)));
@@ -492,7 +492,7 @@ class Automator extends System
 		$objCacheFile->close();
 
 		// Generate the config cache file
-		$objCacheFile = new \File('system/cache/config/config.php', true);
+		$objCacheFile = new File('system/cache/config/config.php', true);
 		$objCacheFile->write('<?php '); // add one space to prevent the "unexpected $end" error
 
 		foreach (PluginLoader::getActive() as $strModule)
@@ -528,7 +528,7 @@ class Automator extends System
 		}
 
 		// Generate the page mapper file
-		$objCacheFile = new \File('system/cache/config/mapping.php', true);
+		$objCacheFile = new File('system/cache/config/mapping.php', true);
 		$objCacheFile->write(sprintf("<?php\n\nreturn %s;\n", var_export($arrMapper, true)));
 		$objCacheFile->close();
 
@@ -569,7 +569,7 @@ class Automator extends System
 		foreach ($arrFiles as $strName)
 		{
 			// Generate the cache file
-			$objCacheFile = new \File('system/cache/dca/' . $strName . '.php', true);
+			$objCacheFile = new File('system/cache/dca/' . $strName . '.php', true);
 			$objCacheFile->write('<?php '); // add one space to prevent the "unexpected $end" error
 
 			// Parse all active modules
@@ -666,7 +666,7 @@ class Automator extends System
 						   . " */\n";
 
 				// Generate the cache file
-				$objCacheFile = new \File($strCacheFile, true);
+				$objCacheFile = new File($strCacheFile, true);
 				$objCacheFile->write(sprintf($strHeader, $strLanguage));
 
 				// Parse all active modules and append to the cache file
@@ -721,7 +721,7 @@ class Automator extends System
 				}
 
 				$strTable = substr($strFile, 0, -4);
-				$objExtract = \DcaExtractor::getInstance($strTable);
+				$objExtract = DcaExtractor::getInstance($strTable);
 
 				if ($objExtract->isDbTable())
 				{
@@ -732,11 +732,11 @@ class Automator extends System
 			}
 		}
 
-		/** @var \DcaExtractor[] $arrExtracts */
+		/** @var DcaExtractor[] $arrExtracts */
 		foreach ($arrExtracts as $strTable=>$objExtract)
 		{
 			// Create the file
-			$objFile = new \File('system/cache/sql/' . $strTable . '.php', true);
+			$objFile = new File('system/cache/sql/' . $strTable . '.php', true);
 			$objFile->write("<?php\n\n");
 
 			$objFile->append(sprintf("\$this->arrMeta = %s;\n", var_export($objExtract->getMeta(), true)));

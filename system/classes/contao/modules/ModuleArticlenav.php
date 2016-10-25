@@ -8,8 +8,9 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace Contao\Modules;
 
+use Contao\Input;
 use Contao\Models\ArticleModel;
 
 /**
@@ -66,7 +67,7 @@ class ModuleArticlenav extends AbstractModule
 		}
 
 		// Redirect to the first article if no article is selected
-		if (!\Input::get('articles'))
+		if (!Input::get('articles'))
 		{
 			if (!$this->loadFirst)
 			{
@@ -101,7 +102,7 @@ class ModuleArticlenav extends AbstractModule
 			$strAlias = $objArticle->alias != '' ? $objArticle->alias : $objArticle->id;
 
 			// Active article
-			if (\Input::get('articles') == $strAlias)
+			if (Input::get('articles') == $strAlias)
 			{
 				$articles[] = array
 				(

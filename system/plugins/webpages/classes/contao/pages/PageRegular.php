@@ -14,6 +14,7 @@ use Contao\Config;
 use Contao\Environment;
 use Contao\Frontend;
 use Contao\FrontendTemplate;
+use Contao\Input;
 use Contao\System;
 use Contao\Template;
 use Contao\Models\FilesModel;
@@ -210,7 +211,7 @@ class PageRegular extends Frontend
 		// Set the cookie
 		if (isset($_GET['toggle_view']))
 		{
-			if (\Input::get('toggle_view') == 'mobile')
+			if (Input::get('toggle_view') == 'mobile')
 			{
 				$this->setCookie('TL_VIEW', 'mobile', 0);
 			}
@@ -223,11 +224,11 @@ class PageRegular extends Frontend
 		}
 
 		// Override the autodetected value
-		if (\Input::cookie('TL_VIEW') == 'mobile')
+		if (Input::cookie('TL_VIEW') == 'mobile')
 		{
 			$blnMobile = true;
 		}
-		elseif (\Input::cookie('TL_VIEW') == 'desktop')
+		elseif (Input::cookie('TL_VIEW') == 'desktop')
 		{
 			$blnMobile = false;
 		}

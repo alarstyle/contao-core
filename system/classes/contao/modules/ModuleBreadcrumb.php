@@ -14,6 +14,7 @@ use Contao\Environment;
 use Contao\Models\ArticleModel;
 use Contao\Models\PageModel;
 use Contao\StringUtil;
+use Contao\Input;
 
 /**
  * Front end module "breadcrumb".
@@ -160,7 +161,7 @@ class ModuleBreadcrumb extends AbstractModule
 				'class'    => ''
 			);
 
-			list($strSection, $strArticle) = explode(':', \Input::get('articles'));
+			list($strSection, $strArticle) = explode(':', Input::get('articles'));
 
 			if ($strArticle === null)
 			{

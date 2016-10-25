@@ -10,6 +10,7 @@
 
 namespace Contao\Editors;
 
+use Contao\FileUpload;
 
 /**
  * Class Upload
@@ -57,7 +58,7 @@ class Upload extends \Contao\Editor implements \uploadable
 	{
 		parent::__construct($arrAttributes);
 
-		$this->objUploader = new \FileUpload();
+		$this->objUploader = new FileUpload();
 		$this->objUploader->setName($this->strName);
 	}
 

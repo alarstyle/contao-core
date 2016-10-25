@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\File;
 use Contao\Models\ArticleModel;
 use Contao\Models\ContentModel;
 use Contao\Models\NewsArchiveModel;
@@ -248,7 +249,7 @@ class News extends Frontend
         }
 
         // Create the file
-        \File::putContent('share/' . $strFile . '.xml', $this->replaceInsertTags($objFeed->$strType(), false));
+        File::putContent('share/' . $strFile . '.xml', $this->replaceInsertTags($objFeed->$strType(), false));
     }
 
 

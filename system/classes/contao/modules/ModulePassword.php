@@ -14,6 +14,7 @@ use Contao\Email;
 use Contao\Environment;
 use Contao\FrontendTemplate;
 use Contao\Idna;
+use Contao\Input;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Versions;
@@ -73,7 +74,7 @@ class ModulePassword extends AbstractModule
 		$this->loadDataContainer('tl_member');
 
 		// Set new password
-		if (strlen(\Input::get('token')))
+		if (strlen(Input::get('token')))
 		{
 			$this->setNewPassword();
 
@@ -130,7 +131,7 @@ class ModulePassword extends AbstractModule
 			++$row;
 
 			// Validate the editor
-			if (\Input::post('FORM_SUBMIT') == 'tl_lost_password')
+			if (Input::post('FORM_SUBMIT') == 'tl_lost_password')
 			{
 				$objEditor->validate();
 
@@ -147,15 +148,15 @@ class ModulePassword extends AbstractModule
 		$this->Template->hasError = $doNotSubmit;
 
 		// Look for an account and send the password link
-		if (\Input::post('FORM_SUBMIT') == 'tl_lost_password' && !$doNotSubmit)
+		if (Input::post('FORM_SUBMIT') == 'tl_lost_password' && !$doNotSubmit)
 		{
 			if ($this->reg_skipName)
 			{
-				$objMember = MemberModel::findActiveByEmailAndUsername(\Input::post('email', true), null);
+				$objMember = MemberModel::findActiveByEmailAndUsername(Input::post('email', true), null);
 			}
 			else
 			{
-				$objMember = MemberModel::findActiveByEmailAndUsername(\Input::post('email', true), \Input::post('username'));
+				$objMember = MemberModel::findActiveByEmailAndUsername(Input::post('email', true), Input::post('username'));
 			}
 
 			if ($objMember === null)
@@ -184,7 +185,7 @@ class ModulePassword extends AbstractModule
 	 */
 	protected function setNewPassword()
 	{
-		$objMember = MemberModel::findOneByActivation(\Input::get('token'));
+		$objMember = MemberModel::findOneByActivation(Input::get('token'));
 
 		if ($objMember === null || $objMember->login == '')
 		{
@@ -231,7 +232,7 @@ class ModulePassword extends AbstractModule
 		$this->Template->rowLast = 'row_2 row_last even';
 
 		// Validate the field
-		if (strlen(\Input::post('FORM_SUBMIT')) && \Input::post('FORM_SUBMIT') == $this->Session->get('setPasswordToken'))
+		if (strlen(Input::post('FORM_SUBMIT')) && Input::post('FORM_SUBMIT') == $this->Session->get('setPasswordToken'))
 		{
 			$objEditor->validate();
 

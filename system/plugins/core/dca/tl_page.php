@@ -625,7 +625,7 @@ $GLOBALS['TL_DCA']['tl_page'] = array
 );
 
 // Disable certain operations in the modal dialog
-if (Input::get('popup'))
+if (\Contao\Input::get('popup'))
 {
 	unset($GLOBALS['TL_DCA']['tl_page']['list']['operations']['show']);
 }
@@ -639,6 +639,7 @@ if (Input::get('popup'))
 use Contao\DataContainer;
 use Contao\Models\PageModel;
 use Contao\Image;
+use Contao\Input;
 
 class tl_page extends Contao\Backend
 {

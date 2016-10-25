@@ -795,7 +795,7 @@ abstract class Editor extends BaseTemplate
 
 		if (!empty($arrParts))
 		{
-			$varValue = \Input::$strMethod(array_shift($arrParts), $this->decodeEntities);
+			$varValue = Input::$strMethod(array_shift($arrParts), $this->decodeEntities);
 
 			foreach ($arrParts as $part)
 			{
@@ -810,7 +810,7 @@ abstract class Editor extends BaseTemplate
 			return $varValue;
 		}
 
-		return \Input::$strMethod($strKey, $this->decodeEntities);
+		return Input::$strMethod($strKey, $this->decodeEntities);
 	}
 
 

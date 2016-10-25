@@ -306,7 +306,7 @@ abstract class Backend extends Controller
 		$this->import('Contao\BackendUser', 'User');
 
 		// Dynamically add the "personal data" module (see #4193)
-		if (\Input::get('do') == 'login')
+		if (Input::get('do') == 'login')
 		{
 			$arrModule = array('tables'=>array('tl_user'), 'callback'=>'ModuleUser');
 		}
@@ -319,8 +319,8 @@ abstract class Backend extends Controller
 		}
 
 		$arrTables = (array) $arrModule['tables'];
-		$strTable = \Input::get('table') ?: $arrTables[0];
-		$id = (!\Input::get('act') && \Input::get('id')) ? \Input::get('id') : $this->Session->get('CURRENT_ID');
+		$strTable = Input::get('table') ?: $arrTables[0];
+		$id = (!Input::get('act') && Input::get('id')) ? Input::get('id') : $this->Session->get('CURRENT_ID');
 
 		// Store the current ID in the current session
 		if ($id != $this->Session->get('CURRENT_ID'))
@@ -328,7 +328,7 @@ abstract class Backend extends Controller
 			$this->Session->set('CURRENT_ID', $id);
 		}
 
-		define('CURRENT_ID', (\Input::get('table') ? $id : \Input::get('id')));
+		define('CURRENT_ID', (Input::get('table') ? $id : Input::get('id')));
 		$this->Template->headline = $GLOBALS['TL_LANG']['MOD'][$module][0];
 
 		// Add the module style sheet
@@ -413,13 +413,13 @@ abstract class Backend extends Controller
 		}
 
 		// Custom action (if key is not defined in config.php the default action will be called)
-		elseif (\Input::get('key') && isset($arrModule[\Input::get('key')]))
+		elseif (Input::get('key') && isset($arrModule[Input::get('key')]))
 		{
-			$objCallback = new $arrModule[\Input::get('key')][0]();
-			$this->Template->main .= $objCallback->{$arrModule[\Input::get('key')][1]}($dc);
+			$objCallback = new $arrModule[Input::get('key')][0]();
+			$this->Template->main .= $objCallback->{$arrModule[Input::get('key')][1]}($dc);
 
 			// Add the name of the parent element
-			if (isset($_GET['table']) && in_array(\Input::get('table'), $arrTables) && \Input::get('table') != $arrTables[0])
+			if (isset($_GET['table']) && in_array(Input::get('table'), $arrTables) && Input::get('table') != $arrTables[0])
 			{
 				if ($GLOBALS['TL_DCA'][$strTable]['config']['ptable'] != '')
 				{
@@ -439,13 +439,13 @@ abstract class Backend extends Controller
 			}
 
 			// Add the name of the submodule
-			$this->Template->headline .= ' » ' . sprintf($GLOBALS['TL_LANG'][$strTable][\Input::get('key')][1], \Input::get('id'));
+			$this->Template->headline .= ' » ' . sprintf($GLOBALS['TL_LANG'][$strTable][Input::get('key')][1], Input::get('id'));
 		}
 
 		// Default action
 		elseif (is_object($dc))
 		{
-			$act = \Input::get('act');
+			$act = Input::get('act');
 
 			if ($act == '' || $act == 'paste' || $act == 'select')
 			{
@@ -508,7 +508,7 @@ abstract class Backend extends Controller
 			// Build the breadcrumb trail
 			if ($strFirst !== null && $strSecond !== null)
 			{
-				if (!isset($_GET['act']) || \Input::get('act') == 'paste' && \Input::get('mode') == 'create' || \Input::get('act') == 'select' || \Input::get('act') == 'editAll' || \Input::get('act') == 'overrideAll')
+				if (!isset($_GET['act']) || Input::get('act') == 'paste' && Input::get('mode') == 'create' || Input::get('act') == 'select' || Input::get('act') == 'editAll' || Input::get('act') == 'overrideAll')
 				{
 					if ($strTable == $strSecond)
 					{
@@ -594,44 +594,44 @@ abstract class Backend extends Controller
 			}
 
 			// Add the current action
-			if (\Input::get('act') == 'editAll')
+			if (Input::get('act') == 'editAll')
 			{
 				$this->Template->headline .= ' » ' . $GLOBALS['TL_LANG']['MSC']['all'][0];
 			}
-			elseif (\Input::get('act') == 'overrideAll')
+			elseif (Input::get('act') == 'overrideAll')
 			{
 				$this->Template->headline .= ' » ' . $GLOBALS['TL_LANG']['MSC']['all_override'][0];
 			}
 			else
 			{
-				if (\Input::get('id'))
+				if (Input::get('id'))
 				{
-					if (\Input::get('do') == 'files' || \Input::get('do') == 'tpl_editor')
+					if (Input::get('do') == 'files' || Input::get('do') == 'tpl_editor')
 					{
 						// Handle new folders (see #7980)
-						if (strpos(\Input::get('id'), '__new__') !== false)
+						if (strpos(Input::get('id'), '__new__') !== false)
 						{
-							$this->Template->headline .= ' » ' . dirname(\Input::get('id')) . ' » ' . $GLOBALS['TL_LANG'][$strTable]['new'][1];
+							$this->Template->headline .= ' » ' . dirname(Input::get('id')) . ' » ' . $GLOBALS['TL_LANG'][$strTable]['new'][1];
 						}
 						else
 						{
-							$this->Template->headline .= ' » ' . \Input::get('id');
+							$this->Template->headline .= ' » ' . Input::get('id');
 						}
 					}
 					elseif (is_array($GLOBALS['TL_LANG'][$strTable][$act]))
 					{
-						$this->Template->headline .= ' » ' . sprintf($GLOBALS['TL_LANG'][$strTable][$act][1], \Input::get('id'));
+						$this->Template->headline .= ' » ' . sprintf($GLOBALS['TL_LANG'][$strTable][$act][1], Input::get('id'));
 					}
 				}
-				elseif (\Input::get('pid'))
+				elseif (Input::get('pid'))
 				{
-					if (\Input::get('do') == 'files' || \Input::get('do') == 'tpl_editor')
+					if (Input::get('do') == 'files' || Input::get('do') == 'tpl_editor')
 					{
-						$this->Template->headline .= ' » ' . \Input::get('pid');
+						$this->Template->headline .= ' » ' . Input::get('pid');
 					}
 					elseif (is_array($GLOBALS['TL_LANG'][$strTable][$act]))
 					{
-						$this->Template->headline .= ' » ' . sprintf($GLOBALS['TL_LANG'][$strTable][$act][1], \Input::get('pid'));
+						$this->Template->headline .= ' » ' . sprintf($GLOBALS['TL_LANG'][$strTable][$act][1], Input::get('pid'));
 					}
 				}
 			}
@@ -805,14 +805,14 @@ abstract class Backend extends Controller
 
 		if (isset($arrMeta[$strLanguage]))
 		{
-			if (\Input::post('alt') == '' && !empty($arrMeta[$strLanguage]['title']))
+			if (Input::post('alt') == '' && !empty($arrMeta[$strLanguage]['title']))
 			{
-				\Input::setPost('alt', $arrMeta[$strLanguage]['title']);
+				Input::setPost('alt', $arrMeta[$strLanguage]['title']);
 			}
 
-			if (\Input::post('caption') == '' && !empty($arrMeta[$strLanguage]['caption']))
+			if (Input::post('caption') == '' && !empty($arrMeta[$strLanguage]['caption']))
 			{
-				\Input::setPost('caption', $arrMeta[$strLanguage]['caption']);
+				Input::setPost('caption', $arrMeta[$strLanguage]['caption']);
 			}
 		}
 	}
@@ -961,7 +961,7 @@ abstract class Backend extends Controller
 		}
 
 		// Mark root pages
-		if ($row['type'] == 'root' || \Input::get('do') == 'article')
+		if ($row['type'] == 'root' || Input::get('do') == 'article')
 		{
 			$label = '<strong>' . $label . '</strong>';
 		}
@@ -1162,7 +1162,7 @@ abstract class Backend extends Controller
 			}
 			else
 			{
-				$strOptions .= sprintf('<option value="{{link_url::%s}}"%s>%s%s</option>', $objPages->id, (('{{link_url::' . $objPages->id . '}}' == \Input::get('value')) ? ' selected="selected"' : ''), str_repeat(' &nbsp; &nbsp; ', $level), specialchars($objPages->title));
+				$strOptions .= sprintf('<option value="{{link_url::%s}}"%s>%s%s</option>', $objPages->id, (('{{link_url::' . $objPages->id . '}}' == Input::get('value')) ? ' selected="selected"' : ''), str_repeat(' &nbsp; &nbsp; ', $level), specialchars($objPages->title));
 				$strOptions .= $this->doCreatePageList($objPages->id, $level);
 			}
 		}
@@ -1277,7 +1277,7 @@ abstract class Backend extends Controller
 					continue;
 				}
 
-				$strFiles .= sprintf('<option value="%s"%s>%s</option>', $strFolder . '/' . $strFile, (($strFolder . '/' . $strFile == \Input::get('value')) ? ' selected="selected"' : ''), specialchars($strFile));
+				$strFiles .= sprintf('<option value="%s"%s>%s</option>', $strFolder . '/' . $strFile, (($strFolder . '/' . $strFile == Input::get('value')) ? ' selected="selected"' : ''), specialchars($strFile));
 			}
 		}
 

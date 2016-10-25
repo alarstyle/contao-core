@@ -28,3 +28,19 @@ $GLOBALS['BE_MOD']['system']['repository_manager'] = array
 	'icon'       => 'system/plugins/repository/themes/default/images/install16.png',
 	'stylesheet' => 'system/plugins/repository/themes/default/backend.css'
 );
+
+
+/**
+ * Register the templates
+ */
+\Contao\TemplateLoader::addFiles(array
+(
+	'repository_catlist' => 'system/plugins/repository/templates',
+	'repository_catview' => 'system/plugins/repository/templates',
+	'repository_mgredit' => 'system/plugins/repository/templates',
+	'repository_mgrinst' => 'system/plugins/repository/templates',
+	'repository_mgrlist' => 'system/plugins/repository/templates',
+	'repository_mgruist' => 'system/plugins/repository/templates',
+	'repository_mgrupdt' => 'system/plugins/repository/templates',
+	'repository_mgrupgd' => 'system/plugins/repository/templates',
+));

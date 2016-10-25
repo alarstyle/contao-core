@@ -251,12 +251,12 @@ class ZipWriter
 			// Create folder
 			if (!is_dir(TL_ROOT . '/' . $strFolder))
 			{
-				new \Folder($strFolder);
+				new Folder($strFolder);
 			}
 		}
 
 		// Rename file
-		\Files::getInstance()->rename(self::TEMPORARY_FOLDER . '/' . basename($this->strTemp), $this->strFile);
+		Files::getInstance()->rename(self::TEMPORARY_FOLDER . '/' . basename($this->strTemp), $this->strFile);
 	}
 
 

@@ -12,6 +12,7 @@ namespace Contao\Editors;
 
 use Contao\Environment;
 use Contao\Image;
+use Contao\Input;
 
 /**
  * Provide methods to handle sortable checkboxes.
@@ -91,18 +92,18 @@ class CheckBoxWizard extends \Contao\Editor
 		}
 
 		// Change the order
-		if (\Input::get($strCommand) && is_numeric(\Input::get('cid')) && \Input::get('id') == $this->currentRecord)
+		if (Input::get($strCommand) && is_numeric(Input::get('cid')) && Input::get('id') == $this->currentRecord)
 		{
 			$this->import('Contao\\Database', 'Database');
 
-			switch (\Input::get($strCommand))
+			switch (Input::get($strCommand))
 			{
 				case 'up':
-					$this->varValue = array_move_up($this->varValue, \Input::get('cid'));
+					$this->varValue = array_move_up($this->varValue, Input::get('cid'));
 					break;
 
 				case 'down':
-					$this->varValue = array_move_down($this->varValue, \Input::get('cid'));
+					$this->varValue = array_move_down($this->varValue, Input::get('cid'));
 					break;
 			}
 

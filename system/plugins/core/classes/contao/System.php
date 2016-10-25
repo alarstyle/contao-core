@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\Input;
 
 /**
  * Abstract library base class
@@ -224,7 +225,7 @@ abstract class System
 		}
 
 		// Use a specific referer
-		if ($strTable != '' && isset($session[$strTable]) && \Input::get('act') != 'select')
+		if ($strTable != '' && isset($session[$strTable]) && Input::get('act') != 'select')
 		{
 			$session['current'] = $session[$strTable];
 		}
@@ -799,7 +800,7 @@ abstract class System
 	 */
 	public static function enableModule($strName)
 	{
-		$objFile = new \File('system/plugins/' . $strName . '/.skip', true);
+		$objFile = new File('system/plugins/' . $strName . '/.skip', true);
 
 		if (!$objFile->exists())
 		{
@@ -821,7 +822,7 @@ abstract class System
 	 */
 	public static function disableModule($strName)
 	{
-		$objFile = new \File('system/plugins/' . $strName . '/.skip', true);
+		$objFile = new File('system/plugins/' . $strName . '/.skip', true);
 
 		if ($objFile->exists())
 		{

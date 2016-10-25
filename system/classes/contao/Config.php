@@ -163,7 +163,7 @@ class Config
         $this->blnIsModified = true;
 
         // Import the Files object (required in the destructor)
-        $this->Files = \Files::getInstance();
+        $this->Files = Files::getInstance();
 
         // Parse the local configuration file
         if (static::$blnHasLcf) {

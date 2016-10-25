@@ -147,7 +147,7 @@ class ModuleNewsMenu extends ModuleNews
 			$arrItems[$intYear]['href'] = $this->strUrl . '?' . 'year=' . $intDate;
 			$arrItems[$intYear]['title'] = specialchars($intYear . ' (' . $quantity . ')');
 			$arrItems[$intYear]['class'] = trim(((++$count == 1) ? 'first ' : '') . (($count == $limit) ? 'last' : ''));
-			$arrItems[$intYear]['isActive'] = (\Input::get('year') == $intDate);
+			$arrItems[$intYear]['isActive'] = (Input::get('year') == $intDate);
 			$arrItems[$intYear]['quantity'] = $quantity;
 		}
 
@@ -200,7 +200,7 @@ class ModuleNewsMenu extends ModuleNews
 				$arrItems[$intYear][$intMonth]['href'] = $this->strUrl . '?' . 'month=' . $intDate;
 				$arrItems[$intYear][$intMonth]['title'] = specialchars($GLOBALS['TL_LANG']['MONTHS'][$intMonth].' '.$intYear . ' (' . $quantity . ')');
 				$arrItems[$intYear][$intMonth]['class'] = trim(((++$count == 1) ? 'first ' : '') . (($count == $limit) ? 'last' : ''));
-				$arrItems[$intYear][$intMonth]['isActive'] = (\Input::get('month') == $intDate);
+				$arrItems[$intYear][$intMonth]['isActive'] = (Input::get('month') == $intDate);
 				$arrItems[$intYear][$intMonth]['quantity'] = $quantity;
 			}
 		}
@@ -208,7 +208,7 @@ class ModuleNewsMenu extends ModuleNews
 		$this->Template->items = $arrItems;
 		$this->Template->showQuantity = ($this->news_showQuantity != '') ? true : false;
 		$this->Template->url = $this->strUrl . '?';
-		$this->Template->activeYear = \Input::get('year');
+		$this->Template->activeYear = Input::get('year');
 	}
 
 

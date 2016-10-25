@@ -39,9 +39,9 @@ class Theme extends Backend
 		/** @var \FileUpload $objUploader */
 		$objUploader = new $class();
 
-		if (\Input::post('FORM_SUBMIT') == 'tl_theme_import')
+		if (Input::post('FORM_SUBMIT') == 'tl_theme_import')
 		{
-			if (!\Input::post('confirm'))
+			if (!Input::post('confirm'))
 			{
 				$arrUploaded = $objUploader->uploadTo('system/tmp');
 
@@ -62,7 +62,7 @@ class Theme extends Backend
 						continue;
 					}
 
-					$objFile = new \File($strFile, true);
+					$objFile = new File($strFile, true);
 
 					// Skip anything but .cto files
 					if ($objFile->extension != 'cto')
@@ -100,7 +100,7 @@ class Theme extends Backend
 			);
 
 			// Proceed
-			if (\Input::post('confirm') == 1)
+			if (Input::post('confirm') == 1)
 			{
 				$this->extractThemeFiles($arrFiles, $arrDbFields);
 			}
@@ -332,7 +332,7 @@ class Theme extends Backend
 				// Extract the files
 				try
 				{
-					\File::putContent($this->customizeUploadPath($objArchive->file_name), $objArchive->unzip());
+					File::putContent($this->customizeUploadPath($objArchive->file_name), $objArchive->unzip());
 				}
 				catch (\Exception $e)
 				{
@@ -459,7 +459,7 @@ class Theme extends Backend
 				}
 
 				// Get the order fields
-				$objDcaExtractor = \DcaExtractor::getInstance($table);
+				$objDcaExtractor = DcaExtractor::getInstance($table);
 				$arrOrder = $objDcaExtractor->getOrderFields();
 
 				// Loop through the rows
@@ -647,7 +647,7 @@ class Theme extends Backend
 					// Create the templates folder even if it is empty (see #4793)
 					if ($table == 'tl_theme' && isset($set['templates']) && strncmp($set['templates'], 'templates/', 10) === 0 && !is_dir(TL_ROOT . '/' . $set['templates']))
 					{
-						new \Folder($set['templates']);
+						new Folder($set['templates']);
 					}
 
 					// Update tl_files (entries have been created by the Dbafs class)
@@ -758,7 +758,7 @@ class Theme extends Backend
 		$objArchive->close();
 
 		// Open the "save as …" dialogue
-		$objFile = new \File('system/tmp/'. $strTmp, true);
+		$objFile = new File('system/tmp/'. $strTmp, true);
 		$objFile->sendToBrowser($strName . '.cto');
 	}
 
@@ -781,7 +781,7 @@ class Theme extends Backend
 		$this->loadDataContainer('tl_theme');
 
 		// Get the order fields
-		$objDcaExtractor = \DcaExtractor::getInstance('tl_theme');
+		$objDcaExtractor = DcaExtractor::getInstance('tl_theme');
 		$arrOrder = $objDcaExtractor->getOrderFields();
 
 		// Add the row
@@ -807,7 +807,7 @@ class Theme extends Backend
 		$this->loadDataContainer('tl_style_sheet');
 
 		// Get the order fields
-		$objDcaExtractor = \DcaExtractor::getInstance('tl_style_sheet');
+		$objDcaExtractor = DcaExtractor::getInstance('tl_style_sheet');
 		$arrOrder = $objDcaExtractor->getOrderFields();
 
 		// Get all style sheets
@@ -831,7 +831,7 @@ class Theme extends Backend
 		$this->loadDataContainer('tl_style');
 
 		// Get the order fields
-		$objDcaExtractor = \DcaExtractor::getInstance('tl_style');
+		$objDcaExtractor = DcaExtractor::getInstance('tl_style');
 		$arrOrder = $objDcaExtractor->getOrderFields();
 
 		// Add the child rows
@@ -868,7 +868,7 @@ class Theme extends Backend
 		$this->loadDataContainer('tl_module');
 
 		// Get the order fields
-		$objDcaExtractor = \DcaExtractor::getInstance('tl_module');
+		$objDcaExtractor = DcaExtractor::getInstance('tl_module');
 		$arrOrder = $objDcaExtractor->getOrderFields();
 
 		// Get all modules
@@ -901,7 +901,7 @@ class Theme extends Backend
 		$this->loadDataContainer('tl_layout');
 
 		// Get the order fields
-		$objDcaExtractor = \DcaExtractor::getInstance('tl_layout');
+		$objDcaExtractor = DcaExtractor::getInstance('tl_layout');
 		$arrOrder = $objDcaExtractor->getOrderFields();
 
 		// Get all layouts
@@ -974,7 +974,7 @@ class Theme extends Backend
 		$this->loadDataContainer('tl_files');
 
 		// Get the order fields
-		$objDcaExtractor = \DcaExtractor::getInstance('tl_files');
+		$objDcaExtractor = DcaExtractor::getInstance('tl_files');
 		$arrOrder = $objDcaExtractor->getOrderFields();
 
 		// Add the folders
@@ -1130,7 +1130,7 @@ class Theme extends Backend
 				$objArchive->addFile($strFolder .'/'. $strFile, $strTarget .'/'. $strFile);
 
 				$arrRow = array();
-				$objFile = new \File($strFolder .'/'. $strFile, true);
+				$objFile = new File($strFolder .'/'. $strFile, true);
 				$objModel = FilesModel::findByPath($strFolder .'/'. $strFile);
 
 				if ($objModel !== null)

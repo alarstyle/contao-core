@@ -113,7 +113,7 @@ abstract class Model
 	{
 		$this->arrModified = array();
 
-		$objDca = \Contao\DcaExtractor::getInstance(static::$strTable);
+		$objDca = DcaExtractor::getInstance(static::$strTable);
 		$this->arrRelations = $objDca->getRelations();
 
 		if ($objResult !== null)
@@ -276,7 +276,7 @@ abstract class Model
 	 */
 	public static function getUniqueFields()
 	{
-		$objDca = \DcaExtractor::getInstance(static::getTable());
+		$objDca = DcaExtractor::getInstance(static::getTable());
 
 		return $objDca->getUniqueFields();
 	}

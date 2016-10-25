@@ -54,3 +54,16 @@ $GLOBALS['TL_HOOKS']['closeAccount'][] = array('Contao\\Newsletter', 'removeSubs
  */
 $GLOBALS['TL_PERMISSIONS'][] = 'newsletters';
 $GLOBALS['TL_PERMISSIONS'][] = 'newsletterp';
+
+
+
+/**
+ * Register the templates
+ */
+\Contao\TemplateLoader::addFiles(array
+(
+	'mod_newsletter'        => 'system/plugins/newsletter/templates/modules',
+	'mod_newsletter_list'   => 'system/plugins/newsletter/templates/modules',
+	'mod_newsletter_reader' => 'system/plugins/newsletter/templates/modules',
+	'nl_default'            => 'system/plugins/newsletter/templates/newsletter',
+));

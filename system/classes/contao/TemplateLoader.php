@@ -20,7 +20,7 @@ namespace Contao;
  *
  * Usage:
  *
- *     ClassLoader::addFile('template_name', 'core/templates');
+ *     TemplateLoader::addFile('template_name', 'core/templates');
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */

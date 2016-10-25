@@ -21,6 +21,7 @@ use Contao\Input;
 use Contao\System;
 use Contao\Validator;
 use Contao\Filter\SqlFiles;
+use Contao\Folder;
 
 /**
  * Back end install tool.
@@ -170,7 +171,7 @@ class BackendInstall extends Backend
 		{
 			foreach (array('config', 'dca', 'language', 'sql') as $dir)
 			{
-				$objFolder = new \Folder('system/cache/' . $dir);
+				$objFolder = new Folder('system/cache/' . $dir);
 				$objFolder->delete();
 			}
 		}
@@ -858,7 +859,7 @@ class BackendInstall extends Backend
 
 		try
 		{
-			\File::putContent('system/config/pathconfig.php', '<?php' . "\n\n// Relative path to the installation\nreturn " . var_export(TL_PATH, true) . ";\n");
+			File::putContent('system/config/pathconfig.php', '<?php' . "\n\n// Relative path to the installation\nreturn " . var_export(TL_PATH, true) . ";\n");
 		}
 		catch (\Exception $e)
 		{

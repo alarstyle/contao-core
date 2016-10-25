@@ -106,7 +106,7 @@ class Image
 	 *
 	 * @throws \InvalidArgumentException If the file does not exists or cannot be processed
 	 */
-	public function __construct(\File $file)
+	public function __construct(File $file)
 	{
 		// Check whether the file exists
 		if (!$file->exists())
@@ -430,7 +430,7 @@ class Image
 				// Copy the source image if the target image does not exist or is older than the source image
 				if (!file_exists(TL_ROOT . '/' . $this->getTargetPath()) || $this->fileObj->mtime > filemtime(TL_ROOT . '/' . $this->getTargetPath()))
 				{
-					\Files::getInstance()->copy($this->getOriginalPath(), $this->getTargetPath());
+					Files::getInstance()->copy($this->getOriginalPath(), $this->getTargetPath());
 				}
 
 				$this->resizedPath = System::urlEncode($this->getTargetPath());
@@ -463,7 +463,7 @@ class Image
 				// Copy the cached file if it exists
 				if ($this->getTargetPath())
 				{
-					\Files::getInstance()->copy($this->getCacheName(), $this->getTargetPath());
+					Files::getInstance()->copy($this->getCacheName(), $this->getTargetPath());
 					$this->resizedPath = System::urlEncode($this->getTargetPath());
 
 					return $this;
@@ -515,7 +515,7 @@ class Image
 		// Set the file permissions when the Safe Mode Hack is used
 		if (Config::get('useFTP'))
 		{
-			\Files::getInstance()->chmod($this->getCacheName(), Config::get('defaultFileChmod'));
+			Files::getInstance()->chmod($this->getCacheName(), Config::get('defaultFileChmod'));
 		}
 
 		// Resize the original image
@@ -610,7 +610,7 @@ class Image
 			$xml = $doc->saveXML();
 		}
 
-		$objCacheFile = new \File($this->getCacheName(), true);
+		$objCacheFile = new File($this->getCacheName(), true);
 		$objCacheFile->write($xml);
 		$objCacheFile->close();
 	}
@@ -858,7 +858,7 @@ class Image
 			return '';
 		}
 
-		$objFile = new \File($src, true);
+		$objFile = new File($src, true);
 		$static = (strncmp($src, 'assets/', 7) === 0) ? TL_ASSETS_URL : TL_FILES_URL;
 
 		return '<img src="' . $static . System::urlEncode($src) . '" width="' . $objFile->width . '" height="' . $objFile->height . '" alt="' . specialchars($alt) . '"' . (($attributes != '') ? ' ' . $attributes : '') . '>';
@@ -893,7 +893,7 @@ class Image
 	{
 		if (is_string($image))
 		{
-			$image = new \File(rawurldecode($image), true);
+			$image = new File(rawurldecode($image), true);
 		}
 
 		/** @var \Image $imageObj */

@@ -10,7 +10,6 @@
 
 namespace Contao;
 
-
 /**
  * Authenticates and initializes user objects
  *
@@ -310,7 +309,7 @@ abstract class User extends System
 		}
 
 		// Load the user object
-		if ($this->findBy('username', \Input::post('username', true)) == false)
+		if ($this->findBy('username', Input::post('username', true)) == false)
 		{
 			$blnLoaded = false;
 
@@ -320,7 +319,7 @@ abstract class User extends System
 				foreach ($GLOBALS['TL_HOOKS']['importUser'] as $callback)
 				{
 					$this->import($callback[0], 'objImport', true);
-					$blnLoaded = $this->objImport->{$callback[1]}(\Input::post('username', true), \Input::postUnsafeRaw('password'), $this->strTable);
+					$blnLoaded = $this->objImport->{$callback[1]}(Input::post('username', true), Input::postUnsafeRaw('password'), $this->strTable);
 
 					// Load successfull
 					if ($blnLoaded === true)
@@ -331,10 +330,10 @@ abstract class User extends System
 			}
 
 			// Return if the user still cannot be loaded
-			if (!$blnLoaded || $this->findBy('username', \Input::post('username', true)) == false)
+			if (!$blnLoaded || $this->findBy('username', Input::post('username', true)) == false)
 			{
 				Message::addError($GLOBALS['TL_LANG']['ERR']['invalidLogin']);
-				$this->log('Could not find user "' . \Input::post('username', true) . '"', __METHOD__, TL_ACCESS);
+				$this->log('Could not find user "' . Input::post('username', true) . '"', __METHOD__, TL_ACCESS);
 
 				return false;
 			}
@@ -343,9 +342,9 @@ abstract class User extends System
 		$time = time();
 
 		// Set the user language
-		if (\Input::post('language'))
+		if (Input::post('language'))
 		{
-			$this->language = \Input::post('language');
+			$this->language = Input::post('language');
 		}
 
 		// Lock the account if there are too many login attempts
@@ -385,7 +384,7 @@ abstract class User extends System
 		else
 		{
 			list($strPassword, $strSalt) = explode(':', $this->password);
-			$blnAuthenticated = ($strSalt == '') ? ($strPassword === sha1(Input::postUnsafeRaw('password'))) : ($strPassword === sha1($strSalt . \Input::postUnsafeRaw('password')));
+			$blnAuthenticated = ($strSalt == '') ? ($strPassword === sha1(Input::postUnsafeRaw('password'))) : ($strPassword === sha1($strSalt . Input::postUnsafeRaw('password')));
 
 			// Store a SHA-512 encrpyted version of the password
 			if ($blnAuthenticated)
@@ -400,7 +399,7 @@ abstract class User extends System
 			foreach ($GLOBALS['TL_HOOKS']['checkCredentials'] as $callback)
 			{
 				$this->import($callback[0], 'objAuth', true);
-				$blnAuthenticated = $this->objAuth->{$callback[1]}(\Input::post('username', true), \Input::postUnsafeRaw('password'), $this);
+				$blnAuthenticated = $this->objAuth->{$callback[1]}(Input::post('username', true), Input::postUnsafeRaw('password'), $this);
 
 				// Authentication successfull
 				if ($blnAuthenticated === true)
@@ -581,7 +580,7 @@ abstract class User extends System
 	public function logout()
 	{
 		// Return if the user has been logged out already
-		if (!\Input::cookie($this->strCookie))
+		if (!Input::cookie($this->strCookie))
 		{
 			return false;
 		}

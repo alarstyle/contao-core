@@ -76,14 +76,14 @@ class Ajax extends Backend
 			// Toggle navigation menu
 			case 'toggleNavigation':
 				$bemod = $this->Session->get('backend_modules');
-				$bemod[\Input::post('id')] = intval(\Input::post('state'));
+				$bemod[Input::post('id')] = intval(Input::post('state'));
 				$this->Session->set('backend_modules', $bemod);
 				exit; break;
 
 			// Load a navigation menu group
 			case 'loadNavigation':
 				$bemod = $this->Session->get('backend_modules');
-				$bemod[\Input::post('id')] = intval(\Input::post('state'));
+				$bemod[Input::post('id')] = intval(Input::post('state'));
 				$this->Session->set('backend_modules', $bemod);
 
 				$this->import('Contao\\BackendUser', 'User');
@@ -91,7 +91,7 @@ class Ajax extends Backend
 				/** @var \BackendTemplate|object $objTemplate */
 				$objTemplate = new BackendTemplate('be_navigation');
 				$navigation = $this->User->navigation();
-				$objTemplate->modules = $navigation[\Input::post('id')]['modules'];
+				$objTemplate->modules = $navigation[Input::post('id')]['modules'];
 
 				echo $objTemplate->parse();
 				exit; break;
@@ -101,17 +101,17 @@ class Ajax extends Backend
 			case 'toggleFileManager':
 			case 'togglePagetree':
 			case 'toggleFiletree':
-				$this->strAjaxId = preg_replace('/.*_([0-9a-zA-Z]+)$/', '$1', \Input::post('id'));
-				$this->strAjaxKey = str_replace('_' . $this->strAjaxId, '', \Input::post('id'));
+				$this->strAjaxId = preg_replace('/.*_([0-9a-zA-Z]+)$/', '$1', Input::post('id'));
+				$this->strAjaxKey = str_replace('_' . $this->strAjaxId, '', Input::post('id'));
 
-				if (\Input::get('act') == 'editAll')
+				if (Input::get('act') == 'editAll')
 				{
 					$this->strAjaxKey = preg_replace('/(.*)_[0-9a-zA-Z]+$/', '$1', $this->strAjaxKey);
-					$this->strAjaxName = preg_replace('/.*_([0-9a-zA-Z]+)$/', '$1', \Input::post('name'));
+					$this->strAjaxName = preg_replace('/.*_([0-9a-zA-Z]+)$/', '$1', Input::post('name'));
 				}
 
 				$nodes = $this->Session->get($this->strAjaxKey);
-				$nodes[$this->strAjaxId] = intval(\Input::post('state'));
+				$nodes[$this->strAjaxId] = intval(Input::post('state'));
 				$this->Session->set($this->strAjaxKey, $nodes);
 				exit; break;
 
@@ -120,31 +120,31 @@ class Ajax extends Backend
 			case 'loadFileManager':
 			case 'loadPagetree':
 			case 'loadFiletree':
-				$this->strAjaxId = preg_replace('/.*_([0-9a-zA-Z]+)$/', '$1', \Input::post('id'));
-				$this->strAjaxKey = str_replace('_' . $this->strAjaxId, '', \Input::post('id'));
+				$this->strAjaxId = preg_replace('/.*_([0-9a-zA-Z]+)$/', '$1', Input::post('id'));
+				$this->strAjaxKey = str_replace('_' . $this->strAjaxId, '', Input::post('id'));
 
-				if (\Input::get('act') == 'editAll')
+				if (Input::get('act') == 'editAll')
 				{
 					$this->strAjaxKey = preg_replace('/(.*)_[0-9a-zA-Z]+$/', '$1', $this->strAjaxKey);
-					$this->strAjaxName = preg_replace('/.*_([0-9a-zA-Z]+)$/', '$1', \Input::post('name'));
+					$this->strAjaxName = preg_replace('/.*_([0-9a-zA-Z]+)$/', '$1', Input::post('name'));
 				}
 
 				$nodes = $this->Session->get($this->strAjaxKey);
-				$nodes[$this->strAjaxId] = intval(\Input::post('state'));
+				$nodes[$this->strAjaxId] = intval(Input::post('state'));
 				$this->Session->set($this->strAjaxKey, $nodes);
 				break;
 
 			// Toggle the visibility of a fieldset
 			case 'toggleFieldset':
 				$fs = $this->Session->get('fieldset_states');
-				$fs[\Input::post('table')][\Input::post('id')] = intval(\Input::post('state'));
+				$fs[Input::post('table')][Input::post('id')] = intval(Input::post('state'));
 				$this->Session->set('fieldset_states', $fs);
 				exit; break;
 
 			// Toggle checkbox groups
 			case 'toggleCheckboxGroup':
 				$state = $this->Session->get('checkbox_groups');
-				$state[\Input::post('id')] = intval(\Input::post('state'));
+				$state[Input::post('id')] = intval(Input::post('state'));
 				$this->Session->set('checkbox_groups', $state);
 				break;
 
@@ -183,17 +183,17 @@ class Ajax extends Backend
 		{
 			// Load nodes of the page structure tree
 			case 'loadStructure':
-				echo $dc->ajaxTreeView($this->strAjaxId, intval(\Input::post('level')));
+				echo $dc->ajaxTreeView($this->strAjaxId, intval(Input::post('level')));
 				exit; break;
 
 			// Load nodes of the file manager tree
 			case 'loadFileManager':
-				echo $dc->ajaxTreeView(\Input::post('folder', true), intval(\Input::post('level')));
+				echo $dc->ajaxTreeView(Input::post('folder', true), intval(Input::post('level')));
 				exit; break;
 
 			// Load nodes of the page tree
 			case 'loadPagetree':
-				$strField = $dc->field = \Input::post('name');
+				$strField = $dc->field = Input::post('name');
 
 				/** @var \PageSelector $strClass */
 				$strClass = $GLOBALS['BE_FFL']['pageSelector'];
@@ -201,12 +201,12 @@ class Ajax extends Backend
 				/** @var \PageSelector $objEditor */
 				$objEditor = new $strClass($strClass::getAttributesFromDca($GLOBALS['TL_DCA'][$dc->table]['fields'][$strField], $dc->field, null, $strField, $dc->table, $dc));
 
-				echo $objEditor->generateAjax($this->strAjaxId, \Input::post('field'), intval(\Input::post('level')));
+				echo $objEditor->generateAjax($this->strAjaxId, Input::post('field'), intval(Input::post('level')));
 				exit; break;
 
 			// Load nodes of the file tree
 			case 'loadFiletree':
-				$strField = $dc->field = \Input::post('name');
+				$strField = $dc->field = Input::post('name');
 
 				/** @var \FileSelector $strClass */
 				$strClass = $GLOBALS['BE_FFL']['fileSelector'];
@@ -215,9 +215,9 @@ class Ajax extends Backend
 				$objEditor = new $strClass($strClass::getAttributesFromDca($GLOBALS['TL_DCA'][$dc->table]['fields'][$strField], $dc->field, null, $strField, $dc->table, $dc));
 
 				// Load a particular node
-				if (\Input::post('folder', true) != '')
+				if (Input::post('folder', true) != '')
 				{
-					echo $objEditor->generateAjax(\Input::post('folder', true), \Input::post('field'), intval(\Input::post('level')));
+					echo $objEditor->generateAjax(Input::post('folder', true), Input::post('field'), intval(Input::post('level')));
 				}
 				else
 				{
@@ -228,11 +228,11 @@ class Ajax extends Backend
 			// Reload the page/file picker
 			case 'reloadPagetree':
 			case 'reloadFiletree':
-				$intId = \Input::get('id');
-				$strField = $dc->field = \Input::post('name');
+				$intId = Input::get('id');
+				$strField = $dc->field = Input::post('name');
 
 				// Handle the keys in "edit multiple" mode
-				if (\Input::get('act') == 'editAll')
+				if (Input::get('act') == 'editAll')
 				{
 					$intId = preg_replace('/.*_([0-9a-zA-Z]+)$/', '$1', $strField);
 					$strField = preg_replace('/(.*)_[0-9a-zA-Z]+$/', '$1', $strField);
@@ -250,7 +250,7 @@ class Ajax extends Backend
 				$varValue = null;
 
 				// Load the value
-				if (\Input::get('act') != 'overrideAll')
+				if (Input::get('act') != 'overrideAll')
 				{
 					if ($GLOBALS['TL_DCA'][$dc->table]['config']['dataContainer'] == 'File')
 					{
@@ -292,7 +292,7 @@ class Ajax extends Backend
 				}
 
 				// Set the new value
-				$varValue = \Input::post('value', true);
+				$varValue = Input::post('value', true);
 				$strKey = ($this->strAction == 'reloadPagetree') ? 'pageTree' : 'fileTree';
 
 				// Convert the selected values
@@ -332,7 +332,7 @@ class Ajax extends Backend
 
 					if (method_exists($dca, 'toggleFeatured'))
 					{
-						$dca->toggleFeatured(\Input::post('id'), ((\Input::post('state') == 1) ? true : false));
+						$dca->toggleFeatured(Input::post('id'), ((Input::post('state') == 1) ? true : false));
 					}
 				}
 				exit; break;
@@ -342,32 +342,32 @@ class Ajax extends Backend
 				$this->import('Contao\\BackendUser', 'User');
 
 				// Check whether the field is a selector field and allowed for regular users (thanks to Fabian Mihailowitsch) (see #4427)
-				if (!is_array($GLOBALS['TL_DCA'][$dc->table]['palettes']['__selector__']) || !in_array(\Input::post('field'), $GLOBALS['TL_DCA'][$dc->table]['palettes']['__selector__']) || ($GLOBALS['TL_DCA'][$dc->table]['fields'][\Input::post('field')]['exclude'] && !$this->User->hasAccess($dc->table . '::' . \Input::post('field'), 'alexf')))
+				if (!is_array($GLOBALS['TL_DCA'][$dc->table]['palettes']['__selector__']) || !in_array(Input::post('field'), $GLOBALS['TL_DCA'][$dc->table]['palettes']['__selector__']) || ($GLOBALS['TL_DCA'][$dc->table]['fields'][Input::post('field')]['exclude'] && !$this->User->hasAccess($dc->table . '::' . Input::post('field'), 'alexf')))
 				{
-					$this->log('Field "' . \Input::post('field') . '" is not an allowed selector field (possible SQL injection attempt)', __METHOD__, TL_ERROR);
+					$this->log('Field "' . Input::post('field') . '" is not an allowed selector field (possible SQL injection attempt)', __METHOD__, TL_ERROR);
 					header('HTTP/1.1 400 Bad Request');
 					die('Bad Request');
 				}
 
 				if ($dc instanceof DC_Table)
 				{
-					if (\Input::get('act') == 'editAll')
+					if (Input::get('act') == 'editAll')
 					{
-						$this->strAjaxId = preg_replace('/.*_([0-9a-zA-Z]+)$/', '$1', \Input::post('id'));
-						$this->Database->prepare("UPDATE " . $dc->table . " SET " . \Input::post('field') . "='" . (intval(\Input::post('state') == 1) ? 1 : '') . "' WHERE id=?")->execute($this->strAjaxId);
+						$this->strAjaxId = preg_replace('/.*_([0-9a-zA-Z]+)$/', '$1', Input::post('id'));
+						$this->Database->prepare("UPDATE " . $dc->table . " SET " . Input::post('field') . "='" . (intval(Input::post('state') == 1) ? 1 : '') . "' WHERE id=?")->execute($this->strAjaxId);
 
-						if (\Input::post('load'))
+						if (Input::post('load'))
 						{
-							echo $dc->editAll($this->strAjaxId, \Input::post('id'));
+							echo $dc->editAll($this->strAjaxId, Input::post('id'));
 						}
 					}
 					else
 					{
-						$this->Database->prepare("UPDATE " . $dc->table . " SET " . \Input::post('field') . "='" . (intval(\Input::post('state') == 1) ? 1 : '') . "' WHERE id=?")->execute($dc->id);
+						$this->Database->prepare("UPDATE " . $dc->table . " SET " . Input::post('field') . "='" . (intval(Input::post('state') == 1) ? 1 : '') . "' WHERE id=?")->execute($dc->id);
 
-						if (\Input::post('load'))
+						if (Input::post('load'))
 						{
-							echo $dc->edit(false, \Input::post('id'));
+							echo $dc->edit(false, Input::post('id'));
 						}
 					}
 				}

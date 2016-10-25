@@ -13,6 +13,7 @@ namespace Contao\Editors;
 use Contao\Cache;
 use Contao\Environment;
 use Contao\Image;
+use Contao\Input;
 
 /**
  * Provide methods to handle key value pairs.
@@ -118,26 +119,26 @@ class KeyValueWizard extends \Contao\Editor
 		$strCommand = 'cmd_' . $this->strField;
 
 		// Change the order
-		if (\Input::get($strCommand) && is_numeric(\Input::get('cid')) && \Input::get('id') == $this->currentRecord)
+		if (Input::get($strCommand) && is_numeric(Input::get('cid')) && Input::get('id') == $this->currentRecord)
 		{
 			$this->import('Contao\\Database', 'Database');
 
-			switch (\Input::get($strCommand))
+			switch (Input::get($strCommand))
 			{
 				case 'copy':
-					array_insert($this->varValue, \Input::get('cid'), array($this->varValue[\Input::get('cid')]));
+					array_insert($this->varValue, Input::get('cid'), array($this->varValue[Input::get('cid')]));
 					break;
 
 				case 'up':
-					$this->varValue = array_move_up($this->varValue, \Input::get('cid'));
+					$this->varValue = array_move_up($this->varValue, Input::get('cid'));
 					break;
 
 				case 'down':
-					$this->varValue = array_move_down($this->varValue, \Input::get('cid'));
+					$this->varValue = array_move_down($this->varValue, Input::get('cid'));
 					break;
 
 				case 'delete':
-					$this->varValue = array_delete($this->varValue, \Input::get('cid'));
+					$this->varValue = array_delete($this->varValue, Input::get('cid'));
 					break;
 			}
 

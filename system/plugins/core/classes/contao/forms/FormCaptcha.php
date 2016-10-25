@@ -10,6 +10,7 @@
 
 namespace Contao\Forms;
 
+use Contao\Input;
 
 /**
  * Class FormCaptcha
@@ -130,7 +131,7 @@ class FormCaptcha extends \Contao\Editor
 	{
 		$arrCaptcha = $this->Session->get('captcha_' . $this->strId);
 
-		if (!is_array($arrCaptcha) || !strlen($arrCaptcha['key']) || !strlen($arrCaptcha['sum']) || \Input::post($arrCaptcha['key']) != $arrCaptcha['sum'] || $arrCaptcha['time'] > (time() - 3))
+		if (!is_array($arrCaptcha) || !strlen($arrCaptcha['key']) || !strlen($arrCaptcha['sum']) || Input::post($arrCaptcha['key']) != $arrCaptcha['sum'] || $arrCaptcha['time'] > (time() - 3))
 		{
 			$this->class = 'error';
 			$this->addError($GLOBALS['TL_LANG']['ERR']['captcha']);

@@ -12,6 +12,7 @@ namespace Contao;
 
 use Contao\Config;
 use Contao\Email;
+use Contao\File;
 use Contao\Models\FilesModel;
 use Contao\Models\NewsletterChannelModel;
 use Contao\Models\NewsletterModel;
@@ -146,9 +147,9 @@ class Newsletter extends Backend
 			$intTotal = $objTotal->count;
 
 			// Get page and timeout
-			$intTimeout = (\Input::get('timeout') > 0) ? \Input::get('timeout') : 1;
-			$intStart = \Input::get('start') ? \Input::get('start') : 0;
-			$intPages = \Input::get('mpc') ? \Input::get('mpc') : 10;
+			$intTimeout = (Input::get('timeout') > 0) ? Input::get('timeout') : 1;
+			$intStart = Input::get('start') ? Input::get('start') : 0;
+			$intPages = Input::get('mpc') ? Input::get('mpc') : 10;
 
 			// Get recipients
 			$objRecipients = $this->Database->prepare("SELECT *, r.email FROM tl_newsletter_recipients r LEFT JOIN tl_member m ON(r.email=m.email) WHERE r.pid=? AND r.active=1 GROUP BY r.email ORDER BY r.email")
@@ -233,10 +234,10 @@ class Newsletter extends Backend
 '.Message::generate().'
 <form action="'.TL_SCRIPT.'" id="tl_newsletter_send" class="tl_form" method="get">
 <div class="tl_formbody_edit tl_newsletter_send">
-<input type="hidden" name="do" value="' . \Input::get('do') . '">
-<input type="hidden" name="table" value="' . \Input::get('table') . '">
-<input type="hidden" name="key" value="' . \Input::get('key') . '">
-<input type="hidden" name="id" value="' . \Input::get('id') . '">
+<input type="hidden" name="do" value="' . Input::get('do') . '">
+<input type="hidden" name="table" value="' . Input::get('table') . '">
+<input type="hidden" name="key" value="' . Input::get('key') . '">
+<input type="hidden" name="id" value="' . Input::get('id') . '">
 <input type="hidden" name="token" value="' . $strToken . '">
 <table class="prev_header">
   <tr class="row_0">
@@ -424,7 +425,7 @@ class Newsletter extends Backend
 	 */
 	public function importRecipients()
 	{
-		if (\Input::get('key') != 'import')
+		if (Input::get('key') != 'import')
 		{
 			return '';
 		}
@@ -442,7 +443,7 @@ class Newsletter extends Backend
 		$objUploader = new $class();
 
 		// Import CSS
-		if (\Input::post('FORM_SUBMIT') == 'tl_recipients_import')
+		if (Input::post('FORM_SUBMIT') == 'tl_recipients_import')
 		{
 			$arrUploaded = $objUploader->uploadTo('system/tmp');
 
@@ -458,7 +459,7 @@ class Newsletter extends Backend
 
 			foreach ($arrUploaded as $strCsvFile)
 			{
-				$objFile = new \File($strCsvFile, true);
+				$objFile = new File($strCsvFile, true);
 
 				if ($objFile->extension != 'csv')
 				{
@@ -467,7 +468,7 @@ class Newsletter extends Backend
 				}
 
 				// Get separator
-				switch (\Input::post('separator'))
+				switch (Input::post('separator'))
 				{
 					case 'semicolon':
 						$strSeparator = ';';
@@ -509,12 +510,12 @@ class Newsletter extends Backend
 
 					// Check whether the e-mail address exists
 					$objRecipient = $this->Database->prepare("SELECT COUNT(*) AS count FROM tl_newsletter_recipients WHERE pid=? AND email=?")
-												   ->execute(\Input::get('id'), $strRecipient);
+												   ->execute(Input::get('id'), $strRecipient);
 
 					if ($objRecipient->count < 1)
 					{
 						$this->Database->prepare("INSERT INTO tl_newsletter_recipients SET pid=?, tstamp=$time, email=?, active=1")
-									   ->execute(\Input::get('id'), $strRecipient);
+									   ->execute(Input::get('id'), $strRecipient);
 
 						++$intTotal;
 					}
@@ -759,7 +760,7 @@ class Newsletter extends Backend
 	 */
 	public function updateAccount()
 	{
-		$intUser = \Input::get('id');
+		$intUser = Input::get('id');
 
 		// Front end call
 		if (TL_MODE == 'FE')
@@ -775,7 +776,7 @@ class Newsletter extends Backend
 		}
 
 		// Edit account
-		if (TL_MODE == 'FE' || \Input::get('act') == 'edit')
+		if (TL_MODE == 'FE' || Input::get('act') == 'edit')
 		{
 			$objUser = $this->Database->prepare("SELECT email, disable FROM tl_member WHERE id=?")
 									  ->limit(1)
@@ -783,7 +784,7 @@ class Newsletter extends Backend
 
 			if ($objUser->numRows)
 			{
-				$strEmail = \Input::post('email', true);
+				$strEmail = Input::post('email', true);
 
 				// E-mail address has changed
 				if (!empty($_POST) && $strEmail != '' && $strEmail != $objUser->email)
@@ -816,18 +817,18 @@ class Newsletter extends Backend
 				}
 
 				// Check activation status
-				elseif (!empty($_POST) && \Input::post('disable') != $objUser->disable)
+				elseif (!empty($_POST) && Input::post('disable') != $objUser->disable)
 				{
 					$this->Database->prepare("UPDATE tl_newsletter_recipients SET active=? WHERE email=?")
-								   ->execute((\Input::post('disable') ? '' : 1), $objUser->email);
+								   ->execute((Input::post('disable') ? '' : 1), $objUser->email);
 
-					$objUser->disable = \Input::post('disable');
+					$objUser->disable = Input::post('disable');
 				}
 			}
 		}
 
 		// Delete account
-		elseif (\Input::get('act') == 'delete')
+		elseif (Input::get('act') == 'delete')
 		{
 			$objUser = $this->Database->prepare("SELECT email FROM tl_member WHERE id=?")
 									  ->limit(1)

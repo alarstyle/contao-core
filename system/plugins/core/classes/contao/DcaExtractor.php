@@ -135,7 +135,7 @@ class DcaExtractor extends Controller
 	 *
 	 * @param string $strTable The table name
 	 *
-	 * @return \DcaExtractor The object instance
+	 * @return DcaExtractor The object instance
 	 */
 	public static function getInstance($strTable)
 	{

@@ -10,6 +10,7 @@
 
 namespace Contao;
 
+use Contao\File;
 use Contao\Models\FilesModel;
 
 /**
@@ -255,7 +256,7 @@ class Folder extends System
 		// Create the parent folder if it does not exist
 		if (!is_dir(TL_ROOT . '/' . $strParent))
 		{
-			new \Folder($strParent);
+			new Folder($strParent);
 		}
 
 		$return = $this->Files->rename($this->strFolder, $strNewName);
@@ -302,7 +303,7 @@ class Folder extends System
 		// Create the parent folder if it does not exist
 		if (!is_dir(TL_ROOT . '/' . $strParent))
 		{
-			new \Folder($strParent);
+			new Folder($strParent);
 		}
 
 		$this->Files->rcopy($this->strFolder, $strNewName);
@@ -331,7 +332,7 @@ class Folder extends System
 	{
 		if (!file_exists(TL_ROOT . '/' . $this->strFolder . '/.htaccess'))
 		{
-			\File::putContent($this->strFolder . '/.htaccess', "<IfModule !mod_authz_core.c>\n  Order deny,allow\n  Deny from all\n</IfModule>\n<IfModule mod_authz_core.c>\n  Require all denied\n</IfModule>");
+			File::putContent($this->strFolder . '/.htaccess', "<IfModule !mod_authz_core.c>\n  Order deny,allow\n  Deny from all\n</IfModule>\n<IfModule mod_authz_core.c>\n  Require all denied\n</IfModule>");
 		}
 	}
 
@@ -343,7 +344,7 @@ class Folder extends System
 	{
 		if (file_exists(TL_ROOT . '/' . $this->strFolder . '/.htaccess'))
 		{
-			$objFile = new \File($this->strFolder . '/.htaccess', true);
+			$objFile = new File($this->strFolder . '/.htaccess', true);
 			$objFile->delete();
 		}
 	}
@@ -412,12 +413,12 @@ class Folder extends System
 
 			if (is_dir(TL_ROOT . '/' . $this->strFolder . '/' . $strFile))
 			{
-				$objFolder = new \Folder($this->strFolder . '/' . $strFile);
+				$objFolder = new Folder($this->strFolder . '/' . $strFile);
 				$intSize += $objFolder->size;
 			}
 			else
 			{
-				$objFile = new \File($this->strFolder . '/' . $strFile, true);
+				$objFile = new File($this->strFolder . '/' . $strFile, true);
 				$intSize += $objFile->size;
 			}
 		}

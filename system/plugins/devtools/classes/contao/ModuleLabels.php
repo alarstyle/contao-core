@@ -50,7 +50,7 @@ class ModuleLabels extends \Contao\BackendModule
 		{
 			if ($strLanguage != 'en' && strncmp($strLanguage, '.', 1) !== 0)
 			{
-				$strOptions .= sprintf('<option value="%s"%s>%s</option>', $strLanguage, (($strLanguage == \Input::post('language') || $strLanguage == $GLOBALS['TL_LANGUAGE']) ? ' selected="selected"' : ''), $arrLanguages[$strLanguage]);
+				$strOptions .= sprintf('<option value="%s"%s>%s</option>', $strLanguage, (($strLanguage == Input::post('language') || $strLanguage == $GLOBALS['TL_LANGUAGE']) ? ' selected="selected"' : ''), $arrLanguages[$strLanguage]);
 			}
 		}
 

@@ -17,6 +17,7 @@ use Contao\Encryption;
 use Contao\Environment;
 use Contao\FrontendTemplate;
 use Contao\Forms\FormPassword;
+use Contao\Folder;
 use Contao\Idna;
 use Contao\Input;
 use Contao\Models\FilesModel;
@@ -453,7 +454,7 @@ class ModuleRegistration extends AbstractModule
 				}
 
 				// Create the user folder
-				new \Folder($objHomeDir->path . '/' . $strUserDir);
+				new Folder($objHomeDir->path . '/' . $strUserDir);
 
 				$objUserDir = FilesModel::findByPath($objHomeDir->path . '/' . $strUserDir);
 

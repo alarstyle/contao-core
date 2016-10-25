@@ -271,12 +271,12 @@ abstract class DataContainer extends Backend
 		$objEditor->currentRecord = $this->intId;
 
 		// Validate the field
-		if (\Input::post('FORM_SUBMIT') == $this->strTable)
+		if (Input::post('FORM_SUBMIT') == $this->strTable)
 		{
-			$key = (\Input::get('act') == 'editAll') ? 'FORM_FIELDS_' . $this->intId : 'FORM_FIELDS';
+			$key = (Input::get('act') == 'editAll') ? 'FORM_FIELDS_' . $this->intId : 'FORM_FIELDS';
 
 			// Calculate the current palette
-			$postPaletteFields = implode(',', \Input::post($key));
+			$postPaletteFields = implode(',', Input::post($key));
 			$postPaletteFields = array_unique(trimsplit('[,;]', $postPaletteFields));
 
 			// Compile the palette if there is none
@@ -293,7 +293,7 @@ abstract class DataContainer extends Backend
 				if (isset($GLOBALS['TL_DCA'][$this->strTable]['palettes']['__selector__']) && in_array($this->strField, $GLOBALS['TL_DCA'][$this->strTable]['palettes']['__selector__']))
 				{
 					// If the field value has changed, recompile the palette
-					if ($this->varValue != \Input::post($this->strInputName))
+					if ($this->varValue != Input::post($this->strInputName))
 					{
 						$newPaletteFields = trimsplit('[,;]', $this->getPalette());
 					}
@@ -301,7 +301,7 @@ abstract class DataContainer extends Backend
 			}
 
 			// Adjust the names in editAll mode
-			if (\Input::get('act') == 'editAll')
+			if (Input::get('act') == 'editAll')
 			{
 				foreach ($newPaletteFields as $k=>$v)
 				{
@@ -318,14 +318,14 @@ abstract class DataContainer extends Backend
 			$paletteFields = array_intersect($postPaletteFields, $newPaletteFields);
 
 			// Validate and save the field
-			if (in_array($this->strInputName, $paletteFields) || \Input::get('act') == 'overrideAll')
+			if (in_array($this->strInputName, $paletteFields) || Input::get('act') == 'overrideAll')
 			{
 				$objEditor->validate();
 
 				if ($objEditor->hasErrors())
 				{
 					// Skip mandatory fields on auto-submit (see #4077)
-					if (\Input::post('SUBMIT_TYPE') != 'auto' || !$objEditor->mandatory || $objEditor->value != '')
+					if (Input::post('SUBMIT_TYPE') != 'auto' || !$objEditor->mandatory || $objEditor->value != '')
 					{
 						$this->noReload = true;
 					}
@@ -459,7 +459,7 @@ abstract class DataContainer extends Backend
 		}
 
 		// No 2-column layout in "edit all" mode
-		if (\Input::get('act') == 'editAll' || \Input::get('act') == 'overrideAll')
+		if (Input::get('act') == 'editAll' || Input::get('act') == 'overrideAll')
 		{
 			$arrData['eval']['tl_class'] = str_replace(array('w50', 'clr', 'wizard', 'long', 'm12', 'cbx'), '', $arrData['eval']['tl_class']);
 		}
@@ -488,7 +488,7 @@ abstract class DataContainer extends Backend
 		}
 
 		// Handle multi-select fields in "override all" mode
-		elseif (\Input::get('act') == 'overrideAll' && ($arrData['inputType'] == 'checkbox' || $arrData['inputType'] == 'checkboxWizard') && $arrData['eval']['multiple'])
+		elseif (Input::get('act') == 'overrideAll' && ($arrData['inputType'] == 'checkbox' || $arrData['inputType'] == 'checkboxWizard') && $arrData['eval']['multiple'])
 		{
 			$updateMode = '
 </div>
@@ -506,7 +506,7 @@ abstract class DataContainer extends Backend
 		// Show a preview image (see #4948)
 		if ($this->strTable == 'tl_files' && $this->strField == 'name' && $this->objActiveRecord !== null && $this->objActiveRecord->type == 'file')
 		{
-			$objFile = new \File($this->objActiveRecord->path, true);
+			$objFile = new File($this->objActiveRecord->path, true);
 
 			if ($objFile->isImage)
 			{
@@ -617,13 +617,13 @@ abstract class DataContainer extends Backend
 		{
 			if (!in_array($strKey, $arrUnset))
 			{
-				$arrKeys[$strKey] = $strKey . '=' . \Input::get($strKey);
+				$arrKeys[$strKey] = $strKey . '=' . Input::get($strKey);
 			}
 		}
 
 		$strUrl = TL_SCRIPT . '?' . implode('&', $arrKeys);
 
-		return $strUrl . (!empty($arrKeys) ? '&' : '') . (\Input::get('table') ? 'table='.\Input::get('table').'&amp;' : '').'act=edit&amp;id='.$id;
+		return $strUrl . (!empty($arrKeys) ? '&' : '') . (Input::get('table') ? 'table='.Input::get('table').'&amp;' : '').'act=edit&amp;id='.$id;
 	}
 
 
@@ -737,7 +737,7 @@ abstract class DataContainer extends Backend
 
 		foreach ($GLOBALS['TL_DCA'][$this->strTable]['list']['global_operations'] as $k=>$v)
 		{
-			if (\Input::get('act') == 'select' && !$v['showOnSelect'])
+			if (Input::get('act') == 'select' && !$v['showOnSelect'])
 			{
 				continue;
 			}

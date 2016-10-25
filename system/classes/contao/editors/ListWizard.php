@@ -14,7 +14,11 @@ use Contao\Cache;
 use Contao\Config;
 use Contao\Environment;
 use Contao\Image;
+use Contao\Input;
+use Contao\Versions;
 use Contao\Message;
+use Contao\System;
+use Contao\File;
 
 /**
  * Provide methods to handle list items.
@@ -74,26 +78,26 @@ class ListWizard extends \Contao\Editor
 		$strCommand = 'cmd_' . $this->strField;
 
 		// Change the order
-		if (\Input::get($strCommand) && is_numeric(\Input::get('cid')) && \Input::get('id') == $this->currentRecord)
+		if (Input::get($strCommand) && is_numeric(Input::get('cid')) && Input::get('id') == $this->currentRecord)
 		{
 			$this->import('Contao\\Database', 'Database');
 
-			switch (\Input::get($strCommand))
+			switch (Input::get($strCommand))
 			{
 				case 'copy':
-					$this->varValue = array_duplicate($this->varValue, \Input::get('cid'));
+					$this->varValue = array_duplicate($this->varValue, Input::get('cid'));
 					break;
 
 				case 'up':
-					$this->varValue = array_move_up($this->varValue, \Input::get('cid'));
+					$this->varValue = array_move_up($this->varValue, Input::get('cid'));
 					break;
 
 				case 'down':
-					$this->varValue = array_move_down($this->varValue, \Input::get('cid'));
+					$this->varValue = array_move_down($this->varValue, Input::get('cid'));
 					break;
 
 				case 'delete':
-					$this->varValue = array_delete($this->varValue, \Input::get('cid'));
+					$this->varValue = array_delete($this->varValue, Input::get('cid'));
 					break;
 			}
 
@@ -159,7 +163,7 @@ class ListWizard extends \Contao\Editor
 	 */
 	public function importList(DataContainer $dc)
 	{
-		if (\Input::get('key') != 'list')
+		if (Input::get('key') != 'list')
 		{
 			return '';
 		}
@@ -177,7 +181,7 @@ class ListWizard extends \Contao\Editor
 		$objUploader = new $class();
 
 		// Import CSS
-		if (\Input::post('FORM_SUBMIT') == 'tl_list_import')
+		if (Input::post('FORM_SUBMIT') == 'tl_list_import')
 		{
 			$arrUploaded = $objUploader->uploadTo('system/tmp');
 
@@ -192,7 +196,7 @@ class ListWizard extends \Contao\Editor
 
 			foreach ($arrUploaded as $strCsvFile)
 			{
-				$objFile = new \File($strCsvFile, true);
+				$objFile = new File($strCsvFile, true);
 
 				if ($objFile->extension != 'csv')
 				{
@@ -201,7 +205,7 @@ class ListWizard extends \Contao\Editor
 				}
 
 				// Get separator
-				switch (\Input::post('separator'))
+				switch (Input::post('separator'))
 				{
 					case 'semicolon':
 						$strSeparator = ';';
@@ -228,11 +232,11 @@ class ListWizard extends \Contao\Editor
 				}
 			}
 
-			$objVersions = new Versions($dc->table, \Input::get('id'));
+			$objVersions = new Versions($dc->table, Input::get('id'));
 			$objVersions->create();
 
 			$this->Database->prepare("UPDATE " . $dc->table . " SET listitems=? WHERE id=?")
-						   ->execute(serialize($arrList), \Input::get('id'));
+						   ->execute(serialize($arrList), Input::get('id'));
 
 			System::setCookie('BE_PAGE_OFFSET', 0, 0);
 			$this->redirect(str_replace('&key=list', '', Environment::get('request')));

@@ -12,6 +12,7 @@ namespace Contao\Modules;
 
 use Contao\Config;
 use Contao\Environment;
+use Contao\Input;
 use Contao\Models\PageModel;
 
 /**
@@ -50,9 +51,9 @@ class ModuleQuicknav extends AbstractModule
 			return $objTemplate->parse();
 		}
 
-		if (\Input::post('FORM_SUBMIT') == 'tl_quicknav')
+		if (Input::post('FORM_SUBMIT') == 'tl_quicknav')
 		{
-			$this->redirect(\Input::post('target', true));
+			$this->redirect(Input::post('target', true));
 		}
 
 		return parent::generate();

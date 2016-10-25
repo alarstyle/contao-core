@@ -11,6 +11,7 @@
 namespace Contao;
 
 use Contao\Elements\ContentElement;
+use Contao\Input;
 use Contao\Models\ArticleModel;
 use Contao\Models\ContentModel;
 use Contao\Models\FilesModel;
@@ -18,6 +19,7 @@ use Contao\Models\FormModel;
 use Contao\Models\PageModel;
 use Contao\Models\ModuleModel;
 use Contao\Modules\AbstractModule;
+use Contao\File;
 
 /**
  * Abstract parent class for Controllers
@@ -1186,7 +1188,7 @@ abstract class Controller extends System
 			die('File not found');
 		}
 
-		$objFile = new \File($strFile, true);
+		$objFile = new File($strFile, true);
 		$arrAllowedTypes = trimsplit(',', strtolower(Config::get('allowedDownload')));
 
 		// Check whether the file type is allowed to be downloaded
@@ -1384,7 +1386,7 @@ abstract class Controller extends System
 
 		try
 		{
-			$objFile = new \File($arrItem['singleSRC'], true);
+			$objFile = new File($arrItem['singleSRC'], true);
 		}
 		catch (\Exception $e)
 		{
@@ -1459,7 +1461,7 @@ abstract class Controller extends System
 
 			if ($src !== $arrItem['singleSRC'])
 			{
-				$objFile = new \File(rawurldecode($src), true);
+				$objFile = new File(rawurldecode($src), true);
 			}
 		}
 		catch (\Exception $e)
@@ -1580,7 +1582,7 @@ abstract class Controller extends System
 			return;
 		}
 
-		$file = \Input::get('file', true);
+		$file = Input::get('file', true);
 
 		// Send the file to the browser and do not send a 404 header (see #5178)
 		if ($file != '')
@@ -1612,7 +1614,7 @@ abstract class Controller extends System
 					continue;
 				}
 
-				$objFile = new \File($objFiles->path, true);
+				$objFile = new File($objFiles->path, true);
 				$strHref = Environment::get('request');
 
 				// Remove an existing file parameter (see #5683)

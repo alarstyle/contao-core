@@ -13,6 +13,7 @@ namespace Contao\Pages;
 use Contao\Config;
 use Contao\Environment;
 use Contao\Frontend;
+use Contao\Input;
 use Contao\Search;
 use Contao\Models\PageModel;
 
@@ -37,7 +38,7 @@ class PageError404 extends Frontend
 		// Add a log entry
 		if ($blnUnusedGet)
 		{
-			$this->log('The request for page ID "' . $pageId . '" contained unused GET parameters: "' . implode('", "', \Input::getUnusedGet()) . '" (' . Environment::get('base') . Environment::get('request') . ')', __METHOD__, TL_ERROR);
+			$this->log('The request for page ID "' . $pageId . '" contained unused GET parameters: "' . implode('", "', Input::getUnusedGet()) . '" (' . Environment::get('base') . Environment::get('request') . ')', __METHOD__, TL_ERROR);
 		}
 		elseif ($strDomain !== null || $strHost !== null)
 		{

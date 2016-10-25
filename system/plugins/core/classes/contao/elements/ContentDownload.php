@@ -13,6 +13,7 @@ namespace Contao\Elements;
 use Contao\Config;
 use Contao\Controller;
 use Contao\Environment;
+use Contao\File;
 use Contao\Input;
 use Contao\System;
 use Contao\Models\FilesModel;
@@ -85,7 +86,7 @@ class ContentDownload extends ContentElement
 	 */
 	protected function compile()
 	{
-		$objFile = new \File($this->singleSRC, true);
+		$objFile = new File($this->singleSRC, true);
 
 		if ($this->linkTitle == '')
 		{

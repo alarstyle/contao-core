@@ -13,6 +13,7 @@ namespace Contao\Editors;
 use Contao\Config;
 use Contao\Environment;
 use Contao\Image;
+use Contao\Input;
 
 /**
  * Provide methods to handle input field "page tree".
@@ -66,9 +67,9 @@ class PageSelector extends \Contao\Editor
 		$this->import('Contao\\BackendUser', 'User');
 
 		// Store the keyword
-		if (\Input::post('FORM_SUBMIT') == 'item_selector')
+		if (Input::post('FORM_SUBMIT') == 'item_selector')
 		{
-			$this->Session->set('page_selector_search', \Input::post('keyword'));
+			$this->Session->set('page_selector_search', Input::post('keyword'));
 			$this->reload();
 		}
 
@@ -154,7 +155,7 @@ class PageSelector extends \Contao\Editor
 			}
 
 			// Add the breadcrumb menu
-			if (\Input::get('do') != 'page')
+			if (Input::get('do') != 'page')
 			{
 				\Backend::addPagesBreadcrumb('tl_page_picker');
 			}
@@ -323,9 +324,9 @@ class PageSelector extends \Contao\Editor
 		$xtnode = 'tree_' . $this->strTable . '_' . $this->strName;
 
 		// Get the session data and toggle the nodes
-		if (\Input::get($flag.'tg'))
+		if (Input::get($flag.'tg'))
 		{
-			$session[$node][\Input::get($flag.'tg')] = (isset($session[$node][\Input::get($flag.'tg')]) && $session[$node][\Input::get($flag.'tg')] == 1) ? 0 : 1;
+			$session[$node][Input::get($flag.'tg')] = (isset($session[$node][Input::get($flag.'tg')]) && $session[$node][Input::get($flag.'tg')] == 1) ? 0 : 1;
 			$this->Session->setData($session);
 			$this->redirect(preg_replace('/(&(amp;)?|\?)'.$flag.'tg=[^& ]*/i', '', Environment::get('request')));
 		}

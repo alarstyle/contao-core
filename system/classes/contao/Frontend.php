@@ -109,7 +109,7 @@ abstract class Frontend extends Controller
 			// Use the matches instead of substr() (thanks to Mario Müller)
 			if (preg_match('@^([a-z]{2}(-[A-Z]{2})?)/(.*)$@', $strRequest, $arrMatches))
 			{
-				\Input::setGet('language', $arrMatches[1]);
+				Input::setGet('language', $arrMatches[1]);
 
 				// Trigger the root page if only the language was given
 				if ($arrMatches[3] == '')
@@ -182,7 +182,7 @@ abstract class Frontend extends Controller
 				return false;
 			}
 
-			\Input::setGet(urldecode($arrFragments[$i]), urldecode($arrFragments[$i+1]), true);
+			Input::setGet(urldecode($arrFragments[$i]), urldecode($arrFragments[$i+1]), true);
 		}
 
 		return $arrFragments[0] ?: null;
@@ -225,7 +225,7 @@ abstract class Frontend extends Controller
 		// The language is set in the URL
 		if (Config::get('addLanguageToUrl') && !empty($_GET['language']))
 		{
-			$objRootPage = PageModel::findFirstPublishedRootByHostAndLanguage($host, \Input::get('language'));
+			$objRootPage = PageModel::findFirstPublishedRootByHostAndLanguage($host, Input::get('language'));
 
 			// No matching root page found
 			if ($objRootPage === null)
@@ -279,7 +279,7 @@ abstract class Frontend extends Controller
 		// Clean the $_GET values (thanks to thyon)
 		foreach (array_keys($arrGet) as $key)
 		{
-			$arrGet[$key] = \Input::get($key, true, true);
+			$arrGet[$key] = Input::get($key, true, true);
 		}
 
 		$arrFragments = preg_split('/&(amp;)?/i', $strRequest);
@@ -401,7 +401,7 @@ abstract class Frontend extends Controller
 	 */
 	protected function getLoginStatus($strCookie)
 	{
-		$cookie = \Input::cookie($strCookie);
+		$cookie = Input::cookie($strCookie);
 
 		if ($cookie === null)
 		{
@@ -425,7 +425,7 @@ abstract class Frontend extends Controller
 					$_SESSION['DISABLE_CACHE'] = true;
 
 					// Always return false if we are not in preview mode (show hidden elements)
-					if (!\Input::cookie('FE_PREVIEW'))
+					if (!Input::cookie('FE_PREVIEW'))
 					{
 						$_SESSION['TL_USER_LOGGED_IN'] = false; // backwards compatibility
 						return false;

@@ -16,6 +16,7 @@ use Contao\Image;
 use Contao\Input;
 use Contao\StringUtil;
 use Contao\Models\FilesModel;
+use Contao\File;
 
 /**
  * Provide methods to handle input field "file tree".
@@ -94,7 +95,7 @@ class FileTree extends \Contao\Editor
 		// Store the order value
 		if ($this->orderField != '')
 		{
-			$arrNew = array_map('Contao\\StringUtil::uuidToBin', explode(',', \Input::post($this->strOrderName)));
+			$arrNew = array_map('Contao\\StringUtil::uuidToBin', explode(',', Input::post($this->strOrderName)));
 
 			// Only proceed if the value has changed
 			if ($arrNew !== $this->{$this->orderField})
@@ -168,7 +169,7 @@ class FileTree extends \Contao\Editor
 						}
 						else
 						{
-							$objFile = new \File($objFiles->path, true);
+							$objFile = new File($objFiles->path, true);
 							$strInfo = $objFiles->path . ' <span class="tl_gray">(' . $this->getReadableSize($objFile->size) . ($objFile->isImage ? ', ' . $objFile->width . 'x' . $objFile->height . ' px' : '') . ')</span>';
 
 							if ($objFile->isImage)
@@ -209,7 +210,7 @@ class FileTree extends \Contao\Editor
 									continue;
 								}
 
-								$objFile = new \File($objSubfiles->path, true);
+								$objFile = new File($objSubfiles->path, true);
 								$strInfo = '<span class="dirname">' . dirname($objSubfiles->path) . '/</span>' . $objFile->basename . ' <span class="tl_gray">(' . $this->getReadableSize($objFile->size) . ($objFile->isImage ? ', ' . $objFile->width . 'x' . $objFile->height . ' px' : '') . ')</span>';
 
 								if ($this->isGallery)
@@ -239,7 +240,7 @@ class FileTree extends \Contao\Editor
 						}
 						else
 						{
-							$objFile = new \File($objFiles->path, true);
+							$objFile = new File($objFiles->path, true);
 							$strInfo = '<span class="dirname">' . dirname($objFiles->path) . '/</span>' . $objFile->basename . ' <span class="tl_gray">(' . $this->getReadableSize($objFile->size) . ($objFile->isImage ? ', ' . $objFile->width . 'x' . $objFile->height . ' px' : '') . ')</span>';
 
 							if ($this->isGallery)
