@@ -34,8 +34,8 @@ use Contao\Input;
  * @property \Comments                                 $Comments    The comments object
  * @property Config                                    $Config      The config object
  * @property Database                                  $Database    The database object
- * @property \Files                                    $Files       The files object
- * @property \Input                                    $Input       The input object
+ * @property Files                                     $Files       The files object
+ * @property Input                                     $Input       The input object
  * @property \Contao\Database\Installer                $Installer   The database installer object
  * @property \Contao\Database\Updater                  $Updater     The database updater object
  * @property Messages                                  $Messages    The messages object

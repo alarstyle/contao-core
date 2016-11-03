@@ -137,10 +137,10 @@ Swift::init(function () {
 /**
  * Define the relative path to the installation (see #5339)
  */
-if (file_exists(TL_ROOT . '/system/config/pathconfig.php') && TL_SCRIPT != 'contao/install.php') {
+if (file_exists(TL_ROOT . '/system/config/pathconfig.php') && TL_SCRIPT != 'install.php') {
     define('TL_PATH', include TL_ROOT . '/system/config/pathconfig.php');
 } elseif (TL_MODE == 'BE') {
-    define('TL_PATH', preg_replace('/\/contao\/[a-z]+\.php$/i', '', Environment::get('scriptName')));
+    define('TL_PATH', preg_replace('/\/contao\/[a-z]+\.php$/i', '', \Contao\Environment::get('scriptName')));
 } else {
     define('TL_PATH', null); // cannot be reliably determined
 }
@@ -177,7 +177,7 @@ $objConfig = Contao\Config::getInstance();
  */
 if (!isset($_SESSION['TL_LANGUAGE'])) {
     // Check the user languages
-    $langs = Environment::get('httpAcceptLanguage');
+    $langs = \Contao\Environment::get('httpAcceptLanguage');
     array_push($langs, 'en'); // see #6533
 
     foreach ($langs as $lang) {
@@ -196,7 +196,7 @@ $GLOBALS['TL_LANGUAGE'] = $_SESSION['TL_LANGUAGE'];
 /**
  * Show the "incomplete installation" message
  */
-if (!$objConfig->isComplete() && TL_SCRIPT != 'contao/install.php') {
+if (!$objConfig->isComplete() && TL_SCRIPT != 'install.php') {
     die_nicely('be_incomplete', 'The installation has not been completed. Open the Contao install tool to continue.');
 }
 
@@ -241,19 +241,3 @@ if (file_exists(TL_ROOT . '/system/config/initconfig.php')) {
     include TL_ROOT . '/system/config/initconfig.php';
 }
 
-
-/**
- * Check the request token upon POST requests
- */
-if ($_POST && !\Contao\RequestToken::validate(\Contao\Input::post('REQUEST_TOKEN'))) {
-    // Force a JavaScript redirect upon Ajax requests (IE requires absolute link)
-    if (Environment::get('isAjaxRequest')) {
-        header('HTTP/1.1 204 No Content');
-        header('X-Ajax-Location: ' . \Contao\Environment::get('base') . 'contao/');
-    } else {
-        header('HTTP/1.1 400 Bad Request');
-        die_nicely('be_referer', 'Invalid request token. Please <a href="javascript:window.location.href=window.location.href">go back</a> and try again.');
-    }
-
-    exit;
-}

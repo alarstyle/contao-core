@@ -78,7 +78,7 @@ class BackendInstall extends Backend
 		}
 
 		// Import the Files object AFTER storing the FTP settings
-		$this->import('Files');
+		$this->import('Contao\\Files', 'Files');
 
 		// If the files are not writeable, the SMH is required
 		if (!$this->Files->is_writeable('system/config/default.php'))
@@ -272,7 +272,7 @@ class BackendInstall extends Backend
 		// Update the local configuration file
 		else
 		{
-			$this->import('Files');
+			$this->import('Contao\\Files', 'Files');
 
 			// The system/tmp folder must be writable for fopen()
 			if (!is_writable(TL_ROOT . '/system/tmp'))

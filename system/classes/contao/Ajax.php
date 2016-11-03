@@ -73,13 +73,6 @@ class Ajax extends Backend
 	{
 		switch ($this->strAction)
 		{
-			// Toggle navigation menu
-			case 'toggleNavigation':
-				$bemod = $this->Session->get('backend_modules');
-				$bemod[Input::post('id')] = intval(Input::post('state'));
-				$this->Session->set('backend_modules', $bemod);
-				exit; break;
-
 			// Load a navigation menu group
 			case 'loadNavigation':
 				$bemod = $this->Session->get('backend_modules');

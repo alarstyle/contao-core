@@ -21,65 +21,6 @@ var AjaxRequest =
     themePath: Contao.script_url + 'system/themes/' + Contao.theme + '/images/',
 
     /**
-     * Toggle the navigation menu
-     *
-     * @param {object} el The DOM element
-     * @param {string} id The ID of the menu item
-     *
-     * @returns {boolean}
-     */
-    toggleNavigation: function(el, id) {
-        el.blur();
-
-        var item = $(id),
-            image = $(el).getFirst('img');
-
-        if (item) {
-            if (item.getStyle('display') == 'none') {
-                item.setStyle('display', null);
-                image.src = AjaxRequest.themePath + 'modMinus.gif';
-                $(el).store('tip:title', Contao.lang.collapse);
-                new Request.Contao().post({'action':'toggleNavigation', 'id':id, 'state':1, 'REQUEST_TOKEN':Contao.request_token});
-            } else {
-                item.setStyle('display', 'none');
-                image.src = AjaxRequest.themePath + 'modPlus.gif';
-                $(el).store('tip:title', Contao.lang.expand);
-                new Request.Contao().post({'action':'toggleNavigation', 'id':id, 'state':0, 'REQUEST_TOKEN':Contao.request_token});
-            }
-            return false;
-        }
-
-        new Request.Contao({
-            evalScripts: true,
-            onRequest: AjaxRequest.displayBox(Contao.lang.loading + ' …'),
-            onSuccess: function(txt) {
-                var li = new Element('li', {
-                    'id': id,
-                    'class': 'tl_parent',
-                    'html': txt,
-                    'styles': {
-                        'display': 'inline'
-                    }
-                }).inject($(el).getParent('li'), 'after');
-
-                // Update the referer ID
-                li.getElements('a').each(function(el) {
-                    el.href = el.href.replace(/&ref=[a-f0-9]+/, '&ref=' + Contao.referer_id);
-                });
-
-                $(el).store('tip:title', Contao.lang.collapse);
-                image.src = AjaxRequest.themePath + 'modMinus.gif';
-                AjaxRequest.hideBox();
-
-                // HOOK
-                window.fireEvent('ajax_change');
-            }
-        }).post({'action':'loadNavigation', 'id':id, 'state':1, 'REQUEST_TOKEN':Contao.request_token});
-
-        return false;
-    },
-
-    /**
      * Toggle the site structure tree
      *
      * @param {object} el    The DOM lement
@@ -1275,24 +1216,6 @@ var Backend =
             text: function(e) {
                 return e.get('html');
             }
-        });
-
-        // Links and input elements
-        ['a[title]', 'input[title]'].each(function(el) {
-            new Tips.Contao($$(el).filter(function(i) {
-                return i.title != '';
-            }), {
-                offset: {x:0, y:26}
-            });
-        });
-
-        // Images
-        $$('img[title]').filter(function(i) {
-            return i.title != '';
-        }).each(function(el) {
-            new Tips.Contao(el, {
-                offset: {x:0, y:((el.get('class') == 'gimage') ? 60 : 30)}
-            });
         });
     },
 

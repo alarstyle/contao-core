@@ -2,14 +2,35 @@
 
 namespace Contao;
 
+
+/**
+ * Creates resized images
+ *
+ * Usage:
+ *
+ *     $thumbUrl = ResizedImage::getResizedUrl('files/some_image.jpg', 800, 600);
+ *
+ */
 class ResizedImage
 {
 
+    /**
+     * @var array
+     */
     protected static $originalCache = [];
 
+    /**
+     * @var array
+     */
     protected static $resizedCache = [];
 
 
+    /**
+     * @param $originalPath
+     * @param $width
+     * @param $height
+     * @return string
+     */
     protected static function generateKey($originalPath, $width, $height)
     {
         $encryptionKey = Config::get('encryptionKey');
@@ -18,6 +39,12 @@ class ResizedImage
     }
 
 
+    /**
+     * @param $originalPath
+     * @param null $width
+     * @param null $height
+     * @return string
+     */
     public static function getResizedUrl($originalPath, $width = null, $height = null)
     {
         $originalPath = rawurldecode($originalPath);
@@ -50,6 +77,10 @@ class ResizedImage
     }
 
 
+    /**
+     * @param $resizedPath
+     * @return array|null
+     */
     public static function getOriginalData($resizedPath)
     {
         $resizedPath = rawurldecode($resizedPath);
@@ -87,6 +118,11 @@ class ResizedImage
     }
 
 
+    /**
+     * @param $resizedPath
+     * @param array|null $originalData
+     * @param bool|false $forceSave
+     */
     public static function createResizedImageAndSave($resizedPath, $originalData = null, $forceSave = false)
     {
         if (!$originalData) {
@@ -114,7 +150,6 @@ class ResizedImage
             }
 
             $img->save($resizedPath);
-
         }
     }
 

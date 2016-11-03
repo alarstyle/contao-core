@@ -471,7 +471,7 @@ a.tl_submit,a.tl_submit:hover {
 }
 
 /* Headline gradient */
-#header h1,#tl_navigation h1,h1.main_headline {
+#header h1,h1.main_headline {
     background:#909390;
     background-image:-moz-linear-gradient(top, #909390, #b3b6b3);
     background-image:-webkit-linear-gradient(top, #909390, #b3b6b3);

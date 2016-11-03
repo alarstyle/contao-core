@@ -9,16 +9,16 @@
  */
 
 // Set the script name
-define('TL_SCRIPT', 'contao/install.php');
-define('CR_CONTROLLER', 'INSTALL');
+define('TL_SCRIPT', 'install.php');
 
 // Initialize the system
 define('TL_MODE', 'BE');
-require dirname(__DIR__) . '/system/initialize.php';
+require_once dirname(__DIR__) . '/system/initialize.php';
+require_once dirname(__DIR__) . '/system/app.php';
 
 // Show error messages
 @ini_set('display_errors', 1);
-error_reporting(Config::get('errorReporting'));
+error_reporting(\Contao\Config::get('errorReporting'));
 
 // Run the controller
 $controller = new \Contao\Controllers\BackendInstall;

@@ -188,7 +188,7 @@ $GLOBALS['TL_DCA']['tl_news_feed'] = array
 		'feedBase' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_news_feed']['feedBase'],
-			'default'                 => Environment::get('base'),
+			'default'                 => \Contao\Environment::get('base'),
 			'exclude'                 => true,
 			'search'                  => true,
 			'inputType'               => 'text',
