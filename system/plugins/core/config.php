@@ -569,3 +569,11 @@ $GLOBALS['TL_MODELS']['tl_files'] = 'Contao\\Models\\FilesModel';
 	'rss_items_only'      => 'system/plugins/core/templates/rss',
 	'search_default'      => 'system/plugins/core/templates/search',
 ));
+
+
+//$GLOBALS['TL_CSS'][] = '/system/plugins/core/assets/css/';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vue.js';
+//$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/lodash.min.js';
+//$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/axios.min.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/core.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/modal.js';

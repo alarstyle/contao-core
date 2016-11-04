@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="<?= $this->charset ?>">
-    <title><?= $this->title ?> - Contao Open Source CMS <?= VERSION ?></title>
+    <title><?= $this->title ?><?= VERSION ?></title>
     <base href="<?= $this->base ?>">
     <meta name="generator" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -40,10 +40,15 @@
     echo $objCombiner->getCombinedFile();
   ?>"></script>
     <script><?= $this->getDateString() ?></script>
-    <?= $this->javascripts ?>
 
 </head>
 <body id="top" class="<?= $this->ua ?><?php if ($this->isPopup) echo ' popup'; ?>">
+
+<div id="app">
+
+
+    <modal></modal>
+
 
 <?php if (!$this->isPopup): ?>
 
@@ -63,6 +68,7 @@
         <a href="<?= $this->base ?>contao/" class="header_logout"
             title="<?= $this->logoutTitle ?>"><?= $this->logout ?></a>
     </div>
+
 </div>
 
 
@@ -129,18 +135,17 @@
 
 </div>
 
-<?php if (!$this->isPopup): ?>
-
-<?php if ($this->pageOffset): ?>
-<script>Backend.vScrollTo($('paste_hint') ? < ? = $this - > pageOffset + 20 ?
-> : <
-? = $this - > pageOffset ?
->)</script>
-<?php System::setCookie('BE_PAGE_OFFSET', 0, 0); ?>
-<?php endif; ?>
-<?php endif; ?>
-
 <?= $this->mootools ?>
+
+</div>
+
+    <?= $this->jsTemplates ?>
+
+    <?= $this->javascripts ?>
+
+    <script>
+        new Vue({el: '#app'});
+    </script>
 
 </body>
 </html>

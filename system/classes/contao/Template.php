@@ -542,6 +542,12 @@ abstract class Template extends BaseTemplate
 	}
 
 
+	public static function generateJsTemplate($id, $src) {
+        $template = file_get_contents(TL_ROOT . $src);
+        return '<script type="text/x-template" id="' . $id . '">' . "\n" . $template . "\n" . '</script>';
+    }
+
+
 	/**
 	 * Generate the markup for an RSS feed tag
 	 *
@@ -582,16 +588,4 @@ abstract class Template extends BaseTemplate
 		}
 	}
 
-
-	/**
-	 * Print the IE6 warning
-	 *
-	 * @return string The warning message
-	 *
-	 * @deprecated The IE6 warning is now in the templates (e.g. be_install)
-	 */
-	public function showIE6warning()
-	{
-		return ''; // Backwards compatibility
-	}
 }

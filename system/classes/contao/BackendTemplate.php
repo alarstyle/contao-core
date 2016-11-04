@@ -91,6 +91,17 @@ class BackendTemplate extends Template
 			$this->javascripts = $strJavaScripts;
 		}
 
+        // JavaScripts Templates
+        if (!empty($GLOBALS['TL_JS_TEMPLATES']) && is_array($GLOBALS['TL_JS_TEMPLATES'])) {
+            $strJsTemplates = '';
+
+            foreach (array_unique($GLOBALS['TL_JS_TEMPLATES']) as $id=>$template) {
+                $strJsTemplates .= Template::generateJsTemplate($id, $template) . "\n";
+            }
+
+            $this->jsTemplates = $strJsTemplates;
+        }
+
 		// MooTools scripts (added at the page bottom)
 		if (!empty($GLOBALS['TL_MOOTOOLS']) && is_array($GLOBALS['TL_MOOTOOLS']))
 		{

@@ -1378,10 +1378,5 @@ Library.
     </script>
   <?php endif; ?>
 
-  <?php if ($this->pageOffset): ?>
-    <script>Backend.vScrollTo(<?= $this->pageOffset ?>)</script>
-    <?php System::setCookie('BE_PAGE_OFFSET', 0, 0); ?>
-  <?php endif; ?>
-
 </body>
 </html>
