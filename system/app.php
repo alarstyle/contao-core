@@ -9,7 +9,7 @@ use Contao\Input;
 /**
  * Check the request token upon POST requests
  */
-if (0 && $_POST && !\Contao\RequestToken::validate(Input::post('REQUEST_TOKEN'))) {
+if ($_POST && !\Contao\RequestToken::validate(Input::post('REQUEST_TOKEN'))) {
     // Force a JavaScript redirect upon Ajax requests (IE requires absolute link)
     if (Environment::get('isAjaxRequest')) {
         header('HTTP/1.1 204 No Content');
@@ -21,7 +21,6 @@ if (0 && $_POST && !\Contao\RequestToken::validate(Input::post('REQUEST_TOKEN'))
 
     exit;
 }
-
 
 
 

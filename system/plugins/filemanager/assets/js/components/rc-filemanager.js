@@ -161,12 +161,13 @@
                 };
                 Raccoon.post('/contao/filemanager', data, config)
                     .then(function (res) {
-                        console.log('Done', res);
+                        console.log(res);
                         //output.className = 'container';
                         //output.innerHTML = res.data;
                     })
                     .catch(function (err) {
-                        console.log('Error', err);
+                        console.log(err);
+                        alert(err);
                         // output.className = 'container text-danger';
                         // output.innerHTML = err.message;
                     });
@@ -176,7 +177,7 @@
 
     };
 
-    Vue.component('file-manager', FileManager);
+    Vue.component('rc-filemanager', FileManager);
 
     //Vue.partial('pickup', '<span class="pickup">{{description}}</span>');
 

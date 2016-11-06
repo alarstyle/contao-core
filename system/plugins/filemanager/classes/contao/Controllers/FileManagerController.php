@@ -22,7 +22,7 @@ class FileManagerController extends Backend
 
         header('Content-type: application/json');
 
-        if ($_POST) {
+        if (Input::post('action')) {
             switch (Input::post('action')) {
 
                 case 'upload':

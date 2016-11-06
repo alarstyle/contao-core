@@ -17,15 +17,24 @@
 
 		get: function(url, config) {
 			config = config ? config : {};
-			config.params = _.defaults({r_token: 'ahh'}, config.params);
+			config.params = _.defaults({'REQUEST_TOKEN': Contao.request_token}, config.params);
 			config.headers = _.defaults({'X-Requested-With': 'XMLHttpRequest'}, config.headers);
 			return axios.get(url, config);
 		},
 
 		post: function(url, data, config) {
 			config = config ? config : {};
-			config.params = _.defaults({r_token: 'ahh'}, config.params);
+			data = data ? data : {};
 			config.headers = _.defaults({'X-Requested-With': 'XMLHttpRequest'}, config.headers);
+
+			if (data.append) {
+				data.append('REQUEST_TOKEN', Contao.request_token);
+			} else {
+				data = _.defaults({'REQUEST_TOKEN': Contao.request_token}, data);
+			}
+
+			console.log(data);
+
 			return axios.post(url, data, config);
 		}
 

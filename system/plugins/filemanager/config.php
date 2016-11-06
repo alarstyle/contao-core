@@ -8,10 +8,10 @@ $GLOBALS['BE_MOD']['system']['filemanager'] = ['callback' => 'Contao\\FileManage
 
 $GLOBALS['TL_CSS'][] = '/system/plugins/filemanager/assets/css/filemanager.css';
 
-$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/filemanager/assets/js/components/file-manager.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/filemanager/assets/js/components/rc-filemanager.js';
 
-$GLOBALS['TL_JS_TEMPLATES']['file-manager'] = '/system/plugins/filemanager/assets/js/components/file-manager.html';
-$GLOBALS['TL_JS_TEMPLATES']['file-manager-table'] = '/system/plugins/filemanager/assets/js/components/file-manager.html';
+$GLOBALS['TL_JS_TEMPLATES']['file-manager'] = '/system/plugins/filemanager/assets/js/components/rc-filemanager.html';
+$GLOBALS['TL_JS_TEMPLATES']['file-manager-table'] = '/system/plugins/filemanager/assets/js/components/rc-filemanager.html';
 
 
 //$GLOBALS['RC_ROUTES']['filemanager'] = 'Contao\\FileManager';
