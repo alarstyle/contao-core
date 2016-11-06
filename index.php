@@ -13,10 +13,5 @@ define('TL_SCRIPT', 'index.php');
 
 // Initialize the system
 define('TL_MODE', 'FE');
-require_once __DIR__ . '/system/initialize.php';
-require_once __DIR__ . '/system/app.php';
-
-
-// Run the controller
-$controller = new \Contao\Controllers\FrontendIndex;
-$controller->run();
+require __DIR__ . '/system/initialize.php';
+require __DIR__ . '/system/app.php';

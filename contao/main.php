@@ -14,8 +14,4 @@ define('TL_SCRIPT', 'contao/main.php');
 // Initialize the system
 define('TL_MODE', 'BE');
 require dirname(__DIR__) . '/system/initialize.php';
-require_once dirname(__DIR__) . '/system/app.php';
-
-// Run the controller
-$controller = new \Contao\Controllers\BackendMain;
-$controller->run();
+require dirname(__DIR__) . '/system/app.php';

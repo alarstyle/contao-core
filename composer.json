@@ -20,6 +20,7 @@
 		"swiftmailer/swiftmailer": "^5.2.1",
 		"true/punycode": "~1.0",
 		"contao-components/compass": "~0.12",
-		"phpixie/image": "^3.2"
+		"phpixie/image": "^3.2",
+		"symfony/finder": "^3.1"
 	}
 }

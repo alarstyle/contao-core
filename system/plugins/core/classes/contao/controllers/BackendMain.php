@@ -57,8 +57,6 @@ class BackendMain extends Backend
 		$this->import('Contao\\BackendUser', 'User');
 		parent::__construct();
 
-		$this->User->authenticate();
-
 		// Password change required
 		if ($this->User->pwChange)
 		{

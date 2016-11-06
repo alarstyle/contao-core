@@ -521,7 +521,7 @@ class Image
 		// Resize the original image
 		if ($this->getTargetPath())
 		{
-			\Files::getInstance()->copy($this->getCacheName(), $this->getTargetPath());
+			Files::getInstance()->copy($this->getCacheName(), $this->getTargetPath());
 			$this->resizedPath = System::urlEncode($this->getTargetPath());
 
 			return $this;

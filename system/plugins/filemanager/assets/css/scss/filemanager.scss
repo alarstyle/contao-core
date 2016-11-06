@@ -1,0 +1,82 @@
+@import "mixins";
+
+.filemanager {
+    ul {
+        list-style: none;
+    }
+    &:after {
+        clear: both;
+        content: '';
+        height: 0;
+    }
+}
+
+.filemanager-controls {
+
+}
+
+.filemanager-filters {
+    border-right: 1px solid #333;
+    float: left;
+    min-height: 100px;
+    width: 200px;
+}
+
+.filemanager-preview {
+    border-left: 1px solid #333;
+    float: left;
+    min-height: 100px;
+    width: 300px;
+}
+
+.filemanager-main {
+    float: left;
+    min-height: 100px;
+    width: calc(100% - 500px);
+}
+
+.filemanager-breadcrumbs {
+    border-bottom: 1px solid #333;
+    float: left;
+    padding: 20px;
+    width: calc(100% - 200px);
+    li {
+        display: inline-block;
+        vertical-align: middle;
+        &:before {
+            content: '/';
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 5px;
+        }
+        &:first-child:before {
+            display: none;
+        }
+        div {
+            cursor: pointer;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+}
+
+.filemanager-items {
+    padding: 20px;
+    table {
+        width: 100%;
+    }
+    th,
+    td {
+        @extend .disable-select;
+        padding: 5px;
+    }
+    .selected {
+        td {
+            background: #4ea5e0 !important;
+            color: #fff;
+        }
+    }
+    .item-icon {
+        width: 30px;
+    }
+}

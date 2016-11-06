@@ -14,7 +14,7 @@ define('TL_SCRIPT', 'contao/password.php');
 // Initialize the system
 define('TL_MODE', 'BE');
 require dirname(__DIR__) . '/system/initialize.php';
-require_once dirname(__DIR__) . '/system/app.php';
+require_once dirname(__DIR__) . '/system/temp.php';
 
 // Run the controller
 $controller = new \Contao\Controllers\BackendPassword;

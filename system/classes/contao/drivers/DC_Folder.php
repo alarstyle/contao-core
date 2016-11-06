@@ -16,6 +16,7 @@ use Contao\Date;
 use Contao\Dbafs;
 use Contao\Editor;
 use Contao\Environment;
+use Contao\FileUpload;
 use Contao\Image;
 use Contao\Input;
 use Contao\Message;
@@ -938,10 +939,14 @@ class DC_Folder extends DataContainer implements \listable, \editable
 		$this->import('Contao\\BackendUser', 'User');
 		$class = $this->User->uploader;
 
+        if ($class === 'DropZone') {
+            $class = "Contao\\DropZone";
+        }
+
 		// See #4086
 		if (!class_exists($class))
 		{
-			$class = 'FileUpload';
+			$class = 'Contao\\FileUpload';
 		}
 
 		/** @var \FileUpload $objUploader */

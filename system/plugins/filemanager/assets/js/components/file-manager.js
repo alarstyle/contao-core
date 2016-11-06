@@ -3,20 +3,181 @@
     var FileManager = {
         template: '#file-manager',
 
-        created: function() {
-            console.log('created');
+        props: {
+            root: {type: String, default: '/'},
+            mode: {type: String, default: 'write'},
+            path: String,
+            view: {type: String},
+            modal: Boolean
         },
 
-        ready: function () {
+        data: function() {
+            return {
+                currentPath: null,
+                items: [],
+                upload: {},
+                selected: [],
+                preview: null,
+                search: ''
+            }
+        },
 
-            console.log('ready');
+        computed: {
+
+            breadcrumbs: function() {
+                var parts = [],
+                    currentPath = '';
+                _.forEach(this.currentPath.split('/'), function(value) {
+                    if (value === '') return;
+                    currentPath += '/' + value;
+                    parts.push({
+                        name: value,
+                        path: currentPath
+                    });
+                });
+                return parts;
+            },
+
+            folders: function() {
+                return _.filter(this.items, { 'mime': 'application/folder' });
+            },
+
+            files: function() {
+                return _.filter(this.items, { 'mime': 'application/file' });
+            }
+
+        },
+
+        created: function() {
+            console.log('created');
+
+            window.addEventListener('keydown', function(e) {
+
+            });
+
+            this.currentPath = this.path;
+
+            this.$watch('path', function (path) {
+                console.log('wwww');
+                this.currentPath = this.path;
+                //this.$session.set('finder.' + this.root + '.path', path);
+            });
+        },
+
+        mounted: function () {
+            this.$el.querySelector('.upload_input').addEventListener('change', this.onUploadChange, true);
+        },
+
+        watch: {
+
+            selected: function(items) {
+                this.$emit('selected', items);
+            },
+
+            currentPath: function(newPath) {
+                this.load()
+            }
+
         },
 
         methods: {
 
+            load: function () {
+                var component = this;
+                return Raccoon.get('/contao/filemanager', {params: {path: this.currentPath}}).then(function (res) {
+                        component.items = res.data.items || [];
+                        component.selected = [];
+                        // this.$set('items', res.data.items || []);
+                        // this.$set('selected', []);
+                        //this.$dispatch('path.finder', this.getFullPath(), this);
+                    }, function () {
+                        //this.$notify('Unable to access directory.', 'danger');
+                    }
+                );
+            },
+
+            selectItem: function(path) {
+                this.selected.push(path);
+                this.selected = [path];
+            },
+
+            setPath: function(path) {
+                this.currentPath = path;
+            },
+
+            test: function() {
+                console.log('test');
+            },
+
+            isSelected: function(path) {
+                return this.selected.indexOf(path.toString()) !== -1;
+            },
+
+            onUploadChange: function(e) {
+                console.log('change');
+
+                var files = e.target.files || e.dataTransfer.files;
+                console.log(files);
+                if (!files.length)
+                    return;
+
+                var input = e.target,
+                    parent = input.parentNode;
+
+                input.removeEventListener('change', this.onUploadChange, true);
+
+                var newInput = input.cloneNode(false);
+
+                newInput.value = '';
+                newInput.addEventListener('change', this.onUploadChange, true);
+
+                // console.log(input.files);
+                // console.log(newInput.files);
+                //
+                // if (!window.oldInputs) window.oldInputs = [];
+                // window.oldInputs.push(input);
+                // window.newInput = newInput;
+
+                parent.removeChild(input);
+                parent.appendChild(newInput);
+
+                console.log(files);
+
+                this.upload(files);
+            },
+
+            upload: function(files) {
+                var data = new FormData();
+                data.append('action', 'upload');
+                data.append('upload_path', this.currentPath);
+                _.forEach(files, function(file, i) {
+                    data.append('files[' + i + ']', file);
+                });
+                var config = {
+                    onUploadProgress: function(progressEvent) {
+                        var percentCompleted = progressEvent.loaded / progressEvent.total;
+                        console.log(percentCompleted);
+                    }
+                };
+                Raccoon.post('/contao/filemanager', data, config)
+                    .then(function (res) {
+                        console.log('Done', res);
+                        //output.className = 'container';
+                        //output.innerHTML = res.data;
+                    })
+                    .catch(function (err) {
+                        console.log('Error', err);
+                        // output.className = 'container text-danger';
+                        // output.innerHTML = err.message;
+                    });
+            }
+
         }
+
     };
 
     Vue.component('file-manager', FileManager);
+
+    //Vue.partial('pickup', '<span class="pickup">{{description}}</span>');
 
 }());

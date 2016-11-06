@@ -16,7 +16,7 @@ namespace Contao;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class DropZone extends \FileUpload
+class DropZone extends FileUpload
 {
 
 	/**

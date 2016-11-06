@@ -14,7 +14,7 @@ define('TL_SCRIPT', 'install.php');
 // Initialize the system
 define('TL_MODE', 'BE');
 require_once dirname(__DIR__) . '/system/initialize.php';
-require_once dirname(__DIR__) . '/system/app.php';
+require_once dirname(__DIR__) . '/system/temp.php';
 
 // Show error messages
 @ini_set('display_errors', 1);

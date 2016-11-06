@@ -14,7 +14,7 @@ define('TL_SCRIPT', 'contao/switch.php');
 // Initialize the system
 define('TL_MODE', 'FE');
 require dirname(__DIR__) . '/system/initialize.php';
-require_once dirname(__DIR__) . '/system/app.php';
+require_once dirname(__DIR__) . '/system/temp.php';
 
 // Run the controller
 $controller = new BackendSwitch;

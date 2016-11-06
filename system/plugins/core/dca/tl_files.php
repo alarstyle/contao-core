@@ -233,7 +233,10 @@ $GLOBALS['TL_DCA']['tl_files'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
+use Contao\DataContainer;
+use Contao\File;
 use Contao\Image;
+use Contao\Input;
 
 class tl_files extends Contao\Backend
 {

@@ -119,6 +119,7 @@ class FileUpload extends Backend
 			// Invalid file name
 			if (!Validator::isValidFileName($file['name']))
 			{
+                echo '1';
 				Message::addError($GLOBALS['TL_LANG']['ERR']['filename']);
 				$this->blnHasError = true;
 			}
@@ -126,6 +127,7 @@ class FileUpload extends Backend
 			// File was not uploaded
 			elseif (!is_uploaded_file($file['tmp_name']))
 			{
+                echo '2';
 				if ($file['error'] == 1 || $file['error'] == 2)
 				{
 					Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filesize'], $maxlength_kb_readable));
@@ -146,6 +148,7 @@ class FileUpload extends Backend
 			// File is too big
 			elseif ($file['size'] > $maxlength_kb)
 			{
+                echo '3';
 				Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filesize'], $maxlength_kb_readable));
 				$this->blnHasError = true;
 			}
@@ -153,22 +156,30 @@ class FileUpload extends Backend
 			// Move the file to its destination
 			else
 			{
+                echo '4';
 				$strExtension = strtolower(substr($file['name'], strrpos($file['name'], '.') + 1));
 
 				// File type not allowed
 				if (!in_array($strExtension, trimsplit(',', strtolower(Config::get('uploadTypes')))))
 				{
+                    echo 'a';
 					Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filetype'], $strExtension));
 					$this->blnHasError = true;
 				}
 				else
 				{
+                    echo 'b';
 					$this->import('Contao\\Files', 'Files');
 					$strNewFile = $strTarget . '/' . $file['name'];
+
+                    echo $strNewFile . '   ' . $file['tmp_name'] . '   ';
+                    
+                    var_dump(is_uploaded_file($file['tmp_name']));
 
 					// Set CHMOD and resize if neccessary
 					if ($this->Files->move_uploaded_file($file['tmp_name'], $strNewFile))
 					{
+                        echo ' YES ';
 						$this->Files->chmod($strNewFile, Config::get('defaultFileChmod'));
 
 						// Notify the user
@@ -180,6 +191,9 @@ class FileUpload extends Backend
 
 						$arrUploaded[] = $strNewFile;
 					}
+					else {
+                        echo ' NO ';
+                    }
 				}
 			}
 		}

@@ -571,9 +571,14 @@ $GLOBALS['TL_MODELS']['tl_files'] = 'Contao\\Models\\FilesModel';
 ));
 
 
-//$GLOBALS['TL_CSS'][] = '/system/plugins/core/assets/css/';
+$GLOBALS['TL_CSS'][] = '/system/plugins/core/assets/css/core.css';
+
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/es6-promise.auto.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vue.js';
-//$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/lodash.min.js';
-//$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/axios.min.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/lodash.min.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/axios.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/core.js';
-$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/modal.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/rc-modal.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/rc-icon.js';
+
+

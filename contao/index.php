@@ -16,6 +16,3 @@ define('TL_MODE', 'BE');
 require dirname(__DIR__) . '/system/initialize.php';
 require_once dirname(__DIR__) . '/system/app.php';
 
-// Run the controller
-$controller = new \Contao\Controllers\BackendLogin;
-$controller->run();

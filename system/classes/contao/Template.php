@@ -543,7 +543,11 @@ abstract class Template extends BaseTemplate
 
 
 	public static function generateJsTemplate($id, $src) {
-        $template = file_get_contents(TL_ROOT . $src);
+        ob_start();
+        include TL_ROOT . $src;
+        $template = ob_get_contents();
+        ob_end_clean();
+        //$template = file_get_contents(TL_ROOT . $src);
         return '<script type="text/x-template" id="' . $id . '">' . "\n" . $template . "\n" . '</script>';
     }
 
