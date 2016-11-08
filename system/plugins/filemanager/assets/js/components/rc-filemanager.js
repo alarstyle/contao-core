@@ -6,9 +6,7 @@
 
         props: {
             root: {type: String, default: '/'},
-            mode: {type: String, default: 'write'},
-            path: String,
-            view: {type: String}
+            path: String
         },
 
         data: function() {

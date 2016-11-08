@@ -295,7 +295,7 @@ abstract class Template extends BaseTemplate
 		header('Content-Type: ' . $this->strContentType . '; charset=' . Config::get('characterSet'));
 
 		// Add the debug bar
-		if (Config::get('debugMode') && !Config::get('hideDebugBar') && !isset($_GET['popup']))
+		if (Config::get('debugMode') && !Config::get('hideDebugBar') && !isset($_GET['popup']) && BE_USER_LOGGED_IN)
 		{
 			$this->strBuffer = str_replace('</body>', $this->getDebugBar() . '</body>', $this->strBuffer);
 		}
@@ -361,7 +361,9 @@ abstract class Template extends BaseTemplate
 			Registry::getInstance()->count()
 		);
 
-		ksort($GLOBALS['TL_DEBUG']);
+        if ($GLOBALS['TL_DEBUG']) {
+            ksort($GLOBALS['TL_DEBUG']);
+        }
 
 		ob_start();
 		print_r($GLOBALS['TL_DEBUG']);

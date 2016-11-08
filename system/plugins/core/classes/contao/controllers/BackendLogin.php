@@ -75,8 +75,6 @@ class BackendLogin extends Backend
             $objTemplate->noCookies = $GLOBALS['TL_LANG']['MSC']['noCookies'];
         }
 
-        $strHeadline = sprintf($GLOBALS['TL_LANG']['MSC']['loginTo'], Config::get('websiteTitle'));
-
         $objTemplate->theme = Backend::getTheme();
         $objTemplate->messages = Message::generate();
         $objTemplate->base = Environment::get('base');
@@ -85,7 +83,7 @@ class BackendLogin extends Backend
         $objTemplate->title = specialchars($strHeadline);
         $objTemplate->charset = Config::get('characterSet');
         $objTemplate->action = ampersand(Environment::get('request'));
-        $objTemplate->headline = $strHeadline;
+        $objTemplate->headline = Config::get('websiteTitle');
         $objTemplate->curUsername = Input::post('username') ?: '';
         $objTemplate->uClass = ($_POST && empty($_POST['username'])) ? ' class="login_error"' : '';
         $objTemplate->pClass = ($_POST && empty($_POST['password'])) ? ' class="login_error"' : '';

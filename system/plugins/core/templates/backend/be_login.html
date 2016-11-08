@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?= $this->language ?>">
+<html lang="<?= $this->language ?>" class="template-be_login <?= $this->ua ?>">
 <head>
 
     <meta charset="<?= $this->charset ?>">
@@ -10,52 +10,36 @@
     <meta name="robots" content="noindex, nofollow">
     <meta name="referrer" content="origin">
 
-    <link rel="stylesheet" href="<?= TL_ASSETS_URL ?>system/themes/<?= $this->theme ?>/login.css">
+    <link rel="stylesheet" href="<?= TL_ASSETS_URL ?>system/themes/default/login.css">
 
 </head>
-<body class="<?= $this->ua ?>">
+<body>
 
 <div class="wrapper">
 
     <div class="main">
-        <h2><?= $this->headline ?></h2>
-        <form action="<?= $this->action ?>" class="tl_login_form" method="post">
-            <input type="hidden" name="FORM_SUBMIT" value="tl_login">
-            <input type="hidden" name="REQUEST_TOKEN" value="<?= REQUEST_TOKEN ?>">
-            <?= $this->messages ?>
-            <?php if ($this->noCookies): ?>
-                <p class="tl_error"><?= $this->noCookies ?></p>
-            <?php endif; ?>
-            <input type="text" name="username" class="tl_text <?= $this->uClass ?>" value="<?= $this->curUsername ?>" autocapitalize="off" placeholder="<?= $this->username ?>" required autofocus>
-            <input type="password" name="password" class="tl_text <?= $this->pClass ?>" value="" placeholder="<?= $this->password ?>" required></td>
-            <input type="submit" name="login" id="login" class="tl_submit" value="<?= $this->loginButton ?>">
-        </form>
-        <div class="go_to_frontend"><a href="<?= $this->frontendUrl ?>" title="<?= $this->feLink ?>"><?= $this->feLink ?></a></div>
+        <div class="login-title">
+            <?= $this->headline ?>
+        </div>
+        <div class="login-form">
+            <form action="<?= $this->action ?>" method="post">
+                <input type="hidden" name="FORM_SUBMIT" value="tl_login">
+                <input type="hidden" name="REQUEST_TOKEN" value="<?= REQUEST_TOKEN ?>">
+                <?= $this->messages ?>
+                <?php if ($this->noCookies): ?>
+                    <div class="error_msg"><?= $this->noCookies ?></div>
+                <?php endif; ?>
+                <input type="text" name="username" class="inp inp_name <?= $this->uClass ?>" value="<?= $this->curUsername ?>" autocapitalize="off" placeholder="<?= $this->username ?>" required autofocus>
+                <input type="password" name="password" class="inp inp_pass <?= $this->pClass ?>" value="" placeholder="<?= $this->password ?>" required></td>
+                <button type="submit" name="login" id="login" class="btn"><?= $this->loginButton ?></button>
+            </form>
+        </div>
+        <div class="login-frontend_link">
+            <a href="<?= $this->frontendUrl ?>" title="<?= $this->feLink ?>"><?= $this->feLink ?> &srarr;</a>
+        </div>
     </div>
 
 </div>
-
-<script>
-    window.addEvent('domready', function () {
-        if (parent.frames[0] && parent.frames[0].name == 'switch') {
-            parent.location.reload();
-        }
-    });
-</script>
-
-<?php if (!$this->disableCron): ?>
-    <script>
-        new Request({
-            url: 'system/cron/cron.txt',
-            onComplete: function (txt) {
-                if (!txt) txt = 0;
-                if (parseInt(txt) < (Date.now() / 1000 - 300)) {
-                    new Request({url: 'system/cron/cron.php'}).send();
-                }
-            }
-        }).send();
-    </script>
-<?php endif; ?>
 
 </body>
 </html>

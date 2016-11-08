@@ -11,6 +11,34 @@
   display: table;
   clear: both; }
 
+.rc-filepicker {
+  position: relative;
+  width: 200px; }
+
+.rc-filepicker-placeholder {
+  padding: 30px;
+  border: 1px dashed #e5e5e5;
+  background: transparent;
+  color: #666;
+  cursor: pointer;
+  text-align: center; }
+  .rc-filepicker-placeholder:before {
+    content: '';
+    background: url("../images/placeholder.svg") no-repeat 50% 50%/contain;
+    display: block;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto; }
+
+.rc-filepicker-clear {
+  cursor: pointer;
+  background: red;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 25px;
+  height: 25px; }
+
 .filemanager ul {
   list-style: none; }
 .filemanager:after {

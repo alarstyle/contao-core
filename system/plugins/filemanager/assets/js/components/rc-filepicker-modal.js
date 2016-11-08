@@ -6,7 +6,7 @@
 
         data: function () {
             return {
-                id: '',
+                fieldId: '',
                 multiple: false,
                 initialized: false
             };
@@ -15,7 +15,7 @@
         mounted: function () {
             var _this = this;
             this.$root.$on('openFilePickerModal', function (data) {
-                _this.id = data.id;
+                _this.fieldId = data.fieldId;
                 _this.multiple = data.multiple;
                 _this.initialized = true;
                 _this.$refs.modal.open();
@@ -29,10 +29,9 @@
             },
 
             select: function () {
-                var _this = this;
                 this.$refs.modal.close();
                 this.$root.$emit('filePicked', {
-                    id: _this.id
+                    fieldId: this.fieldId
                 });
             },
 

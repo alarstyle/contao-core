@@ -218,10 +218,9 @@ textarea {
   clear: both; }
 
 html {
-  font: 12px Arial, Helvetica, sans-serif; }
-
-body {
-  background: #f5f6f8; }
+  font: 14px/1.4 Arial, Helvetica, sans-serif;
+  background: #f5f6f8;
+  color: #333; }
 
 ul {
   list-style: none; }

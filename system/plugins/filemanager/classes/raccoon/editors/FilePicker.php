@@ -315,8 +315,7 @@ class FilePicker extends \Contao\Editor
 		}
 
 
-        $return = '<button @click.prevent="showFilePicker()" class="btn">' . $GLOBALS['TL_LANG']['MSC']['changeSelection'] . '</button>';
-        $return = '<rc-filepicker></rc-filepicker>';
+        $return = '<rc-filepicker field-id="' . $this->strId.'" value="' . $strSet . '"></rc-filepicker>';
 
 		return $return;
 	}

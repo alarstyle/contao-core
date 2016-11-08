@@ -144,7 +144,7 @@ class Message
 				}
 				else
 				{
-					$strMessages .= sprintf('<p class="%s">%s</p>%s', $strClass, $strMessage, "\n");
+					$strMessages .= sprintf('<div class="%s">%s</div>%s', $strClass, $strMessage, "\n");
 				}
 			}
 
