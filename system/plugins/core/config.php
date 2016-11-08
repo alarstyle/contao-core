@@ -582,3 +582,4 @@ $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/rc-moda
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/rc-icon.js';
 
 
+$GLOBALS['TL_JS_TEMPLATES']['rc-modal-template'] = '/system/plugins/core/assets/js/components/rc-modal.html';

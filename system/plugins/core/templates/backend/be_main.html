@@ -46,10 +46,6 @@
 
 <div id="app">
 
-
-    <modal></modal>
-
-
 <?php if (!$this->isPopup): ?>
 
 <div id="header" class="header">
@@ -133,6 +129,8 @@
 
     <div class="clear"></div>
 
+    <rc-filepicker-modal></rc-filepicker-modal>
+
 </div>
 
 <?= $this->mootools ?>
@@ -144,7 +142,7 @@
     <?= $this->javascripts ?>
 
     <script>
-        new Vue({el: '#app'});
+        raccoon.initApp();
     </script>
 
 </body>

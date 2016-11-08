@@ -13,7 +13,7 @@
 	};
 
 
-	var Raccoon = {
+	var raccoon = {
 
 		get: function(url, config) {
 			config = config ? config : {};
@@ -36,10 +36,32 @@
 			console.log(data);
 
 			return axios.post(url, data, config);
+		},
+
+		initApp: function() {
+			new Vue({
+
+				el: '#app',
+
+				data: function() {
+					return {
+
+					}
+				},
+
+				methods: {
+
+					showModal: function(id) {
+
+					}
+
+				}
+
+			});
 		}
 
 	};
 
-	window.Raccoon = Raccoon;
+	window.raccoon = raccoon;
 
 }());

@@ -1,14 +1,14 @@
 (function() {
 
     var FileManager = {
-        template: '#file-manager',
+
+        template: '#rc-filemanager-template',
 
         props: {
             root: {type: String, default: '/'},
             mode: {type: String, default: 'write'},
             path: String,
-            view: {type: String},
-            modal: Boolean
+            view: {type: String}
         },
 
         data: function() {
@@ -71,6 +71,7 @@
         watch: {
 
             selected: function(items) {
+                console.log(items.length);
                 this.$emit('selected', items);
             },
 
@@ -84,20 +85,17 @@
 
             load: function () {
                 var component = this;
-                return Raccoon.get('/contao/filemanager', {params: {path: this.currentPath}}).then(function (res) {
+                return raccoon.get('/contao/filemanager', {params: {path: this.currentPath}}).then(function (res) {
                         component.items = res.data.items || [];
                         component.selected = [];
-                        // this.$set('items', res.data.items || []);
-                        // this.$set('selected', []);
-                        //this.$dispatch('path.finder', this.getFullPath(), this);
                     }, function () {
-                        //this.$notify('Unable to access directory.', 'danger');
+                        alert('Error loading data');
                     }
                 );
             },
 
             selectItem: function(path) {
-                this.selected.push(path);
+                //this.selected.push(path);
                 this.selected = [path];
             },
 
@@ -159,7 +157,7 @@
                         console.log(percentCompleted);
                     }
                 };
-                Raccoon.post('/contao/filemanager', data, config)
+                raccoon.post('/contao/filemanager', data, config)
                     .then(function (res) {
                         console.log(res);
                         //output.className = 'container';

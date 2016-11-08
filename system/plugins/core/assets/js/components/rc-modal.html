@@ -1,0 +1,19 @@
+    <div class="rc-modal" v-show="isOpened">
+        <div class="rc-modal-dialog">
+
+            <div class="rc-modal-header">
+                <slot name="header"></slot>
+            </div>
+
+            <div class="rc-modal-content">
+                <slot></slot>
+            </div>
+
+            <div class="rc-modal-footer">
+                <slot name="footer"></slot>
+            </div>
+
+            <div @click.prevent="close" class="rc-modal-close"></div>
+
+        </div>
+    </div>

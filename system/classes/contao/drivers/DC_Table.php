@@ -4303,9 +4303,9 @@ class DC_Table extends DataContainer implements \listable, \editable
 			$return .= '
 </ul>
 
-<script>
+<!--script>
   Backend.makeParentViewSortable("ul_' . CURRENT_ID . '");
-</script>';
+</script-->';
 		}
 
 		$return .= '

@@ -1,8 +1,8 @@
 .btn {
-    background-color: #1991d1;
+    background-color: #f0f0f0;
     border: 0;
     border-radius: 4px;
-    color: #ffffff;
+    color: #666;
     cursor: pointer;
     display: inline-block;
     vertical-align: middle;
@@ -23,5 +23,43 @@
         height: 100%;
     }
 
+    &.disabled,
+    &:disabled {
+        background-color: #fafafa;
+        border-color: rgba(0, 0, 0, .2);
+        color: #999;
+        cursor: default;
+    }
+
 }
 
+.btn--primary {
+    background-color: #009dd8;
+    color: #fff;
+    &:focus,
+    &:hover {
+        background-color: #00aff2;
+    }
+}
+
+.btn--success {
+    background-color: #82bb42;
+    color: #fff;
+    &:focus,
+    &:hover {
+        background-color: #8fce48;
+    }
+}
+
+.btn--danger {
+    background-color: #d32c46;
+    color: #fff;
+    &:focus,
+    &:hover {
+        background-color: #e33551;
+    }
+}
+
+.btn--link {
+    background: transparent;
+}
