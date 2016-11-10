@@ -1,7 +1,7 @@
 (function() {
     var Modal = {
 
-        template: '#rc-modal-template',
+        template: '#gr-modal-template',
 
         props: {
             openEvent: String,
@@ -41,6 +41,6 @@
 
     };
 
-    Vue.component('rc-modal', Modal);
+    Vue.component('gr-modal', Modal);
 
 }());

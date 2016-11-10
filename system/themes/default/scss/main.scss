@@ -390,31 +390,12 @@ body.popup {
     padding:6px 0;
 }
 
-/* Header */
-
-#tmenu {
-    margin:0;
-    padding:6px 11px 8px;
-    text-align:right;
-    color:#444;
-}
-
 /* Container */
 #container {
     margin:0 auto;
 }
-.popup #container {
-    padding:0;
-}
 
 /* Left */
-#left {
-    width:200px;
-    background:#fff;
-    border:1px solid #bbb;
-    float:left;
-    border-radius:3px;
-}
 
 /* Main */
 #main {
@@ -597,11 +578,6 @@ h2.sub_headline_index {
 }
 .tl_submit_panel {
     padding-left:6px;
-}
-.tl_img_submit {
-    position:relative;
-    top:3px;
-    vertical-align:top;
 }
 .tl_panel .active,.tl_panel_bottom .active,#search .active {
     background:#ffd;

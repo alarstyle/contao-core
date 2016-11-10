@@ -523,6 +523,12 @@ class BackendUser extends User
 		$arrInactiveModules = PluginLoader::getDisabled();
 		$blnCheckInactiveModules = is_array($arrInactiveModules);
 
+		foreach ($GLOBALS['NAVIGATION'] as $strItemName => $arrItem) {
+            $arrModules[$strItemName] = [
+                'label' => specialchars($arrItem['label'] ?: $strItemName)
+            ];
+        }
+
 		foreach ($GLOBALS['BE_MOD'] as $strGroupName=>$arrGroupModules)
 		{
 			if (!empty($arrGroupModules) && ($strGroupName == 'system' || $this->hasAccess(array_keys($arrGroupModules), 'modules')))

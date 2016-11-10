@@ -1,21 +1,44 @@
-
 .navigation {
+    background: #fff;
+    white-space: nowrap;
+    height: 60px;
     > ul {
+        height: 100%;
         > li {
+            display: inline-block;
+            vertical-align: middle;
+            height: 100%;
             img {
                 margin-right:2px;
                 vertical-align:middle;
                 position:relative;
                 top:-1px;
             }
+            &:hover {
+                > ul {
+                    display: block;
+                }
+            }
         }
         ul {
+            display: none;
             padding:0 0 9px 24px !important;
+            position: absolute;
+            left: 0;
             a {
                 font-weight:normal;
                 line-height:19px;
             }
         }
+    }
+    li {
+        position: relative;
+    }
+    a,
+    span {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
 .navigation .tl_level_2

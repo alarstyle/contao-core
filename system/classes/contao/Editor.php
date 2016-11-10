@@ -731,7 +731,7 @@ abstract class Editor extends BaseTemplate
 		{
 			if ($varValue != '')
 			{
-				return ' ' . $strKey . '="' . $varValue . '"';
+				return ' ' . $strKey . '="' . specialchars($varValue) . '"';
 			}
 		}
 
@@ -1460,19 +1460,18 @@ abstract class Editor extends BaseTemplate
 			return '';
 		}
 
-		$type = preg_replace('/^([A-Za-z]+)(\(| ).*$/', '$1', $sql);
+        if (stripos($sql, 'NOT NULL') === false)
+        {
+            return null;
+        }
 
-		if (strpos($sql, 'NULL') !== false && strpos($sql, 'NOT NULL') === false)
-		{
-			return null;
-		}
-		elseif (in_array($type, array('int', 'integer', 'tinyint', 'smallint', 'mediumint', 'bigint', 'float', 'double', 'dec', 'decimal')))
-		{
-			return 0;
-		}
-		else
-		{
-			return '';
-		}
+        $type = strtolower(preg_replace('/^([A-Za-z]+)(\(| ).*$/', '$1', $sql));
+
+        if (in_array($type, array('int', 'integer', 'tinyint', 'smallint', 'mediumint', 'bigint', 'float', 'double', 'dec', 'decimal')))
+        {
+            return 0;
+        }
+
+        return '';
 	}
 }

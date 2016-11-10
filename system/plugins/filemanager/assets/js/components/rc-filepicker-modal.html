@@ -1,8 +1,8 @@
-<rc-modal ref="modal" class="rc-modal--filepicker">
+<gr-modal ref="modal" class="gr-modal--filepicker">
     <div slot="header">header</div>
     <rc-filemanager v-if="initialized" path="/files" @selected="onFileSelected" ref="filemanager"></rc-filemanager>
     <div slot="footer">
         <button @click.prevent="select" class="btn btn--primary">Select</button>
         <button @click.prevent="cancel" class="btn">Cancel</button>
     </div>
-</rc-modal>
+</gr-modal>

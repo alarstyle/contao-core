@@ -1,0 +1,32 @@
+html {
+    background: #202529 url('../images/login_bg.svg') no-repeat 50% 50% / cover;
+}
+
+.login-title {
+    background: url('../images/logo.svg') no-repeat 50% 50% / contain;
+    height: 48px;
+    font-size: 0;
+    margin-bottom: 15px;
+}
+
+.inp {
+    background: #272d32;
+}
+.inp_pass {
+    border-top-color: #202529;
+    box-shadow: 0 3px 0 #202529;
+}
+
+.btn {
+    background: #3387dc;
+}
+
+::-webkit-input-placeholder {
+    color: #a7b1ba;
+}
+::-moz-placeholder {
+    color: #a7b1ba;
+}
+:-ms-input-placeholder {
+    color: #a7b1ba;
+}

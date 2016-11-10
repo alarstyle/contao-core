@@ -1,4 +1,4 @@
-.rc-modal {
+.gr-modal {
     background: rgba(0, 0, 0, .6);
     position: fixed;
     top: 0;
@@ -8,7 +8,7 @@
     overflow: auto;
 }
 
-.rc-modal-dialog {
+.gr-modal-dialog {
     background: #fff;
     border-radius: 4px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .3);
@@ -16,14 +16,14 @@
     position: relative;
 }
 
-.rc-modal-header {
+.gr-modal-header {
     background: #fafafa;
     border-bottom: 1px solid #e5e5e5;
     border-radius: 4px 4px 0 0;
     padding: 20px;
 }
 
-.rc-modal-footer {
+.gr-modal-footer {
     background: #fafafa;
     border-top: 1px solid #e5e5e5;
     border-radius: 0 0 4px 4px;
@@ -31,7 +31,7 @@
     padding: 20px;
 }
 
-.rc-modal-content {
+.gr-modal-content {
     padding: 20px;
     &:after {
         content: '';
@@ -40,7 +40,7 @@
     }
 }
 
-.rc-modal-close {
+.gr-modal-close {
     background: red;
     cursor: pointer;
     position: absolute;

@@ -235,24 +235,58 @@ a {
   text-align: right;
   height: 65px; }
 
+.header-logo {
+  height: 100%;
+  padding: 10px;
+  float: left; }
+
 .header-menu {
   height: 100%;
   font-size: 0; }
-  .header-menu li {
+  .header-menu > li {
     display: inline-block;
-    font-size: 12px;
+    font-size: 14px;
+    height: 100%;
+    margin-left: 20px; }
+  .header-menu .gr-dropdown,
+  .header-menu .gr-dropdown-trigger {
     height: 100%; }
+  .header-menu .gr-dropdown-menu {
+    background: #1e2326;
+    padding: 25px; }
 
-.navigation > ul > li img {
-  margin-right: 2px;
-  vertical-align: middle;
-  position: relative;
-  top: -1px; }
-.navigation > ul ul {
-  padding: 0 0 9px 24px !important; }
-  .navigation > ul ul a {
-    font-weight: normal;
-    line-height: 19px; }
+.navigation {
+  background: #fff;
+  white-space: nowrap;
+  height: 60px; }
+  .navigation > ul {
+    height: 100%; }
+    .navigation > ul > li {
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%; }
+      .navigation > ul > li img {
+        margin-right: 2px;
+        vertical-align: middle;
+        position: relative;
+        top: -1px; }
+      .navigation > ul > li:hover > ul {
+        display: block; }
+    .navigation > ul ul {
+      display: none;
+      padding: 0 0 9px 24px !important;
+      position: absolute;
+      left: 0; }
+      .navigation > ul ul a {
+        font-weight: normal;
+        line-height: 19px; }
+  .navigation li {
+    position: relative; }
+  .navigation a,
+  .navigation span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis; }
 
 .navigation .tl_level_2
 .navigation .active {
@@ -618,28 +652,11 @@ body.popup {
   background: #fff;
   padding: 6px 0; }
 
-/* Header */
-#tmenu {
-  margin: 0;
-  padding: 6px 11px 8px;
-  text-align: right;
-  color: #444; }
-
 /* Container */
 #container {
   margin: 0 auto; }
 
-.popup #container {
-  padding: 0; }
-
 /* Left */
-#left {
-  width: 200px;
-  background: #fff;
-  border: 1px solid #bbb;
-  float: left;
-  border-radius: 3px; }
-
 /* Main */
 #main {
   padding: 1px;
@@ -820,11 +837,6 @@ h2.sub_headline_index {
 
 .tl_submit_panel {
   padding-left: 6px; }
-
-.tl_img_submit {
-  position: relative;
-  top: 3px;
-  vertical-align: top; }
 
 .tl_panel .active, .tl_panel_bottom .active, #search .active {
   background: #ffd; }

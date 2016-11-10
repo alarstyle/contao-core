@@ -278,7 +278,7 @@ html, body, .wrapper {
   border-radius: 4px 4px 0 0; }
 
 .inp_pass {
-  border-top: 1px solid #333c50 !important;
+  border-top: 1px solid #333c50;
   border-radius: 0 0 4px 4px;
   box-shadow: 0 3px 0 #2f384d; }
 
@@ -299,7 +299,7 @@ html, body, .wrapper {
     -webkit-transform: translateY(2px);
     -ms-transform: translateY(2px);
     transform: translateY(2px);
-    box-shadow: 0 1px 0 #2e71a9 !important; }
+    box-shadow: 0 1px 0 #2e71a9; }
 
 .login-frontend_link {
   margin-top: 20px; }
@@ -318,5 +318,9 @@ html, body, .wrapper {
 :-ms-input-placeholder {
   color: #6e7d8f;
   opacity: 1; }
+
+.tl_error {
+  color: #e73d4a;
+  margin-bottom: 10px; }
 
 /*# sourceMappingURL=login.css.map */

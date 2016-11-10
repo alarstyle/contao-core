@@ -190,30 +190,39 @@ class Versions extends Controller
 
 		$strDescription = '';
 
-		if (isset($objRecord->title))
-		{
-			$strDescription = $objRecord->title;
-		}
-		elseif (isset($objRecord->name))
-		{
-			$strDescription = $objRecord->name;
-		}
-		elseif (isset($objRecord->firstname))
-		{
-			$strDescription = $objRecord->firstname . ' ' . $objRecord->lastname;
-		}
-		elseif (isset($objRecord->headline))
-		{
-			$strDescription = $objRecord->headline;
-		}
-		elseif (isset($objRecord->selector))
-		{
-			$strDescription = $objRecord->selector;
-		}
-		elseif (isset($objRecord->subject))
-		{
-			$strDescription = $objRecord->subject;
-		}
+        if (!empty($objRecord->title))
+        {
+            $strDescription = $objRecord->title;
+        }
+        elseif (!empty($objRecord->name))
+        {
+            $strDescription = $objRecord->name;
+        }
+        elseif (!empty($objRecord->firstname))
+        {
+            $strDescription = $objRecord->firstname . ' ' . $objRecord->lastname;
+        }
+        elseif (!empty($objRecord->headline))
+        {
+            $chunks = deserialize($objRecord->headline);
+
+            if (is_array($chunks) && isset($chunks['value']))
+            {
+                $strDescription = $chunks['value'];
+            }
+            else
+            {
+                $strDescription = $objRecord->headline;
+            }
+        }
+        elseif (!empty($objRecord->selector))
+        {
+            $strDescription = $objRecord->selector;
+        }
+        elseif (!empty($objRecord->subject))
+        {
+            $strDescription = $objRecord->subject;
+        }
 
 		$this->Database->prepare("UPDATE tl_version SET active='' WHERE pid=? AND fromTable=?")
 					   ->execute($this->intPid, $this->strTable);
@@ -647,6 +656,13 @@ class Versions extends Controller
 				--$intCount;
 				unset($arrVersions[$k]);
 			}
+
+            // Skip deleted files (see #8480)
+            if ($v['fromTable'] == 'tl_files' && $arrVersions[$k]['deleted'])
+            {
+                --$intCount;
+                unset($arrVersions[$k]);
+            }
 		}
 
 		$objTemplate->versions = $arrVersions;

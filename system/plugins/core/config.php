@@ -94,6 +94,19 @@ $GLOBALS['BE_MOD'] = array
 );
 
 
+$GLOBALS['NAVIGATION'] = [
+    'dashboard' => [
+        'label' => 'Dashboard'
+    ],
+    'users' => [
+        'label' => 'Users'
+    ],
+    'setting' => [
+        'label' => 'Setting'
+    ]
+];
+
+
 /**
  * Front end modules
  */
@@ -578,8 +591,11 @@ $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vue.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/lodash.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/axios.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/core.js';
-$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/rc-modal.js';
-$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/rc-icon.js';
+
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/gr-modal.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/gr-dropdown.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/gr-icon.js';
 
 
-$GLOBALS['TL_JS_TEMPLATES']['rc-modal-template'] = '/system/plugins/core/assets/js/components/rc-modal.html';
+$GLOBALS['TL_JS_TEMPLATES']['gr-modal-template'] = '/system/plugins/core/assets/js/components/gr-modal.html';
+$GLOBALS['TL_JS_TEMPLATES']['gr-dropdown-template'] = '/system/plugins/core/assets/js/components/gr-dropdown.html';

@@ -1,0 +1,22 @@
+.gr-dropdown {
+    text-align: left;
+    position: relative;
+    &.opened {
+        .gr-dropdown-menu {
+            display: block;
+        }
+    }
+}
+
+.gr-dropdown-trigger {
+    @extend .disable_select;
+    cursor: pointer;
+}
+
+.gr-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 100%;
+}

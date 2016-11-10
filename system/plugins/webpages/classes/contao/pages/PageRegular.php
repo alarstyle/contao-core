@@ -305,30 +305,6 @@ class PageRegular extends Frontend
 
 			$strContainer = '';
 
-			// Left column
-			if ($objLayout->cols == '2cll' || $objLayout->cols == '3cl')
-			{
-				$arrSize = deserialize($objLayout->widthLeft);
-
-				if (isset($arrSize['value']) && $arrSize['value'] != '' && $arrSize['value'] >= 0)
-				{
-					$strFramework .= sprintf('#left{width:%s;right:%s}', $arrSize['value'] . $arrSize['unit'], $arrSize['value'] . $arrSize['unit']);
-					$strContainer .= sprintf('padding-left:%s;', $arrSize['value'] . $arrSize['unit']);
-				}
-			}
-
-			// Right column
-			if ($objLayout->cols == '2clr' || $objLayout->cols == '3cl')
-			{
-				$arrSize = deserialize($objLayout->widthRight);
-
-				if (isset($arrSize['value']) && $arrSize['value'] != '' && $arrSize['value'] >= 0)
-				{
-					$strFramework .= sprintf('#right{width:%s}', $arrSize['value'] . $arrSize['unit']);
-					$strContainer .= sprintf('padding-right:%s;', $arrSize['value'] . $arrSize['unit']);
-				}
-			}
-
 			// Main column
 			if ($strContainer != '')
 			{

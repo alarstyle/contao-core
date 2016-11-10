@@ -1,0 +1,19 @@
+    <div class="gr-modal" v-show="isOpened">
+        <div class="gr-modal-dialog">
+
+            <div class="gr-modal-header">
+                <slot name="header"></slot>
+            </div>
+
+            <div class="gr-modal-content">
+                <slot></slot>
+            </div>
+
+            <div class="gr-modal-footer">
+                <slot name="footer"></slot>
+            </div>
+
+            <div @click.prevent="close" class="gr-modal-close"></div>
+
+        </div>
+    </div>

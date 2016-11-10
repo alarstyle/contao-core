@@ -6,15 +6,29 @@
 }
 
 .header-logo {
-
+    height: 100%;
+    padding: 10px;
+    float: left;
 }
 
 .header-menu {
     height: 100%;
     font-size: 0;
-    li {
+    > li {
         display: inline-block;
-        font-size: 12px;
+        font-size: 14px;
         height: 100%;
+        margin-left: 20px;
+    }
+    .gr-dropdown,
+    .gr-dropdown-trigger {
+        height: 100%;
+    }
+    .user-img {
+
+    }
+    .gr-dropdown-menu {
+        background: #1e2326;
+        padding: 25px;
     }
 }

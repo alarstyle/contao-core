@@ -1,0 +1,16 @@
+@import "fonts";
+
+html {
+    font-family: 'Geomanist', Arial, sans-serif;
+}
+
+.header {
+    font-weight: bold;
+}
+
+.header-logo {
+    background: #202529 url('../images/logo-small.svg') no-repeat 50% 50% / 50px auto;
+    font-size: 0;
+    padding: 0;
+    width: 100px;
+}

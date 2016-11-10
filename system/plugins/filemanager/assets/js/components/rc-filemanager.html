@@ -29,14 +29,14 @@
                     <tbody>
 
                         <tr v-for="folder in folders" @click="selectItem(folder.path)" @dblclick="setPath(folder.path)" :class="{'selected': isSelected(folder.path)}">
-                            <td class="item-icon"><rc-icon name="folder"></rc-icon></td>
+                            <td class="item-icon"><gr-icon name="folder"></gr-icon></td>
                             <td class="item-name"><div>{{ folder.name }}</div></td>
                             <td></td>
                             <td></td>
                         </tr>
 
                         <tr v-for="file in files" @click="selectItem(file.path)" :class="{'selected': isSelected(file.path)}">
-                            <td class="item-icon"><rc-icon name="file-o"></rc-icon></td>
+                            <td class="item-icon"><gr-icon name="file-o"></gr-icon></td>
                             <td class="item-name"><div>{{ file.name }}</div></td>
                             <td>{{ file.size }}</td>
                             <td>{{ file.lastmodified }}</td>
@@ -49,7 +49,7 @@
 
         <div class="filemanager-preview">
             Preview
-            <rc-icon name="edit"></rc-icon>
+            <gr-icon name="edit"></gr-icon>
         </div>
 
     </div>

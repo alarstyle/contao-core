@@ -27,7 +27,7 @@
                 <input type="hidden" name="REQUEST_TOKEN" value="<?= REQUEST_TOKEN ?>">
                 <?= $this->messages ?>
                 <?php if ($this->noCookies): ?>
-                    <div class="error_msg"><?= $this->noCookies ?></div>
+                    <div class="tl_error"><?= $this->noCookies ?></div>
                 <?php endif; ?>
                 <input type="text" name="username" class="inp inp_name <?= $this->uClass ?>" value="<?= $this->curUsername ?>" autocapitalize="off" placeholder="<?= $this->username ?>" required autofocus>
                 <input type="password" name="password" class="inp inp_pass <?= $this->pClass ?>" value="" placeholder="<?= $this->password ?>" required></td>

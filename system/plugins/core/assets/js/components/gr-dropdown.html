@@ -1,0 +1,8 @@
+    <div class="gr-dropdown" :class="{opened: isOpened}">
+        <div @click.prevent="toggle" class="gr-dropdown-trigger">
+            <slot name="trigger"></slot>
+        </div>
+        <div class="gr-dropdown-menu">
+            <slot name="menu"></slot>
+        </div>
+    </div>

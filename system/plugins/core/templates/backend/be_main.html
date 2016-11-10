@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?= $this->language ?>">
+<html lang="<?= $this->language ?>" class="<?= $this->ua ?>">
 <head>
 
     <meta charset="<?= $this->charset ?>">
@@ -42,31 +42,42 @@
     <script><?= $this->getDateString() ?></script>
 
 </head>
-<body id="top" class="<?= $this->ua ?><?php if ($this->isPopup) echo ' popup'; ?>">
+<body id="top" class="<?php if ($this->isPopup) echo ' popup'; ?>">
 
 <div id="app">
 
 <?php if (!$this->isPopup): ?>
 
-<div id="header" class="header">
-    <div class="header-logo"></div>
-    <ul class="header-menu">
-        <?= $this->headerMenu ?>
-    </ul>
-    <div id="tmenu">
-        <a href="<?= $this->base ?>contao/main.php?do=login&amp;ref=<?= TL_REFERER_ID ?>" class="header_user"
-            title="<?= $this->account ?>"><?= $this->username ?></a>
-        <a href="contao/preview.php<?= $this->frontendFile ?>"
-            target="_blank" class="header_preview"
-            title="<?= $this->previewTitle ?>"><?= $this->preview ?></a>
-        <a href="<?= $this->base ?>contao/main.php" class="header_home"
-            title="<?= $this->homeTitle ?>"><?= $this->home ?></a>
-        <a href="<?= $this->base ?>contao/" class="header_logout"
-            title="<?= $this->logoutTitle ?>"><?= $this->logout ?></a>
+    <div id="header" class="header">
+        <div class="header-logo"></div>
+        <ul class="header-menu">
+            <li><a href="<?= $this->base ?>contao/main.php?do=login&amp;ref=<?= TL_REFERER_ID ?>" class="header_user" title="<?= $this->account ?>"><?= $this->username ?></a></li>
+            <li><a href="contao/preview.php<?= $this->frontendFile ?>" target="_blank" class="header_preview" title="<?= $this->previewTitle ?>"><?= $this->preview ?></a></li>
+            <li><a href="<?= $this->base ?>contao/" class="header_logout" title="<?= $this->logoutTitle ?>"><?= $this->logout ?></a></li>
+            <?= $this->headerMenu ?>
+        </ul>
     </div>
 
-</div>
-
+    <nav class="navigation">
+        <ul>
+            <?php foreach ($this->modules as $strGroup=>$arrModules): ?>
+                <li class="<?= $arrModules['class'] ?>">
+                    <a title="<?= $arrModules['title'] ?>">
+                        <?= \Contao\Image::getHtml($arrModules['icon']) ?><?= $arrModules['label'] ?>
+                    </a>
+                    <?php if ($arrModules['modules']): ?>
+                        <ul>
+                            <?php foreach ($arrModules['modules'] as $arrConfig): ?>
+                            <li><a href="<?= $arrConfig['href'] ?>" class="<?= $arrConfig['class'] ?>"
+                                   title="<?= $arrConfig['title'] ?>"<?= $arrConfig['icon'] ?>
+                                ><?= $arrConfig['label'] ?></a></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </nav>
 
 <?php if ($this->isCoreOnlyMode): ?>
 <p class="tl_error tl_permalert"><?php if ($this->isAdmin): ?><a href="<?= $this->coreOnlyHref ?>"
@@ -87,31 +98,6 @@
 <?php endif; ?>
 
 <div id="container">
-
-    <?php if (!$this->isPopup): ?>
-    <nav id="left" class="navigation">
-        <ul>
-            <?php foreach ($this->modules as $strGroup=>$arrModules): ?>
-            <li class="<?= $arrModules['class'] ?>">
-                <a title="<?= $arrModules['title'] ?>">
-                    <?= \Contao\Image::getHtml($arrModules['icon']) ?><?= $arrModules['label'] ?>
-                </a>
-            </li>
-            <?php if ($arrModules['modules']): ?>
-            <li class="tl_parent" id="<?= $strGroup ?>">
-                <ul>
-                    <?php foreach ($arrModules['modules'] as $arrConfig): ?>
-                    <li><a href="<?= $arrConfig['href'] ?>" class="<?= $arrConfig['class'] ?>"
-                           title="<?= $arrConfig['title'] ?>"<?= $arrConfig['icon'] ?>
-                        ><?= $arrConfig['label'] ?></a></li>
-                    <?php endforeach; ?>
-                </ul>
-            </li>
-            <?php endif; ?>
-            <?php endforeach; ?>
-        </ul>
-    </nav>
-    <?php endif; ?>
 
     <div id="main">
         <h1 class="main_headline"><?= $this->headline ?></h1>

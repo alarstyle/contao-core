@@ -244,8 +244,6 @@ class BackendMain extends Backend
 		$this->Template->request = ampersand(Environment::get('request'));
 		$this->Template->top = $GLOBALS['TL_LANG']['MSC']['backToTop'];
 		$this->Template->modules = $this->User->navigation();
-		$this->Template->home = $GLOBALS['TL_LANG']['MSC']['home'];
-		$this->Template->homeTitle = $GLOBALS['TL_LANG']['MSC']['homeTitle'];
 		$this->Template->backToTop = specialchars($GLOBALS['TL_LANG']['MSC']['backToTopTitle']);
 		$this->Template->expandNode = $GLOBALS['TL_LANG']['MSC']['expandNode'];
 		$this->Template->collapseNode = $GLOBALS['TL_LANG']['MSC']['collapseNode'];

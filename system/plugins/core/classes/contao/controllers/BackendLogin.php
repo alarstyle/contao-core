@@ -80,7 +80,7 @@ class BackendLogin extends Backend
         $objTemplate->base = Environment::get('base');
         $objTemplate->language = $GLOBALS['TL_LANGUAGE'];
         $objTemplate->languages = System::getLanguages(true);
-        $objTemplate->title = specialchars($strHeadline);
+        $objTemplate->title = specialchars(Config::get('websiteTitle'));
         $objTemplate->charset = Config::get('characterSet');
         $objTemplate->action = ampersand(Environment::get('request'));
         $objTemplate->headline = Config::get('websiteTitle');
