@@ -35,6 +35,12 @@ abstract class Backend extends Controller
 	}
 
 
+	public static function url()
+    {
+
+    }
+
+
 	/**
 	 * Return the current theme as string
 	 *

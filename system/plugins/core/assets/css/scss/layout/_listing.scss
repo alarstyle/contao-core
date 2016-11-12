@@ -1,0 +1,30 @@
+.listing {
+    .item {
+        background: #fff;
+        border-radius: 4px;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, .1);
+        margin-bottom: 14px;
+    }
+    .item-main {}
+    .item-title {}
+    .item-subtitle {}
+    .item-controls {
+
+    }
+
+    .item--img {
+        max-width: 70px;
+        min-width: 70px;
+        > div {
+            background: #f5f6f7 no-repeat 50% 50% / cover;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+        }
+    }
+
+    .item--controls {
+        max-width: 70px;
+        min-width: 70px;
+    }
+}

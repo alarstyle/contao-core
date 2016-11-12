@@ -220,13 +220,14 @@ textarea {
 html {
   font: 14px/1.4 Arial, Helvetica, sans-serif;
   background: #f5f6f8;
-  color: #333; }
+  color: #404548; }
 
 ul {
   list-style: none; }
 
 a {
   color: inherit;
+  cursor: pointer;
   text-decoration: none; }
 
 html {

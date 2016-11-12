@@ -22,6 +22,7 @@ use Contao\Message;
 use Contao\Models\ArticleModel;
 use Contao\System;
 use Contao\Versions;
+use Grow\ApplicationData;
 
 /**
  * Main back end controller.
@@ -129,21 +130,30 @@ class BackendMain extends Backend
 			$this->Template->error = $GLOBALS['TL_LANG']['ERR']['general'];
 			$this->Template->title = $GLOBALS['TL_LANG']['ERR']['general'];
 		}
-		// Welcome screen
-		elseif (!Input::get('do') && !Input::get('act'))
+		else
 		{
-			$this->Template->main .= $this->welcomeScreen();
-			$this->Template->title = $GLOBALS['TL_LANG']['MSC']['home'];
-		}
-		// Open a module
-		elseif (Input::get('do'))
-		{
-			$this->Template->main .= $this->getBackendModule(Input::get('do'));
-			$this->Template->title = $this->Template->headline;
+			$this->generateMainSection();
 		}
 
 		$this->output();
 	}
+
+
+	protected function generateMainSection()
+    {
+        // Welcome screen
+        if (!Input::get('do') && !Input::get('act'))
+        {
+            $this->Template->main .= $this->welcomeScreen();
+            $this->Template->title = $GLOBALS['TL_LANG']['MSC']['home'];
+        }
+        // Open a module
+        elseif (Input::get('do'))
+        {
+            $this->Template->main .= $this->getBackendModule(Input::get('do'));
+            $this->Template->title = $this->Template->headline;
+        }
+    }
 
 
 	/**
@@ -262,6 +272,7 @@ class BackendMain extends Backend
 		$this->Template->buildCacheText = Lang::get('MSC::buildCacheText');
 		$this->Template->buildCacheHref = $this->addToUrl('bic=1');
 		$this->Template->isPopup = Input::get('popup');
+		$this->Template->appData = ApplicationData::getJson();
 
 		// Hide the cache message in the repository manager (see #5966)
 		if (!Config::get('bypassCache') && $this->User->isAdmin)

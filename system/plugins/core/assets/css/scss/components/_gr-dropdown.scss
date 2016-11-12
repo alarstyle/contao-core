@@ -14,9 +14,41 @@
 }
 
 .gr-dropdown-menu {
+    background: #fff;
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
     min-width: 100%;
+    z-index: $dropdownZ;
+}
+
+
+.dropdown--icon {
+    .gr-dropdown-menu {
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        padding: 12px;
+        &:before {
+            background: #fff;
+            content: '';
+            position: absolute;
+            left: 0;
+            top: -5px;
+            width: 37px;
+            height: 10px;
+        }
+    }
+    .gr-dropdown-trigger {
+        border-radius: 4px;
+        text-align: center;
+        width: 37px;
+        height: 37px;
+    }
+    &.opened {
+        .gr-dropdown-trigger {
+            background: #fff;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+        }
+    }
 }

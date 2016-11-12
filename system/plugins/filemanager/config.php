@@ -25,6 +25,5 @@ $GLOBALS['TL_JS_TEMPLATES']['rc-filepicker-modal-template'] = '/system/plugins/f
 //$GLOBALS['TL_JS_TEMPLATES']['file-manager-table'] = '/system/plugins/filemanager/assets/js/components/rc-filemanager.html';
 
 
-//$GLOBALS['RC_ROUTES']['filemanager'] = 'Contao\\FileManager';
 $GLOBALS['RC_ROUTES']['filemanager'] = 'Contao\\Controllers\\FileManagerController';
 

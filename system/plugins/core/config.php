@@ -96,13 +96,28 @@ $GLOBALS['BE_MOD'] = array
 
 $GLOBALS['NAVIGATION'] = [
     'dashboard' => [
-        'label' => 'Dashboard'
+        'label' => 'Dashboard',
+        'controller' => 'Grow\\Controllers\\Dashboard'
     ],
     'users' => [
-        'label' => 'Users'
+        'label' => 'Users',
+        'controller' => 'Grow\\Controllers\\Users',
+        'config' => [
+            'group' => [
+                'table' => 'tl_user_group'
+            ],
+            'list' => [
+                'table' => 'tl_user'
+            ]
+        ]
+    ],
+    'filemanager' => [
+        'label' => 'Filemanager',
+        'controller' => 'Contao\\Controllers\\FileManagerController'
     ],
     'setting' => [
-        'label' => 'Setting'
+        'label' => 'Setting',
+        'controller' => 'Grow\\Controllers\\Settings'
     ]
 ];
 
@@ -505,6 +520,7 @@ $GLOBALS['TL_MODELS']['tl_files'] = 'Contao\\Models\\FilesModel';
 	'be_referer'          => 'system/plugins/core/templates/backend',
 	'be_switch'           => 'system/plugins/core/templates/backend',
 	'be_unavailable'      => 'system/plugins/core/templates/backend',
+	'be_users'            => 'system/plugins/core/templates/backend',
 	'be_welcome'          => 'system/plugins/core/templates/backend',
 	'be_wildcard'         => 'system/plugins/core/templates/backend',
 	'block_searchable'    => 'system/plugins/core/templates/block',
@@ -587,14 +603,17 @@ $GLOBALS['TL_MODELS']['tl_files'] = 'Contao\\Models\\FilesModel';
 $GLOBALS['TL_CSS'][] = '/system/plugins/core/assets/css/core.css';
 
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/es6-promise.auto.min.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/Sortable.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vue.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vue-router.min.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/plugins/vue-sortable.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/lodash.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/axios.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/core.js';
 
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/gr-modal.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/gr-dropdown.js';
-$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/gr-icon.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/icon.js';
 
 
 $GLOBALS['TL_JS_TEMPLATES']['gr-modal-template'] = '/system/plugins/core/assets/js/components/gr-modal.html';

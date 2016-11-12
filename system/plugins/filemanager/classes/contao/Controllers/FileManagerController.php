@@ -2,7 +2,6 @@
 
 namespace Contao\Controllers;
 
-use Contao\Backend;
 use Contao\Config;
 use Contao\FileUpload;
 use Contao\Input;
@@ -10,13 +9,8 @@ use Contao\Message;
 
 use Symfony\Component\Finder\Finder;
 
-class FileManagerController extends Backend
+class FileManagerController extends BackendMain
 {
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     public function run() {
 

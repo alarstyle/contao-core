@@ -393,24 +393,7 @@ body.popup {
 /* Container */
 #container {
     margin:0 auto;
-}
-
-/* Left */
-
-/* Main */
-#main {
-    padding:1px;
-    background:#fff;
-    border-radius:3px;
-    float: right;
-    width: calc(100% - 210px);
-}
-.popup #main {
-    padding:0;
-    margin:0;
-    border:0;
-    float:none;
-    box-shadow:none;
+    padding: 0 50px;
 }
 
 /* Buttons */

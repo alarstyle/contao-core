@@ -525,7 +525,10 @@ class BackendUser extends User
 
 		foreach ($GLOBALS['NAVIGATION'] as $strItemName => $arrItem) {
             $arrModules[$strItemName] = [
-                'label' => specialchars($arrItem['label'] ?: $strItemName)
+                'label' => specialchars($arrItem['label'] ?: $strItemName),
+                'href' => Config::get('backendUri') . '/' . $strItemName,
+                'icon' => '',
+                'class' => '_active'
             ];
         }
 
@@ -538,42 +541,32 @@ class BackendUser extends User
 				$arrModules[$strGroupName]['label'] = (($label = is_array($GLOBALS['TL_LANG']['MOD'][$strGroupName]) ? $GLOBALS['TL_LANG']['MOD'][$strGroupName][0] : $GLOBALS['TL_LANG']['MOD'][$strGroupName]) != false) ? $label : $strGroupName;
 				$arrModules[$strGroupName]['href'] = Controller::addToUrl('mtg=' . $strGroupName);
 
-				// Do not show the modules if the group is closed
-				if (!$blnShowAll && isset($session['backend_modules'][$strGroupName]) && $session['backend_modules'][$strGroupName] < 1)
-				{
-					$arrModules[$strGroupName]['modules'] = false;
-					$arrModules[$strGroupName]['icon'] = 'modPlus.gif';
-					$arrModules[$strGroupName]['title'] = specialchars($GLOBALS['TL_LANG']['MSC']['expandNode']);
-				}
-				else
-				{
-					foreach ($arrGroupModules as $strModuleName=>$arrModuleConfig)
-					{
-						// Exclude inactive modules
-						if ($blnCheckInactiveModules && in_array($strModuleName, $arrInactiveModules))
-						{
-							continue;
-						}
+                foreach ($arrGroupModules as $strModuleName=>$arrModuleConfig)
+                {
+                    // Exclude inactive modules
+                    if ($blnCheckInactiveModules && in_array($strModuleName, $arrInactiveModules))
+                    {
+                        continue;
+                    }
 
-						// Check access
-						if ($strModuleName == 'undo' || $this->hasAccess($strModuleName, 'modules'))
-						{
-							$arrModules[$strGroupName]['modules'][$strModuleName] = $arrModuleConfig;
-							$arrModules[$strGroupName]['modules'][$strModuleName]['title'] = specialchars($GLOBALS['TL_LANG']['MOD'][$strModuleName][1]);
-							$arrModules[$strGroupName]['modules'][$strModuleName]['label'] = (($label = is_array($GLOBALS['TL_LANG']['MOD'][$strModuleName]) ? $GLOBALS['TL_LANG']['MOD'][$strModuleName][0] : $GLOBALS['TL_LANG']['MOD'][$strModuleName]) != false) ? $label : $strModuleName;
-							$arrModules[$strGroupName]['modules'][$strModuleName]['icon'] = !empty($arrModuleConfig['icon']) ? sprintf(' style="background-image:url(\'%s%s\')"', TL_ASSETS_URL, $arrModuleConfig['icon']) : '';
-							$arrModules[$strGroupName]['modules'][$strModuleName]['class'] = 'navigation ' . $strModuleName;
-							$arrModules[$strGroupName]['modules'][$strModuleName]['href'] = TL_SCRIPT . '?do=' . $strModuleName . '&amp;ref=' . TL_REFERER_ID;
+                    // Check access
+                    if ($strModuleName == 'undo' || $this->hasAccess($strModuleName, 'modules'))
+                    {
+                        $arrModules[$strGroupName]['submenu'][$strModuleName] = $arrModuleConfig;
+                        $arrModules[$strGroupName]['submenu'][$strModuleName]['title'] = specialchars($GLOBALS['TL_LANG']['MOD'][$strModuleName][1]);
+                        $arrModules[$strGroupName]['submenu'][$strModuleName]['label'] = (($label = is_array($GLOBALS['TL_LANG']['MOD'][$strModuleName]) ? $GLOBALS['TL_LANG']['MOD'][$strModuleName][0] : $GLOBALS['TL_LANG']['MOD'][$strModuleName]) != false) ? $label : $strModuleName;
+                        $arrModules[$strGroupName]['submenu'][$strModuleName]['icon'] = !empty($arrModuleConfig['icon']) ? sprintf(' style="background-image:url(\'%s%s\')"', TL_ASSETS_URL, $arrModuleConfig['icon']) : '';
+                        $arrModules[$strGroupName]['submenu'][$strModuleName]['class'] = 'navigation ' . $strModuleName;
+                        $arrModules[$strGroupName]['submenu'][$strModuleName]['href'] = Config::get('backendUri') . '/main.php' . '?do=' . $strModuleName . '&amp;ref=' . TL_REFERER_ID;
 
-							// Mark the active module and its group
-							if (Input::get('do') == $strModuleName)
-							{
-								$arrModules[$strGroupName]['class'] = ' trail';
-								$arrModules[$strGroupName]['modules'][$strModuleName]['class'] .= ' active';
-							}
-						}
-					}
-				}
+                        // Mark the active module and its group
+                        if (Input::get('do') == $strModuleName)
+                        {
+                            $arrModules[$strGroupName]['class'] = ' trail';
+                            $arrModules[$strGroupName]['submenu'][$strModuleName]['class'] .= ' active';
+                        }
+                    }
+                }
 			}
 		}
 

@@ -6,7 +6,7 @@
         render: function(createElement) {
             return createElement(
                 'svg',
-                { class: 'gr-icon', attrs: { 'xmlns': 'http://www.w3.org/2000/svg' } },
+                { class: 'icon', attrs: { 'xmlns': 'http://www.w3.org/2000/svg' } },
                 [
                     createElement(
                         'use',
@@ -26,6 +26,6 @@
 
     };
 
-    Vue.component('gr-icon', Icon);
+    Vue.component('icon', Icon);
 
 }());

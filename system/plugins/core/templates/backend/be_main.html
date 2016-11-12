@@ -41,6 +41,8 @@
   ?>"></script>
     <script><?= $this->getDateString() ?></script>
 
+    <script> window.APP_DATA = <?= $this->appData ?>;</script>
+
 </head>
 <body id="top" class="<?php if ($this->isPopup) echo ' popup'; ?>">
 
@@ -62,15 +64,15 @@
         <ul>
             <?php foreach ($this->modules as $strGroup=>$arrModules): ?>
                 <li class="<?= $arrModules['class'] ?>">
-                    <a title="<?= $arrModules['title'] ?>">
+                    <a title="<?= $arrModules['title'] ?>" href="<?= $arrModules['href'] ?>">
                         <?= \Contao\Image::getHtml($arrModules['icon']) ?><?= $arrModules['label'] ?>
                     </a>
-                    <?php if ($arrModules['modules']): ?>
+                    <?php if ($arrModules['submenu']): ?>
                         <ul>
-                            <?php foreach ($arrModules['modules'] as $arrConfig): ?>
+                            <?php foreach ($arrModules['submenu'] as $arrConfig): ?>
                             <li><a href="<?= $arrConfig['href'] ?>" class="<?= $arrConfig['class'] ?>"
-                                   title="<?= $arrConfig['title'] ?>"<?= $arrConfig['icon'] ?>
-                                ><?= $arrConfig['label'] ?></a></li>
+                                   title="<?= $arrConfig['title'] ?>" <?= $arrConfig['icon'] ?>>
+                                <?= $arrConfig['label'] ?></a></li>
                             <?php endforeach; ?>
                         </ul>
                     <?php endif; ?>
@@ -99,7 +101,6 @@
 
 <div id="container">
 
-    <div id="main">
         <h1 class="main_headline"><?= $this->headline ?></h1>
         <?php if ($this->managerHref): ?>
         <div id="manager">
@@ -111,13 +112,10 @@
         <p class="tl_gerror"><?= $this->error ?></p>
         <?php endif; ?>
         <?= $this->main ?>
-    </div>
-
-    <div class="clear"></div>
-
-    <rc-filepicker-modal></rc-filepicker-modal>
 
 </div>
+
+<rc-filepicker-modal></rc-filepicker-modal>
 
 <?= $this->mootools ?>
 

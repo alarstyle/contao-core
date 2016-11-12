@@ -1,33 +1,49 @@
 .navigation {
     background: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     white-space: nowrap;
     height: 60px;
+    padding-left: 40px;
     > ul {
         height: 100%;
         > li {
             display: inline-block;
             vertical-align: middle;
             height: 100%;
+            margin-left: 30px;
+            &:first-child {
+                margin-left: 0;
+            }
             img {
-                margin-right:2px;
-                vertical-align:middle;
-                position:relative;
-                top:-1px;
+                margin-right: 2px;
+                vertical-align: middle;
+                position: relative;
+                top: -1px;
+            }
+            > a {
+                height: 100%;
+                padding-top: 21px;
             }
             &:hover {
                 > ul {
                     display: block;
                 }
             }
+            &.active {
+                > a {
+                    color: #c33e3e;
+                    border-bottom: 2px solid #dedfe0;
+                }
+            }
         }
         ul {
             display: none;
-            padding:0 0 9px 24px !important;
+            padding: 0 0 9px 24px !important;
             position: absolute;
             left: 0;
             a {
-                font-weight:normal;
-                line-height:19px;
+                font-weight: normal;
+                line-height: 19px;
             }
         }
     }
@@ -39,9 +55,11 @@
         display: block;
         overflow: hidden;
         text-overflow: ellipsis;
+        padding: 0 13px;
     }
 }
+
 .navigation .tl_level_2
 .navigation .active {
-    color:#77ac45;
+    color: #77ac45;
 }

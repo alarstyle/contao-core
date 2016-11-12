@@ -1,0 +1,31 @@
+.flex_table1 {
+    display: table;
+    width: 100%;
+    .row {
+        display: table-row;
+    }
+    .cell {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: left;
+    }
+}
+
+.flex_table {
+
+    .row {
+        display: flex;
+        display: -webkit-flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        -webkit-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+        width: 100%;
+        align-items: center;
+    }
+    .cell {
+        vertical-align: middle;
+        flex: 1 1 0;
+        padding: 15px;
+    }
+}
