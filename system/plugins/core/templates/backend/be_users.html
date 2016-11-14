@@ -1,102 +1,97 @@
-    <div class="grid">
+    <template v-if="state === 'edit_item'">
+        <div class="grid">
 
-        <div class="column-2-10">
+            <div class="column-2-10">
 
-            <div class="sidebar">
-                <div class="sidebar-head">
-                    Groups
-                </div>
-                <div class="sidebar-body">
-                    <ul class="sidebar-list">
-                        <li>All Users</li>
-                        <li>Copywriters</li>
-                        <li>Managers</li>
-                    </ul>
-                    <div class="btn btn--link">Add User Category</div>
-                </div>
+            </div>
+
+            <div class="column-6-10">
+                <gr-form :fields="fields"></gr-form>
+            </div>
+
+            <div class="column-2-10">
+                <div class="btn" @click="saveItem">Save</div>
+                <div class="btn" @click="cancelEditItem">Cancel</div>
             </div>
 
         </div>
+    </template>
 
-        <div class="column-8-10">
+    <template v-if="state === 'list'">
+        <div class="grid">
 
-            <div class="main">
-                <div class="main-head">
-                    <div class="main-btns">
-                        <div class="btn btn--primary">+ add new user</div>
+            <div class="column-2-10">
+
+                <div class="sidebar">
+                    <div class="sidebar-head">
+                        Groups
                     </div>
-                    <div class="main-title">All Users</div>
-                    <div class="main-search"></div>
+                    <div class="sidebar-body">
+                        <ul class="sidebar-list">
+                            <li>All Users</li>
+                            <li>Copywriters</li>
+                            <li>Managers</li>
+                        </ul>
+                        <div class="btn btn--link">Add User Category</div>
+                    </div>
                 </div>
-                <div class="main-body">
 
-                    <div class="listing">
-                        <div class="flex_table">
-                            <div class="row row--head">
-                                <div class="cell item--img"></div>
-                                <div class="cell">User Name</div>
-                                <div class="cell">User Category</div>
-                                <div class="cell">Country Access</div>
-                                <div class="cell item--controls"></div>
-                            </div>
-                            <div class="row item">
-                                <div class="cell item--img">
-                                    <div></div>
+            </div>
+
+            <div class="column-8-10">
+
+                <div class="main">
+                    <div class="main-head">
+                        <div class="main-btns">
+                            <div @click="newItem" class="btn btn--primary">+ add new user</div>
+                        </div>
+                        <div class="main-title">All Users</div>
+                        <div class="main-search"></div>
+                    </div>
+                    <div class="main-body">
+
+                        <div class="listing">
+                            <div class="flex_table">
+                                <div class="row row--head">
+                                    <div class="cell item--img"></div>
+                                    <div class="cell">User Name</div>
+                                    <div class="cell">User Category</div>
+                                    <div class="cell">Country Access</div>
+                                    <div class="cell item--controls"></div>
                                 </div>
-                                <div class="cell">
-                                    <div class="item-title">Mikael asdasd</div>
-                                </div>
-                                <div class="cell">
-                                    Copywriter
-                                </div>
-                                <div class="cell">
-                                    flags
-                                </div>
-                                <div class="cell item--controls">
-                                    <gr-dropdown class="dropdown--icon">
-                                        <template slot="trigger">
-                                            <icon name="cog"></icon>
-                                        </template>
-                                        <ul slot="menu">
-                                            <li><a>Disable</a></li>
-                                            <li><a>Edit</a></li>
-                                            <li><a>Delete</a></li>
-                                        </ul>
-                                    </gr-dropdown>
-                                </div>
-                            </div>
-                            <div class="row item">
-                                <div class="cell item--img">
-                                    <div></div>
-                                </div>
-                                <div class="cell">
-                                    <div class="item-title">Mikael</div>
-                                </div>
-                                <div class="cell">
-                                    Copywriter asdasdasd asdasdasd
-                                </div>
-                                <div class="cell">
-                                    flags asdasdasd asdasda
-                                </div>
-                                <div class="cell item--controls">
-                                    <gr-dropdown class="dropdown--icon">
-                                        <template slot="trigger">
-                                            <icon name="cog"></icon>
-                                        </template>
-                                        <ul slot="menu">
-                                            <li><a>Disable</a></li>
-                                            <li><a>Edit</a></li>
-                                            <li><a>Delete</a></li>
-                                        </ul>
-                                    </gr-dropdown>
+                                <div class="row item" v-for="item in list">
+                                    <div class="cell item--img">
+                                        <div></div>
+                                    </div>
+                                    <div class="cell">
+                                        <div class="item-title">{{ item.name }}</div>
+                                    </div>
+                                    <div class="cell">
+                                        {{ item.username }}
+                                    </div>
+                                    <div class="cell">
+                                        {{ item.dateAdded }}
+                                    </div>
+                                    <div class="cell item--controls">
+                                        <gr-dropdown class="dropdown--icon">
+                                            <template slot="trigger">
+                                                <icon name="cog"></icon>
+                                            </template>
+                                            <ul slot="menu">
+                                                <li><a>Disable</a></li>
+                                                <li><a @click="editItem(item.id)">Edit</a></li>
+                                                <li><a>Delete</a></li>
+                                            </ul>
+                                        </gr-dropdown>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
+
             </div>
 
         </div>
-
-    </div>
+    </template>

@@ -17,7 +17,6 @@ namespace Contao;
  * @property string $ua
  * @property array  $javascripts
  * @property array  $stylesheets
- * @property string $mootools
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
@@ -77,6 +76,19 @@ class BackendTemplate extends Template
 			$this->stylesheets .= '<link rel="stylesheet" href="' . $this->addStaticUrlTo('assets/contao/css/debug.css') . '">' . "\n";
 		}
 
+        if (!empty($GLOBALS['COMPONENTS']) && is_array($GLOBALS['COMPONENTS'])) {
+            $strJsTemplates = '';
+
+            foreach ($GLOBALS['COMPONENTS'] as $id=>$componentArr) {
+                $GLOBALS['TL_JAVASCRIPT'][] = $componentArr[0];
+                if (!empty($componentArr[1])) {
+                    $strJsTemplates .= Template::generateJsTemplate($id.'-template', $componentArr[1]) . "\n";
+                }
+            }
+
+            $this->jsTemplates = $strJsTemplates;
+        }
+
 		// JavaScripts
 		if (!empty($GLOBALS['TL_JAVASCRIPT']) && is_array($GLOBALS['TL_JAVASCRIPT']))
 		{
@@ -93,7 +105,7 @@ class BackendTemplate extends Template
 
         // JavaScripts Templates
         if (!empty($GLOBALS['TL_JS_TEMPLATES']) && is_array($GLOBALS['TL_JS_TEMPLATES'])) {
-            $strJsTemplates = '';
+            $strJsTemplates = $this->jsTemplates;
 
             foreach (array_unique($GLOBALS['TL_JS_TEMPLATES']) as $id=>$template) {
                 $strJsTemplates .= Template::generateJsTemplate($id, $template) . "\n";

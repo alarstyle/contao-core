@@ -18,6 +18,8 @@
 require_once dirname(dirname(__FILE__)).'/classes/RepositorySettings.php';
 
 use Contao\Config;
+use Contao\Input;
+use Contao\System;
 
 
 /**

@@ -8,6 +8,11 @@
  * @license LGPL-3.0+
  */
 
+
+
+$rest_json = file_get_contents("php://input");
+$_POST = json_decode($rest_json, true) ?: $_POST;
+
 // Set the script name
 define('TL_SCRIPT', 'index.php');
 

@@ -83,7 +83,7 @@
 
             load: function () {
                 var component = this;
-                return raccoon.get('/contao/filemanager', {params: {path: this.currentPath}}).then(function (res) {
+                return grow.get('/contao/filemanager', {params: {path: this.currentPath}}).then(function (res) {
                         component.items = res.data.items || [];
                         component.selected = [];
                     }, function () {
@@ -155,7 +155,7 @@
                         console.log(percentCompleted);
                     }
                 };
-                raccoon.post('/contao/filemanager', data, config)
+                grow.post('/contao/filemanager', data, config)
                     .then(function (res) {
                         console.log(res);
                         //output.className = 'container';

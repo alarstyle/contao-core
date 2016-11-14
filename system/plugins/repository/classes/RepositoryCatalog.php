@@ -12,6 +12,7 @@
  */
 
 use Contao\Config;
+use Contao\Input;
 
 /**
  * Implements the extension catalog

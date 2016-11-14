@@ -72,7 +72,27 @@ class Application
             }
 
             $controller = $controllerClass ? new $controllerClass() : $this->getBackendController();
-            $controller->run();
+            if (Environment::get('isAjaxRequest')) {
+                $actionName = Input::post('ACTION');
+
+                if ($controller->ajaxActions && !empty($controller->ajaxActions[$actionName])) {
+
+                    header('Content-type: application/json');
+
+                    $data = call_user_func([$controller, $controller->ajaxActions[$actionName]]);
+
+                    exit(json_encode($data));
+
+                }
+                else {
+                    echo 'no such action';
+                    exit;
+                }
+                //$controller->
+            }
+            else {
+                $controller->run();
+            }
 
         } else {
             $controller = new \Contao\Controllers\BackendLogin();

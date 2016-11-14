@@ -41,12 +41,14 @@
   ?>"></script>
     <script><?= $this->getDateString() ?></script>
 
-    <script> window.APP_DATA = <?= $this->appData ?>;</script>
+    <script>
+        window.APP_DATA = <?= $this->appData ?>;
+    </script>
 
 </head>
 <body id="top" class="<?php if ($this->isPopup) echo ' popup'; ?>">
 
-<div id="app">
+<div id="app" :class="{ initialized }">
 
 <?php if (!$this->isPopup): ?>
 
@@ -101,7 +103,6 @@
 
 <div id="container">
 
-        <h1 class="main_headline"><?= $this->headline ?></h1>
         <?php if ($this->managerHref): ?>
         <div id="manager">
             <a href="<?= $this->managerHref ?>" class="close" title="<?= specialchars($this->manager) ?>"><?= $this->
@@ -126,7 +127,7 @@
     <?= $this->javascripts ?>
 
     <script>
-        raccoon.initApp();
+        grow.initApp();
     </script>
 
 </body>

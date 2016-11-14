@@ -1,0 +1,53 @@
+<div class="gr-form">
+    <div class="field" v-for="field in fields">
+
+        <template v-if="field.type === 'text'">
+            <label class="field-label">{{ field.label }}</label>
+            <input type="text" @change="onChange" v-model="field.value" class="form-control">
+            <div class="field-hint">
+                {{ field.hint }}
+            </div>
+        </template>
+
+        <template v-if="field.type === 'textarea'">
+            <label class="field-label">{{ field.label }}</label>
+            <textarea v-model="field.value" class="form-control"></textarea>
+            <div class="field-hint">
+                {{ field.hint }}
+            </div>
+        </template>
+
+        <template v-if="field.type === 'password'">
+            <label class="field-label">{{ field.label }}</label>
+            PASSWORD
+            <div class="field-hint">
+                {{ field.hint }}
+            </div>
+        </template>
+
+        <template v-if="field.type === 'select'">
+            <label class="field-label">{{ field.label }}</label>
+            SELECT
+            <div class="field-hint">
+                {{ field.hint }}
+            </div>
+        </template>
+
+        <template v-if="field.type === 'checkbox'">
+            <label class="field-label">{{ field.label }}</label>
+            CHECKBOX
+            <div class="field-hint">
+                {{ field.hint }}
+            </div>
+        </template>
+
+        <template v-if="field.type === 'textStore'">
+            <label class="field-label">{{ field.label }}</label>
+            TEXTSTORE
+            <div class="field-hint">
+                {{ field.hint }}
+            </div>
+        </template>
+
+    </div>
+</div>

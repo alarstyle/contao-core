@@ -668,7 +668,7 @@ body.popup {
 /* Container */
 #container {
   margin: 0 auto;
-  padding: 0 50px; }
+  padding: 20px 50px; }
 
 /* Buttons */
 #tl_buttons, #tl_buttons_a {
@@ -685,15 +685,6 @@ body.popup {
   opacity: .8; }
 
 /* Data container */
-h1.main_headline {
-  margin: 0;
-  padding: 4px 8px 6px;
-  color: #fff;
-  border-radius: 3px 3px 0 0; }
-
-.popup h1.main_headline {
-  display: none; }
-
 h2.sub_headline, h2.sub_headline_all, h2.sub_headline_update, h2.sub_headline_index, h2.sub_headline_rss {
   margin: 3px 18px 9px;
   padding: 6px 0 8px 36px;

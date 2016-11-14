@@ -13,7 +13,7 @@
 	};
 
 
-	var raccoon = {
+	var grow = {
 
 		get: function(url, config) {
 			config = config ? config : {};
@@ -38,15 +38,25 @@
 			return axios.post(url, data, config);
 		},
 
+		action: function(actionName, data) {
+			data = data ? data : {};
+
+			data = _.defaults({'ACTION': actionName}, data);
+
+			return grow.post(window.location.pathname, data);
+		},
+
 		initApp: function() {
+			var Vue = window.ExtendedVue || window.Vue;
+
+			var appData = _.defaults({initialized: false}, APP_DATA);
+
 			new Vue({
 
 				el: '#app',
 
 				data: function() {
-					return {
-
-					}
+					return appData;
 				},
 
 				methods: {
@@ -55,6 +65,10 @@
 
 					}
 
+				},
+
+				created: function () {
+					this.initialized = true;
 				}
 
 			});
@@ -62,6 +76,6 @@
 
 	};
 
-	window.raccoon = raccoon;
+	window.grow = grow;
 
 }());

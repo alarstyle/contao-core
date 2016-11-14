@@ -272,7 +272,11 @@ class BackendMain extends Backend
 		$this->Template->buildCacheText = Lang::get('MSC::buildCacheText');
 		$this->Template->buildCacheHref = $this->addToUrl('bic=1');
 		$this->Template->isPopup = Input::get('popup');
-		$this->Template->appData = ApplicationData::getJson();
+		$this->Template->appData = ApplicationData::dataAsJson();
+
+        if ($this->jsFile) {
+            $GLOBALS['TL_JAVASCRIPT'][] = $this->jsFile;
+        }
 
 		// Hide the cache message in the repository manager (see #5966)
 		if (!Config::get('bypassCache') && $this->User->isAdmin)

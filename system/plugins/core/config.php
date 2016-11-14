@@ -611,10 +611,22 @@ $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/lodash.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/axios.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/core.js';
 
-$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/gr-modal.js';
-$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/gr-dropdown.js';
-$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/components/icon.js';
 
+$GLOBALS['COMPONENTS']['icon'] = [
+    '/system/plugins/core/assets/js/components/icon.js'
+];
 
-$GLOBALS['TL_JS_TEMPLATES']['gr-modal-template'] = '/system/plugins/core/assets/js/components/gr-modal.html';
-$GLOBALS['TL_JS_TEMPLATES']['gr-dropdown-template'] = '/system/plugins/core/assets/js/components/gr-dropdown.html';
+$GLOBALS['COMPONENTS']['gr-modal'] = [
+    '/system/plugins/core/assets/js/components/gr-modal.js',
+    '/system/plugins/core/assets/js/components/gr-modal.html'
+];
+
+$GLOBALS['COMPONENTS']['gr-dropdown'] = [
+    '/system/plugins/core/assets/js/components/gr-dropdown.js',
+    '/system/plugins/core/assets/js/components/gr-dropdown.html'
+];
+
+$GLOBALS['COMPONENTS']['gr-form'] = [
+    '/system/plugins/core/assets/js/components/gr-form.js',
+    '/system/plugins/core/assets/js/components/gr-form.html'
+];
