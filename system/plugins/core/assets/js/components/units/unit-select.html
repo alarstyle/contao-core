@@ -1,0 +1,7 @@
+    <div class="unit unit--select" :class="{'unit--error': error}">
+        <label class="unit-label">{{ label }}</label>
+        <select @change="onInputChange" class="unit-select">
+            <option v-for="option in options" :value="option.value" :selected="value === option.value">{{ option.label }}</option>
+        </select>
+        <div class="unit-hint">{{ error || hint }}</div>
+    </div>

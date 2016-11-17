@@ -79,9 +79,9 @@ class Application
 
                     header('Content-type: application/json');
 
-                    $data = call_user_func([$controller, $controller->ajaxActions[$actionName]]);
+                    call_user_func([$controller, $controller->ajaxActions[$actionName]]);
 
-                    exit(json_encode($data));
+                    ActionData::output();
 
                 }
                 else {

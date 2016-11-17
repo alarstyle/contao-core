@@ -227,7 +227,7 @@ abstract class Statement
 	 * @param integer $intRows   The maximum number of rows
 	 * @param integer $intOffset The number of rows to skip
 	 *
-	 * @return \Database\Statement The statement object
+	 * @return Statement The statement object
 	 */
 	public function limit($intRows, $intOffset=0)
 	{
@@ -250,7 +250,7 @@ abstract class Statement
 	/**
 	 * Execute the query and return the result object
 	 *
-	 * @return \Database\Result|object The result object
+	 * @return Result|object The result object
 	 */
 	public function execute()
 	{
@@ -272,7 +272,7 @@ abstract class Statement
 	 *
 	 * @param string $strQuery The query string
 	 *
-	 * @return \Database\Result|\Database\Statement The result object or the statement object if there is no result set
+	 * @return Result|Statement The result object or the statement object if there is no result set
 	 *
 	 * @throws \Exception If the query cannot be executed
 	 */
@@ -503,7 +503,7 @@ abstract class Statement
 	 * @param resource $resResult The database result
 	 * @param string   $strQuery  The query string
 	 *
-	 * @return \Database\Result The result object
+	 * @return Result The result object
 	 */
 	abstract protected function createResult($resResult, $strQuery);
 
@@ -511,7 +511,7 @@ abstract class Statement
 	/**
 	 * Bypass the cache and always execute the query
 	 *
-	 * @return \Database\Result The result object
+	 * @return Result The result object
 	 *
 	 * @deprecated Use Database\Statement::execute() instead
 	 */
@@ -524,7 +524,7 @@ abstract class Statement
 	/**
 	 * Always execute the query and add or replace an existing cache entry
 	 *
-	 * @return \Database\Result The result object
+	 * @return Result The result object
 	 *
 	 * @deprecated Use Database\Statement::execute() instead
 	 */

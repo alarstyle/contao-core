@@ -10,28 +10,32 @@
 
         data: function() {
             return {
-                models: {}
+                changedFields: {}
             }
         },
 
         watch: {
-            fields: function(newFileds) {
-                console.log('fields changed');
+            fields: function() {
+                console.log('changed');
             }
-        },
-
-        mounted: function() {
-
         },
 
         methods: {
 
-            onChange: function(e) {
-                console.log(e);
+            onChange: function(value, unit) {
+                this.changedFields[unit.id] = value;
             },
 
-            isValuesChanges: function() {
-                return true;
+            getData: function() {
+                return this.changedFields;
+            },
+
+            showErrors: function(errorData) {
+                _.forEach(this.fields, function(field, i) {
+                    //if (!errorData[field.name]) return;
+                    //console.log(field.name);
+                    //field.error = 'true';
+                });
             }
 
         }

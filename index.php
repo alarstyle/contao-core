@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao Open Source CMS
- *
- * Copyright (c) 2005-2016 Leo Feyer
- *
- * @license LGPL-3.0+
- */
-
-
-
 $rest_json = file_get_contents("php://input");
 $_POST = json_decode($rest_json, true) ?: $_POST;
 

@@ -337,7 +337,7 @@ abstract class Result
 	/**
 	 * Go to the next row of the current result
 	 *
-	 * @return \Database\Result|boolean The result object or false if there is no next row
+	 * @return Result|boolean The result object or false if there is no next row
 	 */
 	public function next()
 	{

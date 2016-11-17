@@ -12,7 +12,9 @@ use Contao\BackendTemplate;
 use Contao\Environment;
 use Contao\Input;
 use Contao\System;
+use Grow\ActionData;
 use Grow\ApplicationData;
+use Grow\Organizer;
 
 class Users extends \Contao\Controllers\BackendMain
 {
@@ -20,7 +22,8 @@ class Users extends \Contao\Controllers\BackendMain
     public $ajaxActions = [
         'getGroups' => 'ajaxGetGroups',
         'getList' => 'ajaxGetList',
-        'getListItem' => 'ajaxGetListItem'
+        'getListItem' => 'ajaxGetListItem',
+        'saveItem' => 'ajaxSaveItem'
     ];
 
     protected $config = [];
@@ -30,6 +33,8 @@ class Users extends \Contao\Controllers\BackendMain
     protected $listTable = null;
 
     protected $jsFile = '/system/plugins/core/assets/js/controllers/list.js';
+
+    protected $listOrganizer;
 
 
     public function __construct($config = null)
@@ -44,8 +49,8 @@ class Users extends \Contao\Controllers\BackendMain
             $this->listTable = $this->config['list']['table'];
         }
 
-        System::loadLanguageFile($this->listTable);
-        $this->loadDataContainer($this->listTable);
+
+        $this->listOrganizer = new Organizer($this->listTable);
 
         parent::__construct();
     }
@@ -280,7 +285,7 @@ class Users extends \Contao\Controllers\BackendMain
             $list[$i] = $this->generateItemForList($item, $listFields);
         }
 
-        return $list;
+        ActionData::data('list', $list);
     }
 
 
@@ -292,29 +297,34 @@ class Users extends \Contao\Controllers\BackendMain
 
     public function ajaxGetListItem()
     {
-
         $id = Input::post('id');
 
-        // Get the current record
-        $objRow = $this->Database->prepare("SELECT * FROM " . $this->listTable . " WHERE id=?")
-            ->limit(1)
-            ->execute($id);
-
-        // Redirect if there is no record with the given ID
-        if ($objRow->numRows < 1) {
-            $this->log('Could not load record "' . $this->strTable . '.id=' . $this->intId . '"', __METHOD__, TL_ERROR);
+        if ($id === 'new') {
+            $fields = $this->listOrganizer->blank();
+        }
+        else {
+            $fields = $this->listOrganizer->load($id);
         }
 
-        $fetchedRow = $objRow->next();
-        $item = [];
+        ActionData::data('fields', $fields);
+    }
 
-        $fields = $this->getFields();
 
-        foreach ($fields as &$field) {
-            $field['value'] = $fetchedRow->$field['name'];
+    public function ajaxSaveItem()
+    {
+        $id = Input::post('id');
+        $fields = Input::post('fields');
+
+        if ($id === 'new') {
+            $result = $this->listOrganizer->create($fields);
+        }
+        else {
+            $result = $this->listOrganizer->save($id, $fields);
         }
 
-        return $fields;
+        if ($result !== true) {
+            ActionData::error($result);
+        }
     }
 
 }

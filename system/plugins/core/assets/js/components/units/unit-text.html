@@ -1,0 +1,5 @@
+    <div class="unit unit--text" :class="{'unit--error': error}">
+        <label class="unit-label">{{ label }}<span v-if="required">*</span></label>
+        <input type="text" @change="onInputChange" :value="value" class="unit-input">
+        <div class="unit-hint">{{ error || hint }}</div>
+    </div>

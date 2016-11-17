@@ -132,7 +132,7 @@ abstract class Database
 	 *
 	 * @param array $arrCustom A configuration array
 	 *
-	 * @return \Database The Database object
+	 * @return Database The Database object
 	 */
 	public static function getInstance(array $arrCustom=null)
 	{
@@ -174,7 +174,7 @@ abstract class Database
 	 *
 	 * @param string $strQuery The query string
 	 *
-	 * @return \Database\Statement The Database\Statement object
+	 * @return Database\Statement The Database\Statement object
 	 */
 	public function prepare($strQuery)
 	{
@@ -187,7 +187,7 @@ abstract class Database
 	 *
 	 * @param string $strQuery The query string
 	 *
-	 * @return \Database\Result|object The Database\Result object
+	 * @return Database\Result|object The Database\Result object
 	 */
 	public function execute($strQuery)
 	{
@@ -200,7 +200,7 @@ abstract class Database
 	 *
 	 * @param string $strQuery The query string
 	 *
-	 * @return \Database\Result|object The Database\Result object
+	 * @return Database\Result|object The Database\Result object
 	 */
 	public function query($strQuery)
 	{

@@ -1,8 +1,8 @@
-(function() {
+(function () {
 
     var List = {
 
-        data: function() {
+        data: function () {
             return {
                 state: '',
                 groups: [],
@@ -12,11 +12,9 @@
             }
         },
 
-        watch: {
+        watch: {},
 
-        },
-
-        mounted: function() {
+        mounted: function () {
 
             this.showList();
 
@@ -24,44 +22,59 @@
 
         methods: {
 
-            showList: function() {
+            showList: function () {
                 var _this = this;
                 this.currentId = null;
                 grow.action('getList')
                     .then(function (response) {
-                        _this.list = response.data;
+                        _this.list = response.data.data.list;
                         _this.state = 'list';
                     });
             },
 
-            editItem: function(id) {
+            editItem: function (id) {
                 var _this = this;
                 grow.action('getListItem', {id: id})
                     .then(function (response) {
-                        _this.fields = response.data;
+                        _this.currentId = id;
+                        _this.fields = response.data.data.fields;
                         _this.state = 'edit_item';
                     });
             },
 
-            newItem: function() {
-                this.currentId = null;
-                // grow.action('getListItem', {id: 1})
-                //     .then(function (response) {
-                //         console.log(response.data);
-                //     });
-                this.state = 'edit_item';
+            newItem: function () {
+                this.editItem('new');
             },
 
-            saveItem: function() {
+            saveItem: function () {
                 var _this = this;
-                grow.action('saveItem', {id: id})
-                    .then(function (response) {
+                var fieldsValues = _this.$refs.form.getData();
+                if (!Object.keys(fieldsValues).length) {
+                    console.log('Nothing was changed');
+                    return;
+                }
 
+                fieldsValues = JSON.parse(JSON.stringify(fieldsValues));
+                console.log(fieldsValues);
+                grow.action('saveItem', {id: _this.currentId, fields: fieldsValues})
+                    .then(function (response) {
+                        if (response.data.error) {
+                            _this.showErrors(response.data.errorData);
+                            //_this.$refs.form.showErrors(response.data.errorData);
+                        }
                     });
             },
 
-            cancelEditItem: function() {
+            cancelEditItem: function () {
                 this.showList();
+            },
+
+            showErrors: function (errorData) {
+                console.log(errorData);
+                _.forEach(this.fields, function(field, i) {
+                    if (!errorData[field.name]) return;
+                    field.error = errorData[field.name][0];
+                });
             }
 
         }

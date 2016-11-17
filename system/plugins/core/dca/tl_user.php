@@ -149,6 +149,7 @@ $GLOBALS['TL_DCA']['tl_user'] = array
 			'sorting'                 => true,
 			'flag'                    => 1,
 			'inputType'               => 'text',
+            'required'                => true,
 			'eval'                    => array('mandatory'=>true, 'rgxp'=>'extnd', 'nospace'=>true, 'unique'=>true, 'maxlength'=>64),
 			'sql'                     => "varchar(64) COLLATE utf8_bin NULL"
 		),
@@ -160,6 +161,7 @@ $GLOBALS['TL_DCA']['tl_user'] = array
 			'sorting'                 => true,
 			'flag'                    => 1,
 			'inputType'               => 'text',
+            'required'                => true,
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
@@ -169,6 +171,7 @@ $GLOBALS['TL_DCA']['tl_user'] = array
 			'exclude'                 => true,
 			'search'                  => true,
 			'inputType'               => 'text',
+            'required'                => true,
 			'eval'                    => array('mandatory'=>true, 'rgxp'=>'email', 'maxlength'=>255, 'unique'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
@@ -234,6 +237,7 @@ $GLOBALS['TL_DCA']['tl_user'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['MSC']['password'],
 			'exclude'                 => true,
 			'inputType'               => 'password',
+            'required'                => true,
 			'eval'                    => array('mandatory'=>true, 'preserveTags'=>true, 'minlength'=>\Contao\Config::get('minPasswordLength')),
 			'sql'                     => "varchar(128) NOT NULL default ''"
 		),

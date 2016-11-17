@@ -13,6 +13,33 @@
 	};
 
 
+	window.scrollTo = function(domElement, offset, ifNotInViewport) {
+		if (!domElement) return;
+		if (isNaN(offset)) offset = 0;
+
+		var top = domElement.offsetTop + offset;
+
+		if (ifNotInViewport && top + 20 > window.pageYOffset && top - 20 < window.pageYOffset + window.innerHeight ) {
+			return;
+		}
+
+		document.documentElement.scrollTop = document.body.scrollTop = top;
+	};
+
+
+	window.AbstractUnit = {
+		props: {
+			id: String,
+			label: String,
+			hint: String,
+			error: {type: String, default: null},
+			required: {type: Boolean, default: false},
+			value: {},
+			config: {}
+		}
+	};
+
+
 	var grow = {
 
 		get: function(url, config) {

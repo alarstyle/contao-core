@@ -239,6 +239,37 @@ $GLOBALS['BE_FFL'] = array
 
 
 /**
+ * UNITS
+ */
+$GLOBALS['UNITS'] = array
+(
+	'text'           => 'Grow\\Units\\Text',
+	'password'       => 'Grow\\Units\\Password',
+	'textarea'       => 'Grow\\Units\\TextArea',
+    'select'         => 'Grow\\Units\\Select',
+    'checkbox'       => 'Grow\\Units\\CheckBox',
+    'checkboxWizard' => 'Grow\\Units\\CheckBoxWizard',
+    'radio'          => 'Grow\\Units\\Radio',
+    'radioTable'     => 'Grow\\Units\\RadioTable',
+//    'inputUnit'      => 'Grow\\Units\\InputUnit',
+//    'trbl'           => 'Grow\\Units\\TrblField',
+//    'chmod'          => 'Grow\\Units\\ChmodTable',
+//    'pageTree'       => 'Grow\\Units\\PageTree',
+//    'pageSelector'   => 'Grow\\Units\\PageSelector',
+//    'fileTree'       => 'Grow\\Units\\FileTree',
+//    'fileSelector'   => 'Grow\\Units\\FileSelector',
+//    'fileUpload'     => 'Grow\\Units\\Upload',
+//    'tableWizard'    => 'Grow\\Units\\TableWizard',
+//    'listWizard'     => 'Grow\\Units\\ListWizard',
+//    'optionWizard'   => 'Grow\\Units\\OptionWizard',
+//    'moduleWizard'   => 'Grow\\Units\\ModuleWizard',
+//    'keyValueWizard' => 'Grow\\Units\\KeyValueWizard',
+//    'imageSize'      => 'Grow\\Units\\ImageSize',
+//    'metaWizard'     => 'Grow\\Units\\MetaWizard'
+);
+
+
+/**
  * Front end form fields
  */
 $GLOBALS['TL_FFL'] = array
@@ -607,26 +638,66 @@ $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/Sortable.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vue.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vue-router.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/plugins/vue-sortable.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/plugins/vue-tooltip.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/lodash.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/axios.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/core.js';
 
 
-$GLOBALS['COMPONENTS']['icon'] = [
-    '/system/plugins/core/assets/js/components/icon.js'
-];
-
-$GLOBALS['COMPONENTS']['gr-modal'] = [
-    '/system/plugins/core/assets/js/components/gr-modal.js',
-    '/system/plugins/core/assets/js/components/gr-modal.html'
-];
-
-$GLOBALS['COMPONENTS']['gr-dropdown'] = [
-    '/system/plugins/core/assets/js/components/gr-dropdown.js',
-    '/system/plugins/core/assets/js/components/gr-dropdown.html'
-];
-
-$GLOBALS['COMPONENTS']['gr-form'] = [
-    '/system/plugins/core/assets/js/components/gr-form.js',
-    '/system/plugins/core/assets/js/components/gr-form.html'
+$GLOBALS['COMPONENTS'] = [
+    'icon'  => [
+        '/system/plugins/core/assets/js/components/icon.js'
+    ],
+    'notice'  => [
+        '/system/plugins/core/assets/js/components/notice.js',
+        '/system/plugins/core/assets/js/components/notice.html'
+    ],
+    'pagination'  => [
+        '/system/plugins/core/assets/js/components/pagination.js',
+        '/system/plugins/core/assets/js/components/pagination.html'
+    ],
+    'gr-modal' => [
+        '/system/plugins/core/assets/js/components/gr-modal.js',
+        '/system/plugins/core/assets/js/components/gr-modal.html'
+    ],
+    'gr-dropdown' => [
+        '/system/plugins/core/assets/js/components/gr-dropdown.js',
+        '/system/plugins/core/assets/js/components/gr-dropdown.html'
+    ],
+    'gr-form' => [
+        '/system/plugins/core/assets/js/components/gr-form.js',
+        '/system/plugins/core/assets/js/components/gr-form.html'
+    ],
+    'unit-text' => [
+        '/system/plugins/core/assets/js/components/units/unit-text.js',
+        '/system/plugins/core/assets/js/components/units/unit-text.html'
+    ],
+    'unit-password' => [
+        '/system/plugins/core/assets/js/components/units/unit-password.js',
+        '/system/plugins/core/assets/js/components/units/unit-password.html'
+    ],
+    'unit-textarea' => [
+        '/system/plugins/core/assets/js/components/units/unit-textarea.js',
+        '/system/plugins/core/assets/js/components/units/unit-textarea.html'
+    ],
+    'unit-select' => [
+        '/system/plugins/core/assets/js/components/units/unit-select.js',
+        '/system/plugins/core/assets/js/components/units/unit-select.html'
+    ],
+    'unit-checkbox' => [
+        '/system/plugins/core/assets/js/components/units/unit-checkbox.js',
+        '/system/plugins/core/assets/js/components/units/unit-checkbox.html'
+    ],
+    'unit-checkbox-wizard' => [
+        '/system/plugins/core/assets/js/components/units/unit-checkbox-wizard.js',
+        '/system/plugins/core/assets/js/components/units/unit-checkbox-wizard.html'
+    ],
+    'unit-radio' => [
+        '/system/plugins/core/assets/js/components/units/unit-radio.js',
+        '/system/plugins/core/assets/js/components/units/unit-radio.html'
+    ],
+    'unit-radio-table' => [
+        '/system/plugins/core/assets/js/components/units/unit-radio-table.js',
+        '/system/plugins/core/assets/js/components/units/unit-radio-table.html'
+    ]
 ];
