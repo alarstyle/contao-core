@@ -1,4 +1,7 @@
-    <div class="unit unit--checkbox" :class="{'unit--error': error}">
-        <label class="unit-label"><input type="checkbox" :checked="value" @change="onInputChange"> {{ label }}</label>
+    <div class="unit unit--checkbox" :class="unitClass">
+        <label class="unit-label">
+            <div class="checkbox"><input type="checkbox" :checked="value" @change="onInputChange"><b></b></div>
+            {{ label }}
+        </label>
         <div class="unit-hint">{{ error || hint }}</div>
     </div>

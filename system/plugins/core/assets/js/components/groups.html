@@ -1,0 +1,12 @@
+    <div class="groups">
+        <div class="groups-head">
+            <div class="groups-title">{{ title }}</div>
+        </div>
+        <ul>
+            <li v-for='item in list'
+                @click="onGroupClick" class="active">{{ item.name }}</li>
+        </ul>
+        <div class="groups-new">
+            <a @clik="newGroup">Add User Group</a>
+        </div>
+    </div>

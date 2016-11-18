@@ -1,0 +1,29 @@
+    <div class="listing-table">
+
+        <table v-if="items.length">
+            <thead v-if="headers.length">
+                <tr>
+                    <th v-for="header in headers">{{ header.label }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in items">
+                    <td v-for="(field, i) in item.fields" :class="'cell--' + headers[i].name">
+                        <div v-if="field.operations">
+                            <div class="operations">
+                                <a v-for="operation in field.operations"
+                                   :title="operation.label"
+                                   @click="emitOperation(item.id, operation.name)">
+                                    <icon :name="operation.icon"></icon>
+                                </a>
+                            </div>
+                        </div>
+                        <div v-else v-html="field"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div v-else="No data"></div>
+
+    </div>

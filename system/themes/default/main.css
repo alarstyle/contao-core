@@ -305,13 +305,7 @@ a {
 .navigation .active {
   color: #77ac45; }
 
-fieldset, form, input, optgroup, select, textarea {
-  font-family: "Trebuchet MS",Verdana,sans-serif; }
-
 /* Font size and color */
-fieldset, form, input, optgroup, select, textarea {
-  font-size: 12px; }
-
 h1, h2, h3, h4, h5, h6 {
   font-size: 12px; }
 
@@ -668,7 +662,7 @@ body.popup {
 /* Container */
 #container {
   margin: 0 auto;
-  padding: 20px 50px; }
+  padding: 40px 50px; }
 
 /* Buttons */
 #tl_buttons, #tl_buttons_a {

@@ -1,13 +1,16 @@
-    <div class="unit unit--radio" :class="{'unit--error': error}">
+    <div class="unit unit--radio" :class="unitClass">
         <label class="unit-label">{{ label }}</label>
         <ul v-if="options.length">
             <li v-for="option in options">
                 <label>
-                    <input type="radio"
-                           :name="id"
-                           :value="option.value"
-                           :checked="value === option.value"
-                           @change="onInputChange">
+                    <div class="radio">
+                        <input type="radio"
+                               :name="id"
+                               :value="option.value"
+                               :checked="value === option.value"
+                               @change="onInputChange">
+                        <b></b>
+                    </div>
                     {{ option.label }}
                 </label>
             </li>

@@ -22,19 +22,7 @@
 
             <div class="column-2-10">
 
-                <div class="sidebar">
-                    <div class="sidebar-head">
-                        Groups
-                    </div>
-                    <div class="sidebar-body">
-                        <ul class="sidebar-list">
-                            <li>All Users</li>
-                            <li>Copywriters</li>
-                            <li>Managers</li>
-                        </ul>
-                        <div class="btn btn--link">Add User Category</div>
-                    </div>
-                </div>
+                <groups title="Groups" :data="groupsData"></groups>
 
             </div>
 
@@ -49,6 +37,8 @@
                         <div class="main-search"></div>
                     </div>
                     <div class="main-body">
+
+                        <listing-table @operation="onOperation"></listing-table>
 
                         <div class="listing">
                             <div class="flex_table">
@@ -78,9 +68,9 @@
                                                 <icon name="cog"></icon>
                                             </template>
                                             <ul slot="menu">
-                                                <li><a>Disable</a></li>
+                                                <li><a @click="disableItem(item.id)">Disable</a></li>
                                                 <li><a @click="editItem(item.id)">Edit</a></li>
-                                                <li><a>Delete</a></li>
+                                                <li><a @click="deleteItem(item.id)">Delete</a></li>
                                             </ul>
                                         </gr-dropdown>
                                     </div>

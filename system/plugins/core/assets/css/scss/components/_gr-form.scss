@@ -1,4 +1,5 @@
 .gr-form {
+    @extend .clearfix;
     background: #fff;
     border-radius: 4px;
     margin-bottom: 20px;

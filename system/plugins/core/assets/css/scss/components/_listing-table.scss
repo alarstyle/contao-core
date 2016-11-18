@@ -1,0 +1,36 @@
+.listing-table {
+    table {
+        border-collapse: separate;
+        border-spacing: 0 8px;
+        margin-top: -8px;
+        width: 100%;
+    }
+    th, td {
+        vertical-align: middle;
+        text-align: left;
+    }
+    th {
+        color: #93999e;
+        font-weight: bold;
+        padding: 0 18px 4px;
+    }
+    td {
+        background: #fff;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, .1);
+        padding-top: 14px;
+        padding-bottom: 14px;
+        > div {
+            padding: 14px 18px;
+        }
+        &:first-child {
+            border-radius: 4px 0 0 4px;
+        }
+        &:last-child {
+            border-radius: 0 4px 4px 0;
+        }
+    }
+    .cell--img,
+    .cell--operations {
+        width: 20px;
+    }
+}

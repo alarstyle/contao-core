@@ -66,6 +66,10 @@ abstract class AbstractUnit
             $unitData['value'] = deserialize($value);
         }
 
+        if ($this->fieldData['eval']['tl_class']) {
+            $unitData['config']['class'] = $this->fieldData['eval']['tl_class'];
+        }
+
         return $unitData;
     }
 

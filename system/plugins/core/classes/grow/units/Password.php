@@ -12,7 +12,7 @@ class Password extends AbstractUnit
 
     public function getUnitData($value)
     {
-        return parent::getUnitData($value !== '' ? '******' : '');
+        return parent::getUnitData(!empty($value) ? '******' : '');
     }
 
 

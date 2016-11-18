@@ -8,23 +8,7 @@
 
 
 
-
-
-
-
-fieldset,form,input,optgroup,select,textarea {
-    font-family:"Trebuchet MS",Verdana,sans-serif;
-}
-
 /* Font size and color */
-a,body,div,label,legend,li,ol,p,td,th,ul,fieldset,form,input,optgroup,select,textarea {
-    //font-size:11px;
-    //font-size:.6875rem;
-}
-fieldset,form,input,optgroup,select,textarea {
-    font-size:12px;
-    //font-size:.75rem;
-}
 h1,h2,h3,h4,h5,h6 {
     font-size:12px;
     //font-size:.75rem;
@@ -392,8 +376,8 @@ body.popup {
 
 /* Container */
 #container {
-    margin:0 auto;
-    padding: 20px 50px;
+    margin: 0 auto;
+    padding: 40px 50px;
 }
 
 /* Buttons */

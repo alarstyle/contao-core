@@ -1,12 +1,15 @@
-    <div class="unit unit--checkbox-wizard" :class="{'unit--error': error}">
+    <div class="unit unit--checkbox-wizard" :class="unitClass">
         <label class="unit-label">{{ label }}</label>
         <ul v-if="options.length">
             <li v-for="option in options">
                 <label>
-                    <input type="checkbox"
-                           :value="option.value"
-                           :checked="isChecked(option.value)"
-                           @change="onInputChange">
+                    <div class="checkbox">
+                        <input type="checkbox"
+                               :value="option.value"
+                               :checked="isChecked(option.value)"
+                               @change="onInputChange">
+                        <b></b>
+                    </div>
                     {{ option.label }}
                 </label>
             </li>

@@ -36,6 +36,16 @@
 			required: {type: Boolean, default: false},
 			value: {},
 			config: {}
+		},
+
+		computed: {
+			unitClass: function() {
+				var c = this.config.class ? [this.config.class] : [];
+				if (this.error) {
+					c.push('unit--error');
+				}
+				return c;
+			}
 		}
 	};
 

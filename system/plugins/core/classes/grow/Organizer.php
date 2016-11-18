@@ -26,8 +26,39 @@ class Organizer
     }
 
 
+    public function blank()
+    {
+        return $this->getUnitsData();
+    }
+
+
+    public function load($id)
+    {
+        $objRow = $this->database->prepare("SELECT * FROM " . $this->table . " WHERE id=?")
+            ->limit(1)
+            ->execute($id);
+
+        // Redirect if there is no record with the given ID
+        if ($objRow->numRows < 1) {
+            $this->log('Could not load record "' . $this->strTable . '.id=' . $this->intId . '"', __METHOD__, TL_ERROR);
+            throw new \Exception('No record found');
+        }
+
+        $fetchedRow = $objRow->fetchAssoc();
+
+        $unitsData = $this->getUnitsData($fetchedRow);
+
+        return $unitsData;
+    }
+
+
     public function create($fieldsValues)
     {
+
+        foreach ($fieldsValues as $value) {
+
+        }
+
         $errors = $this->validate($fieldsValues);
 
         if (!empty($errors)) {
@@ -35,7 +66,7 @@ class Organizer
         }
 
         $objInsertStmt = $this->database->prepare("INSERT INTO " . $this->table . " %s")
-            ->set($this->set)
+            ->set($fieldsValues)
             ->execute();
 
         return true;
@@ -70,7 +101,24 @@ class Organizer
 
     public function delete($id)
     {
+        if (empty($id)) {
+            return 'ID is not set';
+        }
 
+        $this->database->prepare("DELETE FROM " . $this->table . " WHERE id=?")
+            ->execute($id);
+
+        return true;
+    }
+
+
+    public function disable($id)
+    {
+        if (empty($id)) {
+            return 'ID is not set';
+        }
+
+        return true;
     }
 
 
@@ -80,87 +128,7 @@ class Organizer
     }
 
 
-    public function load($id)
-    {
-        $objRow = $this->database->prepare("SELECT * FROM " . $this->table . " WHERE id=?")
-            ->limit(1)
-            ->execute($id);
-
-        // Redirect if there is no record with the given ID
-        if ($objRow->numRows < 1) {
-            $this->log('Could not load record "' . $this->strTable . '.id=' . $this->intId . '"', __METHOD__, TL_ERROR);
-            throw new \Exception('No record found');
-        }
-
-        $fetchedRow = $objRow->fetchAssoc();
-
-        $unitsData = $this->getUnitsData($fetchedRow);
-//
-//        foreach ($unitsData as &$unitData) {
-//            $unitData['value'] = $fetchedRow->$unitData['name'];
-//        }
-
-        return $unitsData;
-    }
-
-
-    public function blank()
-    {
-        return $this->getUnitsData();
-    }
-
-
-    protected function getFieldsData()
-    {
-        $fieldsData = [];
-
-        $tableData = $GLOBALS['TL_DCA'][$this->table];
-        $palette = $tableData['palettes']['default'];
-        $boxes = trimsplit(';', $palette);
-        $fields = [];
-        $fieldsNames = [];
-
-        if (empty($boxes)) return $fields;
-
-        foreach ($boxes as $k => $v) {
-            $eCount = 1;
-            $boxes[$k] = trimsplit(',', $v);
-
-
-            foreach ($boxes[$k] as $kk => $vv) {
-                if (preg_match('/^\[.*\]$/', $vv)) {
-                    ++$eCount;
-                    continue;
-                }
-
-                if (preg_match('/^\{.*\}$/', $vv)) {
-                    continue;
-                } elseif ($GLOBALS['TL_DCA'][$this->table]['fields'][$vv]['exclude1'] || !is_array($GLOBALS['TL_DCA'][$this->listTable]['fields'][$vv])) {
-                    continue;
-                }
-                $fieldsNames[] = $vv;
-            }
-        }
-
-        foreach ($fieldsNames as $fieldName) {
-            $fieldData = $GLOBALS['TL_DCA'][$this->table]['fields'][$fieldName];
-            if (empty($fieldData['inputType'])) continue;
-            $fields[$fieldName] = [
-                'name' => $fieldName,
-                'type' => $fieldData['inputType'],
-                'label' => is_array($fieldData['label']) ? $fieldData['label'][0] : $fieldName,
-                'hint' => is_array($fieldData['label']) ? $fieldData['label'][1] : '',
-                'value' => ''
-            ];
-        }
-
-        return $fields;
-
-        return $fieldsData;
-    }
-
-
-    public function getUnitsData($row)
+    public function getUnitsData($row = NULL)
     {
         $tableData = $GLOBALS['TL_DCA'][$this->table];
         $palette = $tableData['palettes']['default'];
@@ -227,12 +195,6 @@ class Organizer
         }
 
         return $errors;
-    }
-
-
-    protected function getFieldsNames()
-    {
-
     }
 
 

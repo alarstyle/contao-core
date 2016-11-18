@@ -101,7 +101,7 @@ $GLOBALS['NAVIGATION'] = [
     ],
     'users' => [
         'label' => 'Users',
-        'controller' => 'Grow\\Controllers\\Users',
+        'controller' => 'Grow\\Controllers\\ListingWithGroups',
         'config' => [
             'group' => [
                 'table' => 'tl_user_group'
@@ -551,7 +551,7 @@ $GLOBALS['TL_MODELS']['tl_files'] = 'Contao\\Models\\FilesModel';
 	'be_referer'          => 'system/plugins/core/templates/backend',
 	'be_switch'           => 'system/plugins/core/templates/backend',
 	'be_unavailable'      => 'system/plugins/core/templates/backend',
-	'be_users'            => 'system/plugins/core/templates/backend',
+	'be_listing'            => 'system/plugins/core/templates/backend',
 	'be_welcome'          => 'system/plugins/core/templates/backend',
 	'be_wildcard'         => 'system/plugins/core/templates/backend',
 	'block_searchable'    => 'system/plugins/core/templates/block',
@@ -667,6 +667,14 @@ $GLOBALS['COMPONENTS'] = [
     'gr-form' => [
         '/system/plugins/core/assets/js/components/gr-form.js',
         '/system/plugins/core/assets/js/components/gr-form.html'
+    ],
+    'groups' => [
+        '/system/plugins/core/assets/js/components/groups.js',
+        '/system/plugins/core/assets/js/components/groups.html'
+    ],
+    'listing-table' => [
+        '/system/plugins/core/assets/js/components/listing-table.js',
+        '/system/plugins/core/assets/js/components/listing-table.html'
     ],
     'unit-text' => [
         '/system/plugins/core/assets/js/components/units/unit-text.js',
