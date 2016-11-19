@@ -128,6 +128,79 @@ class Organizer
     }
 
 
+    public function getListHeaders()
+    {
+        $tableData = $GLOBALS['TL_DCA'][$this->table];
+        $listFields = $tableData['list']['label']['fields_new'] ?: $tableData['list']['label']['fields'];
+        $headers = [];
+
+        foreach ($listFields as $fieldName) {
+            if (!isset($tableData['fields'][$fieldName])) continue;
+            $field = $tableData['fields'][$fieldName];
+            $headers[] = [
+                'name' => $fieldName,
+                'label' => $field['label'][0] ?: ''
+            ];
+        }
+
+        $headers[] = [
+            'name' => 'operations',
+            'label' => ''
+        ];
+
+        return $headers;
+    }
+
+
+    public function getList($limit = 20, $skip = 0)
+    {
+        $query = "SELECT * FROM " . $this->table;
+
+        $objRowStmt = $this->database->prepare($query);
+
+        $objRowStmt->limit($limit, $skip);
+
+        $objRow = $objRowStmt->execute();
+
+        if ($objRow->numRows < 1) {
+            return 'No data';
+        }
+
+        $result = $objRow->fetchAllAssoc();
+
+        $list = [];
+        $tableData = $GLOBALS['TL_DCA'][$this->table];
+        $listFields = $tableData['list']['label']['fields_new'] ?: $tableData['list']['label']['fields'];
+
+        $operationsData = $tableData['list']['operations'];
+        $operations = [];
+
+        foreach ($operationsData as $operationName=>$operationData) {
+            if (!isset($operationData['icon_new'])) continue;
+            $operations[] = [
+                'name' => $operationName,
+                'label' => $operationData['label'][0] ?: $operationName,
+                'icon' => $operationData['icon_new']
+            ];
+        }
+
+        foreach ($result as $i => $item) {
+            $itemData = [
+                'id' => $item['id'],
+                'fields' => []
+            ];
+            foreach ($listFields as $fieldName) {
+                if (!isset($tableData['fields'][$fieldName])) continue;
+                $itemData['fields'][] = $item[$fieldName] ?: '';
+            }
+            $itemData['fields'][]['operations'] = $operations;
+            $list[] = $itemData;
+        }
+
+        return $list;
+    }
+
+
     public function getUnitsData($row = NULL)
     {
         $tableData = $GLOBALS['TL_DCA'][$this->table];

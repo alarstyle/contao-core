@@ -4,6 +4,8 @@
     'be_filemanager' => 'system/plugins/filemanager/templates',
 ]);
 
+$GLOBALS['GLOBAL_ACTIONS']['filemanagerList'] = ['Grow\\Controllers\\FilemanagerController', 'ajaxList'];
+$GLOBALS['GLOBAL_ACTIONS']['filemanagerUpload'] = ['Grow\\Controllers\\FilemanagerController', 'ajaxUpload'];
 
 /**
  * Back end form fields
@@ -11,12 +13,10 @@
 $GLOBALS['BE_FFL']['filePicker'] = 'Raccoon\\Editors\\FilePicker';
 
 
-$GLOBALS['BE_MOD']['system']['filemanager'] = ['callback' => 'Contao\\FileManager'];
-
 $GLOBALS['TL_CSS'][] = '/system/plugins/filemanager/assets/css/filemanager.css';
 
 
-$GLOBALS['RC_ROUTES']['filemanager'] = 'Contao\\Controllers\\FileManagerController';
+//$GLOBALS['RC_ROUTES']['filemanager'] = 'Contao\\Controllers\\FileManagerController';
 
 
 $GLOBALS['COMPONENTS']['rc-filemanager'] = [

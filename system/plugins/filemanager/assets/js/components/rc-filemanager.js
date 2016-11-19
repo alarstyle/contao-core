@@ -46,26 +46,6 @@
 
         },
 
-        created: function() {
-            console.log('created');
-
-            window.addEventListener('keydown', function(e) {
-
-            });
-
-            this.currentPath = this.path;
-
-            this.$watch('path', function (path) {
-                console.log('wwww');
-                this.currentPath = this.path;
-                //this.$session.set('finder.' + this.root + '.path', path);
-            });
-        },
-
-        mounted: function () {
-            this.$el.querySelector('.upload_input').addEventListener('change', this.onUploadChange, true);
-        },
-
         watch: {
 
             selected: function(items) {
@@ -83,8 +63,9 @@
 
             load: function () {
                 var component = this;
-                return grow.get('/contao/filemanager', {params: {path: this.currentPath}}).then(function (res) {
-                        component.items = res.data.items || [];
+                return grow.action('filemanagerList', {path: this.currentPath})
+                    .then(function (response) {
+                        component.items = response.data.data.items || [];
                         component.selected = [];
                     }, function () {
                         alert('Error loading data');
@@ -169,6 +150,26 @@
                     });
             }
 
+        },
+
+        created: function() {
+            console.log('created');
+
+            window.addEventListener('keydown', function(e) {
+
+            });
+
+            this.currentPath = this.path;
+
+            this.$watch('path', function (path) {
+                console.log('wwww');
+                this.currentPath = this.path;
+                //this.$session.set('finder.' + this.root + '.path', path);
+            });
+        },
+
+        mounted: function () {
+            this.$el.querySelector('.upload_input').addEventListener('change', this.onUploadChange, true);
         }
 
     };

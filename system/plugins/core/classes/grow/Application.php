@@ -6,6 +6,7 @@ use Contao\BackendUser;
 use Contao\Config;
 use Contao\Environment;
 use Contao\Input;
+use Contao\System;
 
 class Application
 {
@@ -54,6 +55,7 @@ class Application
         $arrPath = $this->arrRouteStack;
 
         $backendUser = BackendUser::getInstance();
+
         if (isset($arrPath[1]) && $backendUser->authenticate()) {
 
             $controllerClass = null;
@@ -69,6 +71,21 @@ class Application
                     die;
                 }
 
+            }
+
+            if (Environment::get('isAjaxRequest')) {
+                $actionName = Input::post('ACTION');
+                if (isset($GLOBALS['GLOBAL_ACTIONS'][$actionName])) {
+                    $actionCallback = $GLOBALS['GLOBAL_ACTIONS'][$actionName];
+                    if (is_array($actionCallback)) {
+                        System::importStatic($actionCallback[0])->{$actionCallback[1]}();
+                    }
+                    elseif (is_callable($actionCallback)) {
+                        $actionCallback();
+                    }
+
+                    ActionData::output();
+                }
             }
 
             $controller = $controllerClass ? new $controllerClass() : $this->getBackendController();

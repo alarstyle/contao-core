@@ -113,7 +113,7 @@ $GLOBALS['NAVIGATION'] = [
     ],
     'filemanager' => [
         'label' => 'Filemanager',
-        'controller' => 'Contao\\Controllers\\FileManagerController'
+        'controller' => 'Grow\\Controllers\\FileManagerController'
     ],
     'setting' => [
         'label' => 'Setting',

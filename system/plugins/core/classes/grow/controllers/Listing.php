@@ -90,6 +90,8 @@ class Listing extends \Contao\Controllers\BackendMain
         }
 
         ActionData::data('list', $list);
+        ActionData::data('headers', $this->listOrganizer->getListHeaders());
+        ActionData::data('items', $this->listOrganizer->getList());
     }
 
 

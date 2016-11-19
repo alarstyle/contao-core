@@ -1,18 +1,37 @@
 <?php
 
-namespace Contao\Controllers;
+namespace Grow\Controllers;
 
+use Contao\BackendTemplate;
 use Contao\Config;
+use Contao\Controllers\BackendMain;
 use Contao\FileUpload;
 use Contao\Input;
 use Contao\Message;
+
+use Grow\ActionData;
 
 use Symfony\Component\Finder\Finder;
 
 class FileManagerController extends BackendMain
 {
 
-    public function run() {
+
+    public function __construct($config = null)
+    {
+        parent::__construct();
+    }
+
+
+    protected function generateMainSection()
+    {
+        $objTemplate = new BackendTemplate('be_filemanager');
+
+        $this->Template->main = $objTemplate->parse();
+    }
+
+
+    public function run1() {
 
         header('Content-type: application/json');
 
@@ -115,6 +134,50 @@ class FileManagerController extends BackendMain
         $sizes = ['%d B', '%d  KB', '%d  MB', '%d  GB', '%d TB', '%d PB', '%d EB', '%d ZB', '%d YB'];
         $size  = round($size/pow(1024, ($i = floor(log($size, 1024)))), 2);
         return sprintf($sizes[$i], $size);
+    }
+
+
+    public function ajaxList()
+    {
+        $items = [];
+
+        $path = Input::post('path');
+        $dir = TL_ROOT . $path;
+
+        if (empty($path) || !is_dir($dir)) {
+            return;
+        }
+
+        $finder = new Finder();
+        $finder->depth(0)->in($dir);
+
+        foreach ($finder as $file) {
+
+            $info = [
+                'name'     => $file->getFilename(),
+                'mime'     => 'application/'.($file->isDir() ? 'folder':'file'),
+                'path'     => $this->normalizePath($path.'/'.$file->getFilename()),
+                //'url'      => ltrim(App::url()->getStatic($file->getPathname(), [], 'base'), '/'),
+                //'writable' => $mode == 'w'
+            ];
+
+            if (!$file->isDir()) {
+                $info = array_merge($info, [
+                    'size'         => $this->formatFileSize($file->getSize()),
+                    'lastmodified' => date(\DateTime::ATOM, $file->getMTime())
+                ]);
+            }
+
+            $items[] = $info;
+        }
+
+        ActionData::data('items', $items);
+    }
+
+
+    public function ajaxUpload()
+    {
+
     }
 
 }

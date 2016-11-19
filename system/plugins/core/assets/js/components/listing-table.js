@@ -5,19 +5,13 @@
         template: '#listing-table-template',
 
         props: {
-            headers1: {type: Array, default: function() { return []; }},
-            items1: {type: Array, default: function() { return []; }}
+            headers: {type: Array, default: function() { return []; }},
+            items: {type: Array, default: function() { return []; }}
         },
 
         data: function () {
             return {
-                headers: [
-                    { name: 'img', label: ''},
-                    { name: 'name', label: 'User Name'},
-                    { name: 'category', label: 'User Category'},
-                    { name: 'operations', label: ''}
-                ],
-                items: [
+                items1: [
                     {
                         id: 1,
                         fields: [

@@ -1,6 +1,6 @@
 <?php
 
-namespace Raccoon\Editors;
+namespace Grow\Editors;
 
 use Contao\Config;
 use Contao\Environment;

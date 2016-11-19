@@ -6,6 +6,8 @@
             return {
                 state: '',
                 groupsData: {},
+                listHeaders: [],
+                listItems: [],
                 list: [],
                 fields: [],
                 currentId: null
@@ -37,6 +39,8 @@
                 this.currentId = null;
                 grow.action('getList')
                     .then(function (response) {
+                        _this.listHeaders = response.data.data.headers;
+                        _this.listItems = response.data.data.items;
                         _this.list = response.data.data.list;
                         _this.state = 'list';
                     });
