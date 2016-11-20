@@ -1,4 +1,5 @@
-    <div class="gr-modal" v-show="isOpened">
+    <div class="gr-modal" v-show="isOpened" tabindex="-1">
+        <div @click="close" class="gr-modal-overlay"></div>
         <div class="gr-modal-dialog">
 
             <div class="gr-modal-header">
@@ -13,7 +14,7 @@
                 <slot name="footer"></slot>
             </div>
 
-            <div @click.prevent="close" class="gr-modal-close"></div>
+            <div @click="close" class="gr-modal-close"></div>
 
         </div>
     </div>

@@ -6,7 +6,7 @@
         render: function(createElement) {
             return createElement(
                 'svg',
-                { class: 'icon', attrs: { 'xmlns': 'http://www.w3.org/2000/svg' } },
+                { class: 'icon icon--' + this.name, attrs: { 'xmlns': 'http://www.w3.org/2000/svg' } },
                 [
                     createElement(
                         'use',

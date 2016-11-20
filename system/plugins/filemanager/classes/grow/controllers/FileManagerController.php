@@ -5,9 +5,14 @@ namespace Grow\Controllers;
 use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\Controllers\BackendMain;
+use Contao\Date;
+use Contao\Environment;
 use Contao\FileUpload;
+use Contao\Folder;
 use Contao\Input;
 use Contao\Message;
+use Contao\Session;
+use Contao\Validator;
 
 use Grow\ActionData;
 
@@ -17,57 +22,28 @@ class FileManagerController extends BackendMain
 {
 
 
+    protected $session;
+
+
     public function __construct($config = null)
     {
         parent::__construct();
+
+        $this->session = Session::getInstance();
     }
 
 
-    protected function generateMainSection()
+    public function ajaxList()
     {
-        $objTemplate = new BackendTemplate('be_filemanager');
+        $items = [];
 
-        $this->Template->main = $objTemplate->parse();
-    }
-
-
-    public function run1() {
-
-        header('Content-type: application/json');
-
-        if (Input::post('action')) {
-            switch (Input::post('action')) {
-
-                case 'upload':
-
-                    $uploadPath = ltrim(Input::post('upload_path'), '/');
-                    $objUploader = new FileUpload();
-
-                    $arrUploaded = $objUploader->uploadTo($uploadPath);
-
-                    if ($objUploader->hasError()) {
-                        die(json_encode('error'));
-                    }
-
-                    die(json_encode('ok'));
-                    break;
-
-                default:
-                    die(json_encode('no such action'));
-                    break;
-
-            }
-        }
-
-        $data = [
-            'items' => []
-        ];
-
-        $path = Input::get('path');
+        $uploadPath = Config::get('uploadPath');
+        $path = Input::post('path');
         $dir = TL_ROOT . $path;
 
+
         if (empty($path) || !is_dir($dir)) {
-            die(json_encode($data));
+            return;
         }
 
         $finder = new Finder();
@@ -86,17 +62,102 @@ class FileManagerController extends BackendMain
             if (!$file->isDir()) {
                 $info = array_merge($info, [
                     'size'         => $this->formatFileSize($file->getSize()),
-                    'lastmodified' => date(\DateTime::ATOM, $file->getMTime())
+                    'lastmodified' => Date::parse(Config::get('datimFormat'), $file->getMTime())
                 ]);
             }
 
-            $data['items'][] = $info;
+            $items[] = $info;
         }
 
+        $this->session->set('filemanager_path', $path);
 
-        die(json_encode($data));
+        ActionData::data('items', $items);
     }
 
+
+    public function ajaxUpload()
+    {
+        $uploadPath = ltrim(Input::post('upload_path'), '/');
+        $objUploader = new FileUpload();
+
+        $arrUploaded = $objUploader->uploadTo($uploadPath);
+
+        if ($objUploader->hasError()) {
+            ActionData::error('Error uploading');
+        }
+    }
+
+
+    public function ajaxNewFolder()
+    {
+        $path = Input::post('path');
+        $folderName = Input::post('folderName');
+        $dir = TL_ROOT . $path . '/' . $folderName;
+
+        if (!$this->validateFolderName($path, $folderName)) {
+            return;
+        }
+
+        if (is_dir($dir)) {
+            ActionData::error('Folder with this name already exists');
+            return;
+        }
+
+        mkdir($dir);
+        return;
+    }
+
+
+    public function ajaxRename()
+    {
+
+    }
+
+
+    public function ajaxDelete()
+    {
+        $path = Input::post('path');
+        $fullPath = TL_ROOT . $path;
+
+        if (Validator::isInsecurePath($path)) {
+            $this->log('Trying to delete with insecure path "'.$path.'"', __METHOD__, TL_ERROR);
+            ActionData::error('Insecure path');
+            return;
+        }
+
+        // Check whether the parent folder is within the files directory
+        if (!preg_match('/^\/'.preg_quote(Config::get('uploadPath'), '/').'/i', $path)) {
+            $this->log('Parent folder "'.$path.'" is not within the files directory', __METHOD__, TL_ERROR);
+            ActionData::error('Invalid path');
+            return;
+        }
+
+        if (is_file($fullPath)) {
+            unlink($fullPath);
+        }
+        elseif (is_dir($fullPath)) {
+            $folder = new Folder($path);
+            $folder->delete();
+        }
+    }
+
+
+    protected function generateMainSection()
+    {
+        $objTemplate = new BackendTemplate('be_filemanager');
+
+        $savedPath = $this->session->get('filemanager_path');
+
+        if (!is_dir(TL_ROOT . $savedPath)) {
+            $savedPath = null;
+        }
+
+        $objTemplate->uploadPath = '/' . Config::get('uploadPath');
+        $objTemplate->startPath = $savedPath ?: $objTemplate->uploadPath;
+        $objTemplate->baseUrl = Environment::get('base');
+
+        $this->Template->main = $objTemplate->parse();
+    }
 
 
     /**
@@ -137,47 +198,28 @@ class FileManagerController extends BackendMain
     }
 
 
-    public function ajaxList()
+    protected function validateFolderName($path, $folderName)
     {
-        $items = [];
-
-        $path = Input::post('path');
-        $dir = TL_ROOT . $path;
-
-        if (empty($path) || !is_dir($dir)) {
-            return;
+        if (empty($path) || empty($folderName)) {
+            ActionData::error('No path specified');
+            return false;
         }
 
-        $finder = new Finder();
-        $finder->depth(0)->in($dir);
-
-        foreach ($finder as $file) {
-
-            $info = [
-                'name'     => $file->getFilename(),
-                'mime'     => 'application/'.($file->isDir() ? 'folder':'file'),
-                'path'     => $this->normalizePath($path.'/'.$file->getFilename()),
-                //'url'      => ltrim(App::url()->getStatic($file->getPathname(), [], 'base'), '/'),
-                //'writable' => $mode == 'w'
-            ];
-
-            if (!$file->isDir()) {
-                $info = array_merge($info, [
-                    'size'         => $this->formatFileSize($file->getSize()),
-                    'lastmodified' => date(\DateTime::ATOM, $file->getMTime())
-                ]);
-            }
-
-            $items[] = $info;
+        if (Validator::isInsecurePath($path) || Validator::isInsecurePath($folderName) || !Validator::isValidFileName($folderName) || $folderName[0] === '.')
+        {
+            $this->log('Folder "'.$path.'" is not valid', __METHOD__, TL_ERROR);
+            ActionData::error('Invalid folder name');
+            return false;
         }
 
-        ActionData::data('items', $items);
-    }
+        // Check whether the parent folder is within the files directory
+        if (!preg_match('/^\/'.preg_quote(Config::get('uploadPath'), '/').'/i', $path)) {
+            $this->log('Parent folder "'.$path.'" is not within the files directory', __METHOD__, TL_ERROR);
+            ActionData::error('Invalid folder path');
+            return false;
+        }
 
-
-    public function ajaxUpload()
-    {
-
+        return true;
     }
 
 }

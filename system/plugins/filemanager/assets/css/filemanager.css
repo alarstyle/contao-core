@@ -1,12 +1,11 @@
-.disable-select, .filemanager-items th,
-.filemanager-items td {
+.disable-select, .filemanager-items td {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none; }
 
-.clearfix:after {
+.clearfix:after, .filemanager:after {
   content: "";
   display: table;
   clear: both; }
@@ -39,35 +38,94 @@
   width: 25px;
   height: 25px; }
 
-.filemanager ul {
-  list-style: none; }
-.filemanager:after {
-  clear: both;
-  content: '';
-  height: 0; }
+.filemanager {
+  position: absolute;
+  top: 125px;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+  .filemanager ul {
+    list-style: none; }
+  .filemanager:after {
+    clear: both;
+    content: '';
+    height: 0; }
+
+.filemanager-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 0;
+  height: 60px;
+  padding: 15px 20px;
+  width: 100%; }
+  .filemanager-controls .btn {
+    font-size: 14px; }
+  .filemanager-controls .btn-group,
+  .filemanager-controls .btn {
+    margin-right: 10px; }
 
 .filemanager-filters {
-  border-right: 1px solid #333;
-  float: left;
+  background: #fff;
+  border-right: 1px solid #ecf0f1;
+  position: absolute;
+  left: 0;
+  top: 60px;
+  bottom: 0;
   min-height: 100px;
-  width: 200px; }
+  width: 0; }
 
-.filemanager-preview {
-  border-left: 1px solid #333;
-  float: left;
+.filemanager-info {
+  background: #fff;
+  border-left: 1px solid #ecf0f1;
+  position: absolute;
+  right: 0;
+  top: 60px;
+  bottom: 0;
   min-height: 100px;
   width: 300px; }
+  .filemanager-info label,
+  .filemanager-info th {
+    color: #95a5a6;
+    font-weight: bold;
+    text-transform: uppercase;
+    white-space: nowrap; }
+  .filemanager-info th, .filemanager-info td {
+    padding: 5px 20px 5px 0; }
+  .filemanager-info .inner {
+    padding: 20px; }
+  .filemanager-info a {
+    color: #3387dc;
+    text-decoration: underline; }
 
-.filemanager-main {
-  float: left;
-  min-height: 100px;
-  width: calc(100% - 500px); }
+.filemanager-info-message {
+  color: #bdc3c7;
+  text-align: center;
+  padding: 60px 0 40px 0; }
+  .filemanager-info-message .icon {
+    display: block;
+    margin: 0 auto 20px;
+    width: 50px;
+    height: 50px; }
+
+.filemanager-preview {
+  background: no-repeat 50% 50% / contain;
+  height: 220px; }
+
+.filemanager-info-title div {
+  margin: 5px 0; }
 
 .filemanager-breadcrumbs {
-  border-bottom: 1px solid #333;
-  float: left;
-  padding: 20px;
-  width: calc(100% - 200px); }
+  background: #fff;
+  border-bottom: 1px solid #ecf0f1;
+  color: #666;
+  font-weight: bold;
+  padding: 10px 10px 10px 20px;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 300px;
+  height: 40px; }
   .filemanager-breadcrumbs li {
     display: inline-block;
     vertical-align: middle; }
@@ -76,24 +134,51 @@
       display: inline-block;
       vertical-align: middle;
       margin: 0 5px; }
-    .filemanager-breadcrumbs li:first-child:before {
-      display: none; }
     .filemanager-breadcrumbs li div {
       cursor: pointer;
       display: inline-block;
       vertical-align: middle; }
 
+.filemanager-main {
+  background: #fff;
+  overflow: auto;
+  position: absolute;
+  top: 100px;
+  left: 0;
+  right: 300px;
+  bottom: 0; }
+
 .filemanager-items {
-  padding: 20px; }
+  padding: 20px 0 50px; }
   .filemanager-items table {
     width: 100%; }
-  .filemanager-items th,
+  .filemanager-items tr:nth-child(odd) td {
+    background: #fafafa; }
   .filemanager-items td {
-    padding: 5px; }
+    padding: 10px 6px; }
+    .filemanager-items td div {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap; }
+    .filemanager-items td:first-child {
+      padding-left: 30px; }
+    .filemanager-items td:last-child {
+      padding-right: 30px; }
   .filemanager-items .selected td {
     background: #4ea5e0 !important;
     color: #fff; }
+  .filemanager-items .selected .icon--folder {
+    color: #fff; }
   .filemanager-items .item-icon {
+    color: #999;
     width: 30px; }
+  .filemanager-items .icon--folder {
+    color: #4ea5e0; }
+
+.gr-modal--new_folder .gr-modal-dialog {
+  max-width: 300px; }
+.gr-modal--new_folder .unit {
+  padding: 0;
+  margin: 0; }
 
 /*# sourceMappingURL=filemanager.css.map */

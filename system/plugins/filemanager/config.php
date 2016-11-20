@@ -6,6 +6,9 @@
 
 $GLOBALS['GLOBAL_ACTIONS']['filemanagerList'] = ['Grow\\Controllers\\FilemanagerController', 'ajaxList'];
 $GLOBALS['GLOBAL_ACTIONS']['filemanagerUpload'] = ['Grow\\Controllers\\FilemanagerController', 'ajaxUpload'];
+$GLOBALS['GLOBAL_ACTIONS']['filemanagerNewFolder'] = ['Grow\\Controllers\\FilemanagerController', 'ajaxNewFolder'];
+$GLOBALS['GLOBAL_ACTIONS']['filemanagerRename'] = ['Grow\\Controllers\\FilemanagerController', 'ajaxRename'];
+$GLOBALS['GLOBAL_ACTIONS']['filemanagerDelete'] = ['Grow\\Controllers\\FilemanagerController', 'ajaxDelete'];
 
 /**
  * Back end form fields

@@ -2,7 +2,18 @@
 
 @import "components/rc-filepicker";
 
+$controlsHeight: 60px;
+$breadcrumbsHeight: 40px;
+$filtersWidth: 0;//200px;
+$infoWidth: 300px;
+
 .filemanager {
+    @extend .clearfix;
+    position: absolute;
+    top: 125px;
+    left: 0;
+    right: 0;
+    bottom: 0;
     ul {
         list-style: none;
     }
@@ -14,34 +25,97 @@
 }
 
 .filemanager-controls {
-
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 0;
+    height: $controlsHeight;
+    padding: 15px 20px;
+    width: 100%;
+    .btn {
+        font-size: 14px;
+    }
+    .btn-group,
+    .btn {
+        margin-right: 10px;
+    }
 }
 
 .filemanager-filters {
-    border-right: 1px solid #333;
-    float: left;
+    background: #fff;
+    border-right: 1px solid #ecf0f1;
+    position: absolute;
+    left: 0;
+    top: $controlsHeight;
+    bottom: 0;
     min-height: 100px;
-    width: 200px;
+    width: $filtersWidth;
+}
+
+.filemanager-info {
+    background: #fff;
+    border-left: 1px solid #ecf0f1;
+    position: absolute;
+    right: 0;
+    top: $controlsHeight;
+    bottom: 0;
+    min-height: 100px;
+    width: $infoWidth;
+    table {
+    }
+    label,
+    th {
+        color: #95a5a6;
+        font-weight: bold;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+    th, td {
+        padding: 5px 20px 5px 0;
+    }
+    .inner {
+        padding: 20px;
+    }
+    a {
+        color: #3387dc;
+        text-decoration: underline;
+    }
+}
+
+.filemanager-info-message {
+    color: #bdc3c7;
+    text-align: center;
+    padding: 60px 0 40px 0;
+    .icon {
+        display: block;
+        margin: 0 auto 20px;
+        width: 50px;
+        height: 50px;
+    }
 }
 
 .filemanager-preview {
-    border-left: 1px solid #333;
-    float: left;
-    min-height: 100px;
-    width: 300px;
+    background: no-repeat 50% 50% / contain;
+    height: 220px;
 }
 
-.filemanager-main {
-    float: left;
-    min-height: 100px;
-    width: calc(100% - 500px);
+.filemanager-info-title {
+    div {
+        margin: 5px 0;
+    }
 }
 
 .filemanager-breadcrumbs {
-    border-bottom: 1px solid #333;
-    float: left;
-    padding: 20px;
-    width: calc(100% - 200px);
+    background: #fff;
+    border-bottom: 1px solid #ecf0f1;
+    color: #666;
+    font-weight: bold;
+    padding: 10px 10px 10px 20px;
+    position: absolute;
+    top: $controlsHeight;
+    left: $filtersWidth;
+    right: $infoWidth;
+    height: $breadcrumbsHeight;
     li {
         display: inline-block;
         vertical-align: middle;
@@ -51,9 +125,6 @@
             vertical-align: middle;
             margin: 0 5px;
         }
-        &:first-child:before {
-            display: none;
-        }
         div {
             cursor: pointer;
             display: inline-block;
@@ -62,23 +133,65 @@
     }
 }
 
+.filemanager-main {
+    background: #fff;
+    overflow: auto;
+    position: absolute;
+    top: $controlsHeight + $breadcrumbsHeight;
+    left: $filtersWidth;
+    right: $infoWidth;
+    bottom: 0;
+}
+
 .filemanager-items {
-    padding: 20px;
+    padding: 20px 0 50px;
     table {
         width: 100%;
     }
-    th,
+    tr {
+        &:nth-child(odd) td {
+            background: #fafafa;
+        }
+    }
     td {
         @extend .disable-select;
-        padding: 5px;
+        padding: 10px 6px;
+        div {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        &:first-child {
+            padding-left: 30px;
+        }
+        &:last-child {
+            padding-right: 30px;
+        }
     }
     .selected {
         td {
             background: #4ea5e0 !important;
             color: #fff;
         }
+        .icon--folder {
+            color: #fff;
+        }
     }
     .item-icon {
+        color: #999;
         width: 30px;
+    }
+    .icon--folder {
+        color: #4ea5e0;
+    }
+}
+
+.gr-modal--new_folder {
+    .gr-modal-dialog {
+        max-width: 300px;
+    }
+    .unit {
+        padding: 0;
+        margin: 0;
     }
 }

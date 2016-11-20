@@ -23,6 +23,7 @@ use Contao\Message;
 use Contao\RequestToken;
 use Contao\StringUtil;
 use Contao\System;
+use Contao\Validator;
 use Contao\Versions;
 use Contao\Models\FilesModel;
 use Contao\Folder;

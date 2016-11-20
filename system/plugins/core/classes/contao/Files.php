@@ -40,7 +40,7 @@ abstract class Files
 
 	/**
 	 * Object instance (Singleton)
-	 * @var \Files
+	 * @var Files
 	 */
 	protected static $objInstance;
 

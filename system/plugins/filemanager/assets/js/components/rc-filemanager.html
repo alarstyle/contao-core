@@ -1,12 +1,14 @@
     <div class="filemanager">
 
         <div class="filemanager-controls">
-            <div class="btn">Upload<input type="file" multiple class="upload_input"></div>
-            <button class="btn">New Folder</button>
-        </div>
-
-        <div class="filemanager-filters">
-            Filters
+            <div class="btn-group">
+                <div class="btn btn--primary"><icon name="upload"></icon> Upload<input type="file" multiple class="upload_input"></div>
+                <button class="btn btn--primary" @click="newFolder"><icon name="folder"></icon> New Folder</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn--primary" @click="renameFile" :disabled="selected.length === 0"><icon name="pencil"></icon> Rename</button>
+                <button class="btn btn--primary" @click="deleteFile" :disabled="selected.length === 0"><icon name="trash"></icon> Delete</button>
+            </div>
         </div>
 
         <div class="filemanager-breadcrumbs">
@@ -17,25 +19,24 @@
 
         <div class="filemanager-main">
             <div class="filemanager-items">
-                <table v-if="items.length">
-                    <thead @click.prevent="test()">
-                        <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Size</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
+                <table v-if="items.length || isToParentVisible">
                     <tbody>
 
-                        <tr v-for="folder in folders" @click="selectItem(folder.path)" @dblclick="setPath(folder.path)" :class="{'selected': isSelected(folder.path)}">
+                        <tr v-if="isToParentVisible" @click="selectToParent" @dblclick="openParentFolder" :class="{'selected': isToParentSelected}">
+                            <td class="item-icon"><icon name="folder"></icon></td>
+                            <td class="item-name"><div>..</div></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <tr v-for="folder in folders" @click="selectItem(folder)" @dblclick="setPath(folder.path)" :class="{'selected': isSelected(folder)}">
                             <td class="item-icon"><icon name="folder"></icon></td>
                             <td class="item-name"><div>{{ folder.name }}</div></td>
                             <td></td>
                             <td></td>
                         </tr>
 
-                        <tr v-for="file in files" @click="selectItem(file.path)" :class="{'selected': isSelected(file.path)}">
+                        <tr v-for="file in files" @click="selectItem(file)" :class="{'selected': isSelected(file)}">
                             <td class="item-icon"><icon name="file-o"></icon></td>
                             <td class="item-name"><div>{{ file.name }}</div></td>
                             <td>{{ file.size }}</td>
@@ -47,9 +48,51 @@
             </div>
         </div>
 
-        <div class="filemanager-preview">
-            Preview
-            <icon name="edit"></icon>
+        <div class="filemanager-info">
+            <div v-if="selected.length > 1">
+                Multiple items selected.
+            </div>
+            <div v-if="selected.length === 1">
+                <div v-if="selected[0].isImage" class="filemanager-preview" :style="'background-image: url(' + selected[0].path + ');'">
+
+                </div>
+                <div class="inner">
+                    <div class="filemanager-info-title"><label>Title:</label> <div class="">{{ selected[0].name }}</div></div>
+                    <table>
+                        <tr v-if="selected[0].size">
+                            <th>Size:</th>
+                            <td> {{ selected[0].size }}</td>
+                        </tr>
+                        <tr>
+                            <th>Public url:</th>
+                            <td><a :href="selected[0].url" target="_blank">Link</a></td>
+                        </tr>
+                        <tr v-if="selected[0].lastmodified">
+                            <th>Last modified:</th>
+                            <td> {{ selected[0].lastmodified }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div v-if="selected.length === 0 && !isToParentSelected" class="filemanager-info-message">
+                <icon name="crop"></icon>
+                Nothing is selected.
+            </div>
+            <div v-if="isToParentSelected" class="filemanager-info-message">
+                <icon name="level-up"></icon>
+                Return to the parent folder
+            </div>
         </div>
+
+        <gr-modal ref="newFolderModal" class="gr-modal--new_folder">
+            <div slot="header">New folder</div>
+            <div class="unit">
+                <input @keyup.enter="newFolderOk" ref="newFolderInput" type="text" class="unit-input">
+            </div>
+            <div slot="footer">
+                <button @click="newFolderOk" class="btn btn--primary">Create</button>
+                <button @click="newFolderCancel" class="btn">Cancel</button>
+            </div>
+        </gr-modal>
 
     </div>

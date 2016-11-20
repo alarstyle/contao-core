@@ -261,7 +261,9 @@ a {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   white-space: nowrap;
   height: 60px;
-  padding-left: 40px; }
+  padding-left: 40px;
+  position: relative;
+  z-index: 10; }
   .navigation > ul {
     height: 100%; }
     .navigation > ul > li {
