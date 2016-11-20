@@ -20,7 +20,12 @@
                 search: '',
                 isToParentVisible: false,
                 isToParentSelected: false,
-                isLoading: false
+                isLoading: false,
+
+                isUploadVisible: false,
+                isUploading: false,
+                uploadingPercent: 0,
+                filesToUpload: []
             }
         },
 
@@ -56,12 +61,32 @@
         watch: {
 
             selected: function (items) {
-                console.log(items.length);
                 this.$emit('selected', items);
             },
 
             currentPath: function (newPath) {
                 this.load()
+            },
+
+            filesToUpload: function() {
+
+                if (this.filesToUpload.length == 0) {
+                    this.load();
+                    return;
+                }
+
+                if (this.isUploading) return;
+
+                this.isUploadVisible = true;
+                this.isUploading = true;
+                
+                var _this = this,
+                    file = this.filesToUpload[0];
+
+                this.upload(file, function() {
+                    _this.isUploading = false;
+                    _this.filesToUpload.shift();
+                });
             }
 
         },
@@ -85,7 +110,6 @@
                             _this.selected = [];
                             _this.isToParentSelected = false;
                             _this.isToParentVisible = _this.currentPath !== _this.root;
-                            console.log(_this.isToParentVisible);
                         }, function () {
                             alert('Error loading data');
                         }
@@ -120,10 +144,8 @@
             },
 
             onUploadChange: function (e) {
-                console.log('change');
-
                 var files = e.target.files || e.dataTransfer.files;
-                console.log(files);
+
                 if (!files.length)
                     return;
 
@@ -133,55 +155,50 @@
                 input.removeEventListener('change', this.onUploadChange, true);
 
                 var newInput = input.cloneNode(false);
-
                 newInput.value = '';
                 newInput.addEventListener('change', this.onUploadChange, true);
-
-                // console.log(input.files);
-                // console.log(newInput.files);
-                //
-                // if (!window.oldInputs) window.oldInputs = [];
-                // window.oldInputs.push(input);
-                // window.newInput = newInput;
 
                 parent.removeChild(input);
                 parent.appendChild(newInput);
 
-                console.log(files);
-
-                this.upload(files);
+                var _this = this;
+                _.forEach(files, function(file) {
+                    _this.filesToUpload.push(file);
+                });
             },
 
-            upload: function (files) {
+            upload: function (file, callback) {
+                var _this = this;
                 var data = new FormData();
-                data.append('action', 'upload');
                 data.append('upload_path', this.currentPath);
-                _.forEach(files, function (file, i) {
-                    data.append('files[' + i + ']', file);
-                });
+                data.append('files[0]', file);
                 var config = {
                     onUploadProgress: function (progressEvent) {
                         var percentCompleted = progressEvent.loaded / progressEvent.total;
-                        console.log(percentCompleted);
+                        _this.uploadingPercent = percentCompleted * 100;
                     }
                 };
-                grow.post('/contao/filemanager', data, config)
-                    .then(function (res) {
-                        console.log(res);
-                        //output.className = 'container';
-                        //output.innerHTML = res.data;
+                grow.action('filemanagerUpload', data, config)
+                    .then(function (response) {
+                        if (response.data.success) {
+
+                        }
+                        else if (response.data.error) {
+
+                        }
+                        else {
+                            alert('Unknown error');
+                        }
+                        callback && callback();
                     })
                     .catch(function (err) {
-                        console.log(err);
                         alert(err);
-                        // output.className = 'container text-danger';
-                        // output.innerHTML = err.message;
                     });
             },
 
             newFolder: function () {
+                this.$refs.newFolderInput.value = '';
                 this.$refs.newFolderModal.open();
-                this.$refs.newFolderInput.focus();
             },
 
             newFolderCancel: function () {
@@ -211,7 +228,35 @@
             },
 
             renameFile: function() {
-                console.log('rename')
+                this.$refs.renameInput.value = this.selected[0].name;
+                this.$refs.renameModal.open();
+            },
+
+            renameOk: function () {
+                var newName = this.$refs.renameInput.value,
+                    _this = this;
+                if (newName === '') return;
+                grow.action('filemanagerRename', {path: this.selected[0].path, newName: newName})
+                    .then(function (response) {
+                            if (response.data.success) {
+                                _this.load();
+                                _this.$refs.renameModal.close();
+                            }
+                            else if (response.data.errorData) {
+                                alert(response.data.errorData[0]);
+                            }
+                            else {
+                                alert('Unknown error');
+                            }
+                        }, function () {
+                            alert('Error loading data');
+                        }
+                    );
+
+            },
+
+            renameCancel: function () {
+                this.$refs.renameModal.close();
             },
 
             deleteFile: function() {
@@ -238,8 +283,6 @@
         },
 
         created: function () {
-            console.log('created');
-
             window.addEventListener('keydown', function (e) {
 
             });
@@ -247,9 +290,7 @@
             this.currentPath = this.path;
 
             this.$watch('path', function (path) {
-                console.log('wwww');
                 this.currentPath = this.path;
-                //this.$session.set('finder.' + this.root + '.path', path);
             });
         },
 

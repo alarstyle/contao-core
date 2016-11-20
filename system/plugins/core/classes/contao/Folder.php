@@ -76,13 +76,13 @@ class Folder extends System
 		}
 
 		// Check whether it is a directory
-		if (is_file(TL_ROOT . '/' . $strFolder))
+		if (is_file(TL_ROOT . '/' . ltrim($strFolder, '/')))
 		{
 			throw new \Exception(sprintf('File "%s" is not a directory', $strFolder));
 		}
 
 		$this->import('Contao\\Files', 'Files');
-		$this->strFolder = $strFolder;
+		$this->strFolder = ltrim($strFolder, '/');
 
 		// Create the folder if it does not exist
 		if (!is_dir(TL_ROOT . '/' . $this->strFolder))

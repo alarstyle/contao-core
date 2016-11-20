@@ -75,12 +75,16 @@
 			return axios.post(url, data, config);
 		},
 
-		action: function(actionName, data) {
+		action: function(actionName, data, config) {
 			data = data ? data : {};
 
-			data = _.defaults({'ACTION': actionName}, data);
+			if (data.append) {
+				data.append('ACTION', actionName);
+			} else {
+				data = _.defaults({'ACTION': actionName}, data);
+			}
 
-			return grow.post(window.location.pathname, data);
+			return grow.post(window.location.pathname, data, config);
 		},
 
 		initApp: function() {

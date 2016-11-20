@@ -131,14 +131,14 @@ class File extends System
 		}
 
 		// Make sure we are not pointing to a directory
-		if (is_dir(TL_ROOT . '/' . $strFile))
+		if (is_dir(TL_ROOT . '/' . ltrim($strFile, '/')))
 		{
 			throw new \Exception(sprintf('Directory "%s" is not a file', $strFile));
 		}
 
 		$this->import('Contao\\Files', 'Files');
 
-		$this->strFile = $strFile;
+		$this->strFile = ltrim($strFile, '/');
 		$this->blnDoNotCreate = $blnDoNotCreate;
 
 		if (!$blnDoNotCreate)

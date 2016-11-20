@@ -8,6 +8,7 @@ use Contao\Controllers\BackendMain;
 use Contao\Date;
 use Contao\Environment;
 use Contao\FileUpload;
+use Contao\File;
 use Contao\Folder;
 use Contao\Input;
 use Contao\Message;
@@ -82,6 +83,8 @@ class FileManagerController extends BackendMain
 
         $arrUploaded = $objUploader->uploadTo($uploadPath);
 
+        ActionData::data('aa', $uploadPath);
+
         if ($objUploader->hasError()) {
             ActionData::error('Error uploading');
         }
@@ -103,13 +106,59 @@ class FileManagerController extends BackendMain
             return;
         }
 
-        mkdir($dir);
-        return;
+        new Folder($path . '/' . $folderName);
     }
 
 
     public function ajaxRename()
     {
+        $path = Input::post('path');
+        $newName = Input::post('newName');
+
+        if (empty($newName)) {
+            ActionData::error('Name cannot be empty');
+            return;
+        }
+
+        if (Validator::isInsecurePath($path)) {
+            $this->log('Trying to rename with insecure path "'.$path.'"', __METHOD__, TL_ERROR);
+            ActionData::error('Insecure path');
+            return;
+        }
+
+        // Check whether the parent folder is within the files directory
+        if (!preg_match('/^\/'.preg_quote(Config::get('uploadPath'), '/').'/i', $path)) {
+            $this->log('Parent folder "'.$path.'" is not within the files directory', __METHOD__, TL_ERROR);
+            ActionData::error('Invalid path');
+            return;
+        }
+
+        if (Validator::isInsecurePath($newName) || !Validator::isValidFileName($newName) || $newName[0] === '.')
+        {
+            ActionData::error('Invalid name');
+            return;
+        }
+
+        $fullPath = TL_ROOT . $path;
+        $newFullPath = dirname($path) . '/' . $newName;
+
+        if (is_file($fullPath)) {
+            $strExtension = strtolower(substr($newName, strrpos($newName, '.') + 1));
+            if (!in_array($strExtension, trimsplit(',', strtolower(Config::get('uploadTypes')))))
+            {
+                ActionData::error(sprintf($GLOBALS['TL_LANG']['ERR']['filetype'], $strExtension));
+                return;
+            }
+            $file = new File($path);
+            $file->renameTo($newFullPath);
+        }
+        elseif (is_dir($fullPath)) {
+            $folder = new Folder($path);
+            $folder->renameTo($newFullPath);
+        }
+        else {
+            ActionData::error('Cannot find original destination');
+        }
 
     }
 
@@ -133,7 +182,8 @@ class FileManagerController extends BackendMain
         }
 
         if (is_file($fullPath)) {
-            unlink($fullPath);
+            $file = new File($path);
+            $file->delete();
         }
         elseif (is_dir($fullPath)) {
             $folder = new Folder($path);
