@@ -10,8 +10,15 @@
             </div>
 
             <div class="column-2-10">
-                <div class="btn" @click="saveItem">Save</div>
-                <div class="btn" @click="cancelEditItem">Cancel</div>
+                <div class="submit_panel">
+                    <div class="submit_panel-title">
+                        Save changes?
+                    </div>
+                    <div class="submit_panel-btns">
+                        <div class="btn" @click="cancelEditItem">Cancel</div>
+                        <div class="btn btn--primary" @click="saveItem">Save</div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -22,7 +29,9 @@
 
             <div class="column-2-10">
 
-                <groups title="Groups" :data="groupsData"></groups>
+                <groups title="Groups"
+                        :data="groupsData"
+                        @group-selected="groupSelected"></groups>
 
             </div>
 
@@ -38,45 +47,7 @@
                     </div>
                     <div class="main-body">
 
-                        <listing-table :headers="listHeaders" :items="listItems" @operation="onOperation"></listing-table>
-
-                        <div class="listing">
-                            <div class="flex_table">
-                                <div class="row row--head">
-                                    <div class="cell item--img"></div>
-                                    <div class="cell">User Name</div>
-                                    <div class="cell">User Category</div>
-                                    <div class="cell">Country Access</div>
-                                    <div class="cell item--controls"></div>
-                                </div>
-                                <div class="row item" v-for="item in list">
-                                    <div class="cell item--img">
-                                        <div></div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="item-title">{{ item.name }}</div>
-                                    </div>
-                                    <div class="cell">
-                                        {{ item.username }}
-                                    </div>
-                                    <div class="cell">
-                                        {{ item.dateAdded }}
-                                    </div>
-                                    <div class="cell item--controls">
-                                        <gr-dropdown class="dropdown--icon">
-                                            <template slot="trigger">
-                                                <icon name="cog"></icon>
-                                            </template>
-                                            <ul slot="menu">
-                                                <li><a @click="disableItem(item.id)">Disable</a></li>
-                                                <li><a @click="editItem(item.id)">Edit</a></li>
-                                                <li><a @click="deleteItem(item.id)">Delete</a></li>
-                                            </ul>
-                                        </gr-dropdown>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <listing-table :headers="listHeaders" :items="listItems" @operation="onListingOperation"></listing-table>
 
                     </div>
                 </div>

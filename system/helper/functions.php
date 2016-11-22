@@ -558,6 +558,13 @@ function array_insert(&$arrCurrent, $intIndex, $arrNew)
 }
 
 
+function array_insert_assoc(&$arrCurrent, $index, $newKey, $newValue) {
+    $arrCurrent = array_slice($arrCurrent, 0, $index, true) +
+        [$newKey => $newValue] +
+        array_slice($arrCurrent, $index, 1, true) ;
+}
+
+
 /**
  * Duplicate a particular element of an array
  *

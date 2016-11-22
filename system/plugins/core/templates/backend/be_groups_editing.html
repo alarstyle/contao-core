@@ -1,0 +1,36 @@
+    <template>
+        <div class="grid">
+
+            <div class="column-2-10">
+                <groups title="<?= $this->groupsTitle ?>"
+                        new-label="<?= $this->groupsNew ?>"
+                        :data="groupsData"
+                        @group-selected="editGroup"
+                        @new-group="newGroup"></groups>
+            </div>
+
+            <div class="column-6-10">
+                <template v-if="editing">
+                    <gr-form :fields="fields" ref="form"></gr-form>
+                </template>
+                <template v-else>
+                    Pick a group
+                </template>
+            </div>
+
+            <div class="column-2-10">
+                <template v-if="editing">
+                    <div class="submit_panel">
+                        <div class="submit_panel-title">
+                            Save changes?
+                        </div>
+                        <div class="submit_panel-btns">
+                            <div class="btn" @click="cancelEditGroup">Cancel</div>
+                            <div class="btn btn--primary" @click="saveGroup">Save</div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+        </div>
+    </template>

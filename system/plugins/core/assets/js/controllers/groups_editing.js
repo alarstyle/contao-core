@@ -4,11 +4,11 @@
 
         data: function () {
             return {
-                state: '',
-                groupsData: {},
-                listHeaders: [],
-                listItems: [],
-                list: [],
+                editing: false,
+                groupsData: {
+                    list: [],
+                    creatable: false
+                },
                 fields: [],
                 currentId: null
             }
@@ -16,51 +16,32 @@
 
         watch: {},
 
-        mounted: function () {
-
-            this.showGroups();
-            this.showList();
-
-        },
-
         methods: {
 
             showGroups: function () {
                 var _this = this;
                 grow.action('getGroups')
                     .then(function (response) {
-                        _this.groupsData.list = response.data.data.groups;
-                        console.log(_this.groups);
+                        _this.groupsData.list = response.data.data.items;
+                        _this.groupsData.creatable = response.data.data.creatable;
                     });
             },
 
-            showList: function () {
-                var _this = this;
-                this.currentId = null;
-                grow.action('getList')
-                    .then(function (response) {
-                        _this.listHeaders = response.data.data.headers;
-                        _this.listItems = response.data.data.items;
-                        _this.list = response.data.data.list;
-                        _this.state = 'list';
-                    });
+            newGroup: function () {
+                this.editGroup('new');
             },
 
-            newItem: function () {
-                this.editItem('new');
-            },
-
-            editItem: function (id) {
+            editGroup: function (id) {
                 var _this = this;
-                grow.action('getListItem', {id: id})
+                grow.action('getGroupsItem', {id: id})
                     .then(function (response) {
                         _this.currentId = id;
                         _this.fields = response.data.data.fields;
-                        _this.state = 'edit_item';
+                        _this.editing = true;
                     });
             },
 
-            saveItem: function () {
+            saveGroup: function () {
                 var _this = this;
                 var fieldsValues = _this.$refs.form.getData();
                 if (!Object.keys(fieldsValues).length) {
@@ -70,22 +51,25 @@
 
                 fieldsValues = JSON.parse(JSON.stringify(fieldsValues));
                 console.log(fieldsValues);
-                grow.action('saveItem', {id: _this.currentId, fields: fieldsValues})
+                grow.action('saveGroup', {id: _this.currentId, fields: fieldsValues})
                     .then(function (response) {
-                        if (response.data.error) {
+                        if (response.data.success) {
+                            console.log('SAVED');
+                        }
+                        else if (response.data.error) {
                             _this.showErrors(response.data.errorData);
                             //_this.$refs.form.showErrors(response.data.errorData);
                         }
                     });
             },
 
-            deleteItem: function($id) {
+            deleteItem: function(id) {
                 var _this = this;
                 if (!confirm("Are you sure?")) {
                     return;
                 }
 
-                grow.action('deleteItem', {id: $id})
+                grow.action('deleteItem', {id: id})
                     .then(function (response) {
                         if (response.data.success) {
                             _this.showList();
@@ -96,17 +80,7 @@
                     });
             },
 
-            disableItem: function($id) {
-                var _this = this;
-                grow.action('disableItem', {id: $id})
-                    .then(function (response) {
-                        if (response.data.error) {
-                            _this.showErrors(response.data.errorData);
-                        }
-                    });
-            },
-
-            cancelEditItem: function () {
+            cancelEditGroup: function () {
                 this.showList();
             },
 
@@ -118,9 +92,23 @@
                 });
             },
 
-            onOperation: function(id, operationName) {
-                console.log(id, operationName);
+            onListingOperation: function(id, operationName) {
+                if (operationName === 'edit') {
+                    this.editItem(id);
+                }
+                else if (operationName === 'delete') {
+                    this.deleteItem(id);
+                }
+                else if (operationName === 'toggle') {
+
+                }
             }
+
+        },
+
+        mounted: function () {
+
+            this.showGroups();
 
         }
 

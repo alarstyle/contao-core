@@ -152,9 +152,9 @@ class Organizer
     }
 
 
-    public function getList($limit = 20, $skip = 0)
+    public function getList($limit = 20, $skip = 0, $where = '')
     {
-        $query = "SELECT * FROM " . $this->table;
+        $query = "SELECT * FROM " . $this->table . ' ' . $where;
 
         $objRowStmt = $this->database->prepare($query);
 

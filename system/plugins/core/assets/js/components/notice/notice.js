@@ -1,5 +1,9 @@
 (function () {
 
+    var NoticeItem = function(data) {
+
+    };
+
     var Notice = {
 
         template: '#notice-template',
@@ -11,7 +15,7 @@
 
         data: function () {
             return {
-                pages: []
+                items: []
             }
         },
 
@@ -26,13 +30,19 @@
 
         methods: {
 
-            onClick: function (e) {
+            onItemClick: function (e) {
                 this.isOpened = true;
             }
 
         },
 
         created: function () {
+
+            var _this = this;
+
+            this.$root.$on('newNotice', function(data) {
+                _this.items(new NoticeItem(data));
+            });
 
         }
 

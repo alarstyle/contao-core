@@ -11,6 +11,9 @@
  * @copyright Peter Koch 2008-2010
  */
 
+use Contao\Config;
+use Contao\Input;
+use Contao\System;
 
 /**
  * Implements the extension manager

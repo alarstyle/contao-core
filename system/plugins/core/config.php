@@ -95,10 +95,12 @@ $GLOBALS['BE_MOD'] = array
 
 
 $GLOBALS['NAVIGATION'] = [
+
     'dashboard' => [
         'label' => 'Dashboard',
         'controller' => 'Grow\\Controllers\\Dashboard'
     ],
+
     'users' => [
         'label' => 'Users',
         'controller' => 'Grow\\Controllers\\ListingWithGroups',
@@ -107,18 +109,21 @@ $GLOBALS['NAVIGATION'] = [
                 'table' => 'tl_user_group'
             ],
             'list' => [
-                'table' => 'tl_user'
+                'table' => 'tl_user',
             ]
         ]
     ],
+
     'filemanager' => [
         'label' => 'Filemanager',
         'controller' => 'Grow\\Controllers\\FileManagerController'
     ],
+
     'setting' => [
         'label' => 'Setting',
         'controller' => 'Grow\\Controllers\\Settings'
     ]
+    
 ];
 
 
@@ -551,7 +556,10 @@ $GLOBALS['TL_MODELS']['tl_files'] = 'Contao\\Models\\FilesModel';
 	'be_referer'          => 'system/plugins/core/templates/backend',
 	'be_switch'           => 'system/plugins/core/templates/backend',
 	'be_unavailable'      => 'system/plugins/core/templates/backend',
-	'be_listing'            => 'system/plugins/core/templates/backend',
+
+	'be_listing'          => 'system/plugins/core/templates/backend',
+	'be_groups_editing'   => 'system/plugins/core/templates/backend',
+
 	'be_welcome'          => 'system/plugins/core/templates/backend',
 	'be_wildcard'         => 'system/plugins/core/templates/backend',
 	'block_searchable'    => 'system/plugins/core/templates/block',
@@ -649,8 +657,8 @@ $GLOBALS['COMPONENTS'] = [
         '/system/plugins/core/assets/js/components/icon.js'
     ],
     'notice'  => [
-        '/system/plugins/core/assets/js/components/notice.js',
-        '/system/plugins/core/assets/js/components/notice.html'
+        '/system/plugins/core/assets/js/components/notice/notice.js',
+        '/system/plugins/core/assets/js/components/notice/notice.html'
     ],
     'pagination'  => [
         '/system/plugins/core/assets/js/components/pagination.js',
@@ -663,6 +671,10 @@ $GLOBALS['COMPONENTS'] = [
     'gr-dropdown' => [
         '/system/plugins/core/assets/js/components/gr-dropdown.js',
         '/system/plugins/core/assets/js/components/gr-dropdown.html'
+    ],
+    'gr-select' => [
+        '/system/plugins/core/assets/js/components/gr-select/gr-select.js',
+        '/system/plugins/core/assets/js/components/gr-select/gr-select.html'
     ],
     'gr-form' => [
         '/system/plugins/core/assets/js/components/gr-form.js',

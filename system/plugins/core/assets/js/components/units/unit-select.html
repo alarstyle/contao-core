@@ -3,5 +3,8 @@
         <select @change="onInputChange" class="unit-select">
             <option v-for="option in options" :value="option.value" :selected="value === option.value">{{ option.label }}</option>
         </select>
+        <gr-select
+            :options="options">
+        </gr-select>
         <div class="unit-hint">{{ error || hint }}</div>
     </div>

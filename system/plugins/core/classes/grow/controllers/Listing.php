@@ -14,7 +14,6 @@ class Listing extends \Contao\Controllers\BackendMain
 {
 
     public $ajaxActions = [
-        'getGroups' => 'ajaxGetGroups',
         'getList' => 'ajaxGetList',
         'getListItem' => 'ajaxGetListItem',
         'saveItem' => 'ajaxSaveItem',
@@ -26,7 +25,7 @@ class Listing extends \Contao\Controllers\BackendMain
 
     protected $listTable = null;
 
-    protected $jsFile = '/system/plugins/core/assets/js/controllers/list.js';
+    protected $jsFile = '/system/plugins/core/assets/js/controllers/listing.js';
 
     protected $listOrganizer;
 
@@ -53,51 +52,32 @@ class Listing extends \Contao\Controllers\BackendMain
     }
 
 
-    protected function generateItemForList($item, $listFields)
-    {
-        $itemData = [
-            'id' => $item['id']
-        ];
-        foreach ($listFields as $fieldName) {
-            $itemData[$fieldName] = $item[$fieldName] ?: '';
-        }
-
-        return $itemData;
-    }
+//    protected function generateItemForList($item, $listFields)
+//    {
+//        $itemData = [
+//            'id' => $item['id']
+//        ];
+//        foreach ($listFields as $fieldName) {
+//            $itemData[$fieldName] = $item[$fieldName] ?: '';
+//        }
+//
+//        return $itemData;
+//    }
 
 
     public function ajaxGetList()
     {
-        $query = "SELECT * FROM " . $this->listTable;
+        $groupId = Input::post('groupId');
 
-        $objRowStmt = $this->Database->prepare($query);
-
-        $objRowStmt->limit(20, 0);
-
-        $objRow = $objRowStmt->execute();
-
-        if ($objRow->numRows < 1) {
-            return 'No data';
+        if (empty($groupId) || $groupId === 'all') {
+            $where = '';
+        }
+        else {
+            $where = ' WHERE groups LIKE \'%"' . $groupId . '"%\'';
         }
 
-        $result = $objRow->fetchAllAssoc();
-
-        $list = [];
-        $listFields = $GLOBALS['TL_DCA'][$this->listTable]['list']['label']['fields_new'];
-
-        foreach ($result as $i => $item) {
-            $list[$i] = $this->generateItemForList($item, $listFields);
-        }
-
-        ActionData::data('list', $list);
         ActionData::data('headers', $this->listOrganizer->getListHeaders());
-        ActionData::data('items', $this->listOrganizer->getList());
-    }
-
-
-    public function ajaxGetGroups()
-    {
-
+        ActionData::data('items', $this->listOrganizer->getList(20, 0, $where));
     }
 
 

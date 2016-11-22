@@ -47,11 +47,14 @@ class ListingWithGroups extends Listing
         $groups = [];
         $listFields = $GLOBALS['TL_DCA'][$this->groupTable]['list']['label']['fields_new'];
 
+        $groups[] = ['id' => 'all', 'name' => 'All users'];
+
         foreach ($result as $group) {
             $groups[] = $this->generateItemForGroup($group, $listFields);
         }
 
         ActionData::data('groups', $groups);
+        ActionData::data('creatable', true);
     }
 
 

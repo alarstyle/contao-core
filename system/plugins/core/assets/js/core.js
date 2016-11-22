@@ -2,6 +2,8 @@
 
 	var REQUEST_TOKEN = '';
 
+	var app;
+
 
 	var CancelToken = axios.CancelToken;
 
@@ -92,7 +94,7 @@
 
 			var appData = _.defaults({initialized: false}, APP_DATA);
 
-			new Vue({
+			app = new Vue({
 
 				el: '#app',
 
@@ -112,6 +114,16 @@
 					this.initialized = true;
 				}
 
+			});
+		},
+
+		notice: function(message, type) {
+			if (!app) return;
+			if (!type) type = 'success';
+
+			app.$emit('newNotice', {
+				message: message,
+				type: type
 			});
 		}
 

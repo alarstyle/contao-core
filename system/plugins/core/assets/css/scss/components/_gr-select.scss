@@ -1,0 +1,89 @@
+.gr-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+    .flag {
+        margin: -3px 5px 0 0;
+    }
+    &.disabled {
+        .gr-select-input {
+            cursor: default;
+        }
+    }
+    &.opened {
+        .gr-select-menu {
+            display: block;
+        }
+    }
+}
+
+.gr-select-input {
+    background: #fff;
+    border: 1px solid #e2e3e4;
+    border-radius: 4px;
+    color: #242a2e;
+    cursor: pointer;
+    display: block;
+    font-size: 13px;
+    padding: 4px 11px;
+    width: 100%;
+    height: 40px;
+    line-height: 30px;
+}
+
+.gr-select-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gr-select-menu {
+    background: #fff;
+    border: 1px solid #e2e3e4;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.06);
+    color: #475669;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin: 5px 0;
+    max-height: 250px;
+    min-width: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    ul {
+        list-style: none;
+    }
+    li {
+        cursor: pointer;
+        padding: 4px 10px;
+        position: relative;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: 36px;
+        line-height: 28px;
+        &:first-child {
+            border-radius: 4px 4px 0 0;
+        }
+        &:last-child {
+            border-radius: 0 0 4px 4px;
+        }
+        &:not(.disabled) {
+            &:hover {
+                background: #e5e9f2;
+            }
+            &.selected {
+                background: #1d8ce0;
+                color: #fff;
+            }
+        }
+        &.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+    }
+}

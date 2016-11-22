@@ -6,31 +6,48 @@
 
         props: {
             title: String,
-            data: {type: Object, default: []}
+            newLabel: String,
+            data: {type: Object, default: {}}
         },
 
         data: function () {
             return {
-                list: []
+                active: 0,
+                list: [],
+                creatable: false
             }
         },
 
-        watch: {},
+        watch: {
+            'data.list': function() {
+                this.initData();
+            },
+            'data.creatable': function() {
+                this.initData();
+            }
+        },
 
         methods: {
 
-            onGroupClick: function (e) {
-
+            onGroupClick: function (i) {
+                if (this.active === i) return;
+                this.active = i;
+                this.$emit('group-selected', this.list[i].id);
             },
 
-            newGroup: function () {
+            onNewClick: function () {
+                this.$emit('new-group');
+            },
 
+            initData: function() {
+                this.list = this.data.list;
+                this.creatable = this.data.creatable;
             }
 
         },
 
         mounted: function () {
-            this.list = this.data.list;
+            this.initData();
         }
 
     };
