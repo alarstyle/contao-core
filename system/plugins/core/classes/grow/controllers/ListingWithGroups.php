@@ -10,6 +10,7 @@ class ListingWithGroups extends Listing
 
     protected $groupTable = null;
 
+
     protected $groupOrganizer;
 
 
@@ -17,6 +18,8 @@ class ListingWithGroups extends Listing
     {
         $this->ajaxActions['getGroups'] = 'ajaxGetGroups';
         $this->ajaxActions['getGroup'] = 'ajaxGetGroup';
+        $this->ajaxActions['saveGroup'] = 'ajaxSaveGroup';
+        $this->ajaxActions['deleteGroup'] = 'ajaxDeleteGroup';
 
         parent::__construct($config);
 
@@ -34,11 +37,24 @@ class ListingWithGroups extends Listing
     public function ajaxGetGroups()
     {
         ActionData::data('groups', $this->groupOrganizer->getList(20, 0));
+        ActionData::data('editable', true);
         ActionData::data('creatable', true);
     }
 
 
     public function ajaxGetGroup()
+    {
+
+    }
+
+
+    public function ajaxSaveGroup()
+    {
+
+    }
+
+
+    public function ajaxDeleteGroup()
     {
 
     }

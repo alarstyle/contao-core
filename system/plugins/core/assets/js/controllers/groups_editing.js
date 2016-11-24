@@ -8,7 +8,7 @@
                 groupsCreatable: false,
                 groupsEditable: false,
 
-                formTitle: '',
+                //formTitle: '',
                 formFields: {},
                 formErrors: {},
 
@@ -16,9 +16,16 @@
             }
         },
 
-        watch: {
-            currentId: function(id) {
-
+        computed: {
+            formTitle: function () {
+                var group = _.find(this.groupsList, {id: this.currentId}),
+                    groupName = '';
+                if (group) {
+                    var div = document.createElement("div");
+                    div.innerHTML = group.fields[0];
+                    groupName = div.textContent || div.innerText || '';
+                }
+                return groupName;
             }
         },
 
@@ -28,14 +35,18 @@
                 var _this = this;
                 grow.action('getGroups')
                     .then(function (response) {
-                        _this.groupsList = response.data.data.groups;
-                        _this.groupsCreatable = response.data.data.creatable;
-                        if (!_this.currentId || _this.currentId === 'new') return;
+                        if (response.data.success) {
+                            // Setting data
+                            _this.groupsList = response.data.data.groups;
+                            _this.groupsCreatable = response.data.data.creatable;
 
-                        _this.$refs.groups.findAndSetActive(function(item) {
-                            console.log(item.id, item.id == _this.currentId);
-                            return item.id == _this.currentId;
-                        });
+                            // Selecting group
+                            if (_this.currentId === null || _this.currentId === 'new') return;
+                            _this.$refs.groups.findAndSetActive({id: _this.currentId});
+                        }
+                        else if (response.data.error) {
+                            grow.notify('Loading failed', {type: 'danger'});
+                        }
                     });
             },
 
@@ -44,19 +55,16 @@
             },
 
             editGroup: function (id) {
-                var _this = this,
-                    group = _.find(this.groupsList, {id: id}),
-                    groupName = '';
-                if (group) {
-                    var div = document.createElement("div");
-                    div.innerHTML = group.fields[0];
-                    groupName = div.textContent || div.innerText || '';
-                }
+                var _this = this;
                 grow.action('getGroupsItem', {id: id})
                     .then(function (response) {
-                        _this.currentId = id;
-                        _this.formFields = response.data.data.fields;
-                        _this.formTitle = groupName;
+                        if (response.data.success) {
+                            _this.formFields = response.data.data.fields;
+                            _this.currentId = id;
+                        }
+                        else if (response.data.error) {
+                            grow.notify('Loading failed', {type: 'danger'});
+                        }
                     });
             },
 
@@ -77,6 +85,8 @@
                             _this.formErrors = {};
                             if (_this.currentId !== 'new') return;
                             _this.currentId = response.data.data.newId;
+                            console.log('!!!');
+                            console.log(_this.currentId);
                             _this.loadGroups();
                         }
                         else if (response.data.error) {
@@ -86,7 +96,7 @@
                     });
             },
 
-            deleteGroup: function() {
+            deleteGroup: function () {
                 if (!confirm("Are you sure?")) {
                     return;
                 }
@@ -101,7 +111,7 @@
                             _this.groupsList = _.reject(_this.groupsList, {id: id});
                         }
                         else {
-
+                            grow.notify('Deleting failed', {type: 'danger'});
                         }
                     });
             },

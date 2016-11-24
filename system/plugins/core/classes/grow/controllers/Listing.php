@@ -67,6 +67,7 @@ class Listing extends \Contao\Controllers\BackendMain
 
         ActionData::data('headers', $this->listOrganizer->getListHeaders());
         ActionData::data('items', $this->listOrganizer->getList(20, 0, $where));
+        ActionData::data('creatable', true);
     }
 
 
@@ -91,14 +92,15 @@ class Listing extends \Contao\Controllers\BackendMain
         $fields = Input::post('fields');
 
         if ($id === 'new') {
-            $result = $this->listOrganizer->create($fields);
+            $newId = $this->listOrganizer->create($fields);
+            ActionData::data('newId', $newId);
         }
         else {
-            $result = $this->listOrganizer->save($id, $fields);
+            $this->listOrganizer->save($id, $fields);
         }
 
-        if ($result !== true) {
-            ActionData::error($result);
+        if ($this->listOrganizer->hasErrors()) {
+            ActionData::error($this->listOrganizer->getErrors());
         }
     }
 
@@ -107,10 +109,10 @@ class Listing extends \Contao\Controllers\BackendMain
     {
         $id = Input::post('id');
 
-        $result = $this->listOrganizer->delete($id);
+        $this->listOrganizer->delete($id);
 
-        if ($result !== true) {
-            ActionData::error($result);
+        if ($this->listOrganizer->hasErrors()) {
+            ActionData::error($this->listOrganizer->getErrors());
         }
     }
 
@@ -119,10 +121,10 @@ class Listing extends \Contao\Controllers\BackendMain
     {
         $id = Input::post('id');
 
-        $result = $this->listOrganizer->disable($id);
+        $this->listOrganizer->disable($id);
 
-        if ($result !== true) {
-            ActionData::error($result);
+        if ($this->listOrganizer->hasErrors()) {
+            ActionData::error($this->listOrganizer->getErrors());
         }
     }
 

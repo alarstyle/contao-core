@@ -11,7 +11,7 @@
 
                 listHeaders: [],
                 listItems: [],
-                list: [],
+                listCreatable: false,
 
                 formFields: {},
                 formErrors: {},
@@ -48,7 +48,7 @@
                     .then(function (response) {
                         _this.listHeaders = response.data.data.headers;
                         _this.listItems = response.data.data.items;
-                        _this.list = response.data.data.list;
+                        _this.listCreatable = response.data.data.creatable;
                         _this.state = 'list';
                     });
             },

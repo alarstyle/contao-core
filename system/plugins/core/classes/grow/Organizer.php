@@ -76,7 +76,7 @@ class Organizer
         $this->errorsArr = $this->validate($fieldsValues, $id);
 
         if (!empty($this->errorsArr)) {
-            return;
+            return null;
         }
 
         $fieldsStr = '';
@@ -90,21 +90,26 @@ class Organizer
 
         $valuesArr[] = $id;
 
-        $objUpdateStmt = $this->database->prepare("UPDATE " . $this->table . " SET " . $fieldsStr . " WHERE id=?")
+        $statement = $this->database->prepare("UPDATE " . $this->table . " SET " . $fieldsStr . " WHERE id=?")
             ->execute($valuesArr);
+
+        return $statement->affectedRows;
     }
 
 
     public function delete($id)
     {
+        $this->errorsArr = [];
+
         if (empty($id)) {
-            return 'ID is not set';
+            $this->errorsArr[] = 'ID was not set';
+            return null;
         }
 
-        $this->database->prepare("DELETE FROM " . $this->table . " WHERE id=?")
+        $statement = $this->database->prepare("DELETE FROM " . $this->table . " WHERE id=?")
             ->execute($id);
 
-        return true;
+        return $statement->affectedRows;
     }
 
 

@@ -82,7 +82,7 @@ class GroupsEditing extends \Contao\Controllers\BackendMain
         $fields = Input::post('fields');
 
         if ($id === 'new') {
-            $newId = $this->groupOrganizer->create($fields);
+            $newId = strval($this->groupOrganizer->create($fields));
             ActionData::data('newId', $newId);
         }
         else {
@@ -91,7 +91,6 @@ class GroupsEditing extends \Contao\Controllers\BackendMain
 
         if ($this->groupOrganizer->hasErrors()) {
             ActionData::error($this->groupOrganizer->getErrors());
-            return;
         }
     }
 
@@ -100,10 +99,10 @@ class GroupsEditing extends \Contao\Controllers\BackendMain
     {
         $id = Input::post('id');
 
-        $result = $this->groupOrganizer->delete($id);
+        $this->groupOrganizer->delete($id);
 
-        if ($result !== true) {
-            ActionData::error($result);
+        if ($this->groupOrganizer->hasErrors()) {
+            ActionData::error($this->groupOrganizer->getErrors());
         }
     }
 
