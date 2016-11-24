@@ -1,18 +1,12 @@
 (function() {
 
-    var UnitText = _.defaultsDeep({
+    var UnitText = {
 
-        template: '#unit-text-template',
+        extends: AbstractUnit,
 
-        methods: {
+        template: '#unit-text-template'
 
-            onInputChange: function(e) {
-                this.$emit('change', e.target.value, this);
-            }
-
-        }
-
-    }, AbstractUnit);
+    };
 
     Vue.component('unit-text', UnitText);
 

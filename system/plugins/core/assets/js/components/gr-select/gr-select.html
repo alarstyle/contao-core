@@ -1,10 +1,11 @@
 <div class="gr-select" :class="{disabled: disabled, opened: opened}">
     <div class="gr-select-input" @click="inputClick">
-        <div class="gr-select-label" v-html="label"></div>
+        <div class="gr-select-label" v-html="currentLabel"></div>
     </div>
     <div class="gr-select-menu">
         <ul>
             <li v-for="option in options"
+                :key="option.value"
                 v-html="option.label || option.value"
                 :class="{selected: option.value === value ,disabled: option.disabled}"
                 @click="optionClick(option)">

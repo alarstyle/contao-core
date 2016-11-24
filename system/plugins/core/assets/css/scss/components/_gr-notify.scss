@@ -1,0 +1,29 @@
+.gr-notify {
+    @extend .disable_select;
+    position: fixed;
+    bottom: 0;
+    right: 10px;
+    z-index: $notifyZ;
+
+    .item {
+        background: rgba(0, 0, 0, .9);
+        border-radius: 4px;
+        color: #fff;
+        padding: 10px 20px;
+        position: relative;
+        margin-bottom: 10px;
+        width: 300px;
+    }
+    .item--success {
+        background: rgba(44, 195, 121, .9);
+    }
+    .item--info {
+        background: rgba(51, 135, 220, .9);
+    }
+    .item--warning {
+        background: rgba(220, 146, 51, .9);
+    }
+    .item--danger {
+        background: rgba(195, 62, 62, .9);
+    }
+}

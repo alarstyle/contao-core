@@ -16,6 +16,9 @@ class Organizer
     protected $database;
 
 
+    protected $errorsArr = [];
+
+
     public function __construct($tableName)
     {
         $this->table = $tableName;
@@ -54,31 +57,26 @@ class Organizer
 
     public function create($fieldsValues)
     {
+        $this->errorsArr = $this->validate($fieldsValues);
 
-        foreach ($fieldsValues as $value) {
-
-        }
-
-        $errors = $this->validate($fieldsValues);
-
-        if (!empty($errors)) {
-            return $errors;
+        if (!empty($this->errorsArr)) {
+            return null;
         }
 
         $objInsertStmt = $this->database->prepare("INSERT INTO " . $this->table . " %s")
             ->set($fieldsValues)
             ->execute();
 
-        return true;
+        return $objInsertStmt->insertId;
     }
 
 
     public function save($id, $fieldsValues)
     {
-        $errors = $this->validate($fieldsValues);
+        $this->errorsArr = $this->validate($fieldsValues, $id);
 
-        if (!empty($errors)) {
-            return $errors;
+        if (!empty($this->errorsArr)) {
+            return;
         }
 
         $fieldsStr = '';
@@ -94,8 +92,6 @@ class Organizer
 
         $objUpdateStmt = $this->database->prepare("UPDATE " . $this->table . " SET " . $fieldsStr . " WHERE id=?")
             ->execute($valuesArr);
-
-        return true;
     }
 
 
@@ -163,7 +159,7 @@ class Organizer
         $objRow = $objRowStmt->execute();
 
         if ($objRow->numRows < 1) {
-            return 'No data';
+            return [];
         }
 
         $result = $objRow->fetchAllAssoc();
@@ -171,6 +167,7 @@ class Organizer
         $list = [];
         $tableData = $GLOBALS['TL_DCA'][$this->table];
         $listFields = $tableData['list']['label']['fields_new'] ?: $tableData['list']['label']['fields'];
+        $labelCallback = $tableData['list']['label']['callback'];
 
         $operationsData = $tableData['list']['operations'];
         $operations = [];
@@ -194,6 +191,14 @@ class Organizer
                 $itemData['fields'][] = $item[$fieldName] ?: '';
             }
             $itemData['fields'][]['operations'] = $operations;
+            if (!empty($labelCallback)) {
+                if (is_array($labelCallback)) {
+                    $itemData = System::importStatic($labelCallback[0])->{$labelCallback[1]}($itemData);
+                }
+                elseif (is_callable($labelCallback)) {
+                    $itemData = $labelCallback($itemData);
+                }
+            }
             $list[] = $itemData;
         }
 
@@ -243,14 +248,14 @@ class Organizer
             /** @var AbstractUnit $unit */
             $unit = new $unitClass($this->table, $fieldName);
 
-            $fields[] = $unit->getUnitData(!empty($row) ? $row[$fieldName] : NULL);
+            $fields[$fieldName] = $unit->getUnitData(!empty($row) ? $row[$fieldName] : NULL);
         }
 
         return $fields;
     }
 
 
-    public function validate(&$fieldsValues)
+    public function validate(&$fieldsValues, $id = null)
     {
         $errors = [];
         $fieldsData = $GLOBALS['TL_DCA'][$this->table]['fields'];
@@ -259,7 +264,7 @@ class Organizer
             $unitClass = $this->getUnitClass($fieldsData[$field]['inputType']);
             /** @var AbstractUnit $unit */
             $unit = new $unitClass($this->table, $field);
-            $processedValue = $unit->validate($value);
+            $processedValue = $unit->validate($value, $id);
             if ($unit->hasErrors()) {
                 $errors[$field] = $unit->getErrors();
             } else {
@@ -268,6 +273,28 @@ class Organizer
         }
 
         return $errors;
+    }
+
+
+    /**
+     * Return true if has errors
+     *
+     * @return boolean True if there are errors
+     */
+    public function hasErrors()
+    {
+        return !empty($this->errorsArr);
+    }
+
+
+    /**
+     * Return the errors array
+     *
+     * @return array An array of error messages
+     */
+    public function getErrors()
+    {
+        return $this->errorsArr;
     }
 
 

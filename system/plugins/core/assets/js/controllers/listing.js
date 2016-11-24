@@ -5,14 +5,16 @@
         data: function () {
             return {
                 state: '',
-                groupsData: {
-                    list: [],
-                    creatable: false
-                },
+
+                groupsList: [],
+                groupsCreatable: false,
+
                 listHeaders: [],
                 listItems: [],
                 list: [],
-                fields: [],
+
+                formFields: {},
+                formErrors: {},
                 currentId: null
             }
         },
@@ -34,8 +36,8 @@
                 var _this = this;
                 grow.action('getGroups')
                     .then(function (response) {
-                        _this.groupsData.list = response.data.data.groups;
-                        _this.groupsData.creatable = response.data.data.creatable;
+                        _this.groupsList = response.data.data.groups;
+                        _this.groupsCreatable = response.data.data.creatable;
                     });
             },
 
@@ -64,26 +66,31 @@
                 grow.action('getListItem', {id: id})
                     .then(function (response) {
                         _this.currentId = id;
-                        _this.fields = response.data.data.fields;
+                        _this.formFields = response.data.data.fields;
                         _this.state = 'edit_item';
                     });
             },
 
             saveItem: function () {
-                var _this = this;
-                var fieldsValues = _this.$refs.form.getData();
-                if (!Object.keys(fieldsValues).length) {
-                    console.log('Nothing was changed');
+
+                if (!this.$refs.form.isChanged) {
+                    grow.notify('Nothing was changed', {type: 'warning'});
                     return;
                 }
 
+                var _this = this;
+                var fieldsValues = _this.$refs.form.getValues();
                 fieldsValues = JSON.parse(JSON.stringify(fieldsValues));
-                console.log(fieldsValues);
+
                 grow.action('saveItem', {id: _this.currentId, fields: fieldsValues})
                     .then(function (response) {
-                        if (response.data.error) {
-                            _this.showErrors(response.data.errorData);
-                            //_this.$refs.form.showErrors(response.data.errorData);
+                        if (response.data.success) {
+                            grow.notify('Saved successfully', {type: 'success'});
+                            _this.formErrors = {};
+                        }
+                        else if (response.data.error) {
+                            grow.notify('Saving failed ', {type: 'danger'});
+                            _this.formErrors = response.data.errorData;
                         }
                     });
             },
@@ -100,7 +107,7 @@
                             _this.showList();
                         }
                         else {
-                            _this.showErrors(response.data.errorData);
+
                         }
                     });
             },
@@ -110,21 +117,13 @@
                 grow.action('disableItem', {id: id})
                     .then(function (response) {
                         if (response.data.error) {
-                            _this.showErrors(response.data.errorData);
+
                         }
                     });
             },
 
             cancelEditItem: function () {
                 this.showList();
-            },
-
-            showErrors: function (errorData) {
-                console.log(errorData);
-                _.forEach(this.fields, function(field, i) {
-                    if (!errorData[field.name]) return;
-                    field.error = errorData[field.name][0];
-                });
             },
 
             onListingOperation: function(id, operationName) {
@@ -137,6 +136,12 @@
                 else if (operationName === 'toggle') {
 
                 }
+            },
+
+            newGroup: function() {
+
+
+
             }
 
         }

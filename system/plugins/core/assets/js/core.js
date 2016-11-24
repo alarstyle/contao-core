@@ -1,134 +1,156 @@
-(function(){
+(function () {
 
-	var REQUEST_TOKEN = '';
+    var REQUEST_TOKEN = '';
 
-	var app;
-
-
-	var CancelToken = axios.CancelToken;
+    var app;
 
 
-	var ResponsePromise = function(axios) {
-		this.cancel = function() {
-
-		};
-	};
+    var CancelToken = axios.CancelToken;
 
 
-	window.scrollTo = function(domElement, offset, ifNotInViewport) {
-		if (!domElement) return;
-		if (isNaN(offset)) offset = 0;
+    var ResponsePromise = function (axios) {
+        this.cancel = function () {
 
-		var top = domElement.offsetTop + offset;
-
-		if (ifNotInViewport && top + 20 > window.pageYOffset && top - 20 < window.pageYOffset + window.innerHeight ) {
-			return;
-		}
-
-		document.documentElement.scrollTop = document.body.scrollTop = top;
-	};
+        };
+    };
 
 
-	window.AbstractUnit = {
-		props: {
-			id: String,
-			label: String,
-			hint: String,
-			error: {type: String, default: null},
-			required: {type: Boolean, default: false},
-			value: {},
-			config: {}
-		},
+    window.scrollTo = function (domElement, offset, ifNotInViewport) {
+        if (!domElement) return;
+        if (isNaN(offset)) offset = 0;
 
-		computed: {
-			unitClass: function() {
-				var c = this.config.class ? [this.config.class] : [];
-				if (this.error) {
-					c.push('unit--error');
-				}
-				return c;
-			}
-		}
-	};
+        var top = domElement.offsetTop + offset;
+
+        if (ifNotInViewport && top + 20 > window.pageYOffset && top - 20 < window.pageYOffset + window.innerHeight) {
+            return;
+        }
+
+        document.documentElement.scrollTop = document.body.scrollTop = top;
+    };
 
 
-	var grow = {
+    window.AbstractUnit = {
+        props: {
+            id: String,
+            label: String,
+            hint: String,
+            error: {type: String, default: null},
+            required: {type: Boolean, default: false},
+            value: {},
+            config: {}
+        },
 
-		get: function(url, config) {
-			config = config ? config : {};
-			config.params = _.defaults({'REQUEST_TOKEN': Contao.request_token}, config.params);
-			config.headers = _.defaults({'X-Requested-With': 'XMLHttpRequest'}, config.headers);
-			return axios.get(url, config);
-		},
+        data: function () {
+            return {
+                currentValue: null
+            }
+        },
 
-		post: function(url, data, config) {
-			config = config ? config : {};
-			data = data ? data : {};
-			config.headers = _.defaults({'X-Requested-With': 'XMLHttpRequest'}, config.headers);
+        computed: {
+            unitClass: function () {
+                var c = this.config.class ? [this.config.class] : [];
+                if (this.error) {
+                    c.push('unit--error');
+                }
+                return c;
+            }
+        },
 
-			if (data.append) {
-				data.append('REQUEST_TOKEN', Contao.request_token);
-			} else {
-				data = _.defaults({'REQUEST_TOKEN': Contao.request_token}, data);
-			}
+        watch: {
+            value: function (value) {
+                this.currentValue = value;
+            },
+            currentValue: function(currentValue) {
+                this.$emit('change', currentValue, this);
+            }
+        },
 
-			console.log(data);
+        mounted: function() {
+            this.currentValue = this.value;
+        }
+    };
 
-			return axios.post(url, data, config);
-		},
 
-		action: function(actionName, data, config) {
-			data = data ? data : {};
+    var grow = {
 
-			if (data.append) {
-				data.append('ACTION', actionName);
-			} else {
-				data = _.defaults({'ACTION': actionName}, data);
-			}
+        get: function (url, config) {
+            config = config ? config : {};
+            config.params = _.defaults({'REQUEST_TOKEN': Contao.request_token}, config.params);
+            config.headers = _.defaults({'X-Requested-With': 'XMLHttpRequest'}, config.headers);
+            return axios.get(url, config);
+        },
 
-			return grow.post(window.location.pathname, data, config);
-		},
+        post: function (url, data, config) {
+            config = config ? config : {};
+            data = data ? data : {};
+            config.headers = _.defaults({'X-Requested-With': 'XMLHttpRequest'}, config.headers);
 
-		initApp: function() {
-			var Vue = window.ExtendedVue || window.Vue;
+            if (data.append) {
+                data.append('REQUEST_TOKEN', Contao.request_token);
+            } else {
+                data = _.defaults({'REQUEST_TOKEN': Contao.request_token}, data);
+            }
 
-			var appData = _.defaults({initialized: false}, APP_DATA);
+            console.log(data);
 
-			app = new Vue({
+            return axios.post(url, data, config);
+        },
 
-				el: '#app',
+        action: function (actionName, data, config) {
+            data = data ? data : {};
 
-				data: function() {
-					return appData;
-				},
+            if (data.append) {
+                data.append('ACTION', actionName);
+            } else {
+                data = _.defaults({'ACTION': actionName}, data);
+            }
 
-				methods: {
+            return grow.post(window.location.pathname, data, config);
+        },
 
-					showModal: function(id) {
+        initApp: function () {
+            var Vue = window.ExtendedVue || window.Vue;
 
-					}
+            var appData = _.defaults({initialized: false}, APP_DATA);
 
-				},
+            app = new Vue({
 
-				created: function () {
-					this.initialized = true;
-				}
+                el: '#app',
 
-			});
-		},
+                data: function () {
+                    return appData;
+                },
 
-		notice: function(message, type) {
-			if (!app) return;
-			if (!type) type = 'success';
+                methods: {
 
-			app.$emit('newNotice', {
-				message: message,
-				type: type
-			});
-		}
+                    showModal: function (id) {
 
-	};
+                    }
 
-	window.grow = grow;
+                },
+
+                created: function () {
+                    this.initialized = true;
+                }
+
+            });
+        }
+
+    };
+
+
+
+    var notifyDefault = {
+        type: 'info'
+    };
+
+    grow.notify = function (message, settings) {
+        if (!app) return;
+
+        app.$emit('notify', _.defaults({message: message}, settings, notifyDefault));
+    };
+
+
+    window.grow = grow;
 
 }());

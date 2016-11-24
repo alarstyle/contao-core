@@ -1,0 +1,8 @@
+    <div class="gr-notify">
+        <div class="item"
+             v-for="(item, index) in items"
+             :class="item.class"
+             @click="itemClick(item.id)">
+            {{ item.message }}
+        </div>
+    </div>

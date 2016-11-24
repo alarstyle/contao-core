@@ -5,6 +5,7 @@ namespace Grow\Units;
 use Contao\BaseTemplate;
 use Contao\Database;
 use Contao\System;
+use Grow\ActionData;
 
 /**
  * Generates and validates form fields
@@ -34,12 +35,16 @@ abstract class AbstractUnit
     protected $errorsArr = [];
 
 
+    protected $database;
+
+
     public function __construct($table, $field)
     {
         $this->table = $table;
         $this->field = $field;
         $this->fieldData = $this->getFieldData();
         $this->attributes = $this->getAttributes();
+        $this->database = Database::getInstance();
     }
 
 
@@ -99,19 +104,25 @@ abstract class AbstractUnit
     /**
      * Validate the user input and set the value
      */
-    public function validate($value)
+    public function validate($value, $id = null)
     {
-        $processedValue = $this->validator($value);
+        $processedValue = $this->validator($value, $id);
         return $processedValue;
     }
 
 
-    protected function validator($value)
+    protected function validator($value, $id = null)
     {
         $attr = $this->fieldData;
 
         if ($attr['required'] && empty($value)) {
             $this->errorsArr[] = "Can't be empty";
+        }
+
+        // Make sure unique fields are unique
+        if ($attr['eval']['unique'] && $value != '' && !$this->database->isUniqueValue($this->table, $this->field, $value, $id))
+        {
+            $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['unique'], $attr['label'][0] ?: $this->field);
         }
 
         return $value;
@@ -140,13 +151,19 @@ abstract class AbstractUnit
     {
         $fieldData = $this->fieldData;
 
+        if (is_array($fieldData['options_callback_new'])) {
+            $arrCallback = $fieldData['options_callback_new'];
+            return System::importStatic($arrCallback[0])->{$arrCallback[1]}();
+        }
         if (is_array($fieldData['options_callback'])) {
             $arrCallback = $fieldData['options_callback'];
             $fieldData['options'] = System::importStatic($arrCallback[0])->{$arrCallback[1]}();
-        } elseif (is_callable($fieldData['options_callback'])) {
+        }
+        elseif (is_callable($fieldData['options_callback'])) {
             throw new \Exception('Error getting options');
-            $fieldData['options'] = $fieldData['options_callback']();
-        } elseif (isset($fieldData['foreignKey'])) {
+            //$fieldData['options'] = $fieldData['options_callback']();
+        }
+        elseif (isset($fieldData['foreignKey'])) {
             $arrKey = explode('.', $fieldData['foreignKey'], 2);
             $objOptions = Database::getInstance()->query("SELECT id, " . $arrKey[1] . " AS value FROM " . $arrKey[0] . " WHERE tstamp>0 ORDER BY value");
             $fieldData['options'] = [];

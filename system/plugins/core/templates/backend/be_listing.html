@@ -6,7 +6,9 @@
             </div>
 
             <div class="column-6-10">
-                <gr-form :fields="fields" ref="form"></gr-form>
+                <gr-form :fields="formFields"
+                         :errors="formErrors"
+                         ref="form"></gr-form>
             </div>
 
             <div class="column-2-10">
@@ -29,9 +31,12 @@
 
             <div class="column-2-10">
 
-                <groups title="Groups"
-                        :data="groupsData"
-                        @group-selected="groupSelected"></groups>
+                <groups title="<?= $this->groupsTitle ?>"
+                        new-label="<?= $this->groupsNew ?>"
+                        :list="groupsList"
+                        :creatable="groupsCreatable"
+                        @group-selected="groupSelected"
+                        @new-group="newGroup"></groups>
 
             </div>
 

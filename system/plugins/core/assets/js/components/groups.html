@@ -6,9 +6,10 @@
             <li v-for="(item, i) in list"
                 :key="item.id"
                 :class="{active: i === active}"
-                @click="onGroupClick(i)">{{ item.fields[0] }}</li>
+                v-html="item.fields[0]"
+                @click="groupClick(i)"></li>
         </ul>
         <div class="groups-new" v-if="creatable">
-            <a @click="onNewClick">{{ newLabel }}</a>
+            <a @click="newClick">{{ newLabel }}</a>
         </div>
     </div>

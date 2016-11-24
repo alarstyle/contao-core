@@ -1,5 +1,5 @@
     <div class="unit unit--checkbox-wizard" :class="unitClass">
-        <label class="unit-label">{{ label }}</label>
+        <label class="unit-label">{{ label }}<span v-if="required">*</span></label>
         <ul v-if="options.length">
             <li v-for="option in options">
                 <label>

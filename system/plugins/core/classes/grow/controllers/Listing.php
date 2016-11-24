@@ -29,6 +29,8 @@ class Listing extends \Contao\Controllers\BackendMain
 
     protected $listOrganizer;
 
+    protected $mainSectionTemplate;
+
 
     public function __construct($config = null)
     {
@@ -40,29 +42,16 @@ class Listing extends \Contao\Controllers\BackendMain
 
         $this->listOrganizer = new Organizer($this->listTable);
 
+        $this->mainSectionTemplate = new BackendTemplate('be_listing');
+
         parent::__construct();
     }
 
 
     protected function generateMainSection()
     {
-        $objTemplate = new BackendTemplate('be_listing');
-
-        $this->Template->main = $objTemplate->parse();
+        $this->Template->main = $this->mainSectionTemplate->parse();
     }
-
-
-//    protected function generateItemForList($item, $listFields)
-//    {
-//        $itemData = [
-//            'id' => $item['id']
-//        ];
-//        foreach ($listFields as $fieldName) {
-//            $itemData[$fieldName] = $item[$fieldName] ?: '';
-//        }
-//
-//        return $itemData;
-//    }
 
 
     public function ajaxGetList()

@@ -7,47 +7,50 @@
         props: {
             title: String,
             newLabel: String,
-            data: {type: Object, default: {}}
+            list: {
+                type: Array,
+                default: []
+            },
+            creatable: {
+                type: Boolean,
+                default: false
+            },
+            editable: {
+                type: Boolean,
+                default: false
+            }
         },
 
         data: function () {
             return {
-                active: 0,
-                list: [],
-                creatable: false
-            }
-        },
-
-        watch: {
-            'data.list': function() {
-                this.initData();
-            },
-            'data.creatable': function() {
-                this.initData();
+                active: null
             }
         },
 
         methods: {
 
-            onGroupClick: function (i) {
+            groupClick: function (i) {
                 if (this.active === i) return;
                 this.active = i;
                 this.$emit('group-selected', this.list[i].id);
             },
 
-            onNewClick: function () {
+            newClick: function () {
+                this.active = null;
                 this.$emit('new-group');
             },
 
-            initData: function() {
-                this.list = this.data.list;
-                this.creatable = this.data.creatable;
+            setActive: function (index) {
+                this.active = index;
+            },
+
+            findAndSetActive: function (predicate) {
+                var _this = this;
+                Vue.nextTick(function() {
+                    _this.active  = _.findIndex(_this.list, predicate);
+                });
             }
 
-        },
-
-        mounted: function () {
-            this.initData();
         }
 
     };

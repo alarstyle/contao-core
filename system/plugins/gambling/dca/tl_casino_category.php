@@ -10,9 +10,9 @@
 
 
 /**
- * Table tl_country
+ * Table tl_casino_category
  */
-$GLOBALS['TL_DCA']['tl_country'] = array
+$GLOBALS['TL_DCA']['tl_casino_category'] = array
 (
 
 	// Config
@@ -22,16 +22,16 @@ $GLOBALS['TL_DCA']['tl_country'] = array
 		'enableVersioning'            => true,
 		'onload_callback' => array
 		(
-			array('tl_country', 'checkPermission')
+			array('tl_casino_category', 'checkPermission')
 		),
 		'onsubmit_callback' => array
 		(
-			array('tl_country', 'storeDateAdded'),
-			array('tl_country', 'checkRemoveSession')
+			array('tl_casino_category', 'storeDateAdded'),
+			array('tl_casino_category', 'checkRemoveSession')
 		),
 		'ondelete_callback' => array
 		(
-			array('tl_country', 'removeSession')
+			array('tl_casino_category', 'removeSession')
 		),
 		'sql' => array
 		(
@@ -54,26 +54,26 @@ $GLOBALS['TL_DCA']['tl_country'] = array
 		'label' => array
 		(
 			'fields'                  => array('country'),
-			'callback'                => array('tl_country', 'listCallback')
+			'callback'                => array('tl_casino_category', 'listCallback')
 		),
 		'operations' => array
 		(
 			'edit' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_country']['edit'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_casino_category']['edit'],
 				'href'                => 'act=edit',
 				'icon'                => 'edit.gif',
 				'icon_new'            => 'pencil',
-				'button_callback'     => array('tl_country', 'editUser')
+				'button_callback'     => array('tl_casino_category', 'editUser')
 			),
 			'delete' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_country']['delete'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_casino_category']['delete'],
 				'href'                => 'act=delete',
 				'icon'                => 'delete.gif',
 				'icon_new'            => 'trash',
 				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;"',
-				'button_callback'     => array('tl_country', 'deleteUser')
+				'button_callback'     => array('tl_casino_category', 'deleteUser')
 			)
 		)
 	),
@@ -97,17 +97,17 @@ $GLOBALS['TL_DCA']['tl_country'] = array
 		),
         'country' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_country']['country'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_casino_category']['country'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => ['tl_country', 'getCountriesAsOptions'],
+            'options_callback'        => ['tl_casino_category', 'getCountriesAsOptions'],
             'required'                => true,
             'eval'                    => array('mandatory'=>true, 'unique'=>true),
             'sql'                     => "varchar(5) NOT NULL"
         ),
 		'name' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_country']['name'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_casino_category']['name'],
 			'exclude'                 => true,
 			'search'                  => true,
 			'sorting'                 => true,
@@ -119,7 +119,7 @@ $GLOBALS['TL_DCA']['tl_country'] = array
 		),
 		'short_name' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_country']['short_name'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_casino_category']['short_name'],
 			'exclude'                 => true,
 			'search'                  => true,
 			'sorting'                 => true,
@@ -142,7 +142,7 @@ use Contao\Backend;
 use Contao\Image;
 use Contao\Input;
 
-class tl_country extends \Contao\Backend
+class tl_casino_category extends \Contao\Backend
 {
 
 	/**
@@ -156,7 +156,7 @@ class tl_country extends \Contao\Backend
 
 
 	/**
-	 * Check permissions to edit table tl_country
+	 * Check permissions to edit table tl_casino_category
 	 */
 	public function checkPermission()
 	{
@@ -186,7 +186,7 @@ class tl_country extends \Contao\Backend
 			case 'copy':
 			case 'toggle':
 			default:
-				$objUser = $this->Database->prepare("SELECT admin FROM tl_country WHERE id=?")
+				$objUser = $this->Database->prepare("SELECT admin FROM tl_casino_category WHERE id=?")
 										  ->limit(1)
 										  ->execute(Input::get('id'));
 
@@ -201,7 +201,7 @@ class tl_country extends \Contao\Backend
 			case 'deleteAll':
 			case 'overrideAll':
 				$session = $this->Session->getData();
-				$objUser = $this->Database->execute("SELECT id FROM tl_country WHERE admin=1");
+				$objUser = $this->Database->execute("SELECT id FROM tl_casino_category WHERE admin=1");
 				$session['CURRENT']['IDS'] = array_diff($session['CURRENT']['IDS'], $objUser->fetchEach('id'));
 				$this->Session->setData($session);
 				break;
@@ -284,7 +284,7 @@ class tl_country extends \Contao\Backend
 	 */
 	public function sessionField(DataContainer $dc)
 	{
-		if (Input::post('FORM_SUBMIT') == 'tl_country')
+		if (Input::post('FORM_SUBMIT') == 'tl_casino_category')
 		{
 			$arrPurge = Input::post('purge');
 
@@ -295,19 +295,19 @@ class tl_country extends \Contao\Backend
 				if (in_array('purge_session', $arrPurge))
 				{
 					$this->Session->setData(array());
-					Message::addConfirmation($GLOBALS['TL_LANG']['tl_country']['sessionPurged']);
+					Message::addConfirmation($GLOBALS['TL_LANG']['tl_casino_category']['sessionPurged']);
 				}
 
 				if (in_array('purge_images', $arrPurge))
 				{
 					$this->Automator->purgeImageCache();
-					Message::addConfirmation($GLOBALS['TL_LANG']['tl_country']['htmlPurged']);
+					Message::addConfirmation($GLOBALS['TL_LANG']['tl_casino_category']['htmlPurged']);
 				}
 
 				if (in_array('purge_pages', $arrPurge))
 				{
 					$this->Automator->purgePageCache();
-					Message::addConfirmation($GLOBALS['TL_LANG']['tl_country']['tempPurged']);
+					Message::addConfirmation($GLOBALS['TL_LANG']['tl_casino_category']['tempPurged']);
 				}
 			}
 		}
@@ -315,11 +315,11 @@ class tl_country extends \Contao\Backend
 		return '
 <div>
   <fieldset class="tl_checkbox_container">
-    <legend>'.$GLOBALS['TL_LANG']['tl_country']['session'][0].'</legend>
+    <legend>'.$GLOBALS['TL_LANG']['tl_casino_category']['session'][0].'</legend>
     <input type="checkbox" id="check_all_purge" class="tl_checkbox" onclick="Backend.toggleCheckboxGroup(this, \'ctrl_purge\')"> <label for="check_all_purge" style="color:#a6a6a6"><em>'.$GLOBALS['TL_LANG']['MSC']['selectAll'].'</em></label><br>
-    <input type="checkbox" name="purge[]" id="opt_purge_0" class="tl_checkbox" value="purge_session" onfocus=""> <label for="opt_purge_0">'.$GLOBALS['TL_LANG']['tl_country']['sessionLabel'].'</label><br>
-    <input type="checkbox" name="purge[]" id="opt_purge_1" class="tl_checkbox" value="purge_images" onfocus=""> <label for="opt_purge_1">'.$GLOBALS['TL_LANG']['tl_country']['htmlLabel'].'</label><br>
-    <input type="checkbox" name="purge[]" id="opt_purge_2" class="tl_checkbox" value="purge_pages" onfocus=""> <label for="opt_purge_2">'.$GLOBALS['TL_LANG']['tl_country']['tempLabel'].'</label>
+    <input type="checkbox" name="purge[]" id="opt_purge_0" class="tl_checkbox" value="purge_session" onfocus=""> <label for="opt_purge_0">'.$GLOBALS['TL_LANG']['tl_casino_category']['sessionLabel'].'</label><br>
+    <input type="checkbox" name="purge[]" id="opt_purge_1" class="tl_checkbox" value="purge_images" onfocus=""> <label for="opt_purge_1">'.$GLOBALS['TL_LANG']['tl_casino_category']['htmlLabel'].'</label><br>
+    <input type="checkbox" name="purge[]" id="opt_purge_2" class="tl_checkbox" value="purge_pages" onfocus=""> <label for="opt_purge_2">'.$GLOBALS['TL_LANG']['tl_casino_category']['tempLabel'].'</label>
   </fieldset>'.$dc->help().'
 </div>';
 	}
@@ -408,7 +408,7 @@ class tl_country extends \Contao\Backend
 			$time = time();
 		}
 
-		$this->Database->prepare("UPDATE tl_country SET dateAdded=? WHERE id=?")
+		$this->Database->prepare("UPDATE tl_casino_category SET dateAdded=? WHERE id=?")
 					   ->execute($time, $dc->id);
 	}
 
@@ -471,7 +471,7 @@ class tl_country extends \Contao\Backend
 		}
 
 		// Check permissions AFTER checking the tid, so hacking attempts are logged
-		if (!$this->User->hasAccess('tl_country::disable', 'alexf'))
+		if (!$this->User->hasAccess('tl_casino_category::disable', 'alexf'))
 		{
 			return '';
 		}
@@ -520,19 +520,19 @@ class tl_country extends \Contao\Backend
 		}
 
 		// Check the field access
-		if (!$this->User->hasAccess('tl_country::disable', 'alexf'))
+		if (!$this->User->hasAccess('tl_casino_category::disable', 'alexf'))
 		{
 			$this->log('Not enough permissions to activate/deactivate user ID "'.$intId.'"', __METHOD__, TL_ERROR);
 			$this->redirect('contao/main.php?act=error');
 		}
 
-		$objVersions = new Versions('tl_country', $intId);
+		$objVersions = new Versions('tl_casino_category', $intId);
 		$objVersions->initialize();
 
 		// Trigger the save_callback
-		if (is_array($GLOBALS['TL_DCA']['tl_country']['fields']['disable']['save_callback']))
+		if (is_array($GLOBALS['TL_DCA']['tl_casino_category']['fields']['disable']['save_callback']))
 		{
-			foreach ($GLOBALS['TL_DCA']['tl_country']['fields']['disable']['save_callback'] as $callback)
+			foreach ($GLOBALS['TL_DCA']['tl_casino_category']['fields']['disable']['save_callback'] as $callback)
 			{
 				if (is_array($callback))
 				{
@@ -547,7 +547,7 @@ class tl_country extends \Contao\Backend
 		}
 
 		// Update the database
-		$this->Database->prepare("UPDATE tl_country SET tstamp=". time() .", disable='" . ($blnVisible ? '' : 1) . "' WHERE id=?")
+		$this->Database->prepare("UPDATE tl_casino_category SET tstamp=". time() .", disable='" . ($blnVisible ? '' : 1) . "' WHERE id=?")
 					   ->execute($intId);
 
 		$objVersions->create();

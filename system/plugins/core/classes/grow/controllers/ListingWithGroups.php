@@ -24,36 +24,16 @@ class ListingWithGroups extends Listing
             $this->groupTable = $this->config['group']['table'];
         }
 
+        $this->mainSectionTemplate->groupsTitle = $this->config['group']['title'];
+        $this->mainSectionTemplate->groupsNew = $this->config['group']['newLabel'];
+
         $this->groupOrganizer = new Organizer($this->groupTable);
     }
 
 
     public function ajaxGetGroups()
     {
-        $query = "SELECT * FROM " . $this->groupTable;
-
-        $objRowStmt = $this->Database->prepare($query);
-
-        $objRowStmt->limit(20, 0);
-
-        $objRow = $objRowStmt->execute();
-
-        if ($objRow->numRows < 1) {
-            return 'No data';
-        }
-
-        $result = $objRow->fetchAllAssoc();
-
-        $groups = [];
-        $listFields = $GLOBALS['TL_DCA'][$this->groupTable]['list']['label']['fields_new'];
-
-        $groups[] = ['id' => 'all', 'name' => 'All users'];
-
-        foreach ($result as $group) {
-            $groups[] = $this->generateItemForGroup($group, $listFields);
-        }
-
-        ActionData::data('groups', $groups);
+        ActionData::data('groups', $this->groupOrganizer->getList(20, 0));
         ActionData::data('creatable', true);
     }
 
@@ -61,19 +41,6 @@ class ListingWithGroups extends Listing
     public function ajaxGetGroup()
     {
 
-    }
-
-
-    protected function generateItemForGroup($group, $listFields)
-    {
-        $groupData = [
-            'id' => $group['id']
-        ];
-        foreach ($listFields as $fieldName) {
-            $groupData[$fieldName] = $group[$fieldName] ?: '';
-        }
-
-        return $groupData;
     }
 
 }

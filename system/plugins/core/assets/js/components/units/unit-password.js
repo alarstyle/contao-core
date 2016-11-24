@@ -1,6 +1,8 @@
 (function() {
 
-    var UnitPassword = _.defaultsDeep({
+    var UnitPassword = {
+
+        extends: AbstractUnit,
 
         template: '#unit-password-template',
 
@@ -22,7 +24,7 @@
 
         }
 
-    }, AbstractUnit);
+    };
 
     Vue.component('unit-password', UnitPassword);
 

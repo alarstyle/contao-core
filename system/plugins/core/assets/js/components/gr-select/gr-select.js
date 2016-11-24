@@ -1,16 +1,17 @@
 (function () {
 
+
+    /**
+     * options = [[value, label, disabled], ...]
+     */
+
     var GrSelect = {
 
         template: '#gr-select-template',
 
         props: {
-            /**
-             * [value, label, disabled]
-             */
             name: String,
-            value: '',
-            label: '',
+            value: null,
             options: {
                 type: Array,
                 default: []
@@ -22,44 +23,82 @@
             multiple: {
                 type: Boolean,
                 default: false
+            },
+            placeholder: {
+                type: String,
+                default: ''
             }
         },
 
         data: function () {
             return {
-                opened: false
+                opened: false,
+                currentValue: null,
+                currentLabel: ''
             }
+        },
+
+        watch: {
+
+            value: function(value) {
+                this.currentValue = value;
+                this.setCurrentLabel();
+            },
+
+            options: function(options) {
+                this.setCurrentLabel();
+            },
+
+            opened: function(opened) {
+                if (opened) {
+                    document.documentElement.addEventListener('click', this.documentClick, false);
+                }
+                else {
+                    document.documentElement.removeEventListener('click', this.documentClick, false);
+                }
+            }
+
         },
 
         methods: {
 
             inputClick: function () {
                 if (this.disabled)  return;
-                if (this.opened) {
-                    this.opened = false;
-                }
-                else {
-                    this.opened = true;
-                }
+                this.opened = !this.opened;
             },
 
             optionClick: function (option) {
                 if (this.disabled || option.disabled)  return;
                 this.opened = false;
-                this.label = option.label || option.value;
-                this.value = option.value;
-                this.$emit('change', this.value, this);
+                this.currentLabel = option.label || option.value;
+                this.currentValue = option.value;
+                this.$emit('change', this.currentValue, this);
             },
 
-            selected: function () {
-                // this.$emit('input', result);
-                // this.$emit('change', result);
+            documentClick: function(event) {
+                if (this.$el.contains(event.target)) return;
+                this.opened = false;
+            },
+
+            setCurrentLabel: function() {
+                if (!this.value || !this.options || !this.options.length) {
+                    this.currentLabel = this.value;
+                }
+                var _this = this;
+                this.options.some(function(option) {
+                    if (option.value === _this.value) {
+                        _this.currentLabel = option.label;
+                        return true;
+                    }
+                });
             }
 
         },
 
-        mounted: function () {
-            console.log(this.options);
+        created: function () {
+            if (!this.value) return;
+            this.currentValue = this.value;
+            this.setCurrentLabel();
         }
 
     };

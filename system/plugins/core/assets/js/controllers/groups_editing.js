@@ -4,26 +4,38 @@
 
         data: function () {
             return {
-                editing: false,
-                groupsData: {
-                    list: [],
-                    creatable: false
-                },
-                fields: [],
+                groupsList: [],
+                groupsCreatable: false,
+                groupsEditable: false,
+
+                formTitle: '',
+                formFields: {},
+                formErrors: {},
+
                 currentId: null
             }
         },
 
-        watch: {},
+        watch: {
+            currentId: function(id) {
+
+            }
+        },
 
         methods: {
 
-            showGroups: function () {
+            loadGroups: function () {
                 var _this = this;
                 grow.action('getGroups')
                     .then(function (response) {
-                        _this.groupsData.list = response.data.data.items;
-                        _this.groupsData.creatable = response.data.data.creatable;
+                        _this.groupsList = response.data.data.groups;
+                        _this.groupsCreatable = response.data.data.creatable;
+                        if (!_this.currentId || _this.currentId === 'new') return;
+
+                        _this.$refs.groups.findAndSetActive(function(item) {
+                            console.log(item.id, item.id == _this.currentId);
+                            return item.id == _this.currentId;
+                        });
                     });
             },
 
@@ -32,83 +44,78 @@
             },
 
             editGroup: function (id) {
-                var _this = this;
+                var _this = this,
+                    group = _.find(this.groupsList, {id: id}),
+                    groupName = '';
+                if (group) {
+                    var div = document.createElement("div");
+                    div.innerHTML = group.fields[0];
+                    groupName = div.textContent || div.innerText || '';
+                }
                 grow.action('getGroupsItem', {id: id})
                     .then(function (response) {
                         _this.currentId = id;
-                        _this.fields = response.data.data.fields;
-                        _this.editing = true;
+                        _this.formFields = response.data.data.fields;
+                        _this.formTitle = groupName;
                     });
             },
 
             saveGroup: function () {
-                var _this = this;
-                var fieldsValues = _this.$refs.form.getData();
-                if (!Object.keys(fieldsValues).length) {
-                    console.log('Nothing was changed');
+                if (!this.$refs.form.isChanged) {
+                    grow.notify('Nothing was changed', {type: 'warning'});
                     return;
                 }
 
+                var _this = this;
+                var fieldsValues = _this.$refs.form.getValues();
                 fieldsValues = JSON.parse(JSON.stringify(fieldsValues));
-                console.log(fieldsValues);
+
                 grow.action('saveGroup', {id: _this.currentId, fields: fieldsValues})
                     .then(function (response) {
                         if (response.data.success) {
-                            console.log('SAVED');
+                            grow.notify('Saved successfully', {type: 'success'});
+                            _this.formErrors = {};
+                            if (_this.currentId !== 'new') return;
+                            _this.currentId = response.data.data.newId;
+                            _this.loadGroups();
                         }
                         else if (response.data.error) {
-                            _this.showErrors(response.data.errorData);
-                            //_this.$refs.form.showErrors(response.data.errorData);
+                            grow.notify('Saving failed ', {type: 'danger'});
+                            _this.formErrors = response.data.errorData;
                         }
                     });
             },
 
-            deleteItem: function(id) {
-                var _this = this;
+            deleteGroup: function() {
                 if (!confirm("Are you sure?")) {
                     return;
                 }
 
-                grow.action('deleteItem', {id: id})
+                var _this = this,
+                    id = this.currentId;
+
+                grow.action('deleteGroup', {id: id})
                     .then(function (response) {
                         if (response.data.success) {
-                            _this.showList();
+                            _this.cancelEditGroup();
+                            _this.groupsList = _.reject(_this.groupsList, {id: id});
                         }
                         else {
-                            _this.showErrors(response.data.errorData);
+
                         }
                     });
             },
 
             cancelEditGroup: function () {
-                this.showList();
-            },
-
-            showErrors: function (errorData) {
-                console.log(errorData);
-                _.forEach(this.fields, function(field, i) {
-                    if (!errorData[field.name]) return;
-                    field.error = errorData[field.name][0];
-                });
-            },
-
-            onListingOperation: function(id, operationName) {
-                if (operationName === 'edit') {
-                    this.editItem(id);
-                }
-                else if (operationName === 'delete') {
-                    this.deleteItem(id);
-                }
-                else if (operationName === 'toggle') {
-
-                }
+                this.currentId = null;
+                this.$refs.groups.setActive(null);
             }
 
         },
 
         mounted: function () {
 
-            this.showGroups();
+            this.loadGroups();
 
         }
 

@@ -5,37 +5,45 @@
         template: '#gr-form-template',
 
         props: {
-            fields: {type: Array, default: []}
+            fields: {
+                type: Object,
+                default: {}
+            },
+            errors: {
+                type: Object,
+                default: {}
+            }
         },
 
         data: function() {
             return {
+                isChanged: false,
                 changedFields: {}
             }
         },
 
         watch: {
-            fields: function() {
-                console.log('changed');
+            fields: function(fields) {
+                console.log('FILEDS CHANGED')
             }
         },
 
         methods: {
 
-            onChange: function(value, unit) {
+            unitChange: function(value, unit) {
+                console.log('unit change ', value, unit.id);
+                this.isChanged = true;
                 this.changedFields[unit.id] = value;
             },
 
-            getData: function() {
-                return this.changedFields;
-            },
+            getValues: function() {
+                var values = {};
 
-            showErrors: function(errorData) {
-                _.forEach(this.fields, function(field, i) {
-                    //if (!errorData[field.name]) return;
-                    //console.log(field.name);
-                    //field.error = 'true';
-                });
+                for (var fieldName in this.fields) {
+                    values[fieldName] = this.changedFields[fieldName] !== undefined ? this.changedFields[fieldName] : this.fields[fieldName].value;
+                }
+
+                return values;
             }
 
         }

@@ -1,12 +1,15 @@
 (function() {
 
-    var UnitSelect = _.defaultsDeep({
+    var UnitSelect = {
+
+        extends: AbstractUnit,
 
         template: '#unit-select-template',
 
         data: function() {
             return {
-                options: []
+                options: [],
+                currentValue: null
             }
         },
 
@@ -16,14 +19,13 @@
 
         methods: {
 
-            onInputChange: function(e) {
-                console.log(e.target.value);
-                this.$emit('change', e.target.value, this);
+            onChange: function(value) {
+                this.$emit('change', value, this);
             }
 
         }
 
-    }, AbstractUnit);
+    };
 
     Vue.component('unit-select', UnitSelect);
 

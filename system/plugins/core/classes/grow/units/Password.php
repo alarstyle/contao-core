@@ -16,7 +16,7 @@ class Password extends AbstractUnit
     }
 
 
-    protected function validator($value)
+    protected function validator($value, $id = null)
     {
         $value = parent::validator($value);
 

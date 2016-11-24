@@ -106,7 +106,10 @@ $GLOBALS['NAVIGATION'] = [
         'controller' => 'Grow\\Controllers\\ListingWithGroups',
         'config' => [
             'group' => [
-                'table' => 'tl_user_group'
+                'table' => 'tl_user_group',
+                'title' => 'Groups',
+                'newLabel' => 'New Group',
+                'listCallback' => []
             ],
             'list' => [
                 'table' => 'tl_user',
@@ -641,7 +644,6 @@ $GLOBALS['TL_MODELS']['tl_files'] = 'Contao\\Models\\FilesModel';
 
 $GLOBALS['TL_CSS'][] = '/system/plugins/core/assets/css/core.css';
 
-$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/es6-promise.auto.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/Sortable.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vue.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vue-router.min.js';
@@ -657,8 +659,8 @@ $GLOBALS['COMPONENTS'] = [
         '/system/plugins/core/assets/js/components/icon.js'
     ],
     'notice'  => [
-        '/system/plugins/core/assets/js/components/notice/notice.js',
-        '/system/plugins/core/assets/js/components/notice/notice.html'
+        '/system/plugins/core/assets/js/components/gr-notify/gr-notify.js',
+        '/system/plugins/core/assets/js/components/gr-notify/gr-notify.html'
     ],
     'pagination'  => [
         '/system/plugins/core/assets/js/components/pagination.js',

@@ -1,17 +1,17 @@
 <div class="gr-form">
 
-    <template v-for="field in fields">
+    <template v-for="(field, fieldName) in fields">
 
         <template v-if="field.component">
             <component :is="field.component"
-                       :id="field.name"
+                       :id="fieldName"
                        :value="field.value"
                        :required="field.required"
-                       :error="field.error"
+                       :error="errors[fieldName] ? errors[fieldName][0] : null"
                        :label="field.label"
                        :hint="field.hint"
                        :config="field.config"
-                       @change="onChange"
+                       @change="unitChange"
                        ref="units"></component>
         </template>
 

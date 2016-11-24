@@ -8,6 +8,7 @@ class ActionData
     protected static $logArr = [];
     protected static $errorArr = [];
     protected static $dataArr = [];
+    protected static $notifyArr = [];
 
 
     public static function log($log)
@@ -30,6 +31,12 @@ class ActionData
     public static function data($key, $data)
     {
         static::$dataArr[$key] = $data;
+    }
+
+
+    public static function notify($message, $type)
+    {
+        static::$notifyArr[] = [$message, $type];
     }
 
 

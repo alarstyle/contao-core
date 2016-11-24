@@ -17,8 +17,7 @@ class GroupsEditing extends \Contao\Controllers\BackendMain
         'getGroups' => 'ajaxGetGroups',
         'getGroupsItem' => 'ajaxGetGroupsItem',
         'saveGroup' => 'ajaxSaveGroup',
-        'deleteItem' => 'ajaxDeleteItem',
-        'disableItem' => 'ajaxDisableItem'
+        'deleteGroup' => 'ajaxDeleteGroup'
     ];
 
     protected $config = [];
@@ -28,6 +27,8 @@ class GroupsEditing extends \Contao\Controllers\BackendMain
     protected $jsFile = '/system/plugins/core/assets/js/controllers/groups_editing.js';
 
     protected $groupOrganizer;
+
+    protected $mainTemplate;
 
 
     public function __construct($config = null)
@@ -55,7 +56,7 @@ class GroupsEditing extends \Contao\Controllers\BackendMain
 
     public function ajaxGetGroups()
     {
-        ActionData::data('items', $this->groupOrganizer->getList(20, 0));
+        ActionData::data('groups', $this->groupOrganizer->getList(20, 0));
         ActionData::data('creatable', true);
     }
 
@@ -81,35 +82,25 @@ class GroupsEditing extends \Contao\Controllers\BackendMain
         $fields = Input::post('fields');
 
         if ($id === 'new') {
-            $result = $this->groupOrganizer->create($fields);
+            $newId = $this->groupOrganizer->create($fields);
+            ActionData::data('newId', $newId);
         }
         else {
-            $result = $this->groupOrganizer->save($id, $fields);
+            $this->groupOrganizer->save($id, $fields);
         }
 
-        if ($result !== true) {
-            ActionData::error($result);
+        if ($this->groupOrganizer->hasErrors()) {
+            ActionData::error($this->groupOrganizer->getErrors());
+            return;
         }
     }
 
 
-    public function ajaxDeleteItem()
+    public function ajaxDeleteGroup()
     {
         $id = Input::post('id');
 
         $result = $this->groupOrganizer->delete($id);
-
-        if ($result !== true) {
-            ActionData::error($result);
-        }
-    }
-
-
-    public function ajaxDisableItem()
-    {
-        $id = Input::post('id');
-
-        $result = $this->groupOrganizer->disable($id);
 
         if ($result !== true) {
             ActionData::error($result);

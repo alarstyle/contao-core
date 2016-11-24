@@ -1,10 +1,9 @@
     <div class="unit unit--select" :class="unitClass">
-        <label class="unit-label">{{ label }}</label>
-        <select @change="onInputChange" class="unit-select">
-            <option v-for="option in options" :value="option.value" :selected="value === option.value">{{ option.label }}</option>
-        </select>
+        <label class="unit-label">{{ label }}<span v-if="required">*</span></label>
         <gr-select
-            :options="options">
+            :options="options"
+            :value="value"
+            @change="onChange">
         </gr-select>
         <div class="unit-hint">{{ error || hint }}</div>
     </div>

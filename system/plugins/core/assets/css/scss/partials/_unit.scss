@@ -1,6 +1,7 @@
 .unit {
     margin-bottom: 25px;
     padding: 0 10px;
+    width: 50%;
     &.w50 {
         height: auto;
     }
@@ -14,6 +15,9 @@
     display: inline-block;
     font-weight: bold;
     margin-bottom: 5px;
+    span {
+        color: #c33e3e;
+    }
 }
 
 .unit-hint {
@@ -50,6 +54,9 @@
         color: red;
     }
     .unit-input {
+        border-color: red;
+    }
+    .gr-select-input {
         border-color: red;
     }
 }

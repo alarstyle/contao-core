@@ -1,6 +1,8 @@
 (function() {
 
-    var UnitTextarea = _.defaultsDeep({
+    var UnitTextarea = {
+
+        extends: AbstractUnit,
 
         template: '#unit-textarea-template',
 
@@ -14,7 +16,7 @@
 
         }
 
-    }, AbstractUnit);
+    };
 
     Vue.component('unit-textarea', UnitTextarea);
 

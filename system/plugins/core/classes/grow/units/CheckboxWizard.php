@@ -8,7 +8,7 @@ class CheckboxWizard extends AbstractUnit
     public static $componentName = 'unit-checkbox-wizard';
 
 
-    protected function validator($value)
+    protected function validator($value, $id = null)
     {
         $value = parent::validator($value);
 

@@ -1,6 +1,8 @@
 (function() {
 
-    var UnitRadioTable = _.defaultsDeep({
+    var UnitRadioTable = {
+
+        extends: AbstractUnit,
 
         template: '#unit-radio-table-template',
 
@@ -18,7 +20,7 @@
 
         }
 
-    }, AbstractUnit);
+    };
 
     Vue.component('unit-radio-table', UnitRadioTable);
 

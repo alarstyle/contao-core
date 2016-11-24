@@ -1,6 +1,8 @@
 (function() {
 
-    var UnitCheckboxWizard = _.defaultsDeep({
+    var UnitCheckboxWizard = {
+
+        extends: AbstractUnit,
 
         template: '#unit-checkbox-wizard-template',
 
@@ -36,7 +38,7 @@
 
         }
 
-    }, AbstractUnit);
+    };
 
     Vue.component('unit-checkbox-wizard', UnitCheckboxWizard);
 
