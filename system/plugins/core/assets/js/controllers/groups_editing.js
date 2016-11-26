@@ -8,7 +8,6 @@
                 groupsCreatable: false,
                 groupsEditable: false,
 
-                //formTitle: '',
                 formFields: {},
                 formErrors: {},
 
@@ -18,14 +17,8 @@
 
         computed: {
             formTitle: function () {
-                var group = _.find(this.groupsList, {id: this.currentId}),
-                    groupName = '';
-                if (group) {
-                    var div = document.createElement("div");
-                    div.innerHTML = group.fields[0];
-                    groupName = div.textContent || div.innerText || '';
-                }
-                return groupName;
+                var group = _.find(this.groupsList, {id: this.currentId});
+                return group ? group.title : '';
             }
         },
 
@@ -51,6 +44,7 @@
             },
 
             newGroup: function () {
+                if (this.currentId === 'new') return;
                 this.editGroup('new');
             },
 
@@ -60,6 +54,9 @@
                     .then(function (response) {
                         if (response.data.success) {
                             _this.formFields = response.data.data.fields;
+                            if (id === 'new' && _this.$refs.form) {
+                                _this.$refs.form.reset();
+                            }
                             _this.currentId = id;
                         }
                         else if (response.data.error) {
@@ -83,10 +80,9 @@
                         if (response.data.success) {
                             grow.notify('Saved successfully', {type: 'success'});
                             _this.formErrors = {};
-                            if (_this.currentId !== 'new') return;
-                            _this.currentId = response.data.data.newId;
-                            console.log('!!!');
-                            console.log(_this.currentId);
+                            if (_this.currentId === 'new') {
+                                _this.currentId = response.data.data.newId;
+                            }
                             _this.loadGroups();
                         }
                         else if (response.data.error) {

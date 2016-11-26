@@ -102,6 +102,7 @@ $GLOBALS['TL_DCA']['tl_user_group'] = array
 	// Palettes
 	'palettes' => array
 	(
+		'defaultNew'                  => '{title_legend},name;{modules_legend},modules,themes;{pagemounts_legend},pagemounts,alpty;{filemounts_legend},filemounts,fop;{alexf_legend:hide},alexf;{account_legend},disable,start,stop',
 		'default'                     => '{title_legend},name;{modules_legend},modules,themes;{pagemounts_legend},pagemounts,alpty;{filemounts_legend},filemounts,fop;{forms_legend},forms,formp;{alexf_legend:hide},alexf;{account_legend},disable,start,stop',
 	),
 
@@ -129,7 +130,8 @@ $GLOBALS['TL_DCA']['tl_user_group'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_user']['modules'],
 			'exclude'                 => true,
-			'inputType'               => 'checkbox',
+            'inputTypeNew'            => 'checkboxWizard',
+            'inputType'               => 'checkbox',
 			'options_callback'        => array('tl_user_group', 'getModules'),
 			'reference'               => &$GLOBALS['TL_LANG']['MOD'],
 			'eval'                    => array('multiple'=>true, 'helpwizard'=>true),
@@ -139,6 +141,7 @@ $GLOBALS['TL_DCA']['tl_user_group'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_user']['themes'],
 			'exclude'                 => true,
+            'inputTypeNew'            => 'checkboxWizard',
 			'inputType'               => 'checkbox',
 			'options'                 => array('css', 'modules', 'layout', 'image_sizes', 'theme_import', 'theme_export'),
 			'reference'               => &$GLOBALS['TL_LANG']['MOD'],
@@ -158,6 +161,7 @@ $GLOBALS['TL_DCA']['tl_user_group'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_user']['alpty'],
 			'default'                 => array('regular', 'redirect', 'forward'),
 			'exclude'                 => true,
+            'inputTypeNew'            => 'checkboxWizard',
 			'inputType'               => 'checkbox',
 			'options'                 => array_keys($GLOBALS['TL_PTY']),
 			'reference'               => &$GLOBALS['TL_LANG']['PTY'],
@@ -177,28 +181,10 @@ $GLOBALS['TL_DCA']['tl_user_group'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['FOP']['fop'],
 			'exclude'                 => true,
 			'default'                 => array('f1', 'f2', 'f3'),
+            'inputTypeNew'            => 'checkboxWizard',
 			'inputType'               => 'checkbox',
 			'options'                 => array('f1', 'f2', 'f3', 'f4', 'f5', 'f6'),
 			'reference'               => &$GLOBALS['TL_LANG']['FOP'],
-			'eval'                    => array('multiple'=>true),
-			'sql'                     => "blob NULL"
-		),
-		'forms' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_user']['forms'],
-			'exclude'                 => true,
-			'inputType'               => 'checkbox',
-			'foreignKey'              => 'tl_form.title',
-			'eval'                    => array('multiple'=>true),
-			'sql'                     => "blob NULL"
-		),
-		'formp' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_user']['formp'],
-			'exclude'                 => true,
-			'inputType'               => 'checkbox',
-			'options'                 => array('create', 'delete'),
-			'reference'               => &$GLOBALS['TL_LANG']['MSC'],
 			'eval'                    => array('multiple'=>true),
 			'sql'                     => "blob NULL"
 		),
@@ -206,6 +192,7 @@ $GLOBALS['TL_DCA']['tl_user_group'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_user_group']['alexf'],
 			'exclude'                 => true,
+            'inputTypeNew'            => 'checkboxWizard',
 			'inputType'               => 'checkbox',
 			'options_callback'        => array('tl_user_group', 'getExcludedFields'),
 			'eval'                    => array('multiple'=>true, 'size'=>36),
@@ -245,6 +232,7 @@ $GLOBALS['TL_DCA']['tl_user_group'] = array
  * @author Leo Feyer <https://github.com/leofeyer>
  */
 use Contao\Image;
+use Contao\Input;
 use Contao\PluginLoader;
 
 class tl_user_group extends \Contao\Backend

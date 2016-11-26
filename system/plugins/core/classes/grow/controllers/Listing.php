@@ -43,6 +43,10 @@ class Listing extends \Contao\Controllers\BackendMain
         $this->listOrganizer = new Organizer($this->listTable);
 
         $this->mainSectionTemplate = new BackendTemplate('be_listing');
+        $this->mainSectionTemplate->listTitle = $this->config['list']['title'];
+        $this->mainSectionTemplate->listNew = $this->config['list']['labelNew'];
+        $this->mainSectionTemplate->listEdit = $this->config['list']['labelEdit'];
+        $this->mainSectionTemplate->listCreatable = $this->config['list']['creatable'] ? true : false;
 
         parent::__construct();
     }

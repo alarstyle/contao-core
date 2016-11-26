@@ -35,6 +35,9 @@ abstract class AbstractUnit
     protected $errorsArr = [];
 
 
+    protected $skip = false;
+
+
     protected $database;
 
 
@@ -56,18 +59,17 @@ abstract class AbstractUnit
             'label' => is_array($this->fieldData['label']) ? $this->fieldData['label'][0] : $this->field,
             'hint' => is_array($this->fieldData['label']) ? $this->fieldData['label'][1] : '',
             'required' => $this->fieldData['eval']['mandatory'],
-            'error' => null,
             'value' => array_key_exists('default', $this->fieldData) ? (is_array($this->fieldData['default']) ? serialize($this->fieldData['default']) : $this->fieldData['default']) : '',
             'config' => []
         ];
 
         $options = $this->getProcessedOptions();
 
-        if ($options !== NULL) {
+        if ($options !== null) {
             $unitData['config']['options'] = $options;
         }
 
-        if ($value !== NULL) {
+        if ($value !== null) {
             $unitData['value'] = deserialize($value);
         }
 
@@ -80,13 +82,24 @@ abstract class AbstractUnit
 
 
     /**
-     * Return true if the editor has errors
+     * Return true if has errors
      *
      * @return boolean True if there are errors
      */
     public function hasErrors()
     {
         return !empty($this->errorsArr);
+    }
+
+
+    /**
+     * Return true if no need to submit the value
+     *
+     * @return boolean
+     */
+    public function skipSubmit()
+    {
+        return $this->skip;
     }
 
 
@@ -151,10 +164,6 @@ abstract class AbstractUnit
     {
         $fieldData = $this->fieldData;
 
-        if (is_array($fieldData['options_callback_new'])) {
-            $arrCallback = $fieldData['options_callback_new'];
-            return System::importStatic($arrCallback[0])->{$arrCallback[1]}();
-        }
         if (is_array($fieldData['options_callback'])) {
             $arrCallback = $fieldData['options_callback'];
             $fieldData['options'] = System::importStatic($arrCallback[0])->{$arrCallback[1]}();
@@ -175,7 +184,7 @@ abstract class AbstractUnit
         $options = $fieldData['options'];
 
         if (!is_array($options) || empty($options)) {
-            return NULL;
+            return null;
         }
 
         $validOptions = [];
@@ -190,14 +199,48 @@ abstract class AbstractUnit
             ];
         }
 
+//        echo '<br><br>';
+//        var_dump($fieldData['reference']);
+//        var_dump($options);
+//        echo '<br><br>';
+
+        /*
         foreach ($options as $key => $value) {
             $validOptions[] = [
                 'value' => $isAssociative ? $key : $value,
-                'label' => !$isReference ? $value : ((($ref = (is_array($fieldData['reference'][$value]) ? $fieldData['reference'][$value][0] : $fieldData['reference'][$value])) != false) ? $ref : $value)
+                'label' => $key//!$isReference ? $value : ((($ref = (is_array($fieldData['reference'][$value]) ? $fieldData['reference'][$value][0] : $fieldData['reference'][$value])) != false) ? $ref : $value)
             ];
         }
+        */
+
+        $validOptions = array_merge($validOptions, $this->normalizeOptions($options));
 
         return $validOptions;
+    }
+
+
+    protected function normalizeOptions($options)
+    {
+        $normalOptions = [];
+
+        $isAssociative = array_is_assoc($options);
+
+        foreach ($options as $key => $value) {
+            if (is_array($value)) {
+                $normalOptions[] = [
+                    'value' => $isAssociative ? $key : $value,
+                    'label' => $key
+                ];
+            }
+            else {
+                $normalOptions[] = [
+                    'value' => $isAssociative ? $key : $value,
+                    'label' => $key
+                ];
+            }
+        }
+
+        return $normalOptions;
     }
 
 

@@ -63,6 +63,15 @@ class Organizer
             return null;
         }
 
+        $fieldsValues['tstamp'] = time();
+
+        $tableFieldsData = $GLOBALS['TL_DCA'][$this->table]['fields'];
+
+        foreach ($tableFieldsData as $fieldName=>$fieldData) {
+            if (isset($fieldsValues[$fieldName]) || !isset($fieldData['default'])) continue;
+            $fieldsValues[$fieldName] = $fieldData['default'];
+        }
+
         $objInsertStmt = $this->database->prepare("INSERT INTO " . $this->table . " %s")
             ->set($fieldsValues)
             ->execute();
@@ -82,7 +91,7 @@ class Organizer
         $fieldsStr = '';
         $valuesArr = [];
 
-        foreach ($fieldsValues as $field=>$value) {
+        foreach ($fieldsValues as $field => $value) {
             if (strlen($fieldsStr) > 0) $fieldsStr .= ', ';
             $fieldsStr .= $field . '=?';
             $valuesArr[] = $value;
@@ -153,6 +162,24 @@ class Organizer
     }
 
 
+    public function getSimpleList($limit = 20, $skip = 0, $where = '')
+    {
+        $query = "SELECT * FROM " . $this->table . ' ' . $where;
+
+        $objRowStmt = $this->database->prepare($query);
+        $objRowStmt->limit($limit, $skip);
+        $objRow = $objRowStmt->execute();
+
+        if ($objRow->numRows < 1) {
+            return [];
+        }
+
+        $result = $objRow->fetchAllAssoc();
+
+        return $result;
+    }
+
+
     public function getList($limit = 20, $skip = 0, $where = '')
     {
         $query = "SELECT * FROM " . $this->table . ' ' . $where;
@@ -171,19 +198,21 @@ class Organizer
 
         $list = [];
         $tableData = $GLOBALS['TL_DCA'][$this->table];
-        $listFields = $tableData['list']['label']['fields_new'] ?: $tableData['list']['label']['fields'];
+        $listFields = $tableData['list']['label']['fields_new'] ?: $tableData['list']['label']['fields'] ?: array_keys($tableData['fields']);
         $labelCallback = $tableData['list']['label']['callback'];
 
         $operationsData = $tableData['list']['operations'];
         $operations = [];
 
-        foreach ($operationsData as $operationName=>$operationData) {
-            if (!isset($operationData['icon_new'])) continue;
-            $operations[] = [
-                'name' => $operationName,
-                'label' => $operationData['label'][0] ?: $operationName,
-                'icon' => $operationData['icon_new']
-            ];
+        if ($operationsData) {
+            foreach ($operationsData as $operationName => $operationData) {
+                if (!isset($operationData['icon_new'])) continue;
+                $operations[] = [
+                    'name' => $operationName,
+                    'label' => $operationData['label'][0] ?: $operationName,
+                    'icon' => $operationData['icon_new']
+                ];
+            }
         }
 
         foreach ($result as $i => $item) {
@@ -199,8 +228,7 @@ class Organizer
             if (!empty($labelCallback)) {
                 if (is_array($labelCallback)) {
                     $itemData = System::importStatic($labelCallback[0])->{$labelCallback[1]}($itemData);
-                }
-                elseif (is_callable($labelCallback)) {
+                } elseif (is_callable($labelCallback)) {
                     $itemData = $labelCallback($itemData);
                 }
             }
@@ -214,7 +242,7 @@ class Organizer
     public function getUnitsData($row = NULL)
     {
         $tableData = $GLOBALS['TL_DCA'][$this->table];
-        $palette = $tableData['palettes']['default'];
+        $palette = $tableData['palettes']['defaultNew'] ?: $tableData['palettes']['default'];
         $boxes = trimsplit(';', $palette);
         $fields = [];
         $fieldsNames = [];
@@ -244,9 +272,9 @@ class Organizer
         foreach ($fieldsNames as $fieldName) {
             $fieldData = $tableData['fields'][$fieldName];
 
-            if (empty($fieldData['inputType'])) continue;
+            if (empty($fieldData['inputTypeNew'] ?: $fieldData['inputType'])) continue;
 
-            $unitClass = $this->getUnitClass($fieldData['inputType']);
+            $unitClass = $this->getUnitClass($fieldData['inputTypeNew'] ?: $fieldData['inputType']);
 
             if (empty($unitClass)) continue;
 
@@ -265,15 +293,21 @@ class Organizer
         $errors = [];
         $fieldsData = $GLOBALS['TL_DCA'][$this->table]['fields'];
 
-        foreach ($fieldsValues as $field=>$value) {
-            $unitClass = $this->getUnitClass($fieldsData[$field]['inputType']);
+        foreach ($fieldsValues as $field => $value) {
+            $unitClass = $this->getUnitClass($fieldsData[$field]['inputTypeNew'] ?: $fieldsData[$field]['inputType']);
+
             /** @var AbstractUnit $unit */
             $unit = new $unitClass($this->table, $field);
             $processedValue = $unit->validate($value, $id);
+
             if ($unit->hasErrors()) {
                 $errors[$field] = $unit->getErrors();
             } else {
                 $fieldsValues[$field] = $processedValue;
+            }
+
+            if ($unit->skipSubmit()) {
+                unset($fieldsValues[$field]);
             }
         }
 

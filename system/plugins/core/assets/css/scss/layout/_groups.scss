@@ -1,6 +1,7 @@
 .groups {
     font-weight: bold;
     margin-bottom: 20px;
+    padding-top: 5px;
     ul {
         color: #677076;
         list-style: none;
@@ -50,6 +51,7 @@
     color: #242a2e;
     font-size: 16px;
     text-transform: uppercase;
+    padding-bottom: 10px;
 }
 
 .groups-new {
@@ -64,6 +66,31 @@
             font-size: 16px;
             position: absolute;
             left: 10px;
+        }
+    }
+}
+
+.groups-edit {
+    color: #93999e;
+    float: right;
+    font-size: 14px;
+    a {
+        text-decoration: underline;
+    }
+    .icon {
+        margin: -2px 4px 0 0;
+        width: 15px;
+        height: 15px;
+    }
+}
+
+.groups--editing {
+    li {
+        background: #fff;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+        padding-left: 12px;
+        &:before {
+            content: normal;
         }
     }
 }

@@ -36,11 +36,7 @@ class Application
 
     public function run()
     {
-        $urlPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $urlPath = ltrim($urlPath, '/');
-        $urlPath = rtrim($urlPath, '/');
-
-        $this->arrRouteStack = explode('/', $urlPath);
+        $this->arrRouteStack = Route::get();
 
         if (count($this->arrRouteStack) && $this->arrRouteStack[0] === ltrim(Config::get('backendUri'), '/')) {
             $this->runBackend();

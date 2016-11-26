@@ -19,20 +19,6 @@ $GLOBALS['TL_DCA']['tl_country'] = array
 	'config' => array
 	(
 		'dataContainer'               => 'Table',
-		'enableVersioning'            => true,
-		'onload_callback' => array
-		(
-			array('tl_country', 'checkPermission')
-		),
-		'onsubmit_callback' => array
-		(
-			array('tl_country', 'storeDateAdded'),
-			array('tl_country', 'checkRemoveSession')
-		),
-		'ondelete_callback' => array
-		(
-			array('tl_country', 'removeSession')
-		),
 		'sql' => array
 		(
 			'keys' => array
@@ -46,42 +32,17 @@ $GLOBALS['TL_DCA']['tl_country'] = array
 	// List
 	'list' => array
 	(
-		'sorting' => array
-		(
-			'fields'                  => array('dateAdded DESC'),
-			'flag'                    => 1,
-		),
 		'label' => array
 		(
 			'fields'                  => array('country'),
 			'callback'                => array('tl_country', 'listCallback')
-		),
-		'operations' => array
-		(
-			'edit' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_country']['edit'],
-				'href'                => 'act=edit',
-				'icon'                => 'edit.gif',
-				'icon_new'            => 'pencil',
-				'button_callback'     => array('tl_country', 'editUser')
-			),
-			'delete' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_country']['delete'],
-				'href'                => 'act=delete',
-				'icon'                => 'delete.gif',
-				'icon_new'            => 'trash',
-				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;"',
-				'button_callback'     => array('tl_country', 'deleteUser')
-			)
 		)
 	),
 
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => 'country, name,short_name'
+		'default'                     => 'country, name, short_name'
 	),
 
 	// Fields
@@ -155,125 +116,11 @@ class tl_country extends \Contao\Backend
 	}
 
 
-	/**
-	 * Check permissions to edit table tl_country
-	 */
-	public function checkPermission()
-	{
-		if ($this->User->isAdmin)
-		{
-			return;
-		}
-
-		// Check current action
-		switch (Input::get('act'))
-		{
-			case 'create':
-			case 'select':
-			case 'show':
-				// Allow
-				break;
-
-			case 'delete':
-				if (Input::get('id') == $this->User->id)
-				{
-					$this->log('Attempt to delete own account ID "'.Input::get('id').'"', __METHOD__, TL_ERROR);
-					$this->redirect('contao/main.php?act=error');
-				}
-				// no break;
-
-			case 'edit':
-			case 'copy':
-			case 'toggle':
-			default:
-				$objUser = $this->Database->prepare("SELECT admin FROM tl_country WHERE id=?")
-										  ->limit(1)
-										  ->execute(Input::get('id'));
-
-				if ($objUser->admin && Input::get('act') != '')
-				{
-					$this->log('Not enough permissions to '.Input::get('act').' administrator account ID "'.Input::get('id').'"', __METHOD__, TL_ERROR);
-					$this->redirect('contao/main.php?act=error');
-				}
-				break;
-
-			case 'editAll':
-			case 'deleteAll':
-			case 'overrideAll':
-				$session = $this->Session->getData();
-				$objUser = $this->Database->execute("SELECT id FROM tl_country WHERE admin=1");
-				$session['CURRENT']['IDS'] = array_diff($session['CURRENT']['IDS'], $objUser->fetchEach('id'));
-				$this->Session->setData($session);
-				break;
-		}
-	}
-
 	public function listCallback($item)
 	{
 		$item['fields'][0] = \Contao\System::getCountriesWithFlags()[$item['fields'][0]];
 		return $item;
 	}
-
-
-	/**
-	 * Return the edit user button
-	 *
-	 * @param array  $row
-	 * @param string $href
-	 * @param string $label
-	 * @param string $title
-	 * @param string $icon
-	 * @param string $attributes
-	 *
-	 * @return string
-	 */
-	public function editUser($row, $href, $label, $title, $icon, $attributes)
-	{
-		return ($this->User->isAdmin || !$row['admin']) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
-	}
-
-
-	/**
-	 * Return the copy page button
-	 *
-	 * @param array  $row
-	 * @param string $href
-	 * @param string $label
-	 * @param string $title
-	 * @param string $icon
-	 * @param string $attributes
-	 * @param string $table
-	 *
-	 * @return string
-	 */
-	public function copyUser($row, $href, $label, $title, $icon, $attributes, $table)
-	{
-		if ($GLOBALS['TL_DCA'][$table]['config']['closed'])
-		{
-			return '';
-		}
-
-		return ($this->User->isAdmin || !$row['admin']) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
-	}
-
-
-	/**
-	 * Return the delete page button
-	 *
-	 * @param array  $row
-	 * @param string $href
-	 * @param string $label
-	 * @param string $title
-	 * @param string $icon
-	 * @param string $attributes
-	 *
-	 * @return string
-	 */
-	public function deleteUser($row, $href, $label, $title, $icon, $attributes)
-	{
-		return ($this->User->isAdmin || !$row['admin']) ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.gif$/i', '_.gif', $icon)).' ';
-	}
-
 
 	/**
 	 * Return a checkbox to delete session data

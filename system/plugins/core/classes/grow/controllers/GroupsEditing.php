@@ -49,14 +49,33 @@ class GroupsEditing extends \Contao\Controllers\BackendMain
     {
         $objTemplate = new BackendTemplate('be_groups_editing');
         $objTemplate->groupsTitle = $this->config['group']['title'];
-        $objTemplate->groupsNew = $this->config['group']['newLabel'];
+        $objTemplate->groupsNew = $this->config['group']['labelNew'];
 
         $this->Template->main = $objTemplate->parse();
     }
 
+
     public function ajaxGetGroups()
     {
-        ActionData::data('groups', $this->groupOrganizer->getList(20, 0));
+        $groups = [];
+
+        $labelCallback = $this->config['group']['labelCallback'];
+        $titleCallback = $this->config['group']['titleCallback'];
+        $sortingCallback = $this->config['group']['sortingCallback'];
+
+        foreach ($this->groupOrganizer->getSimpleList(20, 0) as $item) {
+            $groups[] = [
+                'id' => $item['id'],
+                'label' => is_callable($labelCallback) ? call_user_func($labelCallback, $item) : '',
+                'title' => is_callable($titleCallback) ? call_user_func($titleCallback, $item) : ''
+            ];
+        }
+
+        if (is_callable($sortingCallback)) {
+            $groups = call_user_func($sortingCallback, $groups);
+        }
+
+        ActionData::data('groups', $groups);
         ActionData::data('creatable', true);
     }
 
@@ -82,8 +101,8 @@ class GroupsEditing extends \Contao\Controllers\BackendMain
         $fields = Input::post('fields');
 
         if ($id === 'new') {
-            $newId = strval($this->groupOrganizer->create($fields));
-            ActionData::data('newId', $newId);
+            $id = strval($this->groupOrganizer->create($fields));
+            ActionData::data('newId', $id);
         }
         else {
             $this->groupOrganizer->save($id, $fields);
@@ -91,7 +110,10 @@ class GroupsEditing extends \Contao\Controllers\BackendMain
 
         if ($this->groupOrganizer->hasErrors()) {
             ActionData::error($this->groupOrganizer->getErrors());
+            //return;
         }
+
+        //ActionData::data('group', $this->groupOrganizer->getSimpleList(1, 0, 'WHERE id = ' . $id));
     }
 
 

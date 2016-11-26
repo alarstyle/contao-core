@@ -24,7 +24,10 @@
 
         watch: {
             fields: function(fields) {
-                console.log('FILEDS CHANGED')
+                console.log(this.$refs.units);
+
+                this.$forceUpdate();
+                console.log('FIELDS CHANGED')
             }
         },
 
@@ -44,6 +47,12 @@
                 }
 
                 return values;
+            },
+
+            reset: function() {
+                for (var i=0; i < this.$refs.units.length; i++) {
+                    this.$refs.units[i].reset();
+                }
             }
 
         }

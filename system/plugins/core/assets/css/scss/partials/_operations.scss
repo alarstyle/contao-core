@@ -1,4 +1,5 @@
 .operations {
+    @extend .disable_select;
     white-space: nowrap;
     a {
         display: inline-block;

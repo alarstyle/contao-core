@@ -1,11 +1,26 @@
-    <template v-if="state === 'edit_item'">
-        <div class="grid">
+    <div class="grid">
 
-            <div class="column-2-10">
+        <div class="column-2-10">
+            <groups v-if="state === 'list' || state === 'edit_group'"
+                    title="<?= $this->groupsTitle ?>"
+                    label-new="<?= $this->groupsNew ?>"
+                    label-all="<?= $this->groupsAll ?>"
+                    :list="groupsList"
+                    :creatable="groupsCreatable"
+                    :editable="groupsEditable"
+                    @editing-state="groupsEditingState"
+                    @group-selected="groupSelected"
+                    @group-edit="editGroup"
+                    @new-group="newGroup"
+                    ref="groups"></groups>
+        </div>
 
-            </div>
+        <template v-if="state === 'edit_item' || state === 'edit_group'">
 
             <div class="column-6-10">
+                <div class="main-head">
+                    <div class="main-title">{{ formTitle || ( state === 'edit_group' ? '<?= $this->groupsNew ?>' : '' ) || ( currentId === 'new' ? '<?= $this->listNew ?>' : '<?= $this->listEdit ?>' ) }}</div>
+                </div>
                 <gr-form :fields="formFields"
                          :errors="formErrors"
                          ref="form"></gr-form>
@@ -17,37 +32,23 @@
                         Save changes?
                     </div>
                     <div class="submit_panel-btns">
-                        <div class="btn" @click="cancelEditItem">Cancel</div>
-                        <div class="btn btn--primary" @click="saveItem">Save</div>
+                        <div class="btn" @click="cancelEdit">Cancel</div>
+                        <div class="btn btn--primary" @click="save">Save</div>
                     </div>
                 </div>
             </div>
 
-        </div>
-    </template>
+        </template>
 
-    <template v-if="state === 'list'">
-        <div class="grid">
-
-            <div class="column-2-10">
-
-                <groups title="<?= $this->groupsTitle ?>"
-                        new-label="<?= $this->groupsNew ?>"
-                        :list="groupsList"
-                        :creatable="groupsCreatable"
-                        @group-selected="groupSelected"
-                        @new-group="newGroup"></groups>
-
-            </div>
+        <template v-else>
 
             <div class="column-8-10">
-
                 <div class="main">
                     <div class="main-head">
-                        <div class="main-btns">
-                            <div @click="newItem" class="btn btn--primary">+ add new user</div>
+                        <div class="main-btns" v-if="<?= $this->listCreatable ?>">
+                            <div @click="newItem" class="btn btn--primary">+ <?= $this->listNew ?></div>
                         </div>
-                        <div class="main-title">All Users</div>
+                        <div class="main-title"><?= $this->listTitle ?></div>
                         <div class="main-search"></div>
                     </div>
                     <div class="main-body">
@@ -56,8 +57,8 @@
 
                     </div>
                 </div>
-
             </div>
 
-        </div>
-    </template>
+        </template>
+
+    </div>

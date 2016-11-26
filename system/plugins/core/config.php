@@ -108,11 +108,32 @@ $GLOBALS['NAVIGATION'] = [
             'group' => [
                 'table' => 'tl_user_group',
                 'title' => 'Groups',
-                'newLabel' => 'New Group',
-                'listCallback' => []
+                'labelAll' => 'All Users',
+                'labelNew' => 'Add Group',
+                'creatable' => true,
+                'editable' => true,
+                'labelCallback' => function ($item) {
+                    return $item['name'];
+                },
+                'titleCallback' => function ($item) {
+                    return $item['name'];
+                },
+                'sortingCallback' => function ($groups) {
+                    usort($groups, function ($a, $b) {
+                        if ($a['title'] === $b['title']) {
+                            return 0;
+                        }
+                        return (strtolower($a['title']) < strtolower($b['title'])) ? -1 : 1;
+                    });
+                    return $groups;
+                }
             ],
             'list' => [
                 'table' => 'tl_user',
+                'title' => 'Users',
+                'labelNew' => 'Add New User',
+                'labelEdit' => 'Edit User',
+                'creatable' => true
             ]
         ]
     ],

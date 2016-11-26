@@ -81,7 +81,7 @@ $GLOBALS['TL_DCA']['tl_casino_category'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => 'country, name,short_name'
+		'default'                     => 'name, countries, short_name'
 	),
 
 	// Fields
@@ -95,35 +95,24 @@ $GLOBALS['TL_DCA']['tl_casino_category'] = array
 		(
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
-        'country' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_casino_category']['country'],
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'options_callback'        => ['tl_casino_category', 'getCountriesAsOptions'],
-            'required'                => true,
-            'eval'                    => array('mandatory'=>true, 'unique'=>true),
-            'sql'                     => "varchar(5) NOT NULL"
-        ),
 		'name' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_casino_category']['name'],
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'flag'                    => 1,
 			'inputType'               => 'text',
             'required'                => true,
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>64, 'tl_class'=>'w50'),
 			'sql'                     => "varchar(64) NOT NULL default ''"
 		),
+        'countries' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_casino_category']['country'],
+            'inputType'               => 'checkboxWizard',
+            'foreignKey'              => 'tl_country.country',
+            'sql'                     => "varchar(5) NOT NULL"
+        ),
 		'short_name' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_casino_category']['short_name'],
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'flag'                    => 1,
 			'inputType'               => 'text',
             'required'                => true,
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>64, 'tl_class'=>'w50'),

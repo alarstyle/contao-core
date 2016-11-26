@@ -14,10 +14,24 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 1, 'casinos', [
         'group' => [
             'table' => 'tl_casino_category',
             'title' => 'Categories list',
-            'newLabel' => 'Add New Category'
+            'labelAll' => 'All Casinos',
+            'labelNew' => 'Add New Category',
+            'creatable' => true,
+            'editable' => true,
+            'labelCallback' => function ($item) {
+                return $item['name'];
+            },
+            'titleCallback' => function ($item) {
+                return $item['name'];
+            },
+            //'sorting' => ['dateAdded DESC']
         ],
         'list' => [
             'table' => 'tl_casino',
+            'title' => 'Casinos',
+            'labelNew' => 'Add New Casino',
+            'labelEdit' => 'Edit Casino',
+            'creatable' => true
         ]
     ]
 ]);
@@ -30,7 +44,22 @@ array_insert_assoc($GLOBALS['NAVIGATION'], -1, 'countries', [
         'group' => [
             'table' => 'tl_country',
             'title' => 'Countries list',
-            'newLabel' => 'Add Country'
+            'labelNew' => 'Add Country',
+            'labelCallback' => function ($item) {
+                return \Contao\System::getCountriesWithFlags()[$item['country']];
+            },
+            'titleCallback' => function ($item) {
+                return \Contao\System::getCountries()[$item['country']];
+            },
+            'sortingCallback' => function ($groups) {
+                usort($groups, function ($a, $b) {
+                    if ($a['title'] === $b['title']) {
+                        return 0;
+                    }
+                    return ($a['title'] < $b['title']) ? -1 : 1;
+                });
+                return $groups;
+            }
         ],
     ]
 ]);

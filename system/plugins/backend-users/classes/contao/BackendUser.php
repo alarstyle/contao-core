@@ -523,12 +523,14 @@ class BackendUser extends User
 		$arrInactiveModules = PluginLoader::getDisabled();
 		$blnCheckInactiveModules = is_array($arrInactiveModules);
 
+        $route = \Grow\Route::get();
+
 		foreach ($GLOBALS['NAVIGATION'] as $strItemName => $arrItem) {
             $arrModules[$strItemName] = [
                 'label' => specialchars($arrItem['label'] ?: $strItemName),
                 'href' => Config::get('backendUri') . '/' . $strItemName,
                 'icon' => '',
-                'class' => '_active'
+                'class' => $route[1] === $strItemName ? 'active' : ''
             ];
         }
 

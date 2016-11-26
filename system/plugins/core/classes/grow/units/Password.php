@@ -12,13 +12,18 @@ class Password extends AbstractUnit
 
     public function getUnitData($value)
     {
-        return parent::getUnitData(!empty($value) ? '******' : '');
+        return parent::getUnitData(!empty($value) ? '*****' : '');
     }
 
 
     protected function validator($value, $id = null)
     {
         $value = parent::validator($value);
+
+        if ($value === '*****') {
+            $this->skip = true;
+            return true;
+        }
 
         if (!$this->hasErrors()) {
             return Encryption::hash($value);

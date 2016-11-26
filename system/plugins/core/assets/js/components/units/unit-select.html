@@ -2,7 +2,7 @@
         <label class="unit-label">{{ label }}<span v-if="required">*</span></label>
         <gr-select
             :options="options"
-            :value="value"
+            :value="currentValue"
             @change="onChange">
         </gr-select>
         <div class="unit-hint">{{ error || hint }}</div>

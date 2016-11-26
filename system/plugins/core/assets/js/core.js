@@ -58,10 +58,21 @@
 
         watch: {
             value: function (value) {
+                console.log('!!!!');
                 this.currentValue = value;
             },
             currentValue: function(currentValue) {
                 this.$emit('change', currentValue, this);
+            }
+        },
+
+        methods: {
+            reset: function() {
+                var _this = this;
+                this.currentValue = 'reseting_' + Date.now();
+                Vue.nextTick(function() {
+                    _this.currentValue = _this.value;
+                });
             }
         },
 

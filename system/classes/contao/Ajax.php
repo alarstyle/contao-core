@@ -73,22 +73,6 @@ class Ajax extends Backend
 	{
 		switch ($this->strAction)
 		{
-			// Load a navigation menu group
-			case 'loadNavigation':
-				$bemod = $this->Session->get('backend_modules');
-				$bemod[Input::post('id')] = intval(Input::post('state'));
-				$this->Session->set('backend_modules', $bemod);
-
-				$this->import('Contao\\BackendUser', 'User');
-
-				/** @var \BackendTemplate|object $objTemplate */
-				$objTemplate = new BackendTemplate('be_navigation');
-				$navigation = $this->User->navigation();
-				$objTemplate->modules = $navigation[Input::post('id')]['modules'];
-
-				echo $objTemplate->parse();
-				exit; break;
-
 			// Toggle nodes of the file or page tree
 			case 'toggleStructure':
 			case 'toggleFileManager':

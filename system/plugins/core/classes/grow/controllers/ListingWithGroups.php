@@ -2,6 +2,7 @@
 
 namespace Grow\Controllers;
 
+use Contao\Input;
 use Grow\ActionData;
 use Grow\Organizer;
 
@@ -28,7 +29,8 @@ class ListingWithGroups extends Listing
         }
 
         $this->mainSectionTemplate->groupsTitle = $this->config['group']['title'];
-        $this->mainSectionTemplate->groupsNew = $this->config['group']['newLabel'];
+        $this->mainSectionTemplate->groupsNew = $this->config['group']['labelNew'];
+        $this->mainSectionTemplate->groupsAll = $this->config['group']['labelAll'];
 
         $this->groupOrganizer = new Organizer($this->groupTable);
     }
@@ -36,21 +38,66 @@ class ListingWithGroups extends Listing
 
     public function ajaxGetGroups()
     {
-        ActionData::data('groups', $this->groupOrganizer->getList(20, 0));
-        ActionData::data('editable', true);
-        ActionData::data('creatable', true);
+        $groups = [];
+
+        $editable = $this->config['group']['editable'] ? true : false;
+        $creatable = $this->config['group']['creatable'] ? true : false;
+        $sortable = $this->config['group']['sortable'] ? true : false;
+
+        $labelCallback = $this->config['group']['labelCallback'];
+        $titleCallback = $this->config['group']['titleCallback'];
+        $sortingCallback = $this->config['group']['sortingCallback'];
+
+        foreach ($this->groupOrganizer->getSimpleList(20, 0) as $item) {
+            $groups[] = [
+                'id' => $item['id'],
+                'label' => is_callable($labelCallback) ? call_user_func($labelCallback, $item) : '',
+                'title' => is_callable($titleCallback) ? call_user_func($titleCallback, $item) : ''
+            ];
+        }
+
+        if (is_callable($sortingCallback)) {
+            $groups = call_user_func($sortingCallback, $groups);
+        }
+
+        ActionData::data('groups', $groups);
+        ActionData::data('editable', $editable);
+        ActionData::data('creatable', $creatable);
+        ActionData::data('sortable', $sortable);
     }
 
 
     public function ajaxGetGroup()
     {
+        $id = Input::post('id');
 
+        if ($id === 'new') {
+            $fields = $this->groupOrganizer->blank();
+        }
+        else {
+            $fields = $this->groupOrganizer->load($id);
+        }
+
+        ActionData::data('fields', $fields);
     }
 
 
     public function ajaxSaveGroup()
     {
+        $id = Input::post('id');
+        $fields = Input::post('fields');
 
+        if ($id === 'new') {
+            $id = strval($this->groupOrganizer->create($fields));
+            ActionData::data('newId', $id);
+        }
+        else {
+            $this->groupOrganizer->save($id, $fields);
+        }
+
+        if ($this->groupOrganizer->hasErrors()) {
+            ActionData::error($this->groupOrganizer->getErrors());
+        }
     }
 
 

@@ -8,6 +8,7 @@
 
                 groupsList: [],
                 groupsCreatable: false,
+                groupsEditable: false,
 
                 listHeaders: [],
                 listItems: [],
@@ -15,37 +16,46 @@
 
                 formFields: {},
                 formErrors: {},
-                currentId: null
+
+                currentId: null,
+                currentGroupId: null
+            }
+        },
+
+        computed: {
+            formTitle: function () {
+                switch (this.state) {
+
+                    case 'edit_group':
+                        var group = _.find(this.groupsList, {id: this.currentGroupId});
+                        return group ? group.title : '';
+                        break;
+
+                }
+                return '';
             }
         },
 
         watch: {},
 
-        mounted: function () {
-
-            this.state = 'list';
-
-            this.showGroups();
-            this.showList();
-
-        },
-
         methods: {
 
-            showGroups: function () {
+            loadGroups: function () {
                 var _this = this;
                 grow.action('getGroups')
                     .then(function (response) {
                         _this.groupsList = response.data.data.groups;
                         _this.groupsCreatable = response.data.data.creatable;
+                        _this.groupsEditable = response.data.data.editable;
                     });
             },
 
             showList: function (filterData) {
                 var _this = this;
-                this.currentId = null;
                 grow.action('getList', filterData)
                     .then(function (response) {
+                        this.currentId = null;
+                        this.currentGroupId = null;
                         _this.listHeaders = response.data.data.headers;
                         _this.listItems = response.data.data.items;
                         _this.listCreatable = response.data.data.creatable;
@@ -87,6 +97,9 @@
                         if (response.data.success) {
                             grow.notify('Saved successfully', {type: 'success'});
                             _this.formErrors = {};
+                            if (_this.currentId === 'new') {
+                                _this.currentId = response.data.data.newId;
+                            }
                         }
                         else if (response.data.error) {
                             grow.notify('Saving failed ', {type: 'danger'});
@@ -122,8 +135,23 @@
                     });
             },
 
-            cancelEditItem: function () {
+            cancelEdit: function () {
+                if (this.state === 'edit_item') {
+
+                }
+                else {
+                    this.$refs.groups.setActive(null);
+                }
                 this.showList();
+            },
+
+            save: function () {
+                if (this.state === 'edit_item') {
+                    this.saveItem();
+                }
+                else {
+                    this.saveGroup();
+                }
             },
 
             onListingOperation: function(id, operationName) {
@@ -138,11 +166,75 @@
                 }
             },
 
-            newGroup: function() {
+            clickEditGroup: function () {
 
+            },
 
+            newGroup: function () {
+                if (this.currentGroupId === 'new') return;
+                this.currentId = null;
+                this.editGroup('new');
+            },
 
+            groupsEditingState: function (state) {
+                if (state) {
+
+                }
+                else {
+                    if (state !== 'list') {
+                        this.showList();
+                    }
+                }
+            },
+
+            editGroup: function (id) {
+                var _this = this;
+                grow.action('getGroup', {id: id})
+                    .then(function (response) {
+                        if (response.data.success) {
+                            _this.formFields = response.data.data.fields;
+                            if (id === 'new' && _this.$refs.form) {
+                                _this.$refs.form.reset();
+                            }
+                            _this.currentGroupId = id;
+                            _this.state = 'edit_group';
+                        }
+                        else if (response.data.error) {
+                            grow.notify('Loading failed', {type: 'danger'});
+                        }
+                    });
+            },
+
+            saveGroup: function () {
+                var _this = this;
+                var fieldsValues = _this.$refs.form.getValues();
+                fieldsValues = JSON.parse(JSON.stringify(fieldsValues));
+
+                grow.action('saveGroup', {id: _this.currentGroupId, fields: fieldsValues})
+                    .then(function (response) {
+                        if (response.data.success) {
+                            grow.notify('Saved successfully', {type: 'success'});
+                            _this.formErrors = {};
+                            if (_this.currentGroupId === 'new') {
+                                _this.currentGroupId = response.data.data.newId;
+                            }
+                            _this.loadGroups();
+                        }
+                        else if (response.data.error) {
+                            grow.notify('Saving failed ', {type: 'danger'});
+                            _this.formErrors = response.data.errorData;
+                        }
+                    });
             }
+
+        },
+
+        mounted: function () {
+
+            this.state = 'list';
+
+            this.loadGroups();
+            this.showList();
 
         }
 

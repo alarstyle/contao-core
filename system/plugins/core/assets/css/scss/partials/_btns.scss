@@ -6,14 +6,15 @@
     color: #666;
     cursor: pointer;
     display: inline-block;
+    font-weight: bold;
     vertical-align: middle;
     padding: 0 10px;
     position: relative;
     overflow: hidden;
-    height: 30px;
+    height: 40px;
     max-width: 100%;
-    min-width: 30px;
-    line-height: 30px;
+    min-width: 40px;
+    line-height: 40px;
     white-space: nowrap;
     text-overflow: ellipsis;
 
@@ -32,11 +33,11 @@
     }
 
     &--primary {
-        background-color: #009dd8;
+        background-color: #3387dc;
         color: #fff;
         &:focus,
         &:hover {
-            background-color: #00aff2;
+            background-color: #4d97e3;
         }
     }
 
