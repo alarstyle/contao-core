@@ -17,7 +17,7 @@
                 v-html="item.label"
                 @click="groupClick(i)"></li>
         </ul>
-        <div class="groups-new" v-if="creatable">
+        <div class="groups-new" v-if="(creatable && !editable) || (creatable && editable && editingState)">
             <a @click="newClick">{{ labelNew }}</a>
         </div>
     </div>

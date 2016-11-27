@@ -23,17 +23,25 @@
         },
 
         watch: {
-            fields: function(fields) {
-                console.log(this.$refs.units);
-
-                this.$forceUpdate();
-                console.log('FIELDS CHANGED')
+            fields: {
+                handler: function (fields) {
+                    var _this = this;
+                    Vue.nextTick(function() {
+                        _this.isChanged = false;
+                    });
+                },
+                deep: true
+            },
+            isChanged: function(isChanged) {
+                console.log('isChan');
+                this.$root.unsaved = isChanged;
             }
         },
 
         methods: {
 
             unitChange: function(value, unit) {
+                console.log('u');
                 this.isChanged = true;
                 this.changedFields[unit.id] = value;
             },
@@ -54,6 +62,18 @@
                 }
             }
 
+        },
+
+        mounted: function() {
+            var _this = this;
+            Vue.nextTick(function() {
+                _this.isChanged = false;
+            });
+        },
+
+        beforeDestroy: function () {
+            this.isChanged = false;
+            this.$root.unsaved = false;
         }
 
     };

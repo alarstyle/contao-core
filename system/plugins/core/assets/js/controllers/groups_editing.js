@@ -56,9 +56,10 @@
                     .then(function (response) {
                         if (response.data.success) {
                             _this.formFields = response.data.data.fields;
-                            if (id === 'new' && _this.$refs.form) {
-                                _this.$refs.form.reset();
-                            }
+                            _this.formErrors = {};
+                            // if (id === 'new' && _this.$refs.form) {
+                            //     _this.$refs.form.reset();
+                            // }
                             _this.currentId = id;
                         }
                         else if (response.data.error) {

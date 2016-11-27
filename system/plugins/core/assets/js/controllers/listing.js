@@ -79,6 +79,7 @@
                     .then(function (response) {
                         _this.currentId = id;
                         _this.formFields = response.data.data.fields;
+                        _this.formErrors = {};
                         _this.state = 'edit_item';
                     });
             },
@@ -162,6 +163,7 @@
             },
 
             onListingOperation: function(id, operationName) {
+                if (this.$root.locked) return;
                 if (operationName === 'edit') {
                     this.editItem(id);
                 }
@@ -195,14 +197,18 @@
             },
 
             editGroup: function (id) {
+                if (this.locked) return;
+                this.locked = true;
                 var _this = this;
                 grow.action('getGroup', {id: id})
                     .then(function (response) {
+                        _this.locked = false;
                         if (response.data.success) {
                             _this.formFields = response.data.data.fields;
-                            if (id === 'new' && _this.$refs.form) {
-                                _this.$refs.form.reset();
-                            }
+                            _this.formErrors = {};
+                            // if (id === 'new' && _this.$refs.form) {
+                            //     _this.$refs.form.reset();
+                            // }
                             _this.currentGroupId = id;
                             _this.state = 'edit_group';
                         }

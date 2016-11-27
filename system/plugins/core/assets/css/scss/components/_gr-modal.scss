@@ -85,3 +85,33 @@
         height: 20px;
     }
 }
+
+
+.gr-modal--confirm {
+    text-align: center;
+    .gr-modal-close,
+    .gr-modal-header {
+        display: none;
+    }
+    .gr-modal-dialog {
+        display: inline-block;
+        vertical-align: middle;
+        max-width: 400px;
+    }
+    .gr-modal-footer {
+        text-align: center;
+    }
+    .btn {
+        min-width: 80px;
+    }
+    .gr-modal-content {
+        font-size: 20px;
+        padding: 30px;
+    }
+    &:after {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+    }
+}

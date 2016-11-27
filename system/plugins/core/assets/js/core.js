@@ -60,22 +60,22 @@
             value: function (value) {
                 this.currentValue = value;
             },
-            currentValue: function(currentValue) {
+            currentValue: function (currentValue) {
                 this.$emit('change', currentValue, this);
             }
         },
 
         methods: {
-            reset: function() {
+            reset: function () {
                 var _this = this;
                 this.currentValue = 'reseting_' + Date.now();
-                Vue.nextTick(function() {
+                Vue.nextTick(function () {
                     _this.currentValue = _this.value;
                 });
             }
         },
 
-        mounted: function() {
+        mounted: function () {
             this.currentValue = this.value;
         }
     };
@@ -85,13 +85,13 @@
 
         data: function () {
             return {
-                isChanged: false,
+                unsaved: false,
                 locked: false
             }
         },
 
         watch: {
-            isChanged: function (isChanged) {
+            unsaved: function (isChanged) {
                 if (isChanged) {
                     window.addEventListener("beforeunload", this.beforeunload);
                 }
@@ -107,11 +107,27 @@
                 var confirmationMessage = "\o/";
                 e.returnValue = confirmationMessage;     // Gecko, Trident, Chrome 34+
                 return confirmationMessage;              // Gecko, WebKit, Chrome <34
+            },
+
+            confirmExit: function (successCallback) {
+                var confirmExit = this.$refs.confirmExit;
+                confirmExit.$on('ok', function() {
+                    successCallback && successCallback();
+                });
+                confirmExit.$on('cancel', function() {
+                    confirmExit.$off('ok');
+                    confirmExit.$off('cancel');
+                });
+                confirmExit.open();
+            },
+
+            confirmExitIfUnsaved: function (successCallback) {
+                if (!this.unsaved) {
+                    successCallback && successCallback();
+                    return;
+                }
+                this.confirmExit(successCallback);
             }
-
-        },
-
-        mounted: function () {
 
         }
 
@@ -182,7 +198,6 @@
         }
 
     };
-
 
 
     var notifyDefault = {

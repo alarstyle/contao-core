@@ -36,37 +36,50 @@
         methods: {
 
             groupClick: function (i) {
-                if (this.active === i) return;
-                this.active = i;
-                if (this.editingState) {
-                    this.$emit('group-edit', this.list[i].id);
-                }
-                else {
-                    this.$emit('group-selected', this.list[i].id);
-                }
+                if (this.active === i || this.$root.locked) return;
+                var _this = this;
+                this.$root.confirmExitIfUnsaved(function() {
+                    _this.active = i;
+                    if (_this.editingState) {
+                        _this.$emit('group-edit', _this.list[i].id);
+                    }
+                    else {
+                        _this.$emit('group-selected', _this.list[i].id);
+                    }
+                });
+
             },
 
             allClick: function () {
-                if (this.active === null || this.editingState) return;
+                if (this.active === null || this.editingState || this.$root.locked) return;
                 this.active = null;
                 this.$emit('group-selected', null);
             },
 
             newClick: function () {
-                this.active = null;
-                this.$emit('new-group');
+                var _this = this;
+                if (this.$root.locked) return;
+                this.$root.confirmExitIfUnsaved(function() {
+                    _this.active = null;
+                    _this.$emit('new-group');
+                });
             },
 
             editingStateOn: function () {
+                if (this.$root.locked) return;
                 this.editingState = true;
                 this.active = null;
                 this.$emit('editing-state', true);
             },
 
             editingStateOff: function () {
-                this.editingState = false;
-                this.active = null;
-                this.$emit('editing-state', false);
+                if (this.$root.locked) return;
+                var _this = this;
+                this.$root.confirmExitIfUnsaved(function() {
+                    _this.editingState = false;
+                    _this.active = null;
+                    _this.$emit('editing-state', false);
+                });
             },
 
             setActive: function (index) {

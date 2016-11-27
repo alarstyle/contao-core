@@ -701,6 +701,10 @@ $GLOBALS['COMPONENTS'] = [
         '/system/plugins/core/assets/js/components/gr-modal.js',
         '/system/plugins/core/assets/js/components/gr-modal.html'
     ],
+    'gr-confirm-modal' => [
+        '/system/plugins/core/assets/js/components/gr-confirm-modal.js',
+        '/system/plugins/core/assets/js/components/gr-confirm-modal.html'
+    ],
     'gr-dropdown' => [
         '/system/plugins/core/assets/js/components/gr-dropdown.js',
         '/system/plugins/core/assets/js/components/gr-dropdown.html'

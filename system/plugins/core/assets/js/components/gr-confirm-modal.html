@@ -1,0 +1,7 @@
+<gr-modal ref="modal" class="gr-modal--confirm">
+    <slot></slot>
+    <div slot="footer">
+        <button @click="okClick" class="btn btn--danger">Ok</button>
+        <button @click="cancelClick" class="btn">Cancel</button>
+    </div>
+</gr-modal>
