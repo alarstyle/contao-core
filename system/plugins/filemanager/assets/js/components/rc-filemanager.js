@@ -296,6 +296,9 @@
 
         mounted: function () {
             this.$el.querySelector('.upload_input').addEventListener('change', this.onUploadChange, true);
+
+            console.log("!!!!!!");
+            console.log(this.baseUrl);
         }
 
     };

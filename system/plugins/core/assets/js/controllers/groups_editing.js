@@ -2,6 +2,8 @@
 
     var List = {
 
+        extends: AbstractApp,
+
         data: function () {
             return {
                 groupsList: [],
@@ -66,10 +68,14 @@
             },
 
             saveGroup: function () {
+                if (this.locked) return;
+
                 if (!this.$refs.form.isChanged) {
                     grow.notify('Nothing was changed', {type: 'warning'});
                     return;
                 }
+
+                this.locked = true;
 
                 var _this = this;
                 var fieldsValues = _this.$refs.form.getValues();
@@ -77,6 +83,7 @@
 
                 grow.action('saveGroup', {id: _this.currentId, fields: fieldsValues})
                     .then(function (response) {
+                        _this.locked = false;
                         if (response.data.success) {
                             grow.notify('Saved successfully', {type: 'success'});
                             _this.formErrors = {};
@@ -93,15 +100,20 @@
             },
 
             deleteGroup: function () {
+                if (this.locked) return;
+
                 if (!confirm("Are you sure?")) {
                     return;
                 }
+
+                this.locked = true;
 
                 var _this = this,
                     id = this.currentId;
 
                 grow.action('deleteGroup', {id: id})
                     .then(function (response) {
+                        _this.locked = false;
                         if (response.data.success) {
                             _this.cancelEditGroup();
                             _this.groupsList = _.reject(_this.groupsList, {id: id});
@@ -113,6 +125,8 @@
             },
 
             cancelEditGroup: function () {
+                if (this.locked) return;
+
                 this.currentId = null;
                 this.$refs.groups.setActive(null);
             }

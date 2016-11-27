@@ -10,16 +10,11 @@ $GLOBALS['GLOBAL_ACTIONS']['filemanagerNewFolder'] = ['Grow\\Controllers\\Filema
 $GLOBALS['GLOBAL_ACTIONS']['filemanagerRename'] = ['Grow\\Controllers\\FilemanagerController', 'ajaxRename'];
 $GLOBALS['GLOBAL_ACTIONS']['filemanagerDelete'] = ['Grow\\Controllers\\FilemanagerController', 'ajaxDelete'];
 
-/**
- * Back end form fields
- */
-$GLOBALS['BE_FFL']['filePicker'] = 'Raccoon\\Editors\\FilePicker';
+
+$GLOBALS['UNITS']['filePicker'] = 'Grow\\Units\\FilePicker';
 
 
 $GLOBALS['TL_CSS'][] = '/system/plugins/filemanager/assets/css/filemanager.css';
-
-
-//$GLOBALS['RC_ROUTES']['filemanager'] = 'Contao\\Controllers\\FileManagerController';
 
 
 $GLOBALS['COMPONENTS']['rc-filemanager'] = [
@@ -27,9 +22,9 @@ $GLOBALS['COMPONENTS']['rc-filemanager'] = [
     '/system/plugins/filemanager/assets/js/components/rc-filemanager.html'
 ];
 
-$GLOBALS['COMPONENTS']['rc-filepicker'] = [
-    '/system/plugins/filemanager/assets/js/components/rc-filepicker.js',
-    '/system/plugins/filemanager/assets/js/components/rc-filepicker.html'
+$GLOBALS['COMPONENTS']['unit-filepicker'] = [
+    '/system/plugins/filemanager/assets/js/components/unit-filepicker.js',
+    '/system/plugins/filemanager/assets/js/components/unit-filepicker.html'
 ];
 
 $GLOBALS['COMPONENTS']['rc-filepicker-modal'] = [

@@ -23,6 +23,7 @@ use Contao\Models\ArticleModel;
 use Contao\System;
 use Contao\Versions;
 use Grow\ApplicationData;
+use Grow\Route;
 
 /**
  * Main back end controller.
@@ -116,6 +117,10 @@ class BackendMain extends Backend
 	{
 		$this->Template = new BackendTemplate('be_main');
 		$this->Template->main = '';
+
+        $route = Route::get();
+
+		$this->Template->pageClass = 'page_' . $route[1];
 
 		// Ajax request
 		if ($_POST && Environment::get('isAjaxRequest'))

@@ -1,8 +1,14 @@
+<?php
+    $root = '/' . \Contao\Config::get('uploadPath');
+    $path = '/' . \Contao\Config::get('uploadPath');
+    $base = \Contao\Environment::get('base')
+?>
+
 <gr-modal ref="modal" class="gr-modal--filepicker">
     <div slot="header">header</div>
-    <rc-filemanager v-if="initialized" path="/files" @selected="onFileSelected" ref="filemanager"></rc-filemanager>
+    <rc-filemanager v-if="initialized" root="<?= $root ?>" path="<?= $path ?>" base-url="<?= $base ?>" @selected="onFileSelected" ref="filemanager"></rc-filemanager>
     <div slot="footer">
-        <button @click.prevent="select" class="btn btn--primary">Select</button>
-        <button @click.prevent="cancel" class="btn">Cancel</button>
+        <button :disabled="!somethingSelected" @click="select" class="btn btn--primary">Select</button>
+        <button @click="cancel" class="btn">Cancel</button>
     </div>
 </gr-modal>

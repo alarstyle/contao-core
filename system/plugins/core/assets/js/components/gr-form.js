@@ -34,7 +34,6 @@
         methods: {
 
             unitChange: function(value, unit) {
-                console.log('unit change ', value, unit.id);
                 this.isChanged = true;
                 this.changedFields[unit.id] = value;
             },

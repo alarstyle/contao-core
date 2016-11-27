@@ -101,7 +101,6 @@ class Application
                     echo 'no such action';
                     exit;
                 }
-                //$controller->
             }
             else {
                 $controller->run();

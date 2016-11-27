@@ -69,8 +69,21 @@ class Listing extends \Contao\Controllers\BackendMain
             $where = ' WHERE groups LIKE \'%"' . $groupId . '"%\'';
         }
 
-        ActionData::data('headers', $this->listOrganizer->getListHeaders());
-        ActionData::data('items', $this->listOrganizer->getList(20, 0, $where));
+        $headers = $this->listOrganizer->getListHeaders();
+        $list = $this->listOrganizer->getList(20, 0, $where);
+
+        $headersCallback = $this->config['list']['headersCallback'];
+        $listCallback = $this->config['list']['listCallback'];
+
+        if (is_callable($headersCallback)) {
+            $headers = call_user_func($headersCallback, $headers);
+        }
+        if (is_callable($listCallback)) {
+            $list = call_user_func($listCallback, $list);
+        }
+
+        ActionData::data('headers', $headers);
+        ActionData::data('items', $list);
         ActionData::data('creatable', true);
     }
 

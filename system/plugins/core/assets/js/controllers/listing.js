@@ -2,6 +2,8 @@
 
     var List = {
 
+        extends: AbstractApp,
+
         data: function () {
             return {
                 state: '',
@@ -88,12 +90,15 @@
                     return;
                 }
 
+                this.locked = true;
+
                 var _this = this;
                 var fieldsValues = _this.$refs.form.getValues();
                 fieldsValues = JSON.parse(JSON.stringify(fieldsValues));
 
                 grow.action('saveItem', {id: _this.currentId, fields: fieldsValues})
                     .then(function (response) {
+                        _this.locked = false;
                         if (response.data.success) {
                             grow.notify('Saved successfully', {type: 'success'});
                             _this.formErrors = {};
@@ -136,6 +141,7 @@
             },
 
             cancelEdit: function () {
+                if (this.locked) return;
                 if (this.state === 'edit_item') {
 
                 }
@@ -146,6 +152,7 @@
             },
 
             save: function () {
+                if (this.locked) return;
                 if (this.state === 'edit_item') {
                     this.saveItem();
                 }
@@ -206,12 +213,16 @@
             },
 
             saveGroup: function () {
+
+                this.locked = true;
+
                 var _this = this;
                 var fieldsValues = _this.$refs.form.getValues();
                 fieldsValues = JSON.parse(JSON.stringify(fieldsValues));
 
                 grow.action('saveGroup', {id: _this.currentGroupId, fields: fieldsValues})
                     .then(function (response) {
+                        _this.locked = false;
                         if (response.data.success) {
                             grow.notify('Saved successfully', {type: 'success'});
                             _this.formErrors = {};

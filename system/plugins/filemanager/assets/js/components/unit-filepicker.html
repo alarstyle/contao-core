@@ -1,0 +1,15 @@
+    <div class="unit unit--filepicker">
+        <label class="unit-label">{{ label }}<span v-if="required">*</span></label>
+        <template v-if="currentValue">
+            <div class="rc-filepicker-view" :style="'background-image: url(\'' + currentValue + '\');'">
+                <div class="rc-filepicker-change" @click="openFilePickerModal"></div>
+                <div class="rc-filepicker-clear" @click="clear"></div>
+            </div>
+        </template>
+        <template v-else>
+            <div class="rc-filepicker-placeholder" @click="openFilePickerModal">
+                <?= $GLOBALS['TL_LANG']['MSC']['changeSelection'] ?>
+            </div>
+        </template>
+        <div class="unit-hint">{{ error || hint }}</div>
+    </div>

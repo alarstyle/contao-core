@@ -11,16 +11,16 @@
   clear: both; }
 
 .rc-filepicker {
-  position: relative;
-  width: 200px; }
+  position: relative; }
 
 .rc-filepicker-placeholder {
   padding: 30px;
   border: 1px dashed #e5e5e5;
   background: transparent;
-  color: #666;
+  color: #999;
   cursor: pointer;
-  text-align: center; }
+  text-align: center;
+  width: 200px; }
   .rc-filepicker-placeholder:before {
     content: '';
     background: url("../images/placeholder.svg") no-repeat 50% 50%/contain;
@@ -29,14 +29,60 @@
     height: 60px;
     margin: 0 auto; }
 
-.rc-filepicker-clear {
+.rc-filepicker-view {
+  background: no-repeat 50% 50% / cover;
+  position: relative;
+  width: 200px;
+  height: 140px; }
+  .rc-filepicker-view:hover .rc-filepicker-clear {
+    opacity: 1; }
+  .rc-filepicker-view:hover .rc-filepicker-change {
+    opacity: 0.2; }
+
+.rc-filepicker-change {
+  background: #fff;
   cursor: pointer;
-  background: red;
   position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 25px;
-  height: 25px; }
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.2s ease; }
+
+.rc-filepicker-clear {
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 30px;
+  height: 30px;
+  opacity: 0;
+  transition: opacity 0.2s ease; }
+  .rc-filepicker-clear:before, .rc-filepicker-clear:after {
+    background: #333;
+    content: '';
+    transform: rotate(45deg);
+    position: absolute; }
+  .rc-filepicker-clear:before {
+    top: 14px;
+    left: 5px;
+    width: 20px;
+    height: 2px; }
+  .rc-filepicker-clear:after {
+    top: 5px;
+    left: 14px;
+    width: 2px;
+    height: 20px; }
+
+.gr-modal--filepicker .filemanager {
+  position: relative;
+  top: auto;
+  bottom: auto;
+  height: 1000px;
+  max-height: calc(100vh - 200px); }
 
 .filemanager {
   display: flex;

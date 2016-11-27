@@ -133,7 +133,17 @@ $GLOBALS['NAVIGATION'] = [
                 'title' => 'Users',
                 'labelNew' => 'Add New User',
                 'labelEdit' => 'Edit User',
-                'creatable' => true
+                'creatable' => true,
+                'headersCallback' => function($headers) {
+                    $headers[0]['label'] = '';
+                    return $headers;
+                },
+                'listCallback' => function($list) {
+                    foreach ($list as $i=>$item) {
+                        $list[$i]['fields'][0] = '<div class="user_avatar" style="background-image: url(\'' . $list[$i]['fields'][0] . '\')"></div>';
+                    }
+                    return $list;
+                }
             ]
         ]
     ],

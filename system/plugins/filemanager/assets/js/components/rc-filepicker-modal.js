@@ -8,7 +8,9 @@
             return {
                 fieldId: '',
                 multiple: false,
-                initialized: false
+                initialized: false,
+                somethingSelected: false,
+                selectedFiles: []
             };
         },
 
@@ -25,13 +27,21 @@
         methods: {
 
             onFileSelected: function (data) {
+                if (!data.length || !data[0].isImage) {
+                    this.somethingSelected = false;
+                    this.selectedFiles = [];
+                    return;
+                }
+                this.somethingSelected = true;
+                this.selectedFiles = data;
                 console.log('seleced', data);
             },
 
             select: function () {
                 this.$refs.modal.close();
                 this.$root.$emit('filePicked', {
-                    fieldId: this.fieldId
+                    fieldId: this.fieldId,
+                    files: this.selectedFiles
                 });
             },
 

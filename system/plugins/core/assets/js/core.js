@@ -58,7 +58,6 @@
 
         watch: {
             value: function (value) {
-                console.log('!!!!');
                 this.currentValue = value;
             },
             currentValue: function(currentValue) {
@@ -82,6 +81,43 @@
     };
 
 
+    window.AbstractApp = {
+
+        data: function () {
+            return {
+                isChanged: false,
+                locked: false
+            }
+        },
+
+        watch: {
+            isChanged: function (isChanged) {
+                if (isChanged) {
+                    window.addEventListener("beforeunload", this.beforeunload);
+                }
+                else {
+                    window.removeEventListener("beforeunload", this.beforeunload);
+                }
+            }
+        },
+
+        methods: {
+
+            beforeunload: function (e) {
+                var confirmationMessage = "\o/";
+                e.returnValue = confirmationMessage;     // Gecko, Trident, Chrome 34+
+                return confirmationMessage;              // Gecko, WebKit, Chrome <34
+            }
+
+        },
+
+        mounted: function () {
+
+        }
+
+    };
+
+
     var grow = {
 
         get: function (url, config) {
@@ -101,8 +137,6 @@
             } else {
                 data = _.defaults({'REQUEST_TOKEN': Contao.request_token}, data);
             }
-
-            console.log(data);
 
             return axios.post(url, data, config);
         },

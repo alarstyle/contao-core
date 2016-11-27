@@ -23,3 +23,26 @@
 @import "layout/listing";
 @import "layout/groups";
 @import "layout/submit_panel";
+
+
+
+.user_avatar {
+    background: no-repeat 50% 50% / cover;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+.cell--avatar {
+    padding: 0 !important;
+    width: 50px !important;
+    > div {
+        padding-right: 0 !important;
+    }
+}
+
+.page_users {
+    .cell--name {
+        font-size: 17px;
+    }
+}

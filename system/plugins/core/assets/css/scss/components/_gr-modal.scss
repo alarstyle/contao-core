@@ -50,6 +50,7 @@
 
 .gr-modal-content {
     padding: 20px;
+    position: relative;
     &:after {
         content: '';
         clear: both;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Grow\Editors;
+namespace Grow\Units;
 
 use Contao\Config;
 use Contao\Environment;
@@ -20,7 +20,7 @@ use Contao\File;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class FilePicker extends \Contao\Editor
+class FilePickerOld extends AbstractUnit
 {
 
 	/**
@@ -53,19 +53,18 @@ class FilePicker extends \Contao\Editor
 	 *
 	 * @param array $arrAttributes
 	 */
-	public function __construct($arrAttributes=null)
+	public function __construct($table, $field)
 	{
-		$this->import('Contao\\Database', 'Database');
-		parent::__construct($arrAttributes);
+		parent::__construct($table, $field);
 
 		// Prepare the order field
 		if ($this->orderField != '')
 		{
-			$this->strOrderId = $this->orderField . str_replace($this->strField, '', $this->strId);
-			$this->strOrderName = $this->orderField . str_replace($this->strField, '', $this->strName);
+			$this->strOrderId = $this->orderField . str_replace($this->table, '', $this->strId);
+			$this->strOrderName = $this->orderField . str_replace($this->field, '', $this->strName);
 
 			// Retrieve the order value
-			$objRow = $this->Database->prepare("SELECT {$this->orderField} FROM {$this->strTable} WHERE id=?")
+			$objRow = $this->database->prepare("SELECT {$this->orderField} FROM {$this->table} WHERE id=?")
 									 ->limit(1)
 									 ->execute($this->activeRecord->id);
 
@@ -92,7 +91,7 @@ class FilePicker extends \Contao\Editor
 			// Only proceed if the value has changed
 			if ($arrNew !== $this->{$this->orderField})
 			{
-				$this->Database->prepare("UPDATE {$this->strTable} SET tstamp=?, {$this->orderField}=? WHERE id=?")
+				$this->database->prepare("UPDATE {$this->table} SET tstamp=?, {$this->orderField}=? WHERE id=?")
 							   ->execute(time(), serialize($arrNew), $this->activeRecord->id);
 
 				$this->objDca->createNewVersion = true; // see #6285
