@@ -103,26 +103,24 @@
             deleteGroup: function () {
                 if (this.locked) return;
 
-                if (!confirm("Are you sure?")) {
-                    return;
-                }
-
-                this.locked = true;
-
                 var _this = this,
                     id = this.currentId;
 
-                grow.action('deleteGroup', {id: id})
-                    .then(function (response) {
-                        _this.locked = false;
-                        if (response.data.success) {
-                            _this.cancelEditGroup();
-                            _this.groupsList = _.reject(_this.groupsList, {id: id});
-                        }
-                        else {
-                            grow.notify('Deleting failed', {type: 'danger'});
-                        }
-                    });
+                this.$root.confirmDelete(function() {
+                    _this.locked = true;
+
+                    grow.action('deleteGroup', {id: id})
+                        .then(function (response) {
+                            _this.locked = false;
+                            if (response.data.success) {
+                                _this.cancelEditGroup();
+                                _this.groupsList = _.reject(_this.groupsList, {id: id});
+                            }
+                            else {
+                                grow.notify('Deleting failed', {type: 'danger'});
+                            }
+                        });
+                });
             },
 
             cancelEditGroup: function () {

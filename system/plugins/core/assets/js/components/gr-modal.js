@@ -6,7 +6,15 @@
         props: {
             openEvent: String,
             closeEvent: String,
-            opened: Boolean
+            opened: Boolean,
+            closeBtn: {
+                type: Boolean,
+                default: true
+            },
+            overlayClose: {
+                type: Boolean,
+                default: true
+            }
         },
 
         data: function() {

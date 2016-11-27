@@ -1,4 +1,4 @@
-<gr-modal ref="modal" class="gr-modal--confirm">
+<gr-modal :closeBtn="false" :overlayClose="false" ref="modal" class="gr-modal--confirm">
     <slot></slot>
     <div slot="footer">
         <button @click="okClick" class="btn btn--danger">Ok</button>

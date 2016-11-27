@@ -85,7 +85,6 @@
             },
 
             saveItem: function () {
-
                 if (!this.$refs.form.isChanged) {
                     grow.notify('Nothing was changed', {type: 'warning'});
                     return;
@@ -115,20 +114,24 @@
             },
 
             deleteItem: function(id) {
+                if (this.locked) return;
+
+                this.locked = true;
+
                 var _this = this;
-                if (!confirm("Are you sure?")) {
-                    return;
-                }
 
-                grow.action('deleteItem', {id: id})
-                    .then(function (response) {
-                        if (response.data.success) {
-                            _this.showList();
-                        }
-                        else {
+                this.$root.confirmDelete(function() {
+                    grow.action('deleteItem', {id: id})
+                        .then(function (response) {
+                            _this.locked = false;
+                            if (response.data.success) {
+                                _this.showList();
+                            }
+                            else {
 
-                        }
-                    });
+                            }
+                        });
+                });
             },
 
             disableItem: function(id) {

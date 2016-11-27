@@ -127,6 +127,18 @@
                     return;
                 }
                 this.confirmExit(successCallback);
+            },
+
+            confirmDelete: function (successCallback) {
+                var confirmDelete = this.$refs.confirmDelete;
+                confirmDelete.$on('ok', function() {
+                    successCallback && successCallback();
+                });
+                confirmDelete.$on('cancel', function() {
+                    confirmDelete.$off('ok');
+                    confirmDelete.$off('cancel');
+                });
+                confirmDelete.open();
             }
 
         }
@@ -170,7 +182,7 @@
         },
 
         initApp: function () {
-            var Vue = window.ExtendedVue || window.Vue;
+            var Vue = window.ExtendedVue || window.Vue.extend(AbstractApp);
 
             var appData = _.defaults({initialized: false}, APP_DATA);
 

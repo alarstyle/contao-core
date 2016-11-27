@@ -260,24 +260,26 @@
             },
 
             deleteFile: function() {
-                if (!confirm('Are you sure?')) return;
                 var _this = this,
                     path = this.selected[0].path;
-                grow.action('filemanagerDelete', {path: path})
-                    .then(function (response) {
-                            if (response.data.success) {
-                                _this.load();
+
+                this.$root.confirmDelete(function() {
+                    grow.action('filemanagerDelete', {path: path})
+                        .then(function (response) {
+                                if (response.data.success) {
+                                    _this.load();
+                                }
+                                else if (response.data.errorData) {
+                                    alert(response.data.errorData[0]);
+                                }
+                                else {
+                                    alert('Unknown error');
+                                }
+                            }, function () {
+                                alert('Error loading data');
                             }
-                            else if (response.data.errorData) {
-                                alert(response.data.errorData[0]);
-                            }
-                            else {
-                                alert('Unknown error');
-                            }
-                        }, function () {
-                            alert('Error loading data');
-                        }
-                    );
+                        );
+                });
             }
 
         },

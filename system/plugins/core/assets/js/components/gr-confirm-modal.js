@@ -5,12 +5,7 @@
         template: '#gr-confirm-modal-template',
 
         data: function () {
-            return {
-                fieldId: '',
-                multiple: false,
-                somethingSelected: false,
-                selectedFiles: []
-            };
+            return {};
         },
 
         methods: {
