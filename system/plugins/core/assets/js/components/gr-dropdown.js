@@ -10,34 +10,30 @@
 
         data: function () {
             return {
-                isOpened: false
+                opened: false
             }
         },
 
-        //created: function () {
-
-            // if (this.openEvent) {
-            //     this.$root.$on(this.openEvent, this.open);
-            // }
-            //
-            // if (this.closeEvent) {
-            //     this.$root.$on(this.closeEvent, this.close);
-            // }
-
-        //},
+        watch: {
+            opened: function(opened) {
+                if (opened) {
+                    document.documentElement.addEventListener('click', this.documentClick, false);
+                }
+                else {
+                    document.documentElement.removeEventListener('click', this.documentClick, false);
+                }
+            }
+        },
 
         methods: {
 
-            open: function () {
-                this.isOpened = true;
-            },
-
-            close: function () {
-                this.isOpened = false;
-            },
-
             toggle: function () {
-                this.isOpened ? this.close() : this.open();
+                this.opened = !this.opened;
+            },
+
+            documentClick: function() {
+                if (this.$el.contains(event.target)) return;
+                this.opened = false;
             }
 
         }

@@ -252,8 +252,7 @@ class BackendMain extends Backend
 		$this->Template->preview = $GLOBALS['TL_LANG']['MSC']['fePreview'];
 		$this->Template->previewTitle = specialchars($GLOBALS['TL_LANG']['MSC']['fePreviewTitle']);
 		$this->Template->pageOffset = Input::cookie('BE_PAGE_OFFSET');
-		$this->Template->logout = Lang::get('MSC::logoutBT');
-		$this->Template->logoutTitle = specialchars(Lang::get('MSC::logoutBTTitle'));
+
 		$this->Template->backendModules = Lang::get('MSC::backendModules');
 		$this->Template->username = $GLOBALS['TL_LANG']['MSC']['user'] . ' ' . $GLOBALS['TL_USERNAME'];
 		$this->Template->request = ampersand(Environment::get('request'));

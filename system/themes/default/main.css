@@ -241,21 +241,6 @@ a {
   padding: 10px;
   float: left; }
 
-.header-menu {
-  height: 100%;
-  font-size: 0; }
-  .header-menu > li {
-    display: inline-block;
-    font-size: 14px;
-    height: 100%;
-    margin-left: 20px; }
-  .header-menu .gr-dropdown,
-  .header-menu .gr-dropdown-trigger {
-    height: 100%; }
-  .header-menu .gr-dropdown-menu {
-    background: #1e2326;
-    padding: 25px; }
-
 .navigation {
   background: #fff;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);

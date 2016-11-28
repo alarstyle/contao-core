@@ -747,11 +747,11 @@ class tl_user extends \Contao\Backend
 	 * Prevent administrators from downgrading their own account
 	 *
 	 * @param mixed         $varValue
-	 * @param DataContainer $dc
+	 * @param \Contao\DataContainer $dc
 	 *
 	 * @return mixed
 	 */
-	public function checkAdminStatus($varValue, DataContainer $dc)
+	public function checkAdminStatus($varValue, \Contao\DataContainer $dc)
 	{
 		if ($varValue == '' && $this->User->id == $dc->id)
 		{
@@ -766,11 +766,11 @@ class tl_user extends \Contao\Backend
 	 * Prevent administrators from disabling their own account
 	 *
 	 * @param mixed         $varValue
-	 * @param DataContainer $dc
+	 * @param \Contao\DataContainer $dc
 	 *
 	 * @return mixed
 	 */
-	public function checkAdminDisable($varValue, DataContainer $dc)
+	public function checkAdminDisable($varValue, \Contao\DataContainer $dc)
 	{
 		if ($varValue == 1 && $this->User->id == $dc->id)
 		{
@@ -812,9 +812,9 @@ class tl_user extends \Contao\Backend
 	/**
 	 * Check whether the user session should be removed
 	 *
-	 * @param DataContainer $dc
+	 * @param \Contao\DataContainer $dc
 	 */
-	public function checkRemoveSession(DataContainer $dc)
+	public function checkRemoveSession(\Contao\DataContainer $dc)
 	{
 		if ($dc->activeRecord)
 		{
@@ -829,9 +829,9 @@ class tl_user extends \Contao\Backend
 	/**
 	 * Remove the session if a user is deleted (see #5353)
 	 *
-	 * @param DataContainer $dc
+	 * @param \Contao\DataContainer $dc
 	 */
-	public function removeSession(DataContainer $dc)
+	public function removeSession(\Contao\DataContainer $dc)
 	{
 		if (!$dc->activeRecord)
 		{
@@ -894,9 +894,9 @@ class tl_user extends \Contao\Backend
 	 *
 	 * @param integer       $intId
 	 * @param boolean       $blnVisible
-	 * @param DataContainer $dc
+	 * @param \Contao\DataContainer $dc
 	 */
-	public function toggleVisibility($intId, $blnVisible, DataContainer $dc=null)
+	public function toggleVisibility($intId, $blnVisible, \Contao\DataContainer $dc=null)
 	{
 		// Set the ID and action
 		Input::setGet('id', $intId);

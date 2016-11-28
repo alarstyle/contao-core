@@ -19,6 +19,7 @@
 @import "layout/grid";
 @import "layout/flex_table";
 @import "layout/sidebar";
+@import "layout/header";
 @import "layout/main";
 @import "layout/listing";
 @import "layout/groups";
@@ -26,10 +27,12 @@
 
 
 #app {
+    .header-menu,
     #container {
         visibility: hidden;
     }
     &.initialized {
+        .header-menu,
         #container {
             visibility: visible;
         }

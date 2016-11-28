@@ -103,7 +103,13 @@ class ListingWithGroups extends Listing
 
     public function ajaxDeleteGroup()
     {
+        $id = Input::post('id');
 
+        $this->groupOrganizer->delete($id);
+
+        if ($this->groupOrganizer->hasErrors()) {
+            ActionData::error($this->groupOrganizer->getErrors());
+        }
     }
 
 }

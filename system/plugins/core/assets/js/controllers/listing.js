@@ -263,7 +263,8 @@
 
             deleteGroup: function() {
                 if (this.locked) return;
-                var _this = this;
+                var _this = this,
+                    id = this.currentGroupId;
 
                 this.$root.confirmDelete(function() {
                     _this.locked = true;

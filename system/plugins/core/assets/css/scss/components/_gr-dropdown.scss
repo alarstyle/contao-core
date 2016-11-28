@@ -21,6 +21,15 @@
     left: 0;
     min-width: 100%;
     z-index: $dropdownZ;
+    ul {
+        a {
+            display: block;
+            line-height: 30px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
 }
 
 

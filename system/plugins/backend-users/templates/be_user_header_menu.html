@@ -1,14 +1,13 @@
-<gr-dropdown>
-    <div slot="trigger">
-        <div class="user-img"></div>
-        Mikael Anderson
-    </div>
+<gr-dropdown class="header-menu-user">
+    <template slot="trigger">
+        <div class="user-img" <?= $this->avatar ?>></div>
+        <?= $this->name ?>
+        <b></b>
+    </template>
     <ul slot="menu">
-        <li><a href="#">My Account</a></li>
-        <li><a href="#">Change Password</a></li>
-        <li><a href="#">Logout</a></li>
-        <li>Panel Language:
-
-        </li>
+        <!--<li><a href="#">My Account</a></li>-->
+        <!--<li><a href="#">Change Password</a></li>-->
+        <li><a href="<?= $this->logoutUrl ?>"><?= $this->logoutLabel ?></a></li>
+        <!--<li>Panel Language:</li>-->
     </ul>
 </gr-dropdown>
