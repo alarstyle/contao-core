@@ -1,5 +1,5 @@
     <div class="unit unit--text" :class="unitClass">
-        <label class="unit-label">{{ label }}<span v-if="required">*</span></label>
+        <label class="unit-label">{{ label }}<span v-if="required">*</span>:</label>
         <input type="text" v-model="currentValue" class="unit-input">
         <div class="unit-hint">{{ error || hint }}</div>
     </div>

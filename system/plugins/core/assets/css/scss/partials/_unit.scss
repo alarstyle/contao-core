@@ -1,5 +1,5 @@
 .unit {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     padding: 0 10px;
     width: 50%;
     &.w50 {
@@ -14,7 +14,8 @@
     color: #242a2e;
     display: inline-block;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
+    padding-left: 1px;
     span {
         color: #c33e3e;
     }
@@ -22,9 +23,10 @@
 
 .unit-hint {
     font-size: 11px;
-    color: #777;
+    color: #999;
     letter-spacing: 0.5px;
-    margin-top: 5px;
+    margin-top: 3px;
+    padding-left: 1px;
 }
 
 .unit-input {

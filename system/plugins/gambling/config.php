@@ -37,6 +37,36 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 1, 'casinos', [
 ]);
 
 
+array_insert_assoc($GLOBALS['NAVIGATION'], 2, 'articles', [
+    'label' => 'Articles',
+    'controller' => 'Grow\\Controllers\\ListingWithGroups',
+    'config' => [
+        'group' => [
+            'table' => 'tl_casino_category',
+            'title' => 'Categories list',
+            'labelAll' => 'All Casinos',
+            'labelNew' => 'Add New Category',
+            'creatable' => true,
+            'editable' => true,
+            'labelCallback' => function ($item) {
+                return $item['name'];
+            },
+            'titleCallback' => function ($item) {
+                return $item['name'];
+            },
+            //'sorting' => ['dateAdded DESC']
+        ],
+        'list' => [
+            'table' => 'tl_casino',
+            'title' => 'Casinos',
+            'labelNew' => 'Add New Casino',
+            'labelEdit' => 'Edit Casino',
+            'creatable' => true
+        ]
+    ]
+]);
+
+
 array_insert_assoc($GLOBALS['NAVIGATION'], -1, 'countries', [
     'label' => 'Languages & Countries',
     'controller' => 'Grow\\Controllers\\GroupsEditing',
