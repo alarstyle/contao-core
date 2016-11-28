@@ -102,7 +102,7 @@ $GLOBALS['TL_DCA']['tl_user_group'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'defaultNew'                  => '{title_legend},name;{modules_legend},modules,themes;{pagemounts_legend},pagemounts,alpty;{filemounts_legend},filemounts,fop;{alexf_legend:hide},alexf;{account_legend},disable,start,stop',
+		'defaultNew'                  => '{title_legend},name;{modules_legend},navigation;{account_legend},disable',
 		'default'                     => '{title_legend},name;{modules_legend},modules,themes;{pagemounts_legend},pagemounts,alpty;{filemounts_legend},filemounts,fop;{forms_legend},forms,formp;{alexf_legend:hide},alexf;{account_legend},disable,start,stop',
 	),
 
@@ -125,6 +125,17 @@ $GLOBALS['TL_DCA']['tl_user_group'] = array
 			'inputType'               => 'text',
 			'eval'                    => array('mandatory'=>true, 'unique'=>true, 'maxlength'=>255),
 			'sql'                     => "varchar(255) NOT NULL default ''"
+		),
+		'navigation' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_user']['modules'],
+			'exclude'                 => true,
+            'inputTypeNew'            => 'checkboxWizard',
+            'inputType'               => 'checkbox',
+			'options_callback'        => array('tl_user_group', 'getNavigationOptions'),
+			'reference'               => &$GLOBALS['TL_LANG']['MOD'],
+			'eval'                    => array('multiple'=>true, 'helpwizard'=>true),
+			'sql'                     => "blob NULL"
 		),
 		'modules' => array
 		(
@@ -269,6 +280,21 @@ class tl_user_group extends \Contao\Backend
 
 		return sprintf('<div class="list_icon" style="background-image:url(\'%ssystem/themes/%s/images/%s.gif\')" data-icon="%s.gif" data-icon-disabled="%s.gif">%s</div>', TL_ASSETS_URL, \Contao\Backend::getTheme(), $image, $disabled ? $image : rtrim($image, '_'), rtrim($image, '_') . '_', $label);
 	}
+
+
+
+    public function getNavigationOptions()
+    {
+        $arrModules = [];
+
+        foreach ($GLOBALS['NAVIGATION'] as $k=>$v)
+        {
+            if (empty($v)) continue;
+            $arrModules[$k] = $v['label'];
+        }
+
+        return $arrModules;
+    }
 
 
 	/**

@@ -101,6 +101,7 @@
                         _this.locked = false;
                         if (response.data.success) {
                             grow.notify('Saved successfully', {type: 'success'});
+                            _this.unsaved = false;
                             _this.formErrors = {};
                             if (_this.currentId === 'new') {
                                 _this.currentId = response.data.data.newId;
@@ -234,6 +235,7 @@
                         _this.locked = false;
                         if (response.data.success) {
                             grow.notify('Saved successfully', {type: 'success'});
+                            _this.unsaved = false;
                             _this.formErrors = {};
                             if (_this.currentGroupId === 'new') {
                                 _this.currentGroupId = response.data.data.newId;

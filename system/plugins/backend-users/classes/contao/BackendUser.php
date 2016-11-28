@@ -219,6 +219,7 @@ class BackendUser extends User
 		// Do not redirect if authentication is successful
  		if (parent::authenticate())
  		{
+            $this->prepareNavigation();
  			return true;
  		}
 
@@ -412,7 +413,7 @@ class BackendUser extends User
 
 		// Inherit permissions
 		$always = array('alexf');
-		$depends = array('modules', 'themes', 'pagemounts', 'alpty', 'filemounts', 'fop', 'forms', 'formp');
+		$depends = array('modules', 'navigation', 'themes', 'pagemounts', 'alpty', 'filemounts', 'fop', 'forms', 'formp');
 
 		// HOOK: Take custom permissions
 		if (!empty($GLOBALS['TL_PERMISSIONS']) && is_array($GLOBALS['TL_PERMISSIONS']))
@@ -438,7 +439,6 @@ class BackendUser extends User
 			$objGroup = $this->Database->prepare("SELECT * FROM tl_user_group WHERE id=? AND disable!='1' AND (start='' OR start<='$time') AND (stop='' OR stop>'" . ($time + 60) . "')")
 									   ->limit(1)
 									   ->execute($id);
-
 			if ($objGroup->numRows > 0)
 			{
 				foreach ($inherit as $field)
@@ -499,6 +499,16 @@ class BackendUser extends User
 		}
 	}
 
+    public function prepareNavigation()
+    {
+        foreach ($GLOBALS['NAVIGATION'] as $strItemName => $arrItem) {
+            if (empty($arrItem) || !$this->hasAccess($strItemName, 'navigation')) {
+                unset($GLOBALS['NAVIGATION'][$strItemName]);
+                continue;
+            }
+        }
+    }
+
 
 	/**
 	 * Generate the navigation menu and return it as array
@@ -534,43 +544,45 @@ class BackendUser extends User
             ];
         }
 
-		foreach ($GLOBALS['BE_MOD'] as $strGroupName=>$arrGroupModules)
-		{
-			if (!empty($arrGroupModules) && ($strGroupName == 'system' || $this->hasAccess(array_keys($arrGroupModules), 'modules')))
-			{
-				$arrModules[$strGroupName]['icon'] = 'modMinus.gif';
-				$arrModules[$strGroupName]['title'] = specialchars($GLOBALS['TL_LANG']['MSC']['collapseNode']);
-				$arrModules[$strGroupName]['label'] = (($label = is_array($GLOBALS['TL_LANG']['MOD'][$strGroupName]) ? $GLOBALS['TL_LANG']['MOD'][$strGroupName][0] : $GLOBALS['TL_LANG']['MOD'][$strGroupName]) != false) ? $label : $strGroupName;
-				$arrModules[$strGroupName]['href'] = Controller::addToUrl('mtg=' . $strGroupName);
-
-                foreach ($arrGroupModules as $strModuleName=>$arrModuleConfig)
+        if ($this->name === 'admin') {
+            foreach ($GLOBALS['BE_MOD'] as $strGroupName=>$arrGroupModules)
+            {
+                if (!empty($arrGroupModules) && ($strGroupName == 'system' || $this->hasAccess(array_keys($arrGroupModules), 'modules')))
                 {
-                    // Exclude inactive modules
-                    if ($blnCheckInactiveModules && in_array($strModuleName, $arrInactiveModules))
-                    {
-                        continue;
-                    }
+                    $arrModules[$strGroupName]['icon'] = 'modMinus.gif';
+                    $arrModules[$strGroupName]['title'] = specialchars($GLOBALS['TL_LANG']['MSC']['collapseNode']);
+                    $arrModules[$strGroupName]['label'] = (($label = is_array($GLOBALS['TL_LANG']['MOD'][$strGroupName]) ? $GLOBALS['TL_LANG']['MOD'][$strGroupName][0] : $GLOBALS['TL_LANG']['MOD'][$strGroupName]) != false) ? $label : $strGroupName;
+                    $arrModules[$strGroupName]['href'] = Controller::addToUrl('mtg=' . $strGroupName);
 
-                    // Check access
-                    if ($strModuleName == 'undo' || $this->hasAccess($strModuleName, 'modules'))
+                    foreach ($arrGroupModules as $strModuleName=>$arrModuleConfig)
                     {
-                        $arrModules[$strGroupName]['submenu'][$strModuleName] = $arrModuleConfig;
-                        $arrModules[$strGroupName]['submenu'][$strModuleName]['title'] = specialchars($GLOBALS['TL_LANG']['MOD'][$strModuleName][1]);
-                        $arrModules[$strGroupName]['submenu'][$strModuleName]['label'] = (($label = is_array($GLOBALS['TL_LANG']['MOD'][$strModuleName]) ? $GLOBALS['TL_LANG']['MOD'][$strModuleName][0] : $GLOBALS['TL_LANG']['MOD'][$strModuleName]) != false) ? $label : $strModuleName;
-                        $arrModules[$strGroupName]['submenu'][$strModuleName]['icon'] = !empty($arrModuleConfig['icon']) ? sprintf(' style="background-image:url(\'%s%s\')"', TL_ASSETS_URL, $arrModuleConfig['icon']) : '';
-                        $arrModules[$strGroupName]['submenu'][$strModuleName]['class'] = 'navigation ' . $strModuleName;
-                        $arrModules[$strGroupName]['submenu'][$strModuleName]['href'] = Config::get('backendUri') . '/main.php' . '?do=' . $strModuleName . '&amp;ref=' . TL_REFERER_ID;
-
-                        // Mark the active module and its group
-                        if (Input::get('do') == $strModuleName)
+                        // Exclude inactive modules
+                        if ($blnCheckInactiveModules && in_array($strModuleName, $arrInactiveModules))
                         {
-                            $arrModules[$strGroupName]['class'] = ' trail';
-                            $arrModules[$strGroupName]['submenu'][$strModuleName]['class'] .= ' active';
+                            continue;
+                        }
+
+                        // Check access
+                        if ($strModuleName == 'undo' || $this->hasAccess($strModuleName, 'modules'))
+                        {
+                            $arrModules[$strGroupName]['submenu'][$strModuleName] = $arrModuleConfig;
+                            $arrModules[$strGroupName]['submenu'][$strModuleName]['title'] = specialchars($GLOBALS['TL_LANG']['MOD'][$strModuleName][1]);
+                            $arrModules[$strGroupName]['submenu'][$strModuleName]['label'] = (($label = is_array($GLOBALS['TL_LANG']['MOD'][$strModuleName]) ? $GLOBALS['TL_LANG']['MOD'][$strModuleName][0] : $GLOBALS['TL_LANG']['MOD'][$strModuleName]) != false) ? $label : $strModuleName;
+                            $arrModules[$strGroupName]['submenu'][$strModuleName]['icon'] = !empty($arrModuleConfig['icon']) ? sprintf(' style="background-image:url(\'%s%s\')"', TL_ASSETS_URL, $arrModuleConfig['icon']) : '';
+                            $arrModules[$strGroupName]['submenu'][$strModuleName]['class'] = 'navigation ' . $strModuleName;
+                            $arrModules[$strGroupName]['submenu'][$strModuleName]['href'] = Config::get('backendUri') . '/main.php' . '?do=' . $strModuleName . '&amp;ref=' . TL_REFERER_ID;
+
+                            // Mark the active module and its group
+                            if (Input::get('do') == $strModuleName)
+                            {
+                                $arrModules[$strGroupName]['class'] = ' trail';
+                                $arrModules[$strGroupName]['submenu'][$strModuleName]['class'] .= ' active';
+                            }
                         }
                     }
                 }
-			}
-		}
+            }
+        }
 
 		// HOOK: add custom logic
 		if (isset($GLOBALS['TL_HOOKS']['getUserNavigation']) && is_array($GLOBALS['TL_HOOKS']['getUserNavigation']))

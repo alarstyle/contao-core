@@ -189,9 +189,6 @@ abstract class AbstractUnit
 
         $validOptions = [];
 
-        $isAssociative = array_is_assoc($options);
-        $isReference = isset($fieldData['reference']);
-
         if ($fieldData['eval']['includeBlankOption'] && !$fieldData['eval']['multiple']) {
             $validOptions[] = [
                 'value' => '',
@@ -223,21 +220,30 @@ abstract class AbstractUnit
     {
         $normalOptions = [];
 
+        $fieldData = $this->fieldData;
+
         $isAssociative = array_is_assoc($options);
+        $isReference = isset($fieldData['reference']);
+
+        ActionData::data('test', $options);
 
         foreach ($options as $key => $value) {
-            if (is_array($value)) {
-                $normalOptions[] = [
-                    'value' => $isAssociative ? $key : $value,
-                    'label' => $key
-                ];
+            if ($isReference) {
+                if (is_array($value)) {
+                    $label = $key;
+                }
+                else {
+                    $ref = is_array($fieldData['reference'][$value]) ? $fieldData['reference'][$value][0] : $fieldData['reference'][$value];
+                    $label = $ref ?: $value;
+                }
             }
             else {
-                $normalOptions[] = [
-                    'value' => $isAssociative ? $key : $value,
-                    'label' => $key
-                ];
+                $label = $value;
             }
+            $normalOptions[] = [
+                'value' => $isAssociative ? $key : $value,
+                'label' => $label
+            ];
         }
 
         return $normalOptions;
