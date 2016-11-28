@@ -689,6 +689,7 @@ $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vue.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vue-router.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/plugins/vue-sortable.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/plugins/vue-tooltip.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/plugins/vue-sticky.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/lodash.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/axios.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/core.js';

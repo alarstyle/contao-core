@@ -116,12 +116,14 @@
 
             deleteItem: function(id) {
                 if (this.locked) return;
-
-                this.locked = true;
+                if (id === undefined) {
+                    id = this.currentId;
+                }
 
                 var _this = this;
 
                 this.$root.confirmDelete(function() {
+                    _this.locked = true;
                     grow.action('deleteItem', {id: id})
                         .then(function (response) {
                             _this.locked = false;
@@ -156,13 +158,23 @@
                 this.showList();
             },
 
-            save: function () {
+            saveClick: function () {
                 if (this.locked) return;
                 if (this.state === 'edit_item') {
                     this.saveItem();
                 }
                 else {
                     this.saveGroup();
+                }
+            },
+
+            deleteClick: function() {
+                if (this.locked) return;
+                if (this.state === 'edit_item') {
+                    this.deleteItem();
+                }
+                else {
+                    this.deleteGroup();
                 }
             },
 
@@ -247,6 +259,27 @@
                             _this.formErrors = response.data.errorData;
                         }
                     });
+            },
+
+            deleteGroup: function() {
+                if (this.locked) return;
+                var _this = this;
+
+                this.$root.confirmDelete(function() {
+                    _this.locked = true;
+
+                    grow.action('deleteGroup', {id: id})
+                        .then(function (response) {
+                            _this.locked = false;
+                            if (response.data.success) {
+                                _this.cancelEdit();
+                                _this.groupsList = _.reject(_this.groupsList, {id: id});
+                            }
+                            else {
+                                grow.notify('Deleting failed', {type: 'danger'});
+                            }
+                        });
+                });
             }
 
         },

@@ -2,6 +2,10 @@
     background: #fff;
     border-radius: 4px;
     padding: 20px;
+    margin-top: 50px;
+    &.fixed {
+        margin-top: 0;
+    }
 }
 
 .submit_panel-title {

@@ -42,7 +42,7 @@ $GLOBALS['TL_DCA']['tl_country'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => 'country, name, short_name'
+		'default'                     => 'country, language'
 	),
 
 	// Fields
@@ -65,6 +65,16 @@ $GLOBALS['TL_DCA']['tl_country'] = array
             'required'                => true,
             'eval'                    => array('mandatory'=>true, 'unique'=>true),
             'sql'                     => "varchar(5) NOT NULL"
+        ),
+        'language' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_country']['language'],
+            'exclude'                 => true,
+            'inputType'               => 'select',
+            'required'                => true,
+			'options'                 => \Contao\System::getLanguages(),
+            'eval'                    => array('mandatory'=>true),
+			'sql'                     => "varchar(5) NOT NULL default ''"
         ),
 		'name' => array
 		(
