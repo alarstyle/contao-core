@@ -9,7 +9,6 @@
         data: function() {
             return {
                 options: [],
-                valueArr: [],
             }
         },
 
@@ -21,19 +20,22 @@
 
             onInputChange: function(e) {
                 if (e.target.checked) {
-                    this.valueArr.push(e.target.value + '');
+                    if (!this.currentValue) {
+                        this.currentValue = [e.target.value + ''];
+                    }
+                    else {
+                        this.currentValue = _.concat(this.currentValue, [e.target.value + '']);
+                    }
                 }
                 else {
-                    _.remove(this.valueArr, function(n) {
-                        return n === e.target.value + '';
+                    this.currentValue = _.filter(this.currentValue, function(n) {
+                        return n !== e.target.value + '';
                     });
                 }
-                console.log(this.valueArr);
-                this.$emit('change', this.valueArr, this);
             },
 
             isChecked: function(value) {
-                return _.indexOf(this.value, value + '') >= 0;
+                return _.indexOf(this.currentValue, value + '') >= 0;
             }
 
         }

@@ -57,11 +57,17 @@
         },
 
         watch: {
-            value: function (value) {
-                this.currentValue = value;
+            value: {
+                handler: function (value) {
+                    this.currentValue = value;
+                },
+                deep: true
             },
-            currentValue: function (currentValue) {
-                this.$emit('change', currentValue, this);
+            currentValue: {
+                handler: function (currentValue) {
+                    this.$emit('change', currentValue, this);
+                },
+                deep: true
             }
         },
 
@@ -112,6 +118,8 @@
             confirmExit: function (successCallback) {
                 var confirmExit = this.$refs.confirmExit;
                 confirmExit.$on('ok', function() {
+                    confirmExit.$off('ok');
+                    confirmExit.$off('cancel');
                     successCallback && successCallback();
                 });
                 confirmExit.$on('cancel', function() {
@@ -132,6 +140,8 @@
             confirmDelete: function (successCallback) {
                 var confirmDelete = this.$refs.confirmDelete;
                 confirmDelete.$on('ok', function() {
+                    confirmDelete.$off('ok');
+                    confirmDelete.$off('cancel');
                     successCallback && successCallback();
                 });
                 confirmDelete.$on('cancel', function() {

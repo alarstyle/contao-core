@@ -7,7 +7,7 @@ class Dashboard extends \Contao\Controllers\BackendMain
 
     protected function generateMainSection()
     {
-        $this->Template->main = 'ok';
+        $this->Template->main = 'Dashboard will be enabled when everything else is ready';
     }
 
 }

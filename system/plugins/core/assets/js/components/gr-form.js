@@ -33,7 +33,7 @@
                 deep: true
             },
             isChanged: function(isChanged) {
-                console.log('isChan');
+                console.log('isChan', isChanged);
                 this.$root.unsaved = isChanged;
             }
         },
