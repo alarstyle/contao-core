@@ -24,6 +24,8 @@
             </tbody>
         </table>
 
-        <div v-else></div>
+        <div v-else class="listing-table-empty">
+            <?= $GLOBALS['TL_LANG']['MSC']['noResult'] ?>
+        </div>
 
     </div>
