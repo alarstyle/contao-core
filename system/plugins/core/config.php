@@ -135,12 +135,21 @@ $GLOBALS['NAVIGATION'] = [
                 'labelEdit' => 'Edit User',
                 'creatable' => true,
                 'headersCallback' => function($headers) {
-                    $headers[0]['label'] = '';
+                    foreach($headers as &$header) {
+                        switch($header['name']) {
+                            case 'avatar':
+                                $header['label'] = '';
+                        }
+                    }
+                    //$headers[0]['label'] = '';
                     return $headers;
                 },
                 'listCallback' => function($list) {
                     foreach ($list as $i=>$item) {
                         $list[$i]['fields'][0] = '<div class="user_avatar" style="background-image: url(\'' . $list[$i]['fields'][0] . '\')"></div>';
+                        $countriesIds = deserialize($list[$i]['fields'][3]);
+                        if (empty($countriesIds)) continue;
+                        $list[$i]['fields'][3] = \Gambling\BackendHelpers::getCountriesFlagsByIds($countriesIds);
                     }
                     return $list;
                 }

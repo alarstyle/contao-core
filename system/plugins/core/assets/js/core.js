@@ -212,8 +212,11 @@
 
                 },
 
-                created: function () {
-                    this.initialized = true;
+                mounted: function () {
+                    var _this = this;
+                    window.Vue.nextTick(function() {
+                        _this.initialized = true;
+                    });
                 }
 
             });

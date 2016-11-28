@@ -56,8 +56,8 @@ $GLOBALS['TL_DCA']['tl_user'] = array
 		),
 		'label' => array
 		(
-			'fields'                  => array('icon', 'name', 'username', 'dateAdded'),
-			'fields_new'              => array('avatar', 'name', 'username', 'dateAdded'),
+            'fields_new'              => array('avatar', 'name', 'username', 'countries'),
+            'fields'                  => array('icon', 'name', 'username', 'dateAdded'),
 			'showColumns'             => true,
 			'label_callback'          => array('tl_user', 'addIcon')
 		),
@@ -92,7 +92,7 @@ $GLOBALS['TL_DCA']['tl_user'] = array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_user']['toggle'],
                 'icon'                => 'visible.gif',
-                'icon_new'            => 'eye',
+                'icon_new_'            => 'eye',
                 'attributes'          => 'onclick="return AjaxRequest.toggleVisibility(this,%s)"',
                 'button_callback'     => array('tl_user', 'toggleIcon')
             ),
@@ -127,7 +127,7 @@ $GLOBALS['TL_DCA']['tl_user'] = array
 		'__selector__'                => array('inherit', 'admin'),
 		'login'                       => '{name_legend},name,email;{backend_legend},language,uploader,showHelp,thumbnails,useRTE,useCE;{session_legend},session;{password_legend},password',
 		'admin'                       => '{name_legend},username,name,email;{backend_legend:hide},language,uploader,showHelp,thumbnails,useRTE,useCE;{password_legend:hide},pwChange,password;{admin_legend},admin;{account_legend},disable,start,stop',
-        'defaultNew'                  => '{name_legend},avatar,username,name,email,language;{password_legend:hide},pwChange,password;{admin_legend},admin;{groups_legend},groups;{account_legend},disable',
+        'defaultNew'                  => '{name_legend},avatar,username,name,email,language;{password_legend:hide},password;{admin_legend},admin;{groups_legend},groups,countries;{account_legend},disable',
         'default'                     => '{name_legend},avatar,username,name,email;{backend_legend:hide},language,uploader,showHelp,thumbnails,useRTE,useCE;{password_legend:hide},pwChange,password;{admin_legend},admin;{groups_legend},groups,inherit;{account_legend},disable,start,stop',
 		'group'                       => '{name_legend},username,name,email;{backend_legend:hide},language,uploader,showHelp,thumbnails,useRTE,useCE;{password_legend:hide},pwChange,password;{admin_legend},admin;{groups_legend},groups,inherit;{account_legend},disable,start,stop',
 		'extend'                      => '{name_legend},username,name,email;{backend_legend:hide},language,uploader,showHelp,thumbnails,useRTE,useCE;{password_legend:hide},pwChange,password;{admin_legend},admin;{groups_legend},groups,inherit;{modules_legend},modules,themes;{pagemounts_legend},pagemounts,alpty;{filemounts_legend},filemounts,fop;{forms_legend},forms,formp;{account_legend},disable,start,stop',
@@ -278,7 +278,7 @@ $GLOBALS['TL_DCA']['tl_user'] = array
 			'filter'                  => true,
 			'inputType'               => 'checkboxWizard',
 			'foreignKey'              => 'tl_user_group.name',
-			'eval'                    => array('multiple'=>true),
+			'eval'                    => array('multiple'=>true, 'tl_class'=>'w50'),
 			'sql'                     => "blob NULL",
 			'relation'                => array('type'=>'belongsToMany', 'load'=>'lazy')
 		),
@@ -293,6 +293,17 @@ $GLOBALS['TL_DCA']['tl_user'] = array
 			'eval'                    => array('helpwizard'=>true, 'submitOnChange'=>true),
 			'sql'                     => "varchar(12) NOT NULL default 'group'"
 		),
+        'navigation' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_user']['modules'],
+            'exclude'                 => true,
+            'inputTypeNew'            => 'checkboxWizard',
+            'inputType'               => 'checkbox',
+            'options_callback'        => array('tl_user_group', 'getNavigationOptions'),
+            'reference'               => &$GLOBALS['TL_LANG']['MOD'],
+            'eval'                    => array('multiple'=>true, 'helpwizard'=>true),
+            'sql'                     => "blob NULL"
+        ),
 		'modules' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_user']['modules'],
@@ -378,6 +389,7 @@ $GLOBALS['TL_DCA']['tl_user'] = array
 			'filter'                  => true,
 			'flag'                    => 2,
 			'inputType'               => 'checkbox',
+            'eval'                    => ['tl_class'=>'clr'],
 			'save_callback' => array
 			(
 				array('tl_user', 'checkAdminDisable')
@@ -440,7 +452,15 @@ $GLOBALS['TL_DCA']['tl_user'] = array
 		(
 			'eval'                    => array('rgxp'=>'datim', 'doNotCopy'=>true),
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
-		)
+		),
+        'countries' => array
+        (
+            'label'                   => ['Available Countries', 'Grant access to selected countries'],
+            'inputTypeNew'            => 'checkboxWizard',
+            'options_callback'        => 'Gambling\\BackendHelpers::getCountriesForOptions',
+            'eval'                    => ['tl_class'=>'w50'],
+            'sql'                     => "blob NULL"
+        ),
 	)
 );
 

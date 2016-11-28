@@ -169,8 +169,7 @@ abstract class AbstractUnit
             $fieldData['options'] = System::importStatic($arrCallback[0])->{$arrCallback[1]}();
         }
         elseif (is_callable($fieldData['options_callback'])) {
-            throw new \Exception('Error getting options');
-            //$fieldData['options'] = $fieldData['options_callback']();
+            $fieldData['options'] = call_user_func($fieldData['options_callback']);
         }
         elseif (isset($fieldData['foreignKey'])) {
             $arrKey = explode('.', $fieldData['foreignKey'], 2);
@@ -224,8 +223,6 @@ abstract class AbstractUnit
 
         $isAssociative = array_is_assoc($options);
         $isReference = isset($fieldData['reference']);
-
-        ActionData::data('test', $options);
 
         foreach ($options as $key => $value) {
             if ($isReference) {

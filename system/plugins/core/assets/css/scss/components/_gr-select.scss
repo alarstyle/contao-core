@@ -1,9 +1,6 @@
 .gr-select {
     @extend .disable_select;
     position: relative;
-    .flag {
-        margin: -3px 5px 0 0;
-    }
     &.disabled {
         .gr-select-input {
             cursor: default;
