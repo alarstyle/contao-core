@@ -19,6 +19,7 @@
         box-shadow: 1px 1px 1px rgba(0, 0, 0, .1);
         padding-top: 14px;
         padding-bottom: 14px;
+        position: relative;
         > div {
             padding: 14px 18px;
         }
@@ -32,6 +33,12 @@
     .cell--img,
     .cell--operations {
         width: 20px;
+    }
+
+    .item-img {
+        background: #fcfcfc no-repeat 50% 50% / cover;
+        border-radius: 4px 0 0 4px;
+        @include abs-pos(0,0,0,0);
     }
 }
 

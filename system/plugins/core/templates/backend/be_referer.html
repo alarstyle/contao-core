@@ -1,8 +1,10 @@
 <?php
 
-$theme = Backend::getTheme();
+use \Contao\Environment;
 
-System::loadLanguageFile('exception');
+$theme = \Contao\Backend::getTheme();
+
+\Contao\System::loadLanguageFile('exception');
 $lang = (object) $GLOBALS['TL_LANG']['XPT'];
 
 ?>

@@ -113,29 +113,6 @@ class Installer extends Controller
 
 		$sql_current = $this->getFromDb();
 		$sql_target = $this->getFromDca();
-		$sql_legacy = $this->getFromFile();
-
-		// Manually merge the legacy definitions (see #4766)
-		if (!empty($sql_legacy))
-		{
-			foreach ($sql_legacy as $table=>$categories)
-			{
-				foreach ($categories as $category=>$fields)
-				{
-					if (is_array($fields))
-					{
-						foreach ($fields as $name=>$sql)
-						{
-							$sql_target[$table][$category][$name] = $sql;
-						}
-					}
-					else
-					{
-						$sql_target[$table][$category] = $fields;
-					}
-				}
-			}
-		}
 
 		// Create tables
 		foreach (array_diff(array_keys($sql_target), array_keys($sql_current)) as $table)
@@ -314,101 +291,6 @@ class Installer extends Controller
 		if (isset($GLOBALS['TL_HOOKS']['sqlGetFromDca']) && is_array($GLOBALS['TL_HOOKS']['sqlGetFromDca']))
 		{
 			foreach ($GLOBALS['TL_HOOKS']['sqlGetFromDca'] as $callback)
-			{
-				$this->import($callback[0]);
-				$return = $this->{$callback[0]}->{$callback[1]}($return);
-			}
-		}
-
-		return $return;
-	}
-
-
-	/**
-	 * Get the DCA table settings from the database.sql files
-	 *
-	 * @return array An array of DCA table settings
-	 */
-	public function getFromFile()
-	{
-		$table = '';
-		$return = array();
-
-		// Only check the active modules (see #4541)
-		foreach (PluginLoader::getActive() as $strModule)
-		{
-			if (strncmp($strModule, '.', 1) === 0 || strncmp($strModule, '__', 2) === 0)
-			{
-				continue;
-			}
-
-			// Ignore the database.sql of the not renamed core modules
-			if (in_array($strModule, array('calendar', 'comments', 'faq', 'listing', 'news', 'newsletter')))
-			{
-				continue;
-			}
-
-			$strFile = TL_ROOT . '/system/plugins/' . $strModule . '/config/database.sql';
-
-			if (!file_exists($strFile))
-			{
-				continue;
-			}
-
-			$data = file($strFile);
-
-			foreach ($data as $k=>$v)
-			{
-				$key_name = array();
-				$subpatterns = array();
-
-				// Unset comments and empty lines
-				if (preg_match('/^[#-]+/', $v) || !strlen(trim($v)))
-				{
-					unset($data[$k]);
-					continue;
-				}
-
-				// Store the table names
-				if (preg_match('/^CREATE TABLE `([^`]+)`/i', $v, $subpatterns))
-				{
-					$table = $subpatterns[1];
-				}
-				// Get the table options
-				elseif ($table != '' && preg_match('/^\)([^;]+);/', $v, $subpatterns))
-				{
-					$return[$table]['TABLE_OPTIONS'] = $subpatterns[1];
-					$table = '';
-				}
-				// Add the fields
-				elseif ($table != '')
-				{
-					preg_match('/^[^`]*`([^`]+)`/', trim($v), $key_name);
-					$first = preg_replace('/\s[^\n\r]+/', '', $key_name[0]);
-					$key = $key_name[1];
-
-					// Create definitions
-					if (in_array($first, array('KEY', 'PRIMARY', 'PRIMARY KEY', 'FOREIGN', 'FOREIGN KEY', 'INDEX', 'UNIQUE', 'FULLTEXT', 'CHECK')))
-					{
-						if (strncmp($first, 'PRIMARY', 7) === 0)
-						{
-							$key = 'PRIMARY';
-						}
-
-						$return[$table]['TABLE_CREATE_DEFINITIONS'][$key] = preg_replace('/,$/', '', trim($v));
-					}
-					else
-					{
-						$return[$table]['TABLE_FIELDS'][$key] = preg_replace('/,$/', '', trim($v));
-					}
-				}
-			}
-		}
-
-		// HOOK: allow third-party developers to modify the array (see #3281)
-		if (isset($GLOBALS['TL_HOOKS']['sqlGetFromFile']) && is_array($GLOBALS['TL_HOOKS']['sqlGetFromFile']))
-		{
-			foreach ($GLOBALS['TL_HOOKS']['sqlGetFromFile'] as $callback)
 			{
 				$this->import($callback[0]);
 				$return = $this->{$callback[0]}->{$callback[1]}($return);

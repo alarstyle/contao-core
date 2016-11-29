@@ -17,6 +17,7 @@
                 listCreatable: false,
 
                 formFields: {},
+                formSidebarFields: {},
                 formErrors: {},
 
                 currentId: null,
@@ -79,13 +80,14 @@
                     .then(function (response) {
                         _this.currentId = id;
                         _this.formFields = response.data.data.fields;
+                        _this.formSidebarFields = response.data.data.sidebar;
                         _this.formErrors = {};
                         _this.state = 'edit_item';
                     });
             },
 
             saveItem: function () {
-                if (!this.$refs.form.isChanged) {
+                if (!this.$refs.form.isChanged && (!this.$refs.formSidebar || !this.$refs.formSidebar.isChanged)) {
                     grow.notify('Nothing was changed', {type: 'warning'});
                     return;
                 }
@@ -93,7 +95,7 @@
                 this.locked = true;
 
                 var _this = this;
-                var fieldsValues = _this.$refs.form.getValues();
+                var fieldsValues = _.defaults(_this.$refs.form.getValues(), _this.$refs.formSidebar.getValues());
                 fieldsValues = JSON.parse(JSON.stringify(fieldsValues));
 
                 grow.action('saveItem', {id: _this.currentId, fields: fieldsValues})
@@ -221,10 +223,11 @@
                         _this.locked = false;
                         if (response.data.success) {
                             _this.formFields = response.data.data.fields;
+                            _this.formSidebarFields = response.data.data.sidebar;
                             _this.formErrors = {};
-                            // if (id === 'new' && _this.$refs.form) {
-                            //     _this.$refs.form.reset();
-                            // }
+                            if (id === 'new' && _this.$refs.form) {
+                                _this.$refs.form.reset();
+                            }
                             _this.currentGroupId = id;
                             _this.state = 'edit_group';
                         }

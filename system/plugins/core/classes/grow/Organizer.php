@@ -180,9 +180,13 @@ class Organizer
     }
 
 
-    public function getList($limit = 20, $skip = 0, $where = '')
+    public function getList($limit = 20, $skip = 0, $where = '', $order= '')
     {
-        $query = "SELECT * FROM " . $this->table . ' ' . $where;
+        if ($order) {
+            $order = 'ORDER BY ' . $order;
+        }
+
+        $query = "SELECT * FROM " . $this->table . ' ' . $where . ' ' . $order;
 
         $objRowStmt = $this->database->prepare($query);
 
@@ -242,49 +246,20 @@ class Organizer
     public function getUnitsData($row = NULL)
     {
         $tableData = $GLOBALS['TL_DCA'][$this->table];
+
         $palette = $tableData['palettes']['defaultNew'] ?: $tableData['palettes']['default'];
-        $boxes = trimsplit(';', $palette);
-        $fields = [];
-        $fieldsNames = [];
+        $sidebarPalette = $tableData['palettes']['sidebar'];
 
-        if (empty($boxes)) return $fields;
+        $fieldsNames = $this->getFieldsNamesFromPalette($palette);
+        $sidebarFieldsNames = $this->getFieldsNamesFromPalette($sidebarPalette);
 
-        foreach ($boxes as $k => $v) {
-            $eCount = 1;
-            $boxes[$k] = trimsplit(',', $v);
+        $fields = $this->getUnitsDataForFields($row, $fieldsNames);
+        $sidebar = $this->getUnitsDataForFields($row, $sidebarFieldsNames);
 
-            foreach ($boxes[$k] as $kk => $vv) {
-                if (preg_match('/^\[.*\]$/', $vv)) {
-                    ++$eCount;
-                    continue;
-                }
-
-                if (preg_match('/^\{.*\}$/', $vv)) {
-                    continue;
-                } elseif ($tableData['fields'][$vv]['exclude1'] || !is_array($tableData['fields'][$vv])) {
-                    continue;
-                }
-
-                $fieldsNames[] = $vv;
-            }
-        }
-
-        foreach ($fieldsNames as $fieldName) {
-            $fieldData = $tableData['fields'][$fieldName];
-
-            if (empty($fieldData['inputTypeNew'] ?: $fieldData['inputType'])) continue;
-
-            $unitClass = $this->getUnitClass($fieldData['inputTypeNew'] ?: $fieldData['inputType']);
-
-            if (empty($unitClass)) continue;
-
-            /** @var AbstractUnit $unit */
-            $unit = new $unitClass($this->table, $fieldName);
-
-            $fields[$fieldName] = $unit->getUnitData(!empty($row) ? $row[$fieldName] : NULL);
-        }
-
-        return $fields;
+        return [
+            'main' => $fields,
+            'sidebar' => $sidebar
+        ];
     }
 
 
@@ -348,6 +323,61 @@ class Organizer
     {
         $class = $this->getUnitClass($unitName);
         return !empty($class) ? $class::$componentName : NULL;
+    }
+
+
+    protected  function getFieldsNamesFromPalette($palette)
+    {
+        $tableData = $GLOBALS['TL_DCA'][$this->table];
+        $boxes = trimsplit(';', $palette);
+        $fieldsNames = [];
+
+        foreach ($boxes as $k => $v) {
+            $eCount = 1;
+            $boxes[$k] = trimsplit(',', $v);
+
+            foreach ($boxes[$k] as $kk => $vv) {
+                if (preg_match('/^\[.*\]$/', $vv)) {
+                    ++$eCount;
+                    continue;
+                }
+
+                if (preg_match('/^\{.*\}$/', $vv)) {
+                    continue;
+                } elseif ($tableData['fields'][$vv]['exclude1'] || !is_array($tableData['fields'][$vv])) {
+                    continue;
+                }
+
+                $fieldsNames[] = $vv;
+            }
+        }
+
+        return $fieldsNames;
+    }
+
+
+    protected function getUnitsDataForFields($row, $fieldsNames)
+    {
+        $tableData = $GLOBALS['TL_DCA'][$this->table];
+
+        $fields = [];
+
+        foreach ($fieldsNames as $fieldName) {
+            $fieldData = $tableData['fields'][$fieldName];
+
+            if (empty($fieldData['inputTypeNew'] ?: $fieldData['inputType'])) continue;
+
+            $unitClass = $this->getUnitClass($fieldData['inputTypeNew'] ?: $fieldData['inputType']);
+
+            if (empty($unitClass)) continue;
+
+            /** @var AbstractUnit $unit */
+            $unit = new $unitClass($this->table, $fieldName);
+
+            $fields[$fieldName] = $unit->getUnitData(!empty($row) ? $row[$fieldName] : NULL);
+        }
+
+        return $fields;
     }
 
 }

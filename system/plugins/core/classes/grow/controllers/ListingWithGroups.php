@@ -78,7 +78,10 @@ class ListingWithGroups extends Listing
             $fields = $this->groupOrganizer->load($id);
         }
 
-        ActionData::data('fields', $fields);
+        ActionData::data('fields', $fields['main']);
+        if ($fields['sidebar']) {
+            ActionData::data('sidebar', $fields['sidebar']);
+        }
     }
 
 

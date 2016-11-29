@@ -41,6 +41,11 @@
     height: 44px;
 }
 
+.unit-textarea {
+    @extend .unit-input;
+    height: 80px;
+}
+
 .unit-select {
     background: #fff;
     border: 1px solid #e2e3e4;
@@ -76,4 +81,9 @@
     ul {
         line-height: 26px;
     }
+}
+
+.unit--long,
+.unit--textarea {
+    width: 100%;
 }

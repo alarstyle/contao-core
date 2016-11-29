@@ -31,10 +31,15 @@
                     <div class="submit_panel-title">
                         Save changes?
                     </div>
+                    <div class="submit_panel-form" v-if="formSidebarFields">
+                        <gr-form :fields="formSidebarFields"
+                                 :errors="formErrors"
+                                 ref="formSidebar"></gr-form>
+                    </div>
                     <div class="submit_panel-btns">
-                        <div class="btn" @click="cancelEdit">Cancel</div>
                         <div class="btn btn--primary" @click="saveClick">Save</div>
-                        <div class="btn btn--danger" @click="deleteClick">Delete</div>
+                        <div class="btn" @click="cancelEdit">Cancel</div>
+                        <div v-if="currentId !== 'new' && currentGroupId !== 'new'" class="btn btn--danger" @click="deleteClick">Delete</div>
                     </div>
                 </div>
             </div>

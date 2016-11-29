@@ -388,7 +388,6 @@ class DcaExtractor extends Controller
 			return;
 		}
 
-		$blnFromFile = false;
 		$arrRelations = array();
 
 		// Check whether there are fields (see #4826)
@@ -396,12 +395,6 @@ class DcaExtractor extends Controller
 		{
 			foreach ($GLOBALS['TL_DCA'][$this->strTable]['fields'] as $field=>$config)
 			{
-				// Check whether all fields have an SQL definition
-				if (!isset($config['sql']) && isset($config['inputType']))
-				{
-					$blnFromFile = true;
-				}
-
 				// Check whether there is a relation (see #6524)
 				if (isset($config['relation']))
 				{
@@ -419,51 +412,6 @@ class DcaExtractor extends Controller
 
 		$sql = $GLOBALS['TL_DCA'][$this->strTable]['config']['sql'] ?: array();
 		$fields = $GLOBALS['TL_DCA'][$this->strTable]['fields'] ?: array();
-
-		// Get the SQL information from the database.sql files (backwards compatibility)
-		if ($blnFromFile)
-		{
-			if (!isset(static::$arrSql[$this->strTable]))
-			{
-				$objInstaller = new Database\Installer();
-				static::$arrSql = $objInstaller->getFromFile();
-			}
-
-			$arrTable = static::$arrSql[$this->strTable];
-			list($engine,, $charset) = explode(' ', trim($arrTable['TABLE_OPTIONS']));
-
-			if ($engine != '')
-			{
-				$sql['engine'] = str_replace('ENGINE=', '', $engine);
-			}
-			if ($charset != '')
-			{
-				$sql['charset'] = str_replace('CHARSET=', '', $charset);
-			}
-
-			// Fields
-			if (isset($arrTable['TABLE_FIELDS']))
-			{
-				foreach ($arrTable['TABLE_FIELDS'] as $k=>$v)
-				{
-					$fields[$k]['sql'] = str_replace('`' . $k . '` ', '', $v);
-				}
-			}
-
-			// Keys
-			if (isset($arrTable['TABLE_CREATE_DEFINITIONS']))
-			{
-				foreach ($arrTable['TABLE_CREATE_DEFINITIONS'] as $strKey)
-				{
-					if (preg_match('/^([A-Z]+ )?KEY .+\(([^)]+)\)$/', $strKey, $arrMatches) && preg_match_all('/`([^`]+)`/', $arrMatches[2], $arrFields))
-					{
-						$type = trim($arrMatches[1]);
-						$field = implode(',', $arrFields[1]);
-						$sql['keys'][$field] = ($type != '') ? strtolower($type) : 'index';
-					}
-				}
-			}
-		}
 
 		// Not a database table or no field information
 		if (empty($sql) || empty($fields))

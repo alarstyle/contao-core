@@ -1,10 +1,24 @@
 .submit_panel {
     background: #fff;
     border-radius: 4px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, .1);
     padding: 20px;
     margin-top: 50px;
     &.fixed {
         margin-top: 0;
+    }
+    .gr-form {
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+    }
+    .unit {
+        margin-bottom: 15px;
+        padding: 0;
+        width: 100%;
+    }
+    .gr-select-menu {
+        max-width: 100%;
     }
 }
 
@@ -17,5 +31,8 @@
 }
 
 .submit_panel-btns {
-
+    .btn {
+        margin-bottom: 10px;
+        width: 100%;
+    }
 }

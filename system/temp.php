@@ -5,7 +5,7 @@
  */
 if ($_POST && !\Contao\RequestToken::validate(\Contao\Input::post('REQUEST_TOKEN'))) {
     // Force a JavaScript redirect upon Ajax requests (IE requires absolute link)
-    if (Environment::get('isAjaxRequest')) {
+    if (\Contao\Environment::get('isAjaxRequest')) {
         header('HTTP/1.1 204 No Content');
         header('X-Ajax-Location: ' . \Contao\Environment::get('base') . 'contao/');
     } else {

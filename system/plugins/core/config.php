@@ -134,6 +134,13 @@ $GLOBALS['NAVIGATION'] = [
                 'labelNew' => 'Add New User',
                 'labelEdit' => 'Edit User',
                 'creatable' => true,
+                'whereCallback' => function() {
+                    $groupId = \Contao\Input::post('groupId');
+                    if (empty($groupId) || $groupId === 'all') {
+                        return '';
+                    }
+                    return ' WHERE groups LIKE \'%"' . $groupId . '"%\'';
+                },
                 'headersCallback' => function($headers) {
                     foreach($headers as &$header) {
                         switch($header['name']) {
@@ -141,7 +148,6 @@ $GLOBALS['NAVIGATION'] = [
                                 $header['label'] = '';
                         }
                     }
-                    //$headers[0]['label'] = '';
                     return $headers;
                 },
                 'listCallback' => function($list) {
@@ -162,10 +168,10 @@ $GLOBALS['NAVIGATION'] = [
         'controller' => 'Grow\\Controllers\\FileManagerController'
     ],
 
-    'setting' => [
-        'label' => 'Setting',
-        'controller' => 'Grow\\Controllers\\Settings'
-    ]
+//    'setting' => [
+//        'label' => 'Setting',
+//        'controller' => 'Grow\\Controllers\\Settings'
+//    ]
     
 ];
 

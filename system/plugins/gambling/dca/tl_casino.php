@@ -1,17 +1,5 @@
 <?php
 
-/**
- * Contao Open Source CMS
- *
- * Copyright (c) 2005-2016 Leo Feyer
- *
- * @license LGPL-3.0+
- */
-
-
-/**
- * Table tl_casino
- */
 $GLOBALS['TL_DCA']['tl_casino'] = array
 (
 
@@ -136,11 +124,6 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 );
 
 
-/**
- * Provide miscellaneous methods that are used by the data configuration array.
- *
- * @author Leo Feyer <https://github.com/leofeyer>
- */
 use Contao\Backend;
 use Contao\Image;
 use Contao\Input;

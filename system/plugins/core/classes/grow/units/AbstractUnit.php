@@ -238,7 +238,7 @@ abstract class AbstractUnit
                 $label = $value;
             }
             $normalOptions[] = [
-                'value' => $isAssociative ? $key : $value,
+                'value' => ($isAssociative ? $key : $value) . '',
                 'label' => $label
             ];
         }

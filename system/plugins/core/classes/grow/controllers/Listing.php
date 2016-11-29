@@ -60,17 +60,11 @@ class Listing extends \Contao\Controllers\BackendMain
 
     public function ajaxGetList()
     {
-        $groupId = Input::post('groupId');
-
-        if (empty($groupId) || $groupId === 'all') {
-            $where = '';
-        }
-        else {
-            $where = ' WHERE groups LIKE \'%"' . $groupId . '"%\'';
-        }
+        $where = is_callable($this->config['list']['whereCallback']) ? call_user_func($this->config['list']['whereCallback']) : '';
+        $order = $this->config['list']['order'] ?: '';
 
         $headers = $this->listOrganizer->getListHeaders();
-        $list = $this->listOrganizer->getList(20, 0, $where);
+        $list = $this->listOrganizer->getList(20, 0, $where, $order);
 
         $headersCallback = $this->config['list']['headersCallback'];
         $listCallback = $this->config['list']['listCallback'];
@@ -99,7 +93,10 @@ class Listing extends \Contao\Controllers\BackendMain
             $fields = $this->listOrganizer->load($id);
         }
 
-        ActionData::data('fields', $fields);
+        ActionData::data('fields', $fields['main']);
+        if ($fields['sidebar']) {
+            ActionData::data('sidebar', $fields['sidebar']);
+        }
     }
 
 
