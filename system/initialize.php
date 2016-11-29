@@ -76,11 +76,11 @@ set_exception_handler('__exception');
 /**
  * Include some classes required for further processing
  */
-require TL_ROOT . '/system/classes/contao/Config.php';
+require TL_ROOT . '/system/classes/Contao/Config.php';
 
-require TL_ROOT . '/system/classes/contao/TemplateLoader.php';
+require TL_ROOT . '/system/classes/Contao/TemplateLoader.php';
 
-require TL_ROOT . '/system/classes/contao/PluginLoader.php';
+require TL_ROOT . '/system/classes/Contao/PluginLoader.php';
 
 \Contao\Config::preload(); // see #5872
 
