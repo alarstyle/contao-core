@@ -1,5 +1,8 @@
     <div class="unit unit--textarea" :class="unitClass">
         <label class="unit-label">{{ label }}<span v-if="required">*</span>:</label>
-        <textarea class="unit-textarea"></textarea>
+        <gr-textarea
+            :value="currentValue"
+            @change="handleChange">
+        </gr-textarea>
         <div class="unit-hint">{{ error || hint }}</div>
     </div>

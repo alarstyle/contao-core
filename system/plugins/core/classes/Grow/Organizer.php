@@ -253,8 +253,8 @@ class Organizer
         $fieldsNames = $this->getFieldsNamesFromPalette($palette);
         $sidebarFieldsNames = $this->getFieldsNamesFromPalette($sidebarPalette);
 
-        $fields = $this->getUnitsDataForFields($row, $fieldsNames);
         $sidebar = $this->getUnitsDataForFields($row, $sidebarFieldsNames);
+        $fields = $this->getUnitsDataForFields($row, $fieldsNames);
 
         return [
             'main' => $fields,

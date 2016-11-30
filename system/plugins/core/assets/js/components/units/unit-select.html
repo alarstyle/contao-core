@@ -3,7 +3,7 @@
         <gr-select
             :options="options"
             :value="currentValue"
-            @change="onChange">
+            @change="handleChange">
         </gr-select>
         <div class="unit-hint">{{ error || hint }}</div>
     </div>

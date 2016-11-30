@@ -56,6 +56,10 @@
                 else {
                     document.documentElement.removeEventListener('click', this.documentClick, false);
                 }
+            },
+
+            currentValue: function(currentValue) {
+                this.$emit('change', currentValue, this);
             }
 
         },
@@ -72,7 +76,6 @@
                 this.opened = false;
                 this.currentLabel = option.label || option.value;
                 this.currentValue = option.value;
-                this.$emit('change', this.currentValue, this);
             },
 
             documentClick: function(event) {

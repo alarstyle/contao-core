@@ -95,7 +95,9 @@
                 this.locked = true;
 
                 var _this = this;
-                var fieldsValues = _.defaults(_this.$refs.form.getValues(), _this.$refs.formSidebar.getValues());
+                var fieldsValues = _.defaults(
+                    _this.$refs.form.getValues(),
+                    _this.$refs.formSidebar ? _this.$refs.formSidebar.getValues() : []);
                 fieldsValues = JSON.parse(JSON.stringify(fieldsValues));
 
                 grow.action('saveItem', {id: _this.currentId, fields: fieldsValues})

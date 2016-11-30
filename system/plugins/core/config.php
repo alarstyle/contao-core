@@ -295,14 +295,14 @@ $GLOBALS['BE_FFL'] = array
 /**
  * UNITS
  */
-$GLOBALS['UNITS'] = array
-(
+$GLOBALS['UNITS'] = [
+
 	'text'           => 'Grow\\Units\\Text',
 	'password'       => 'Grow\\Units\\Password',
 	'textarea'       => 'Grow\\Units\\TextArea',
     'select'         => 'Grow\\Units\\Select',
-    'checkbox'       => 'Grow\\Units\\CheckBox',
-    'checkboxWizard' => 'Grow\\Units\\CheckBoxWizard',
+    'checkbox'       => 'Grow\\Units\\Checkbox',
+    'checkboxWizard' => 'Grow\\Units\\CheckboxWizard',
     'radio'          => 'Grow\\Units\\Radio',
     'radioTable'     => 'Grow\\Units\\RadioTable',
 //    'inputUnit'      => 'Grow\\Units\\InputUnit',
@@ -320,7 +320,7 @@ $GLOBALS['UNITS'] = array
 //    'keyValueWizard' => 'Grow\\Units\\KeyValueWizard',
 //    'imageSize'      => 'Grow\\Units\\ImageSize',
 //    'metaWizard'     => 'Grow\\Units\\MetaWizard'
-);
+];
 
 
 /**
@@ -728,6 +728,10 @@ $GLOBALS['COMPONENTS'] = [
     'gr-select' => [
         '/system/plugins/core/assets/js/components/gr-select/gr-select.js',
         '/system/plugins/core/assets/js/components/gr-select/gr-select.html'
+    ],
+    'gr-textarea' => [
+        '/system/plugins/core/assets/js/components/gr-textarea/gr-textarea.js',
+        '/system/plugins/core/assets/js/components/gr-textarea/gr-textarea.html'
     ],
     'gr-form' => [
         '/system/plugins/core/assets/js/components/gr-form.js',

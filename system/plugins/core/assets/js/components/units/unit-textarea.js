@@ -14,6 +14,10 @@
 
         methods: {
 
+            handleChange: function(newValue) {
+                this.currentValue = newValue;
+            }
+
         }
 
     };

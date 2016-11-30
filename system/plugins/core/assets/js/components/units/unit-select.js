@@ -8,8 +8,7 @@
 
         data: function() {
             return {
-                options: [],
-                currentValue: null
+                options: []
             }
         },
 
@@ -19,8 +18,8 @@
 
         methods: {
 
-            onChange: function(value) {
-                this.$emit('change', value, this);
+            handleChange: function(newValue) {
+                this.currentValue = newValue;
             }
 
         }
