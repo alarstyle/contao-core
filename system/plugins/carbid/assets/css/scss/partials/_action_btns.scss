@@ -1,0 +1,164 @@
+.tl_content_right,
+.tl_right {
+    a,
+    img {
+        display: inline-block;
+        vertical-align: middle !important;
+    }
+    /*> a,
+    > img {
+        @extend .commonForButtons;
+        background: #fff;
+        border-radius: 50%;
+        height: 25px;
+        width: 25px;
+    }*/
+    a {
+        //height: 25px;
+        //width: 25px;
+    }
+}
+
+img[src*="edit.gif"],
+img[src*="edit_.gif"],
+img[src*="header.gif"],
+img[src*="header_.gif"],
+img[src*="copy.gif"],
+img[src*="copy_.gif"],
+img[src*="copychilds.gif"],
+img[src*="copychilds_.gif"],
+img[src*="delete.gif"],
+img[src*="delete_.gif"],
+img[src*="visible.gif"],
+img[src*="visible_.gif"],
+img[src*="invisible.gif"],
+img[src*="invisible_.gif"],
+img[src*="cut.gif"],
+img[src*="cut_.gif"],
+img[src*="new.gif"],
+img[src*="new_.gif"],
+img[src*="new2.gif"],
+img[src*="new2_.gif"],
+img[src*="show.gif"],
+img[src*="show_.gif"],
+img[src*="drag.gif"],
+img[src*="drag_.gif"],
+img[src*="editor.gif"],
+img[src*="editor_.gif"],
+img[src*="article.gif"],
+img[src*="article_.gif"],
+img[src*="pasteafter.gif"],
+img[src*="pasteafter_.gif"],
+img[src*="pasteinto.gif"],
+img[src*="pasteinto_.gif"],
+img[src*="su.gif"],
+img[src*="su_.gif"],
+img[src*="css.gif"],
+img[src*="css_.gif"],
+img[src*="modules.gif"],
+img[src*="modules_.gif"],
+img[src*="layout.gif"],
+img[src*="layout_.gif"],
+img[src*="sizes.gif"],
+img[src*="sizes_.gif"],
+img[src*="theme_export.gif"],
+img[src*="theme_export_.gif"] {
+    padding: 25px 0 0 25px;
+    height: 0;
+    width: 0;
+}
+
+img[src*="edit.gif"],
+img[src*="edit_.gif"] {
+    @extend .iconActionEdit;
+}
+img[src*="header.gif"],
+img[src*="header_.gif"] {
+    @extend .iconActionHeader;
+}
+img[src*="copy.gif"],
+img[src*="copy_.gif"] {
+    @extend .iconActionCopy;
+}
+img[src*="copychilds.gif"],
+img[src*="copychilds_.gif"] {
+    @extend .iconActionCopyChildren;
+}
+img[src*="delete.gif"],
+img[src*="delete_.gif"] {
+    @extend .iconActionDelete;
+}
+img[src*="visible.gif"],
+img[src*="visible_.gif"] {
+    @extend .iconActionVisible;
+}
+img[src*="invisible.gif"],
+img[src*="invisible_.gif"] {
+    @extend .iconActionInvisible;
+}
+img[src*="cut.gif"],
+img[src*="cut_.gif"] {
+    @extend .iconActionCut;
+}
+img[src*="new.gif"],
+img[src*="new_.gif"] {
+    @extend .iconActionNewAfter;
+}
+img[src*="new2.gif"],
+img[src*="new2_.gif"] {
+    @extend .iconActionNew;
+}
+img[src*="show.gif"],
+img[src*="show_.gif"] {
+    @extend .iconActionShow;
+}
+img[src*="drag.gif"],
+img[src*="drag_.gif"] {
+    @extend .iconActionDrag;
+}
+img[src*="editor.gif"],
+img[src*="editor_.gif"] {
+    @extend .iconActionEditor;
+}
+img[src*="article.gif"],
+img[src*="article_.gif"] {
+    @extend .iconActionArticle;
+}
+img[src*="pasteafter.gif"],
+img[src*="pasteafter_.gif"] {
+    @extend .iconActionPasteAfter;
+}
+img[src*="pasteinto.gif"],
+img[src*="pasteinto_.gif"] {
+    @extend .iconActionPasteInto;
+}
+img[src*="su.gif"],
+img[src*="su_.gif"] {
+    @extend .iconActionSetUser;
+}
+img[src*="css.gif"],
+img[src*="css_.gif"] {
+    @extend .iconActionCss;
+}
+img[src*="modules.gif"],
+img[src*="modules_.gif"] {
+    @extend .iconActionModules;
+}
+img[src*="layout.gif"],
+img[src*="layout_.gif"] {
+    @extend .iconActionLayout;
+}
+img[src*="sizes.gif"],
+img[src*="sizes_.gif"] {
+    @extend .iconActionPictures;
+}
+img[src*="theme_export.gif"],
+img[src*="theme_export_.gif"] {
+    @extend .iconActionExport;
+}
+
+img[src*="_.gif"] {
+    opacity: 0.2;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}

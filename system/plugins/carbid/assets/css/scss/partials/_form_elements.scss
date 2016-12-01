@@ -1,0 +1,176 @@
+
+/* INPUT, TEXTAREA AND SELECT */
+
+.tl_text,
+.tl_text_2,
+.tl_text_3,
+.tl_text_4,
+.tl_textarea,
+.tl_text_unit,
+.tl_text_trbl,
+.tl_text_interval,
+select.tl_select,
+select.tl_mselect,
+select.tl_select_column,
+select.tl_select_unit,
+select.tl_select_interval,
+.styled_select,
+.chzn-container-single .chzn-single,
+.chzn-container-multi {
+    -webkit-appearance: none;
+    background: $inputBgColor;
+    border: 1px solid $inputBorderColor !important;
+    border-radius: 4px;
+    color: $inputTextColor;
+    padding: 4px 8px !important;
+    height: $inputHeight;
+    vertical-align: middle;
+    margin: 0;
+    max-width: 100%;
+    &:focus,
+    &.focused {
+        background: $inputFocusBgColor;
+        outline: none !important;
+    }
+    &:disabled,
+    &.disabled  {
+        background: $inputBgColor;
+        border: 1px solid $inputBorderColor;
+        color: $inputTextColor;
+        opacity: .5;
+    }
+    &.active {
+        background: $inputBgColor;
+    }
+}
+
+.tl_text {
+    width: calc(50% - 20px);
+    .wizard & {
+        width: calc(50% - 50px);
+    }
+    .long &,
+    .w50 & {
+        width: 100%;
+    }
+    .long.wizard &,
+    .w50.wizard & {
+        width: calc(100% - 30px);
+    }
+}
+
+.tl_text_2 {
+    width: calc(25% - 13px);
+    .w50 & {
+        width: calc(50% - 3px);
+    }
+    td > & {
+        width: 100%;
+    }
+
+}
+
+.tl_textarea {
+    width: 100%;
+    min-height: 80px;
+    resize: vertical;
+}
+
+//select.tl_select {
+//    width: calc(50% - 20px);
+//    .w50 & {
+//        width: 100%;
+//    }
+//}
+
+
+/* SELECTS */
+
+.tl_select, .tl_mselect, .tl_select_column {
+    margin: 0;
+}
+
+.styled_select {
+    font: inherit;
+}
+.tl_select_column {
+    margin: 0 !important;
+}
+.tl_select,
+.tl_select_column {
+    span {
+        display: block;
+        margin-right: 15px;
+        font: inherit;
+        padding: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    b {
+        @include abs-pos(auto, 50%, 12px);
+        background: none !important;
+        border-top: 4px solid #333;
+        border-right: 4px solid transparent;
+        border-left: 4px solid transparent;
+        margin-top: -2px;
+        width: 0 !important;
+        height: 0 !important;
+        i {
+            display: none;
+        }
+    }
+}
+
+.chzn-container-single {
+    .chzn-single {
+        background: none;
+        border: 0;
+        box-shadow: none;
+        padding: 0;
+        position: static;
+        > span {
+            font: inherit;
+            margin: 0;
+        }
+        div {
+            background: none;
+            border: none;
+        }
+    }
+}
+.chzn-container-multi {
+    padding: 0 !important;
+    .chzn-choices {
+        background: none;
+        border: none;
+        padding: 0;
+    }
+    .long & {
+        width: 100%;
+    }
+}
+.chzn-container-active {
+    background: #fff;
+}
+
+
+/* LIST OF CHECKBOXES */
+
+.tl_checkbox_wizard {
+    .sortable span {
+        margin: 2px 0 0 0;
+    }
+    label {
+        padding: 0 !important;
+    }
+}
+
+
+/* BUTTONS */
+
+.tl_submit {
+//a.btn.primary {
+    @extend .simpleBtn;
+    background-image: none !important;
+    margin-top: 0 !important;
+}

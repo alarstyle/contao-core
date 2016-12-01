@@ -1,0 +1,51 @@
+.template-be_main {
+    overflow: hidden;
+
+    #main {
+        //@include abs-pos($sidebarWidth, $headerHeight, 0, 0);
+        /*
+        margin-left: 0;
+        width: auto;*/
+        padding: 0 0 30px 0;
+    }
+
+    .tl_formbody_submit {
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 5px 0 0 0;
+        padding: 0;
+        position: fixed;
+        bottom: 0;
+        right: 17px;
+        z-index: 100;
+    }
+
+    &.debug-enabled {
+        #main {
+            bottom: $debugbarHeight;
+        }
+        .tl_formbody_submit {
+            bottom: $debugbarHeight + $debugbarContentHeight;
+        }
+         .debug-closed {
+            .tl_formbody_submit {
+                bottom: $debugbarHeight;
+            }
+        }
+    }
+
+    /*.tl_formbody_submit {
+        .tl_submit_container {
+            padding: 5px 5px 4px 5px;
+        }
+        input {
+            margin-left: 1px;
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+    .tl_box .tl_formbody_submit {
+        background: none;
+        border-radius: 0;
+    }*/
+}

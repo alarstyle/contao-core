@@ -1,0 +1,80 @@
+/**
+ * Carbid for Contao Open Source CMS
+ *
+ * Copyright (C) 2014-2016 Alexander Stulnikov
+ *
+ * @link       https://github.com/alarstyle/contao-carbid
+ * @license    http://opensource.org/licenses/MIT
+ */
+
+@import "scss/variables/colors";
+@import "scss/variables/sizes";
+
+@import "scss/reset";
+@import "scss/mixins";
+@import "scss/icons";
+@import "scss/basic";
+@import "scss/common";
+
+@import "scss/vendor/_perfect-scrollbar";
+
+@import 'scss/layout/sidebar';
+@import 'scss/layout/header';
+@import 'scss/layout/main';
+@import 'scss/layout/debugbar';
+
+@import "scss/templates/be_main";
+@import "scss/templates/be_login";
+@import "scss/templates/be_confirm";
+@import "scss/templates/be_diff";
+@import "scss/templates/popup";
+@import "scss/templates/be_install";
+
+@import 'scss/partials/breadcrumbs';
+@import 'scss/partials/filters';
+@import 'scss/partials/top_buttons';
+@import 'scss/partials/fieldset';
+@import 'scss/partials/action_btns';
+//@import 'scss/partials/tooltip';
+@import 'scss/partials/form_elements';
+@import 'scss/partials/checkbox_radio';
+@import 'scss/partials/submit_btns';
+@import 'scss/partials/messages';
+@import 'scss/partials/modal';
+@import 'scss/partials/preloader';
+@import 'scss/partials/pagination';
+
+@import 'scss/widgets/chmod_table';
+@import 'scss/widgets/checkbox_radio_wizard';
+@import 'scss/widgets/code_editor';
+@import "scss/widgets/dropzone";
+@import 'scss/widgets/password';
+@import 'scss/widgets/datepicker';
+
+@import 'scss/views/empty_view';
+@import 'scss/views/tree_view';
+@import 'scss/views/list_view';
+@import 'scss/views/parent_view';
+@import 'scss/views/maintenance';
+@import 'scss/views/repository';
+
+
+/*
+@import 'scss/popup';
+
+
+
+@import "scss/widgets/colorpicker";
+
+@import "scss/widgets/mce";*/
+
+
+/*
+@import 'scss/partials/top_buttons';
+@import 'scss/partials/tree_view';
+@import 'scss/partials/list_view';
+
+@import 'scss/partials/checkbox_radio';
+
+@import 'scss/thirdparty/rsce';
+@import 'scss/thirdparty/isotope';*/

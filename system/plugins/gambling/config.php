@@ -6,7 +6,7 @@ if (TL_MODE == 'BE') {
 
 $GLOBALS['TL_CSS'][] = '/system/plugins/gambling/assets/css/main.css';
 
-/*
+
 array_insert_assoc($GLOBALS['NAVIGATION'], 1, 'casinos', [
     'label' => 'Casinos',
     'controller' => 'Grow\\Controllers\\ListingWithGroups',
@@ -35,7 +35,7 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 1, 'casinos', [
         ]
     ]
 ]);
-*/
+
 
 array_insert_assoc($GLOBALS['NAVIGATION'], 2, 'articles', [
     'label' => 'Articles',

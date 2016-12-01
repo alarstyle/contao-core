@@ -53,7 +53,7 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => 'countries,name,url,owner,year,licence,phone,email'
+		'default'                     => 'rating,countries,name,url,owner,year,licence,phone,email'
 	),
 
 	// Fields
@@ -119,6 +119,12 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['email'],
 			'inputType'               => 'text',
 			'sql'                     => "varchar(255) NOT NULL default ''"
+		),
+		'rating' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['rating'],
+			'inputType'               => 'rating',
+			'sql'                     => "float NULL"
 		)
 	)
 );

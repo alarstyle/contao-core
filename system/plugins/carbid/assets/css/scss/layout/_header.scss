@@ -1,0 +1,152 @@
+#header {
+    @extend .no-js-hidden;
+    @include abs-pos(0,0,0);
+    background: $headerBrColor;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    color: $headerTextColor;
+    font-weight: 300;
+    margin: 0;
+    height: $headerHeight;
+    width: auto;
+    z-index: 100;
+    a {
+        color: $headerTextColor;
+    }
+    h1 {
+        background: none;
+        border: 0;
+        border-radius: 0;
+        float: left;
+        font-size: 18px;
+        font-weight: normal;
+        letter-spacing: 1px;
+        margin: 0;
+        padding: 7px 0 0 12px;
+        small {
+            font-size: 10px;
+            font-weight: 300;
+            letter-spacing: 0;
+            opacity: 0.4;
+        }
+    }
+}
+
+#tmenu {
+    float: right;
+    font-size: 0;
+    font-weight: 300;
+    height: $headerHeight;
+    padding: 0 20px 0 0;
+}
+
+.tmenu-btn {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 4px;
+    position: relative;
+    height: 100%;
+    width: $headerHeight + 4px;
+    > span {
+        cursor: pointer;
+        display: block;
+        opacity: 0.5;
+        height: 100%;
+        width: 100%;
+    }
+    > b {
+        @include abs-pos(auto, 7px, 3px);
+        //background: #36c6d3;
+        background: $errorBgColor;
+        border-radius: 12px;
+        color: #fff;
+        cursor: pointer;
+        font-size: 10px;
+        font-weight: 300;
+        text-align: center;
+        padding: 0 3px;
+        height: 16px;
+        min-width: 16px;
+        line-height: 16px;
+        &:empty {
+            display: none;
+        }
+    }
+    > div {
+        @include abs-pos(auto, auto, 0);
+        background: #fff;
+        border-radius: 2px;
+        box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.22);
+        display: none;
+        font-size: 12px;
+        text-align: left;
+        padding: 10px;
+        width: 220px;
+        &:empty {
+            display: none !important;
+        }
+        &:after {
+            @include abs-pos(auto, -6px, 14px);
+            border-right: 6px solid transparent;
+            border-bottom: 6px solid #fff;
+            border-left: 6px solid transparent;
+            content: '';
+        }
+        > a {
+            display: block;
+        }
+    }
+    &:hover {
+        background-color: #3f4f62;
+        > span {
+            opacity: 1;
+        }
+        > div {
+            display: block;
+        }
+    }
+    &.tmenu-alerts {
+        > span {
+            @extend .iconTopMenuAlerts;
+        }
+        > div {
+            padding: 10px;
+            width: 500px;
+        }
+        .tl_permalert {
+            margin-bottom: 10px;
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+    &.tmenu-main {
+        > span {
+            @extend .iconTopMenuMain;
+        }
+        > div {
+            font-size: 14px;
+            padding: 0;
+            span {
+                display: block;
+            }
+            a {
+                background-position: 6px 50%;
+                color: #555 !important;
+                display: block;
+                padding: 8px 10px 8px 30px;
+                margin: 0;
+                &:hover {
+                    background-color: #e1e5ec;
+                }
+                &:first-child {
+                    border-radius: 2px 2px 0 0;
+                }
+                &:last-child {
+                    border-radius: 0 0 2px 2px;
+                }
+            }
+        }
+    }
+}

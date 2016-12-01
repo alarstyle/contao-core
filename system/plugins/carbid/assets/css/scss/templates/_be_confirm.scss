@@ -1,0 +1,111 @@
+.template-be_confirm {
+    background: $loginBodyBgColor;
+    #header {
+        left: 0;
+    }
+    #container {
+        text-align: center;
+        height: 100%;
+        &:after {
+            content: '';
+            display: inline-block;
+            vertical-align: middle;
+            height: 100%;
+        }
+    }
+    #main {
+        background: $loginMainBgColor;
+        border-radius: 7px;
+        display: inline-block;
+        vertical-align: middle;
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        font-size: 12px;
+        max-width: 98%;
+        margin: 0 auto;
+        padding: 10px 30px;
+        text-align: left;
+        width: 500px;
+        > p:first-child {
+            text-align: center;
+            img {
+                width: 100px;
+                height: 100px;
+            }
+        }
+        dl {
+            dd, dt {
+                padding-top: 4px;
+                padding-bottom: 4px;
+            }
+        }
+    }
+    .tl_formbody_edit {
+        > p:last-child {
+            text-align: center;
+        }
+    }
+    #link {
+
+    }
+}
+
+.template-be_confirm1 {
+
+    #main {
+
+        .tl_formbody_edit p:last-child {
+            text-align: center;
+            padding-top: 10px;
+            margin-bottom: 10px;
+        }
+        dl {
+            border: 1px solid rgba(255,255,255,.5);
+            border-radius: 5px;
+            padding: 9px 20px;
+            margin: 0 0 18px 0;
+            dd {
+                margin-left: 40px;
+            }
+        }
+        #link {
+            color: #000;
+            background: rgba(255,255,255,.9);
+            border-radius: 5px;
+            padding: 5px 10px;
+            border: 1px solid rgba(255,255,255,.9);
+        }
+    }
+
+    @media (max-width: 500px) {
+        display: block;
+
+        #container {
+            display: block;
+            margin: 0;
+            padding-bottom: 0;
+            height: 100%;
+        }
+        #main {
+            padding-left: 30px;
+            padding-right: 30px;
+            width: 100%;
+            min-height: 100%;
+            dl {
+                dt {
+                    float: none;
+                    width: auto;
+                    padding-bottom: 0;
+                }
+                dd {
+                    margin-left: 20px;
+                    float: none;
+                }
+            }
+
+        }
+    }
+}

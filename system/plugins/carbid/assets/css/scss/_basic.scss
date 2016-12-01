@@ -1,0 +1,60 @@
+body {
+    &:before {
+        @extend .preloader;
+        @include abs-pos(50%, 50%);
+        margin: -15px 0 0 -15px;
+        content: '';
+        .page_loaded & {
+            display: none;
+        }
+    }
+}
+
+.float-right {
+    float: right;
+}
+.float-left {
+    float: left
+}
+
+.no_js {
+    display: block;
+    text-align: center;
+    height: 100%;
+    &:after {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+    }
+    div {
+        font-size: 1.5rem;
+        display: inline-block;
+        vertical-align: middle;
+        max-width: 90%;
+        padding: 10px 0 90px 0;
+    }
+}
+
+#container {
+    padding: 0;
+    max-width: none;
+    width: auto;
+}
+
+#footer {
+    display: none;
+}
+
+h2.sub_headline {
+    display: none;
+}
+
+.collapsible_area {
+    display: block;
+}
+
+.invisible,
+.hidden {
+    display: none !important;
+}

@@ -1,0 +1,212 @@
+#left {
+    @extend .no-js-hidden;
+    @include abs-pos(0, $headerHeight, auto, 0);
+    background: $sidebarBgColor;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
+    float: none;
+    width: $sidebarWidth;
+    h1 {
+        display: none;
+    }
+    .debug-enabled & {
+        bottom: $debugbarHeight;
+    }
+    .ps-scrollbar-x-rail {
+        display: none !important;
+    }
+    .ps-scrollbar-y-rail {
+        background: rgba(255,255,255,0);
+        border-radius: 0 !important;
+        top: 0 !important;
+        width: 4px;
+        height: 100%;
+    }
+    .ps-container:hover > .ps-scrollbar-y-rail {
+        background: rgba(255,255,255,0.1);
+        opacity: 1 !important;
+    }
+    .ps-scrollbar-y {
+        background: rgba(0,0,0,.6);
+        width: 4px;
+    }
+}
+
+#tl_navigation {
+    height: 100%;
+    overflow: auto;
+    a {
+        font-weight: 300 !important;
+        letter-spacing: 0.2px;
+    }
+    ul {
+        &.tl_level_1 {
+            margin: 0 !important;
+            padding-bottom: 10px;
+        }
+        &.tl_level_2 {
+            padding: 0 0 10px 0 !important;
+        }
+    }
+    li {
+        display: block;
+        &.tl_level_1_group {
+            padding: 0 !important;
+            text-transform: uppercase;
+            position: relative;
+            a {
+                color: $sidebarGroupTextColor;
+                padding-left: 10px;
+                padding-right: 30px;
+            }
+            img {
+                @include abs-pos(auto,11px,15px);
+                border-bottom: 2px solid $sidebarGroupTextColor;
+                border-right: 2px solid $sidebarGroupTextColor;
+                height: 0;
+                width: 0;
+                padding: 6px 0 0 6px;
+                margin: 0;
+                &[src*="modMinus.gif"] {
+                    @include transform(rotate(-135deg) translate(-2px,-2px));
+                }
+                &[src*="modPlus.gif"] {
+                    @include transform(rotate(45deg));
+                }
+            }
+        }
+    }
+    a {
+        color: $sidebarTextColor;
+        display: block;
+        padding: 8px 10px 8px 37px;
+        background-position: 10px 50%;
+        line-height: 18px !important;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        position: relative;
+        &:before {
+            @include abs-pos(6px, 4px);
+            content: '';
+            opacity: 0.3;
+            height: 25px;
+            width: 25px;
+        }
+        &:hover {
+            background-color: $sidebarHoverBgColor;
+        }
+        &.active {
+            background-color: $sidebarActiveBgColor;
+            color: $sidebarActiveTextColor;
+            &:before {
+                opacity: 0.85;
+            }
+        }
+    }
+}
+
+%no_bg_image_important {
+    background-image: none !important;
+}
+
+a.navigation {
+    &.article {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_note;
+    }
+    &.news {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_clock;
+    }
+    &.calendar {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_calendar;
+    }
+    &.faq {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_support;
+    }
+    &.newsletter {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_envelope;
+    }
+    &.form {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_list;
+    }
+    &.comments {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_bubble;
+    }
+    &.themes {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_moustache;
+    }
+    &.page {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_globe;
+    }
+    &.tpl_editor {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_puzzle;
+    }
+    &.member {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_member;
+    }
+    &.mgroup {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_members;
+    }
+    &.user {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_user;
+    }
+    &.group {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_users;
+    }
+    &.files {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_layers;
+    }
+    &.log {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_book;
+    }
+    &.settings {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_wrench;
+    }
+    &.maintenance {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_cup;
+    }
+    &.undo {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_undo;
+    }
+    &.repository_catalog {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_drawer;
+    }
+    &.repository_manager {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_briefcase;
+    }
+    &.autoload {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_energy;
+    }
+    &.extension {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_chemistry;
+    }
+    &.labels {
+        @extend %no_bg_image_important;
+        @extend .icon_nav_tag;
+    }
+}

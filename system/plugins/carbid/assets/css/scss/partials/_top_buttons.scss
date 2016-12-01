@@ -1,0 +1,10 @@
+#tl_buttons {
+    margin: 10px 20px;
+    padding: 0;
+    a {
+        @extend .simpleBtnWhite;
+        background-position: 2px 50%;
+        margin: 0 0 0 10px;
+        padding-left: 20px !important;
+    }
+}

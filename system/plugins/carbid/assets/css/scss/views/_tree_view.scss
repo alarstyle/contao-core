@@ -1,0 +1,19 @@
+.tree_view {
+    background: $fieldsetBgColor;
+    border: 1px solid #dbe0e4;
+    border-radius: 4px;
+    padding: 20px;
+    //max-width: 840px;
+    .tree_view,
+    .list_view,
+    .parent_view {
+        background: none;
+        box-shadow: none;
+        padding: 0;
+        max-width: none;
+    }
+    .tl_listing {
+        margin: 0 !important;
+        width: auto;
+    }
+}

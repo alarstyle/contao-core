@@ -1,0 +1,45 @@
+#tl_ajaxOverlay {
+    position: fixed;
+    top: 0 !important;
+    background: #000;
+    -moz-opacity: .7;
+    opacity: 0.7;
+    z-index: 109;
+}
+#tl_ajaxBox {
+    background: #2c3642;
+    border: 0;
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,.4);
+    color: #fff;
+    font: inherit;
+    position: fixed;
+    top: 50% !important;
+    left: 50% !important;
+    margin-top: -40px;
+    margin-left: -100px;
+    line-height: 30px;
+    width: 230px !important;
+    z-index: 110;
+    &:after {
+        content: "";
+        width: 30px;
+        height: 30px;
+        float: right;
+        border-radius: 50%;
+        border: solid 2px rgba(255, 255, 255, 0.2);
+        border-top-color: #fff;
+        border-left-color: #fff;
+        -webkit-animation: spin 1s infinite linear;
+        animation: spin 1s infinite linear;
+    }
+}
+@-webkit-keyframes spin {
+    100% {
+        @include transform(rotate(360deg));
+    }
+}
+@keyframes spin {
+    100% {
+        @include transform(rotate(360deg));
+    }
+}

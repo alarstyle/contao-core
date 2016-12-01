@@ -1,0 +1,49 @@
+html {
+    background: $bodyBgColor;
+    box-sizing: border-box;
+    color: $bodyTextColor;
+    font: 14px Helvetica,Arial,sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    overflow-y: scroll;
+    height: 100%;
+    margin: 0 !important;
+}
+
+body {
+    background: inherit;
+    position: relative;
+    height: 100%;
+    overflow: visible !important;
+    margin-bottom: 0 !important;
+}
+
+* {
+    &,
+    &:before,
+    &:after {
+        box-sizing: inherit;
+    }
+}
+
+a, body, div, legend, li, ol, p, td, th, ul, fieldset, form, input, optgroup, select, textarea,
+label, h1, h2, h3, h4 {
+    color: inherit;
+    font: inherit;
+}
+
+a,
+input,
+select,
+textarea,
+button {
+    &:focus {
+        outline: none !important;
+    }
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+}

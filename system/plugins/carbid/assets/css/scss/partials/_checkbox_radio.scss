@@ -1,0 +1,54 @@
+input[type="checkbox"][data-styled="1"],
+input[type="radio"][data-styled="1"] {
+    cursor: pointer;
+    position: absolute !important;
+    top: auto !important;
+    opacity: 0;
+    margin: 0 !important;
+    width: 22px;
+    height: 22px;
+    z-index: 20;
+    + i {
+        border: 2px solid $btnBgColor;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0;
+        width: 22px;
+        height: 22px;
+        &:before {
+            border-left: 3px solid #fff;
+            border-bottom: 3px solid #fff;
+            content: '';
+            display: block;
+            visibility: hidden;
+            width: 13px;
+            height: 8px;
+        }
+    }
+    &:checked + i {
+        background: $btnBgColor;
+        &:before {
+            visibility: visible;
+        }
+    }
+}
+input[type="checkbox"][data-styled="1"] {
+    + i {
+        &:before {
+            @include transform(rotate(-45deg) translate(0px, 4px));
+        }
+    }
+
+}
+input[type="radio"][data-styled="1"] {
+    + i {
+        border-radius: 50%;
+        &:before {
+            @include transform(rotate(-45deg) translate(-1px, 4px));
+        }
+    }
+}
+input.tl_checkbox[data-styled="1"] + i,
+input.tl_radio[data-styled="1"] + i {
+    margin: -2px 4px 0 0;
+}

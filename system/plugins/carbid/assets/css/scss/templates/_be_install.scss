@@ -1,0 +1,96 @@
+.template-be_install {
+    #header,
+    #main {
+        position: relative;
+        top: auto;
+        right: auto;
+        bottom: auto;
+        left: auto;
+
+    }
+    #header {
+        margin-bottom: 20px;
+        h1 {
+            float: none;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+    }
+    #main {
+        margin: 0 auto;
+        max-width: 800px;
+        overflow: auto;
+    }
+    #container {
+
+    }
+    .tl_tbox,
+    .tl_box {
+        > div {
+            padding-top: 20px;
+            margin-bottom: 0;
+        }
+        h3 {
+            display: none;
+        }
+    }
+    .tl_tbox.nolegend {
+        padding: 20px !important;
+        h3 {
+            display: block;
+            padding: 0 !important;
+        }
+    }
+    .tl_submit_container {
+        margin: 0;
+    }
+}
+
+.template-be_install1 {
+    #menuToggler {
+        display: none;
+    }
+    #header h1 {
+        margin-left: 12px !important;
+    }
+    #container {
+        max-width: 760px;
+        padding: 0 10px;
+        margin: 0 auto;
+        h3 {
+            padding-top: 0;
+        }
+    }
+    #main {
+        margin: 0 auto;
+        padding: 60px 0 0 0;
+        float: none;
+    }
+    .tl_formbody_submit {
+        background: none;
+        bottom: auto !important;
+        padding: 0;
+        .tl_submit {
+            margin-left: -2px;
+        }
+    }
+    #container h2 {
+        background: url("../images/install.png") no-repeat 0 50%;
+        margin-top: 0;
+        padding: 13px 0 10px 50px;
+    }
+    #go_to_login a {
+        background: url("../images/login2.png") no-repeat 0 50%;
+        padding: 2px 0 2px 25px;
+        display: inline-block;
+        color: #fff;
+        opacity: 0.7;
+        &:hover {
+            opacity: 1;
+        }
+    }
+    .tl_submit_container {
+        padding: 0;
+        text-align: left;
+    }
+}

@@ -1,0 +1,52 @@
+.parent_view {
+    padding: 0;
+    margin: 20px;
+    //max-width: 840px;
+    > ul {
+        background: $fieldsetBgColor;
+        border-radius: 4px;
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+    }
+    .tree_view,
+    .list_view,
+    .parent_view {
+        background: none;
+        box-shadow: none;
+        padding: 0;
+        max-width: none;
+    }
+    .tl_header {
+        background: #3598dc;
+        border: 0;
+        border-radius: 4px 4px 0 0;
+        color: #fff;
+        padding: 20px;
+        margin: 0;
+        width: auto;
+    }
+    .tl_header_table {
+        padding: 0;
+        td {
+            padding-bottom: 5px;
+        }
+    }
+    .tl_content_header {
+        background: none;
+        font-size: 12px;
+        padding: 2px 8px;
+    }
+    .tl_content {
+        padding: 20px;
+        width: auto;
+    }
+    .cte_type {
+        font-size: 18px;
+        padding: 0 0 0 20px;
+        &.published {
+
+        }
+        &.unpublished {
+
+        }
+    }
+}

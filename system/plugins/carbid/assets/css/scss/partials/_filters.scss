@@ -1,0 +1,39 @@
+.tl_panel,
+.tl_version_panel {
+    background: $filtersBgColor;
+    border: 0;
+    font-size: 12px;
+    strong {
+        display: inline-block;
+        font-weight: normal;
+        vertical-align: middle;
+    }
+    .styled_select {
+        line-height: 14px;
+    }
+    .tl_select,
+    .tl_text {
+        box-sizing: border-box;
+        font-size: inherit !important;
+        margin-bottom: 0 !important;
+        height: 24px;
+    }
+    .tl_text {
+        padding-bottom: 5px !important;
+    }
+    .tl_img_submit {
+        @extend .simpleBtnWhite;
+        @extend .iconMiscFilter;
+        top: auto;
+        margin-top: -4px;
+        min-width: 0;
+        width: 30px;
+        height: 30px;
+    }
+}
+
+.tl_search {
+    .tl_text {
+        width: 80px;
+    }
+}

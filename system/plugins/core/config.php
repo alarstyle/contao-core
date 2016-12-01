@@ -296,7 +296,6 @@ $GLOBALS['BE_FFL'] = array
  * UNITS
  */
 $GLOBALS['UNITS'] = [
-
 	'text'           => 'Grow\\Units\\Text',
 	'password'       => 'Grow\\Units\\Password',
 	'textarea'       => 'Grow\\Units\\TextArea',
@@ -305,6 +304,7 @@ $GLOBALS['UNITS'] = [
     'checkboxWizard' => 'Grow\\Units\\CheckboxWizard',
     'radio'          => 'Grow\\Units\\Radio',
     'radioTable'     => 'Grow\\Units\\RadioTable',
+    'rating'         => 'Grow\\Units\\Rating',
 //    'inputUnit'      => 'Grow\\Units\\InputUnit',
 //    'trbl'           => 'Grow\\Units\\TrblField',
 //    'chmod'          => 'Grow\\Units\\ChmodTable',
@@ -776,5 +776,9 @@ $GLOBALS['COMPONENTS'] = [
     'unit-radio-table' => [
         '/system/plugins/core/assets/js/components/units/unit-radio-table.js',
         '/system/plugins/core/assets/js/components/units/unit-radio-table.html'
+    ],
+    'unit-rating' => [
+        '/system/plugins/core/assets/js/components/units/unit-rating.js',
+        '/system/plugins/core/assets/js/components/units/unit-rating.html'
     ]
 ];

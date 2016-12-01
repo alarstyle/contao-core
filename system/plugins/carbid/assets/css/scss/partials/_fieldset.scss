@@ -1,0 +1,170 @@
+.tl_tbox,
+.tl_box {
+    background: $fieldsetBgColor;
+    border: 1px solid #dbe0e4 !important;
+    border-radius: 4px;
+    padding: 0 !important;
+    margin: 0 0 25px 0 !important;
+    position: relative;
+    label {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 5px;
+        vertical-align: middle;
+        max-width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    label.error,
+    legend.error {
+        color: $errorBgColor;
+    }
+    /*
+    &>div,
+    &>div[id^="sub_"]>div {
+        margin-bottom: 21px !important;
+        position: relative;
+    }
+    h3 {
+        padding: 0 0 1px 0;
+        height: 17px;
+    }
+    .tl_error {
+        background: none !important;
+        color: #cd4237;
+        padding: 0 !important;
+        margin-bottom: 0;
+        box-shadow: none;
+    }
+    label {
+        display: inline-block;
+        vertical-align: middle;
+    }*/
+}
+
+div.tl_tbox {
+    padding: 20px !important;
+}
+
+fieldset.tl_tbox,
+fieldset.tl_box {
+    display: table-cell; // Fix for fieldset width, when content is wider
+    padding-top: 40px !important;
+    padding-bottom: 20px !important;
+    min-width: 0;
+    width: 100%;
+    &.nolegend {
+        padding-top: 10px !important;
+    }
+    .ie & {
+        display: block;
+    }
+    > legend {
+        @extend .disable-select;
+        @include abs-pos(0,0);
+        background: none !important;
+        border-bottom: 1px solid #e7eaec;
+        color: #434a54 !important;
+        display: block;
+        font-size: 16px;
+        padding: 0 20px !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        line-height: 40px;
+        height: 40px;
+        width: 100%;
+        &:after {
+            @include abs-pos(auto, 50%, 20px);
+            @include transform(rotate(135deg));
+            content: '';
+            border-bottom: 2px solid #c4c4c4;
+            border-left: 2px solid #c4c4c4;
+            width: 10px;
+            height: 10px;
+            margin-top: -3px;
+        }
+    }
+    > div {
+        padding: 0 20px;
+    }
+    .tl_error {
+        background: 0;
+        color: #e73d4a;
+        font-size: 11px;
+        box-shadow: none;
+        margin: 0;
+        height: auto;
+        padding: 1px 0;
+    }
+    &.collapsed {
+        padding-bottom: 0 !important;
+        > legend {
+            border: 0;
+            &:after {
+                @include transform(rotate(-45deg));
+                margin-top: -7px;
+            }
+        }
+    }
+}
+
+.tl_box,
+.tl_tbox,
+.tl_xpl {
+    h3 {
+        padding-bottom: 0;
+    }
+    // Found in template editor
+    > h3:first-child {
+        padding: 0;
+    }
+}
+
+.tl_checkbox_single_container {
+    white-space: nowrap;
+    padding: 1px 0 0 0;
+    label {
+        margin-bottom: 2px;
+        max-width: calc(100% - 30px);
+    }
+}
+
+.w50 {
+    height: auto;
+}
+
+.cbx {
+    height: 60px;
+    margin: 10px 0 0 0;
+}
+
+.m12 {
+    margin: 24px 0 0 0 !important;
+}
+
+.tl_help {
+    font-size: 11px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: auto;
+    &,
+    & a {
+        color: #AAB2BD;
+    }
+}
+
+.tl_xpl,
+.tl_formbody_edit {
+    padding: 0 20px;
+}
+
+@media (max-width: $smallWidth) {
+    .w50 {
+        float: none;
+        width: auto;
+    }
+}

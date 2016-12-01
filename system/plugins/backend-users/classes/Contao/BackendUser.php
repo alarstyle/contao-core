@@ -544,7 +544,7 @@ class BackendUser extends User
             ];
         }
 
-        if ($this->username === 'admin' && 0) {
+        if ($this->username === 'admin') {
             foreach ($GLOBALS['BE_MOD'] as $strGroupName=>$arrGroupModules)
             {
                 if (!empty($arrGroupModules) && ($strGroupName == 'system' || $this->hasAccess(array_keys($arrGroupModules), 'modules')))

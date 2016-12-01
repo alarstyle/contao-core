@@ -1,0 +1,28 @@
+ul.tl_listing {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    li {
+        margin-bottom: 10px;
+        min-height: 24px;
+        border-radius: 4px;
+        &.tl_folder_top,
+        &.tl_folder,
+        &.tl_file,
+        &.tl_file_list {
+            background: #fff;
+        }
+        &.tl_folder,
+        &.tl_file {
+            .tl_left>a img[src*='folMinus.gif'],
+            .tl_left>a img[src*='folPlus.gif'] {
+                position: absolute !important;
+                margin-left: -30px !important;
+            }
+        }
+    }
+    li.tl_folder,
+    li.tl_file,
+    li.parent ul {
+        margin-left: 32px;
+    }
+}

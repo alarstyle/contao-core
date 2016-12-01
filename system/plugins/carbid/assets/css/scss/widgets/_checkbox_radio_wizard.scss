@@ -1,0 +1,46 @@
+fieldset.tl_checkbox_container,
+fieldset.tl_radio_container {
+    margin: 15px 0 5px !important;
+    legend {
+        font-size: 12px;
+    }
+    label {
+        font-weight: normal;
+        margin: 8px 0 0;
+        padding: 0;
+    }
+    i {
+        margin-top: 8px !important;
+    }
+}
+
+fieldset.tl_checkbox_container {
+    .checkbox_toggler_first,
+    .checkbox_toggler {
+        line-height: 20px;
+        a {
+            display: inline-block;
+            vertical-align: middle;
+            margin: -4px 4px 0 0;
+        }
+        img {
+            vertical-align: middle;
+            position: static;
+            top: auto;
+            margin: 0;
+        }
+    }
+    .tl_checkbox_container {
+        padding-left: 30px;
+        margin: 0 0 10px 0 !important;
+    }
+}
+
+// SO FAR FOUND ON INSTALL PAGE
+div.tl_checkbox_container {
+    margin-top: 6px !important;
+    label {
+        margin: 0;
+        padding: 0;
+    }
+}

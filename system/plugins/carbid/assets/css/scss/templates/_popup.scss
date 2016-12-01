@@ -1,0 +1,24 @@
+body.popup {
+    //overflow: auto !important; // commented for file picker
+    background: none;
+    padding: 0;
+    .do-files & {
+        overflow: auto !important; // for files manager in popup
+    }
+    #container {
+        width: auto;
+    }
+    #main {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        bottom: auto !important;
+        overflow: auto;
+    }
+    #manager {
+        background: none;
+        text-align: center;
+        margin-top: 0;
+    }
+}

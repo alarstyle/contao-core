@@ -1,0 +1,47 @@
+.list_view {
+    background: $fieldsetBgColor;
+    border: 1px solid #dbe0e4;
+    border-radius: 4px;
+    padding: 20px;
+    //max-width: 840px;
+    .tree_view,
+    .list_view,
+    .parent_view {
+        background: none;
+        box-shadow: none;
+        padding: 0;
+        max-width: none;
+    }
+    table.tl_listing {
+        border-left: 1px solid #e7ecf1;
+        border-right: 1px solid #e7ecf1;
+        margin: 0 !important;
+        width: 100%;
+    }
+    th,
+    td {
+        background: #fff;
+        border-top: 1px solid #e7ecf1;
+        border-bottom: 1px solid #e7ecf1;
+        padding: 8px !important;
+    }
+    tr.odd {
+        background: #fbfcfd;
+    }
+    tr.even {
+        td {
+            background: #fff;
+        }
+    }
+    tr:hover {
+        td {
+            background: #eef1f5;
+        }
+    }
+    td.tl_folder_tlist,
+    td.tl_folder_list {
+        background: none !important;
+        padding: 2px 8px !important;
+        font-size: 12px;
+    }
+}

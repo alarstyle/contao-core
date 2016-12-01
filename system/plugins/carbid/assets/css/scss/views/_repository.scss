@@ -1,0 +1,12 @@
+.extension_container {
+    background: $fieldsetBgColor;
+    border: 1px solid #dbe0e4;
+    border-radius: 4px;
+    padding: 20px;
+    .extension {
+        margin: 0 0 10px;
+        &:last-child {
+            margin: 0;
+        }
+    }
+}
