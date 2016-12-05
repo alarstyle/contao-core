@@ -4,6 +4,10 @@ if (TL_MODE == 'BE') {
     $GLOBALS['TL_HOOKS']['parseBackendTemplate'][] = array('Gambling\\BackendHook', 'parseBackendTemplate');
 }
 
+\Contao\TemplateLoader::addFiles([
+    'be_posts'    => 'system/plugins/gambling/templates'
+]);
+
 $GLOBALS['TL_CSS'][] = '/system/plugins/gambling/assets/css/main.css';
 
 
@@ -39,7 +43,7 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 1, 'casinos', [
 
 array_insert_assoc($GLOBALS['NAVIGATION'], 2, 'articles', [
     'label' => 'Articles',
-    'controller' => 'Grow\\Controllers\\ListingWithGroups',
+    'controller' => 'Gambling\\Controllers\\Posts',
     'config' => [
         'group' => [
             'table' => 'tl_post_category',
@@ -79,7 +83,14 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 2, 'articles', [
                     $list[$i]['fields'][3] = \Gambling\BackendHelpers::getCountriesFlagsByIds($countriesIds);
                 }
                 return $list;
-            }
+            },
+            'whereCallback' => function() {
+                $groupId = \Contao\Input::post('groupId');
+                if (empty($groupId) || $groupId === 'all') {
+                    return '';
+                }
+                return 'category = ' . $groupId;
+            },
         ]
     ]
 ]);
@@ -111,3 +122,12 @@ array_insert_assoc($GLOBALS['NAVIGATION'], -1, 'countries', [
         ],
     ]
 ]);
+
+
+$GLOBALS['COMPONENTS']['unit-rating'] = [
+    '/system/plugins/gambling/assets/js/components/unit-rating.js',
+    '/system/plugins/gambling/assets/js/components/unit-rating.html'
+];
+
+
+$GLOBALS['UNITS']['rating'] = 'Gambling\\Units\\Rating';

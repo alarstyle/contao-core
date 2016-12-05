@@ -7,7 +7,7 @@
             <li v-for="option in options"
                 :key="option.value"
                 v-html="option.label || option.value"
-                :class="{selected: option.value === value ,disabled: option.disabled}"
+                :class="{selected: option.value === currentValue ,disabled: option.disabled}"
                 @click="optionClick(option)">
             </li>
         </ul>

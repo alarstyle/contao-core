@@ -162,9 +162,23 @@ class Organizer
     }
 
 
-    public function getSimpleList($limit = 20, $skip = 0, $where = '')
+    public function getSimpleList($limit = 20, $skip = 0, $where = [], $order='')
     {
-        $query = "SELECT * FROM " . $this->table . ' ' . $where;
+        if (!empty($where)) {
+            if (is_string($where)) {
+                $where = [$where];
+            }
+            $where = 'WHERE (' .implode(') AND (', $where) . ')';
+        }
+        else {
+            $where = '';
+        }
+
+        if ($order) {
+            $order = 'ORDER BY ' . $order;
+        }
+
+        $query = "SELECT * FROM " . $this->table . ' ' . $where . ' '. $order;
 
         $objRowStmt = $this->database->prepare($query);
         $objRowStmt->limit($limit, $skip);
@@ -180,8 +194,18 @@ class Organizer
     }
 
 
-    public function getList($limit = 20, $skip = 0, $where = '', $order= '')
+    public function getList($limit = 20, $skip = 0, $where = [], $order= '')
     {
+        if (!empty($where)) {
+            if (is_string($where)) {
+                $where = [$where];
+            }
+            $where = 'WHERE (' .implode(') AND (', $where) . ')';
+        }
+        else {
+            $where = '';
+        }
+
         if ($order) {
             $order = 'ORDER BY ' . $order;
         }
@@ -270,6 +294,10 @@ class Organizer
 
         foreach ($fieldsValues as $field => $value) {
             $unitClass = $this->getUnitClass($fieldsData[$field]['inputTypeNew'] ?: $fieldsData[$field]['inputType']);
+
+            if (empty($unitClass)) {
+                continue;
+            }
 
             /** @var AbstractUnit $unit */
             $unit = new $unitClass($this->table, $field);

@@ -2,6 +2,7 @@
 
 namespace Gambling;
 
+use Contao\BackendUser;
 use Contao\Database;
 use Contao\System;
 use Grow\ActionData;
@@ -39,7 +40,7 @@ class BackendHelpers
     }
 
 
-    public static function getCountriesForOptions()
+    public static function getCountriesForOptions($idsArr)
     {
         static::loadCountries();
 
@@ -47,6 +48,7 @@ class BackendHelpers
         $countries = [];
 
         foreach (static::$countries as $id=>$country) {
+            if (!empty($idsArr) && !in_array($id, $idsArr)) continue;
             $countries[$id] = $countriesNames[$country['code']];
         }
 
@@ -68,6 +70,28 @@ class BackendHelpers
         }
 
         return $countriesFlags;
+    }
+
+
+    public static function getUserAvailableCountries()
+    {
+        static::loadCountries();
+
+        $user = BackendUser::getInstance();
+
+        if ($user->admin) {
+            return array_keys(static::$countries);
+        }
+
+        return $user->countries;
+    }
+
+
+    public static function getUserAvailableCountriesForOptions()
+    {
+        $availableCountries = static::getUserAvailableCountries();
+
+        return static::getCountriesForOptions($availableCountries);
     }
 
 }

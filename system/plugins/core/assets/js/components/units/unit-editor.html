@@ -1,0 +1,7 @@
+    <div class="unit unit--editor" :class="unitClass">
+        <label class="unit-label">{{ label }}<span v-if="required">*</span>:</label>
+        <div ref="editor">
+            Click here to edit!
+        </div>
+        <div class="unit-hint">{{ error || hint }}</div>
+    </div>

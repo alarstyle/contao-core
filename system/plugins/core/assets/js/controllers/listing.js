@@ -1,6 +1,6 @@
 (function () {
 
-    var List = {
+    var Listing = {
 
         extends: AbstractApp,
 
@@ -55,10 +55,12 @@
 
             showList: function (filterData) {
                 var _this = this;
+                this.$root.locked = true;
                 grow.action('getList', filterData)
                     .then(function (response) {
-                        this.currentId = null;
-                        this.currentGroupId = null;
+                        _this.$root.locked = false;
+                        _this.currentId = null;
+                        _this.currentGroupId = null;
                         _this.listHeaders = response.data.data.headers;
                         _this.listItems = response.data.data.items;
                         _this.listCreatable = response.data.data.creatable;
@@ -301,6 +303,6 @@
 
     };
 
-    window.ExtendedVue = Vue.extend(List);
+    window.Listing = Vue.extend(Listing);
 
 }());

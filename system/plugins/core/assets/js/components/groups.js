@@ -57,8 +57,8 @@
             },
 
             newClick: function () {
-                var _this = this;
                 if (this.$root.locked) return;
+                var _this = this;
                 this.$root.confirmExitIfUnsaved(function() {
                     _this.active = null;
                     _this.$emit('new-group');

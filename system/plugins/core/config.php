@@ -1,13 +1,5 @@
 <?php
 
-/**
- * Contao Open Source CMS
- *
- * Copyright (c) 2005-2016 Leo Feyer
- *
- * @license LGPL-3.0+
- */
-
 
 /**
  * Back end modules
@@ -139,7 +131,7 @@ $GLOBALS['NAVIGATION'] = [
                     if (empty($groupId) || $groupId === 'all') {
                         return '';
                     }
-                    return ' WHERE groups LIKE \'%"' . $groupId . '"%\'';
+                    return 'groups LIKE \'%"' . $groupId . '"%\'';
                 },
                 'headersCallback' => function($headers) {
                     foreach($headers as &$header) {
@@ -304,7 +296,7 @@ $GLOBALS['UNITS'] = [
     'checkboxWizard' => 'Grow\\Units\\CheckboxWizard',
     'radio'          => 'Grow\\Units\\Radio',
     'radioTable'     => 'Grow\\Units\\RadioTable',
-    'rating'         => 'Grow\\Units\\Rating',
+    'editor'         => 'Grow\\Units\\Editor',
 //    'inputUnit'      => 'Grow\\Units\\InputUnit',
 //    'trbl'           => 'Grow\\Units\\TrblField',
 //    'chmod'          => 'Grow\\Units\\ChmodTable',
@@ -691,6 +683,7 @@ $GLOBALS['TL_MODELS']['tl_files'] = 'Contao\\Models\\FilesModel';
 $GLOBALS['TL_CSS'][] = '/system/plugins/core/assets/css/core.css';
 
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/Sortable.min.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/assets/tinymce/tinymce.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vue.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vue-router.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/plugins/vue-sortable.js';
@@ -777,8 +770,18 @@ $GLOBALS['COMPONENTS'] = [
         '/system/plugins/core/assets/js/components/units/unit-radio-table.js',
         '/system/plugins/core/assets/js/components/units/unit-radio-table.html'
     ],
-    'unit-rating' => [
-        '/system/plugins/core/assets/js/components/units/unit-rating.js',
-        '/system/plugins/core/assets/js/components/units/unit-rating.html'
+    'unit-editor' => [
+        '/system/plugins/core/assets/js/components/units/unit-editor.js',
+        '/system/plugins/core/assets/js/components/units/unit-editor.html'
+    ]
+];
+
+
+$GLOBALS['EDITOR_PRESETS'] = [
+    'minimal' => [
+        'toolbar' => 'bold italic | alignleft aligncenter alignright'
+    ],
+    'simple' => [
+        'toolbar' => 'bold italic | alignleft aligncenter alignright alignjustify | link unlink'
     ]
 ];

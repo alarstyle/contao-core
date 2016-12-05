@@ -1,6 +1,9 @@
     <div class="grid">
 
         <div class="column-2-10">
+            <?php $this->block('leftTop'); ?>
+            <?php $this->endblock(); ?>
+
             <groups
                 v-if="state === 'list' || state === 'edit_group'"
                 title="<?= $this->groupsTitle ?>"

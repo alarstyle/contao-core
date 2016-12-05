@@ -85,7 +85,7 @@ $GLOBALS['TL_DCA']['tl_post'] = array
 		'text' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_post']['text'],
-			'inputType'               => 'textarea',
+			'inputType'               => 'editor',
             'sql'                     => "mediumtext NULL"
 		),
         'img_preview' => [
@@ -109,8 +109,7 @@ $GLOBALS['TL_DCA']['tl_post'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_post']['category'],
             'inputType'               => 'select',
             'required'                => true,
-            //'options_callback'                 => ['tl_post', 'getCategoriesList'],
-            'foreignKey'              => 'tl_post_category.name',
+            'options_callback'        => ['tl_post', 'getCategoriesList'],
             'eval'                    => ['mandatory' => true],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ],
@@ -127,6 +126,9 @@ $GLOBALS['TL_DCA']['tl_post'] = array
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''"
         ),
+        'country' => [
+            'sql'                     => "int(10) NULL"
+        ]
 	)
 );
 
@@ -173,9 +175,12 @@ class tl_post extends \Contao\Backend
 	public function getCategoriesList()
     {
         $db = \Contao\Database::getInstance();
+        $session = \Contao\Session::getInstance();
 
-        $objRow = $db->prepare('SELECT * FROM tl_post_category')
-            ->execute();
+        $currentCountry = $session->get('postsCurrentCountry') ?: null;
+
+        $objRow = $db->prepare('SELECT * FROM tl_post_category WHERE country = ?')
+            ->execute($currentCountry);
 
         if ($objRow->numRows < 1) {
             return [];
@@ -186,8 +191,6 @@ class tl_post extends \Contao\Backend
         while ($objRow->next()) {
             $categories[$objRow->id] = $objRow->name;
         }
-
-        return [];
 
         return $categories;
     }

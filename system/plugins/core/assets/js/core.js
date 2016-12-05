@@ -34,10 +34,19 @@
             id: String,
             label: String,
             hint: String,
-            error: {type: String, default: null},
-            required: {type: Boolean, default: false},
+            error: {
+                type: String,
+                default: null
+            },
+            required: {
+                type: Boolean,
+                default: false
+            },
             value: {},
-            config: {}
+            config: {
+                type: [Array, Object],
+                default: function() {return {}}
+            }
         },
 
         data: function () {
@@ -192,11 +201,11 @@
         },
 
         initApp: function () {
-            var Vue = window.ExtendedVue || window.Vue.extend(AbstractApp);
+            var App = APP_DATA['jsAppClassName'] ? window[APP_DATA['jsAppClassName']] : window.ExtendedVue || window.Vue.extend(AbstractApp);
 
             var appData = _.defaults({initialized: false}, APP_DATA);
 
-            app = new Vue({
+            app = new App({
 
                 el: '#app',
 

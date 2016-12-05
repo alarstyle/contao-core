@@ -276,10 +276,13 @@ class BackendMain extends Backend
 		$this->Template->buildCacheText = Lang::get('MSC::buildCacheText');
 		$this->Template->buildCacheHref = $this->addToUrl('bic=1');
 		$this->Template->isPopup = Input::get('popup');
-		$this->Template->appData = ApplicationData::dataAsJson();
 
-        if ($this->jsFile) {
+        if (!empty($this->jsFile)) {
             $GLOBALS['TL_JAVASCRIPT'][] = $this->jsFile;
+        }
+
+        if (!empty($this->jsAppClassName)) {
+            ApplicationData::addData('jsAppClassName', $this->jsAppClassName);
         }
 
 		// Hide the cache message in the repository manager (see #5966)
@@ -306,6 +309,8 @@ class BackendMain extends Backend
 				}
 			}
 		}
+
+        $this->Template->appData = ApplicationData::dataAsJson();
 
 		$this->Template->output();
 	}

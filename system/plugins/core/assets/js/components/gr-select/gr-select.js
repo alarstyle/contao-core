@@ -1,6 +1,5 @@
 (function () {
 
-
     /**
      * options = [[value, label, disabled], ...]
      */
@@ -41,6 +40,7 @@
         watch: {
 
             value: function(value) {
+                if (this.currentValue === value) return;
                 this.currentValue = value;
                 this.setCurrentLabel();
             },

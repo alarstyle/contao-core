@@ -63,7 +63,10 @@ $GLOBALS['TL_DCA']['tl_post_category'] = array
             'required'                => true,
 			'eval'                    => array('mandatory'=>true, 'unique'=>true),
 			'sql'                     => "varchar(255) NOT NULL default ''"
-		)
+		),
+        'country' => [
+            'sql'                     => "int(10) NULL"
+        ]
 	)
 );
 

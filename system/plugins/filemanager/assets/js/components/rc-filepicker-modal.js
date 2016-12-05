@@ -47,6 +47,9 @@
 
             cancel: function () {
                 this.$refs.modal.close();
+                this.$root.$emit('filePickCanceled', {
+                    fieldId: this.fieldId
+                });
             }
 
         }

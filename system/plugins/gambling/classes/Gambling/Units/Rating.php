@@ -1,6 +1,8 @@
 <?php
 
-namespace Grow\Units;
+namespace Gambling\Units;
+
+use Grow\Units\AbstractUnit;
 
 class Rating extends AbstractUnit
 {

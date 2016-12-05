@@ -22,6 +22,9 @@ class ApplicationData
 
     public static function dataAsJson()
     {
+        if (empty(static::$globalData)) {
+            return '{}';
+        }
         return json_encode(static::$globalData);
     }
 
