@@ -41,7 +41,7 @@ class Pages extends GroupsEditing
     {
         $pages = [];
 
-        foreach ($this->groupOrganizer->getSimpleList(20, 0, ["type='regular'", "pid=1", "published=1"]) as $item) {
+        foreach ($this->groupOrganizer->getSimpleList(20, 0, ["type='regular'", "pid=1", "published=1"], 'sorting') as $item) {
             $pages[] = [
                 'id' => $item['id'],
                 'label' => $item['title'],

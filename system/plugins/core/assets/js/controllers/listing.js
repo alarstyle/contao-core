@@ -45,7 +45,7 @@
 
             loadGroups: function () {
                 var _this = this;
-                grow.action('getGroups')
+                this.action('getGroups')
                     .then(function (response) {
                         _this.groupsList = response.data.data.groups;
                         _this.groupsCreatable = response.data.data.creatable;
@@ -56,7 +56,7 @@
             showList: function (filterData) {
                 var _this = this;
                 this.$root.locked = true;
-                grow.action('getList', filterData)
+                this.action('getList', filterData)
                     .then(function (response) {
                         _this.$root.locked = false;
                         _this.currentId = null;
@@ -78,7 +78,7 @@
 
             editItem: function (id) {
                 var _this = this;
-                grow.action('getListItem', {id: id})
+                this.action('getListItem', {id: id})
                     .then(function (response) {
                         _this.currentId = id;
                         _this.formFields = response.data.data.fields;
@@ -102,7 +102,7 @@
                     _this.$refs.formSidebar ? _this.$refs.formSidebar.getValues() : []);
                 fieldsValues = JSON.parse(JSON.stringify(fieldsValues));
 
-                grow.action('saveItem', {id: _this.currentId, fields: fieldsValues})
+                this.action('saveItem', {id: _this.currentId, fields: fieldsValues})
                     .then(function (response) {
                         _this.locked = false;
                         if (response.data.success) {
@@ -130,7 +130,7 @@
 
                 this.$root.confirmDelete(function() {
                     _this.locked = true;
-                    grow.action('deleteItem', {id: id})
+                    _this.action('deleteItem', {id: id})
                         .then(function (response) {
                             _this.locked = false;
                             if (response.data.success) {
@@ -144,8 +144,7 @@
             },
 
             disableItem: function(id) {
-                var _this = this;
-                grow.action('disableItem', {id: id})
+                this.action('disableItem', {id: id})
                     .then(function (response) {
                         if (response.data.error) {
 
@@ -222,7 +221,7 @@
                 if (this.locked) return;
                 this.locked = true;
                 var _this = this;
-                grow.action('getGroup', {id: id})
+                this.action('getGroup', {id: id})
                     .then(function (response) {
                         _this.locked = false;
                         if (response.data.success) {
@@ -249,7 +248,7 @@
                 var fieldsValues = _this.$refs.form.getValues();
                 fieldsValues = JSON.parse(JSON.stringify(fieldsValues));
 
-                grow.action('saveGroup', {id: _this.currentGroupId, fields: fieldsValues})
+                this.action('saveGroup', {id: _this.currentGroupId, fields: fieldsValues})
                     .then(function (response) {
                         _this.locked = false;
                         if (response.data.success) {
@@ -276,7 +275,7 @@
                 this.$root.confirmDelete(function() {
                     _this.locked = true;
 
-                    grow.action('deleteGroup', {id: id})
+                    _this.action('deleteGroup', {id: id})
                         .then(function (response) {
                             _this.locked = false;
                             if (response.data.success) {

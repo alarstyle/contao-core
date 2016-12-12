@@ -98,7 +98,9 @@ abstract class Database
 
 			// Unset the reference (see #4772)
 			$strKey = md5(implode('', $this->arrConfig));
-			unset(static::$arrInstances[$strKey]);
+            if (isset(static::$arrInstances)) {
+                unset(static::$arrInstances[$strKey]);
+            }
 		}
 	}
 

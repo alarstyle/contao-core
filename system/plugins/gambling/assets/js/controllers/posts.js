@@ -16,12 +16,11 @@
             handleCountryChange: function(countryId) {
                 if (this.currentCountry === countryId) return;
 
-                this.locked = true;
                 var _this = this;
 
-                console.log(countryId);
+                this.locked = true;
 
-                grow.action('changeCountry', {countryId: countryId})
+                this.action('changeCountry', {countryId: countryId})
                     .then(function (response) {
                         _this.currentCountry = countryId;
                         _this.locked = false;

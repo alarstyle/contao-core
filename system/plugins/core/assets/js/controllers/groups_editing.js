@@ -28,7 +28,7 @@
 
             loadGroups: function () {
                 var _this = this;
-                grow.action('getGroups')
+                this.action('getGroups')
                     .then(function (response) {
                         if (response.data.success) {
                             // Setting data
@@ -52,7 +52,7 @@
 
             editGroup: function (id) {
                 var _this = this;
-                grow.action('getGroupsItem', {id: id})
+                this.action('getGroupsItem', {id: id})
                     .then(function (response) {
                         if (response.data.success) {
                             _this.formFields = response.data.data.fields;
@@ -82,7 +82,7 @@
                 var fieldsValues = _this.$refs.form.getValues();
                 fieldsValues = JSON.parse(JSON.stringify(fieldsValues));
 
-                grow.action('saveGroup', {id: _this.currentId, fields: fieldsValues})
+                this.action('saveGroup', {id: _this.currentId, fields: fieldsValues})
                     .then(function (response) {
                         _this.locked = false;
                         if (response.data.success) {
@@ -110,7 +110,7 @@
                 this.$root.confirmDelete(function() {
                     _this.locked = true;
 
-                    grow.action('deleteGroup', {id: id})
+                    _this.action('deleteGroup', {id: id})
                         .then(function (response) {
                             _this.locked = false;
                             if (response.data.success) {
