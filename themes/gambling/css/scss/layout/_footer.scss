@@ -1,0 +1,166 @@
+.footer {
+    background: #262a30;
+    color: #7d7f83;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    padding: 40px 0 50px;
+    text-align: center;
+    > div {
+        @extend .clearfix;
+    }
+    .logo {
+        display: block;
+    }
+    a {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    ul {
+        list-style: none;
+    }
+}
+
+.footer-casinos {
+    color: #fff;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+    li {
+        margin-bottom: 24px;
+    }
+}
+
+.footer-nav {
+    margin-bottom: 50px;
+    li {
+        margin-bottom: 24px;
+    }
+}
+
+.footer-social {
+    margin-bottom: 20px;
+    ul {
+        display: inline-block;
+        text-align: left;
+    }
+    li {
+        margin-bottom: 20px;
+    }
+    svg {
+        background: #31353b;
+        border-radius: 50%;
+        display: inline-block;
+        fill: #989a9d;
+        vertical-align: middle;
+        margin: -2px 14px 0 0;
+        width: 33px;
+        height: 33px;
+    }
+}
+
+.footer .lang {
+    margin-bottom: 30px;
+    .dropdown {
+        display: inline-block;
+    }
+    .dropdown-btn {
+        background: #2f3238;
+        border-radius: 3px;
+        color: #fff;
+        font-style: italic;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 18px;
+        position: relative;
+        width: 190px;
+    }
+}
+
+.footer-copyright {
+    clear: both;
+    text-align: center;
+}
+
+@media (min-width: $min-tablet-width) {
+    .footer {
+        padding-top: 50px;
+        text-align: left;
+        > div {
+            margin: 0 auto;
+            max-width: 600px;
+        }
+        .lang {
+            clear: right;
+            float: right;
+        }
+    }
+    .footer-casinos {
+        float: left;
+    }
+    .footer-nav {
+        float: left;
+    }
+    .footer-copyright {
+        br {
+            display: none;
+        }
+    }
+}
+
+@media (min-width: $min-tablet-width) and (max-width: $max-tablet-width) {
+    .footer-nav {
+        float: right;
+        width: 190px;
+        .lang {
+            margin-bottom: 50px;
+        }
+    }
+    .footer-social {
+        float: left;
+        clear: left;
+        padding-top: 5px;
+        margin-bottom: 50px;
+        ul {
+            display: block;
+        }
+        li {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 33px 0 0;
+        }
+    }
+}
+
+@media (min-width: $min-desktop-width) {
+    .footer {
+        padding-top: 70px;
+        > div {
+            max-width: 1120px;
+        }
+        .lang {
+            margin: 0;
+        }
+    }
+    .footer-casinos {
+        margin-right: 75px;
+        padding-top: 10px;
+        width: 270px;
+    }
+    .footer-nav {
+        margin-right: 25px;
+        padding-top: 10px;
+        width: 190px;
+    }
+    .footer-social {
+        padding-top: 6px;
+        li {
+            margin-bottom: 13px;
+        }
+    }
+    .footer-copyright {
+        clear: left;
+        float: left;
+        padding-top: 10px;
+    }
+}
+

@@ -277,10 +277,6 @@ class BackendMain extends Backend
 		$this->Template->buildCacheHref = $this->addToUrl('bic=1');
 		$this->Template->isPopup = Input::get('popup');
 
-        if (!empty($this->jsFile)) {
-            $GLOBALS['TL_JAVASCRIPT'][] = $this->jsFile;
-        }
-
         if (!empty($this->jsAppClassName)) {
             ApplicationData::addData('jsAppClassName', $this->jsAppClassName);
         }

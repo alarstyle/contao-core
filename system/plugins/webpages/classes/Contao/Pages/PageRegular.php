@@ -33,7 +33,7 @@ class PageRegular extends Frontend
 	/**
 	 * Generate a regular page
 	 *
-	 * @param \PageModel $objPage
+	 * @param \Contao\Models\PageModel $objPage
 	 * @param boolean    $blnCheckRequest
 	 */
 	public function generate($objPage, $blnCheckRequest=false)
@@ -185,12 +185,11 @@ class PageRegular extends Frontend
 		$this->Template->description = str_replace(array("\n", "\r", '"'), array(' ' , '', ''), $objPage->description);
 
 		// Body onload and body classes
-		$this->Template->onload = trim($objLayout->onload);
 		$this->Template->class = trim($objLayout->cssClass . ' ' . $objPage->cssClass);
 
 		// Execute AFTER the modules have been generated and create footer scripts first
 		$this->createFooterScripts($objLayout);
-		$this->createHeaderScripts($objPage, $objLayout);
+		//$this->createHeaderScripts($objPage, $objLayout);
 
 		// Print the template to the screen
 		$this->Template->output($blnCheckRequest);
@@ -280,29 +279,6 @@ class PageRegular extends Frontend
 				$this->Template->viewport = '<meta name="viewport" content="width=device-width,initial-scale=1.0">' . "\n";
 			}
 
-			// Wrapper
-			if ($objLayout->static)
-			{
-				$arrSize = deserialize($objLayout->width);
-
-				if (isset($arrSize['value']) && $arrSize['value'] != '' && $arrSize['value'] >= 0)
-				{
-					$arrMargin = array('left'=>'0 auto 0 0', 'center'=>'0 auto', 'right'=>'0 0 0 auto');
-					$strFramework .= sprintf('#wrapper{width:%s;margin:%s}', $arrSize['value'] . $arrSize['unit'], $arrMargin[$objLayout->align]);
-				}
-			}
-
-			// Header
-			if ($objLayout->rows == '2rwh' || $objLayout->rows == '3rw')
-			{
-				$arrSize = deserialize($objLayout->headerHeight);
-
-				if (isset($arrSize['value']) && $arrSize['value'] != '' && $arrSize['value'] >= 0)
-				{
-					$strFramework .= sprintf('#header{height:%s}', $arrSize['value'] . $arrSize['unit']);
-				}
-			}
-
 			$strContainer = '';
 
 			// Main column
@@ -311,28 +287,11 @@ class PageRegular extends Frontend
 				$strFramework .= sprintf('#container{%s}', substr($strContainer, 0, -1));
 			}
 
-			// Footer
-			if ($objLayout->rows == '2rwf' || $objLayout->rows == '3rw')
-			{
-				$arrSize = deserialize($objLayout->footerHeight);
-
-				if (isset($arrSize['value']) && $arrSize['value'] != '' && $arrSize['value'] >= 0)
-				{
-					$strFramework .= sprintf('#footer{height:%s}', $arrSize['value'] . $arrSize['unit']);
-				}
-			}
-
 			// Add the layout specific CSS
 			if ($strFramework != '')
 			{
 				$this->Template->framework = Template::generateInlineStyle($strFramework) . "\n";
 			}
-		}
-
-		// Overwrite the viewport tag (see #6251)
-		if ($objLayout->viewport != '')
-		{
-			$this->Template->viewport = '<meta name="viewport" content="' . $objLayout->viewport . '">' . "\n";
 		}
 
 		$this->Template->mooScripts = '';
@@ -347,54 +306,6 @@ class PageRegular extends Frontend
 		{
 			$arrAppendJs = array();
 			$GLOBALS['TL_JAVASCRIPT'] = array();
-		}
-
-		// jQuery scripts
-		if ($objLayout->addJQuery)
-		{
-			if ($objLayout->jSource == 'j_googleapis' || $objLayout->jSource == 'j_fallback')
-			{
-				$this->Template->mooScripts .= Template::generateScriptTag('https://code.jquery.com/jquery-' . $GLOBALS['TL_ASSETS']['JQUERY'] . '.min.js') . "\n";
-
-				// Local fallback (thanks to DyaGa)
-				if ($objLayout->jSource == 'j_fallback')
-				{
-					$this->Template->mooScripts .= Template::generateInlineScript('window.jQuery || document.write(\'<script src="' . TL_ASSETS_URL . 'assets/jquery/core/' . $GLOBALS['TL_ASSETS']['JQUERY'] . '/jquery.min.js">\x3C/script>\')') . "\n";
-				}
-			}
-			else
-			{
-				$GLOBALS['TL_JAVASCRIPT'][] = 'assets/jquery/core/' . $GLOBALS['TL_ASSETS']['JQUERY'] . '/jquery.min.js|static';
-			}
-		}
-
-		// MooTools scripts
-		if ($objLayout->addMooTools)
-		{
-			if ($objLayout->mooSource == 'moo_googleapis' || $objLayout->mooSource == 'moo_fallback')
-			{
-				if (version_compare($GLOBALS['TL_ASSETS']['MOOTOOLS'], '1.5.1', '>'))
-				{
-					$this->Template->mooScripts .= Template::generateScriptTag('https://ajax.googleapis.com/ajax/libs/mootools/' . $GLOBALS['TL_ASSETS']['MOOTOOLS'] . '/mootools.min.js') . "\n";
-				}
-				else
-				{
-					$this->Template->mooScripts .= Template::generateScriptTag('https://ajax.googleapis.com/ajax/libs/mootools/' . $GLOBALS['TL_ASSETS']['MOOTOOLS'] . '/mootools-yui-compressed.js') . "\n";
-				}
-
-				// Local fallback (thanks to DyaGa)
-				if ($objLayout->mooSource == 'moo_fallback')
-				{
-					$this->Template->mooScripts .= Template::generateInlineScript('window.MooTools || document.write(\'<script src="' . TL_ASSETS_URL . 'assets/mootools/core/' . $GLOBALS['TL_ASSETS']['MOOTOOLS'] . '/mootools-core.js">\x3C/script>\')') . "\n";
-				}
-
-				$GLOBALS['TL_JAVASCRIPT'][] = 'assets/mootools/core/' . $GLOBALS['TL_ASSETS']['MOOTOOLS'] . '/mootools-more.js|static';
-				$GLOBALS['TL_JAVASCRIPT'][] = 'assets/mootools/core/' . $GLOBALS['TL_ASSETS']['MOOTOOLS'] . '/mootools-mobile.js|static';
-			}
-			else
-			{
-				$GLOBALS['TL_JAVASCRIPT'][] = 'assets/mootools/core/' . $GLOBALS['TL_ASSETS']['MOOTOOLS'] . '/mootools.js|static';
-			}
 		}
 
 		// Load MooTools core for the debug bar (see #5195)

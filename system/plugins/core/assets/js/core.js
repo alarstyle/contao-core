@@ -58,6 +58,7 @@
         computed: {
             unitClass: function () {
                 var c = this.config.class ? [this.config.class] : [];
+                c.push('id_' + this.id);
                 if (this.error) {
                     c.push('unit--error');
                 }
@@ -81,6 +82,9 @@
         },
 
         methods: {
+            softReset: function() {
+                this.currentValue = this.value;
+            },
             reset: function () {
                 var _this = this;
                 this.currentValue = 'reseting_' + Date.now();

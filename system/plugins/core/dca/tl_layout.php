@@ -97,15 +97,14 @@ $GLOBALS['TL_DCA']['tl_layout'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array('rows', 'cols', 'addJQuery', 'addMooTools', 'static'),
-		'default'                     => '{title_legend},name;{header_legend},rows;{column_legend},cols;{sections_legend:hide},sections,sPosition;{webfonts_legend:hide},webfonts;{style_legend},stylesheet,external,loadingOrder;{feed_legend:hide},newsfeeds;{modules_legend},modules;{expert_legend:hide},template,viewport,titleTag,cssClass,onload,head;{jquery_legend},addJQuery;{mootools_legend},addMooTools;{script_legend:hide},analytics,script;{static_legend},static'
+		'default'                     => '{title_legend},name;{sections_legend:hide},sections,sPosition;{feed_legend:hide},newsfeeds;{modules_legend},modules;',
+		'default1'                    => '{title_legend},name;{sections_legend:hide},sections,sPosition;{feed_legend:hide},newsfeeds;{modules_legend},modules;{expert_legend:hide},template,titleTag,cssClass',
+		'defaultOld'                  => '{title_legend},name;{sections_legend:hide},sections,sPosition;{webfonts_legend:hide},webfonts;{style_legend},stylesheet,external,loadingOrder;{feed_legend:hide},newsfeeds;{modules_legend},modules;{expert_legend:hide},template,viewport,titleTag,cssClass,onload,head;{jquery_legend},addJQuery;{mootools_legend},addMooTools;{script_legend:hide},analytics,script;{static_legend},static'
 	),
 
 	// Subpalettes
 	'subpalettes' => array
 	(
-		'rows_2rwh'                   => 'headerHeight',
-		'rows_2rwf'                   => 'footerHeight',
-		'rows_3rw'                    => 'headerHeight,footerHeight',
 		'cols_2cll'                   => 'widthLeft',
 		'cols_2clr'                   => 'widthRight',
 		'cols_3cl'                    => 'widthLeft,widthRight',
@@ -152,24 +151,6 @@ $GLOBALS['TL_DCA']['tl_layout'] = array
 			'eval'                    => array('helpwizard'=>true, 'cols'=>4, 'submitOnChange'=>true),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_layout'],
 			'sql'                     => "varchar(8) NOT NULL default ''"
-		),
-		'headerHeight' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_layout']['headerHeight'],
-			'exclude'                 => true,
-			'inputType'               => 'inputUnit',
-			'options'                 => $GLOBALS['TL_CSS_UNITS'],
-			'eval'                    => array('includeBlankOption'=>true, 'rgxp'=>'digit', 'tl_class'=>'w50'),
-			'sql'                     => "varchar(255) NOT NULL default ''"
-		),
-		'footerHeight' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_layout']['footerHeight'],
-			'exclude'                 => true,
-			'inputType'               => 'inputUnit',
-			'options'                 => $GLOBALS['TL_CSS_UNITS'],
-			'eval'                    => array('includeBlankOption'=>true, 'rgxp'=>'digit', 'tl_class'=>'w50'),
-			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
 		'cols' => array
 		(
@@ -458,6 +439,7 @@ $GLOBALS['TL_DCA']['tl_layout'] = array
  * @author Leo Feyer <https://github.com/leofeyer>
  */
 use Contao\Image;
+use Contao\Input;
 use Contao\PluginLoader;
 
 class tl_layout extends Contao\Backend

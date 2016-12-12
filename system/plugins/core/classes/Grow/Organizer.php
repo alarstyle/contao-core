@@ -72,6 +72,8 @@ class Organizer
             $fieldsValues[$fieldName] = $fieldData['default'];
         }
 
+        $this->doSaveCallbacks($fieldsValues);
+
         $objInsertStmt = $this->database->prepare("INSERT INTO " . $this->table . " %s")
             ->set($fieldsValues)
             ->execute();
@@ -98,6 +100,8 @@ class Organizer
         }
 
         $valuesArr[] = $id;
+
+        $this->doSaveCallbacks($fieldsValues, $id);
 
         $statement = $this->database->prepare("UPDATE " . $this->table . " SET " . $fieldsStr . " WHERE id=?")
             ->execute($valuesArr);
@@ -407,5 +411,31 @@ class Organizer
 
         return $fields;
     }
+
+
+    protected function doSaveCallbacks($fieldsValues, $id = null)
+    {
+        $tableFieldsData = $GLOBALS['TL_DCA'][$this->table]['fields'];
+
+        foreach($fieldsValues as $fieldName=>$fieldValue) {
+            if (!is_array($tableFieldsData[$fieldName]['save_callback_new'])) continue;
+            foreach ($tableFieldsData[$fieldName]['save_callback_new'] as $callback)
+            {
+                try
+                {
+                    if (is_callable($callback))
+                    {
+                        $fieldValue = call_user_func($callback, $fieldValue, $id);
+                    }
+                }
+                catch (\Exception $e)
+                {
+//                    $objEditor->class = 'error';
+//                    $objEditor->addError($e->getMessage());
+                }
+            }
+        }
+    }
+
 
 }

@@ -1,0 +1,95 @@
+.casinos_promo {
+    background: #2cc379;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    &:before {
+        background: url('../images/casinos_promo-mobile.svg') no-repeat 50% 50% / 550px auto;
+        content: '';
+        position: absolute;
+    }
+    .content_block {
+        position: relative;
+    }
+}
+.casinos_promo-title {
+    font: bold 24px/1.35 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.casinos_promo-text {
+    font-size: 16px;
+}
+
+@media (max-width: $max-mobile-width) {
+    .casinos_promo {
+        background: none;
+        &:before {
+            background-color: #2cc379;
+            top: 0;
+            left: 0;
+            height: 334px;
+            width: 100%;
+        }
+        .content_block {
+            max-width: none;
+            padding-bottom: 0;
+        }
+    }
+    .casinos_promo-title {
+        text-align: center;
+        margin: 0 auto 90px;
+        max-width: 400px;
+        min-height: 60px;
+        padding: 0 30px;
+    }
+    .casinos_promo-text {
+        background: #fff;
+        color: #242a2e;
+        padding: 25px 28px;
+        min-height: 200px;
+    }
+}
+
+
+@media (min-width: $min-tablet-width) {
+    .casinos_promo {
+        padding: 10px 30px;
+        &:before {
+            left: 50%;
+            bottom: 20px;
+            height: 370px;
+            width: 550px;
+        }
+    }
+    .casinos_promo-title {
+        font-size: 32px;
+        margin-bottom: 10px;
+        width: 360px;
+    }
+    .casinos_promo-text {
+        width: 460px;
+    }
+}
+
+
+@media (min-width: $min-desktop-width) {
+    .casinos_promo {
+        padding-top: 95px;
+        padding-bottom: 70px;
+        &:before {
+            margin-left: 180px;
+            bottom: 30px;
+        }
+        .content_block {
+            max-width: 1150px;
+        }
+    }
+    .casinos_promo-title {
+        font-size: 36px;
+        width: auto;
+    }
+    .casinos_promo-text {
+        width: 750px;
+    }
+}

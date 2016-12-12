@@ -1,6 +1,6 @@
 (function () {
 
-    var List = {
+    var GroupsEditing = {
 
         extends: AbstractApp,
 
@@ -141,6 +141,6 @@
 
     };
 
-    window.ExtendedVue = Vue.extend(List);
+    window.GroupsEditing = Vue.extend(GroupsEditing);
 
 }());

@@ -1182,9 +1182,11 @@ class tl_page extends Contao\Backend
 	 *
 	 * @return string
 	 */
-	public function getPageTypes(DataContainer $dc)
+	public function getPageTypes(\Contao\DataContainer $dc = null)
 	{
 		$arrOptions = array();
+
+        if (!$dc) return $arrOptions;
 
 		foreach (array_keys($GLOBALS['TL_PTY']) as $pty)
 		{

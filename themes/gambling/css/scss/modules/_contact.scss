@@ -1,0 +1,52 @@
+.contact {
+    background: #fff;
+    padding: 0 0 20px;
+}
+
+.contact-title {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.contact-submit {
+    text-align: right;
+    padding-top: 10px;
+}
+
+@media (max-width: $max-mobile-width) {
+    .contact {
+        .btn {
+            display: block;
+            width: 100%;
+        }
+    }
+}
+
+@media (min-width: $min-tablet-width) {
+    .contact {
+        padding: 20px 0;
+    }
+    .contact-name,
+    .contact-email {
+        float: left;
+        width: 50%;
+    }
+    .contact-name {
+        padding-right: 14px;
+    }
+    .contact-email {
+        padding-left: 14px;
+    }
+    .contact-message {
+        clear: both;
+        padding-top: 5px;
+    }
+}
+
+@media (min-width: $min-desktop-width) {
+    .contact {
+        padding: 20px 0 40px;
+    }
+}

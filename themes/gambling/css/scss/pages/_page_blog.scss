@@ -1,0 +1,15 @@
+.page_blog {
+    .submenu,
+    .breadcrumbs,
+    .news {
+        @extend .add_line;
+    }
+    .promotions {
+        @extend .add_line_end;
+    }
+    .news {
+        .content_block {
+            padding-top: 0;
+        }
+    }
+}

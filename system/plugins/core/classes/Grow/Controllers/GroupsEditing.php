@@ -20,11 +20,13 @@ class GroupsEditing extends \Contao\Controllers\BackendMain
         'deleteGroup' => 'ajaxDeleteGroup'
     ];
 
+    protected $tplName = 'be_groups_editing';
+
     protected $config = [];
 
     protected $groupTable = null;
 
-    protected $jsFile = '/system/plugins/core/assets/js/controllers/groups_editing.js';
+    protected $jsAppClassName = 'GroupsEditing';
 
     protected $groupOrganizer;
 
@@ -41,13 +43,15 @@ class GroupsEditing extends \Contao\Controllers\BackendMain
 
         $this->groupOrganizer = new Organizer($this->groupTable);
 
+        $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/controllers/groups_editing.js';
+
         parent::__construct();
     }
 
 
     protected function generateMainSection()
     {
-        $objTemplate = new BackendTemplate('be_groups_editing');
+        $objTemplate = new BackendTemplate($this->tplName);
         $objTemplate->groupsTitle = $this->config['group']['title'];
         $objTemplate->groupsNew = $this->config['group']['labelNew'];
 

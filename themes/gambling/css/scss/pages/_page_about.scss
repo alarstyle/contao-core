@@ -1,0 +1,18 @@
+.page_about {
+    .content_block {
+
+    }
+}
+
+@media (min-width: $min-desktop-width) {
+    .page_about {
+        .content_block {
+            max-width: 760px + 40px;
+        }
+        .breadcrumbs {
+            ul {
+                max-width: 760px;
+            }
+        }
+    }
+}

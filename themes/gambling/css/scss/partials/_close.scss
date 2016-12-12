@@ -1,0 +1,35 @@
+.close {
+    @extend .disable-select;
+    color: #2d3235;
+    cursor: pointer;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    b {
+        @include transform(rotate(45deg));
+        display: block;
+        margin: 10px 0 0 10px;
+        position: relative;
+        width: 20px;
+        height: 20px;
+        &:before,
+        &:after {
+            background: currentColor;
+            border-radius: 2px;
+            content: '';
+            position: absolute;
+        }
+        &:before {
+            width: 2px;
+            height: 100%;
+            left: 50%;
+            margin-left: -1px;
+        }
+        &:after {
+            width: 100%;
+            height: 2px;
+            top: 50%;
+            margin-top: -1px;
+        }
+    }
+}

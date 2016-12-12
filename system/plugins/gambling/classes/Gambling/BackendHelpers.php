@@ -40,7 +40,7 @@ class BackendHelpers
     }
 
 
-    public static function getCountriesForOptions($idsArr)
+    public static function getCountriesForOptions($idsArr = null)
     {
         static::loadCountries();
 

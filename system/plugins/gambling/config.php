@@ -4,8 +4,22 @@ if (TL_MODE == 'BE') {
     $GLOBALS['TL_HOOKS']['parseBackendTemplate'][] = array('Gambling\\BackendHook', 'parseBackendTemplate');
 }
 
+$GLOBALS['TL_HOOKS']['beforeGetPageIdFromUrl'][] = array('Gambling\\BackendHook', 'beforeGetPageIdFromUrl');
+$GLOBALS['TL_HOOKS']['generatePage'][] = array('Gambling\\FrontendHook', 'generatePage');
+
+/**
+ * Frontend only
+ */
+if (TL_MODE == 'FE') {
+    $GLOBALS['TL_HOOKS']['initializeSystem'][] = array('Gambling\\FrontendHook', 'initializeSystem');
+}
+
+$GLOBALS['TL_MODELS']['tl_country'] = 'Gambling\\Models\\CountryModel';
+
 \Contao\TemplateLoader::addFiles([
-    'be_posts'    => 'system/plugins/gambling/templates'
+    'be_posts'    => 'system/plugins/gambling/templates',
+    'be_casinos'  => 'system/plugins/gambling/templates',
+    'be_pages'  => 'system/plugins/gambling/templates'
 ]);
 
 $GLOBALS['TL_CSS'][] = '/system/plugins/gambling/assets/css/main.css';
@@ -13,7 +27,7 @@ $GLOBALS['TL_CSS'][] = '/system/plugins/gambling/assets/css/main.css';
 
 array_insert_assoc($GLOBALS['NAVIGATION'], 1, 'casinos', [
     'label' => 'Casinos',
-    'controller' => 'Grow\\Controllers\\ListingWithGroups',
+    'controller' => 'Gambling\\Controllers\\Casinos',
     'config' => [
         'group' => [
             'table' => 'tl_casino_category',
@@ -120,6 +134,27 @@ array_insert_assoc($GLOBALS['NAVIGATION'], -1, 'countries', [
                 return $groups;
             }
         ],
+    ]
+]);
+
+
+
+array_insert_assoc($GLOBALS['NAVIGATION'], 3, 'pages', [
+    'label' => 'Website Structure',
+    'controller' => 'Gambling\\Controllers\\Pages',
+    'config' => [
+        'group' => [
+            'table' => 'tl_page',
+            'title' => 'Pages',
+            'creatable' => false,
+            'editable' => false,
+            'labelCallback' => function ($item) {
+                return $item['name'];
+            },
+            'titleCallback' => function ($item) {
+                return $item['name'];
+            }
+        ]
     ]
 ]);
 

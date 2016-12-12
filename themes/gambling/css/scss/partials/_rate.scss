@@ -1,0 +1,53 @@
+.rate {
+    font-size: 14px;
+    white-space: nowrap;
+    div {
+        background: url('../images/rate.png') repeat-x 0 0 / 17px auto;
+        display: inline-block;
+        vertical-align: middle;
+        width: 170px;
+        height: 15px;
+        margin: -2px 7px 0 0;
+    }
+    b {
+        background: url('../images/rate.png') repeat-x 0 100% / 17px auto;
+        display: block;
+        height: 100%;
+        width: 0;
+    }
+    span {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
+.rate_small {
+    @extend .rate;
+}
+
+.rate_large {
+    @extend .rate;
+    div {
+        height: 17px;
+        width: 230px;
+    }
+    div,
+    b {
+        background-image: url('../images/rate_large.png');
+        background-size: 23px auto;
+    }
+}
+
+@media (max-width: $max-mobile-width) {
+    .rate_small {
+        div {
+            width: 150px;
+            height: 13px;
+            margin: -2px 7px 0 0;
+        }
+        div,
+        b {
+            background-size: 15px auto;
+        }
+    }
+}

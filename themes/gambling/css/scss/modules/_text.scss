@@ -1,0 +1,57 @@
+.text {
+    line-height: 1.7;
+    .content_block {
+        padding-top: 0;
+    }
+    h1 {
+        font: 22px/1.6 'Montserrat', sans-serif;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+    h2 {
+        font-size: 18px;
+        letter-spacing: 0.5px;
+        margin-bottom: 16px;
+        &:not(:first-child) {
+            margin-top: 35px;
+        }
+    }
+    h3 {
+
+    }
+    a {
+        color: #c33e3e;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    p,
+    ul {
+        margin-bottom: 25px;
+    }
+    ul {
+        list-style: disc;
+        padding-left: 25px;
+    }
+    li {
+        margin-bottom: 10px;
+    }
+}
+
+@media (min-width: $min-tablet-width) {
+    .text {
+        font-size: 16px;
+        line-height: 1.8;
+        h1 {
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+        h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        ul {
+            padding-left: 45px;
+        }
+    }
+}

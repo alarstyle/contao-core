@@ -884,3 +884,11 @@ function nl2br_callback($matches)
 {
 	return str_replace("\n", '<br>', $matches[0]);
 }
+
+
+function render_template($strTemplate, $objData = null)
+{
+    $objTemplate = new \Contao\FrontendTemplate($strTemplate);
+    $objTemplate->data = $objData;
+    return $objTemplate->parse();
+}

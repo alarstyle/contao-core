@@ -42,7 +42,7 @@ $GLOBALS['TL_DCA']['tl_country'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => 'country, language'
+		'default'                     => 'country, language, fallback'
 	),
 
 	// Fields
@@ -59,7 +59,6 @@ $GLOBALS['TL_DCA']['tl_country'] = array
         'country' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_country']['country'],
-            'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => ['tl_country', 'getCountriesAsOptions'],
             'required'                => true,
@@ -69,37 +68,21 @@ $GLOBALS['TL_DCA']['tl_country'] = array
         'language' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_country']['language'],
-            'exclude'                 => true,
             'inputType'               => 'select',
             'required'                => true,
 			'options'                 => \Contao\System::getLanguages(),
             'eval'                    => array('mandatory'=>true),
 			'sql'                     => "varchar(5) NOT NULL default ''"
         ),
-		'name' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_country']['name'],
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'flag'                    => 1,
-			'inputType'               => 'text',
-            'required'                => true,
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>64, 'tl_class'=>'w50'),
-			'sql'                     => "varchar(64) NOT NULL default ''"
-		),
-		'short_name' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_country']['short_name'],
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'flag'                    => 1,
-			'inputType'               => 'text',
-            'required'                => true,
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>64, 'tl_class'=>'w50'),
-			'sql'                     => "varchar(64) NOT NULL default ''"
-		)
+        'fallback' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_country']['fallback'],
+            'inputType'               => 'checkbox',
+            'save_callback_new' => [
+                ['tl_country', 'fallbackReset']
+            ],
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
 	)
 );
 
@@ -432,4 +415,25 @@ class tl_country extends \Contao\Backend
 
         return $countries;
     }
+
+
+    public function fallbackReset($value, $id)
+    {
+        if ($value == 1) {
+
+            $database = \Contao\Database::getInstance();
+
+            if ($id) {
+                $statement = $database->prepare("UPDATE tl_country SET fallback = 0 WHERE id <> ?")
+                    ->execute(intval($id));
+            } else {
+                $database->prepare("UPDATE tl_country SET fallback = 0")
+                    ->execute();
+            }
+
+        }
+
+        return $value;
+    }
+
 }

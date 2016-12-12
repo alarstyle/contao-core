@@ -1,16 +1,11 @@
-<div class="unit unit--text" :class="unitClass">
+<div class="unit unit--rating" :class="unitClass">
     <label class="unit-label">{{ label }}<span v-if="required">*</span>:</label>
     <ul>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
+        <li class="rating_star"
+            v-for="n in 20"
+            @click="starClick(n)"
+            :class="{active: isActive(n)}"><icon name="star"></icon></li>
+        <li>{{ currentValue ? currentValue.toFixed(1) : '' }}</li>
     </ul>
     <div class="unit-hint">{{ error || hint }}</div>
 </div>

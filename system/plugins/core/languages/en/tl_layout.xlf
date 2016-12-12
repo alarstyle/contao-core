@@ -44,18 +44,6 @@
       <trans-unit id="tl_layout.3rw.1">
         <source>Show a header above and a footer below the main row.</source>
       </trans-unit>
-      <trans-unit id="tl_layout.headerHeight.0">
-        <source>Header height</source>
-      </trans-unit>
-      <trans-unit id="tl_layout.headerHeight.1">
-        <source>Please enter the height of the page header.</source>
-      </trans-unit>
-      <trans-unit id="tl_layout.footerHeight.0">
-        <source>Footer height</source>
-      </trans-unit>
-      <trans-unit id="tl_layout.footerHeight.1">
-        <source>Please enter the height of the page footer.</source>
-      </trans-unit>
       <trans-unit id="tl_layout.cols.0">
         <source>Columns</source>
       </trans-unit>

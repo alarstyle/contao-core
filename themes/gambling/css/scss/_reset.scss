@@ -1,0 +1,263 @@
+html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header, menu, nav, section, time, mark, audio, video, details, summary, a {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+html {
+    box-sizing: border-box;
+    line-height: 1.2;
+    overflow-y: scroll;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+article, aside, figcaption, figure, main, footer, header, nav, section, details, summary {
+    display: block;
+}
+
+iframe {
+    border: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+caption, th, td {
+    font-weight: normal;
+    text-align: left;
+    vertical-align: top;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+pre {
+    white-space: pre-wrap; /* CSS 2.1 */
+    white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
+    word-wrap: break-word; /* IE */
+}
+
+small {
+    font-size: 80%;
+}
+
+b,
+strong {
+    font-weight: bold;
+}
+
+td img {
+    vertical-align: top;
+}
+
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+sup {
+    top: -0.5em;
+}
+
+// standardize any monospaced elements
+pre, code, kbd, samp {
+    font-family: monospace, sans-serif;
+}
+
+* {
+    /* Remove default webkit and possible mozilla styles. Keeping this as :active to remove browser styles */
+    /*-moz-appearance: none;
+    -webkit-appearance: none;*/
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+// Removing 300ms delay
+a,
+area,
+button,
+[role="button"],
+input,
+label,
+select,
+summary,
+textarea {
+    touch-action: manipulation;
+}
+
+// Add the correct display in IE
+template {
+    display: none;
+}
+
+
+/* MEDIA ELEMENT */
+
+audio,
+canvas,
+progress,
+video {
+    display: inline-block; /* Internet Explorer 11+, Windows Phone 8.1+ */
+}
+
+img,
+embed,
+object,
+audio,
+video {
+    height: auto;
+    max-width: 100%;
+}
+
+// Add the correct display in iOS 4-7.
+audio:not([controls]) {
+    display: none;
+    height: 0;
+}
+
+// Hide the overflow in IE.
+svg:not(:root) {
+    overflow: hidden;
+}
+
+// Remove the border on images inside links in IE 10-.
+img {
+    border: none;
+}
+
+
+/* FORMS */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    font: inherit;
+}
+
+// hand cursor on clickable elements
+label,
+input[type="radio"],
+input[type="checkbox"],
+input[type="button"],
+input[type="submit"],
+input[type="file"],
+button {
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    vertical-align: text-bottom;
+}
+
+input[type="checkbox"] {
+    vertical-align: bottom;
+}
+
+// Webkit browsers add a 2px margin outside the chrome of form elements
+button,
+input,
+select,
+textarea {
+    margin: 0;
+    vertical-align: middle;
+}
+
+// make buttons play nice in IE
+button {
+    width: auto;
+    overflow: visible;
+}
+
+// Show the overflow in Edge.
+button,
+input {
+    overflow: visible;
+}
+
+// Remove the inheritance of text transform in Firefox.
+button,
+select {
+    text-transform: none;
+}
+
+// Correct the inability to style clickable types in iOS and Safari
+button,
+html [type="button"],
+[type="reset"],
+[type="submit"] {
+    -webkit-appearance: button;
+}
+
+// Remove the inner border and padding in Firefox
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+    border-style: 0;
+    padding: 0;
+}
+
+// Restore the focus styles unset by the previous rule
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+    outline: 1px dotted ButtonText;
+}
+
+// Correct the text wrapping in Edge and IE.
+// Correct the color inheritance from `fieldset` elements in IE.
+legend {
+    color: inherit;
+    display: table;
+    max-width: 100%;
+    white-space: normal;
+}
+
+textarea {
+    overflow: auto; /* Internet Explorer 11+ */
+    resize: vertical; /* Specify textarea resizability */
+}
+
+[disabled] {
+    cursor: default;
+}
+
+// Correct the odd appearance in Chrome and Safari.
+// Correct the outline style in Safari.
+[type="search"] {
+    -webkit-appearance: textfield;
+    outline-offset: -2px;
+}
+
+// Remove the inner padding and cancel buttons in Chrome and Safari on OS X
+[type="search"]::-webkit-search-cancel-button,
+[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}

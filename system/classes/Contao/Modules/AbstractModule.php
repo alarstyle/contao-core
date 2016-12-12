@@ -276,16 +276,6 @@ abstract class AbstractModule extends Frontend
 	 */
 	public function generate()
 	{
-		if ($this->arrData['space'][0] != '')
-		{
-			$this->arrStyle[] = 'margin-top:'.$this->arrData['space'][0].'px;';
-		}
-
-		if ($this->arrData['space'][1] != '')
-		{
-			$this->arrStyle[] = 'margin-bottom:'.$this->arrData['space'][1].'px;';
-		}
-
 		$this->Template = new FrontendTemplate($this->strTemplate);
 		$this->Template->setData($this->arrData);
 

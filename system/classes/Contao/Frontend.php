@@ -60,6 +60,18 @@ abstract class Frontend extends Controller
 	public static function getPageIdFromUrl()
 	{
 
+        if (isset($GLOBALS['TL_HOOKS']['beforeGetPageIdFromUrl']) && is_array($GLOBALS['TL_HOOKS']['beforeGetPageIdFromUrl']))
+        {
+            foreach ($GLOBALS['TL_HOOKS']['beforeGetPageIdFromUrl'] as $callback)
+            {
+                /** @var \Contao\Models\PageModel $objRootPage */
+                if (($pageId = static::importStatic($callback[0])->{$callback[1]}()) !== null)
+                {
+                    return $pageId;
+                }
+            }
+        }
+
 		if (Environment::get('request') == '')
 		{
 			return null;
@@ -127,18 +139,14 @@ abstract class Frontend extends Controller
 
 		$arrFragments = null;
 
-		// If did not find a matching page
-		if ($arrFragments === null)
-		{
-			if ($strRequest == '/')
-			{
-				return false;
-			}
-			else
-			{
-				$arrFragments = explode('/', $strRequest);
-			}
-		}
+        if ($strRequest == '/')
+        {
+            return false;
+        }
+        else
+        {
+            $arrFragments = explode('/', $strRequest);
+        }
 
 		// Add the second fragment as auto_item if the number of fragments is even
 		if (Config::get('useAutoItem') && count($arrFragments) % 2 == 0)

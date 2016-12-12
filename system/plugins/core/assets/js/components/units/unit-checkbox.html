@@ -1,6 +1,6 @@
     <div class="unit unit--checkbox" :class="unitClass">
         <label class="unit-label">
-            <div class="checkbox"><input type="checkbox" :checked="value" @change="onInputChange"><b></b></div>
+            <div class="checkbox"><input type="checkbox" :checked="currentValue == 1" @change="onInputChange"><b></b></div>
             <div class="checkbox-label" v-html="label"></div>
         </label>
         <div class="unit-hint">{{ error || hint }}</div>

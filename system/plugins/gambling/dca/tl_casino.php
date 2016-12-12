@@ -149,7 +149,8 @@ class tl_casino extends \Contao\Backend
 
 	public function listCallback($item)
 	{
-		$item['fields'][0] = \Contao\System::getCountriesWithFlags()[$item['fields'][0]];
+        $countries = \Contao\System::getCountriesWithFlags();
+		$item['fields'][0] = $countries[$item['fields'][0]];
 		return $item;
 	}
 

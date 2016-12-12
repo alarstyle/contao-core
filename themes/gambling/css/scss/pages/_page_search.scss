@@ -1,0 +1,35 @@
+.page_search {
+    .submenu-select .dropdown-btn div {
+        color: #47c17e;
+        &:after {
+            border-top-color: #47c17e;
+        }
+    }
+    .casinos {
+        .content_block {
+            padding-top: 0;
+        }
+    }
+    @media (min-width: $min-tablet-width) {
+        .submenu--nav li {
+            padding-right: 0;
+            &:before,
+            &:after {
+                display: none;
+            }
+            &.active {
+                color: #47c17e;
+                &:after {
+                    background: #47c17e;
+                    border: 0;
+                    display: block;
+                    top: auto;
+                    left: 32px;
+                    right: 0;
+                    bottom: 0;
+                    height: 2px;
+                }
+            }
+        }
+    }
+}

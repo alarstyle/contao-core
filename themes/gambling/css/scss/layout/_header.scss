@@ -1,0 +1,119 @@
+.header {
+    background: #242a2e;
+    height: 80px;
+    > div {
+        height: 100%;
+        &:before {
+            content: '';
+            display: table;
+            height: 0;
+        }
+    }
+}
+
+.header .lang,
+.header-search {
+    border-left: 1px solid #2f3539;
+    float: right;
+    height: 100%;
+    width: 50px;
+    position: relative;
+    z-index: 100;
+}
+
+.header .lang .dropdown-btn,
+.header-search-btn {
+    @extend .disable-select;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    padding-top: 31px;
+}
+
+.header .lang {
+    span:after {
+        color: #626f78;
+        margin-right: 5px;
+    }
+    .dropdown-btn {
+        font-size: 0;
+        text-align: center;
+    }
+    .dropdown-menu {
+        right: 5px;
+    }
+}
+
+.header-search {
+}
+.header-search-btn {
+    &:before {
+        border: 2px solid #fcfcfc;
+        border-radius: 50%;
+        content: '';
+        display: block;
+        margin: 0 auto;
+        width: 17px;
+        height: 17px;
+    }
+    &:after {
+        @include transform(rotate(45deg) translate(5px,-6px));
+        background: #fcfcfc;
+        content: '';
+        display: block;
+        margin: 0 auto;
+        height: 2px;
+        width: 10px;
+    }
+}
+
+@media (min-width: $min-tablet-width) {
+    .header .lang,
+    .header-search {
+        width: 62px;
+    }
+    .header .lang {
+        .dropdown-menu {
+            right: 11px;
+        }
+    }
+}
+
+@media (max-width: $max-tablet-width) {
+    .header .lang {
+        span {
+            &:before {
+                margin: 0;
+            }
+            &:after {
+                display: none;
+            }
+        }
+    }
+}
+
+@media (min-width: $min-desktop-width) {
+    .header {
+        > div {
+            margin: 0 auto;
+            max-width: $content_max_width;
+            position: relative;
+        }
+    }
+    .header-search {
+        border-color: transparent;
+        width: 80px;
+    }
+    .header .lang {
+        width: 110px;
+        .dropdown-btn {
+            font-size: 14px;
+            font-weight: bold;
+            font-style: italic;
+            text-transform: uppercase;
+        }
+        .dropdown-menu {
+            right: 10px;
+        }
+    }
+}

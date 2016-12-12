@@ -81,7 +81,7 @@ $GLOBALS['TL_DCA']['tl_casino_category'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => 'name, countries, short_name'
+		'default'                     => 'name, countries, alias'
 	),
 
 	// Fields
@@ -107,17 +107,17 @@ $GLOBALS['TL_DCA']['tl_casino_category'] = array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_casino_category']['country'],
             'inputType'               => 'checkboxWizard',
-            'foreignKey'              => 'tl_country.country',
+            'options_callback'        => 'Gambling\\BackendHelpers::getCountriesForOptions',
             'sql'                     => "varchar(5) NOT NULL"
         ),
-		'short_name' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_casino_category']['short_name'],
-			'inputType'               => 'text',
+        'alias' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_casino_category']['alias'],
+            'inputType'               => 'text',
             'required'                => true,
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>64, 'tl_class'=>'w50'),
-			'sql'                     => "varchar(64) NOT NULL default ''"
-		)
+            'eval'                    => array('mandatory'=>true),
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ),
 	)
 );
 

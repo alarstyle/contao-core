@@ -480,6 +480,8 @@ $GLOBALS['TL_DCA']['tl_settings'] = array
  * @author Leo Feyer <https://github.com/leofeyer>
  */
 use Contao\DataContainer;
+use Contao\Input;
+use Contao\Validator;
 
 class tl_settings extends Contao\Backend
 {

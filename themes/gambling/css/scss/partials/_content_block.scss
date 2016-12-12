@@ -1,0 +1,17 @@
+.content_block {
+    margin: 0 auto;
+    max-width: 350px + 2*15px;
+    padding: 40px 15px;
+    @media (min-width: $min-tablet-width) {
+        max-width: 750px + 40px;
+        padding: 55px 20px;
+    }
+    @media (min-width: $min-desktop-width) {
+        max-width: $content_max_width + 40px;
+        padding-top: 65px;
+        padding-bottom: 65px;
+        &.narrow {
+            max-width: 760px + 40px;
+        }
+    }
+}

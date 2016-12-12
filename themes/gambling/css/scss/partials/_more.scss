@@ -1,0 +1,15 @@
+.more {
+    text-align: center;
+    .btn {
+        min-width: 220px;
+        @media (max-width: 500px) {
+            display: block;
+        }
+    }
+    @media (min-width: $min-tablet-width) {
+        margin-top: 5px;
+    }
+    @media (min-width: $min-desktop-width) {
+        margin-top: 25px;
+    }
+}

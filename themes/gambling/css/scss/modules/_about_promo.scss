@@ -1,0 +1,89 @@
+.about_promo {
+    background: #cc3f43;
+    color: #fff;
+    padding: 40px 0;
+    text-align: center;
+    text-transform: uppercase;
+    ul {
+        color: #f5d9d9;
+        list-style: none;
+        letter-spacing: 1px;
+        font-size: 0;
+        font-weight: bold;
+        margin: 0 -15px;
+    }
+    li {
+        display: inline-block;
+        vertical-align: top;
+        font-size: 15px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 90px;
+        margin: 0 5px 15px;
+    }
+    svg {
+        display: block;
+        width: 90px;
+        height: 80px;
+        margin: 0 auto;
+    }
+}
+
+.about_promo-dices {
+    display: none;
+}
+
+.about_promo-title {
+    @include transform(scaleX(1.05));
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 1px 0 0 #fff;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+@media (min-width: $min-tablet-width) {
+    .about_promo {
+        padding: 55px 0;
+        li {
+            font-size: 18px;
+            margin: 0 10px 10px;
+            max-width: none;
+            width: 120px;
+        }
+        svg {
+            width: 100px;
+            height: 90px;
+        }
+    }
+    .about_promo-dices {
+        display: block;
+        fill: #fff;
+        width: 120px;
+        height: 110px;
+        margin: 0 auto 25px;
+        svg {
+            fill: #fff;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .about_promo-title {
+        font-size: 38px;
+        margin-bottom: 40px;
+    }
+}
+
+
+@media (min-width: $min-desktop-width) {
+    .about_promo {
+        padding: 55px 0 60px;
+        li {
+            margin: 0 20px 10px;
+        }
+    }
+    .about_promo-title {
+        font-size: 44px;
+    }
+}

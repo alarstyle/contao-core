@@ -13,7 +13,7 @@
  * This is the Ace code editor configuration file. Please visit
  * http://ace.c9.io for more information.
  */
-if ($GLOBALS['TL_CONFIG']['useCE']):
+if ($GLOBALS['TL_CONFIG']['useCE'] && 0):
 
 ?>
 <script>window.ace || document.write('<script src="<?php echo TL_ASSETS_URL; ?>assets/ace/<?php echo $GLOBALS['TL_ASSETS']['ACE']; ?>/ace.js" charset="utf-8">\x3C/script>')</script>

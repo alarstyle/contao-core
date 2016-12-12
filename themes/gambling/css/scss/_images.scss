@@ -1,0 +1,36 @@
+.img {
+    background: #f5f6f7;
+    position: relative;
+    div {
+
+    }
+    img {
+        @include abs-pos(0, 0);
+        display: block;
+        width: 100%;
+    }
+}
+
+.icon {
+    display: inline-block;
+    fill: currentColor;
+    height: 33px;
+    width: 33px;
+    vertical-align: middle;
+    margin-top: -0.35em;
+}
+
+.arrow_blue,
+.arrow_red {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    background: url('../images/arrow-blue.svg') no-repeat 50% 50% / contain;
+    width: 12px;
+    height: 12px;
+    margin: -2px 0 0 8px;
+}
+
+.arrow_red {
+    background-image: url('../images/arrow-red.svg');
+}

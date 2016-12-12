@@ -20,8 +20,6 @@ use Contao\Model;
  * @property integer $tstamp
  * @property string  $name
  * @property string  $rows
- * @property string  $headerHeight
- * @property string  $footerHeight
  * @property string  $cols
  * @property string  $widthLeft
  * @property string  $widthRight

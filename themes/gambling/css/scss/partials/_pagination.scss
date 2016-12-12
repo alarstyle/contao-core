@@ -1,0 +1,45 @@
+.pagination {
+    text-align: center;
+    font-size: 0;
+    padding-top: 15px;
+    div {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    a,
+    span {
+        background: #fff;
+        border: 2px solid transparent;
+        display: inline-block;
+        font-size: 18px;
+        font-weight: bold;
+        vertical-align: middle;
+        height: 53px;
+        min-width: 53px;
+        margin: 0 8px;
+        padding: 0 5px;
+        line-height: 49px;
+    }
+    span {
+        border-color: #cd3f3f;
+        color: #cd3f3f;
+    }
+    .prev,
+    .next {
+        &:before {
+            @include transform(rotate(45deg) translate(2px, -2px));
+            content: '';
+            border-left: 2px solid #1b1d1e;
+            border-bottom: 2px solid #1b1d1e;
+            display: block;
+            margin: 17px auto 0;
+            width: 15px;
+            height: 15px;
+        }
+    }
+    .next {
+        &:before {
+            @include transform(rotate(-135deg) translate(2px, -2px));
+        }
+    }
+}

@@ -1,0 +1,56 @@
+@import "scss/reset";
+@import "scss/mixins";
+@import "scss/fonts";
+@import "scss/images";
+@import "scss/basic";
+@import "scss/flags";
+
+@import "scss/vendor/slick";
+
+@import "scss/layout/header";
+@import "scss/layout/main";
+@import "scss/layout/footer";
+
+@import "scss/partials/logo";
+@import "scss/partials/content_block";
+@import "scss/partials/btn";
+@import "scss/partials/close";
+@import "scss/partials/breadcrumbs";
+@import "scss/partials/title";
+@import "scss/partials/more";
+@import "scss/partials/row";
+@import "scss/partials/rate";
+@import "scss/partials/add_line";
+@import "scss/partials/input_material";
+@import "scss/partials/pagination";
+@import "scss/partials/mobile_switch_positions";
+@import "scss/partials/dropdown";
+@import "scss/partials/lang";
+@import "scss/partials/pros_cons";
+
+@import "scss/modules/submenu";
+@import "scss/modules/menu";
+@import "scss/modules/filter";
+@import "scss/modules/slider";
+@import "scss/modules/top";
+@import "scss/modules/casinos";
+@import "scss/modules/promotions";
+@import "scss/modules/news";
+@import "scss/modules/simple";
+@import "scss/modules/subscription";
+@import "scss/modules/contact";
+@import "scss/modules/text";
+@import "scss/modules/casinos_promo";
+@import "scss/modules/about_promo";
+@import "scss/modules/article";
+@import "scss/modules/casino";
+@import "scss/modules/search";
+
+@import "scss/pages/page_home";
+@import "scss/pages/page_blog";
+@import "scss/pages/page_article";
+@import "scss/pages/page_casinos";
+@import "scss/pages/page_casino";
+@import "scss/pages/page_about";
+@import "scss/pages/page_search";
+

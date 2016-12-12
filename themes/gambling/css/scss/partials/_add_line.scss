@@ -1,0 +1,23 @@
+@media (min-width: $min-desktop-width) {
+    .add_line,
+    .add_line_end {
+        position: relative;
+        &:before {
+            @include abs-pos(0, 0);
+            border-left: 5px solid #c33e3e;
+            content: '';
+        }
+    }
+    .add_line {
+        &:before {
+            height: 100%;
+        }
+    }
+    .add_line_end {
+        &:before {
+            border-bottom: 5px solid #c33e3e;
+            height: 62px;
+            width: 18px;
+        }
+    }
+}

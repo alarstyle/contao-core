@@ -1,0 +1,36 @@
+.unit--rating {
+    ul {
+        list-style: none;
+        font-size: 0;
+    }
+    li {
+        display: inline-block;
+        vertical-align: middle;
+        &:last-child {
+            color: #8b9499;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-left: 10px;
+        }
+    }
+    .rating_star {
+        background: #edeff1;
+        border-radius: 2px;
+        color: #c8cdd0;
+        cursor: pointer;
+        padding-top: 8px;
+        margin: 0 4px 0 0;
+        text-align: center;
+        height: 30px;
+        width: 24px;
+        &.active {
+            background: #ffae3a;
+            color: #fff;
+        }
+    }
+    .icon {
+        width: 14px;
+        height: 14px;
+    }
+}

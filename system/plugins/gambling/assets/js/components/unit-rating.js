@@ -6,13 +6,16 @@
 
         template: '#unit-rating-template',
 
-        data: function() {
-            return {
-
-            }
-        },
-
         methods: {
+
+            starClick: function(n) {
+                this.currentValue = n / 2;
+            },
+
+            isActive: function(n) {
+                console.log(n);
+                return n/2 <= this.currentValue;
+            }
 
         }
 

@@ -1,0 +1,6 @@
+.page_article {
+    .article,
+    .news {
+        @extend .add_line;
+    }
+}
