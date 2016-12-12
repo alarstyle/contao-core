@@ -161,7 +161,8 @@ class BackendUser extends User
 		// Store the session data
 		if ($this->intId != '')
 		{
-			$this->Database->prepare("UPDATE " . $this->strTable . " SET session=? WHERE id=?")
+            $database = Database::getInstance();
+            $database->prepare("UPDATE " . $this->strTable . " SET session=? WHERE id=?")
 						   ->execute(serialize($session), $this->intId);
 		}
 	}

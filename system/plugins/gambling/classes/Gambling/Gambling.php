@@ -32,6 +32,7 @@ class Gambling
         return Environment::get('base') . $currentCountryCode . '/';
     }
 
+
     public static function getCountries()
     {
         if (Cache::has('countries')) {
@@ -50,7 +51,7 @@ class Gambling
                 'code' => $country['country'],
                 'lang' => $country['language'],
                 'title' => $allCountries[$country['country']],
-                'link' => '#'
+                'link' => '/' . $country['country'] . '/'
             ];
         }
 
@@ -88,22 +89,6 @@ class Gambling
         return $currentCountry;
     }
 
-
-    public static function getFrontendUrl($pageId)
-    {
-        if (empty(static::$urls[$pageId])) {
-            $currentCountry = static::getCurrentCountry();
-            static::$urls[$pageId] = '/' . $currentCountry['code'] . '/' . Controller::generateFrontendUrl(PageModel::findByPk($pageId)->row());
-        }
-
-        return static::$urls[$pageId] ?: '';
-    }
-
-
-    public static function getPageTitle($pageId)
-    {
-
-    }
 
     public static function getPageData($pageId)
     {

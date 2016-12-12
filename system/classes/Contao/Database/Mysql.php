@@ -349,7 +349,7 @@ class Mysql extends Database
 	 * @param resource $resConnection        The connection ID
 	 * @param boolean  $blnDisableAutocommit If true, autocommitting will be disabled
 	 *
-	 * @return \Database\Mysql\Statement The Database\Statement object
+	 * @return \Contao\Database\Mysql\Statement The Database\Statement object
 	 */
 	protected function createStatement($resConnection, $blnDisableAutocommit)
 	{

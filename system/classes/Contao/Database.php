@@ -174,7 +174,7 @@ abstract class Database
 	 *
 	 * @param string $strQuery The query string
 	 *
-	 * @return Database\Statement The Database\Statement object
+	 * @return \Contao\Database\Statement The Database\Statement object
 	 */
 	public function prepare($strQuery)
 	{
@@ -723,7 +723,7 @@ abstract class Database
 	 * @param resource $resConnection        The connection ID
 	 * @param boolean  $blnDisableAutocommit If true, autocommitting will be disabled
 	 *
-	 * @return \Database\Statement The Database\Statement object
+	 * @return \Contao\Database\Statement The Database\Statement object
 	 */
 	abstract protected function createStatement($resConnection, $blnDisableAutocommit);
 
@@ -733,7 +733,7 @@ abstract class Database
 	 *
 	 * @param string $strQuery The query string
 	 *
-	 * @return \Database\Result|object The Database\Result object
+	 * @return \Contao\Database\Result|object The Database\Result object
 	 *
 	 * @deprecated Use \Database::execute() instead
 	 */
