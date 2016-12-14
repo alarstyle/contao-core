@@ -1,5 +1,5 @@
-    <div class="unit unit--editor" :class="unitClass">
+    <div class="unit unit--date" :class="unitClass">
         <label class="unit-label">{{ label }}<span v-if="required">*</span>:</label>
-        <div ref="editor"></div>
+        <input type="text" class="unit-input" ref="input">
         <div class="unit-hint">{{ error || hint }}</div>
     </div>

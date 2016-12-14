@@ -66,14 +66,14 @@
             },
 
             editingStateOn: function () {
-                if (this.$root.locked) return;
+                if (this.$root.locked || this.editingState) return;
                 this.editingState = true;
                 this.active = null;
                 this.$emit('editing-state', true);
             },
 
             editingStateOff: function () {
-                if (this.$root.locked) return;
+                if (this.$root.locked || !this.editingState) return;
                 var _this = this;
                 this.$root.confirmExitIfUnsaved(function() {
                     _this.editingState = false;

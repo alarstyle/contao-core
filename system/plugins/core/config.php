@@ -297,6 +297,7 @@ $GLOBALS['UNITS'] = [
     'radio'          => 'Grow\\Units\\Radio',
     'radioTable'     => 'Grow\\Units\\RadioTable',
     'editor'         => 'Grow\\Units\\Editor',
+    'date'           => 'Grow\\Units\\Date',
 //    'inputUnit'      => 'Grow\\Units\\InputUnit',
 //    'trbl'           => 'Grow\\Units\\TrblField',
 //    'chmod'          => 'Grow\\Units\\ChmodTable',
@@ -684,6 +685,7 @@ $GLOBALS['TL_CSS'][] = '/system/plugins/core/assets/css/core.css';
 
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/Sortable.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/assets/tinymce/tinymce.min.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/flatpickr.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vue.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vue-router.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/plugins/vue-sortable.js';
@@ -773,6 +775,10 @@ $GLOBALS['COMPONENTS'] = [
     'unit-editor' => [
         '/system/plugins/core/assets/js/components/units/unit-editor.js',
         '/system/plugins/core/assets/js/components/units/unit-editor.html'
+    ],
+    'unit-date' => [
+        '/system/plugins/core/assets/js/components/units/unit-date.js',
+        '/system/plugins/core/assets/js/components/units/unit-date.html'
     ]
 ];
 
@@ -783,5 +789,8 @@ $GLOBALS['EDITOR_PRESETS'] = [
     ],
     'simple' => [
         'toolbar' => 'bold italic | alignleft aligncenter alignright alignjustify | link unlink'
+    ],
+    'regular' => [
+        'toolbar' => 'bold italic | alignleft aligncenter alignright alignjustify | link unlink | visualblocks code | fullscreen'
     ]
 ];

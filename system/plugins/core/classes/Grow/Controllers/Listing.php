@@ -108,7 +108,7 @@ class Listing extends \Contao\Controllers\BackendMain
     {
         $id = Input::post('id');
         $fields = Input::post('fields');
-
+        
         if ($id === 'new') {
             $newId = $this->listOrganizer->create($fields);
             ActionData::data('newId', $newId);

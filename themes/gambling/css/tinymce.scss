@@ -1,0 +1,14 @@
+@import "scss/reset";
+@import "scss/mixins";
+@import "scss/fonts";
+@import "scss/images";
+@import "scss/basic";
+
+body {
+    background: #fff;
+    color: #1b1d1e;
+    padding: 10px !important;
+}
+
+@import "scss/modules/text";
+@import "scss/modules/article";

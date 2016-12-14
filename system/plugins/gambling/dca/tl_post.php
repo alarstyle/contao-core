@@ -46,7 +46,7 @@ $GLOBALS['TL_DCA']['tl_post'] = array
 	'palettes' => array
 	(
 		'default'                     => 'name,alias,teaser,text,img_preview,img_cover,description',
-        'sidebar'                     => 'category,published'
+        'sidebar'                     => 'category,promotion_end,date,published'
 	),
 
 	// Fields
@@ -86,7 +86,8 @@ $GLOBALS['TL_DCA']['tl_post'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_post']['text'],
 			'inputType'               => 'editor',
-            'sql'                     => "mediumtext NULL"
+            'sql'                     => "mediumtext NULL",
+            'config'                  => []
 		),
         'img_preview' => [
             'label'             => &$GLOBALS['TL_LANG']['tl_post']['img_preview'],
@@ -113,11 +114,17 @@ $GLOBALS['TL_DCA']['tl_post'] = array
             'eval'                    => ['mandatory' => true],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ],
+        'promotion_end' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_post']['promotion_end'],
+            'inputType'               => 'date',
+            'config'                  => ['enableTime'=>true],
+            'sql'                     => "int(10) unsigned NULL"
+        ],
         'date' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_post']['date'],
             'default'                 => time(),
-            'inputType'               => 'text',
-            'eval'                    => array('rgxp'=>'date', 'datepicker'=>true),
+            'inputType'               => 'date',
+            'config'                  => ['enableTime'=>true],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ],
         'published' => array
@@ -179,8 +186,12 @@ class tl_post extends \Contao\Backend
 
         $currentCountry = $session->get('postsCurrentCountry') ?: null;
 
-        $objRow = $db->prepare('SELECT * FROM tl_post_category WHERE country = ?')
-            ->execute($currentCountry);
+        if (empty($currentCountry)) {
+            return [];
+        }
+
+        $objRow = $db->prepare('SELECT * FROM tl_post_category')
+            ->execute();
 
         if ($objRow->numRows < 1) {
             return [];
@@ -189,7 +200,9 @@ class tl_post extends \Contao\Backend
         $categories = [];
 
         while ($objRow->next()) {
-            $categories[$objRow->id] = $objRow->name;
+            $nameArr = deserialize($objRow->name);
+            $name = $nameArr[$currentCountry];
+            $categories[$objRow->id] = $name ?: $objRow->alias;
         }
 
         return $categories;

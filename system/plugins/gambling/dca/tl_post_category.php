@@ -51,17 +51,17 @@ $GLOBALS['TL_DCA']['tl_post_category'] = array
 		'name' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_post_category']['name'],
-			'inputType'               => 'text',
+			'inputType'               => 'multilingualText',
             'required'                => true,
-			'eval'                    => array('mandatory'=>true),
-			'sql'                     => "varchar(255) NOT NULL default ''"
+			'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
+            'sql'                     => "blob NULL"
 		),
 		'alias' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_post_category']['alias'],
 			'inputType'               => 'text',
             'required'                => true,
-			'eval'                    => array('mandatory'=>true, 'unique'=>true),
+			'eval'                    => array('mandatory'=>true, 'unique'=>true, 'tl_class'=>'w50'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
         'country' => [

@@ -20,8 +20,6 @@ use Grow\Route;
 class Gambling
 {
 
-    protected static $urls = [];
-
     protected static $pagesData = [];
 
 
@@ -106,6 +104,12 @@ class Gambling
         }
 
         return static::$pagesData[$pageId] ?: [];
+    }
+
+
+    public static function getTranslation($arr, $lang)
+    {
+        return '11';
     }
 
 }

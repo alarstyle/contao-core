@@ -5,6 +5,7 @@ namespace Gambling\Controllers;
 use Contao\Input;
 use Contao\Session;
 use Gambling\BackendHelpers;
+use Gambling\Gambling;
 use Grow\ApplicationData;
 use Grow\Controllers\ListingWithGroups;
 
@@ -92,7 +93,8 @@ class Posts extends ListingWithGroups
 
     public function ajaxGetGroups()
     {
-        $this->config['group']['whereCallback'] = [$this, 'groupsWhereCallback'];
+        $this->config['group']['labelCallback'] = [$this, 'groupsLabelCallback'];
+        $this->config['group']['titleCallback'] = [$this, 'groupsLabelCallback'];
         parent::ajaxGetGroups();
     }
 
@@ -113,10 +115,11 @@ class Posts extends ListingWithGroups
     }
 
 
-    protected function groupsWhereCallback()
+    protected function groupsLabelCallback($item)
     {
-        return 'country = ' . $this->currentCountry;
+        $nameArr = deserialize($item['name']);
+        $name = $nameArr[$this->currentCountry];
+        return $name ?: $item['alias'];
     }
-
 
 }

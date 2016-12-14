@@ -25,6 +25,7 @@
                         _this.currentCountry = countryId;
                         _this.locked = false;
                         if (response.data.success) {
+                            _this.$refs.groups.editingStateOff();
                             _this.$refs.groups.setActive(null);
                             _this.loadGroups();
                             _this.showList();

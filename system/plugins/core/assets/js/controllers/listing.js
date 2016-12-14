@@ -206,14 +206,9 @@
                 this.editGroup('new');
             },
 
-            groupsEditingState: function (state) {
-                if (state) {
-
-                }
-                else {
-                    if (state !== 'list') {
-                        this.showList();
-                    }
+            groupsEditingState: function (proupsState) {
+                if (!proupsState && this.state !== 'list') {
+                    this.showList();
                 }
             },
 

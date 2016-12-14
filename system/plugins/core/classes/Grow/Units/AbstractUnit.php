@@ -77,6 +77,12 @@ abstract class AbstractUnit
             $unitData['config']['class'] = $this->fieldData['eval']['tl_class'];
         }
 
+        if ($this->fieldData['config']) {
+            foreach ($this->fieldData['config'] as $key=>$value) {
+                $unitData['config'][$key] = $value;
+            }
+        }
+
         return $unitData;
     }
 

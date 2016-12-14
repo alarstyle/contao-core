@@ -64,14 +64,8 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 2, 'articles', [
             'title' => 'Categories',
             'labelAll' => 'All Articles',
             'labelNew' => 'Add New Category',
-            'creatable' => true,
-            'editable' => true,
-            'labelCallback' => function ($item) {
-                return $item['name'];
-            },
-            'titleCallback' => function ($item) {
-                return $item['name'];
-            }
+            'creatable' => false,
+            'editable' => true
         ],
         'list' => [
             'table' => 'tl_post',
@@ -164,5 +158,15 @@ $GLOBALS['COMPONENTS']['unit-rating'] = [
     '/system/plugins/gambling/assets/js/components/unit-rating.html'
 ];
 
+$GLOBALS['COMPONENTS']['unit-multilingual-text'] = [
+    '/system/plugins/gambling/assets/js/components/unit-multilingual-text.js',
+    '/system/plugins/gambling/assets/js/components/unit-multilingual-text.html'
+];
+
 
 $GLOBALS['UNITS']['rating'] = 'Gambling\\Units\\Rating';
+$GLOBALS['UNITS']['multilingualText'] = 'Gambling\\Units\\MultilingualText';
+
+
+$GLOBALS['EDITOR_PRESETS']['regular']['content_css'] = '/themes/gambling/css/tinymce.css';
+$GLOBALS['EDITOR_PRESETS']['regular']['body_class'] = 'text';

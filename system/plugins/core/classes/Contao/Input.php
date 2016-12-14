@@ -136,17 +136,17 @@ class Input
 
 			$varValue = static::decodeEntities($varValue);
 			$varValue = static::xssClean($varValue, true);
-			$varValue = static::stripTags($varValue);
+			//$varValue = static::stripTags($varValue);
 
-			if (!$blnDecodeEntities)
-			{
-				$varValue = static::encodeSpecialChars($varValue);
-			}
-
-			if (TL_MODE != 'BE')
-			{
-				$varValue = static::encodeInsertTags($varValue);
-			}
+//			if (!$blnDecodeEntities)
+//			{
+//				$varValue = static::encodeSpecialChars($varValue);
+//			}
+//
+//			if (TL_MODE != 'BE')
+//			{
+//				$varValue = static::encodeInsertTags($varValue);
+//			}
 
 			static::$arrCache[$strCacheKey][$strKey] = $varValue;
 		}

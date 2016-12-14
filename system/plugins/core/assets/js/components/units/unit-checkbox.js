@@ -8,8 +8,7 @@
 
         watch: {
             currentValue: function(currentValue) {
-                console.log('OOOOOH');
-                console.log(currentValue);
+
             }
         },
 

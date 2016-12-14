@@ -4,7 +4,7 @@
         plugins: 'autoresize visualblocks template link image lists code fullscreen growcms',
         menubar: false,
         toolbar:
-            'undo redo' +
+            //'undo redo' +
             ' | styleselect formatselect blockquote removeformat' +
             ' | bold italic' +
             ' | alignleft aligncenter alignright alignjustify' +
@@ -48,10 +48,19 @@
 
         template: '#unit-editor-template',
 
-        datat: function() {
+        data: function() {
             return {
                 editor: null,
                 currentImageFieldId: null
+            }
+        },
+
+        watch: {
+            value: function() {
+                console.log('value changed');
+            },
+            currentValue: function() {
+                console.log('currentValue changed');
             }
         },
 
@@ -70,6 +79,11 @@
                 this.$root.$off('filePicked', this.filePicked);
                 this.$root.$off('filePickCanceled', this.filePickCanceled);
                 this.currentImageFieldId = null;
+            },
+
+            handleEditorChange: function(e) {
+                this.currentValue = this.editor.getContent();
+                console.log('Editor contents was changed.');
             }
 
         },
@@ -78,11 +92,18 @@
             if (this.editor) return;
             console.log('mount');
             var _this = this,
-                setting = {
+                configSettings = this.config.settings,
+                settings = {
                     target: this.$refs.editor,
                     init_instance_callback: function (editor) {
                         _this.editor = editor;
-                        //editor.setContent("content here");
+
+                        console.log('!!!!!!!');
+                        console.log(_this.currentValue);
+                        if (_this.currentValue) {
+                            editor.setContent(_this.currentValue);
+                        }
+                        editor.on('Change', _this.handleEditorChange);
                     },
                     file_browser_callback: function(field_name, url, type, win) {
                         _this.currentImageFieldId = field_name;
@@ -95,7 +116,7 @@
                         });
                     }
                 };
-            tinymce.init(_.defaults(setting, defaultSettings));
+            tinymce.init(_.defaults(settings, configSettings, defaultSettings));
         },
 
         destroyed: function() {

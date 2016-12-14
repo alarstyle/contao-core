@@ -1,0 +1,11 @@
+<div class="unit unit--multilingual-text" :class="unitClass">
+    <label class="unit-label">{{ label }}<span v-if="required">*</span>:</label>
+    {{ config }}
+    <ul>
+        <li v-for="(value, i) in currentValue">
+            <span class="flag" :class="'flag-' + config['countries'][i]"></span>
+            <input type="text" v-model="currentValue[i]" class="unit-input">
+        </li>
+    </ul>
+    <div class="unit-hint">{{ error || hint }}</div>
+</div>

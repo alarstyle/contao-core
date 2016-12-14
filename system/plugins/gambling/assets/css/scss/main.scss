@@ -40,3 +40,20 @@ html {
         padding-left: 1px;
     }
 }
+
+.unit--multilingual-text {
+    li {
+        list-style: none;
+        position: relative;
+        padding: 0 0 5px 30px;
+        &:last-child {
+            padding-bottom: 0;
+        }
+    }
+    .flag {
+        position: absolute;
+        left: 0;
+        top: 14px;
+        margin: 0;
+    }
+}
