@@ -11,11 +11,14 @@
     .item--big {
         @extend .col_1_of_2;
     }
+    .item-img {
+        display: block;
+    }
     .item-img,
     .item-big_img {
         height: 125px;
         div {
-            background: no-repeat 50% 50% / cover;
+            background: #dfdfdf no-repeat 50% 50% / cover;
             height: 100%;
         }
     }

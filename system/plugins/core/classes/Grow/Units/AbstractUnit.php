@@ -4,7 +4,11 @@ namespace Grow\Units;
 
 use Contao\BaseTemplate;
 use Contao\Database;
+use Contao\Date;
+use Contao\Idna;
+use Contao\StringUtil;
 use Contao\System;
+use Contao\Validator;
 use Grow\ActionData;
 
 /**
@@ -134,8 +138,17 @@ abstract class AbstractUnit
     {
         $attr = $this->fieldData;
 
+        if (is_string($value)) {
+            $value = trim($value);
+        }
+
         if ($attr['required'] && empty($value)) {
             $this->errorsArr[] = "Can't be empty";
+        }
+
+        //
+        if (!empty($attr['eval']['rgxp'])) {
+            $this->validateRgxp($value, $id, $attr['eval']['rgxp']);
         }
 
         // Make sure unique fields are unique
@@ -256,6 +269,230 @@ abstract class AbstractUnit
     protected function getProcessedValue()
     {
 
+    }
+
+
+    protected function validateRgxp($value, $id, $rgxp)
+    {
+        $label = $this->fieldData['label'];
+
+        switch ($rgxp)
+        {
+            // Numeric characters (including full stop [.] and minus [-])
+            case 'digit':
+                // Support decimal commas and convert them automatically (see #3488)
+                if (substr_count($value, ',') == 1 && strpos($value, '.') === false)
+                {
+                    $value = str_replace(',', '.', $value);
+                }
+                if (!Validator::isNumeric($value))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['digit'], $label);
+                }
+                break;
+
+            // Natural numbers (positive integers)
+            case 'natural':
+                if (!Validator::isNatural($value))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['natural'], $label);
+                }
+                break;
+
+            // Alphabetic characters (including full stop [.] minus [-] and space [ ])
+            case 'alpha':
+                if (!Validator::isAlphabetic($value))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['alpha'], $label);
+                }
+                break;
+
+            // Alphanumeric characters (including full stop [.] minus [-], underscore [_] and space [ ])
+            case 'alnum':
+                if (!Validator::isAlphanumeric($value))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['alnum'], $label);
+                }
+                break;
+
+            // Do not allow any characters that are usually encoded by class Input [=<>()#/])
+            case 'extnd':
+                if (!Validator::isExtendedAlphanumeric(html_entity_decode($value)))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['extnd'], $label);
+                }
+                break;
+
+            // Check whether the current value is a valid date format
+            case 'date':
+                if (!Validator::isDate($value))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['date'], Date::getInputFormat(Date::getNumericDateFormat()));
+                }
+                else
+                {
+                    // Validate the date (see #5086)
+                    try
+                    {
+                        new Date($value, Date::getNumericDateFormat());
+                    }
+                    catch (\OutOfBoundsException $e)
+                    {
+                        $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['invalidDate'], $value);
+                    }
+                }
+                break;
+
+            // Check whether the current value is a valid time format
+            case 'time':
+                if (!Validator::isTime($value))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['time'], Date::getInputFormat(Date::getNumericTimeFormat()));
+                }
+                break;
+
+            // Check whether the current value is a valid date and time format
+            case 'datim':
+                if (!Validator::isDatim($value))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['dateTime'], Date::getInputFormat(Date::getNumericDatimFormat()));
+                }
+                else
+                {
+                    // Validate the date (see #5086)
+                    try
+                    {
+                        new Date($value, Date::getNumericDatimFormat());
+                    }
+                    catch (\OutOfBoundsException $e)
+                    {
+                        $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['invalidDate'], $value);
+                    }
+                }
+                break;
+
+            // Check whether the current value is a valid e-mail address
+            case 'email':
+                if (!Validator::isEmail($value))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['email'], $label);
+                }
+                break;
+
+            // Check whether the current value is list of valid e-mail addresses
+            case 'emails':
+                $arrEmails = trimsplit(',', $value);
+
+                foreach ($arrEmails as $strEmail)
+                {
+                    $strEmail = Idna::encodeEmail($strEmail);
+
+                    if (!Validator::isEmail($strEmail))
+                    {
+                        $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['emails'], $label);
+                        break;
+                    }
+                }
+                break;
+
+            // Check whether the current value is a valid URL
+            case 'url':
+                if (!Validator::isUrl($value))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['url'], $label);
+                }
+                break;
+
+            // Check whether the current value is a valid alias
+            case 'alias':
+                if (!Validator::isAlias($value))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['alias'], $label);
+                }
+                break;
+
+            // Check whether the current value is a valid folder URL alias
+            case 'folderalias':
+                if (!Validator::isFolderAlias($value))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['folderalias'], $label);
+                }
+                break;
+
+            // Check whether the current value is a valid page URL alias
+            case 'pagealias':
+                if (!Validator::isPageAlias($value))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['folderalias'], $label);
+                }
+                break;
+
+            // Phone numbers (numeric characters, space [ ], plus [+], minus [-], parentheses [()] and slash [/])
+            case 'phone':
+                if (!Validator::isPhone(html_entity_decode($value)))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['phone'], $label);
+                }
+                break;
+
+            // Check whether the current value is a percent value
+            case 'prcnt':
+                if (!Validator::isPercent($value))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['prcnt'], $label);
+                }
+                break;
+
+            // Check whether the current value is a locale
+            case 'locale':
+                if (!Validator::isLocale($value))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['locale'], $label);
+                }
+                break;
+
+            // Check whether the current value is a language code
+            case 'language':
+                if (!Validator::isLanguage($value))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['language'], $label);
+                }
+                break;
+
+            // Check whether the current value is a Google+ ID or vanity name
+            case 'google+':
+                if (!Validator::isGooglePlusId($value))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['invalidGoogleId'], $label);
+                }
+                break;
+
+            // Check whether the current value is a field name
+            case 'fieldname':
+                if (!Validator::isFieldName($value))
+                {
+                    $this->errorsArr[] = sprintf($GLOBALS['TL_LANG']['ERR']['invalidFieldName'], $label);
+                }
+                break;
+
+            // HOOK: pass unknown tags to callback functions
+//            default:
+//                if (isset($GLOBALS['TL_HOOKS']['addCustomRegexp']) && is_array($GLOBALS['TL_HOOKS']['addCustomRegexp']))
+//                {
+//                    foreach ($GLOBALS['TL_HOOKS']['addCustomRegexp'] as $callback)
+//                    {
+//                        $this->import($callback[0]);
+//                        $break = $this->{$callback[0]}->{$callback[1]}($rgxp, $value, $this);
+//
+//                        // Stop the loop if a callback returned true
+//                        if ($break === true)
+//                        {
+//                            break;
+//                        }
+//                    }
+//                }
+//                break;
+        }
     }
 
 }

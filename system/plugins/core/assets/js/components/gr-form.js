@@ -6,7 +6,7 @@
 
         props: {
             fields: {
-                type: Object,
+                type: [Object, Array],
                 default: {}
             },
             errors: {
@@ -25,8 +25,10 @@
         watch: {
             fields: {
                 handler: function (fields) {
-                    for (var i=0; i < this.$refs.units.length; i++) {
-                        this.$refs.units[i].softReset();
+                    if (this.$refs.units) {
+                        for (var i=0; i < this.$refs.units.length; i++) {
+                            this.$refs.units[i].softReset();
+                        }
                     }
                     var _this = this;
                     Vue.nextTick(function() {

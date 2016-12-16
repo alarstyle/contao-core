@@ -97,7 +97,7 @@ $GLOBALS['TL_DCA']['tl_layout'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array('rows', 'cols', 'addJQuery', 'addMooTools', 'static'),
-		'default'                     => '{title_legend},name;{sections_legend:hide},sections,sPosition;{feed_legend:hide},newsfeeds;{modules_legend},modules;',
+		'default'                     => '{title_legend},name;{sections_legend:hide},sections,sPosition;{feed_legend:hide},newsfeeds;{modules_legend},modules;{expert_legend:hide},template',
 		'default1'                    => '{title_legend},name;{sections_legend:hide},sections,sPosition;{feed_legend:hide},newsfeeds;{modules_legend},modules;{expert_legend:hide},template,titleTag,cssClass',
 		'defaultOld'                  => '{title_legend},name;{sections_legend:hide},sections,sPosition;{webfonts_legend:hide},webfonts;{style_legend},stylesheet,external,loadingOrder;{feed_legend:hide},newsfeeds;{modules_legend},modules;{expert_legend:hide},template,viewport,titleTag,cssClass,onload,head;{jquery_legend},addJQuery;{mootools_legend},addMooTools;{script_legend:hide},analytics,script;{static_legend},static'
 	),

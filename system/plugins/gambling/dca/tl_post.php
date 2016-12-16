@@ -11,7 +11,8 @@ $GLOBALS['TL_DCA']['tl_post'] = array
 		(
 			'keys' => array
 			(
-				'id' => 'primary'
+				'id' => 'primary',
+                'alias' => 'unique'
 			)
 		)
 	),
@@ -45,8 +46,8 @@ $GLOBALS['TL_DCA']['tl_post'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => 'name,alias,teaser,text,img_preview,img_cover,description',
-        'sidebar'                     => 'category,promotion_end,date,published'
+		'default'                     => '[general],name,alias,teaser,[images],img_preview,img_cover,[content],text,[seo],metaTitle,metaDescription',
+        'sidebar'                     => 'category,author,promotion_end,date,published'
 	),
 
 	// Fields
@@ -73,7 +74,7 @@ $GLOBALS['TL_DCA']['tl_post'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_post']['alias'],
 			'inputType'               => 'text',
             'required'                => true,
-			'eval'                    => array('mandatory'=>true),
+			'eval'                    => array('mandatory'=>true, 'unique'=>true, 'rgxp'=>'alias'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
 		'teaser' => array
@@ -101,8 +102,13 @@ $GLOBALS['TL_DCA']['tl_post'] = array
             'eval'              => ['tl_class'=>'w50'],
             'sql'               => "varchar(255) NOT NULL default ''"
         ],
-        'description' => [
-            'label'             => &$GLOBALS['TL_LANG']['tl_post']['description'],
+        'metaTitle' => [
+            'label'             => &$GLOBALS['TL_LANG']['tl_post']['metaTitle'],
+            'inputType'         => 'text',
+            'sql'               => "varchar(255) NOT NULL default ''"
+        ],
+        'metaDescription' => [
+            'label'             => &$GLOBALS['TL_LANG']['tl_post']['metaDescription'],
             'inputType'         => 'textarea',
             'sql'               => "varchar(255) NOT NULL default ''"
         ],
@@ -114,6 +120,16 @@ $GLOBALS['TL_DCA']['tl_post'] = array
             'eval'                    => ['mandatory' => true],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ],
+        'author' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_post']['author'],
+            'default'                 => \Contao\BackendUser::getInstance()->id,
+            'inputType'               => 'select',
+            'foreignKey'              => 'tl_user.name',
+            'eval'                    => array('mandatory'=>true),
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'relation'                => array('type'=>'hasOne', 'load'=>'lazy')
+        ),
         'promotion_end' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_post']['promotion_end'],
             'inputType'               => 'date',

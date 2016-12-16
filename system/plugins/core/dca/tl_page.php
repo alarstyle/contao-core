@@ -215,7 +215,7 @@ $GLOBALS['TL_DCA']['tl_page'] = array
 			'exclude'                 => true,
 			'inputType'               => 'text',
 			'search'                  => true,
-			'eval'                    => array('rgxp'=>'folderalias', 'doNotCopy'=>true, 'maxlength'=>128, 'tl_class'=>'w50'),
+			'eval'                    => array('rgxp'=>'pagealias', 'doNotCopy'=>true, 'maxlength'=>128, 'tl_class'=>'w50'),
 			'save_callback' => array
 			(
 				array('tl_page', 'generateAlias')
@@ -967,7 +967,7 @@ class tl_page extends Contao\Backend
 		if ($varValue == '')
 		{
 			$autoAlias = true;
-			$varValue = StringUtil::generateAlias($dc->activeRecord->title);
+			$varValue = \Contao\StringUtil::generateAlias($dc->activeRecord->title);
 		}
 
 		$objAlias = $this->Database->prepare("SELECT id FROM tl_page WHERE id=? OR alias=?")

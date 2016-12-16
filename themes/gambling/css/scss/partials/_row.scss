@@ -24,14 +24,17 @@
     }
     .col_1_of_4 {
         width: calc(50% - 22px);
+        max-width: calc(50% - 22px);
     }
 }
 
 @media (min-width: $min-desktop-width) {
     .col_1_of_2 {
         width: calc(50% - 22px);
+        max-width: calc(50% - 22px);
     }
     .col_1_of_4 {
         width: calc(25% - 22px);
+        max-width: calc(25% - 22px);
     }
 }

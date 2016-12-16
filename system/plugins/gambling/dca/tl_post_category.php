@@ -34,7 +34,7 @@ $GLOBALS['TL_DCA']['tl_post_category'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => 'name,alias'
+		'default'                     => 'name'
 	),
 
 	// Fields

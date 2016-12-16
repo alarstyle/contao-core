@@ -1,5 +1,5 @@
     <div class="unit unit--radio-table" :class="unitClass">
-        <label class="unit-label">{{ label }}<span v-if="required">*</span></label>
+        <label class="unit-label" v-if="label">{{ label }}<span v-if="required">*</span></label>
         <div>RADIO TABLE</div>
         <div class="unit-hint">{{ error || hint }}</div>
     </div>

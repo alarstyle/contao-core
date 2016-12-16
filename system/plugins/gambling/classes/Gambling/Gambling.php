@@ -15,6 +15,7 @@ use Contao\Environment;
 use Contao\Models\PageModel;
 use Contao\System;
 use Gambling\Models\CountryModel;
+use Gambling\Models\PostModel;
 use Grow\Route;
 
 class Gambling
@@ -110,6 +111,52 @@ class Gambling
     public static function getTranslation($arr, $lang)
     {
         return '11';
+    }
+
+
+    public static function getNews($limit, $offset = 0, $options = null)
+    {
+        $currentCountry = static::getCurrentCountry();
+        $postsPage = static::getPageData(78);
+
+        $news = \Gambling\Models\PostModel::findNewsByCountryId($currentCountry['id'], $limit, $offset, $options);
+
+        if ($news === null) return [];
+
+        $news = $news->fetchAll();
+
+        foreach ($news as $i=>&$newsItem) {
+            $newsItem['url'] = str_replace('{id}', $newsItem['alias'], $postsPage['url']);
+        }
+
+        return $news;
+    }
+
+
+    public static function getPromotions($limit, $offset = 0, $options = null)
+    {
+        $currentCountry = static::getCurrentCountry();
+        $postsPage = static::getPageData(78);
+
+        $promotions = \Gambling\Models\PostModel::findPromotionsByCountryId($currentCountry['id'], $limit, $offset, $options);
+
+        if ($promotions === null) return [];
+
+        $promotions = $promotions->fetchAll();
+
+        foreach ($promotions as $i=>&$promotion) {
+            $promotion['url'] = str_replace('{id}', $promotion['alias'], $postsPage['url']);
+        }
+
+        return $promotions;
+    }
+
+
+    public static function getArticle($alias)
+    {
+        $article = PostModel::findByAlias($alias);
+
+        return $article;
     }
 
 }

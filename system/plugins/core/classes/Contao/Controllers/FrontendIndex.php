@@ -97,7 +97,7 @@ class FrontendIndex extends Frontend
 		}
 
 		// Get the current page object(s)
-		$objPage = PageModel::findPublishedByIdOrAlias($pageId);
+		$objPage = $this->getPageById($pageId);
 
 		// Check the URL and language of each page if there are multiple results
 		if ($objPage !== null && $objPage->count() > 1)
@@ -309,6 +309,35 @@ class FrontendIndex extends Frontend
 		// Stop the script (see #4565)
 		exit;
 	}
+
+
+	protected function getPageById($pageId)
+    {
+        // HOOK: add custom logic
+        if (isset($GLOBALS['TL_HOOKS']['getPageById']) && is_array($GLOBALS['TL_HOOKS']['getPageById']))
+        {
+            foreach ($GLOBALS['TL_HOOKS']['getPageById'] as $callback)
+            {
+                /** @var \PageModel $objRootPage */
+                if (is_object(($objPage = static::importStatic($callback[0])->{$callback[1]}($pageId))))
+                {
+                    return $objPage;
+                }
+            }
+        }
+
+        $objPage = PageModel::findPublishedByIdOrAlias($pageId);
+
+//        if ($objPage === null) {
+//            $lastSlashPos = strrpos($pageId, '/');
+//            if ($lastSlashPos) {
+//                $newPageId = substr($pageId, 0, $lastSlashPos);
+//                $objPage = $this->getPageById($newPageId);
+//            }
+//        }
+
+        return $objPage;
+    }
 
 
 	/**

@@ -12,6 +12,7 @@ namespace Contao\Elements;
 
 use Contao\Model;
 use Contao\Models\ModuleModel;
+use Contao\Modules\AbstractModule;
 
 /**
  * Front end content element "module".
@@ -40,7 +41,7 @@ class ContentModule extends ContentElement
 			return '';
 		}
 
-		$strClass = Module::findClass($objModule->type);
+		$strClass = AbstractModule::findClass($objModule->type);
 
 		if (!class_exists($strClass))
 		{

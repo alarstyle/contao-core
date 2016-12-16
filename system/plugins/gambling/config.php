@@ -4,7 +4,8 @@ if (TL_MODE == 'BE') {
     $GLOBALS['TL_HOOKS']['parseBackendTemplate'][] = array('Gambling\\BackendHook', 'parseBackendTemplate');
 }
 
-$GLOBALS['TL_HOOKS']['beforeGetPageIdFromUrl'][] = array('Gambling\\BackendHook', 'beforeGetPageIdFromUrl');
+$GLOBALS['TL_HOOKS']['beforeGetPageIdFromUrl'][] = array('Gambling\\FrontendHook', 'beforeGetPageIdFromUrl');
+$GLOBALS['TL_HOOKS']['getPageById'][] = array('Gambling\\FrontendHook', 'getPageById');
 $GLOBALS['TL_HOOKS']['generatePage'][] = array('Gambling\\FrontendHook', 'generatePage');
 
 /**
@@ -15,12 +16,20 @@ if (TL_MODE == 'FE') {
 }
 
 $GLOBALS['TL_MODELS']['tl_country'] = 'Gambling\\Models\\CountryModel';
+$GLOBALS['TL_MODELS']['tl_post'] = 'Gambling\\Models\\PostModel';
 
 \Contao\TemplateLoader::addFiles([
     'be_posts'    => 'system/plugins/gambling/templates',
     'be_casinos'  => 'system/plugins/gambling/templates',
-    'be_pages'  => 'system/plugins/gambling/templates'
+    'be_pages'  => 'system/plugins/gambling/templates',
+    'mod_posts'  => 'system/plugins/gambling/templates'
 ]);
+
+$GLOBALS['FE_MOD'] = [
+    'stuff' => [
+        'posts' => 'Gambling\\Modules\\PostsModule'
+    ]
+];
 
 $GLOBALS['TL_CSS'][] = '/system/plugins/gambling/assets/css/main.css';
 
@@ -169,4 +178,4 @@ $GLOBALS['UNITS']['multilingualText'] = 'Gambling\\Units\\MultilingualText';
 
 
 $GLOBALS['EDITOR_PRESETS']['regular']['content_css'] = '/themes/gambling/css/tinymce.css';
-$GLOBALS['EDITOR_PRESETS']['regular']['body_class'] = 'text';
+$GLOBALS['EDITOR_PRESETS']['regular']['body_class'] = 'text article-content';

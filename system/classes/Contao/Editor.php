@@ -1042,6 +1042,14 @@ abstract class Editor extends BaseTemplate
 					}
 					break;
 
+				// Check whether the current value is a valid page URL alias
+				case 'pagealias':
+					if (!Validator::isPageAlias($varInput))
+					{
+						$this->addError(sprintf($GLOBALS['TL_LANG']['ERR']['folderalias'], $this->strLabel));
+					}
+					break;
+
 				// Phone numbers (numeric characters, space [ ], plus [+], minus [-], parentheses [()] and slash [/])
 				case 'phone':
 					if (!Validator::isPhone(html_entity_decode($varInput)))

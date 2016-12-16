@@ -13,7 +13,7 @@
 }
 
 .article-img {
-    background: no-repeat 50% 50% / cover;
+    background: #dfdfdf no-repeat 50% 50% / cover;
     height: 330px;
     position: relative;
 }
@@ -24,15 +24,16 @@
     line-height: 25px;
     margin-bottom: 20px;
     min-height: 25px;
-    a {
+    a,
+    span {
         color: #1b1d1e;
         display: inline-block;
         vertical-align: bottom;
         font-style: normal;
         font-weight: bold;
-        &:hover {
-            text-decoration: underline;
-        }
+    }
+    a:hover {
+        text-decoration: underline;
     }
     div {
         float: left;
@@ -48,6 +49,7 @@
     padding-bottom: 5px;
     .img {
         clear: both;
+        font-size: 0;
         margin: 0 -40px;
     }
 }

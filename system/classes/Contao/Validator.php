@@ -231,6 +231,26 @@ class Validator
 
 
 	/**
+	 * Valid page alias name
+	 *
+	 * @param mixed $varValue The value to be validated
+	 *
+	 * @return boolean True if the value is a valid page alias name
+	 */
+	public static function isPageAlias($varValue)
+	{
+		if (function_exists('mb_eregi'))
+		{
+			return mb_eregi('^[[:alnum:]\/\._-{}]+$', $varValue);
+		}
+		else
+		{
+			return preg_match('/^[\w\/.-{}]+$/u', $varValue);
+		}
+	}
+
+
+	/**
 	 * Valid phone number
 	 *
 	 * @param mixed $varValue The value to be validated

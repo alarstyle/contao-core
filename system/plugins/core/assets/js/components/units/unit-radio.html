@@ -1,5 +1,5 @@
     <div class="unit unit--radio" :class="unitClass">
-        <label class="unit-label">{{ label }}</label>
+        <label class="unit-label" v-if="label">{{ label }}</label>
         <ul v-if="options.length">
             <li v-for="option in options">
                 <label>

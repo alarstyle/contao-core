@@ -1,5 +1,5 @@
     <div class="unit unit--date" :class="unitClass">
-        <label class="unit-label">{{ label }}<span v-if="required">*</span>:</label>
+        <label class="unit-label" v-if="label">{{ label }}<span v-if="required">*</span>:</label>
         <input type="text" class="unit-input" ref="input">
         <div class="unit-hint">{{ error || hint }}</div>
     </div>
