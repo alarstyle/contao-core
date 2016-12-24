@@ -13,7 +13,6 @@
             },
 
             isActive: function(n) {
-                console.log(n);
                 return n/2 <= this.currentValue;
             }
 

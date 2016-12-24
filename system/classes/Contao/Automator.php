@@ -376,7 +376,7 @@ class Automator extends System
 			$objFile->append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">');
 
 			// Find the searchable pages
-			$arrPages = \Backend::findSearchablePages($objRoot->id, '', true);
+			$arrPages = Backend::findSearchablePages($objRoot->id, '', true);
 
 			// HOOK: take additional pages
 			if (isset($GLOBALS['TL_HOOKS']['getSearchablePages']) && is_array($GLOBALS['TL_HOOKS']['getSearchablePages']))

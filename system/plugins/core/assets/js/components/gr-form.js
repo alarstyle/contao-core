@@ -38,7 +38,6 @@
                 deep: true
             },
             isChanged: function(isChanged) {
-                console.log('isChan', isChanged);
                 this.$root.unsaved = isChanged;
             }
         },
@@ -49,6 +48,7 @@
                 console.log('u');
                 this.isChanged = true;
                 this.changedFields[unit.id] = value;
+                this.$emit('change', value, unit, this);
             },
 
             getValues: function() {

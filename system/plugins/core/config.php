@@ -146,8 +146,11 @@ $GLOBALS['NAVIGATION'] = [
                     foreach ($list as $i=>$item) {
                         $list[$i]['fields'][0] = '<div class="user_avatar" style="background-image: url(\'' . $list[$i]['fields'][0] . '\')"></div>';
                         $countriesIds = deserialize($list[$i]['fields'][3]);
-                        if (empty($countriesIds)) continue;
-                        $list[$i]['fields'][3] = \Gambling\BackendHelpers::getCountriesFlagsByIds($countriesIds);
+                        if (empty($countriesIds)) {
+                            $list[$i]['fields'][3] = '';
+                        } else {
+                            $list[$i]['fields'][3] = \Gambling\BackendHelpers::getCountriesFlagsByIds($countriesIds);
+                        }
                     }
                     return $list;
                 }
@@ -791,6 +794,6 @@ $GLOBALS['EDITOR_PRESETS'] = [
         'toolbar' => 'bold italic | alignleft aligncenter alignright alignjustify | link unlink'
     ],
     'regular' => [
-        'toolbar' => 'bold italic | alignleft aligncenter alignright alignjustify | link unlink | visualblocks code | fullscreen'
+        'toolbar' => 'formatselect | bold italic blockquote | removeformat | alignleft aligncenter alignright alignjustify | bullist numlist | link unlink | image | visualblocks code | fullscreen'
     ]
 ];

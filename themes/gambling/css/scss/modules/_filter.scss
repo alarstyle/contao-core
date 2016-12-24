@@ -36,8 +36,8 @@
     .double_inputs .inp,
     .btns button {
         float: left;
-        height: 45px;
-        line-height: 39px;
+        height: 36px;
+        line-height: 30px;
         width: calc(50% - 5px);
         &:first-child {
             margin-right: 5px;
@@ -57,7 +57,7 @@
     svg {
         display: block;
         fill: #d3d3d3;
-        margin: 15px auto 0;
+        margin: 11px auto 0;
         width: 32px;
         height: 32px;
     }
@@ -160,7 +160,7 @@
         }
         .dropdown-btn {
             height: 100%;
-            line-height: 65px;
+            line-height: 56px;
             padding: 0 22px;
             text-transform: uppercase;
             span {

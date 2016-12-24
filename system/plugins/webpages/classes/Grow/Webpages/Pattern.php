@@ -1,6 +1,7 @@
 <?php
 
 namespace Grow\Webpages;
+
 use Contao\Config;
 use Contao\Controller;
 use Contao\Database;
@@ -10,7 +11,6 @@ use Contao\Models\ContentModel;
 use Contao\Models\FilesModel;
 use Contao\Models\ModuleModel;
 use Contao\StringUtil;
-
 
 /**
  * Class Pattern

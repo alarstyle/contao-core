@@ -1,1 +1,23 @@
 <?php $this->extend('be_listing'); ?>
+
+<?php $this->block('leftTop'); ?>
+
+<div class="country_select" v-if="state === 'list' || state === 'edit_group'">
+    <label>Country</label>
+    <gr-select
+        :options="countries"
+        :value="currentCountry"
+        @change="handleCountryChange">
+    </gr-select>
+</div>
+
+<div class="country_switch" v-if="state === 'edit_item' && casinoCountries && casinoCountries.length">
+    <groups
+        :list="casinoCountries"
+        title="Country"
+        @group-selected="handleEditCountrySelected"
+        ref="groups">
+    </groups>
+</div>
+
+<?php $this->endblock(); ?>

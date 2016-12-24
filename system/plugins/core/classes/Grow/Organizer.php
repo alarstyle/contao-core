@@ -19,6 +19,9 @@ class Organizer
     protected $errorsArr = [];
 
 
+    protected $skipFields = [];
+
+
     public function __construct($tableName)
     {
         $this->table = $tableName;
@@ -48,6 +51,8 @@ class Organizer
         }
 
         $fetchedRow = $objRow->fetchAssoc();
+
+        $this->doLoadCallbacks($fetchedRow, $id);
 
         $unitsData = $this->getUnitsData($fetchedRow);
 
@@ -90,18 +95,19 @@ class Organizer
             return null;
         }
 
+        $this->doSaveCallbacks($fieldsValues, $id);
+
         $fieldsStr = '';
         $valuesArr = [];
 
         foreach ($fieldsValues as $field => $value) {
+            if (in_array($field, $this->skipFields)) continue;
             if (strlen($fieldsStr) > 0) $fieldsStr .= ', ';
             $fieldsStr .= $field . '=?';
             $valuesArr[] = $value;
         }
 
         $valuesArr[] = $id;
-
-        $this->doSaveCallbacks($fieldsValues, $id);
 
         $statement = $this->database->prepare("UPDATE " . $this->table . " SET " . $fieldsStr . " WHERE id=?")
             ->execute($valuesArr);
@@ -281,8 +287,8 @@ class Organizer
         $fieldsNames = $this->getFieldsNamesFromPalette($palette);
         $sidebarFieldsNames = $this->getFieldsNamesFromPalette($sidebarPalette);
 
-        $sidebar = $this->getUnitsDataForFields($row, $sidebarFieldsNames);
         $fields = $this->getUnitsDataForFields($row, $fieldsNames);
+        $sidebar = $this->getUnitsDataForFields($row, $sidebarFieldsNames);
 
         return [
             'main' => $fields,
@@ -314,7 +320,7 @@ class Organizer
             }
 
             if ($unit->skipSubmit()) {
-                unset($fieldsValues[$field]);
+                $this->skipFields[] = $field;
             }
         }
 
@@ -365,18 +371,14 @@ class Organizer
         $fieldsNames = [];
 
         foreach ($boxes as $k => $v) {
-            $eCount = 1;
             $boxes[$k] = trimsplit(',', $v);
 
             foreach ($boxes[$k] as $kk => $vv) {
-                if (preg_match('/^\[.*\]$/', $vv)) {
-                    ++$eCount;
-                    continue;
-                }
-
                 if (preg_match('/^\{.*\}$/', $vv)) {
                     continue;
-                } elseif ($tableData['fields'][$vv]['exclude1'] || !is_array($tableData['fields'][$vv])) {
+                } elseif ($tableData['fields'][$vv]['exclude1']) {
+                    continue;
+                } elseif (!preg_match('/^\[.*\]$/', $vv) && !is_array($tableData['fields'][$vv])) {
                     continue;
                 }
 
@@ -395,6 +397,16 @@ class Organizer
         $fields = [];
 
         foreach ($fieldsNames as $fieldName) {
+
+            if (strpos($fieldName, '[') === 0) {
+                $fieldName = str_replace(['[', ']'], '', $fieldName);
+                $fields[$fieldName] = [
+                    'component' => 'section-title',
+                    'label' => $GLOBALS['TL_LANG'][$this->table][$fieldName] ?: $fieldName
+                ];
+                continue;
+            }
+
             $fieldData = $tableData['fields'][$fieldName];
 
             if (empty($fieldData['inputTypeNew'] ?: $fieldData['inputType'])) continue;
@@ -413,7 +425,33 @@ class Organizer
     }
 
 
-    protected function doSaveCallbacks($fieldsValues, $id = null)
+    protected function doLoadCallbacks(&$fieldsValues, $id = null)
+    {
+        $tableFieldsData = $GLOBALS['TL_DCA'][$this->table]['fields'];
+
+
+        foreach($tableFieldsData as $fieldName=>$fieldData) {
+            if (!is_array($fieldData['load_callback_new'])) continue;
+            foreach ($fieldData['load_callback_new'] as $callback)
+            {
+                try
+                {
+                    if (is_callable($callback))
+                    {
+                        $fieldsValues[$fieldName] = call_user_func_array($callback, [$fieldsValues[$fieldName], $id, &$fieldsValues]);
+                    }
+                }
+                catch (\Exception $e)
+                {
+//                    $objEditor->class = 'error';
+//                    $objEditor->addError($e->getMessage());
+                }
+            }
+        }
+    }
+
+
+    protected function doSaveCallbacks(&$fieldsValues, $id = null)
     {
         $tableFieldsData = $GLOBALS['TL_DCA'][$this->table]['fields'];
 
@@ -425,7 +463,7 @@ class Organizer
                 {
                     if (is_callable($callback))
                     {
-                        $fieldValue = call_user_func($callback, $fieldValue, $id);
+                        $fieldValue = call_user_func_array($callback, [$fieldValue, $id, &$fieldsValues]);
                     }
                 }
                 catch (\Exception $e)

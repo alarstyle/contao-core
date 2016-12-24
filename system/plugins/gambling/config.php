@@ -16,6 +16,7 @@ if (TL_MODE == 'FE') {
 }
 
 $GLOBALS['TL_MODELS']['tl_country'] = 'Gambling\\Models\\CountryModel';
+$GLOBALS['TL_MODELS']['tl_casino_category'] = 'Gambling\\Models\\CasinoCategoryModel';
 $GLOBALS['TL_MODELS']['tl_post'] = 'Gambling\\Models\\PostModel';
 
 \Contao\TemplateLoader::addFiles([
@@ -36,6 +37,7 @@ $GLOBALS['TL_CSS'][] = '/system/plugins/gambling/assets/css/main.css';
 
 array_insert_assoc($GLOBALS['NAVIGATION'], 1, 'casinos', [
     'label' => 'Casinos',
+    //'hidden' => true,
     'controller' => 'Gambling\\Controllers\\Casinos',
     'config' => [
         'group' => [
@@ -58,13 +60,87 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 1, 'casinos', [
             'title' => 'Casinos',
             'labelNew' => 'Add New Casino',
             'labelEdit' => 'Edit Casino',
-            'creatable' => true
+            'creatable' => true,
+            'headersCallback' => function($headers) {
+                foreach($headers as &$header) {
+                    switch($header['name']) {
+                        case 'img_logo':
+                            $header['label'] = '';
+                    }
+                }
+                return $headers;
+            },
+            'listCallback' => function($list) {
+                foreach ($list as $i=>$item) {
+                    $list[$i]['fields'][0] = '<div class="item-img" style="background-image: url(\'' . $list[$i]['fields'][0] . '\')"></div>';
+                    $countriesIds = deserialize($list[$i]['fields'][2]);
+                    if (empty($countriesIds)) {
+                        $list[$i]['fields'][2] = 'None';
+                    }
+                    else {
+                        $list[$i]['fields'][2] = \Gambling\BackendHelpers::getCountriesFlagsByIds($countriesIds);
+                    }
+                }
+                return $list;
+            },
+        ]
+    ]
+]);
+
+array_insert_assoc($GLOBALS['NAVIGATION'], 2, 'bettings', [
+    'label' => 'Bettings',
+    //'hidden' => true,
+    'controller' => 'Gambling\\Controllers\\Bettings',
+    'config' => [
+        'group' => [
+            'table' => 'tl_casino_category',
+            'title' => 'Categories list',
+            'labelAll' => 'All Bettings',
+            'labelNew' => 'Add New Category',
+            'creatable' => true,
+            'editable' => true,
+            'labelCallback' => function ($item) {
+                return $item['name'];
+            },
+            'titleCallback' => function ($item) {
+                return $item['name'];
+            },
+            //'sorting' => ['dateAdded DESC']
+        ],
+        'list' => [
+            'table' => 'tl_casino',
+            'title' => 'Bettings',
+            'labelNew' => 'Add New Betting',
+            'labelEdit' => 'Edit Betting',
+            'creatable' => true,
+            'headersCallback' => function($headers) {
+                foreach($headers as &$header) {
+                    switch($header['name']) {
+                        case 'img_logo':
+                            $header['label'] = '';
+                    }
+                }
+                return $headers;
+            },
+            'listCallback' => function($list) {
+                foreach ($list as $i=>$item) {
+                    $list[$i]['fields'][0] = '<div class="item-img" style="background-image: url(\'' . $list[$i]['fields'][0] . '\')"></div>';
+                    $countriesIds = deserialize($list[$i]['fields'][2]);
+                    if (empty($countriesIds)) {
+                        $list[$i]['fields'][2] = 'None';
+                    }
+                    else {
+                        $list[$i]['fields'][2] = \Gambling\BackendHelpers::getCountriesFlagsByIds($countriesIds);
+                    }
+                }
+                return $list;
+            },
         ]
     ]
 ]);
 
 
-array_insert_assoc($GLOBALS['NAVIGATION'], 2, 'articles', [
+array_insert_assoc($GLOBALS['NAVIGATION'], 3, 'articles', [
     'label' => 'Articles',
     'controller' => 'Gambling\\Controllers\\Posts',
     'config' => [
@@ -144,6 +220,7 @@ array_insert_assoc($GLOBALS['NAVIGATION'], -1, 'countries', [
 
 array_insert_assoc($GLOBALS['NAVIGATION'], 3, 'pages', [
     'label' => 'Website Structure',
+    'hidden' => true,
     'controller' => 'Gambling\\Controllers\\Pages',
     'config' => [
         'group' => [

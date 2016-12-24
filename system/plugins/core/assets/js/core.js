@@ -100,6 +100,11 @@
     };
 
 
+    window.AbstractAction = {
+
+    };
+
+
     window.AbstractApp = {
 
         data: function () {

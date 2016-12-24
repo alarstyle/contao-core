@@ -2,7 +2,11 @@
 
     <template v-for="(field, fieldName) in fields">
 
-        <template v-if="field.component">
+        <div v-if="field.component === 'section-title'" class="section_title">
+            {{ field.label }}
+        </div>
+
+        <template v-else-if="field.component">
             <component :is="field.component"
                        :id="fieldName"
                        :value="field.value"

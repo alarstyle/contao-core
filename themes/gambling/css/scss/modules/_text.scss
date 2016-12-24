@@ -36,6 +36,11 @@
     li {
         margin-bottom: 10px;
     }
+    blockquote {
+        background: #f5f6f7;
+        margin: 0 0 25px;
+        padding: 24px 24px 1px;
+    }
 }
 
 @media (min-width: $min-tablet-width) {
@@ -52,6 +57,20 @@
         }
         ul {
             padding-left: 45px;
+        }
+        blockquote {
+            float: right;
+            margin-left: 40px;
+            width: 280px;
+        }
+    }
+}
+
+@media (min-width: $min-desktop-width) {
+    .text {
+        blockquote {
+            padding: 25px 40px 6px;
+            width: 330px;
         }
     }
 }

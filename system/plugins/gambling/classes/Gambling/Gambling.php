@@ -14,6 +14,7 @@ use Contao\Controller;
 use Contao\Environment;
 use Contao\Models\PageModel;
 use Contao\System;
+use Gambling\Models\CasinoCategoryModel;
 use Gambling\Models\CountryModel;
 use Gambling\Models\PostModel;
 use Grow\Route;
@@ -22,6 +23,9 @@ class Gambling
 {
 
     protected static $pagesData = [];
+
+
+    protected static $casinoCategories = null;
 
 
     public static function getHomePage()
@@ -157,6 +161,32 @@ class Gambling
         $article = PostModel::findByAlias($alias);
 
         return $article;
+    }
+
+
+    public static function getCasinoCategories()
+    {
+        if (static::$casinoCategories !== null) {
+            return static::$casinoCategories;
+        }
+
+        $categories = CasinoCategoryModel::findAll();
+
+        if ($categories === null) return [];
+
+        $categories = $categories->fetchAll();
+        $currentCountry = static::getCurrentCountry();
+        $countryId = intval($currentCountry['id']);
+        $casinosPage = \Gambling\Gambling::getPageData(71);
+
+        foreach ($categories as &$category) {
+            $category['name'] = deserialize($category['name'])[$countryId] ?: $category['alias'];
+            $category['url'] = $casinosPage['url'] . '#' . '/';
+        }
+
+        static::$casinoCategories = $categories;
+
+        return static::$casinoCategories;
     }
 
 }

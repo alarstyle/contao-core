@@ -52,6 +52,10 @@ abstract class AbstractUnit
         $this->fieldData = $this->getFieldData();
         $this->attributes = $this->getAttributes();
         $this->database = Database::getInstance();
+
+        if (empty($this->fieldData['sql'])) {
+            $this->skip = true;
+        }
     }
 
 

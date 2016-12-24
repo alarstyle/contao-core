@@ -537,6 +537,9 @@ class BackendUser extends User
         $route = \Grow\Route::get();
 
 		foreach ($GLOBALS['NAVIGATION'] as $strItemName => $arrItem) {
+            if ($arrItem['hidden']) {
+                continue;
+            }
             $arrModules[$strItemName] = [
                 'label' => specialchars($arrItem['label'] ?: $strItemName),
                 'href' => Config::get('backendUri') . '/' . $strItemName,

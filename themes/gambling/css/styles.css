@@ -1473,13 +1473,13 @@ input:focus:-ms-input-placeholder {
   color: #81b3e7;
   cursor: pointer;
   display: inline-block;
-  font: bold 15px/54px 'Montserrat', sans-serif;
+  font: bold 15px/48px 'Montserrat', sans-serif;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 1px;
   padding: 2px 30px 0;
-  height: 60px;
+  height: 54px;
   vertical-align: middle; }
   .btn:hover {
     background: rgba(129, 179, 231, 0.1);
@@ -1605,7 +1605,7 @@ input:focus:-ms-input-placeholder {
     height: 31px; }
   @media (min-width: 768px) {
     .title {
-      font-size: 28px;
+      font-size: 24px;
       letter-spacing: 3px;
       margin-bottom: 35px; }
       .title.icon-chips:before {
@@ -1776,11 +1776,11 @@ input:focus:-ms-input-placeholder {
     font-size: 18px;
     font-weight: bold;
     vertical-align: middle;
-    height: 53px;
-    min-width: 53px;
+    height: 48px;
+    min-width: 48px;
     margin: 0 8px;
     padding: 0 5px;
-    line-height: 49px; }
+    line-height: 44px; }
   .pagination span {
     border-color: #cd3f3f;
     color: #cd3f3f; }
@@ -1983,7 +1983,7 @@ ul.dropdown-menu {
     background: #fff;
     box-shadow: 0 2px 1px rgba(0, 0, 0, 0.05);
     color: #242a2e;
-    height: 65px;
+    height: 55px;
     max-width: 1300px;
     margin: 0 auto;
     position: relative;
@@ -2247,20 +2247,20 @@ ul.dropdown-menu {
         background: #fff;
         box-shadow: 0 2px 1px rgba(0, 0, 0, 0.05);
         color: #242a2e;
-        height: 65px;
+        height: 55px;
         display: none;
         text-transform: none;
         padding-left: 5px;
         width: 100%;
         z-index: 50; }
       .menu li li {
-        padding-top: 20px; }
+        padding: 16px 25px 0; }
         .menu li li:before {
           border-bottom-color: #ccc; }
         .menu li li:after {
           border-top-color: #ccc; }
         .menu li li:before, .menu li li:after {
-          left: -4px; }
+          left: -5px; }
         .menu li li.active {
           color: #c33e3e; }
           .menu li li.active a:hover {
@@ -2294,7 +2294,7 @@ ul.dropdown-menu {
     background: #fff;
     box-shadow: 0 2px 1px rgba(0, 0, 0, 0.05);
     color: #242a2e;
-    height: 65px;
+    height: 55px;
     max-width: 1300px;
     margin: 0 auto; }
   .filter .radios {
@@ -2320,8 +2320,8 @@ ul.dropdown-menu {
   .filter .double_inputs .inp,
   .filter .btns button {
     float: left;
-    height: 45px;
-    line-height: 39px;
+    height: 36px;
+    line-height: 30px;
     width: calc(50% - 5px); }
     .filter .double_inputs .inp:first-child,
     .filter .btns button:first-child {
@@ -2339,7 +2339,7 @@ ul.dropdown-menu {
   .filter-icon svg {
     display: block;
     fill: #d3d3d3;
-    margin: 15px auto 0;
+    margin: 11px auto 0;
     width: 32px;
     height: 32px; }
 
@@ -2425,7 +2425,7 @@ ul.dropdown-menu {
           display: none; }
     .filter .dropdown-btn {
       height: 100%;
-      line-height: 65px;
+      line-height: 56px;
       padding: 0 22px;
       text-transform: uppercase; }
       .filter .dropdown-btn span {
@@ -2496,20 +2496,20 @@ ul.dropdown-menu {
       border: 0;
       font-size: 0;
       padding: 0;
-      width: 75px;
-      height: 75px;
+      width: 65px;
+      height: 65px;
       z-index: 10;
       margin-top: -30px; }
       .slider .slick-prev:before,
       .slider .slick-next:before {
         position: absolute;
-        top: 24px;
-        left: 29px;
+        top: 21px;
+        left: 26px;
         border-bottom: 2px solid #fff;
         border-left: 2px solid #fff;
         content: '';
-        width: 26px;
-        height: 26px; }
+        width: 22px;
+        height: 22px; }
     .slider .slick-prev {
       left: 0; }
       .slider .slick-prev:before {
@@ -2522,7 +2522,7 @@ ul.dropdown-menu {
         -webkit-transform: rotate(-135deg);
         -ms-transform: rotate(-135deg);
         transform: rotate(-135deg);
-        left: 18px; }
+        left: 17px; }
     .slider .slick-dots {
       position: absolute;
       left: 50%;
@@ -2548,13 +2548,15 @@ ul.dropdown-menu {
         height: 12px; } }
 @media (min-width: 1200px) {
   .slider .item-inner {
-    height: 620px;
+    height: 450px;
     max-width: 1080px;
-    padding-top: 75px; }
+    padding-top: 55px; }
   .slider .item-info {
-    width: 55%; }
+    width: 55%;
+    padding-bottom: 20px; }
   .slider .item-title {
-    font-size: 48px; }
+    font-size: 42px;
+    margin-bottom: 20px; }
   .slider .slick-dots {
     margin-left: -540px; } }
 .top {
@@ -2569,7 +2571,7 @@ ul.dropdown-menu {
   padding: 42px 15px 30px; }
 
 .top-title {
-  font: 28px/1.4 'Montserrat', sans-serif;
+  font: 24px/1.4 'Montserrat', sans-serif;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -2675,8 +2677,8 @@ ul.dropdown-menu {
 
 .top-list-title {
   background: #242b2e url("../images/bg-dark.png") repeat 50% 50%/34px auto;
-  font: bold 15px/80px 'Montserrat', sans-serif;
-  height: 80px;
+  font: bold 15px/70px 'Montserrat', sans-serif;
+  height: 70px;
   text-transform: uppercase;
   padding: 0 15px; }
   .top-list-title > div {
@@ -2722,7 +2724,7 @@ ul.dropdown-menu {
     font-weight: bold; } }
 @media (min-width: 768px) {
   .top-content {
-    font-size: 18px; }
+    font-size: 16px; }
 
   .top-title {
     margin-bottom: 10px;
@@ -2734,7 +2736,7 @@ ul.dropdown-menu {
     .top:before {
       background: #edf0f1 url("../images/gray_bg.png") repeat 50% 50%/34px auto;
       content: '';
-      height: 80px;
+      height: 70px;
       position: absolute;
       top: 0;
       left: 0;
@@ -2746,7 +2748,7 @@ ul.dropdown-menu {
       border-left: 5px solid #c33e3e;
       border-bottom: 5px solid #c33e3e;
       content: '';
-      height: 225px;
+      height: 219px;
       width: 18px; }
 
   .top-inner {
@@ -2756,7 +2758,7 @@ ul.dropdown-menu {
   .top-article {
     float: left;
     padding: 155px 50px 40px 0;
-    width: calc(100% - 420px); }
+    width: calc(100% - 480px); }
 
   .top-title {
     text-align: left;
@@ -2790,7 +2792,7 @@ ul.dropdown-menu {
   .top-list {
     float: right;
     margin-bottom: -35px;
-    width: 420px; }
+    width: 480px; }
     .top-list .item {
       padding: 15px 18px; }
       .top-list .item:last-child {
@@ -2798,10 +2800,10 @@ ul.dropdown-menu {
       .top-list .item > div {
         max-width: none; }
     .top-list .item-img {
-      width: 75px;
-      height: 75px; }
+      width: 64px;
+      height: 64px; }
     .top-list .item-info {
-      width: calc(100% - 87px); }
+      width: calc(100% - 160px); }
 
   .top-list-title > div {
     max-width: none; } }
@@ -3185,7 +3187,7 @@ ul.dropdown-menu {
     padding: 20px 0 30px; }
 
   .simple-text {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.8;
     margin: 0 auto;
     max-width: 1080px;
@@ -3194,7 +3196,7 @@ ul.dropdown-menu {
     columns: 2;
     -webkit-column-gap: 30px;
     -moz-column-gap: 30px;
-    column-gap: 30px; } }
+    column-gap: 50px; } }
 .subscription {
   background: #d24546;
   color: #fff;
@@ -3221,10 +3223,10 @@ ul.dropdown-menu {
   border: 0;
   border-bottom: 2px solid #f6dada;
   color: #fff;
-  font: 18px/1 'Montserrat', sans-serif;
+  font: 16px/1 'Montserrat', sans-serif;
   letter-spacing: 1px;
   padding: 2px 5px 0;
-  height: 60px;
+  height: 54px;
   width: 370px;
   margin-right: 30px; }
   .subscription-form .inp::-webkit-input-placeholder {
@@ -3268,7 +3270,7 @@ ul.dropdown-menu {
     line-height: 1.5; }
 
   .subscription-promo {
-    font-size: 36px;
+    font-size: 32px;
     letter-spacing: 2px;
     line-height: 1.3;
     margin-bottom: 20px; } }
@@ -3350,6 +3352,10 @@ ul.dropdown-menu {
     padding-left: 25px; }
   .text li {
     margin-bottom: 10px; }
+  .text blockquote {
+    background: #f5f6f7;
+    margin: 0 0 25px;
+    padding: 24px 24px 1px; }
 
 @media (min-width: 768px) {
   .text {
@@ -3362,7 +3368,15 @@ ul.dropdown-menu {
       font-size: 22px;
       margin-bottom: 10px; }
     .text ul {
-      padding-left: 45px; } }
+      padding-left: 45px; }
+    .text blockquote {
+      float: right;
+      margin-left: 40px;
+      width: 280px; } }
+@media (min-width: 1200px) {
+  .text blockquote {
+    padding: 25px 40px 6px;
+    width: 330px; } }
 .casinos_promo {
   background: #2cc379;
   color: #fff;

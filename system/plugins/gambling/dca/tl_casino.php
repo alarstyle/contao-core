@@ -13,7 +13,7 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 			'keys' => array
 			(
 				'id' => 'primary',
-                'country' => 'unique',
+                'alias' => 'unique',
 			)
 		)
 	),
@@ -28,8 +28,7 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 		),
 		'label' => array
 		(
-			'fields'                  => array('country'),
-			'callback'                => array('tl_casino', 'listCallback')
+            'fields_new'              => array('img_logo', 'name', 'countries'),
 		),
 		'operations' => array
 		(
@@ -53,7 +52,7 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => 'rating,countries,name,url,owner,year,licence,phone,email'
+		'default'                     => '[general],countries,name,url,owner,year,licence,phone,email,rating,type,casino_link,betting_link,casino_categories,betting_categories,[images],img_logo,img_cover'
 	),
 
 	// Fields
@@ -67,10 +66,9 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 		(
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
-
         'countries' => array
         (
-            'label'                   => ['Casino Countries', ''],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['countries'],
             'inputTypeNew'            => 'checkboxWizard',
             'options_callback'        => 'Gambling\\BackendHelpers::getCountriesForOptions',
             'eval'                    => ['tl_class'=>'w50'],
@@ -81,19 +79,21 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['name'],
 			'inputType'               => 'text',
             'required'                => true,
-			'eval'                    => array('mandatory'=>true),
+			'eval'                    => array('mandatory'=>true, 'tl_class'=>'unit--long'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
 		'url' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['url'],
 			'inputType'               => 'text',
+            'eval'                    => array('tl_class'=>'unit--long'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
 		'owner' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['owner'],
 			'inputType'               => 'text',
+            'eval'                    => array('tl_class'=>'unit--long'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
 		'year' => array
@@ -106,6 +106,7 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['licence'],
 			'inputType'               => 'text',
+            'eval'                    => array('tl_class'=>'unit--long'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
 		'phone' => array
@@ -125,14 +126,72 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['rating'],
 			'inputType'               => 'rating',
 			'sql'                     => "float NULL"
-		)
+		),
+        'type' => [
+            'label'             => &$GLOBALS['TL_LANG']['tl_casino']['type'],
+            'inputType'         => 'radio',
+            'default'           => 'casino',
+            'options'           => ['casino' => 'Only Casino', 'betting' => 'Only Betting', 'casino_betting' => 'Casino And Betting'],
+            'load_callback_new' => [
+                ['tl_casino', 'loadType']
+            ],
+            'save_callback_new' => [
+                ['tl_casino', 'saveType']
+            ]
+        ],
+        'isCasino' => [
+            'sql'               => "char(1) NOT NULL default ''"
+        ],
+        'isBetting' => [
+            'sql'               => "char(1) NOT NULL default ''"
+        ],
+        'casino_link' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['casino_link'],
+            'inputType'               => 'text',
+            'eval'                    => ['tl_class'=>'w50'],
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ),
+        'betting_link' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['betting_link'],
+            'inputType'               => 'text',
+            'eval'                    => ['tl_class'=>'w50'],
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ),
+        'casino_categories' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['casino_categories'],
+            'inputTypeNew'            => 'checkboxWizard',
+            'options_callback'        => 'Gambling\\BackendHelpers::getCountriesForOptions',
+            'eval'                    => ['tl_class'=>'w50'],
+            'sql'                     => "blob NULL"
+        ),
+        'betting_categories' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['betting_categories'],
+            'inputTypeNew'            => 'checkboxWizard',
+            'options_callback'        => 'Gambling\\BackendHelpers::getCountriesForOptions',
+            'eval'                    => ['tl_class'=>'w50'],
+            'sql'                     => "blob NULL"
+        ),
+        'img_logo' => [
+            'label'             => &$GLOBALS['TL_LANG']['tl_casino']['img_logo'],
+            'inputType'         => 'filePicker',
+            'eval'              => ['tl_class'=>'w50'],
+            'sql'               => "varchar(255) NOT NULL default ''"
+        ],
+        'img_cover' => [
+            'label'             => &$GLOBALS['TL_LANG']['tl_casino']['img_cover'],
+            'inputType'         => 'filePicker',
+            'eval'              => ['tl_class'=>'w50'],
+            'sql'               => "varchar(255) NOT NULL default ''"
+        ]
 	)
 );
 
 
 use Contao\Backend;
-use Contao\Image;
-use Contao\Input;
 
 class tl_casino extends \Contao\Backend
 {
@@ -147,33 +206,41 @@ class tl_casino extends \Contao\Backend
 	}
 
 
-	public function listCallback($item)
+	public function loadType($value, $id, &$fieldsValues)
+    {
+        if ($fieldsValues['isCasino'] == 1 && $fieldsValues['isBetting'] == 1) {
+            return 'casino_betting';
+        }
+        if ($fieldsValues['isCasino'] == 1) {
+            return 'casino';
+        }
+        if ($fieldsValues['isBetting'] == 1) {
+            return 'betting';
+        }
+        return null;
+    }
+
+
+	public function saveType($value, $id, &$fieldsValues)
 	{
-        $countries = \Contao\System::getCountriesWithFlags();
-		$item['fields'][0] = $countries[$item['fields'][0]];
-		return $item;
-	}
-
-
-	/**
-	 * Return all modules except profile modules
-	 *
-	 * @return array
-	 */
-	public function getModules()
-	{
-		$arrModules = array();
-
-		foreach ($GLOBALS['BE_MOD'] as $k=>$v)
-		{
-			if (!empty($v))
-			{
-				unset($v['undo']);
-				$arrModules[$k] = array_keys($v);
-			}
-		}
-
-		return $arrModules;
+        switch ($value) {
+            case 'casino':
+                $fieldsValues['isCasino'] = 1;
+                $fieldsValues['isBetting'] = 0;
+                break;
+            case 'betting':
+                $fieldsValues['isCasino'] = 0;
+                $fieldsValues['isBetting'] = 1;
+                break;
+            case 'casino_betting':
+                $fieldsValues['isCasino'] = 1;
+                $fieldsValues['isBetting'] = 1;
+                break;
+            default:
+                $fieldsValues['isCasino'] = 0;
+                $fieldsValues['isBetting'] = 0;
+        }
+		return null;
 	}
 
 

@@ -29,6 +29,7 @@
                 <?php $this->block('form'); ?>
                 <gr-form :fields="formFields"
                          :errors="formErrors"
+                         @change="handleFormChange"
                          ref="form"></gr-form>
                 <?php $this->endblock(); ?>
             </div>

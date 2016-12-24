@@ -30,13 +30,44 @@ class BackendHelpers
             $countriesNames = \Contao\System::getCountries();
             while ($result->next()) {
                 static::$countries[$result->id] = [
+                    'id' => $result->id,
                     'code' => $result->country,
-                    'name' => $countriesNames[$result->country] ?: $result->country
+                    'name' => $countriesNames[$result->country] ?: $result->country,
+                    'default' => $result->fallback
                 ];
             }
         } else {
             static::$countries = [];
         }
+
+        uasort(static::$countries, function ($a, $b) {
+            if ($a['name'] === $b['name']) {
+                return 0;
+            }
+            return ($a['name'] < $b['name']) ? -1 : 1;
+        });
+    }
+
+
+    public static function getCountries()
+    {
+        static::loadCountries();
+
+        return static::$countries;
+    }
+
+
+    public static function getDefaultCountry()
+    {
+        static::loadCountries();
+
+        foreach (static::$countries as $country) {
+            if ($country['default']) {
+                return $country;
+            }
+        }
+
+        return array_values(static::$countries)[0];
     }
 
 
@@ -92,6 +123,18 @@ class BackendHelpers
         $availableCountries = static::getUserAvailableCountries();
 
         return static::getCountriesForOptions($availableCountries);
+    }
+
+
+    public static function getCasinoCategoriesForOptions()
+    {
+
+    }
+
+
+    public static function getBettingCategoriesForOptions()
+    {
+
     }
 
 }

@@ -84,7 +84,8 @@ class FrontendHook
         if (!empty($user_country)) {
             // Get country by code
             $countryObj = CountryModel::findByCode($user_country);
-        } elseif (empty($countryObj)) {
+        }
+        if (empty($countryObj)) {
             // Get fallback country
             if (empty($countryObj)) {
                 $countryObj = CountryModel::findFallback();

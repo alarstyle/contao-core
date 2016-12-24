@@ -62,17 +62,17 @@
             border: 0;
             font-size: 0;
             padding: 0;
-            width: 75px;
-            height: 75px;
+            width: 65px;
+            height: 65px;
             z-index: 10;
             margin-top: -30px;
             &:before {
-                @include abs-pos(29px, 24px);
+                @include abs-pos(26px, 21px);
                 border-bottom: 2px solid #fff;
                 border-left: 2px solid #fff;
                 content: '';
-                width: 26px;
-                height: 26px;
+                width: 22px;
+                height: 22px;
             }
         }
         .slick-prev {
@@ -85,7 +85,7 @@
             right: 0;
             &:before {
                 @include transform(rotate(-135deg));
-                left: 18px;
+                left: 17px;
             }
         }
         .slick-dots {
@@ -118,15 +118,17 @@
 @media (min-width: $min-desktop-width) {
     .slider {
         .item-inner {
-            height: 620px;
+            height: 450px;
             max-width: 1080px;
-            padding-top: 75px;
+            padding-top: 55px;
         }
         .item-info {
             width: 55%;
+            padding-bottom: 20px;
         }
         .item-title {
-            font-size: 48px;
+            font-size: 42px;
+            margin-bottom: 20px;
         }
         .slick-dots {
             margin-left: -540px;

@@ -417,7 +417,7 @@ class tl_country extends \Contao\Backend
     }
 
 
-    public function fallbackReset($value, $id)
+    public function fallbackReset($value, $id, &$fieldsValues)
     {
         if ($value == 1) {
 

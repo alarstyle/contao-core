@@ -38,7 +38,7 @@ $GLOBALS['TL_DCA']['tl_casino_category'] = array
 			'keys' => array
 			(
 				'id' => 'primary',
-                'country' => 'unique',
+                'alias' => 'unique',
 			)
 		)
 	),
@@ -53,7 +53,7 @@ $GLOBALS['TL_DCA']['tl_casino_category'] = array
 		),
 		'label' => array
 		(
-			'fields'                  => array('country'),
+			'fields'                  => array('countries'),
 			'callback'                => array('tl_casino_category', 'listCallback')
 		),
 		'operations' => array
@@ -81,7 +81,7 @@ $GLOBALS['TL_DCA']['tl_casino_category'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => 'name, countries, alias'
+		'default'                     => 'name, alias'
 	),
 
 	// Fields
@@ -95,28 +95,25 @@ $GLOBALS['TL_DCA']['tl_casino_category'] = array
 		(
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
-		'name' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_casino_category']['name'],
-			'inputType'               => 'text',
-            'required'                => true,
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>64, 'tl_class'=>'w50'),
-			'sql'                     => "varchar(64) NOT NULL default ''"
-		),
-        'countries' => array
+        'name' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_casino_category']['country'],
-            'inputType'               => 'checkboxWizard',
-            'options_callback'        => 'Gambling\\BackendHelpers::getCountriesForOptions',
-            'sql'                     => "varchar(5) NOT NULL"
+            'label'                   => &$GLOBALS['TL_LANG']['tl_casino_category']['name'],
+            'inputType'               => 'multilingualText',
+            'required'                => true,
+            'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
+            'sql'                     => "blob NULL"
         ),
         'alias' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_casino_category']['alias'],
             'inputType'               => 'text',
             'required'                => true,
-            'eval'                    => array('mandatory'=>true),
+            'eval'                    => array('mandatory'=>true, 'unique'=>true, 'rgxp'=>'alias', 'tl_class'=>'w50'),
             'sql'                     => "varchar(255) NOT NULL default ''"
+        ),
+        'sorting' => array
+        (
+            'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
 	)
 );
