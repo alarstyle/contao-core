@@ -1,0 +1,18 @@
+.timer {
+    background: #d43a31;
+    color: #fff;
+    height: 73px;
+    overflow: hidden;
+    padding-top: 13px;
+    text-align: center;
+    white-space: nowrap;
+    span {
+        display: block;
+        font: bold 24px/31px 'Montserrat', sans-serif;
+        height: 31px;
+    }
+    div {
+        color: #ea9d98;
+        font: 12px/1.2 'Montserrat', sans-serif;
+    }
+}

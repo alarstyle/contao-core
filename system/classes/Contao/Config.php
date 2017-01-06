@@ -140,6 +140,24 @@ class Config
                 if (file_exists($strFile)) {
                     include $strFile;
                 }
+
+                $configFile = TL_ROOT . '/system/plugins/' . $strModule . '/newConfig.php';
+                if (file_exists($configFile)) {
+                    $config = include $configFile;
+                    foreach ($config as $key => $value) {
+                        if (empty($value)) {
+                            continue;
+                        }
+                        if (!is_array($value)) {
+                            $value = [$value];
+                        }
+                        if (empty($GLOBALS[$key])) {
+                            $GLOBALS[$key] = $value;
+                            continue;
+                        }
+                        $GLOBALS[$key] = array_merge($GLOBALS[$key], $value);
+                    }
+                }
             }
         }
 

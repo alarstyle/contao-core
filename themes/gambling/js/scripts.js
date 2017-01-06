@@ -153,7 +153,7 @@
 
 
     function initCountdown() {
-        var $elements = $('.promotions .item-timer span');
+        var $elements = $('[data-end]');
         if (!$elements.length) return;
 
         function leadingZero(num) {

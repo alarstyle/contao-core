@@ -1,15 +1,6 @@
 <?php
 
 /**
- * Contao Open Source CMS
- *
- * Copyright (c) 2005-2016 Leo Feyer
- *
- * @license LGPL-3.0+
- */
-
-
-/**
  * Table tl_casino_category
  */
 $GLOBALS['TL_DCA']['tl_casino_category'] = array
@@ -103,18 +94,19 @@ $GLOBALS['TL_DCA']['tl_casino_category'] = array
             'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
             'sql'                     => "blob NULL"
         ),
-        'alias' => array
-        (
+        'alias' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_casino_category']['alias'],
             'inputType'               => 'text',
             'required'                => true,
             'eval'                    => array('mandatory'=>true, 'unique'=>true, 'rgxp'=>'alias', 'tl_class'=>'w50'),
             'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
-        'sorting' => array
-        (
+        ],
+        'isBetting' => [
+            'sql'               => "char(1) NOT NULL default ''"
+        ],
+        'sorting' => [
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ),
+        ],
 	)
 );
 

@@ -163,7 +163,7 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['casino_categories'],
             'inputTypeNew'            => 'checkboxWizard',
-            'options_callback'        => 'Gambling\\BackendHelpers::getCountriesForOptions',
+            'options_callback'        => 'Gambling\\BackendHelpers::getCasinoCategoriesForOptions',
             'eval'                    => ['tl_class'=>'w50'],
             'sql'                     => "blob NULL"
         ),
@@ -171,7 +171,7 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['betting_categories'],
             'inputTypeNew'            => 'checkboxWizard',
-            'options_callback'        => 'Gambling\\BackendHelpers::getCountriesForOptions',
+            'options_callback'        => 'Gambling\\BackendHelpers::getBettingCategoriesForOptions',
             'eval'                    => ['tl_class'=>'w50'],
             'sql'                     => "blob NULL"
         ),

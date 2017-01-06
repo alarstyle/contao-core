@@ -76,10 +76,10 @@ class BackendTemplate extends Template
 			$this->stylesheets .= '<link rel="stylesheet" href="' . $this->addStaticUrlTo('assets/contao/css/debug.css') . '">' . "\n";
 		}
 
-        if (!empty($GLOBALS['COMPONENTS']) && is_array($GLOBALS['COMPONENTS'])) {
+        if (!empty($GLOBALS['components']) && is_array($GLOBALS['components'])) {
             $strJsTemplates = '';
 
-            foreach ($GLOBALS['COMPONENTS'] as $id=>$componentArr) {
+            foreach ($GLOBALS['components'] as $id=>$componentArr) {
                 $GLOBALS['TL_JAVASCRIPT'][] = $componentArr[0];
                 if (!empty($componentArr[1])) {
                     $strJsTemplates .= Template::generateJsTemplate($id.'-template', $componentArr[1]) . "\n";

@@ -1,6 +1,5 @@
 <?php
 
-use Contao\BackendUser;
 use Contao\Environment;
 use Contao\Input;
 use Grow\Application;

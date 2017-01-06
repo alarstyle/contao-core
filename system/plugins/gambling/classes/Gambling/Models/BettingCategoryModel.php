@@ -4,7 +4,7 @@ namespace Gambling\Models;
 
 use Contao\Model;
 
-class CasinoCategoryModel extends Model
+class BettingCategoryModel extends Model
 {
 
     protected static $strTable = 'tl_casino_category';
@@ -23,7 +23,7 @@ class CasinoCategoryModel extends Model
 
     protected static function find(array $arrOptions)
     {
-        $arrOptions['column'][] = 'NOT isBetting = 1';
+        $arrOptions['column'][] = 'isBetting = 1';
 
         return parent::find($arrOptions);
     }

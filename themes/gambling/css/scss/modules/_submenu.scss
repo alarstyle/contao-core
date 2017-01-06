@@ -30,7 +30,7 @@
     text-transform: uppercase;
     li {
         display: inline-block;
-        padding: 21px 20px 0;
+        padding: 16px 20px 0;
     }
     a:before {
         @extend .arrow_red;
@@ -91,7 +91,7 @@
         li {
             display: inline-block;
             letter-spacing: 0.5px;
-            padding: 21px 32px 0;
+            padding: 16px 32px 0;
             position: relative;
             height: 100%;
             &:before,
@@ -128,16 +128,16 @@
         @include abs-pos(0, 0);
         border-right: 1px solid #eaeaeb;
         height: 100%;
-        width: 65px;
+        width: 56px;
         svg {
             display: block;
             fill: #d3d3d3;
-            margin: 15px auto 0;
+            margin: 12px auto 0;
             width: 32px;
             height: 32px;
         }
         + ul {
-            padding-left: 80px;
+            padding-left: 60px;
         }
     }
 }

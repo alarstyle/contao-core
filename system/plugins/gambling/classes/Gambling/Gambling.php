@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alexander
- * Date: 07.12.16
- * Time: 10:12
- */
 
 namespace Gambling;
 
@@ -14,6 +8,7 @@ use Contao\Controller;
 use Contao\Environment;
 use Contao\Models\PageModel;
 use Contao\System;
+use Gambling\Models\BettingCategoryModel;
 use Gambling\Models\CasinoCategoryModel;
 use Gambling\Models\CountryModel;
 use Gambling\Models\PostModel;
@@ -26,6 +21,7 @@ class Gambling
 
 
     protected static $casinoCategories = null;
+    protected static $bettingCategories = null;
 
 
     public static function getHomePage()
@@ -177,16 +173,42 @@ class Gambling
         $categories = $categories->fetchAll();
         $currentCountry = static::getCurrentCountry();
         $countryId = intval($currentCountry['id']);
-        $casinosPage = \Gambling\Gambling::getPageData(71);
+        $casinosPage = static::getPageData(71);
 
         foreach ($categories as &$category) {
             $category['name'] = deserialize($category['name'])[$countryId] ?: $category['alias'];
-            $category['url'] = $casinosPage['url'] . '#' . '/';
+            $category['url'] = $casinosPage['url'] . $category['alias'] . '/';
         }
 
         static::$casinoCategories = $categories;
 
         return static::$casinoCategories;
+    }
+
+
+    public static function getBettingCategories()
+    {
+        if (static::$bettingCategories !== null) {
+            return static::$bettingCategories;
+        }
+
+        $categories = BettingCategoryModel::findAll();
+
+        if ($categories === null) return [];
+
+        $categories = $categories->fetchAll();
+        $currentCountry = static::getCurrentCountry();
+        $countryId = intval($currentCountry['id']);
+        $casinosPage = static::getPageData(71);
+
+        foreach ($categories as &$category) {
+            $category['name'] = deserialize($category['name'])[$countryId] ?: $category['alias'];
+            $category['url'] = $casinosPage['url'] . $category['alias'] . '/';
+        }
+
+        static::$bettingCategories = $categories;
+
+        return static::$bettingCategories;
     }
 
 }

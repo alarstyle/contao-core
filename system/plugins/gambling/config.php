@@ -238,18 +238,6 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 3, 'pages', [
     ]
 ]);
 
-
-$GLOBALS['COMPONENTS']['unit-rating'] = [
-    '/system/plugins/gambling/assets/js/components/unit-rating.js',
-    '/system/plugins/gambling/assets/js/components/unit-rating.html'
-];
-
-$GLOBALS['COMPONENTS']['unit-multilingual-text'] = [
-    '/system/plugins/gambling/assets/js/components/unit-multilingual-text.js',
-    '/system/plugins/gambling/assets/js/components/unit-multilingual-text.html'
-];
-
-
 $GLOBALS['UNITS']['rating'] = 'Gambling\\Units\\Rating';
 $GLOBALS['UNITS']['multilingualText'] = 'Gambling\\Units\\MultilingualText';
 

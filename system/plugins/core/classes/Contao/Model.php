@@ -419,16 +419,10 @@ abstract class Model
 	 *
 	 * @return static The model object
 	 *
-	 * @throws \InvalidArgumentException If an argument is passed
 	 * @throws \LogicException           If the model cannot be saved
 	 */
 	public function save()
 	{
-		// Deprecated call
-		if (count(func_get_args()))
-		{
-			throw new \InvalidArgumentException('The $blnForceInsert argument has been removed (see system/docs/UPGRADE.md)');
-		}
 
 		// The instance cannot be saved
 		if ($this->blnPreventSaving)

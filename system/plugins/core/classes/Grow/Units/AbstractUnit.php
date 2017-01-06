@@ -205,7 +205,7 @@ abstract class AbstractUnit
 
         $options = $fieldData['options'];
 
-        if (!is_array($options) || empty($options)) {
+        if (!is_array($options)) {
             return null;
         }
 

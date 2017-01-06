@@ -5,6 +5,8 @@ namespace Gambling;
 use Contao\BackendUser;
 use Contao\Database;
 use Contao\System;
+use Gambling\Models\BettingCategoryModel;
+use Gambling\Models\CasinoCategoryModel;
 use Grow\ActionData;
 
 class BackendHelpers
@@ -13,6 +15,8 @@ class BackendHelpers
 
 
     protected static $countries = null;
+
+    protected static $defaultCountryId = null;
 
 
     protected static function loadCountries()
@@ -29,6 +33,9 @@ class BackendHelpers
         if ($result->numRows) {
             $countriesNames = \Contao\System::getCountries();
             while ($result->next()) {
+                if ($result->fallback) {
+                    static::$defaultCountryId = $result->id;
+                }
                 static::$countries[$result->id] = [
                     'id' => $result->id,
                     'code' => $result->country,
@@ -128,13 +135,41 @@ class BackendHelpers
 
     public static function getCasinoCategoriesForOptions()
     {
+        static::loadCountries();
 
+        $categories = CasinoCategoryModel::findAll();
+
+        if ($categories === null) return [];
+
+        $categories = $categories->fetchAll();
+        $options = [];
+        $countryId = static::$defaultCountryId;
+
+        foreach ($categories as $category) {
+            $options[$category['id']] = deserialize($category['name'])[$countryId] ?: $category['alias'];;
+        }
+
+        return $options;
     }
 
 
     public static function getBettingCategoriesForOptions()
     {
+        static::loadCountries();
 
+        $categories = BettingCategoryModel::findAll();
+
+        if ($categories === null) return [];
+
+        $categories = $categories->fetchAll();
+        $options = [];
+        $countryId = static::$defaultCountryId;
+
+        foreach ($categories as $category) {
+            $options[$category['id']] = deserialize($category['name'])[$countryId] ?: $category['alias'];;
+        }
+
+        return $options;
     }
 
 }

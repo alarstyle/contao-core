@@ -28,23 +28,9 @@
             display: none;
         }
     }
-    .item-timer {
+    .timer {
         @include abs-pos(0, auto, auto, 0);
-        background: #d43a31;
-        color: #fff;
-        height: 50px;
-        overflow: hidden;
-        text-align: center;
-        white-space: nowrap;
         width: 41%;
-        span {
-            display: block;
-            font: bold 16px/50px 'Montserrat', sans-serif;
-            height: 50px;
-        }
-        div {
-            display: none;
-        }
     }
     .item-info {
         margin-left: 41%;
@@ -95,6 +81,25 @@
     }
 }
 
+
+@media (max-width: $max-mobile-width) {
+    .promotions {
+        .timer {
+            padding-top: 0;
+            height: 50px;
+            span {
+                font-size: 16px;
+                line-height: 50px;
+                height: 50px;
+            }
+            div {
+                display: none;
+            }
+        }
+    }
+}
+
+
 @media (min-width: $min-tablet-width) {
     .promotions {
         .items {
@@ -114,23 +119,11 @@
                 display: block;
             }
         }
-        .item-timer {
+        .timer {
             width: 183px;
-            height: 73px;
             left: 140px;
             top: 39px;
             bottom: auto;
-            padding-top: 13px;
-            span {
-                font-size: 24px;
-                height: 31px;
-                line-height: 31px;
-            }
-            div {
-                color: #ea9d98;
-                display: block;
-                font: 12px/1.2 'Montserrat', sans-serif;
-            }
         }
         .item-info {
             margin-left: 315px;

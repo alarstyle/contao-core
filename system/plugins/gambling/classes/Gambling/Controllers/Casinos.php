@@ -62,6 +62,7 @@ class Casinos extends ListingWithGroups
 
     public function ajaxGetGroups()
     {
+        $this->config['group']['whereCallback'] = [$this, 'groupsWhereCallback'];
         $this->config['group']['labelCallback'] = [$this, 'groupsLabelCallback'];
         $this->config['group']['titleCallback'] = [$this, 'groupsLabelCallback'];
         parent::ajaxGetGroups();
@@ -91,10 +92,20 @@ class Casinos extends ListingWithGroups
         return $name ?: $item['alias'];
     }
 
+    protected function groupsWhereCallback()
+    {
+        return ['NOT isBetting = 1'];
+    }
+
 
     protected function listWhereCallback()
     {
         $this->where[] = 'countries LIKE \'%"' . $this->currentCountryId . '"%\' OR countries = "a:0:{}"';
+        $this->where[] = 'isCasino = 1';
+        $groupId = Input::post('groupId');
+        if (!empty($groupId)) {
+            $this->where[] = 'casino_categories LIKE \'%"' . $groupId . '"%\'';
+        }
         return $this->where;
     }
 
