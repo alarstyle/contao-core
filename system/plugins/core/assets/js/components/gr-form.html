@@ -1,10 +1,18 @@
 <div class="gr-form">
 
-    <template v-for="(field, fieldName) in fields">
+    <div v-for="(field, fieldName) in fields" :key="fieldName" v-if="!field.hidden">
 
         <div v-if="field.component === 'section-title'" class="section_title">
             {{ field.label }}
         </div>
+
+        <template v-else-if="field.component === 'unit-select1'">
+            <component :is="field.component"
+                       :id="fieldName"
+                       :fieldData="field.value"
+                       @change="unitChange"
+                       ref="units"></component>
+        </template>
 
         <template v-else-if="field.component">
             <component :is="field.component"
@@ -23,6 +31,6 @@
             NO COMPONENT FOR TYPE: {{ field.type }}
         </template>
 
-    </template>
+    </div>
 
 </div>

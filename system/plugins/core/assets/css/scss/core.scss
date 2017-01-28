@@ -9,6 +9,8 @@
 @import "partials/checkbox_radio";
 @import "partials/unit";
 @import "partials/operations";
+@import "partials/panel";
+@import "partials/steps";
 
 @import "components/gr-dropdown";
 @import "components/gr-modal";
@@ -66,3 +68,4 @@
         font-size: 17px;
     }
 }
+

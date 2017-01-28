@@ -11,13 +11,71 @@
     </gr-select>
 </div>
 
-<div class="country_switch" v-if="state === 'edit_item' && casinoCountries && casinoCountries.length">
+<div class="country_switch" v-if="state === 'edit_item' && step === 2 && casinoCountries && casinoCountries.length">
     <groups
         :list="casinoCountries"
         title="Country"
         @group-selected="handleEditCountrySelected"
-        ref="groups">
+        ref="casinoDataCountry">
     </groups>
 </div>
+
+<?php $this->endblock(); ?>
+
+
+<?php $this->block('form'); ?>
+    <gr-form v-if="step === 1"
+             :fields="formFields"
+             :errors="formErrors"
+             @change="handleFormChange"
+             ref="form"></gr-form>
+    <template v-else>
+        <gr-form v-for="(data, countryId) in casinoData" v-if="casinoDataCountryId == countryId"
+                 :fields="data.main"
+                 :errors="formErrors"
+                 ref="dataForm"></gr-form>
+    </template>
+<?php $this->endblock(); ?>
+
+
+<?php $this->block('right'); ?>
+
+    <div class="submit_panel" v-sticky data-margin-top="50">
+        <div class="submit_panel-title">
+            Save changes?
+        </div>
+        <div class="steps" v-if="currentId">
+            <ul>
+                <li :class="step === 1 ? 'active' : ''"><b>1</b><span @click="handleStep1Click">General information</span></li>
+                <li :class="step === 2 ? 'active' : ''"><b>2</b><span @click="handleStep2Click">Casino Description</span></li>
+            </ul>
+        </div>
+        <div class="submit_panel-form" v-if="formSidebarFields">
+            <gr-form v-if="step === 1"
+                    :fields="formSidebarFields"
+                     :errors="formErrors"
+                     @change="handleFormChange"
+                     ref="formSidebar"></gr-form>
+            <template v-else>
+                <gr-form v-for="(data, countryId) in casinoData" v-if="casinoDataCountryId == countryId"
+                         :fields="data.sidebar"
+                         :errors="formErrors"
+                         ref="dataFormSidebar"></gr-form>
+            </template>
+        </div>
+        <div class="submit_panel-btns">
+            <template v-if="step === 1 && currentId === 'new'">
+                <div class="btn btn--primary" @click="handleNextClick">Next</div>
+            </template>
+            <template v-else-if="step === 2">
+                <div class="btn btn--primary" @click="saveDataClick">Save</div>
+            </template>
+            <template v-else>
+                <div class="btn btn--primary" @click="saveClick">Save</div>
+            </template>
+            <div class="btn" @click="cancelEdit">Cancel</div>
+            <div v-if="currentId !== 'new' && currentGroupId !== 'new'" class="btn btn--danger" @click="deleteClick">Delete</div>
+        </div>
+    </div>
 
 <?php $this->endblock(); ?>

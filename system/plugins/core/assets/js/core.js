@@ -72,12 +72,6 @@
                     this.currentValue = value;
                 },
                 deep: true
-            },
-            currentValue: {
-                handler: function (currentValue) {
-                    this.$emit('change', currentValue, this);
-                },
-                deep: true
             }
         },
 

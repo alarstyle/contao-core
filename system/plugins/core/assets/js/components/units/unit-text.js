@@ -4,7 +4,20 @@
 
         extends: AbstractUnit,
 
-        template: '#unit-text-template'
+        template: '#unit-text-template',
+
+        watch: {
+            currentValue: function(currentValue) {
+                console.log('TEXT CHANGED', currentValue);
+                this.$emit('change', this.currentValue, this);
+            }
+        },
+
+        methods: {
+            handleInputChange: function() {
+
+            }
+        }
 
     };
 

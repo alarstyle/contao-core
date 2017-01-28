@@ -20,7 +20,8 @@ class Listing extends \Contao\Controllers\BackendMain
         'getListItem' => 'ajaxGetListItem',
         'saveItem' => 'ajaxSaveItem',
         'deleteItem' => 'ajaxDeleteItem',
-        'disableItem' => 'ajaxDisableItem'
+        'disableItem' => 'ajaxDisableItem',
+        'updateForm' => 'ajaxUpdateForm'
     ];
 
     protected $config = [];
@@ -144,6 +145,17 @@ class Listing extends \Contao\Controllers\BackendMain
         if ($this->listOrganizer->hasErrors()) {
             ActionData::error($this->listOrganizer->getErrors());
         }
+    }
+
+
+    public function ajaxUpdateForm()
+    {
+        $id = Input::post('id');
+        $fields = Input::post('fields');
+
+        $updatedFields = $this->listOrganizer->updateForm($id, $fields);
+
+        ActionData::data('fields', $updatedFields);
     }
 
 }

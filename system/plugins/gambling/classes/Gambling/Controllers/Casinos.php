@@ -2,11 +2,14 @@
 
 namespace Gambling\Controllers;
 
+use Contao\Database;
 use Contao\Input;
 use Contao\Session;
 use Gambling\BackendHelpers;
+use Grow\ActionData;
 use Grow\ApplicationData;
 use Grow\Controllers\ListingWithGroups;
+use Grow\Organizer;
 
 class Casinos extends ListingWithGroups
 {
@@ -26,9 +29,14 @@ class Casinos extends ListingWithGroups
     protected $currentCountryId;
 
 
+    protected $casinoDataOrganizer;
+
+
     public function __construct($config)
     {
         $this->ajaxActions['changeCountry'] = 'ajaxChangeCountry';
+        $this->ajaxActions['getCasinoData'] = 'ajaxGetCasinoData';
+        $this->ajaxActions['saveCasinoData'] = 'ajaxSaveCasinoData';
 
         parent::__construct($config);
 
@@ -36,6 +44,8 @@ class Casinos extends ListingWithGroups
 
         $this->session = Session::getInstance();
         $this->currentCountryId = $this->session->get('postsCurrentCountry');
+
+        $this->casinoDataOrganizer = new Organizer('tl_casino_data');
 
         $countries = BackendHelpers::getUserAvailableCountriesForOptions();
         $availableCountries = [];
@@ -84,6 +94,61 @@ class Casinos extends ListingWithGroups
     }
 
 
+    public function ajaxGetCasinoData()
+    {
+        $id = Input::post('id');
+        $fieldsValues = Input::post('fields');
+        $casinoCountries = $fieldsValues['countries'] ?: [];
+
+        $casinoData = [];
+
+        $objRow = Database::getInstance()->prepare("SELECT id, country FROM tl_casino_data WHERE pid=?")
+            ->execute($id);
+
+        if ($objRow->numRows >= 1) {
+            foreach ($objRow->fetchAllAssoc() as $row) {
+                $casinoData[$row['country']] = $this->casinoDataOrganizer->load($row['id']);
+            }
+        }
+
+        foreach ($casinoCountries as $countryId) {
+            if (isset($casinoData[$countryId])) continue;
+            $casinoData[$countryId] = $this->casinoDataOrganizer->blank();
+        }
+
+        ActionData::data('casinoData', $casinoData);
+    }
+
+
+    public function ajaxSaveCasinoData()
+    {
+        $id = Input::post('id');
+        $countryId = Input::post('countryId');
+        $fields = Input::post('fields');
+
+        $objRow = Database::getInstance()->prepare("SELECT id FROM tl_casino_data WHERE pid=? AND country=?")
+            ->limit(1)
+            ->execute($id, $countryId);
+
+        if ($objRow->numRows < 1) {
+            $fields['country'] = $countryId;
+            $fields['pid'] = $id;
+            $dataId = $this->casinoDataOrganizer->create($fields);
+        } else {
+            $dataId = $objRow->id;
+            $this->casinoDataOrganizer->save($dataId, $fields);
+        }
+
+        if ($this->casinoDataOrganizer->hasErrors()) {
+            ActionData::error($this->listOrganizer->getErrors());
+            return;
+        }
+
+        $casinoData = $this->casinoDataOrganizer->load($dataId);
+        ActionData::data('casinoData', $casinoData);
+    }
+
+
     protected function groupsLabelCallback($item)
     {
         $defaultCountry = BackendHelpers::getDefaultCountry();
@@ -100,7 +165,7 @@ class Casinos extends ListingWithGroups
 
     protected function listWhereCallback()
     {
-        $this->where[] = 'countries LIKE \'%"' . $this->currentCountryId . '"%\' OR countries = "a:0:{}"';
+        $this->where[] = 'countries LIKE \'%"' . $this->currentCountryId . '"%\' OR countries = "a:0:{}" OR countries = ""';
         $this->where[] = 'isCasino = 1';
         $groupId = Input::post('groupId');
         if (!empty($groupId)) {

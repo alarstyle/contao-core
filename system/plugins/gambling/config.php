@@ -37,7 +37,6 @@ $GLOBALS['TL_CSS'][] = '/system/plugins/gambling/assets/css/main.css';
 
 array_insert_assoc($GLOBALS['NAVIGATION'], 1, 'casinos', [
     'label' => 'Casinos',
-    //'hidden' => true,
     'controller' => 'Gambling\\Controllers\\Casinos',
     'config' => [
         'group' => [
@@ -53,7 +52,7 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 1, 'casinos', [
             'titleCallback' => function ($item) {
                 return $item['name'];
             },
-            //'sorting' => ['dateAdded DESC']
+            //'sorting' => ['tstamp']
         ],
         'list' => [
             'table' => 'tl_casino',
@@ -89,7 +88,6 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 1, 'casinos', [
 
 array_insert_assoc($GLOBALS['NAVIGATION'], 2, 'bettings', [
     'label' => 'Bettings',
-    //'hidden' => true,
     'controller' => 'Gambling\\Controllers\\Bettings',
     'config' => [
         'group' => [
@@ -105,7 +103,7 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 2, 'bettings', [
             'titleCallback' => function ($item) {
                 return $item['name'];
             },
-            //'sorting' => ['dateAdded DESC']
+            //'sorting' => ['tstamp DESC']
         ],
         'list' => [
             'table' => 'tl_casino',

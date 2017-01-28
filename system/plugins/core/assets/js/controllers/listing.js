@@ -78,7 +78,7 @@
 
             editItem: function (id) {
                 var _this = this;
-                this.action('getListItem', {id: id})
+                return this.action('getListItem', {id: id})
                     .then(function (response) {
                         _this.currentId = id;
                         _this.formFields = response.data.data.fields;
@@ -102,7 +102,7 @@
                     _this.$refs.formSidebar ? _this.$refs.formSidebar.getValues() : []);
                 fieldsValues = JSON.parse(JSON.stringify(fieldsValues));
 
-                this.action('saveItem', {id: _this.currentId, fields: fieldsValues})
+                return this.action('saveItem', {id: _this.currentId, fields: fieldsValues})
                     .then(function (response) {
                         _this.locked = false;
                         if (response.data.success) {
@@ -285,7 +285,24 @@
             },
 
             handleFormChange: function(value, unit, form) {
-
+                // var _this = this;
+                //
+                // var fieldData = form.fields[unit.id];
+                //
+                // if (!fieldData.config.updateOnChange) return;
+                //
+                // var fieldsValues = _this.$refs.form.getValues();
+                // fieldsValues = JSON.parse(JSON.stringify(fieldsValues));
+                //
+                // this.action('updateForm', {id: _this.state === 'edit_group' ? _this.currentGroupId : _this.currentId, fields: fieldsValues})
+                //     .then(function (response) {
+                //         if (response.data.success) {
+                //             grow.notify('Updated');
+                //         }
+                //         else if (response.data.error) {
+                //             grow.notify('Unknown error', {type: 'danger'});
+                //         }
+                //     });
             }
 
         },

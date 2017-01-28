@@ -6,16 +6,11 @@
 
         template: '#unit-checkbox-template',
 
-        watch: {
-            currentValue: function(currentValue) {
-
-            }
-        },
-
         methods: {
 
             onInputChange: function(e) {
                 this.currentValue = e.target.checked ? 1 : 0;
+                this.$emit('change', this.currentValue, this);
             }
 
         }

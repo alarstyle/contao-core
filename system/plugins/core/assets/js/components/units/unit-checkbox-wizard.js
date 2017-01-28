@@ -32,6 +32,7 @@
                         return n !== e.target.value + '';
                     });
                 }
+                this.$emit('change', this.currentValue, this);
             },
 
             isChecked: function(value) {

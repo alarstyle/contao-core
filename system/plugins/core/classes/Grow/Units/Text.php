@@ -7,5 +7,4 @@ class Text extends AbstractUnit
 
     public static $componentName = 'unit-text';
 
-
 }

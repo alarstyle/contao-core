@@ -14,7 +14,10 @@ $GLOBALS['TL_DCA']['tl_post'] = array
 				'id' => 'primary',
                 'alias' => 'unique'
 			)
-		)
+		),
+        'updateFormCallback' => function($id, $fieldsValues) {
+            return $fieldsValues;
+        }
 	),
 
 	// List
@@ -74,7 +77,10 @@ $GLOBALS['TL_DCA']['tl_post'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_post']['alias'],
 			'inputType'               => 'text',
             'required'                => true,
-			'eval'                    => array('mandatory'=>true, 'unique'=>true, 'rgxp'=>'alias'),
+            'config'                  => [
+                'prefix' => \Contao\Environment::get('base') . '../article/'
+            ],
+			'eval'                    => array('mandatory'=>true, 'unique'=>true, 'rgxp'=>'alias', 'tl_class'=>'unit--long'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
 		'teaser' => array
@@ -118,6 +124,9 @@ $GLOBALS['TL_DCA']['tl_post'] = array
             'required'                => true,
             'options_callback'        => ['tl_post', 'getCategoriesList'],
             'eval'                    => ['mandatory' => true],
+            'config'                  => [
+                'updateOnChange' => true
+            ],
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ],
         'author' => array

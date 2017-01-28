@@ -27,16 +27,15 @@
                 if (!selectedDates.length) {
                     this.currentValue = '';
                 }
-                this.currentValue = Math.floor(selectedDates[0].getTime() / 1000);
-                console.log('!!!!');
-                console.log(this.currentValue);
+                else {
+                    this.currentValue = Math.floor(selectedDates[0].getTime() / 1000);
+                }
+                this.$emit('change', this.currentValue, this);
             }
 
         },
 
         mounted: function () {
-            console.log(this.microtime);
-            console.log(new Date(this.microtime));
             this.fp = new Flatpickr(this.$refs.input, {
                 static: true,
                 enableTime: this.config['enableTime'] || false,

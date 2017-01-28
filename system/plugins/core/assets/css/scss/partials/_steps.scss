@@ -1,0 +1,44 @@
+.steps {
+    @extend .disable_select;
+    border-bottom: 1px solid #d9dddf;
+    color: #d3d4d5;
+    font-weight: bold;
+    margin-bottom: 16px;
+    ul {
+        list-style: none;
+    }
+    li {
+        margin-bottom: 15px;
+        position: relative;
+        &.active {
+            color: #3387dc;
+            b {
+                background: #3387dc;
+            }
+        }
+        &.success {
+            color: #2cc379;
+            b {
+                background: #2cc379;
+                font-size: 0;
+            }
+        }
+    }
+    span {
+        cursor: pointer;
+        display: inline-block;
+        padding: 3px 0 3px 30px;
+        position: relative;
+    }
+    b {
+        @include abs-pos(0, 0);
+        background: #d3d4d5;
+        border-radius: 50%;
+        color: #fff;
+        line-height: 24px;
+        text-align: center;
+        width: 24px;
+        height: 24px;
+    }
+}
+

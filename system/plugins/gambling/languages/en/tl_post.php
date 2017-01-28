@@ -6,7 +6,7 @@ $GLOBALS['TL_LANG']['tl_post']['seo'] = 'SEO';
 $GLOBALS['TL_LANG']['tl_post']['content'] = 'Article content';
 
 $GLOBALS['TL_LANG']['tl_post']['name'] = ['Title', 'Article title'];
-$GLOBALS['TL_LANG']['tl_post']['alias'] = ['Alias', 'Unique identifier of this article. Is used in the URL.'];
+$GLOBALS['TL_LANG']['tl_post']['alias'] = ['Article URL', ''];
 $GLOBALS['TL_LANG']['tl_post']['teaser'] = ['Teaser', 'Small text preview for articles list'];
 $GLOBALS['TL_LANG']['tl_post']['text'] = ['', 'Main content of the article'];
 $GLOBALS['TL_LANG']['tl_post']['img_preview'] = ['Preview image', 'Small image for articles list (630x400)'];

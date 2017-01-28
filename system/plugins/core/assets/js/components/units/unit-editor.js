@@ -83,6 +83,7 @@
 
             handleEditorChange: function(e) {
                 this.currentValue = this.editor.getContent();
+                this.$emit('change', this.currentValue, this);
                 console.log('Editor contents was changed.');
             }
 
@@ -90,7 +91,6 @@
 
         mounted: function() {
             if (this.editor) return;
-            console.log('mount');
             var _this = this,
                 configSettings = this.config.settings,
                 settings = {
@@ -98,8 +98,6 @@
                     init_instance_callback: function (editor) {
                         _this.editor = editor;
 
-                        console.log('!!!!!!!');
-                        console.log(_this.currentValue);
                         if (_this.currentValue) {
                             editor.setContent(_this.currentValue);
                         }

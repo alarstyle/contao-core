@@ -6,16 +6,11 @@
 
         template: '#unit-textarea-template',
 
-        data: function() {
-            return {
-
-            }
-        },
-
         methods: {
 
-            handleChange: function(newValue) {
+            handleTextareaChange: function(newValue) {
                 this.currentValue = newValue;
+                this.$emit('change', this.currentValue, this);
             }
 
         }

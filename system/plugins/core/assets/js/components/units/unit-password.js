@@ -6,16 +6,6 @@
 
         template: '#unit-password-template',
 
-        data: function() {
-            return {
-
-            }
-        },
-
-        mounted: function() {
-
-        },
-
         methods: {
 
             onInputChange: function(e) {

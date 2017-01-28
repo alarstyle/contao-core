@@ -38,21 +38,26 @@
                 <?php $this->block('rightTop'); ?>
                 <?php $this->endblock(); ?>
 
-                <div class="submit_panel" v-sticky data-margin-top="50">
-                    <div class="submit_panel-title">
-                        Save changes?
+                <?php $this->block('right'); ?>
+
+                    <div class="submit_panel" v-sticky data-margin-top="50">
+                        <div class="submit_panel-title">
+                            Save changes?
+                        </div>
+                        <div class="submit_panel-form" v-if="formSidebarFields">
+                            <gr-form :fields="formSidebarFields"
+                                     :errors="formErrors"
+                                     @change="handleFormChange"
+                                     ref="formSidebar"></gr-form>
+                        </div>
+                        <div class="submit_panel-btns">
+                            <div class="btn btn--primary" @click="saveClick">Save</div>
+                            <div class="btn" @click="cancelEdit">Cancel</div>
+                            <div v-if="currentId !== 'new' && currentGroupId !== 'new'" class="btn btn--danger" @click="deleteClick">Delete</div>
+                        </div>
                     </div>
-                    <div class="submit_panel-form" v-if="formSidebarFields">
-                        <gr-form :fields="formSidebarFields"
-                                 :errors="formErrors"
-                                 ref="formSidebar"></gr-form>
-                    </div>
-                    <div class="submit_panel-btns">
-                        <div class="btn btn--primary" @click="saveClick">Save</div>
-                        <div class="btn" @click="cancelEdit">Cancel</div>
-                        <div v-if="currentId !== 'new' && currentGroupId !== 'new'" class="btn btn--danger" @click="deleteClick">Delete</div>
-                    </div>
-                </div>
+
+                <?php $this->endblock(); ?>
             </div>
 
         </template>

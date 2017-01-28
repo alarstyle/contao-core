@@ -60,6 +60,28 @@ class Organizer
     }
 
 
+    public function loadByParent($id)
+    {
+        $id = intval($id);
+        $objRow = $this->database->prepare("SELECT * FROM " . $this->table . " WHERE pid=?")
+            ->execute($id);
+
+        // Redirect if there is no record with the given ID
+        if ($objRow->numRows < 1) {
+            return null;
+        }
+
+        $unitsDataArray = [];
+
+        foreach ($objRow->fetchAllAssoc() as $row) {
+            $this->doLoadCallbacks($row, $id);
+            $unitsDataArray[] = $this->getUnitsData($row);
+        }
+
+        return $unitsDataArray;
+    }
+
+
     public function create($fieldsValues)
     {
         $this->errorsArr = $this->validate($fieldsValues);
@@ -79,8 +101,15 @@ class Organizer
 
         $this->doSaveCallbacks($fieldsValues);
 
+        $fieldsToSave = [];
+
+        foreach ($fieldsValues as $field => $value) {
+            if (in_array($field, $this->skipFields)) continue;
+            $fieldsToSave[$field] = $value;
+        }
+
         $objInsertStmt = $this->database->prepare("INSERT INTO " . $this->table . " %s")
-            ->set($fieldsValues)
+            ->set($fieldsToSave)
             ->execute();
 
         return $objInsertStmt->insertId;
@@ -347,6 +376,25 @@ class Organizer
     public function getErrors()
     {
         return $this->errorsArr;
+    }
+
+
+    public function updateForm($id, $fieldsValues)
+    {
+        $updateFormCallback = $GLOBALS['TL_DCA'][$this->table]['config']['updateFormCallback'];
+
+        if (!$updateFormCallback || !is_callable($updateFormCallback)) return [];
+
+        try
+        {
+            return call_user_func_array($updateFormCallback, [$id, $fieldsValues]);
+        }
+        catch (\Exception $e)
+        {
+
+        }
+
+        return [];
     }
 
 

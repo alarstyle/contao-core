@@ -21,11 +21,6 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 	// List
 	'list' => array
 	(
-		'sorting' => array
-		(
-			'fields'                  => array('dateAdded DESC'),
-			'flag'                    => 1,
-		),
 		'label' => array
 		(
             'fields_new'              => array('img_logo', 'name', 'countries'),
@@ -52,7 +47,7 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '[general],countries,name,url,owner,year,licence,phone,email,rating,type,casino_link,betting_link,casino_categories,betting_categories,[images],img_logo,img_cover'
+		'default'                     => '[general],countries,name,alias,url,owner,year,licence,phone,email,rating,type,casino_link,betting_link,casino_categories,betting_categories,[images],img_logo,img_cover'
 	),
 
 	// Fields
@@ -82,6 +77,17 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 			'eval'                    => array('mandatory'=>true, 'tl_class'=>'unit--long'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
+        'alias' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['alias'],
+            'inputType'               => 'text',
+            'required'                => true,
+            'config'                  => [
+                'prefix' => \Contao\Environment::get('base') . '../casino/'
+            ],
+            'eval'                    => array('mandatory'=>true, 'unique'=>true, 'rgxp'=>'alias', 'tl_class'=>'unit--long'),
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ),
 		'url' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['url'],

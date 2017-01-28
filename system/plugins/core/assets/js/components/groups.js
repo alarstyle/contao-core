@@ -23,6 +23,10 @@
             sortable: {
                 type: Boolean,
                 default: false
+            },
+            confirmExitIfUnsaved: {
+                type: Boolean,
+                default: true
             }
         },
 
@@ -38,15 +42,14 @@
             groupClick: function (i) {
                 if (this.active === i || this.$root.locked) return;
                 var _this = this;
-                this.$root.confirmExitIfUnsaved(function() {
-                    _this.active = i;
-                    if (_this.editingState) {
-                        _this.$emit('group-edit', _this.list[i].id);
-                    }
-                    else {
-                        _this.$emit('group-selected', _this.list[i].id);
-                    }
-                });
+                if (this.confirmExitIfUnsaved) {
+                    this.$root.confirmExitIfUnsaved(function() {
+                        _this._changeSelectedGroup(i);
+                    });
+                }
+                else {
+                    _this._changeSelectedGroup(i);
+                }
 
             },
 
@@ -91,6 +94,17 @@
                 Vue.nextTick(function() {
                     _this.active  = _.findIndex(_this.list, predicate);
                 });
+            },
+
+
+            _changeSelectedGroup: function(index) {
+                this.active = index;
+                if (this.editingState) {
+                    this.$emit('group-edit', this.list[index].id);
+                }
+                else {
+                    this.$emit('group-selected', this.list[index].id);
+                }
             }
 
         }

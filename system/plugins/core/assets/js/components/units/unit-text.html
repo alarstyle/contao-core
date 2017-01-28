@@ -1,5 +1,9 @@
     <div class="unit unit--text" :class="unitClass">
         <label class="unit-label" v-if="label">{{ label }}<span v-if="required">*</span>:</label>
-        <input type="text" v-model="currentValue" class="unit-input">
+        <div class="unit-input-container">
+            <div class="prefix" v-if="config.prefix">{{ config.prefix }}</div>
+            <input type="text" v-model="currentValue" class="unit-input" @change="handleInputChange">
+            <div class="suffix" v-if="config.suffix">{{ config.suffix }}</div>
+        </div>
         <div class="unit-hint">{{ error || hint }}</div>
     </div>

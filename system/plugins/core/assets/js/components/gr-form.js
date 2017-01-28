@@ -7,7 +7,9 @@
         props: {
             fields: {
                 type: [Object, Array],
-                default: {}
+                default: function() {
+                    return {};
+                }
             },
             errors: {
                 type: Object,
@@ -18,6 +20,7 @@
         data: function() {
             return {
                 isChanged: false,
+                doNotEmitUpdate: true,
                 changedFields: {}
             }
         },
@@ -25,6 +28,7 @@
         watch: {
             fields: {
                 handler: function (fields) {
+                    this.doNotEmitUpdate = true;
                     if (this.$refs.units) {
                         for (var i=0; i < this.$refs.units.length; i++) {
                             this.$refs.units[i].softReset();
@@ -32,7 +36,7 @@
                     }
                     var _this = this;
                     Vue.nextTick(function() {
-                        _this.isChanged = false;
+                        _this.doNotEmitUpdate = false;
                     });
                 },
                 deep: true
@@ -45,7 +49,9 @@
         methods: {
 
             unitChange: function(value, unit) {
-                console.log('u');
+                console.log('AAAA');
+                console.log(unit);
+                if (this.doNotEmitUpdate) return;
                 this.isChanged = true;
                 this.changedFields[unit.id] = value;
                 this.$emit('change', value, unit, this);
@@ -72,12 +78,13 @@
         mounted: function() {
             var _this = this;
             Vue.nextTick(function() {
-                _this.isChanged = false;
+                _this.doNotEmitUpdate = false;
             });
         },
 
         beforeDestroy: function () {
             this.isChanged = false;
+            this.doNotEmitUpdate = false;
             this.$root.unsaved = false;
         }
 
