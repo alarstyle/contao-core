@@ -60,28 +60,6 @@ class Organizer
     }
 
 
-    public function loadByParent($id)
-    {
-        $id = intval($id);
-        $objRow = $this->database->prepare("SELECT * FROM " . $this->table . " WHERE pid=?")
-            ->execute($id);
-
-        // Redirect if there is no record with the given ID
-        if ($objRow->numRows < 1) {
-            return null;
-        }
-
-        $unitsDataArray = [];
-
-        foreach ($objRow->fetchAllAssoc() as $row) {
-            $this->doLoadCallbacks($row, $id);
-            $unitsDataArray[] = $this->getUnitsData($row);
-        }
-
-        return $unitsDataArray;
-    }
-
-
     public function create($fieldsValues)
     {
         $this->errorsArr = $this->validate($fieldsValues);

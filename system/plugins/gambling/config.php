@@ -60,6 +60,7 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 1, 'casinos', [
             'labelNew' => 'Add New Casino',
             'labelEdit' => 'Edit Casino',
             'creatable' => true,
+            'order' => 'id DESC',
             'headersCallback' => function($headers) {
                 foreach($headers as &$header) {
                     switch($header['name']) {
@@ -111,6 +112,7 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 2, 'bettings', [
             'labelNew' => 'Add New Betting',
             'labelEdit' => 'Edit Betting',
             'creatable' => true,
+            'order' => 'id DESC',
             'headersCallback' => function($headers) {
                 foreach($headers as &$header) {
                     switch($header['name']) {
