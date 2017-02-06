@@ -116,6 +116,12 @@ class Result extends \Contao\Database\Result
 			mysql_free_result($this->resResult);
 		}
 	}
+
+
+	public function rawResult()
+    {
+        return $this->resResult;
+    }
 }
 
 // Backwards compatibility

@@ -47,7 +47,7 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '[general],countries,name,alias,url,owner,year,licence,phone,email,rating,type,casino_link,betting_link,casino_categories,betting_categories,[images],img_logo,img_cover'
+		'default'                     => '[general],countries,name,alias,website,owner,year,licence,phone,email,rating,type,casino_categories,betting_categories,[images],img_logo,img_cover,logo_bg'
 	),
 
 	// Fields
@@ -69,16 +69,14 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
             'eval'                    => ['tl_class'=>'w50'],
             'sql'                     => "blob NULL"
         ),
-		'name' => array
-		(
+		'name' => [
 			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['name'],
 			'inputType'               => 'text',
             'required'                => true,
 			'eval'                    => array('mandatory'=>true, 'tl_class'=>'unit--long'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
-		),
-        'alias' => array
-        (
+		],
+        'alias' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['alias'],
             'inputType'               => 'text',
             'required'                => true,
@@ -87,52 +85,35 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
             ],
             'eval'                    => array('mandatory'=>true, 'unique'=>true, 'rgxp'=>'alias', 'tl_class'=>'unit--long'),
             'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
-		'url' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['url'],
+        ],
+		'website' => [
+			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['website'],
 			'inputType'               => 'text',
             'eval'                    => array('tl_class'=>'unit--long'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
-		),
-		'owner' => array
-		(
+        ],
+		'owner' => [
 			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['owner'],
 			'inputType'               => 'text',
             'eval'                    => array('tl_class'=>'unit--long'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
-		),
-		'year' => array
-		(
+		],
+		'year' => [
 			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['year'],
 			'inputType'               => 'text',
 			'sql'                     => "varchar(255) NOT NULL default ''"
-		),
-		'licence' => array
-		(
+		],
+		'licence' => [
 			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['licence'],
 			'inputType'               => 'text',
             'eval'                    => array('tl_class'=>'unit--long'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
-		),
-		'phone' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['phone'],
-			'inputType'               => 'text',
-			'sql'                     => "varchar(255) NOT NULL default ''"
-		),
-		'email' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['email'],
-			'inputType'               => 'text',
-			'sql'                     => "varchar(255) NOT NULL default ''"
-		),
-		'rating' => array
-		(
+		],
+		'rating' => [
 			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['rating'],
 			'inputType'               => 'rating',
 			'sql'                     => "float NULL"
-		),
+		],
         'type' => [
             'label'             => &$GLOBALS['TL_LANG']['tl_casino']['type'],
             'inputType'         => 'radio',
@@ -151,39 +132,29 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
         'isBetting' => [
             'sql'               => "char(1) NOT NULL default ''"
         ],
-        'casino_link' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['casino_link'],
-            'inputType'               => 'text',
-            'eval'                    => ['tl_class'=>'w50'],
-            'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
-        'betting_link' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['betting_link'],
-            'inputType'               => 'text',
-            'eval'                    => ['tl_class'=>'w50'],
-            'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
-        'casino_categories' => array
-        (
+        'casino_categories' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['casino_categories'],
             'inputTypeNew'            => 'checkboxWizard',
             'options_callback'        => 'Gambling\\BackendHelpers::getCasinoCategoriesForOptions',
             'eval'                    => ['tl_class'=>'w50'],
             'sql'                     => "blob NULL"
-        ),
-        'betting_categories' => array
-        (
+        ],
+        'betting_categories' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['betting_categories'],
             'inputTypeNew'            => 'checkboxWizard',
             'options_callback'        => 'Gambling\\BackendHelpers::getBettingCategoriesForOptions',
             'eval'                    => ['tl_class'=>'w50'],
             'sql'                     => "blob NULL"
-        ),
+        ],
         'img_logo' => [
             'label'             => &$GLOBALS['TL_LANG']['tl_casino']['img_logo'],
             'inputType'         => 'filePicker',
+            'eval'              => ['tl_class'=>'w50'],
+            'sql'               => "varchar(255) NOT NULL default ''"
+        ],
+        'logo_bg' => [
+            'label'             => &$GLOBALS['TL_LANG']['tl_casino']['logo_bg'],
+            'inputType'         => 'color',
             'eval'              => ['tl_class'=>'w50'],
             'sql'               => "varchar(255) NOT NULL default ''"
         ],

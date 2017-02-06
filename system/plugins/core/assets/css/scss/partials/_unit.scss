@@ -62,7 +62,9 @@
     .suffix {
         background: #f4f4f4;
         padding: 0 10px;
+        position: relative;
         width: 10px;
+        overflow: hidden;
     }
 }
 
@@ -179,6 +181,19 @@
         }
         .mce-edit-area {
             border-radius: 0;
+        }
+    }
+}
+
+.unit--color {
+    .prefix {
+        width: 40px;
+        div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
     }
 }

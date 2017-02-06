@@ -159,6 +159,7 @@
                 this.action('getCasinoData', {id: this.currentId, fields: fieldsValues})
                     .then(function (response) {
                         _this.casinoData = response.data.data.casinoData;
+                        _this.casinoData = response.data.data.casinoData;
 
                         // _this.formFields = response.data.data.fields;
                         // _this.formSidebarFields = response.data.data.sidebar;
@@ -192,20 +193,24 @@
                 this.locked = true;
 
                 var _this = this;
+                var currentId = _this.currentId,
+                    countryId = _this.casinoDataCountryId;
                 var fieldsValues = _.defaults(
                     dataForm.getValues(),
                     dataFormSidebar ? dataFormSidebar.getValues() : []);
-                fieldsValues = JSON.parse(JSON.stringify(fieldsValues));
+
+                var simpleFieldsValues = JSON.parse(JSON.stringify(fieldsValues));
 
                 return this.action('saveCasinoData', {
-                        id: _this.currentId,
-                        countryId: _this.casinoDataCountryId,
-                        fields: fieldsValues})
+                        id: currentId,
+                        countryId: countryId,
+                        fields: simpleFieldsValues})
                     .then(function (response) {
                         _this.locked = false;
                         if (response.data.success) {
-                            _this.casinoData[_this.casinoDataCountryId] = response.data.data.casinoData;
-                                grow.notify('Saved successfully', {type: 'success'});
+                            _this.casinoData[countryId] = response.data.data.casinoData;
+                            //_this.casinoData[_this.casinoDataCountryId] = response.data.data.casinoData;
+                            grow.notify('Saved successfully', {type: 'success'});
                             _this.unsaved = false;
                             _this.formErrors = {};
                         }

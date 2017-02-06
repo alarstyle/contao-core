@@ -209,7 +209,7 @@ class tl_post extends \Contao\Backend
         $db = \Contao\Database::getInstance();
         $session = \Contao\Session::getInstance();
 
-        $currentCountry = $session->get('postsCurrentCountry') ?: null;
+        $currentCountry = $session->get('CurrentCountry') ?: null;
 
         if (empty($currentCountry)) {
             return [];

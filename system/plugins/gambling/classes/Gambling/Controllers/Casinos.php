@@ -43,7 +43,7 @@ class Casinos extends ListingWithGroups
         $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/gambling/assets/js/controllers/casinos.js';
 
         $this->session = Session::getInstance();
-        $this->currentCountryId = $this->session->get('postsCurrentCountry');
+        $this->currentCountryId = $this->session->get('CurrentCountry');
 
         $this->casinoDataOrganizer = new Organizer('tl_casino_data');
 
@@ -62,7 +62,7 @@ class Casinos extends ListingWithGroups
 
         if (empty($this->currentCountryId) || !in_array($this->currentCountryId, array_keys($countries))) {
             $this->currentCountryId = $availableCountries[0]['value'];
-            $this->session->set('postsCurrentCountry', $this->currentCountryId);
+            $this->session->set('CurrentCountry', $this->currentCountryId);
         }
 
         ApplicationData::addData('availableCountries', $availableCountries);
@@ -90,7 +90,7 @@ class Casinos extends ListingWithGroups
     public function ajaxChangeCountry()
     {
         $countryId = intval(Input::post('countryId'));
-        $this->session->set('postsCurrentCountry', $countryId);
+        $this->session->set('CurrentCountry', $countryId);
     }
 
 
@@ -140,7 +140,7 @@ class Casinos extends ListingWithGroups
         }
 
         if ($this->casinoDataOrganizer->hasErrors()) {
-            ActionData::error($this->listOrganizer->getErrors());
+            ActionData::error($this->casinoDataOrganizer->getErrors());
             return;
         }
 

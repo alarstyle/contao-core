@@ -27,6 +27,12 @@ class Pages extends GroupsEditing
     protected $contentOrganizer;
 
 
+    protected $session;
+
+
+    protected $currentCountry;
+
+
     public function __construct($config)
     {
         $this->contentOrganizer = new ContentOrganizer();
@@ -34,6 +40,10 @@ class Pages extends GroupsEditing
         parent::__construct($config);
 
         $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/gambling/assets/js/controllers/pages.js';
+
+        $this->session = Session::getInstance();
+
+        $this->currentCountry = $this->session->get('CurrentCountry');
     }
 
 

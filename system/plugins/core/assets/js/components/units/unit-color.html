@@ -1,0 +1,8 @@
+    <div class="unit unit--color" :class="unitClass">
+        <label class="unit-label" v-if="label">{{ label }}<span v-if="required">*</span>:</label>
+        <div class="unit-input-container">
+            <div class="prefix"><div :style="prefixStyle"></div></div>
+            <input type="text" v-model="currentValue" class="unit-input" @change="handleInputChange">
+        </div>
+        <div class="unit-hint">{{ error || hint }}</div>
+    </div>

@@ -1,6 +1,6 @@
 <div class="gr-form">
 
-    <div v-for="(field, fieldName) in fields" :key="fieldName" v-if="!field.hidden">
+    <template v-for="(field, fieldName) in fields" v-if="!field.hidden">
 
         <div v-if="field.component === 'section-title'" class="section_title">
             {{ field.label }}
@@ -31,6 +31,6 @@
             NO COMPONENT FOR TYPE: {{ field.type }}
         </template>
 
-    </div>
+    </template>
 
 </div>

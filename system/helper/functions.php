@@ -871,21 +871,6 @@ if (!USE_MBSTRING)
 }
 
 
-/**
- * Replace line breaks with <br> tags (to be used with preg_replace_callback)
- *
- * @param array $matches
- *
- * @return string
- *
- * @deprecated
- */
-function nl2br_callback($matches)
-{
-	return str_replace("\n", '<br>', $matches[0]);
-}
-
-
 function render_template($strTemplate, $objData = null)
 {
     $objTemplate = new \Contao\FrontendTemplate($strTemplate);

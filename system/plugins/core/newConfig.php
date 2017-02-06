@@ -85,6 +85,10 @@ return [
         'unit-date' => [
             '/system/plugins/core/assets/js/components/units/unit-date.js',
             '/system/plugins/core/assets/js/components/units/unit-date.html'
+        ],
+        'unit-color' => [
+            '/system/plugins/core/assets/js/components/units/unit-color.js',
+            '/system/plugins/core/assets/js/components/units/unit-color.html'
         ]
     ],
 

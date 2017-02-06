@@ -11,12 +11,14 @@
 namespace Contao\Controllers;
 
 use Contao\Config;
+use Contao\Database;
 use Contao\Environment;
 use Contao\Frontend;
 use Contao\Input;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Models\PageModel;
+use Grow\Router;
 
 /**
  * Main front end controller.
@@ -65,7 +67,9 @@ class FrontendIndex extends Frontend
 	{
 		global $objPage;
 
-		$pageId = $this->getPageIdFromUrl();
+        $pageId = $this->doRoute();
+
+//		$pageId = $this->getPageIdFromUrl();
 		$objRootPage = null;
 
 		// Load a website root page object if there is no page ID
@@ -309,6 +313,82 @@ class FrontendIndex extends Frontend
 		// Stop the script (see #4565)
 		exit;
 	}
+
+	protected function doRoute() {
+        if (isset($GLOBALS['TL_HOOKS']['beforeGetPageIdFromUrl']) && is_array($GLOBALS['TL_HOOKS']['beforeGetPageIdFromUrl']))
+        {
+            foreach ($GLOBALS['TL_HOOKS']['beforeGetPageIdFromUrl'] as $callback)
+            {
+                /** @var \Contao\Models\PageModel $objRootPage */
+                if (($pageId = static::importStatic($callback[0])->{$callback[1]}()) !== null)
+                {
+                    return $pageId;
+                }
+            }
+        }
+
+        // Fetch method and URI from somewhere
+        $httpMethod = $_SERVER['REQUEST_METHOD'];
+        $uri = $_SERVER['REQUEST_URI'];
+
+        if (isset($GLOBALS['TL_HOOKS']['getPageUri']) && is_array($GLOBALS['TL_HOOKS']['getPageUri']))
+        {
+            foreach ($GLOBALS['TL_HOOKS']['getPageUri'] as $callback)
+            {
+                if (($newUri = static::importStatic($callback[0])->{$callback[1]}($uri)) !== null)
+                {
+                    $uri = $newUri;
+                }
+            }
+        }
+
+        $dispatcher = \FastRoute\simpleDispatcher(function(\FastRoute\RouteCollector $r) {
+
+            $pageRow = Database::getInstance()->prepare("SELECT id, alias FROM tl_page")->execute();
+
+            if ($pageRow->numRows < 1) {
+                $this->log('No pages found', __METHOD__, TL_ERROR);
+                throw new \Exception('No pages found');
+            }
+
+            $pages = $pageRow->fetchAllAssoc();
+
+            foreach ($pages as $page) {
+                $routeUri = $page['alias'] !== 'index' ? '/' . $page['alias'] : '';
+                $r->addRoute(['GET', 'POST'], $routeUri, $page['alias']);
+                $r->addRoute(['GET', 'POST'], $routeUri . '/', $page['alias']);
+            }
+        });
+
+        // Strip query string (?foo=bar) and decode URI
+        if (false !== $pos = strpos($uri, '?')) {
+            $uri = substr($uri, 0, $pos);
+        }
+        $uri = rawurldecode($uri);
+
+        $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
+
+        switch ($routeInfo[0]) {
+            case \FastRoute\Dispatcher::NOT_FOUND:
+                // ... 404 Not Found
+                return false;
+                break;
+            case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+                $allowedMethods = $routeInfo[1];
+                // ... 405 Method Not Allowed
+                return false;
+                break;
+            case \FastRoute\Dispatcher::FOUND:
+                $handler = $routeInfo[1];
+                $vars = $routeInfo[2];
+                // ... call $handler with $vars
+                return $handler;
+                break;
+        }
+
+        return $routeInfo;
+    }
+
 
 
 	protected function getPageById($pageId)

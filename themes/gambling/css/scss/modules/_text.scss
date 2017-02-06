@@ -3,12 +3,14 @@
     .content_block {
         padding-top: 0;
     }
-    h1 {
+    h1,
+    .h1 {
         font: 22px/1.6 'Montserrat', sans-serif;
         text-transform: uppercase;
         margin-bottom: 10px;
     }
-    h2 {
+    h2,
+    .h2 {
         font-size: 18px;
         letter-spacing: 0.5px;
         margin-bottom: 16px;

@@ -5,6 +5,7 @@ if (TL_MODE == 'BE') {
 }
 
 $GLOBALS['TL_HOOKS']['beforeGetPageIdFromUrl'][] = array('Gambling\\FrontendHook', 'beforeGetPageIdFromUrl');
+$GLOBALS['TL_HOOKS']['getPageUri'][] = array('Gambling\\FrontendHook', 'getPageUri');
 $GLOBALS['TL_HOOKS']['getPageById'][] = array('Gambling\\FrontendHook', 'getPageById');
 $GLOBALS['TL_HOOKS']['generatePage'][] = array('Gambling\\FrontendHook', 'generatePage');
 
@@ -17,6 +18,7 @@ if (TL_MODE == 'FE') {
 
 $GLOBALS['TL_MODELS']['tl_country'] = 'Gambling\\Models\\CountryModel';
 $GLOBALS['TL_MODELS']['tl_casino_category'] = 'Gambling\\Models\\CasinoCategoryModel';
+$GLOBALS['TL_MODELS']['tl_casino'] = 'Gambling\\Models\\CasinoModel';
 $GLOBALS['TL_MODELS']['tl_post'] = 'Gambling\\Models\\PostModel';
 
 \Contao\TemplateLoader::addFiles([
@@ -220,7 +222,7 @@ array_insert_assoc($GLOBALS['NAVIGATION'], -1, 'countries', [
 
 array_insert_assoc($GLOBALS['NAVIGATION'], 3, 'pages', [
     'label' => 'Website Structure',
-    'hidden' => true,
+    //'hidden' => true,
     'controller' => 'Gambling\\Controllers\\Pages',
     'config' => [
         'group' => [

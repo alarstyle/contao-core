@@ -36,7 +36,7 @@ class Posts extends ListingWithGroups
         $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/gambling/assets/js/controllers/posts.js';
 
         $this->session = Session::getInstance();
-        $this->currentCountry = $this->session->get('postsCurrentCountry');
+        $this->currentCountry = $this->session->get('CurrentCountry');
 
         $countries = BackendHelpers::getUserAvailableCountriesForOptions();
         $availableCountries = [];
@@ -53,7 +53,7 @@ class Posts extends ListingWithGroups
 
         if (empty($this->currentCountry) || !in_array($this->currentCountry, array_keys($countries))) {
             $this->currentCountry = $availableCountries[0]['value'];
-            $this->session->set('postsCurrentCountry', $this->currentCountry);
+            $this->session->set('CurrentCountry', $this->currentCountry);
         }
 
         ApplicationData::addData('availableCountries', $availableCountries);
@@ -64,7 +64,7 @@ class Posts extends ListingWithGroups
     public function ajaxChangeCountry()
     {
         $countryId = intval(Input::post('countryId'));
-        $this->session->set('postsCurrentCountry', $countryId);
+        $this->session->set('CurrentCountry', $countryId);
     }
 
 

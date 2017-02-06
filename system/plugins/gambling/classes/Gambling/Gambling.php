@@ -5,6 +5,7 @@ namespace Gambling;
 
 use Contao\Cache;
 use Contao\Controller;
+use Contao\Database;
 use Contao\Environment;
 use Contao\Models\PageModel;
 use Contao\System;
@@ -173,11 +174,12 @@ class Gambling
         $categories = $categories->fetchAll();
         $currentCountry = static::getCurrentCountry();
         $countryId = intval($currentCountry['id']);
-        $casinosPage = static::getPageData(71);
+        $casinosCategoryPage = static::getPageData(71);
 
         foreach ($categories as &$category) {
             $category['name'] = deserialize($category['name'])[$countryId] ?: $category['alias'];
-            $category['url'] = $casinosPage['url'] . $category['alias'] . '/';
+            $category['url'] = str_replace('{categoryAlias}', $category['alias'], $casinosCategoryPage['url']);
+            $category['current'] = $casinosCategoryPage['current'] && $category['alias'] === end(\Grow\Route::get());
         }
 
         static::$casinoCategories = $categories;
@@ -199,16 +201,130 @@ class Gambling
         $categories = $categories->fetchAll();
         $currentCountry = static::getCurrentCountry();
         $countryId = intval($currentCountry['id']);
-        $casinosPage = static::getPageData(71);
+        $bettingCategoryPage = \Gambling\Gambling::getPageData(80);
 
         foreach ($categories as &$category) {
             $category['name'] = deserialize($category['name'])[$countryId] ?: $category['alias'];
-            $category['url'] = $casinosPage['url'] . $category['alias'] . '/';
+            $category['url'] = str_replace('{categoryAlias}', $category['alias'], $bettingCategoryPage['url']);
+            $category['current'] = $bettingCategoryPage['current'] && $category['alias'] === end(\Grow\Route::get());
         }
 
         static::$bettingCategories = $categories;
 
         return static::$bettingCategories;
+    }
+
+
+    public static function getCasinoCategory($alias)
+    {
+        $categories = static::getCasinoCategories();
+
+        $casinoCategory = null;
+
+        foreach($categories as $category) {
+            if ($category['alias'] === $alias) {
+                $casinoCategory = $category;
+                break;
+            }
+        }
+
+        return $casinoCategory;
+    }
+
+
+    public static function getBettingCategory($alias)
+    {
+        $categories = static::getBettingCategories();
+
+        $bettingCategory = null;
+
+        foreach($categories as $category) {
+            if ($category['alias'] === $alias) {
+                $bettingCategory = $category;
+                break;
+            }
+        }
+
+        return $bettingCategory;
+    }
+
+
+    public static function getCasinos($categoryId, $limit, $offset, $options = null)
+    {
+        $currentCountry = static::getCurrentCountry();
+        $previewPage = static::getPageData(79);
+
+        $casinos = \Gambling\Models\CasinoModel::findCasinos($currentCountry['id'], $categoryId, $limit, $offset, $options);
+
+        if ($casinos === null || !$casinos->numRows) return [];
+
+        $casinos = $casinos->fetchAllAssoc();
+
+        foreach ($casinos as $i=>&$casino) {
+            $casino['url'] = str_replace('{casinoAlias}', $casino['alias'], $previewPage['url']);
+        }
+
+        return $casinos;
+    }
+
+
+    public static function getBettings($categoryId, $limit, $offset, $options = null)
+    {
+        $currentCountry = static::getCurrentCountry();
+        $previewPage = static::getPageData(79);
+
+        $bettings = \Gambling\Models\CasinoModel::findBettings($currentCountry['id'], $categoryId, $limit, $offset, $options);
+
+        if ($bettings === null || !$bettings->numRows) return [];
+
+        $bettings = $bettings->fetchAllAssoc();
+
+        foreach ($bettings as $i=>&$betting) {
+            $betting['url'] = str_replace('{casinoAlias}', $betting['alias'], $previewPage['url']);
+        }
+
+        return $bettings;
+    }
+
+
+    public static function getCasino($alias)
+    {
+        $currentCountry = static::getCurrentCountry();
+        $casino = \Gambling\Models\CasinoModel::findByAlias($alias);
+
+        if ($casino === null) return null;
+
+        $casino = $casino->row();
+
+        $data = Database::getInstance()->prepare("SELECT * FROM `tl_casino_data` WHERE pid = ? AND country = ?")
+            ->execute($casino['id'], $currentCountry['id']);
+
+        if (!$data || !$data->published) return null;
+
+        $prosArr = [];
+        $consArr = [];
+        foreach (explode("\n", $data->pros) as $pro) {
+            if (!trim($pro)) continue;
+            $prosArr[] = trim($pro);
+        }
+        foreach (explode("\n", $data->cons) as $con) {
+            if (!trim($con)) continue;
+            $consArr[] = trim($con);
+        }
+        $data->pros = $prosArr;
+        $data->cons = $consArr;
+
+        if (!$casino['isCasino']) {
+            $data->casino_link = null;
+        }
+
+        if (!$casino['isBetting']) {
+            $data->betting_link = null;
+        }
+
+        $casino['data'] = $data;
+
+        return $casino;
     }
 
 }

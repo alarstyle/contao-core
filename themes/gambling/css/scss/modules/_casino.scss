@@ -187,6 +187,9 @@
     }
     .btn {
         display: block;
+        + .btn {
+            margin-top: 20px;
+        }
     }
 }
 
@@ -419,6 +422,13 @@
         .item:before,
         .item:after {
             background: #3a4247;
+        }
+        .item {
+            &:last-child:after {
+                background: -moz-linear-gradient(top,  #3a4247 0%, #3a4247 40%, rgba(58,66,71,0) 100%); /* FF3.6-15 */
+                background: -webkit-linear-gradient(top,  #3a4247 0%, #3a4247 40%,rgba(58,66,71,0) 100%); /* Chrome10-25,Safari5.1-6 */
+                background: linear-gradient(to bottom,  #3a4247 0%, #3a4247 40%,rgba(58,66,71,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            }
         }
         .item-content {
             color: #b4b4b4;

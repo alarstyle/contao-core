@@ -24,7 +24,7 @@
 
 
 <?php $this->block('form'); ?>
-    <gr-form v-if="step === 1"
+     <gr-form v-if="step === 1 || state === 'edit_group'"
              :fields="formFields"
              :errors="formErrors"
              @change="handleFormChange"
@@ -50,13 +50,15 @@
                 <li :class="step === 2 ? 'active' : ''"><b>2</b><span @click="handleStep2Click">Casino Description</span></li>
             </ul>
         </div>
-        <div class="submit_panel-form" v-if="formSidebarFields">
-            <gr-form v-if="step === 1"
-                    :fields="formSidebarFields"
-                     :errors="formErrors"
-                     @change="handleFormChange"
-                     ref="formSidebar"></gr-form>
-            <template v-else>
+        <div class="submit_panel-form">
+            <template v-if="formSidebarFields">
+                <gr-form v-if="step === 1"
+                        :fields="formSidebarFields"
+                         :errors="formErrors"
+                         @change="handleFormChange"
+                         ref="formSidebar"></gr-form>
+            </template>
+            <template v-else-if="step === 2">
                 <gr-form v-for="(data, countryId) in casinoData" v-if="casinoDataCountryId == countryId"
                          :fields="data.sidebar"
                          :errors="formErrors"

@@ -55,11 +55,20 @@ class FrontendHook
 
         $pageId = implode('/', array_slice($route, 1)) ?: 'index';
 
-        if (strpos($pageId, 'article/') === 0) {
-            $pageId = 'article/{id}';
-        }
+//        if (strpos($pageId, 'article/') === 0) {
+//            $pageId = 'article/{id}';
+//        }
 
-        return $pageId;
+        return null;
+        //return $pageId;
+    }
+
+
+    public function getPageUri($uri) {
+        $uri = explode('/', $uri);
+        array_splice($uri, 1, 1);
+        $uri = implode('/', $uri) ?: 'index';
+        return $uri;
     }
 
 
