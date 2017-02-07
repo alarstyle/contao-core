@@ -10,6 +10,7 @@
 
             starClick: function(n) {
                 this.currentValue = n / 2;
+                this.$emit('change', this.currentValue, this);
             },
 
             isActive: function(n) {

@@ -55,11 +55,11 @@ class ModuleArticle extends AbstractModule
 	 *
 	 * @return string
 	 */
-	public function generate($blnNoMarkup)
+	public function generate($blnNoMarkup = null)
 	{
 		$this->type = 'article';
 
-		return parent::generate();
+		return parent::generate($blnNoMarkup);
 	}
 
 

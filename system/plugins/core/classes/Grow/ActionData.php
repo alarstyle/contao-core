@@ -34,6 +34,12 @@ class ActionData
     }
 
 
+    public static function push($key, $data)
+    {
+        static::$dataArr[$key][] = $data;
+    }
+
+
     public static function notify($message, $type)
     {
         static::$notifyArr[] = [$message, $type];

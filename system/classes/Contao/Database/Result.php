@@ -51,7 +51,7 @@ abstract class Result
 	 * Current row index
 	 * @var integer
 	 */
-	private $intIndex = -1;
+    protected $intIndex = -1;
 
 	/**
 	 * End indicator

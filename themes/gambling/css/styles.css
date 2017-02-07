@@ -2703,7 +2703,7 @@ ul.dropdown-menu {
     padding: 0 10px 0 5px; }
     .top-list-title > div:before {
       float: right;
-      margin: 30px 0 0 0;
+      margin: 25px 0 0 0;
       height: 18px;
       width: 30px; }
 
@@ -2747,25 +2747,23 @@ ul.dropdown-menu {
     padding: 0 50px;
     letter-spacing: 2px; } }
 @media (min-width: 1200px) {
-  .top {
-    margin-bottom: 10px; }
-    .top:before {
-      background: #edf0f1 url("../images/gray_bg.png") repeat 50% 50%/34px auto;
-      content: '';
-      height: 70px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0; }
-    .top:after {
-      position: absolute;
-      top: 0;
-      left: 0;
-      border-left: 5px solid #c33e3e;
-      border-bottom: 5px solid #c33e3e;
-      content: '';
-      height: 219px;
-      width: 18px; }
+  .top:before {
+    background: #edf0f1 url("../images/gray_bg.png") repeat 50% 50%/34px auto;
+    content: '';
+    height: 70px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0; }
+  .top:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 5px solid #c33e3e;
+    border-bottom: 5px solid #c33e3e;
+    content: '';
+    height: 219px;
+    width: 18px; }
 
   .top-inner {
     max-width: 1300px;

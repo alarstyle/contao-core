@@ -158,7 +158,7 @@
         padding: 0 10px 0 5px;
         &:before {
             float: right;
-            margin: 30px 0 0 0;
+            margin: 25px 0 0 0;
             height: 18px;
             width: 30px;
         }
@@ -217,7 +217,7 @@
 
 @media (min-width: $min-desktop-width) {
     .top {
-        margin-bottom: 10px;
+        //margin-bottom: 10px;
         &:before {
             background: #edf0f1 url('../images/gray_bg.png') repeat 50% 50% / 34px auto;
             content: '';

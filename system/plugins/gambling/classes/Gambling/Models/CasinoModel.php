@@ -15,7 +15,10 @@ class CasinoModel extends Model
         $t = static::$strTable;
         $database = \Contao\Database::getInstance();
 
-        $statement = $database->prepare("SELECT * FROM $t LEFT JOIN tl_casino_data data ON $t.id = data.pid WHERE $t.casino_categories LIKE '%\"$categoryId\"%' AND countries LIKE '%\"$countryId\"%' AND data.country = $countryId AND $t.isCasino = 1 AND data.published = 1 ORDER BY $t.id DESC");
+        $statement = $database->prepare("SELECT * FROM $t LEFT JOIN tl_casino_data data ON $t.id = data.pid " .
+            "WHERE " .
+                ($categoryId ? "$t.casino_categories LIKE '%\"$categoryId\"%' AND " : "" ) .
+                "countries LIKE '%\"$countryId\"%' AND data.country = $countryId AND $t.isCasino = 1 AND data.published = 1 ORDER BY $t.id DESC");
 
         if ($limit) {
             $statement->limit($limit, $offset);
@@ -29,7 +32,10 @@ class CasinoModel extends Model
         $t = static::$strTable;
         $database = \Contao\Database::getInstance();
 
-        $statement = $database->prepare("SELECT * FROM $t LEFT JOIN tl_casino_data data ON $t.id = data.pid WHERE $t.betting_categories LIKE '%\"$categoryId\"%' AND countries LIKE '%\"$countryId\"%' AND data.country = $countryId AND $t.isBetting = 1 AND data.published = 1 ORDER BY $t.id DESC");
+        $statement = $database->prepare("SELECT * FROM $t LEFT JOIN tl_casino_data data ON $t.id = data.pid " .
+            "WHERE " .
+                ($categoryId ? "$t.betting_categories LIKE '%\"$categoryId\"%' AND " : "") .
+                "countries LIKE '%\"$countryId\"%' AND data.country = $countryId AND $t.isBetting = 1 AND data.published = 1 ORDER BY $t.id DESC");
 
         if ($limit) {
             $statement->limit($limit, $offset);

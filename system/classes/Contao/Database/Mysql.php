@@ -39,24 +39,23 @@ class Mysql extends Database
 			$strHost .= ':' . $this->arrConfig['dbSocket'];
 		}
 
+		$dsn = 'mysql:dbname=' . $this->arrConfig['dbDatabase'] . ';host=' . $this->arrConfig['dbHost'];
+
 		if ($this->arrConfig['dbPconnect'])
 		{
-			$this->resConnection = mysql_pconnect($strHost, $this->arrConfig['dbUser'], $this->arrConfig['dbPass']);
+			//$this->resConnection = mysql_pconnect($strHost, $this->arrConfig['dbUser'], $this->arrConfig['dbPass']);
+            $this->resConnection = new \PDO($dsn, $this->arrConfig['dbUser'], $this->arrConfig['dbPass'], [\PDO::ATTR_PERSISTENT => true]);
 		}
 		else
 		{
-			$this->resConnection = mysql_connect($strHost, $this->arrConfig['dbUser'], $this->arrConfig['dbPass']);
+			//$this->resConnection = mysql_connect($strHost, $this->arrConfig['dbUser'], $this->arrConfig['dbPass']);
+			$this->resConnection = new \PDO($dsn, $this->arrConfig['dbUser'], $this->arrConfig['dbPass']);
 		}
 
-		if (mysql_error())
-		{
-			throw new \Exception(mysql_error());
-		}
+        $this->resConnection->query("SET NAMES " . $this->arrConfig['dbCharset']);
+        $this->resConnection->query("SET sql_mode='" . $this->arrConfig['dbSqlMode'] . "'");
 
-		mysql_query("SET NAMES " . $this->arrConfig['dbCharset'], $this->resConnection);
-		mysql_query("SET sql_mode='" . $this->arrConfig['dbSqlMode'] . "'", $this->resConnection);
-
-		mysql_select_db($this->arrConfig['dbDatabase'], $this->resConnection);
+		//mysql_select_db($this->arrConfig['dbDatabase'], $this->resConnection);
 	}
 
 
@@ -65,7 +64,8 @@ class Mysql extends Database
 	 */
 	protected function disconnect()
 	{
-		mysql_close($this->resConnection);
+		//mysql_close($this->resConnection);
+        $this->resConnection = null;
 	}
 
 
@@ -76,12 +76,7 @@ class Mysql extends Database
 	 */
 	protected function get_error()
 	{
-		if (is_resource($this->resConnection))
-		{
-			return mysql_error($this->resConnection);
-		}
-
-		return mysql_error();
+		return $this->resConnection->errorInfo()[2];
 	}
 
 
@@ -102,7 +97,7 @@ class Mysql extends Database
 		}
 		else
 		{
-			return "FIND_IN_SET(" . $strKey . ", '" . mysql_real_escape_string($varSet, $this->resConnection) . "')";
+			return "FIND_IN_SET(" . $strKey . ", " . $this->resConnection->quote($varSet) . ")";
 		}
 	}
 
@@ -236,8 +231,8 @@ class Mysql extends Database
 	 */
 	protected function begin_transaction()
 	{
-		mysql_query("SET AUTOCOMMIT=0", $this->resConnection);
-		mysql_query("BEGIN", $this->resConnection);
+        $this->resConnection->query("SET AUTOCOMMIT=0");
+        $this->resConnection->query("BEGIN");
 	}
 
 
@@ -246,8 +241,8 @@ class Mysql extends Database
 	 */
 	protected function commit_transaction()
 	{
-		mysql_query("COMMIT", $this->resConnection);
-		mysql_query("SET AUTOCOMMIT=1", $this->resConnection);
+        $this->resConnection->query("COMMIT");
+        $this->resConnection->query("SET AUTOCOMMIT=1");
 	}
 
 
@@ -256,8 +251,8 @@ class Mysql extends Database
 	 */
 	protected function rollback_transaction()
 	{
-		mysql_query("ROLLBACK", $this->resConnection);
-		mysql_query("SET AUTOCOMMIT=1", $this->resConnection);
+        $this->resConnection->query("ROLLBACK");
+        $this->resConnection->query("SET AUTOCOMMIT=1");
 	}
 
 
@@ -275,7 +270,7 @@ class Mysql extends Database
 			$arrLocks[] = $table .' '. $mode;
 		}
 
-		mysql_query("LOCK TABLES " . implode(', ', $arrLocks));
+        $this->resConnection->query("LOCK TABLES " . implode(', ', $arrLocks));
 	}
 
 
@@ -284,7 +279,7 @@ class Mysql extends Database
 	 */
 	protected function unlock_tables()
 	{
-		mysql_query("UNLOCK TABLES");
+        $this->resConnection->query("UNLOCK TABLES");
 	}
 
 
@@ -297,7 +292,7 @@ class Mysql extends Database
 	 */
 	protected function get_size_of($strTable)
 	{
-		$objStatus = mysql_query("SHOW TABLE STATUS LIKE '" . $strTable . "'");
+		$objStatus = $this->resConnection->query("SHOW TABLE STATUS LIKE '" . $strTable . "'");
 		$objStatus = mysql_fetch_object($objStatus);
 
 		return ($objStatus->Data_length + $objStatus->Index_length);
@@ -313,7 +308,7 @@ class Mysql extends Database
 	 */
 	protected function get_next_id($strTable)
 	{
-		$objStatus = mysql_query("SHOW TABLE STATUS LIKE '" . $strTable . "'");
+		$objStatus = $this->resConnection->query("SHOW TABLE STATUS LIKE '" . $strTable . "'");
 		$objStatus = mysql_fetch_object($objStatus);
 
 		return $objStatus->Auto_increment;
@@ -331,7 +326,7 @@ class Mysql extends Database
 
 		if (empty($ids))
 		{
-			$res = mysql_query(implode(' UNION ALL ', array_fill(0, 10, "SELECT UNHEX(REPLACE(UUID(), '-', '')) AS uuid")));
+			$res = $this->resConnection->query(implode(' UNION ALL ', array_fill(0, 10, "SELECT UNHEX(REPLACE(UUID(), '-', '')) AS uuid")));
 
 			while (($row = mysql_fetch_object($res)) != false)
 			{

@@ -41,7 +41,7 @@ class Statement extends \Contao\Database\Statement
 	 */
 	protected function string_escape($strString)
 	{
-		return "'" . mysql_real_escape_string($strString, $this->resConnection) . "'";
+		return $this->resConnection->quote($strString);
 	}
 
 
@@ -71,7 +71,7 @@ class Statement extends \Contao\Database\Statement
 	 */
 	protected function execute_query()
 	{
-		return mysql_query($this->strQuery, $this->resConnection);
+		return $this->resConnection->query($this->strQuery);
 	}
 
 
@@ -82,7 +82,7 @@ class Statement extends \Contao\Database\Statement
 	 */
 	protected function get_error()
 	{
-		return mysql_error($this->resConnection);
+		return $this->resConnection->errorInfo()[2];
 	}
 
 
@@ -93,7 +93,7 @@ class Statement extends \Contao\Database\Statement
 	 */
 	protected function affected_rows()
 	{
-		return mysql_affected_rows($this->resConnection);
+		return $this->resResult->rowCount();
 	}
 
 
@@ -104,7 +104,7 @@ class Statement extends \Contao\Database\Statement
 	 */
 	protected function insert_id()
 	{
-		return mysql_insert_id($this->resConnection);
+		return $this->resConnection->lastInsertId();
 	}
 
 
@@ -115,7 +115,7 @@ class Statement extends \Contao\Database\Statement
 	 */
 	protected function explain_query()
 	{
-		return mysql_fetch_assoc(mysql_query('EXPLAIN ' . $this->strQuery, $this->resConnection));
+		return $this->resConnection->query('EXPLAIN ' . $this->strQuery)->fetch(\PDO::FETCH_ASSOC);
 	}
 
 
@@ -132,6 +132,3 @@ class Statement extends \Contao\Database\Statement
 		return new \Contao\Database\Mysql\Result($resResult, $strQuery);
 	}
 }
-
-// Backwards compatibility
-class_alias('Contao\\Database\\Mysql\\Statement', 'Database_Statement');

@@ -49,6 +49,8 @@ abstract class Database
 	 */
 	protected $resConnection;
 
+    protected $pdo;
+
 	/**
 	 * Disable autocommit
 	 * @var boolean
@@ -80,9 +82,9 @@ abstract class Database
 		$this->arrConfig = $arrConfig;
 		$this->connect();
 
-		if (!is_resource($this->resConnection) && !is_object($this->resConnection))
+		if ($this->error)
 		{
-			throw new Exception(sprintf('Could not connect to database (%s)', $this->error));
+			throw new \Exception(sprintf('Could not connect to database (%s)', $this->error));
 		}
 	}
 

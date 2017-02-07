@@ -6,6 +6,12 @@
 
         template: '#unit-multilingual-text-template',
 
+        watch: {
+            currentValue: function(currentValue) {
+                this.$emit('change', currentValue, this);
+            }
+        },
+
         methods: {
 
         }

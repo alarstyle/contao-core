@@ -274,7 +274,7 @@ abstract class AbstractModule extends Frontend
 	 *
 	 * @return string
 	 */
-	public function generate()
+	public function generate($blnNoMarkup = null)
 	{
 		$this->Template = new FrontendTemplate($this->strTemplate);
 		$this->Template->setData($this->arrData);

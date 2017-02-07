@@ -1,7 +1,7 @@
 <?php
 
 $GLOBALS['TL_LANG']['tl_casino_data']['links'] = 'Links';
-$GLOBALS['TL_LANG']['tl_casino_data']['currency_title'] = 'Currency';
+$GLOBALS['TL_LANG']['tl_casino_data']['misc'] = 'Misc';
 $GLOBALS['TL_LANG']['tl_casino_data']['casino_bonuses'] = 'Casino bonuses';
 $GLOBALS['TL_LANG']['tl_casino_data']['betting_bonuses'] = 'Betting bonuses';
 $GLOBALS['TL_LANG']['tl_casino_data']['wagering_title'] = 'Wagering requirement';
@@ -17,7 +17,8 @@ $GLOBALS['TL_LANG']['tl_casino_data']['contacts'] = 'Contacts';
 $GLOBALS['TL_LANG']['tl_casino_data']['casino_link'] = ['Casino affiliate link', ''];
 $GLOBALS['TL_LANG']['tl_casino_data']['betting_link'] = ['Betting affiliate link', ''];
 
-$GLOBALS['TL_LANG']['tl_casino_data']['currency'] = ['', ''];
+$GLOBALS['TL_LANG']['tl_casino_data']['currency'] = ['Currency', ''];
+$GLOBALS['TL_LANG']['tl_casino_data']['bonus_code'] = ['Bonus Code', ''];
 
 $GLOBALS['TL_LANG']['tl_casino_data']['cash_sign_up'] = ['Sign Up Cash Bonus', 'Keep field empty if there is no cash bonus'];
 $GLOBALS['TL_LANG']['tl_casino_data']['spins_sign_up'] = ['Sign Up Free Spins', 'Keep field empty if there is no Free Spins'];

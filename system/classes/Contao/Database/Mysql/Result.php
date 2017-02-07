@@ -37,7 +37,7 @@ class Result extends \Contao\Database\Result
 	 */
 	protected function fetch_assoc()
 	{
-		return mysql_fetch_assoc($this->resResult);
+		return $this->resResult->fetch(\PDO::FETCH_ASSOC, \PDO::FETCH_ORI_ABS, $this->intIndex);
 	}
 
 
@@ -48,7 +48,7 @@ class Result extends \Contao\Database\Result
 	 */
 	protected function num_rows()
 	{
-		return mysql_num_rows($this->resResult);
+		return $this->resResult->rowCount();
 	}
 
 
@@ -102,7 +102,9 @@ class Result extends \Contao\Database\Result
 			throw new \OutOfBoundsException("Invalid index $intIndex (only $intTotal rows in the result set)");
 		}
 
-		mysql_data_seek($this->resResult, $intIndex);
+        //$this->resResult->fetch(\PDO::FETCH_ASSOC, \PDO::FETCH_ORI_ABS, $intIndex);
+
+		//mysql_data_seek($this->resResult, $intIndex);
 	}
 
 

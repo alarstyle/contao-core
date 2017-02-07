@@ -139,6 +139,3 @@ class Statement extends \Contao\Database\Statement
 		return new \Contao\Database\Mysqli\Result($resResult, $strQuery);
 	}
 }
-
-// Backwards compatibility
-class_alias('Contao\\Database\\Mysqli\\Statement', 'Database_Statement');
