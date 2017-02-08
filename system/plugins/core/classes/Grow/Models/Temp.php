@@ -33,10 +33,10 @@ class Temp extends Model
         'rating' => [
             'sql'                     => "float NULL"
         ],
-        'isCasino' => [
+        'is_casino' => [
             'sql'               => "char(1) NOT NULL default ''"
         ],
-        'isBetting' => [
+        'is_betting' => [
             'sql'               => "char(1) NOT NULL default ''"
         ],
         'casino_link' => array
@@ -95,10 +95,10 @@ class Temp extends Model
             'rating' => [
                 'sql'                     => "float NULL"
             ],
-            'isCasino' => [
+            'is_casino' => [
                 'sql'               => "char(1) NOT NULL default ''"
             ],
-            'isBetting' => [
+            'is_betting' => [
                 'sql'               => "char(1) NOT NULL default ''"
             ],
             'casino_link' => array

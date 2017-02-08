@@ -26,6 +26,7 @@
                 if (data.fieldId !== this.id) return;
                 console.log(data.files[0]);
                 this.currentValue = data.files[0].path;
+                this.$emit('change', this.currentValue, this);
             },
 
             openFilePickerModal: function () {
@@ -40,6 +41,7 @@
                 var _this = this;
                 setTimeout(function() {
                     _this.currentValue = null;
+                    _this.$emit('change', this.currentValue, this);
                 }, 100);
 
             }

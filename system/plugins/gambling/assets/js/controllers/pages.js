@@ -6,15 +6,16 @@
 
         data: function() {
             return {
-
+                countries: APP_DATA.availableCountries || [],
+                currentCountry: APP_DATA.currentCountry || null
             }
         },
 
         methods: {
 
-        },
-
-        mounted: function() {
+            handleCountryChange: function(countryId) {
+                if (this.currentCountry === countryId) return;
+            }
 
         }
 

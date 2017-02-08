@@ -221,10 +221,6 @@
                     });
             }
 
-        },
-
-        mounted: function() {
-            var _this = this;
         }
 
     };

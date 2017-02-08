@@ -293,7 +293,7 @@ class Mysql extends Database
 	protected function get_size_of($strTable)
 	{
 		$objStatus = $this->resConnection->query("SHOW TABLE STATUS LIKE '" . $strTable . "'");
-		$objStatus = mysql_fetch_object($objStatus);
+		$objStatus = $objStatus->fetch(\PDO::FETCH_OBJ);
 
 		return ($objStatus->Data_length + $objStatus->Index_length);
 	}
@@ -309,7 +309,7 @@ class Mysql extends Database
 	protected function get_next_id($strTable)
 	{
 		$objStatus = $this->resConnection->query("SHOW TABLE STATUS LIKE '" . $strTable . "'");
-		$objStatus = mysql_fetch_object($objStatus);
+		$objStatus = $objStatus->fetch(\PDO::FETCH_OBJ);
 
 		return $objStatus->Auto_increment;
 	}
@@ -328,7 +328,7 @@ class Mysql extends Database
 		{
 			$res = $this->resConnection->query(implode(' UNION ALL ', array_fill(0, 10, "SELECT UNHEX(REPLACE(UUID(), '-', '')) AS uuid")));
 
-			while (($row = mysql_fetch_object($res)) != false)
+			while (($row = $res->fetch(\PDO::FETCH_OBJ)) != false)
 			{
 				$ids[] = $row->uuid;
 			}

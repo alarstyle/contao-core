@@ -126,10 +126,10 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
                 ['tl_casino', 'saveType']
             ]
         ],
-        'isCasino' => [
+        'is_casino' => [
             'sql'               => "char(1) NOT NULL default ''"
         ],
-        'isBetting' => [
+        'is_betting' => [
             'sql'               => "char(1) NOT NULL default ''"
         ],
         'casino_categories' => [
@@ -185,13 +185,13 @@ class tl_casino extends \Contao\Backend
 
 	public function loadType($value, $id, &$fieldsValues)
     {
-        if ($fieldsValues['isCasino'] == 1 && $fieldsValues['isBetting'] == 1) {
+        if ($fieldsValues['is_casino'] == 1 && $fieldsValues['is_betting'] == 1) {
             return 'casino_betting';
         }
-        if ($fieldsValues['isCasino'] == 1) {
+        if ($fieldsValues['is_casino'] == 1) {
             return 'casino';
         }
-        if ($fieldsValues['isBetting'] == 1) {
+        if ($fieldsValues['is_betting'] == 1) {
             return 'betting';
         }
         return null;
@@ -202,20 +202,20 @@ class tl_casino extends \Contao\Backend
 	{
         switch ($value) {
             case 'casino':
-                $fieldsValues['isCasino'] = 1;
-                $fieldsValues['isBetting'] = 0;
+                $fieldsValues['is_casino'] = 1;
+                $fieldsValues['is_betting'] = 0;
                 break;
             case 'betting':
-                $fieldsValues['isCasino'] = 0;
-                $fieldsValues['isBetting'] = 1;
+                $fieldsValues['is_casino'] = 0;
+                $fieldsValues['is_betting'] = 1;
                 break;
             case 'casino_betting':
-                $fieldsValues['isCasino'] = 1;
-                $fieldsValues['isBetting'] = 1;
+                $fieldsValues['is_casino'] = 1;
+                $fieldsValues['is_betting'] = 1;
                 break;
             default:
-                $fieldsValues['isCasino'] = 0;
-                $fieldsValues['isBetting'] = 0;
+                $fieldsValues['is_casino'] = 0;
+                $fieldsValues['is_betting'] = 0;
         }
 		return null;
 	}

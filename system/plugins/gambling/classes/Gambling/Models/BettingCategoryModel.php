@@ -23,7 +23,7 @@ class BettingCategoryModel extends Model
 
     protected static function find(array $arrOptions)
     {
-        $arrOptions['column'][] = 'isBetting = 1';
+        $arrOptions['column'][] = 'is_betting = 1';
 
         return parent::find($arrOptions);
     }

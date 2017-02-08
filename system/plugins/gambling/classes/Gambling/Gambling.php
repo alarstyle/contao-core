@@ -314,11 +314,11 @@ class Gambling
         $data->pros = $prosArr;
         $data->cons = $consArr;
 
-        if (!$casino['isCasino']) {
+        if (!$casino['is_casino']) {
             $data->casino_link = null;
         }
 
-        if (!$casino['isBetting']) {
+        if (!$casino['is_betting']) {
             $data->betting_link = null;
         }
 

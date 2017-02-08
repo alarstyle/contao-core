@@ -2649,7 +2649,7 @@ ul.dropdown-menu {
       max-width: 500px;
       position: relative; }
   .top-list .item-img {
-    background: #242b2e no-repeat 50% 50% / cover;
+    background: #242b2e no-repeat 50% 50% / contain;
     border-radius: 50%;
     display: inline-block;
     vertical-align: middle;
@@ -3687,7 +3687,7 @@ ul.dropdown-menu {
     position: relative; }
 
 .casino-logo {
-  background: no-repeat 50% 50% / contain;
+  background: #2c3438 no-repeat 50% 50% / contain;
   display: block;
   height: 133px;
   margin-bottom: 25px; }

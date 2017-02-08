@@ -14,7 +14,6 @@
             return {
                 currentPath: null,
                 items: [],
-                upload: {},
                 selected: [],
                 preview: null,
                 search: '',
@@ -68,9 +67,9 @@
                 this.load()
             },
 
-            filesToUpload: function() {
+            filesToUpload: function(filesToUpload) {
 
-                if (this.filesToUpload.length == 0) {
+                if (filesToUpload.length == 0) {
                     this.load();
                     return;
                 }
@@ -81,11 +80,13 @@
                 this.isUploading = true;
                 
                 var _this = this,
-                    file = this.filesToUpload[0];
+                    file = filesToUpload[0];
 
-                this.upload(file, function() {
+                console.log(this.uploadFile);
+
+                this.uploadFile(file, function() {
                     _this.isUploading = false;
-                    _this.filesToUpload.shift();
+                    filesToUpload.shift();
                 });
             }
 
@@ -167,7 +168,7 @@
                 });
             },
 
-            upload: function (file, callback) {
+            uploadFile: function (file, callback) {
                 var _this = this;
                 var data = new FormData();
                 data.append('upload_path', this.currentPath);

@@ -159,14 +159,14 @@ class Casinos extends ListingWithGroups
 
     protected function groupsWhereCallback()
     {
-        return ['NOT isBetting = 1'];
+        return ['NOT is_betting = 1'];
     }
 
 
     protected function listWhereCallback()
     {
         $this->where[] = 'countries LIKE \'%"' . $this->currentCountryId . '"%\' OR countries = "a:0:{}" OR countries = ""';
-        $this->where[] = 'isCasino = 1';
+        $this->where[] = 'is_casino = 1';
         $groupId = Input::post('groupId');
         if (!empty($groupId)) {
             $this->where[] = 'casino_categories LIKE \'%"' . $groupId . '"%\'';

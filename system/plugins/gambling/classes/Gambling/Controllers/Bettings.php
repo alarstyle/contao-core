@@ -14,7 +14,7 @@ class Bettings extends Casinos
     public function ajaxSaveGroup()
     {
         $fields = Input::post('fields');
-        $fields['isBetting'] = 1;
+        $fields['is_betting'] = 1;
         $fields = Input::setPost('fields', $fields);
 
         parent::ajaxSaveGroup();
@@ -23,14 +23,14 @@ class Bettings extends Casinos
 
     protected function groupsWhereCallback()
     {
-        return ['isBetting = 1'];
+        return ['is_betting = 1'];
     }
 
 
     protected function listWhereCallback()
     {
         $this->where[] = 'countries LIKE \'%"' . $this->currentCountryId . '"%\' OR countries = "a:0:{}"';
-        $this->where[] = 'isBetting = 1';
+        $this->where[] = 'is_betting = 1';
         $groupId = Input::post('groupId');
         if (!empty($groupId)) {
             $this->where[] = 'betting_categories LIKE \'%"' . $groupId . '"%\'';

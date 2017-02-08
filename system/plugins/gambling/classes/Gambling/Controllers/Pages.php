@@ -42,8 +42,28 @@ class Pages extends GroupsEditing
         $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/gambling/assets/js/controllers/pages.js';
 
         $this->session = Session::getInstance();
-
         $this->currentCountry = $this->session->get('CurrentCountry');
+
+        $countries = BackendHelpers::getUserAvailableCountriesForOptions();
+        $availableCountries = [];
+        foreach ($countries as $key => $value) {
+            $availableCountries[] = [
+                'value' => $key,
+                'label' => $value
+            ];
+        }
+
+        if (empty($availableCountries)) {
+            throw new \Exception('User has no countries to access');
+        }
+
+        if (empty($this->currentCountryId) || !in_array($this->currentCountryId, array_keys($countries))) {
+            $this->currentCountryId = $availableCountries[0]['value'];
+            $this->session->set('CurrentCountry', $this->currentCountryId);
+        }
+
+        ApplicationData::addData('availableCountries', $availableCountries);
+        ApplicationData::addData('currentCountry', $this->currentCountryId);
     }
 
 

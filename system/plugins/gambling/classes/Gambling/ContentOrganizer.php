@@ -41,7 +41,7 @@ class ContentOrganizer extends Organizer
     }
 
 
-    public function getUnitsData($row)
+    public function getUnitsData($row = null)
     {
         $tableData = $GLOBALS['TL_DCA'][$this->table];
 

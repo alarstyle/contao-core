@@ -23,7 +23,7 @@ class CasinoCategoryModel extends Model
 
     protected static function find(array $arrOptions)
     {
-        $arrOptions['column'][] = 'NOT isBetting = 1';
+        $arrOptions['column'][] = 'NOT is_betting = 1';
 
         return parent::find($arrOptions);
     }

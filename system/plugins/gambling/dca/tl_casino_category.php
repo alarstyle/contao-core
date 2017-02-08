@@ -101,7 +101,7 @@ $GLOBALS['TL_DCA']['tl_casino_category'] = array
             'eval'                    => array('mandatory'=>true, 'unique'=>true, 'rgxp'=>'alias', 'tl_class'=>'w50'),
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
-        'isBetting' => [
+        'is_betting' => [
             'sql'               => "char(1) NOT NULL default ''"
         ],
         'sorting' => [

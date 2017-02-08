@@ -18,7 +18,7 @@ class CasinoModel extends Model
         $statement = $database->prepare("SELECT * FROM $t LEFT JOIN tl_casino_data data ON $t.id = data.pid " .
             "WHERE " .
                 ($categoryId ? "$t.casino_categories LIKE '%\"$categoryId\"%' AND " : "" ) .
-                "countries LIKE '%\"$countryId\"%' AND data.country = $countryId AND $t.isCasino = 1 AND data.published = 1 ORDER BY $t.id DESC");
+                "countries LIKE '%\"$countryId\"%' AND data.country = $countryId AND $t.is_casino = 1 AND data.published = 1 ORDER BY $t.id DESC");
 
         if ($limit) {
             $statement->limit($limit, $offset);
@@ -35,7 +35,7 @@ class CasinoModel extends Model
         $statement = $database->prepare("SELECT * FROM $t LEFT JOIN tl_casino_data data ON $t.id = data.pid " .
             "WHERE " .
                 ($categoryId ? "$t.betting_categories LIKE '%\"$categoryId\"%' AND " : "") .
-                "countries LIKE '%\"$countryId\"%' AND data.country = $countryId AND $t.isBetting = 1 AND data.published = 1 ORDER BY $t.id DESC");
+                "countries LIKE '%\"$countryId\"%' AND data.country = $countryId AND $t.is_betting = 1 AND data.published = 1 ORDER BY $t.id DESC");
 
         if ($limit) {
             $statement->limit($limit, $offset);
