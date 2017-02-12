@@ -39,6 +39,8 @@ class BackendHelpers
                 static::$countries[$result->id] = [
                     'id' => $result->id,
                     'code' => $result->country,
+                    'flag' => $result->country,
+                    'alias' => $result->alias,
                     'name' => $countriesNames[$result->country] ?: $result->country,
                     'default' => $result->fallback
                 ];
@@ -102,9 +104,9 @@ class BackendHelpers
 
         foreach ($ids as $id) {
             if (empty(static::$countries[$id])) continue;
-            $countryCode = static::$countries[$id]['code'];
+            $countryFlag = static::$countries[$id]['flag'];
             $countryName = static::$countries[$id]['name'];
-            $countriesFlags .= '<span class="flag flag-' . $countryCode . '" title="' . $countryName . '"></span>';
+            $countriesFlags .= '<span class="flag flag-' . $countryFlag . '" title="' . $countryName . '"></span>';
         }
 
         return $countriesFlags;

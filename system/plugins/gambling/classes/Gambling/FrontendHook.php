@@ -38,9 +38,9 @@ class FrontendHook
             $this->redirectToCountry();
         }
 
-        $user_country = $route[0];
+        $countryAlias = $route[0];
 
-        $countryObj = CountryModel::findByCode($user_country);
+        $countryObj = CountryModel::findByAlias($countryAlias);
 
         if (empty($countryObj)) {
             header('HTTP/1.1 404 Not Found');
@@ -50,7 +50,7 @@ class FrontendHook
 
         $user_lang = $countryObj->language;
 
-        System::setCookie('USER_COUNTRY', $user_country, time()+60*60*24*30);
+        System::setCookie('USER_COUNTRY', $countryAlias, time()+60*60*24*30);
         System::setCookie('USER_LANG', $user_lang, time()+60*60*24*30);
 
         $pageId = implode('/', array_slice($route, 1)) ?: 'index';
@@ -80,20 +80,20 @@ class FrontendHook
 
     protected function redirectToCountry()
     {
-        $user_country = Input::cookie('USER_COUNTRY');
+        $countryAlias = Input::cookie('USER_COUNTRY');
         $countryObj = null;
 
         // Get country code by IP
-        if (empty($user_country)) {
+        if (empty($countryAlias)) {
             $ip = Environment::get('ip');
             $geo = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $ip));
-            $user_country = strtolower($geo['geoplugin_countryCode']);
+            $countryCode = strtolower($geo['geoplugin_countryCode']);
+            $countryObj = CountryModel::findByCode($countryCode);
+        }
+        else {
+            $countryObj = CountryModel::findByAlias($countryAlias);
         }
 
-        if (!empty($user_country)) {
-            // Get country by code
-            $countryObj = CountryModel::findByCode($user_country);
-        }
         if (empty($countryObj)) {
             // Get fallback country
             if (empty($countryObj)) {
@@ -108,9 +108,9 @@ class FrontendHook
             die('No fallback country');
         }
 
-        $user_country = $countryObj->country;
+        $countryAlias = $countryObj->alias;
 
-        Controller::redirect($user_country . '/', 302);
+        Controller::redirect($countryAlias . '/', 302);
     }
 
 }

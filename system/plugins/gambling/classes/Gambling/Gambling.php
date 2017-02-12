@@ -49,9 +49,11 @@ class Gambling
             $countries[] = [
                 'id' => $country['id'],
                 'code' => $country['country'],
+                'flag' => $country['country'],
+                'alias' => $country['alias'],
                 'lang' => $country['language'],
                 'title' => $allCountries[$country['country']],
-                'link' => '/' . $country['country'] . '/'
+                'link' => '/' . $country['alias'] . '/'
             ];
         }
 
@@ -74,12 +76,12 @@ class Gambling
             return Cache::get('currentCountry');
         }
 
-        $currentCountryCode = Route::get()[0];
+        $currentCountryAlias = Route::get()[0];
         $countries = static::getCountries();
         $currentCountry = null;
 
         foreach ($countries as $country) {
-            if ($country['code'] === $currentCountryCode) {
+            if ($country['alias'] === $currentCountryAlias) {
                 $currentCountry = $country;
             }
         }
@@ -96,7 +98,7 @@ class Gambling
             global $objPage;
             $pageRow = PageModel::findByPk($pageId)->row();
             $currentCountry = static::getCurrentCountry();
-            $url = '/' . $currentCountry['code'] . '/' . Controller::generateFrontendUrl($pageRow);
+            $url = '/' . $currentCountry['alias'] . '/' . Controller::generateFrontendUrl($pageRow);
             static::$pagesData[$pageId] = [
                 'id' => $pageId,
                 'url' => $url,
@@ -262,6 +264,34 @@ class Gambling
 
         foreach ($casinos as $i=>&$casino) {
             $casino['url'] = str_replace('{casinoAlias}', $casino['alias'], $previewPage['url']);
+            $cashTotal =
+                ((int) $casino['cash_1_deposit'] ?: 0) +
+                ((int) $casino['cash_2_deposit'] ?: 0) +
+                ((int) $casino['cash_3_deposit'] ?: 0);
+            $casino['depositSpinsBonusTotal'] =
+                ((int) $casino['spins_1_deposit'] ?: 0) +
+                ((int) $casino['spins_2_deposit'] ?: 0) +
+                ((int) $casino['spins_2_deposit'] ?: 0);
+            if ($cashTotal > 0) {
+                $casino['depositCashBonusTotal'] = $casino['currency_before'] !== '1'
+                    ? ($cashTotal . ' ' . $casino['currency'])
+                    : ($casino['currency'] . $cashTotal);
+            }
+            if ($casino['cash_sign_up']) {
+                $casino['cash_sign_up'] = $casino['currency_before'] !== '1'
+                    ? ($casino['cash_sign_up'] . ' ' . $casino['currency'])
+                    : ($casino['currency'] . $casino['cash_sign_up']);
+            }
+            if ($casino['bet_bonus_deposit']) {
+                $casino['bet_bonus_deposit'] = $casino['currency_before'] !== '1'
+                    ? ($casino['bet_bonus_deposit'] . ' ' . $casino['currency'])
+                    : ($casino['currency'] . $casino['bet_bonus_deposit']);
+            }
+            if ($casino['bet_bonus_sign_up']) {
+                $casino['bet_bonus_sign_up'] = $casino['currency_before'] !== '1'
+                    ? ($casino['bet_bonus_sign_up'] . ' ' . $casino['currency'])
+                    : ($casino['currency'] . $casino['bet_bonus_sign_up']);
+            }
         }
 
         return $casinos;

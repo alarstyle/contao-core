@@ -19,6 +19,15 @@ class CountryModel extends Model
     }
 
 
+    public static function findByAlias($alias)
+    {
+        $t = static::$strTable;
+        $arrColumns = array("$t.alias=?");
+
+        return static::findOneBy($arrColumns, $alias);
+    }
+
+
     public static function findFallback()
     {
         $t = static::$strTable;

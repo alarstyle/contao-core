@@ -3336,6 +3336,7 @@ ul.dropdown-menu {
   .text .h1 {
     font: 22px/1.6 'Montserrat', sans-serif;
     text-transform: uppercase;
+    letter-spacing: 0;
     margin-bottom: 10px; }
   .text h2,
   .text .h2 {

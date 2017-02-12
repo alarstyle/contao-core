@@ -284,6 +284,9 @@ abstract class AbstractUnit
         {
             // Numeric characters (including full stop [.] and minus [-])
             case 'digit':
+                if (strlen($value) === 0) {
+                    break;
+                }
                 // Support decimal commas and convert them automatically (see #3488)
                 if (substr_count($value, ',') == 1 && strpos($value, '.') === false)
                 {
