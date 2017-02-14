@@ -111,6 +111,9 @@ class Posts extends ListingWithGroups
     protected function listWhereCallback()
     {
         $this->where[] = 'country = ' . $this->currentCountry;
+        $this->listOrganizer->listQuery
+            ->where('country', $this->currentCountry);
+
         return $this->where;
     }
 

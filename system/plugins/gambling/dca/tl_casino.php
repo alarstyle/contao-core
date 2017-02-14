@@ -47,7 +47,7 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '[general],countries,name,alias,website,owner,year,licence,phone,email,rating,type,casino_categories,betting_categories,[images],img_logo,img_cover,logo_bg'
+		'default'                     => '[general],countries,name,alias,website,owner,year,licence,phone,email,rating,type,[images],img_logo,img_cover,logo_bg'
 	),
 
 	// Fields
@@ -131,20 +131,6 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
         ],
         'is_betting' => [
             'sql'               => "char(1) NOT NULL default ''"
-        ],
-        'casino_categories' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['casino_categories'],
-            'inputTypeNew'            => 'checkboxWizard',
-            'options_callback'        => 'Gambling\\BackendHelpers::getCasinoCategoriesForOptions',
-            'eval'                    => ['tl_class'=>'w50'],
-            'sql'                     => "blob NULL"
-        ],
-        'betting_categories' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['betting_categories'],
-            'inputTypeNew'            => 'checkboxWizard',
-            'options_callback'        => 'Gambling\\BackendHelpers::getBettingCategoriesForOptions',
-            'eval'                    => ['tl_class'=>'w50'],
-            'sql'                     => "blob NULL"
         ],
         'img_logo' => [
             'label'             => &$GLOBALS['TL_LANG']['tl_casino']['img_logo'],

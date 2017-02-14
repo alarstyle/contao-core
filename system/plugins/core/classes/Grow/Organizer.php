@@ -22,10 +22,16 @@ class Organizer
     protected $skipFields = [];
 
 
+    public $listQuery;
+
+
     public function __construct($tableName)
     {
         $this->table = $tableName;
         $this->database = Database::getInstance();
+
+        $connection = \Grow\Database::getConnection();
+        $this->listQuery = $connection->selectQuery()->table($tableName);
 
         System::loadLanguageFile($tableName);
         Controller::loadDataContainer($tableName);
@@ -212,6 +218,83 @@ class Organizer
 
 
     public function getList($limit = 20, $skip = 0, $where = [], $order= '')
+    {
+        if (!empty($where)) {
+            if (is_string($where)) {
+                $where = [$where];
+            }
+            foreach ($where as $whereItem) {
+                $temp = explode(' ', $whereItem);
+                $this->listQuery->where($temp[0], $temp[1], $temp[2]);
+            }
+        }
+
+        $this->listQuery
+            ->limit($limit)
+            ->offset($skip);
+
+        if ($order) {
+            if (is_string($order)) {
+                $order = explode(' ', $order);
+            }
+            $this->listQuery
+                ->orderBy($order[0], strtolower($order[1]));
+        }
+
+//        var_dump($this->listQuery->execute());
+//
+//        die();
+
+        $result = $this->listQuery->execute()->asArray();
+
+        if (count($result) < 1) {
+            return [];
+        }
+
+        $list = [];
+        $tableData = $GLOBALS['TL_DCA'][$this->table];
+        $listFields = $tableData['list']['label']['fields_new'] ?: $tableData['list']['label']['fields'] ?: array_keys($tableData['fields']);
+        $labelCallback = $tableData['list']['label']['callback'];
+
+        $operationsData = $tableData['list']['operations'];
+        $operations = [];
+
+        if ($operationsData) {
+            foreach ($operationsData as $operationName => $operationData) {
+                if (!isset($operationData['icon_new'])) continue;
+                $operations[] = [
+                    'name' => $operationName,
+                    'label' => $operationData['label'][0] ?: $operationName,
+                    'icon' => $operationData['icon_new']
+                ];
+            }
+        }
+
+        foreach ($result as $i => $item) {
+            $itemData = [
+                'id' => $item->id,
+                'fields' => []
+            ];
+            foreach ($listFields as $fieldName) {
+                if (!isset($tableData['fields'][$fieldName])) continue;
+                $itemData['fields'][] = $item->$fieldName ?: '';
+            }
+            $itemData['fields'][]['operations'] = $operations;
+            if (!empty($labelCallback)) {
+                if (is_array($labelCallback)) {
+                    $itemData = System::importStatic($labelCallback[0])->{$labelCallback[1]}($itemData);
+                } elseif (is_callable($labelCallback)) {
+                    $itemData = $labelCallback($itemData);
+                }
+            }
+            $list[] = $itemData;
+        }
+
+        return $list;
+    }
+
+
+    public function getListOld($limit = 20, $skip = 0, $where = [], $order= '')
     {
         if (!empty($where)) {
             if (is_string($where)) {

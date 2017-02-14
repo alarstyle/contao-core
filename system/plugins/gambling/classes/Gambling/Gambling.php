@@ -254,44 +254,33 @@ class Gambling
     public static function getCasinos($categoryId, $limit, $offset, $options = null)
     {
         $currentCountry = static::getCurrentCountry();
+
+        $connection = \Grow\Database::getConnection();
+        $query = $connection->selectQuery()->table('tl_casino')
+            ->join('tl_casino_data', 'data', 'left')
+            ->on('tl_casino.id', 'data.pid')
+            ->where('countries', 'like', '%"' . $currentCountry['id'] . '"%')
+            ->where('data.country', $currentCountry['id'])
+            ->where('is_casino', 1)
+            ->where('data.published', 1)
+            ->orderBy('tl_casino.id', 'desc');
+        if ($categoryId) {
+            $query->where('data.casino_categories', 'like', '%"' . $categoryId . '"%');
+        }
+        $casinos = $query->execute()->asArray();
+
+        if (!count($casinos)) return [];
+
         $previewPage = static::getPageData(79);
 
-        $casinos = \Gambling\Models\CasinoModel::findCasinos($currentCountry['id'], $categoryId, $limit, $offset, $options);
+//        $casinos = \Gambling\Models\CasinoModel::findCasinos($currentCountry['id'], $categoryId, $limit, $offset, $options);
+//
+//        if ($casinos === null || !$casinos->numRows) return [];
+//
+//        $casinos = $casinos->fetchAllAssoc();
 
-        if ($casinos === null || !$casinos->numRows) return [];
-
-        $casinos = $casinos->fetchAllAssoc();
-
-        foreach ($casinos as $i=>&$casino) {
-            $casino['url'] = str_replace('{casinoAlias}', $casino['alias'], $previewPage['url']);
-            $cashTotal =
-                ((int) $casino['cash_1_deposit'] ?: 0) +
-                ((int) $casino['cash_2_deposit'] ?: 0) +
-                ((int) $casino['cash_3_deposit'] ?: 0);
-            $casino['depositSpinsBonusTotal'] =
-                ((int) $casino['spins_1_deposit'] ?: 0) +
-                ((int) $casino['spins_2_deposit'] ?: 0) +
-                ((int) $casino['spins_2_deposit'] ?: 0);
-            if ($cashTotal > 0) {
-                $casino['depositCashBonusTotal'] = $casino['currency_before'] !== '1'
-                    ? ($cashTotal . ' ' . $casino['currency'])
-                    : ($casino['currency'] . $cashTotal);
-            }
-            if ($casino['cash_sign_up']) {
-                $casino['cash_sign_up'] = $casino['currency_before'] !== '1'
-                    ? ($casino['cash_sign_up'] . ' ' . $casino['currency'])
-                    : ($casino['currency'] . $casino['cash_sign_up']);
-            }
-            if ($casino['bet_bonus_deposit']) {
-                $casino['bet_bonus_deposit'] = $casino['currency_before'] !== '1'
-                    ? ($casino['bet_bonus_deposit'] . ' ' . $casino['currency'])
-                    : ($casino['currency'] . $casino['bet_bonus_deposit']);
-            }
-            if ($casino['bet_bonus_sign_up']) {
-                $casino['bet_bonus_sign_up'] = $casino['currency_before'] !== '1'
-                    ? ($casino['bet_bonus_sign_up'] . ' ' . $casino['currency'])
-                    : ($casino['currency'] . $casino['bet_bonus_sign_up']);
-            }
+        foreach ($casinos as $i=>$casino) {
+            $casinos[$i] = static::prepareCasino($casino, $previewPage);
         }
 
         return $casinos;
@@ -301,16 +290,27 @@ class Gambling
     public static function getBettings($categoryId, $limit, $offset, $options = null)
     {
         $currentCountry = static::getCurrentCountry();
+
+        $connection = \Grow\Database::getConnection();
+        $query = $connection->selectQuery()->table('tl_casino')
+            ->join('tl_casino_data', 'data', 'left')
+            ->on('tl_casino.id', 'data.pid')
+            ->where('countries', 'like', '%"' . $currentCountry['id'] . '"%')
+            ->where('data.country', $currentCountry['id'])
+            ->where('is_betting', 1)
+            ->where('data.published', 1)
+            ->orderBy('tl_casino.id', 'desc');
+        if ($categoryId) {
+            $query->where('data.betting_categories', 'like', '%"' . $categoryId . '"%');
+        }
+        $bettings = $query->execute()->asArray();
+
+        if (!count($bettings)) return [];
+
         $previewPage = static::getPageData(79);
 
-        $bettings = \Gambling\Models\CasinoModel::findBettings($currentCountry['id'], $categoryId, $limit, $offset, $options);
-
-        if ($bettings === null || !$bettings->numRows) return [];
-
-        $bettings = $bettings->fetchAllAssoc();
-
-        foreach ($bettings as $i=>&$betting) {
-            $betting['url'] = str_replace('{casinoAlias}', $betting['alias'], $previewPage['url']);
+        foreach ($bettings as $i=>$betting) {
+            $bettings[$i] = static::prepareCasino($betting, $previewPage);
         }
 
         return $bettings;
@@ -320,41 +320,93 @@ class Gambling
     public static function getCasino($alias)
     {
         $currentCountry = static::getCurrentCountry();
-        $casino = \Gambling\Models\CasinoModel::findByAlias($alias);
 
-        if ($casino === null) return null;
+        $connection = \Grow\Database::getConnection();
+        $casino = $connection->selectQuery()->table('tl_casino')
+            ->join('tl_casino_data', 'data', 'left')
+                ->on('tl_casino.id', 'data.pid')
+            ->where('alias', $alias)
+            ->where('data.country', $currentCountry['id'])
+            ->limit(1)
+            ->execute()->asArray();
 
-        $casino = $casino->row();
+        if (!count($casino) || !$casino[0]->published) return null;
 
-        $data = Database::getInstance()->prepare("SELECT * FROM `tl_casino_data` WHERE pid = ? AND country = ?")
-            ->execute($casino['id'], $currentCountry['id']);
+        $casino = $casino[0];
 
-        if (!$data || !$data->published) return null;
+        $previewPage = static::getPageData(79);
+        $casino = static::prepareCasino($casino, $previewPage);
 
         $prosArr = [];
         $consArr = [];
-        foreach (explode("\n", $data->pros) as $pro) {
+        foreach (explode("\n", $casino->pros) as $pro) {
             if (!trim($pro)) continue;
             $prosArr[] = trim($pro);
         }
-        foreach (explode("\n", $data->cons) as $con) {
+        foreach (explode("\n", $casino->cons) as $con) {
             if (!trim($con)) continue;
             $consArr[] = trim($con);
         }
-        $data->pros = $prosArr;
-        $data->cons = $consArr;
+        $casino->pros = $prosArr;
+        $casino->cons = $consArr;
 
-        if (!$casino['is_casino']) {
-            $data->casino_link = null;
+        if (!$casino->is_casino) {
+            $casino->casino_link = null;
         }
 
-        if (!$casino['is_betting']) {
-            $data->betting_link = null;
+        if (!$casino->is_betting) {
+            $casino->betting_link = null;
         }
-
-        $casino['data'] = $data;
 
         return $casino;
+    }
+
+
+    protected static function prepareCasino($casino, $previewPage)
+    {
+        $casino->url = str_replace('{casinoAlias}', $casino->alias, $previewPage['url']);
+
+        $cashTotal =
+            ((int) $casino->cash_1_deposit ?: 0) +
+            ((int) $casino->cash_2_deposit ?: 0) +
+            ((int) $casino->cash_3_deposit ?: 0);
+        $casino->depositSpinsBonusTotal =
+            ((int) $casino->spins_1_deposit ?: 0) +
+            ((int) $casino->spins_2_deposit ?: 0) +
+            ((int) $casino->spins_2_deposit ?: 0);
+        if ($cashTotal > 0) {
+            $casino->depositCashBonusTotal = static::addCurrency($casino, $cashTotal);
+        }
+        if ($casino->cash_1_deposit) {
+            $casino->cash_1_deposit = static::addCurrency($casino, $casino->cash_1_deposit);
+        }
+        if ($casino->cash_2_deposit) {
+            $casino->cash_2_deposit = static::addCurrency($casino, $casino->cash_2_deposit);
+        }
+        if ($casino->cash_3_deposit) {
+            $casino->cash_3_deposit = static::addCurrency($casino, $casino->cash_3_deposit);
+        }
+        if ($casino->cash_sign_up) {
+            $casino->cash_sign_up = static::addCurrency($casino, $casino->cash_sign_up);
+        }
+        if ($casino->bet_bonus_deposit) {
+            $casino->bet_bonus_deposit = static::addCurrency($casino, $casino->bet_bonus_deposit);
+        }
+        if ($casino->bet_bonus_sign_up) {
+            $casino->bet_bonus_sign_up = static::addCurrency($casino, $casino->bet_bonus_sign_up);
+        }
+
+        $casino->hasCasinoBonus = $casino->depositSpinsBonusTotal || $casino->depositCashBonusTotal || $casino->spins_sign_up || $casino->cash_sign_up;
+        $casino->hasBettingBonus = $casino->bet_bonus_deposit || $casino->bet_bonus_sign_up;
+
+        return $casino;
+    }
+
+    protected static function addCurrency($casino, $amount)
+    {
+        return $casino->currency_before !== '1'
+            ? ($amount . ' ' . $casino->currency)
+            : ($casino->currency . $amount);
     }
 
 }

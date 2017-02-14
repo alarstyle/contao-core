@@ -1,5 +1,6 @@
 <?php
 
+$GLOBALS['TL_LANG']['tl_casino_data']['categories_title'] = 'Categories';
 $GLOBALS['TL_LANG']['tl_casino_data']['links'] = 'Links';
 $GLOBALS['TL_LANG']['tl_casino_data']['misc'] = 'Misc';
 $GLOBALS['TL_LANG']['tl_casino_data']['casino_bonuses'] = 'Casino bonuses';

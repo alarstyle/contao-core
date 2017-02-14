@@ -77,14 +77,12 @@
     width: 2px;
     height: 20px; }
 
-.gr-modal--filepicker {
-  z-index: 99999; }
-  .gr-modal--filepicker .filemanager {
-    position: relative;
-    top: auto;
-    bottom: auto;
-    height: 1000px;
-    max-height: calc(100vh - 200px); }
+.gr-modal--filepicker .filemanager {
+  position: relative;
+  top: auto;
+  bottom: auto;
+  height: 1000px;
+  max-height: calc(100vh - 200px); }
 
 .filemanager {
   display: flex;

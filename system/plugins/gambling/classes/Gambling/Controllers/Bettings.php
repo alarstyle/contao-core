@@ -29,12 +29,23 @@ class Bettings extends Casinos
 
     protected function listWhereCallback()
     {
-        $this->where[] = 'countries LIKE \'%"' . $this->currentCountryId . '"%\' OR countries = "a:0:{}"';
-        $this->where[] = 'is_betting = 1';
+        $this->listOrganizer->listQuery
+            ->startGroup()
+                ->where('countries', 'like', '%"' . $this->currentCountryId . '"%')
+                ->orWhere('countries', 'a:0:{}')
+                ->orWhere('countries', '')
+            ->endGroup()
+            ->where('is_betting', 1);
+
         $groupId = Input::post('groupId');
         if (!empty($groupId)) {
-            $this->where[] = 'betting_categories LIKE \'%"' . $groupId . '"%\'';
+            $this->listOrganizer->listQuery
+                ->join('tl_casino_data', 'data', 'left')
+                    ->on('tl_casino.id', 'data.pid')
+                ->where('data.country', $this->currentCountryId)
+                ->where('data.betting_categories', 'like', '%"' . $groupId . '"%');
         }
+
         return $this->where;
     }
 

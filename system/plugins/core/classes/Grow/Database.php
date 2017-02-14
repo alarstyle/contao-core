@@ -14,6 +14,7 @@ class Database
 
     protected static $connection;
 
+
     public static function getInstance()
     {
         if (!isset(static::$instance)) {
@@ -22,6 +23,7 @@ class Database
 
         return static::$instance;
     }
+
 
     public static function getDatabase()
     {
@@ -39,6 +41,7 @@ class Database
 
         return static::$database;
     }
+
 
     public static function getConnection()
     {

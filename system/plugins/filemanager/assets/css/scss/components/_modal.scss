@@ -1,5 +1,6 @@
 .gr-modal--filepicker {
-    z-index: 99999;
+    // commented because it overflows all modals
+    //z-index: 99999;
     .filemanager {
         position: relative;
         top: auto;
