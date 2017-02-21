@@ -4,7 +4,7 @@
         <li class="rating_star"
             v-for="n in 20"
             @click="starClick(n)"
-            :class="{active: isActive(n)}"><icon name="star"></icon></li>
+            :class="{active: isActive(n)}"><icon type="star"></icon></li>
         <li>{{ currentValue ? currentValue : '' }}</li>
     </ul>
     <div class="unit-hint">{{ error || hint }}</div>

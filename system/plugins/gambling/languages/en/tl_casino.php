@@ -12,6 +12,7 @@ $GLOBALS['TL_LANG']['tl_casino']['year'] = ['Established in', ''];
 $GLOBALS['TL_LANG']['tl_casino']['licence'] = ['Licences', ''];
 $GLOBALS['TL_LANG']['tl_casino']['rating'] = ['Casino rating', ''];
 $GLOBALS['TL_LANG']['tl_casino']['type'] = ['Type', ''];
+$GLOBALS['TL_LANG']['tl_casino']['languages'] = ['Languages', ''];
 $GLOBALS['TL_LANG']['tl_casino']['casino_categories'] = ['Casino categories', ''];
 $GLOBALS['TL_LANG']['tl_casino']['betting_categories'] = ['Betting categories', ''];
 $GLOBALS['TL_LANG']['tl_casino']['img_logo'] = ['Logo image', 'Casino logo image (500x500)'];

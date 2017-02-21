@@ -302,6 +302,7 @@ $GLOBALS['UNITS'] = [
     'editor'         => 'Grow\\Units\\Editor',
     'date'           => 'Grow\\Units\\Date',
     'color'          => 'Grow\\Units\\Color',
+    'kit'            => 'Grow\\Units\\Kit',
 //    'inputUnit'      => 'Grow\\Units\\InputUnit',
 //    'trbl'           => 'Grow\\Units\\TrblField',
 //    'chmod'          => 'Grow\\Units\\ChmodTable',

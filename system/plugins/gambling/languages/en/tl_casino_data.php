@@ -17,6 +17,8 @@ $GLOBALS['TL_LANG']['tl_casino_data']['contacts'] = 'Contacts';
 
 $GLOBALS['TL_LANG']['tl_casino_data']['casino_link'] = ['Casino affiliate link', ''];
 $GLOBALS['TL_LANG']['tl_casino_data']['betting_link'] = ['Betting affiliate link', ''];
+$GLOBALS['TL_LANG']['tl_casino_data']['casino_same_window'] = ['Open in same window', ''];
+$GLOBALS['TL_LANG']['tl_casino_data']['betting_same_window'] = ['Open in same window', ''];
 
 $GLOBALS['TL_LANG']['tl_casino_data']['currency'] = ['Currency', ''];
 $GLOBALS['TL_LANG']['tl_casino_data']['currency_before'] = ['Show currency before amount', ''];

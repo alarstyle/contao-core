@@ -125,13 +125,11 @@
         }
     }
     .item-link {
-        display: inline-block;
         font-size: 13px;
         font-weight: bold;
         letter-spacing: 2px;
         text-transform: uppercase;
-        vertical-align: middle;
-        margin-top: 10px;
+        margin: 10px 0 0 62px;
         a {
             border: 1px solid #4caeec;
             border-radius: 3px;
@@ -156,6 +154,9 @@
         margin: 0 auto;
         max-width: 500px;
         padding: 0 10px 0 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         &:before {
             float: right;
             margin: 25px 0 0 0;
@@ -297,6 +298,11 @@
         }
         .item-info {
             width: calc(100% - 160px);
+        }
+        .item-link {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 0;
         }
     }
     .top-list-title {

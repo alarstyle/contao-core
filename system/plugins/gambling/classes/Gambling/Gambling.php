@@ -395,9 +395,24 @@ class Gambling
         if ($casino->bet_bonus_sign_up) {
             $casino->bet_bonus_sign_up = static::addCurrency($casino, $casino->bet_bonus_sign_up);
         }
+        if ($casino->withdrawal_min) {
+            $casino->withdrawal_min = static::addCurrency($casino, $casino->withdrawal_min);
+        }
+        if ($casino->withdrawal_max) {
+            $casino->withdrawal_max = static::addCurrency($casino, $casino->withdrawal_max);
+        }
 
         $casino->hasCasinoBonus = $casino->depositSpinsBonusTotal || $casino->depositCashBonusTotal || $casino->spins_sign_up || $casino->cash_sign_up;
         $casino->hasBettingBonus = $casino->bet_bonus_deposit || $casino->bet_bonus_sign_up;
+
+        if ($casino->casino_link) {
+            $casino->affiliate_link = $casino->casino_link;
+            $casino->affiliate_same_window = $casino->casino_same_window;
+        }
+        elseif ($casino->betting_link) {
+            $casino->affiliate_link = $casino->betting_link;
+            $casino->affiliate_same_window = $casino->betting_same_window;
+        }
 
         return $casino;
     }

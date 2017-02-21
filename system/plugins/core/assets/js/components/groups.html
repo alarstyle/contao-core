@@ -2,7 +2,7 @@
          :class="{'groups--editing': editingState}">
         <div class="groups-head">
             <div v-if="editable" class="groups-edit">
-                <a v-if="!editingState" @click="editingStateOn"><icon name="pencil"></icon>Edit</a>
+                <a v-if="!editingState" @click="editingStateOn"><icon type="pencil"></icon>Edit</a>
                 <a v-else @click="editingStateOff">Close</a>
             </div>
             <div class="groups-title">{{ title }}</div>

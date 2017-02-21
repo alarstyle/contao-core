@@ -89,6 +89,10 @@ return [
         'unit-color' => [
             '/system/plugins/core/assets/js/components/units/unit-color.js',
             '/system/plugins/core/assets/js/components/units/unit-color.html'
+        ],
+        'unit-kit' => [
+            '/system/plugins/core/assets/js/components/units/unit-kit.js',
+            '/system/plugins/core/assets/js/components/units/unit-kit.html'
         ]
     ],
 

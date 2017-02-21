@@ -28,7 +28,7 @@ $GLOBALS['TL_DCA']['tl_casino_data'] = array
     ),
 
 	'palettes' => [
-		'default'                     => '[categories_title],casino_categories,betting_categories,[links],casino_link,betting_link,[misc],currency,currency_before,bonus_code,[casino_bonuses],cash_sign_up,spins_sign_up,cash_1_deposit,spins_1_deposit,cash_2_deposit,spins_2_deposit,cash_3_deposit,spins_3_deposit,[betting_bonuses],bet_bonus_sign_up,bet_bonus_deposit,[wagering_title],wagering,[withdrawal],withdrawal_methods,withdrawal_min,withdrawal_max,withdrawal_frequency,[deposit_methods_title],deposit_methods,[providers_title],providers,[licenses_title],licenses,[contacts],phone,email,[review_title],review,[pros_cons],pros,cons,[seo],meta_title,meta_description',
+		'default'                     => '[categories_title],casino_categories,betting_categories,[links],casino_link,casino_same_window,betting_link,betting_same_window,[misc],currency,currency_before,bonus_code,[casino_bonuses],cash_sign_up,spins_sign_up,cash_1_deposit,spins_1_deposit,cash_2_deposit,spins_2_deposit,cash_3_deposit,spins_3_deposit,[betting_bonuses],bet_bonus_sign_up,bet_bonus_deposit,[wagering_title],wagering,[withdrawal],withdrawal_methods,withdrawal_min,withdrawal_max,withdrawal_frequency,[deposit_methods_title],deposit_methods,[providers_title],providers,[licenses_title],licenses,[contacts],phone,email,[review_title],review,[pros_cons],pros,cons,[seo],meta_title,meta_description',
         'sidebar'                     => 'published'
 	],
 
@@ -65,11 +65,23 @@ $GLOBALS['TL_DCA']['tl_casino_data'] = array
             'eval'                    => ['tl_class'=>'w50'],
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
+        'casino_same_window' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_casino_data']['casino_same_window'],
+            'inputType'               => 'checkbox',
+            'eval'                    => array('tl_class'=>'w50 align_to_text'),
+            'sql'                     => "char(1) NOT NULL default ''"
+        ],
         'betting_link' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_casino_data']['betting_link'],
             'inputType'               => 'text',
-            'eval'                    => ['tl_class'=>'w50'],
+            'eval'                    => ['tl_class'=>'w50 clr'],
             'sql'                     => "varchar(255) NOT NULL default ''"
+        ],
+        'betting_same_window' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_casino_data']['betting_same_window'],
+            'inputType'               => 'checkbox',
+            'eval'                    => array('tl_class'=>'w50 align_to_text'),
+            'sql'                     => "char(1) NOT NULL default ''"
         ],
         'currency' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_casino_data']['currency'],

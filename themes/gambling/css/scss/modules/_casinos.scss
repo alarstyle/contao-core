@@ -158,6 +158,42 @@
             height: 95px;
             text-align: center;
             margin: 14px 0 0 -110px;
+            b {
+                @include transition(opacity 0.2s ease);
+                background: rgba(140, 140, 150, .7);
+                border-radius: 50%;
+                display: block;
+                opacity: 0;
+                position: relative;
+                width: 100%;
+                height: 100%;
+                &:before,
+                &:after {
+                    content: '';
+                    position: absolute;
+                }
+                &:before {
+                    background: #f5edea;
+                    height: 3px;
+                    width: 30px;
+                    top: 46px;
+                    left: 32px;
+                }
+                &:after {
+                    @include transform(rotate(-45deg));
+                    border-bottom: 3px solid #f5edea;
+                    border-right: 3px solid #f5edea;
+                    width: 17px;
+                    height: 17px;
+                    top: 39px;
+                    left: 45px;
+                }
+            }
+            &:hover {
+                b {
+                    opacity: 1;
+                }
+            }
         }
         .item-info {
             padding-left: 125px;

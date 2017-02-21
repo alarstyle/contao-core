@@ -28,7 +28,7 @@
             @include transform(scale(1.6) translate(1px, -16px));
         }
         .logo-advisor {
-            @include transform(scale(1.6) translate(-58px, -3px));
+            @include transform(scale(1.6) translate(-55px, -3px));
         }
     }
 }
@@ -55,16 +55,36 @@
     .header {
         .logo {
             margin: 16px auto 0;
-            width: 300px;
+            width: 270px;
             height: 48px;
         }
     }
 }
 
 @media (min-width: $min-desktop-width) {
+    .logo-animation {
+        @include abs-pos(-10px, -8px);
+        @include transition(opacity 0.2s ease);
+        background: url('../images/logo-animation.gif') no-repeat 50% 50% / contain;
+        width: 70px;
+        height: 70px;
+        opacity: 0;
+    }
     .header {
         .logo {
             float: left;
+            position: relative;
+            &:hover {
+                .logo-animation {
+                    opacity: 1;
+                }
+                .logo-dices {
+                    opacity: 0;
+                }
+            }
+        }
+        .logo-dices {
+            @include transition(opacity 0.2s ease);
         }
     }
     .footer {
@@ -78,7 +98,7 @@
             @include transform(scale(2) translate(0px, -18px));
         }
         .logo-gambling {
-            @include transform(scale(1.4) translate(22px, -22px));
+            @include transform(scale(1.4) translate(16px, -22px));
         }
         .logo-advisor {
             @include transform(scale(1.4) translate(-72px, -1px));

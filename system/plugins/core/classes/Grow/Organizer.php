@@ -241,10 +241,6 @@ class Organizer
                 ->orderBy($order[0], strtolower($order[1]));
         }
 
-//        var_dump($this->listQuery->execute());
-//
-//        die();
-
         $result = $this->listQuery->execute()->asArray();
 
         if (count($result) < 1) {
@@ -462,14 +458,7 @@ class Organizer
     protected function getUnitClass($unitName)
     {
         $class = $GLOBALS['UNITS'][$unitName];
-        return class_exists($class) ? $class : NULL;
-    }
-
-
-    protected function getUnitComponent($unitName)
-    {
-        $class = $this->getUnitClass($unitName);
-        return !empty($class) ? $class::$componentName : NULL;
+        return class_exists($class) ? $class : null;
     }
 
 

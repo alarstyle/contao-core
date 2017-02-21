@@ -47,7 +47,7 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '[general],countries,name,alias,website,owner,year,licence,phone,email,rating,type,[images],img_logo,img_cover,logo_bg'
+		'default'                     => '[general],countries,name,alias,website,owner,year,licence,phone,email,rating,type,languages,[images],img_logo,img_cover,logo_bg'
 	),
 
 	// Fields
@@ -125,6 +125,21 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
             'save_callback_new' => [
                 ['tl_casino', 'saveType']
             ]
+        ],
+        'languages' => [
+            'label'             => &$GLOBALS['TL_LANG']['tl_casino']['languages'],
+            'inputType'         => 'kit',
+            'fields' => [
+                'flag' => [
+                    'label'             => &$GLOBALS['TL_LANG']['tl_casino']['languages_flag'],
+                    'inputType' => 'text',
+                ],
+                'lang' => [
+                    'label'             => &$GLOBALS['TL_LANG']['tl_casino']['languages_lang'],
+                    'inputType' => 'text',
+                ]
+            ],
+            'sql'                     => "blob NULL"
         ],
         'is_casino' => [
             'sql'               => "char(1) NOT NULL default ''"

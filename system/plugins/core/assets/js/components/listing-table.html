@@ -14,7 +14,7 @@
                                 <a v-for="operation in field.operations"
                                    :title="operation.label"
                                    @click="emitOperation(item.id, operation.name)">
-                                    <icon :name="operation.icon"></icon>
+                                    <icon :type="operation.icon"></icon>
                                 </a>
                             </div>
                         </div>

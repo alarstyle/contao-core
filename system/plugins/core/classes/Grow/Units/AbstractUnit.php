@@ -45,11 +45,11 @@ abstract class AbstractUnit
     protected $database;
 
 
-    public function __construct($table, $field)
+    public function __construct($table, $field, $fieldData = null)
     {
         $this->table = $table;
         $this->field = $field;
-        $this->fieldData = $this->getFieldData();
+        $this->fieldData = $fieldData ?: $this->getFieldData();
         $this->attributes = $this->getAttributes();
         $this->database = Database::getInstance();
 
