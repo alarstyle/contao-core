@@ -85,6 +85,7 @@
                         _this.formSidebarFields = response.data.data.sidebar;
                         _this.formErrors = {};
                         _this.state = 'edit_item';
+                        _this.$emit('edit-item', response.data.data.fields);
                     });
             },
 
@@ -112,10 +113,12 @@
                             if (_this.currentId === 'new') {
                                 _this.currentId = response.data.data.newId;
                             }
+                            _this.$emit('save-success', fieldsValues);
                         }
                         else if (response.data.error) {
                             grow.notify('Saving failed ', {type: 'danger'});
                             _this.formErrors = response.data.errorData;
+                            _this.$emit('save-failed');
                         }
                     });
             },

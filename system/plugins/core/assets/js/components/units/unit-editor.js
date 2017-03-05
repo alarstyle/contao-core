@@ -56,11 +56,9 @@
         },
 
         watch: {
-            value: function() {
-                console.log('value changed');
-            },
-            currentValue: function() {
-                console.log('currentValue changed');
+            value: function(value) {
+                this.editor.setContent(value);
+                this.currentValue = value;
             }
         },
 
@@ -70,8 +68,7 @@
                 this.$root.$off('filePicked', this.filePicked);
                 this.$root.$off('filePickCanceled', this.filePickCanceled);
                 if (this.id !== data.fieldId && !this.currentImageFieldId) return;
-                var path = data.files[0].path;
-                document.getElementById(this.currentImageFieldId).value = path;
+                document.getElementById(this.currentImageFieldId).value = data.files[0].path;
                 this.currentImageFieldId = null;
             },
 

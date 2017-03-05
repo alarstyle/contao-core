@@ -1,0 +1,33 @@
+.kit {
+    display: table;
+    min-width: 50%;
+    .unit--text, .unit--select, .unit--date {
+        width: 100%;
+    }
+}
+
+.kit-head,
+.kit-item {
+    display: table-row;
+}
+
+.kit-item-cell {
+    display: table-cell;
+    vertical-align: top;
+    padding: 5px;
+    .unit {
+        margin-bottom: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+.kit-item-cell--number {
+    vertical-align: middle;
+    padding-right: 0;
+    width: 16px;
+}
+
+.kit-item-cell--btns {
+    width: 10px;
+}

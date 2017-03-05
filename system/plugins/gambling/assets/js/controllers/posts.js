@@ -52,19 +52,14 @@
                 var _this = this;
 
                 Vue.nextTick(function() {
-                    console.log('updateFields');
-
                     if (!_this.formSidebarFields.category || !_this.formSidebarFields.promotion_end) return;
 
                     var category = categoryValue || _this.formSidebarFields.category.value;
-                    console.log(category);
 
                     if (category == 5) {
-                        //Vue.set(_this.formFields.name, 'hidden', true);
                         Vue.set(_this.formSidebarFields.promotion_end, 'hidden', true);
                     }
                     else {
-                        //Vue.set(_this.formFields.name, 'hidden', false);
                         Vue.set(_this.formSidebarFields.promotion_end, 'hidden', false);
                     }
 

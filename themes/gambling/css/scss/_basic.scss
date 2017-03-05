@@ -61,7 +61,9 @@ input:focus:-ms-input-placeholder { /* Internet Explorer 10+ */
     color:    transparent !important;
 }
 
-.wrapper {}
+.wrapper {
+    padding-top: 80px;
+}
 
 
 .for_mobile {

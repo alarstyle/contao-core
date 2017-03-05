@@ -1,0 +1,41 @@
+<div class="grid">
+
+    <div class="column-2-10">
+        <div class="country_select" v-sticky data-margin-top="50">
+            <label>Country</label>
+            <gr-select
+                :options="countries"
+                :value="currentCountry"
+                @change="handleCountryChange">
+            </gr-select>
+        </div>
+    </div>
+
+
+    <div class="column-6-10">
+        <div class="main-head">
+            <div class="main-title">Translations</div>
+        </div>
+        <gr-form :fields="formFields"
+                 :errors="formErrors"
+                 @change="handleFormChange"
+                 ref="form"></gr-form>
+    </div>
+
+    <div class="column-2-10">
+
+        <?php $this->block('right'); ?>
+
+            <div class="submit_panel" v-sticky data-margin-top="50">
+                <div class="submit_panel-title">
+                    Save changes?
+                </div>
+                <div class="submit_panel-btns">
+                    <div class="btn btn--primary" @click="saveClick">Save</div>
+                </div>
+            </div>
+
+        <?php $this->endblock(); ?>
+    </div>
+
+</div>

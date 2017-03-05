@@ -23,10 +23,18 @@ class FrontendHook
     public function generatePage($objPage, $objLayout, $page)
     {
         $currentCountry = Gambling::getCurrentCountry();
+        $currentCountryId = $currentCountry['id'];
 
         $GLOBALS['TL_LANGUAGE'] = $objPage->language = $page->Template->language = $currentCountry['lang'] ?: 'en';
 
         $objPage->country = $page->Template->country = $currentCountry['code'];
+
+        $navigationTitle = deserialize($objPage->navigationTitle)[$currentCountryId] ?: $objPage->title;
+        $metaTitle = deserialize($objPage->metaTitle)[$currentCountryId] ?: $navigationTitle;
+        $metaDescription = deserialize($objPage->metaDescription)[$currentCountryId];
+
+        $objPage->title = $metaTitle;
+        $objPage->description = $metaDescription ?: '';
     }
 
 

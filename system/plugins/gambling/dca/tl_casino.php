@@ -131,12 +131,14 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
             'inputType'         => 'kit',
             'fields' => [
                 'flag' => [
-                    'label'             => &$GLOBALS['TL_LANG']['tl_casino']['languages_flag'],
-                    'inputType' => 'text',
+                    'label' => &$GLOBALS['TL_LANG']['tl_casino']['languages_flag'],
+                    'inputType' => 'select',
+                    'options' => \Contao\System::getCountriesWithFlags(),
                 ],
                 'lang' => [
-                    'label'             => &$GLOBALS['TL_LANG']['tl_casino']['languages_lang'],
-                    'inputType' => 'text',
+                    'label' => &$GLOBALS['TL_LANG']['tl_casino']['languages_lang'],
+                    'inputType' => 'select',
+                    'options' => \Contao\System::getLanguages(),
                 ]
             ],
             'sql'                     => "blob NULL"

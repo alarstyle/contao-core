@@ -334,6 +334,9 @@ input:focus:-ms-input-placeholder {
   /* Internet Explorer 10+ */
   color: transparent !important; }
 
+.wrapper {
+  padding-top: 80px; }
+
 @media (min-width: 768px) {
   .for_mobile {
     display: none !important; } }
@@ -1166,7 +1169,12 @@ input:focus:-ms-input-placeholder {
 
 .header {
   background: #242a2e;
-  height: 80px; }
+  height: 80px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100; }
   .header > div {
     height: 100%; }
     .header > div:before {
@@ -3881,11 +3889,7 @@ ul.dropdown-menu {
     .casino-overview .btn + .btn {
       margin-top: 20px; }
 
-.casino-lang div:before {
-  background: #ebeced no-repeat 50% 50% / cover;
-  content: '';
-  display: inline-block;
-  vertical-align: middle;
+.casino-lang .flag:before {
   margin: -3px 9px 0 0;
   width: 20px;
   height: 14px; }

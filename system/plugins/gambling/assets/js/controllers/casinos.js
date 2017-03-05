@@ -12,7 +12,10 @@
                 step: null,
 
                 casinoDataCountryId: null,
-                casinoData: {}
+                casinoData: {},
+
+                currentCasinoName: '',
+                currentCasinoType: ''
             }
         },
 
@@ -27,10 +30,10 @@
 
                     case 'edit_item':
                         if (this.step === 1) {
-                            return 'Step 1';
+                            return 'Step 1. ' + this.currentCasinoName;
                         }
                         else if (this.step === 2) {
-                            return 'Step 2';
+                            return 'Step 2. ' + this.currentCasinoName;
                         }
                         break;
 
@@ -102,8 +105,11 @@
             },
 
             handleFormChange: function(value, unit, form) {
-                if (unit.id === 'countries') {
-                    this.updateCasinoCountries(value);
+                switch(unit.id) {
+                    case 'countries':
+                        this.updateCasinoCountries(value);
+                        break;
+                    case 'type':
                 }
             },
 
@@ -158,17 +164,42 @@
 
                 this.action('getCasinoData', {id: this.currentId, fields: fieldsValues})
                     .then(function (response) {
-                        _this.casinoData = response.data.data.casinoData;
-                        _this.casinoData = response.data.data.casinoData;
+                        var casinoData = response.data.data.casinoData,
+                            countryId = _this.casinoCountries[0].id;
+
+                        console.log('---------------');
+                        console.log(casinoData);
+
+                        switch(_this.currentCasinoType) {
+                            case 'casino':
+                                casinoData[countryId].main.betting_categories.hidden = true;
+                                casinoData[countryId].main.betting_link.hidden = true;
+                                casinoData[countryId].main.betting_same_window.hidden = true;
+                                casinoData[countryId].main.betting_bonuses.hidden = true;
+                                casinoData[countryId].main.bet_bonus_sign_up.hidden = true;
+                                casinoData[countryId].main.bet_bonus_deposit.hidden = true;
+                                break;
+                            case 'betting':
+                                casinoData[countryId].main.casino_categories.hidden = true;
+                                casinoData[countryId].main.casino_link.hidden = true;
+                                casinoData[countryId].main.casino_same_window.hidden = true;
+                                casinoData[countryId].main.casino_signup_bonuses.hidden = true;
+                                casinoData[countryId].main.cash_sign_up.hidden = true;
+                                casinoData[countryId].main.spins_sign_up.hidden = true;
+                                casinoData[countryId].main.deposit_bonuses.hidden = true;
+                                break;
+                        }
+
+
+
+                        _this.casinoData = casinoData;
 
                         // _this.formFields = response.data.data.fields;
                         // _this.formSidebarFields = response.data.data.sidebar;
                         _this.formErrors = {};
 
-                        console.log(response.data.data);
-
                         _this.step = 2;
-                        _this.casinoDataCountryId = _this.casinoCountries[0].id;
+                        _this.casinoDataCountryId = countryId;
 
                         Vue.nextTick(function() {
                             _this.$refs.casinoDataCountry.setActive(0);
@@ -221,6 +252,17 @@
                     });
             }
 
+        },
+
+        mounted: function() {
+            var _this = this;
+            this.$on('edit-item', function(formFields) {
+                _this.currentCasinoName = formFields.name.value;
+                _this.currentCasinoType = formFields.type.value;
+            });
+            this.$on('save-success', function(fieldsValues) {
+                _this.currentCasinoType = fieldsValues.type;
+            });
         }
 
     };

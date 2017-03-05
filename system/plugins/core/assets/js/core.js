@@ -69,6 +69,7 @@
         watch: {
             value: {
                 handler: function (value) {
+                    console.log('AbstractUnit value changed ' , this.id);
                     this.currentValue = value;
                 },
                 deep: true
@@ -128,8 +129,8 @@
             },
 
             action: function(actionName, data, config) {
-                var _this = this,
-                    promise = grow.action(actionName, data, config);
+                var _this = this;
+                var promise = grow.action(actionName, data, config);
                 promise.catch(function(error) {
                     alert(error);
                     _this.locked = false;

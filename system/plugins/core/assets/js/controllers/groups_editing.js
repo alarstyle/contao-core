@@ -55,12 +55,14 @@
                 this.action('getGroupsItem', {id: id})
                     .then(function (response) {
                         if (response.data.success) {
-                            _this.formFields = response.data.data.fields;
+                            _this.formFields = [];
                             _this.formErrors = {};
-                            // if (id === 'new' && _this.$refs.form) {
-                            //     _this.$refs.form.reset();
-                            // }
                             _this.currentId = id;
+                            Vue.nextTick(function() {
+                                _this.formFields = response.data.data.fields;
+                                _this.$emit('edit-group', response.data.data.fields);
+                                _this.unsaved = false;
+                            });
                         }
                         else if (response.data.error) {
                             grow.notify('Loading failed', {type: 'danger'});
@@ -82,23 +84,25 @@
                 var fieldsValues = _this.$refs.form.getValues();
                 fieldsValues = JSON.parse(JSON.stringify(fieldsValues));
 
-                this.action('saveGroup', {id: _this.currentId, fields: fieldsValues})
-                    .then(function (response) {
-                        _this.locked = false;
-                        if (response.data.success) {
-                            grow.notify('Saved successfully', {type: 'success'});
-                            _this.unsaved = false;
-                            _this.formErrors = {};
-                            if (_this.currentId === 'new') {
-                                _this.currentId = response.data.data.newId;
+                Vue.nextTick(function() {
+                    _this.action('saveGroup', {id: _this.currentId, fields: fieldsValues})
+                        .then(function (response) {
+                            _this.locked = false;
+                            if (response.data.success) {
+                                grow.notify('Saved successfully', {type: 'success'});
+                                _this.unsaved = false;
+                                _this.formErrors = {};
+                                if (_this.currentId === 'new') {
+                                    _this.currentId = response.data.data.newId;
+                                }
+                                _this.loadGroups();
                             }
-                            _this.loadGroups();
-                        }
-                        else if (response.data.error) {
-                            grow.notify('Saving failed ', {type: 'danger'});
-                            _this.formErrors = response.data.errorData;
-                        }
-                    });
+                            else if (response.data.error) {
+                                grow.notify('Saving failed ', {type: 'danger'});
+                                _this.formErrors = response.data.errorData;
+                            }
+                        });
+                });
             },
 
             deleteGroup: function () {

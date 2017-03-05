@@ -413,6 +413,18 @@ abstract class System
 	}
 
 
+    public static function getFlags()
+    {
+        $countries = static::getCountries();
+
+        foreach ($countries as $key => $name) {
+            $countries[$key] = '<span class="flag flag-' . $key . '"></span>';
+        }
+
+        return $countries;
+    }
+
+
     public static function getCountriesWithFlags()
     {
         $countries = static::getCountries();

@@ -9,7 +9,6 @@
  * @license    http://opensource.org/licenses/MIT
  */
 
-
 /**
  * Register namespaces
  */

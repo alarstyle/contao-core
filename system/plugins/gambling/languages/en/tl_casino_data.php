@@ -3,7 +3,7 @@
 $GLOBALS['TL_LANG']['tl_casino_data']['categories_title'] = 'Categories';
 $GLOBALS['TL_LANG']['tl_casino_data']['links'] = 'Links';
 $GLOBALS['TL_LANG']['tl_casino_data']['misc'] = 'Misc';
-$GLOBALS['TL_LANG']['tl_casino_data']['casino_bonuses'] = 'Casino bonuses';
+$GLOBALS['TL_LANG']['tl_casino_data']['casino_signup_bonuses'] = 'Casino signup bonuses';
 $GLOBALS['TL_LANG']['tl_casino_data']['betting_bonuses'] = 'Betting bonuses';
 $GLOBALS['TL_LANG']['tl_casino_data']['wagering_title'] = 'Wagering requirement';
 $GLOBALS['TL_LANG']['tl_casino_data']['withdrawal'] = 'Withdrawal information';
@@ -26,6 +26,9 @@ $GLOBALS['TL_LANG']['tl_casino_data']['bonus_code'] = ['Bonus Code', ''];
 
 $GLOBALS['TL_LANG']['tl_casino_data']['cash_sign_up'] = ['Sign Up Cash Bonus', 'Keep field empty if there is no cash bonus'];
 $GLOBALS['TL_LANG']['tl_casino_data']['spins_sign_up'] = ['Sign Up Free Spins', 'Keep field empty if there is no Free Spins'];
+$GLOBALS['TL_LANG']['tl_casino_data']['deposit_bonuses'] = ['Casino deposit bonuses', ''];
+$GLOBALS['TL_LANG']['tl_casino_data']['deposit_bonuses_cash'] = ['Cash', ''];
+$GLOBALS['TL_LANG']['tl_casino_data']['deposit_bonuses_spins'] = ['Spins', ''];
 $GLOBALS['TL_LANG']['tl_casino_data']['cash_1_deposit'] = ['1st Deposit Cash Bonus', 'Keep field empty if there is no cash bonus'];
 $GLOBALS['TL_LANG']['tl_casino_data']['spins_1_deposit'] = ['1st Deposit Free Spins', 'Keep field empty if there is no Free Spins'];
 $GLOBALS['TL_LANG']['tl_casino_data']['cash_2_deposit'] = ['2nd Deposit Cash Bonus', 'Keep field empty if there is no cash bonus'];

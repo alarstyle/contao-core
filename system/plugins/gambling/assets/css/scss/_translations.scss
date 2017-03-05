@@ -1,0 +1,31 @@
+.page_translations {
+    .unit-hint {
+        display: none;
+    }
+    .unit--text {
+        margin-bottom: 15px;
+        width: 100%;
+        &:after {
+            content: '';
+            clear: both;
+            display: table;
+        }
+    }
+    .unit-label {
+        background: #e2e3e4;
+        border: 1px solid #e2e3e4;
+        border-radius: 4px;
+        color: #242a2e;
+        display: block;
+        font-size: 13px;
+        padding: 10px 11px 0;
+        height: 40px;
+        float: left;
+        margin: 0 10px 0 0;
+        width: 160px;
+    }
+    .unit-input-container {
+        float: left;
+        width: calc(100% - 170px);
+    }
+}

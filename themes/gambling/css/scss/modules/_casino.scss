@@ -194,12 +194,8 @@
 }
 
 .casino-lang {
-    div {
+    .flag {
         &:before {
-            background: #ebeced no-repeat 50% 50% / cover;
-            content: '';
-            display: inline-block;
-            vertical-align: middle;
             margin: -3px 9px 0 0;
             width: 20px;
             height: 14px;

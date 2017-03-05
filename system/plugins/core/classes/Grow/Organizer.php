@@ -30,6 +30,8 @@ class Organizer
         $this->table = $tableName;
         $this->database = Database::getInstance();
 
+        if (empty($tableName)) return;
+
         $connection = \Grow\Database::getConnection();
         $this->listQuery = $connection->selectQuery()->table($tableName);
 
@@ -363,7 +365,7 @@ class Organizer
     }
 
 
-    public function getUnitsData($row = NULL)
+    public function getUnitsData($row = null)
     {
         $tableData = $GLOBALS['TL_DCA'][$this->table];
 
@@ -462,9 +464,9 @@ class Organizer
     }
 
 
-    protected  function getFieldsNamesFromPalette($palette)
+    protected  function getFieldsNamesFromPalette($palette, $fields = null)
     {
-        $tableData = $GLOBALS['TL_DCA'][$this->table];
+        $fields = $fields ?: $GLOBALS['TL_DCA'][$this->table]['fields'];
         $boxes = trimsplit(';', $palette);
         $fieldsNames = [];
 
@@ -474,9 +476,9 @@ class Organizer
             foreach ($boxes[$k] as $kk => $vv) {
                 if (preg_match('/^\{.*\}$/', $vv)) {
                     continue;
-                } elseif ($tableData['fields'][$vv]['exclude1']) {
+                } elseif ($fields[$vv]['exclude1']) {
                     continue;
-                } elseif (!preg_match('/^\[.*\]$/', $vv) && !is_array($tableData['fields'][$vv])) {
+                } elseif (!preg_match('/^\[.*\]$/', $vv) && !is_array($fields[$vv])) {
                     continue;
                 }
 
@@ -488,9 +490,9 @@ class Organizer
     }
 
 
-    protected function getUnitsDataForFields($row, $fieldsNames)
+    protected function getUnitsDataForFields($row, $fieldsNames, $fieldsData = null)
     {
-        $tableData = $GLOBALS['TL_DCA'][$this->table];
+        $fieldsData = $fieldsData?: $GLOBALS['TL_DCA'][$this->table]['fields'];
 
         $fields = [];
 
@@ -505,7 +507,7 @@ class Organizer
                 continue;
             }
 
-            $fieldData = $tableData['fields'][$fieldName];
+            $fieldData = $fieldsData[$fieldName];
 
             if (empty($fieldData['inputTypeNew'] ?: $fieldData['inputType'])) continue;
 
@@ -514,9 +516,9 @@ class Organizer
             if (empty($unitClass)) continue;
 
             /** @var AbstractUnit $unit */
-            $unit = new $unitClass($this->table, $fieldName);
+            $unit = new $unitClass($this->table, $fieldName, $fieldData);
 
-            $fields[$fieldName] = $unit->getUnitData(!empty($row) ? $row[$fieldName] : NULL);
+            $fields[$fieldName] = $unit->getUnitData(!empty($row) ? $row[$fieldName] : null);
         }
 
         return $fields;

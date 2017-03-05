@@ -9,7 +9,6 @@
  * @license    http://opensource.org/licenses/MIT
  */
 
-
 require_once TL_ROOT . '/system/modules/carbid/helper/functions.php';
 
 

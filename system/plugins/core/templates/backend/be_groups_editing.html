@@ -16,17 +16,16 @@
             </div>
 
             <div class="column-6-10">
-                <template v-if="currentId !== null">
-                    <div class="main-head">
-                        <div class="main-title">{{ formTitle || '<?= $this->groupsNew ?>' }}</div>
-                    </div>
-                    <gr-form :fields="formFields"
-                             :errors="formErrors"
-                             ref="form"></gr-form>
-                </template>
-                <template v-else>
-
-                </template>
+                <?php $this->block('center'); ?>
+                    <template v-if="currentId !== null">
+                        <div class="main-head">
+                            <div class="main-title">{{ formTitle || '<?= $this->groupsNew ?>' }}</div>
+                        </div>
+                        <gr-form :fields="formFields"
+                                 :errors="formErrors"
+                                 ref="form"></gr-form>
+                    </template>
+                <?php $this->endblock(); ?>
             </div>
 
             <div class="column-2-10">

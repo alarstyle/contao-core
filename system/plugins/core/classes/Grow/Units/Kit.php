@@ -32,7 +32,7 @@ class Kit extends AbstractUnit
             $fields[$fieldName] = $unit->getUnitData($value ?: null);
         }
 
-        $unitData['fields'] = $fields;
+        $unitData['config']['fields'] = $fields;
 
         return $unitData;
     }

@@ -30,11 +30,13 @@ class Pages extends GroupsEditing
     protected $session;
 
 
-    protected $currentCountry;
+    protected $currentCountryId;
 
 
     public function __construct($config)
     {
+        $this->ajaxActions['changeCountry'] = 'ajaxChangeCountry';
+
         $this->contentOrganizer = new ContentOrganizer();
 
         parent::__construct($config);
@@ -42,7 +44,7 @@ class Pages extends GroupsEditing
         $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/gambling/assets/js/controllers/pages.js';
 
         $this->session = Session::getInstance();
-        $this->currentCountry = $this->session->get('CurrentCountry');
+        $this->currentCountryId = $this->session->get('CurrentCountry');
 
         $countries = BackendHelpers::getUserAvailableCountriesForOptions();
         $availableCountries = [];
@@ -67,6 +69,18 @@ class Pages extends GroupsEditing
     }
 
 
+    public function ajaxChangeCountry()
+    {
+        $countryId = intval(Input::post('countryId'));
+        $pageId = intval(Input::post('id'));
+        $this->session->set('CurrentCountry', $countryId);
+
+        if (empty($pageId)) return;
+
+        $this->ajaxGetGroupsItem();
+    }
+
+
     public function ajaxGetGroups()
     {
         $pages = [];
@@ -87,11 +101,22 @@ class Pages extends GroupsEditing
     {
         $id = Input::post('id');
 
-        //$fields = $this->groupOrganizer->load($id);
-
         $fields = $this->contentOrganizer->load($id);
 
         ActionData::data('fields', $fields);
+    }
+
+
+    public function ajaxSaveGroup()
+    {
+        $id = Input::post('id');
+        $fields = Input::post('fields');
+
+        $this->contentOrganizer->save($id, $fields);
+
+        if ($this->contentOrganizer->hasErrors()) {
+            ActionData::error($this->groupOrganizer->getErrors());
+        }
     }
 
 }

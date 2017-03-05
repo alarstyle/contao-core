@@ -1,14 +1,12 @@
 <?php $this->extend('be_groups_editing'); ?>
 
 <?php $this->block('leftTop'); ?>
-
-<div class="country_select">
-    <label>Country</label>
-    <gr-select
-        :options="countries"
-        :value="currentCountry"
-        @change="handleCountryChange">
-    </gr-select>
-</div>
-
+    <div class="country_select">
+        <label>Country</label>
+        <gr-select
+            :options="countries"
+            :value="currentCountry"
+            @change="handleCountryChange">
+        </gr-select>
+    </div>
 <?php $this->endblock(); ?>

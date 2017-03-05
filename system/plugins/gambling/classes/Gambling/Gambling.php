@@ -24,6 +24,8 @@ class Gambling
     protected static $casinoCategories = null;
     protected static $bettingCategories = null;
 
+    protected static $translations = null;
+
 
     public static function getHomePage()
     {
@@ -98,22 +100,22 @@ class Gambling
             global $objPage;
             $pageRow = PageModel::findByPk($pageId)->row();
             $currentCountry = static::getCurrentCountry();
+            $currentCountryId = $currentCountry['id'];
             $url = '/' . $currentCountry['alias'] . '/' . Controller::generateFrontendUrl($pageRow);
+            $navigationTitle = deserialize($pageRow['navigationTitle'])[$currentCountryId] ?: $pageRow['title'];
+            $metaTitle = deserialize($pageRow['metaTitle'])[$currentCountryId];
+            $metaDescription = deserialize($pageRow['metaDescription'])[$currentCountryId];
             static::$pagesData[$pageId] = [
                 'id' => $pageId,
                 'url' => $url,
-                'title' => 'some title',
-                'current' => $pageId == $objPage->id
+                'current' => $pageId == $objPage->id,
+                'navigationTitle' => $navigationTitle,
+                'metaTitle' => $metaTitle ?: $navigationTitle,
+                'metaDescription' => $metaDescription
             ];
         }
 
         return static::$pagesData[$pageId] ?: [];
-    }
-
-
-    public static function getTranslation($arr, $lang)
-    {
-        return '11';
     }
 
 
@@ -362,30 +364,33 @@ class Gambling
     }
 
 
+    public static function getTranslation($variableName)
+    {
+        $currentCountry = static::getCurrentCountry();
+        $countryId = $currentCountry['id'];
+
+        if (static::$translations === null) {
+            $translationsFile = TL_ROOT . '/system/config/translations.php';
+            if (!file_exists($translationsFile)) {
+                static::$translations = [];
+            }
+            $allTranslations = include $translationsFile;
+            if (!$allTranslations || !$allTranslations['frontend'] || !$allTranslations['frontend'][$countryId] || !is_array($allTranslations['frontend'][$countryId])) {
+                static::$translations = [];
+            }
+            else {
+                static::$translations = $allTranslations['frontend'][$countryId];
+            }
+        }
+
+        return htmlentities(static::$translations[$variableName] ?: $variableName, ENT_NOQUOTES, 'UTF-8');
+    }
+
+
     protected static function prepareCasino($casino, $previewPage)
     {
         $casino->url = str_replace('{casinoAlias}', $casino->alias, $previewPage['url']);
 
-        $cashTotal =
-            ((int) $casino->cash_1_deposit ?: 0) +
-            ((int) $casino->cash_2_deposit ?: 0) +
-            ((int) $casino->cash_3_deposit ?: 0);
-        $casino->depositSpinsBonusTotal =
-            ((int) $casino->spins_1_deposit ?: 0) +
-            ((int) $casino->spins_2_deposit ?: 0) +
-            ((int) $casino->spins_2_deposit ?: 0);
-        if ($cashTotal > 0) {
-            $casino->depositCashBonusTotal = static::addCurrency($casino, $cashTotal);
-        }
-        if ($casino->cash_1_deposit) {
-            $casino->cash_1_deposit = static::addCurrency($casino, $casino->cash_1_deposit);
-        }
-        if ($casino->cash_2_deposit) {
-            $casino->cash_2_deposit = static::addCurrency($casino, $casino->cash_2_deposit);
-        }
-        if ($casino->cash_3_deposit) {
-            $casino->cash_3_deposit = static::addCurrency($casino, $casino->cash_3_deposit);
-        }
         if ($casino->cash_sign_up) {
             $casino->cash_sign_up = static::addCurrency($casino, $casino->cash_sign_up);
         }
@@ -402,10 +407,7 @@ class Gambling
             $casino->withdrawal_max = static::addCurrency($casino, $casino->withdrawal_max);
         }
 
-        $casino->hasCasinoBonus = $casino->depositSpinsBonusTotal || $casino->depositCashBonusTotal || $casino->spins_sign_up || $casino->cash_sign_up;
-        $casino->hasBettingBonus = $casino->bet_bonus_deposit || $casino->bet_bonus_sign_up;
-
-        if ($casino->casino_link) {
+        if ($casino->is_casino && $casino->casino_link) {
             $casino->affiliate_link = $casino->casino_link;
             $casino->affiliate_same_window = $casino->casino_same_window;
         }
@@ -413,6 +415,31 @@ class Gambling
             $casino->affiliate_link = $casino->betting_link;
             $casino->affiliate_same_window = $casino->betting_same_window;
         }
+
+        $casino->languages = deserialize($casino->languages) ?: [];
+        $casino->deposit_bonuses = deserialize($casino->deposit_bonuses) ?: [];
+
+        $depositCashTotal = 0;
+        $casino->depositSpinsBonusTotal = 0;
+
+        if ($casino->deposit_bonuses) {
+            foreach ($casino->deposit_bonuses as $i=>$bonus) {
+                if ($bonus['cash']) {
+                    $casino->deposit_bonuses[$i]['cash'] = static::addCurrency($casino, $bonus['cash']);
+                    $depositCashTotal += (int) $bonus['cash'];
+                }
+                if ($bonus['spins']) {
+                    $casino->depositSpinsBonusTotal += (int) $bonus['spins'];
+                }
+            }
+        }
+
+        if ($depositCashTotal > 0) {
+            $casino->depositCashBonusTotal = static::addCurrency($casino, $depositCashTotal);
+        }
+
+        $casino->hasCasinoBonus = $casino->is_casino && ($casino->depositSpinsBonusTotal || $casino->depositCashBonusTotal || $casino->spins_sign_up || $casino->cash_sign_up);
+        $casino->hasBettingBonus = $casino->is_betting && ($casino->bet_bonus_deposit || $casino->bet_bonus_sign_up);
 
         return $casino;
     }

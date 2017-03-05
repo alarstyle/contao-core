@@ -28,6 +28,9 @@
         watch: {
             fields: {
                 handler: function (fields) {
+                    if (!Object.keys(fields).length) {
+                        this.changedFields = {};
+                    }
                     this.doNotEmitUpdate = true;
                     if (this.$refs.units) {
                         for (var i=0; i < this.$refs.units.length; i++) {
@@ -49,12 +52,12 @@
         methods: {
 
             unitChange: function(value, unit) {
-                console.log('AAAA');
-                console.log(unit);
+                console.log("FORM unit changed ", value);
                 if (this.doNotEmitUpdate) return;
                 this.isChanged = true;
                 this.changedFields[unit.id] = value;
                 this.$emit('change', value, unit, this);
+                console.log("END");
             },
 
             getValues: function() {
@@ -68,9 +71,11 @@
             },
 
             reset: function() {
+                if (!this.$refs.units) return;
                 for (var i=0; i < this.$refs.units.length; i++) {
                     this.$refs.units[i].reset();
                 }
+                this.changedFields = [];
             }
 
         },
