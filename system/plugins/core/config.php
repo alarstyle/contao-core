@@ -706,7 +706,7 @@ $GLOBALS['EDITOR_PRESETS'] = [
         'toolbar' => 'bold italic | alignleft aligncenter alignright'
     ],
     'simple' => [
-        'toolbar' => 'bold italic | alignleft aligncenter alignright alignjustify | link unlink'
+        'toolbar' => 'bold italic | alignleft aligncenter alignright alignjustify | link unlink | removeformat code'
     ],
     'regular' => [
         'toolbar' => 'formatselect | bold italic blockquote | removeformat | alignleft aligncenter alignright alignjustify | bullist numlist | link unlink | image | visualblocks code | fullscreen'

@@ -182,6 +182,12 @@ class Gambling
 
         foreach ($categories as &$category) {
             $category['name'] = deserialize($category['name'])[$countryId] ?: $category['alias'];
+            $category['metaTitle'] = deserialize($category['metaTitle'])[$countryId] ?: null;
+            $category['metaDescription'] = deserialize($category['metaDescription'])[$countryId] ?: null;
+            $category['topTitle'] = deserialize($category['topTitle'])[$countryId] ?: null;
+            $category['topText'] = deserialize($category['topText'])[$countryId] ?: null;
+            $category['bottomTitle'] = deserialize($category['bottomTitle'])[$countryId] ?: null;
+            $category['bottomText'] = deserialize($category['bottomText'])[$countryId] ?: null;
             $category['url'] = str_replace('{categoryAlias}', $category['alias'], $casinosCategoryPage['url']);
             $category['current'] = $casinosCategoryPage['current'] && $category['alias'] === end(\Grow\Route::get());
         }
@@ -209,6 +215,12 @@ class Gambling
 
         foreach ($categories as &$category) {
             $category['name'] = deserialize($category['name'])[$countryId] ?: $category['alias'];
+            $category['metaTitle'] = deserialize($category['metaTitle'])[$countryId] ?: null;
+            $category['metaDescription'] = deserialize($category['metaDescription'])[$countryId] ?: null;
+            $category['topTitle'] = deserialize($category['topTitle'])[$countryId] ?: null;
+            $category['topText'] = deserialize($category['topText'])[$countryId] ?: null;
+            $category['bottomTitle'] = deserialize($category['bottomTitle'])[$countryId] ?: null;
+            $category['bottomText'] = deserialize($category['bottomText'])[$countryId] ?: null;
             $category['url'] = str_replace('{categoryAlias}', $category['alias'], $bettingCategoryPage['url']);
             $category['current'] = $bettingCategoryPage['current'] && $category['alias'] === end(\Grow\Route::get());
         }

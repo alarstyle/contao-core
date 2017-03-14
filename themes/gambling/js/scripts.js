@@ -38,6 +38,57 @@
     })();
 
 
+    function initNav() {
+        $('#menu_toggler').each(function() {
+            var $menu_toggler = $(this),
+                menuOpened;
+            function updateScrollState() {
+                menuOpened = $menu_toggler[0].checked;
+                menuOpened ? disableScroll() : enableScroll();
+            }
+            updateScrollState();
+            $menu_toggler.on('change', updateScrollState);
+            $w.on('resize', function() {
+                if ($w.width() >= 1200) {
+                    $menu_toggler.prop('checked', false);
+                }
+            });
+        });
+        $('.menu').each(function() {
+            var $menu = $(this),
+                $activeLink = $menu.find('.with_submenu.active > div a'),
+                isHidden = false;
+            function showSubmenu() {
+                isHidden = false;
+                $menu.removeClass('hide_submenu');
+            }
+            function hideSubmenu() {
+                isHidden = true;
+                $menu.addClass('hide_submenu');
+            }
+            function onWindowScroll() {
+                if ($w.scrollTop() > 30 && isHidden) return;
+                if ($w.scrollTop() <= 30) {
+                    showSubmenu();
+                    return;
+                }
+                hideSubmenu();
+            }
+            function updateOnWindowResize() {
+                $w.off('scroll', onWindowScroll);
+                $activeLink.off('mouseover', showSubmenu);
+                showSubmenu();
+                if ($w.width() >= 1200) {
+                    $w.on('scroll', onWindowScroll);
+                    $activeLink.on('mouseover', showSubmenu);
+                }
+            }
+            $w.on('resize', updateOnWindowResize);
+            updateOnWindowResize();
+        })
+    }
+
+
     function initSlider() {
         if ($w.width < 768) return;
         $('.slider').each(function () {
@@ -213,6 +264,7 @@
 
 
     $(function () {
+        initNav();
         initSlider();
         initDropdown();
         initSubmenu();

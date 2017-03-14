@@ -168,12 +168,18 @@
 
             saveClick: function () {
                 if (this.locked) return;
-                if (this.state === 'edit_item') {
-                    this.saveItem();
-                }
-                else {
-                    this.saveGroup();
-                }
+                this.locked = true;
+                var _this = this;
+                setTimeout(function() {
+                    Vue.nextTick(function() {
+                        if (_this.state === 'edit_item') {
+                            _this.saveItem();
+                        }
+                        else {
+                            _this.saveGroup();
+                        }
+                    });
+                }, 300);
             },
 
             deleteClick: function() {

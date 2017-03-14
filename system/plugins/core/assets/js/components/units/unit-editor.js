@@ -1,7 +1,8 @@
 (function() {
 
     var defaultSettings = {
-        plugins: 'autoresize visualblocks template link image lists code fullscreen growcms',
+        plugins: 'autoresize visualblocks template link image lists code fullscreen growcms paste',
+        paste_as_text: true,
         menubar: false,
         toolbar:
             //'undo redo' +
@@ -63,6 +64,15 @@
         },
 
         methods: {
+
+            reset: function () {
+                var _this = this;
+                this.currentValue = 'reseting_' + Date.now();
+                Vue.nextTick(function () {
+                    _this.currentValue = _this.value;
+                    _this.editor.setContent(_this.currentValue);
+                });
+            },
 
             filePicked: function(data) {
                 this.$root.$off('filePicked', this.filePicked);

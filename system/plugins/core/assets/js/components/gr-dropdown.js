@@ -1,6 +1,6 @@
 (function () {
 
-    var Dropdown = {
+    Vue.component('gr-dropdown', {
 
         template: '#gr-dropdown-template',
 
@@ -38,8 +38,6 @@
 
         }
 
-    };
-
-    Vue.component('gr-dropdown', Dropdown);
+    });
 
 }());

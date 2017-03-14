@@ -11,7 +11,7 @@
     </gr-select>
 </div>
 
-<div class="country_switch" v-if="state === 'edit_item' && step === 2 && casinoCountries && casinoCountries.length">
+<div class="country_switch" v-if="state === 'edit_item' && step === 2 && casinoCountries && casinoCountries.length" v-sticky data-margin-top="50">
     <groups
         :list="casinoCountries"
         title="Country"

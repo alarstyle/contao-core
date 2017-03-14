@@ -1,5 +1,7 @@
 (function () {
 
+    var fieldsNamesToProcess = ['name', 'metaTitle', 'metaDescription', 'topTitle', 'topText', 'bottomTitle', 'bottomText'];
+
     var Casinos = {
 
         extends: Listing,
@@ -13,6 +15,8 @@
 
                 casinoDataCountryId: null,
                 casinoData: {},
+
+                categoryRawFields: null,
 
                 currentCasinoName: '',
                 currentCasinoType: ''
@@ -89,10 +93,15 @@
                         _this.currentCountry = countryId;
                         _this.locked = false;
                         if (response.data.success) {
-                            _this.$refs.groups.editingStateOff();
-                            _this.$refs.groups.setActive(null);
-                            _this.loadGroups();
-                            _this.showList();
+                            if (_this.state === 'edit_group') {
+                                _this.editGroup(_this.currentGroupId);
+                            }
+                            else {
+                                _this.$refs.groups.editingStateOff();
+                                _this.$refs.groups.setActive(null);
+                                _this.loadGroups();
+                                _this.showList();
+                            }
                         }
                         else if (response.data.error) {
                             grow.notify('Unknown error', {type: 'danger'});
@@ -250,6 +259,96 @@
                             _this.formErrors = response.data.errorData;
                         }
                     });
+            },
+
+            editGroup: function (id) {
+                if (this.locked) return;
+                this.locked = true;
+                var _this = this;
+                this.action('getGroup', {id: id})
+                    .then(function (response) {
+                        _this.locked = false;
+                        if (response.data.success) {
+                            _this.step = null;
+                            _this.categoryRawFields = _.defaultsDeep({}, response.data.data.fields);
+                            _this.formFields = _this.getFields(response.data.data.fields);
+                            _this.formSidebarFields = response.data.data.sidebar;
+                            _this.formErrors = {};
+                            if (_this.$refs.form) {
+                                console.log('reseting');
+                                _this.$refs.form.reset();
+                            }
+                            _this.currentGroupId = id;
+                            _this.state = 'edit_group';
+                        }
+                        else if (response.data.error) {
+                            grow.notify('Loading failed', {type: 'danger'});
+                        }
+                    });
+            },
+
+            saveGroup: function () {
+                this.locked = true;
+
+                var _this = this;
+                var fieldsValues = _this.$refs.form.getValues();
+                fieldsValues = this.getFieldsValues(fieldsValues);
+
+                console.log(fieldsValues);
+
+                this.action('saveGroup', {id: _this.currentGroupId, fields: fieldsValues})
+                    .then(function (response) {
+                        _this.locked = false;
+                        if (response.data.success) {
+                            grow.notify('Saved successfully', {type: 'success'});
+                            _this.unsaved = false;
+                            _this.formErrors = {};
+                            if (_this.currentGroupId === 'new') {
+                                _this.currentGroupId = response.data.data.newId;
+                            }
+                            _this.loadGroups();
+                        }
+                        else if (response.data.error) {
+                            grow.notify('Saving failed ', {type: 'danger'});
+                            _this.formErrors = response.data.errorData;
+                        }
+                    });
+            },
+
+            getFields: function(rawFields) {
+                var _this = this,
+                    fields = _.defaultsDeep({}, rawFields);
+                _.forEach(fields, function(field, fieldName) {
+                    if (!_.includes(fieldsNamesToProcess, fieldName) || !fields[fieldName].value) return;
+                    if (typeof fields[fieldName].value === 'string') {
+                        fields[fieldName].value = '';
+                    }
+                    else if (fields[fieldName].value[_this.currentCountry]) {
+                        fields[fieldName].value = fields[fieldName].value[_this.currentCountry];
+                    }
+                    else {
+                        fields[fieldName].value = '';
+                    }
+                });
+                return fields;
+            },
+
+            getFieldsValues: function(fieldsValues) {
+                var _this = this,
+                    fields = {};
+                _.forEach(this.categoryRawFields, function(field, fieldName) {
+                    if (_.includes(fieldsNamesToProcess, fieldName)) {
+                        fields[fieldName] = field.value || {};
+                        if (typeof fields[fieldName] === 'string') {
+                            fields[fieldName] = {};
+                        }
+                        fields[fieldName][_this.currentCountry] = fieldsValues[fieldName];
+                        return;
+                    }
+                    fields[fieldName] = fieldsValues[fieldName];
+                });
+
+                return fields;
             }
 
         },

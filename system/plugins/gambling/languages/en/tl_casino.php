@@ -10,7 +10,6 @@ $GLOBALS['TL_LANG']['tl_casino']['website'] = ['Casino website link', 'Max 255 c
 $GLOBALS['TL_LANG']['tl_casino']['owner'] = ['Casino owner', 'Max 255 characters'];
 $GLOBALS['TL_LANG']['tl_casino']['year'] = ['Established in', ''];
 $GLOBALS['TL_LANG']['tl_casino']['licence'] = ['Licences', ''];
-$GLOBALS['TL_LANG']['tl_casino']['rating'] = ['Casino rating', ''];
 $GLOBALS['TL_LANG']['tl_casino']['type'] = ['Type', ''];
 $GLOBALS['TL_LANG']['tl_casino']['languages'] = ['Languages', ''];
 $GLOBALS['TL_LANG']['tl_casino']['languages_flag'] = ['Flag', ''];

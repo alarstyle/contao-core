@@ -31,7 +31,7 @@ class FrontendHook
 
         $navigationTitle = deserialize($objPage->navigationTitle)[$currentCountryId] ?: $objPage->title;
         $metaTitle = deserialize($objPage->metaTitle)[$currentCountryId] ?: $navigationTitle;
-        $metaDescription = deserialize($objPage->metaDescription)[$currentCountryId];
+        $metaDescription = deserialize($objPage->metaDescription)[$currentCountryId] ?: '';
 
         $objPage->title = $metaTitle;
         $objPage->description = $metaDescription ?: '';

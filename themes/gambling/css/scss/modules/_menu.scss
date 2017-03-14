@@ -55,8 +55,8 @@
 
     .menu_toggler {
         &:checked + .wrapper {
-            height: 100vh;
-            overflow: hidden;
+            //height: 100vh;
+            //overflow: hidden;
             .menu {
                 @include transition(none);
                 visibility: visible;
@@ -95,7 +95,7 @@
         position: fixed;
         top: 0;
         left: 0;
-        height: 100%;
+        height: 100vh;
         width: 100%;
         z-index: 9999;
         visibility: hidden;
@@ -237,6 +237,7 @@
                     }
                 }
                 ul {
+                    @include transition(opacity 0.2s ease);
                     display: block;
                 }
             }
@@ -246,6 +247,13 @@
             line-height: 25px;
             &:hover {
                 text-decoration: underline;
+            }
+        }
+        &.hide_submenu {
+            li.with_submenu.active ul {
+                @include transition(opacity 0.2s ease, visibility 0s ease 0.2s);
+                opacity: 0;
+                visibility: hidden;
             }
         }
     }

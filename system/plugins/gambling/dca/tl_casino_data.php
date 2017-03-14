@@ -28,7 +28,7 @@ $GLOBALS['TL_DCA']['tl_casino_data'] = array
     ),
 
 	'palettes' => [
-		'default'                     => '[categories_title],casino_categories,betting_categories,[links],casino_link,casino_same_window,betting_link,betting_same_window,[misc],currency,currency_before,bonus_code,[casino_signup_bonuses],cash_sign_up,spins_sign_up,deposit_bonuses,[betting_bonuses],bet_bonus_sign_up,bet_bonus_deposit,[wagering_title],wagering,[withdrawal],withdrawal_methods,withdrawal_min,withdrawal_max,withdrawal_frequency,[deposit_methods_title],deposit_methods,[providers_title],providers,[licenses_title],licenses,[contacts],phone,email,[review_title],review,[pros_cons],pros,cons,[seo],meta_title,meta_description',
+		'default'                     => '[categories_title],casino_categories,betting_categories,[links],casino_link,casino_same_window,betting_link,betting_same_window,[misc],rating,currency,currency_before,bonus_code,[casino_signup_bonuses],cash_sign_up,spins_sign_up,deposit_bonuses,[betting_bonuses],bet_bonus_sign_up,bet_bonus_deposit,[wagering_title],wagering,[withdrawal],withdrawal_methods,withdrawal_min,withdrawal_max,withdrawal_frequency,[deposit_methods_title],deposit_methods,[providers_title],providers,[licenses_title],licenses,[contacts],phone,email,[review_title],review,[pros_cons],pros,cons,[seo],meta_title,meta_description',
         'sidebar'                     => 'published'
 	],
 
@@ -82,6 +82,11 @@ $GLOBALS['TL_DCA']['tl_casino_data'] = array
             'inputType'               => 'checkbox',
             'eval'                    => array('tl_class'=>'w50 align_to_text'),
             'sql'                     => "char(1) NOT NULL default ''"
+        ],
+        'rating' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_casino_data']['rating'],
+            'inputType'               => 'rating',
+            'sql'                     => "float NULL"
         ],
         'currency' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_casino_data']['currency'],

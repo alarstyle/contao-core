@@ -1168,6 +1168,9 @@ input:focus:-ms-input-placeholder {
   display: none; }
 
 .header {
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
   background: #242a2e;
   height: 80px;
   width: 100%;
@@ -2164,21 +2167,18 @@ ul.dropdown-menu {
       height: 2px;
       width: 18px; }
 
-  .menu_toggler:checked + .wrapper {
-    height: 100vh;
-    overflow: hidden; }
-    .menu_toggler:checked + .wrapper .menu {
-      -webkit-transition: none;
-      transition: none;
-      visibility: visible; }
-      .menu_toggler:checked + .wrapper .menu nav {
-        -webkit-transform: translate3d(0, 0, 0);
-        -ms-transform: translate3d(0, 0, 0);
-        transform: translate3d(0, 0, 0); }
-    .menu_toggler:checked + .wrapper .menu-close {
-      opacity: 1; }
-    .menu_toggler:checked + .wrapper .menu-overlay {
-      opacity: .8; }
+  .menu_toggler:checked + .wrapper .menu {
+    -webkit-transition: none;
+    transition: none;
+    visibility: visible; }
+    .menu_toggler:checked + .wrapper .menu nav {
+      -webkit-transform: translate3d(0, 0, 0);
+      -ms-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0); }
+  .menu_toggler:checked + .wrapper .menu-close {
+    opacity: 1; }
+  .menu_toggler:checked + .wrapper .menu-overlay {
+    opacity: .8; }
 
   .menu-close {
     position: absolute;
@@ -2207,7 +2207,7 @@ ul.dropdown-menu {
     position: fixed;
     top: 0;
     left: 0;
-    height: 100%;
+    height: 100vh;
     width: 100%;
     z-index: 9999;
     visibility: hidden; }
@@ -2324,12 +2324,19 @@ ul.dropdown-menu {
         content: '';
         margin-left: -8px; }
       .menu li.with_submenu.active ul {
+        -webkit-transition: opacity 0.2s ease;
+        transition: opacity 0.2s ease;
         display: block; }
     .menu a {
       display: inline-block;
       line-height: 25px; }
       .menu a:hover {
-        text-decoration: underline; } }
+        text-decoration: underline; }
+    .menu.hide_submenu li.with_submenu.active ul {
+      -webkit-transition: opacity 0.2s ease,visibility 0s ease 0.2s;
+      transition: opacity 0.2s ease,visibility 0s ease 0.2s;
+      opacity: 0;
+      visibility: hidden; } }
 .filter {
   font-weight: bold;
   letter-spacing: 1px; }
@@ -3481,7 +3488,7 @@ ul.dropdown-menu {
 
   .casinos_promo-title {
     text-align: center;
-    margin: 0 auto 90px;
+    margin: 0 auto 10px;
     max-width: 400px;
     min-height: 60px;
     padding: 0 30px; }

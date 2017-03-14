@@ -83,6 +83,10 @@
                 }
 
                 textarea.style.height = newHeight + 'px';
+            },
+
+            reset: function () {
+                this.currentValue = this.value;
             }
 
         },
