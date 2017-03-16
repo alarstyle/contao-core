@@ -181,6 +181,7 @@ class Gambling
         $casinosCategoryPage = static::getPageData(71);
 
         foreach ($categories as &$category) {
+            $category['alias'] = deserialize($category['alias'])[$countryId] ?: $category['alias'];
             $category['name'] = deserialize($category['name'])[$countryId] ?: $category['alias'];
             $category['metaTitle'] = deserialize($category['metaTitle'])[$countryId] ?: null;
             $category['metaDescription'] = deserialize($category['metaDescription'])[$countryId] ?: null;

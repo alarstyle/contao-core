@@ -1,6 +1,6 @@
 (function () {
 
-    var fieldsNamesToProcess = ['name', 'metaTitle', 'metaDescription', 'topTitle', 'topText', 'bottomTitle', 'bottomText'];
+    var fieldsNamesToProcess = ['name', 'alias', 'metaTitle', 'metaDescription', 'topTitle', 'topText', 'bottomTitle', 'bottomText'];
 
     var Casinos = {
 

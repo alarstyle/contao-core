@@ -3497,7 +3497,7 @@ ul.dropdown-menu {
     background: #fff;
     color: #242a2e;
     padding: 25px 28px;
-    min-height: 200px; } }
+    min-height: 100px; } }
 @media (min-width: 768px) {
   .casinos_promo {
     padding: 10px 30px; }

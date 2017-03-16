@@ -15,8 +15,7 @@ $GLOBALS['TL_DCA']['tl_casino_category'] = array
 		(
 			'keys' => array
 			(
-				'id' => 'primary',
-                'alias' => 'unique',
+				'id' => 'primary'
 			)
 		)
 	),
@@ -64,8 +63,8 @@ $GLOBALS['TL_DCA']['tl_casino_category'] = array
         'alias' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_casino_category']['alias'],
             'inputType'               => 'text',
-            'eval'                    => array('mandatory'=>true, 'unique'=>true, 'rgxp'=>'alias', 'tl_class'=>'w50'),
-            'sql'                     => "varchar(255) NOT NULL default ''"
+            'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
+            'sql'                     => "blob NULL"
         ],
         'metaTitle' => array
         (

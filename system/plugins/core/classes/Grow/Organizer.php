@@ -390,7 +390,10 @@ class Organizer
         $errors = [];
         $fieldsData = $GLOBALS['TL_DCA'][$this->table]['fields'];
 
+        $this->doValidateCallbacks($fieldsValues, $id);
+
         foreach ($fieldsValues as $field => $value) {
+
             $unitClass = $this->getUnitClass($fieldsData[$field]['inputTypeNew'] ?: $fieldsData[$field]['inputType']);
 
             if (empty($unitClass)) {
@@ -539,6 +542,31 @@ class Organizer
                     if (is_callable($callback))
                     {
                         $fieldsValues[$fieldName] = call_user_func_array($callback, [$fieldsValues[$fieldName], $id, &$fieldsValues]);
+                    }
+                }
+                catch (\Exception $e)
+                {
+//                    $objEditor->class = 'error';
+//                    $objEditor->addError($e->getMessage());
+                }
+            }
+        }
+    }
+
+
+    protected function doValidateCallbacks(&$fieldsValues, $id = null)
+    {
+        $tableFieldsData = $GLOBALS['TL_DCA'][$this->table]['fields'];
+
+        foreach($fieldsValues as $fieldName=>$fieldValue) {
+            if (!is_array($tableFieldsData[$fieldName]['validateCallback'])) continue;
+            foreach ($tableFieldsData[$fieldName]['validateCallback'] as $callback)
+            {
+                try
+                {
+                    if (is_callable($callback))
+                    {
+                        $fieldValue = call_user_func_array($callback, [$fieldValue, $id, &$fieldsValues]);
                     }
                 }
                 catch (\Exception $e)
