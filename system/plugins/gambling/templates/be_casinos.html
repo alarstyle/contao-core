@@ -2,24 +2,44 @@
 
 <?php $this->block('leftTop'); ?>
 
-<div class="country_select" v-if="state === 'list' || state === 'edit_group'">
-    <label>Country</label>
-    <gr-select
-        :options="countries"
-        :value="currentCountry"
-        @change="handleCountryChange">
-    </gr-select>
-</div>
+    <div class="country_select" v-if="state === 'list' || state === 'edit_group'">
+        <label>Country</label>
+        <gr-select
+            :options="countries"
+            :value="currentCountry"
+            @change="handleCountryChange">
+        </gr-select>
+    </div>
 
-<div class="country_switch" v-if="state === 'edit_item' && step === 2 && casinoCountries && casinoCountries.length" v-sticky data-margin-top="50">
+    <div class="country_switch" v-if="state === 'edit_item' && step === 2 && casinoCountries && casinoCountries.length" v-sticky data-margin-top="50">
+        <groups
+            :list="casinoCountries"
+            title="Country"
+            @group-selected="handleEditCountrySelected"
+            ref="casinoDataCountry">
+        </groups>
+    </div>
+
+<?php $this->endblock(); ?>
+
+
+<?php $this->block('left'); ?>
     <groups
-        :list="casinoCountries"
-        title="Country"
-        @group-selected="handleEditCountrySelected"
-        ref="casinoDataCountry">
+        v-if="state === 'list' || state === 'edit_group'"
+        title="<?= $this->groupsTitle ?>"
+        label-new="<?= $this->groupsNew ?>"
+        label-all="<?= $this->groupsAll ?>"
+        :list="groupsList"
+        :creatable="groupsCreatable"
+        :editable="groupsEditable"
+        :sortable="true"
+        @editing-state="groupsEditingState"
+        @group-selected="groupSelected"
+        @group-edit="editGroup"
+        @new-group="newGroup"
+        @reorder="handleGroupsReorder"
+        ref="groups">
     </groups>
-</div>
-
 <?php $this->endblock(); ?>
 
 

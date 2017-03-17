@@ -37,6 +37,7 @@ class Casinos extends ListingWithGroups
         $this->ajaxActions['changeCountry'] = 'ajaxChangeCountry';
         $this->ajaxActions['getCasinoData'] = 'ajaxGetCasinoData';
         $this->ajaxActions['saveCasinoData'] = 'ajaxSaveCasinoData';
+        $this->ajaxActions['reorderGroups'] = 'ajaxReorderGroups';
 
         parent::__construct($config);
 
@@ -149,6 +150,15 @@ class Casinos extends ListingWithGroups
     }
 
 
+    public function ajaxReorderGroups()
+    {
+        $id = Input::post('id');
+        $previousId = Input::post('previousId');
+
+        $this->setGroupNewPosition($id, $previousId);
+    }
+
+
     protected function groupsLabelCallback($item)
     {
         $defaultCountry = BackendHelpers::getDefaultCountry();
@@ -183,6 +193,97 @@ class Casinos extends ListingWithGroups
         }
 
         return $this->where;
+    }
+
+
+    protected function setGroupNewPosition($id, $previousId)
+    {
+        $connection = \Grow\Database::getConnection();
+
+        $newSorting = $this->getNewPosition('tl_casino_category', $id, $previousId, [$this, 'modifyGroupQuery']);
+
+        $connection->updateQuery()
+            ->table('tl_casino_category')
+            ->set('sorting', $newSorting)
+            ->where('id', $id)
+            ->execute();
+    }
+
+
+    protected function getNewPosition($table, $id, $previousId, callable $modifyQueryMethod = null)
+    {
+        $newSorting = 0;
+
+        $database = \Grow\Database::getDatabase();
+        $connection = \Grow\Database::getConnection();
+
+        if (!$previousId) {
+            // ID is not set (insert at the end)
+            $maxSortingQuery = $connection->selectQuery()
+                ->table($table)
+                ->fields(['sorting' => $database->sqlExpression('MAX(sorting)')]);
+            if ($modifyQueryMethod) $modifyQueryMethod($maxSortingQuery);
+            $maxSorting = $maxSortingQuery->execute()->asArray();
+            $maxSorting = $maxSorting && $maxSorting[0] ? $maxSorting[0]->sorting : 0;
+            $newSorting = intval($maxSorting) + 128;
+
+            return $newSorting;
+        }
+
+        $previous = $connection->selectQuery()
+            ->table($table)
+            ->where('id', $previousId)
+            ->execute()->asArray();
+
+        $prevSorting = !count($previous) ? 0 : $previous[0]->sorting;
+
+        ActionData::data('previousSorting', $prevSorting);
+
+        $nextQuery = $connection->selectQuery()
+            ->table($table)
+            ->fields(['sorting' => $database->sqlExpression('MIN(sorting)')])
+            ->where('sorting', '<', $prevSorting);
+        if ($modifyQueryMethod) $modifyQueryMethod($nextQuery);
+        $next = $nextQuery->execute()->asArray();
+
+//        if (!count($next)) {
+//            return $prevSorting + 128;
+//        }
+
+        $nextSorting = !count($next) ? 0 : $next[0]->sorting;
+
+        if ($prevSorting !== 0 && (($prevSorting + $nextSorting) % 2) === 0 && $nextSorting < 4294967295)
+        {
+            return ($prevSorting + $nextSorting) / 2;
+        }
+
+        $count = 1;
+
+        $itemsQuery = $connection->selectQuery()
+            ->table($table)
+            ->fields(['id', 'sorting'])
+            ->orderBy('sorting', 'asc');
+        if ($modifyQueryMethod) $modifyQueryMethod($itemsQuery);
+        $items = $itemsQuery->execute()->asArray();
+
+        foreach ($items as $item) {
+            if ($item->id == $previousId)
+            {
+                $newSorting = ($count++ * 128);
+            }
+            $connection->updateQuery()
+                ->table($table)
+                ->set('sorting', ($count++ * 128))
+                ->where('id', $item->id)
+                ->execute();
+        }
+
+        return $newSorting;
+    }
+
+    protected function modifyGroupQuery($query)
+    {
+        $query->where('is_betting', '!=', 1);
     }
 
 }

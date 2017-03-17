@@ -20,21 +20,6 @@ $GLOBALS['TL_DCA']['tl_casino_category'] = array
 		)
 	),
 
-	// List
-	'list' => array
-	(
-		'sorting' => array
-		(
-			'fields'                  => array('dateAdded DESC'),
-			'flag'                    => 1,
-		),
-		'label' => array
-		(
-			'fields'                  => array('countries'),
-			'callback'                => array('tl_casino_category', 'listCallback')
-		)
-	),
-
 	// Palettes
 	'palettes' => array
 	(
@@ -111,7 +96,7 @@ $GLOBALS['TL_DCA']['tl_casino_category'] = array
             'sql'               => "char(1) NOT NULL default ''"
         ],
         'sorting' => [
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            'sql'               => "int(10) unsigned NOT NULL default '0'"
         ],
 	)
 );

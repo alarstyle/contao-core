@@ -49,4 +49,9 @@ class Bettings extends Casinos
         return $this->where;
     }
 
+    protected function modifyGroupQuery($query)
+    {
+        $query->where('is_betting', 1);
+    }
+
 }

@@ -7,15 +7,19 @@
             </div>
             <div class="groups-title">{{ title }}</div>
         </div>
-        <ul>
+        <ul v-sortable="!sortable ? false : sortableOptions">
             <li v-if="labelAll && !editingState"
                 :class="{active: active === null}"
                 @click="allClick">{{ labelAll }}</li>
             <li v-for="(item, i) in list"
                 :key="item.id"
-                :class="{active: i === active}"
-                v-html="item.label"
-                @click="groupClick(i)"></li>
+                :class="{active: item.id === active}"
+                @click="groupClick(item.id)">
+                <div v-html="item.label"></div>
+                <div class="item-sort" v-if="sortable">
+                    <icon type="sort"></icon>
+                </div>
+            </li>
         </ul>
         <div class="groups-new" v-if="(creatable && !editable) || (creatable && editable && editingState)">
             <a @click="newClick">{{ labelNew }}</a>

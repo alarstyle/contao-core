@@ -33,22 +33,30 @@
         data: function () {
             return {
                 active: null,
-                editingState: false
+                editingState: false,
+                sortableOptions: {
+                    handle: '.item-sort',
+                    onSort: this.handleSort
+                }
             }
         },
 
         methods: {
 
-            groupClick: function (i) {
-                if (this.active === i || this.$root.locked) return;
+            handleSort: function(event) {
+                this.$emit('reorder', event);
+            },
+
+            groupClick: function (id) {
+                if (this.active === id || this.$root.locked) return;
                 var _this = this;
                 if (this.confirmExitIfUnsaved) {
                     this.$root.confirmExitIfUnsaved(function() {
-                        _this._changeSelectedGroup(i);
+                        _this._changeSelectedGroup(id);
                     });
                 }
                 else {
-                    _this._changeSelectedGroup(i);
+                    _this._changeSelectedGroup(id);
                 }
 
             },
@@ -86,7 +94,7 @@
             },
 
             setActive: function (index) {
-                this.active = index;
+                this.active = index != null ? this.list[index].id : null;
             },
 
             findAndSetActive: function (predicate) {
@@ -97,13 +105,13 @@
             },
 
 
-            _changeSelectedGroup: function(index) {
-                this.active = index;
+            _changeSelectedGroup: function(id) {
+                this.active = id;
                 if (this.editingState) {
-                    this.$emit('group-edit', this.list[index].id);
+                    this.$emit('group-edit', id);
                 }
                 else {
-                    this.$emit('group-selected', this.list[index].id);
+                    this.$emit('group-selected', id);
                 }
             }
 

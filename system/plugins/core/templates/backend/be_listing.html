@@ -4,20 +4,22 @@
             <?php $this->block('leftTop'); ?>
             <?php $this->endblock(); ?>
 
-            <groups
-                v-if="state === 'list' || state === 'edit_group'"
-                title="<?= $this->groupsTitle ?>"
-                label-new="<?= $this->groupsNew ?>"
-                label-all="<?= $this->groupsAll ?>"
-                :list="groupsList"
-                :creatable="groupsCreatable"
-                :editable="groupsEditable"
-                @editing-state="groupsEditingState"
-                @group-selected="groupSelected"
-                @group-edit="editGroup"
-                @new-group="newGroup"
-                ref="groups">
-            </groups>
+            <?php $this->block('left'); ?>
+                <groups
+                    v-if="state === 'list' || state === 'edit_group'"
+                    title="<?= $this->groupsTitle ?>"
+                    label-new="<?= $this->groupsNew ?>"
+                    label-all="<?= $this->groupsAll ?>"
+                    :list="groupsList"
+                    :creatable="groupsCreatable"
+                    :editable="groupsEditable"
+                    @editing-state="groupsEditingState"
+                    @group-selected="groupSelected"
+                    @group-edit="editGroup"
+                    @new-group="newGroup"
+                    ref="groups">
+                </groups>
+            <?php $this->endblock(); ?>
         </div>
 
         <template v-if="state === 'edit_item' || state === 'edit_group'">

@@ -278,6 +278,12 @@ $GLOBALS['TL_DCA']['tl_casino_data'] = array
             'eval'                    => ['tl_class'=>'w50'],
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
+        'casino_sorting' => [
+            'sql'               => "int(10) unsigned NOT NULL default '0'"
+        ],
+        'betting_sorting' => [
+            'sql'               => "int(10) unsigned NOT NULL default '0'"
+        ],
         'published' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_casino_data']['published'],

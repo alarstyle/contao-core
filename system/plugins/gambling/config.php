@@ -55,7 +55,7 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 1, 'casinos', [
             'titleCallback' => function ($item) {
                 return $item['name'];
             },
-            //'sorting' => ['tstamp']
+            'order' => 'sorting DESC, tstamp'
         ],
         'list' => [
             'table' => 'tl_casino',

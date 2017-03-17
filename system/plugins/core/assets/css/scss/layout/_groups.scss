@@ -37,6 +37,9 @@
             }
         }
     }
+    .item-sort {
+        display: none;
+    }
 }
 
 .groups-head {
@@ -86,8 +89,21 @@
         background: #fff;
         box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
         padding-left: 12px;
+        position: relative;
         &:before {
             content: normal;
+        }
+    }
+    .item-sort {
+        @extend .disable_select;
+        @include abs-pos(null, 0, 0);
+        display: block;
+        text-align: center;
+        width: 38px;
+        .icon {
+            margin-top: -3px;
+            width: 15px;
+            height: 15px;
         }
     }
 }

@@ -171,7 +171,9 @@ class Gambling
             return static::$casinoCategories;
         }
 
-        $categories = CasinoCategoryModel::findAll();
+        $categories = CasinoCategoryModel::findAll([
+            'order' => 'sorting DESC'
+        ]);
 
         if ($categories === null) return [];
 

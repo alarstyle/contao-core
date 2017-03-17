@@ -148,6 +148,33 @@
                 });
             },
 
+            handleGroupsReorder: function(event) {
+                console.log('handle');
+                console.log(this.groupsList);
+                console.log(this.groupsList.slice());
+
+                var _this = this,
+                    list = this.groupsList.slice(),
+                    oldIndex = event.oldIndex,
+                    newIndex = event.newIndex,
+                    item = list[oldIndex],
+                    previousItem = newIndex === 0 ? null : (oldIndex < newIndex ? list[newIndex] : list[newIndex-1]);
+
+                this.groupsList = arrayMove(list, oldIndex, newIndex);
+
+                return this.action('reorderGroups', {
+                    id: item.id,
+                    previousId: previousItem ? previousItem.id : null })
+                    .then(function (response) {
+                        if (response.data.success) {
+                            //grow.notify('Saved successfully', {type: 'success'});
+                        }
+                        else {
+                            grow.notify('Saving new order failed ', {type: 'danger'});
+                        }
+                    });
+            },
+
             _goToStep1: function() {
                 var _this = this;
                 this.editItem(this.currentId)
