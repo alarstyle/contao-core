@@ -38,6 +38,7 @@ class Casinos extends ListingWithGroups
         $this->ajaxActions['getCasinoData'] = 'ajaxGetCasinoData';
         $this->ajaxActions['saveCasinoData'] = 'ajaxSaveCasinoData';
         $this->ajaxActions['reorderGroups'] = 'ajaxReorderGroups';
+        $this->ajaxActions['reorderList'] = 'ajaxReorderList';
 
         parent::__construct($config);
 
@@ -159,6 +160,15 @@ class Casinos extends ListingWithGroups
     }
 
 
+    public function ajaxReorderList()
+    {
+        $id = Input::post('id');
+        $previousId = Input::post('previousId');
+
+        $this->setListNewPosition($id, $previousId);
+    }
+
+
     protected function groupsLabelCallback($item)
     {
         $defaultCountry = BackendHelpers::getDefaultCountry();
@@ -207,6 +217,20 @@ class Casinos extends ListingWithGroups
             ->set('sorting', $newSorting)
             ->where('id', $id)
             ->execute();
+    }
+
+
+    protected function setListNewPosition($id, $previousId)
+    {
+        $connection = \Grow\Database::getConnection();
+
+//        $newSorting = $this->getNewPosition('tl_casino_data', $id, $previousId, [$this, 'modifyGroupQuery']);
+//
+//        $connection->updateQuery()
+//            ->table('tl_casino_category')
+//            ->set('sorting', $newSorting)
+//            ->where('id', $id)
+//            ->execute();
     }
 
 

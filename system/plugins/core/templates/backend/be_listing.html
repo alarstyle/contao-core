@@ -77,7 +77,9 @@
                     </div>
                     <div class="main-body">
 
-                        <listing-table :headers="listHeaders" :items="listItems" @operation="onListingOperation"></listing-table>
+                        <?php $this->block('listing'); ?>
+                            <listing-table :headers="listHeaders" :items="listItems" @operation="onListingOperation"></listing-table>
+                        <?php $this->endblock(); ?>
 
                     </div>
                 </div>

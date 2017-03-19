@@ -149,12 +149,7 @@
             },
 
             handleGroupsReorder: function(event) {
-                console.log('handle');
-                console.log(this.groupsList);
-                console.log(this.groupsList.slice());
-
-                var _this = this,
-                    list = this.groupsList.slice(),
+                var list = this.groupsList.slice(),
                     oldIndex = event.oldIndex,
                     newIndex = event.newIndex,
                     item = list[oldIndex],
@@ -163,6 +158,35 @@
                 this.groupsList = arrayMove(list, oldIndex, newIndex);
 
                 return this.action('reorderGroups', {
+                    id: item.id,
+                    previousId: previousItem ? previousItem.id : null })
+                    .then(function (response) {
+                        if (response.data.success) {
+                            //grow.notify('Saved successfully', {type: 'success'});
+                        }
+                        else {
+                            grow.notify('Saving new order failed ', {type: 'danger'});
+                        }
+                    });
+            },
+
+            handleListReorder: function(event) {
+                console.log('handle reorder');
+                console.log(this.listItems.slice());
+
+                var _this = this,
+                    list = this.listItems.slice(),
+                    oldIndex = event.oldIndex,
+                    newIndex = event.newIndex,
+                    item = list[oldIndex],
+                    previousItem = newIndex === 0 ? null : (oldIndex < newIndex ? list[newIndex] : list[newIndex-1]);
+
+                console.log(item);
+                console.log(previousItem);
+
+                this.listItems = arrayMove(list, oldIndex, newIndex);
+
+                return this.action('reorderList', {
                     id: item.id,
                     previousId: previousItem ? previousItem.id : null })
                     .then(function (response) {

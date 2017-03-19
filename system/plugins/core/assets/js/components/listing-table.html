@@ -6,7 +6,7 @@
                     <th v-for="header in headers">{{ header.label }}</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody v-sortable="!sortable ? false : sortableOptions">
                 <tr v-for="item in items">
                     <td v-for="(field, i) in item.fields" :class="'cell--' + headers[i].name">
                         <div v-if="field && field.operations">
@@ -16,6 +16,7 @@
                                    @click="emitOperation(item.id, operation.name)">
                                     <icon :type="operation.icon"></icon>
                                 </a>
+                                <a class="item-sort" v-if="sortable"><icon type="sort"></icon></a>
                             </div>
                         </div>
                         <div v-else v-html="field"></div>

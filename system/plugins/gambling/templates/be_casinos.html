@@ -101,3 +101,7 @@
     </div>
 
 <?php $this->endblock(); ?>
+
+<?php $this->block('listing'); ?>
+    <listing-table :headers="listHeaders" :items="listItems" :sortable="true" @reorder="handleListReorder" @operation="onListingOperation"></listing-table>
+<?php $this->endblock(); ?>
