@@ -7,8 +7,8 @@
                 </tr>
             </thead>
             <tbody v-sortable="!sortable ? false : sortableOptions">
-                <tr v-for="item in items">
-                    <td v-for="(field, i) in item.fields" :class="'cell--' + headers[i].name">
+                <tr v-for="item in items" :key="item.id">
+                    <td v-for="(field, i) in item.fields" :key="i" :class="'cell--' + headers[i].name">
                         <div v-if="field && field.operations">
                             <div class="operations">
                                 <a v-for="operation in field.operations"

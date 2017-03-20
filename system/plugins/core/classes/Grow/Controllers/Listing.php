@@ -66,10 +66,12 @@ class Listing extends \Contao\Controllers\BackendMain
     public function ajaxGetList()
     {
         $where = is_callable($this->config['list']['whereCallback']) ? call_user_func($this->config['list']['whereCallback']) : '';
-        $order = $this->config['list']['order'] ?: '';
+        $order = $this->config['list']['order'] ?: null;
+        $join = $this->config['list']['join'] ?: '';
+        $joinOn = $this->config['list']['joinOn'] ?: '';
 
         $headers = $this->listOrganizer->getListHeaders();
-        $list = $this->listOrganizer->getList(20, 0, $where, $order);
+        $list = $this->listOrganizer->getList(20, 0, $where, $order, $join, $joinOn);
 
         $headersCallback = $this->config['list']['headersCallback'];
         $listCallback = $this->config['list']['listCallback'];

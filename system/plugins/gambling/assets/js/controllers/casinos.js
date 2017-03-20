@@ -181,14 +181,20 @@
                     item = list[oldIndex],
                     previousItem = newIndex === 0 ? null : (oldIndex < newIndex ? list[newIndex] : list[newIndex-1]);
 
-                console.log(item);
-                console.log(previousItem);
+                // console.log(item);
+                // console.log(previousItem);
+                // console.log(oldIndex);
+                // console.log(newIndex);
+                //
+                // var newArr = arrayMove(list, oldIndex, newIndex);
+                // console.log(newArr);
 
                 this.listItems = arrayMove(list, oldIndex, newIndex);
 
                 return this.action('reorderList', {
                     id: item.id,
-                    previousId: previousItem ? previousItem.id : null })
+                    previousId: previousItem ? previousItem.id : null,
+                    countryId: this.currentCountry })
                     .then(function (response) {
                         if (response.data.success) {
                             //grow.notify('Saved successfully', {type: 'success'});

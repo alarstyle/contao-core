@@ -164,8 +164,9 @@ class Casinos extends ListingWithGroups
     {
         $id = Input::post('id');
         $previousId = Input::post('previousId');
+        $countryId = Input::post('countryId');
 
-        $this->setListNewPosition($id, $previousId);
+        $this->setListNewPosition($id, $previousId, $countryId);
     }
 
 
@@ -186,6 +187,11 @@ class Casinos extends ListingWithGroups
     protected function listWhereCallback()
     {
         $this->listOrganizer->listQuery
+            ->fields(['*'])
+            ->fields('tl_casino.id', 'id')
+            ->join('tl_casino_data', 'data', 'left')
+            ->on('tl_casino.id', 'data.pid')
+            ->where('data.country', $this->currentCountryId)
             ->startGroup()
                 ->where('countries', 'like', '%"' . $this->currentCountryId . '"%')
                 ->orWhere('countries', 'a:0:{}')
@@ -196,9 +202,6 @@ class Casinos extends ListingWithGroups
         $groupId = Input::post('groupId');
         if (!empty($groupId)) {
             $this->listOrganizer->listQuery
-                ->join('tl_casino_data', 'data', 'left')
-                    ->on('tl_casino.id', 'data.pid')
-                ->where('data.country', $this->currentCountryId)
                 ->where('data.casino_categories', 'like', '%"' . $groupId . '"%');
         }
 
@@ -210,7 +213,7 @@ class Casinos extends ListingWithGroups
     {
         $connection = \Grow\Database::getConnection();
 
-        $newSorting = $this->getNewPosition('tl_casino_category', $id, $previousId, [$this, 'modifyGroupQuery']);
+        $newSorting = $this->getNewPosition('tl_casino_category', 'id', 'sorting', $previousId, [$this, 'modifyGroupQuery']);
 
         $connection->updateQuery()
             ->table('tl_casino_category')
@@ -220,21 +223,22 @@ class Casinos extends ListingWithGroups
     }
 
 
-    protected function setListNewPosition($id, $previousId)
+    protected function setListNewPosition($id, $previousId, $countryId)
     {
         $connection = \Grow\Database::getConnection();
 
-//        $newSorting = $this->getNewPosition('tl_casino_data', $id, $previousId, [$this, 'modifyGroupQuery']);
-//
-//        $connection->updateQuery()
-//            ->table('tl_casino_category')
-//            ->set('sorting', $newSorting)
-//            ->where('id', $id)
-//            ->execute();
+        $newSorting = $this->getNewPosition('tl_casino_data', 'pid', 'casino_sorting', $previousId, [$this, 'modifyListQuery']);
+
+        $connection->updateQuery()
+            ->table('tl_casino_data')
+            ->set('casino_sorting', $newSorting)
+            ->where('pid', $id)
+            ->where('country', $this->currentCountryId)
+            ->execute();
     }
 
 
-    protected function getNewPosition($table, $id, $previousId, callable $modifyQueryMethod = null)
+    protected function getNewPosition($table, $idFiledName, $sortingFieldName, $previousId, callable $modifyQueryMethod = null)
     {
         $newSorting = 0;
 
@@ -245,59 +249,61 @@ class Casinos extends ListingWithGroups
             // ID is not set (insert at the end)
             $maxSortingQuery = $connection->selectQuery()
                 ->table($table)
-                ->fields(['sorting' => $database->sqlExpression('MAX(sorting)')]);
+                ->fields([$sortingFieldName => $database->sqlExpression('MAX('.$sortingFieldName.')')]);
             if ($modifyQueryMethod) $modifyQueryMethod($maxSortingQuery);
             $maxSorting = $maxSortingQuery->execute()->asArray();
-            $maxSorting = $maxSorting && $maxSorting[0] ? $maxSorting[0]->sorting : 0;
+            $maxSorting = $maxSorting && $maxSorting[0] ? $maxSorting[0]->$sortingFieldName : 0;
             $newSorting = intval($maxSorting) + 128;
 
             return $newSorting;
         }
 
-        $previous = $connection->selectQuery()
+        $previousQuery = $connection->selectQuery()
             ->table($table)
-            ->where('id', $previousId)
-            ->execute()->asArray();
+            ->where($idFiledName, $previousId);
+        if ($modifyQueryMethod) $modifyQueryMethod($previousQuery);
+        $previous = $previousQuery->execute()->asArray();
 
-        $prevSorting = !count($previous) ? 0 : $previous[0]->sorting;
+        $prevSorting = !count($previous) ? 0 : intval($previous[0]->$sortingFieldName);
 
         ActionData::data('previousSorting', $prevSorting);
 
         $nextQuery = $connection->selectQuery()
             ->table($table)
-            ->fields(['sorting' => $database->sqlExpression('MIN(sorting)')])
-            ->where('sorting', '<', $prevSorting);
+            ->fields([$sortingFieldName => $database->sqlExpression('MAX('.$sortingFieldName.')')])
+            ->where($sortingFieldName, '<', $prevSorting);
         if ($modifyQueryMethod) $modifyQueryMethod($nextQuery);
         $next = $nextQuery->execute()->asArray();
 
-//        if (!count($next)) {
-//            return $prevSorting + 128;
-//        }
+        $nextSorting = !count($next) ? 0 : intval($next[0]->$sortingFieldName);
 
-        $nextSorting = !count($next) ? 0 : $next[0]->sorting;
+        ActionData::data('nextSorting', $nextSorting);
 
         if ($prevSorting !== 0 && (($prevSorting + $nextSorting) % 2) === 0 && $nextSorting < 4294967295)
         {
+            ActionData::data('new pos', ($prevSorting + $nextSorting) / 2);
             return ($prevSorting + $nextSorting) / 2;
         }
+
+        ActionData::data('reordering', true);
 
         $count = 1;
 
         $itemsQuery = $connection->selectQuery()
             ->table($table)
-            ->fields(['id', 'sorting'])
-            ->orderBy('sorting', 'asc');
+            ->fields(['id', $idFiledName, $sortingFieldName])
+            ->orderBy($sortingFieldName, 'asc');
         if ($modifyQueryMethod) $modifyQueryMethod($itemsQuery);
         $items = $itemsQuery->execute()->asArray();
 
         foreach ($items as $item) {
-            if ($item->id == $previousId)
+            if ($item->$idFiledName == $previousId)
             {
                 $newSorting = ($count++ * 128);
             }
             $connection->updateQuery()
                 ->table($table)
-                ->set('sorting', ($count++ * 128))
+                ->set($sortingFieldName, ($count++ * 128))
                 ->where('id', $item->id)
                 ->execute();
         }
@@ -308,6 +314,11 @@ class Casinos extends ListingWithGroups
     protected function modifyGroupQuery($query)
     {
         $query->where('is_betting', '!=', 1);
+    }
+
+    protected function modifyListQuery($query)
+    {
+        $query->where('country', $this->currentCountryId);
     }
 
 }

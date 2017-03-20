@@ -54,7 +54,7 @@ class Organizer
 
         // Redirect if there is no record with the given ID
         if ($objRow->numRows < 1) {
-            $this->log('Could not load record "' . $this->strTable . '.id=' . $this->intId . '"', __METHOD__, TL_ERROR);
+            //throw new \Exception('Could not load record "' . $this->strTable . '.id=' . $this->intId . '"', __METHOD__, TL_ERROR);
             throw new \Exception('No record found');
         }
 
@@ -219,8 +219,16 @@ class Organizer
     }
 
 
-    public function getList($limit = 20, $skip = 0, $where = [], $order= '')
+    public function getList($limit = 20, $skip = 0, $where = [], $order = null, $join = null, $joinOn = null)
     {
+        if ($join) {
+            $this->listQuery->join($join[0], $join[1], $join[2]);
+        }
+
+        if ($joinOn) {
+            $this->listQuery->on($joinOn[0], $joinOn[1]);
+        }
+
         if (!empty($where)) {
             if (is_string($where)) {
                 $where = [$where];
@@ -236,11 +244,19 @@ class Organizer
             ->offset($skip);
 
         if ($order) {
-            if (is_string($order)) {
-                $order = explode(' ', $order);
+            if (strrpos($order, ",") !== false) {
+                $orderArr = explode(',', trim($order));
             }
-            $this->listQuery
-                ->orderBy($order[0], strtolower($order[1]));
+            else {
+                $orderArr = [trim($order)];
+            }
+            foreach ($orderArr as $orderItem) {
+                if (is_string($orderItem)) {
+                    $orderItem = explode(' ', trim($orderItem));
+                }
+                $this->listQuery
+                    ->orderBy($orderItem[0], strtolower($orderItem[1]));
+            }
         }
 
         $result = $this->listQuery->execute()->asArray();

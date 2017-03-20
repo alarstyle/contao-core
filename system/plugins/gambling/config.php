@@ -63,7 +63,7 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 1, 'casinos', [
             'labelNew' => 'Add New Casino',
             'labelEdit' => 'Edit Casino',
             'creatable' => true,
-            'order' => 'tl_casino.id DESC',
+            'order' => 'casino_sorting DESC, tl_casino.id DESC',
             'headersCallback' => function($headers) {
                 foreach($headers as &$header) {
                     switch($header['name']) {

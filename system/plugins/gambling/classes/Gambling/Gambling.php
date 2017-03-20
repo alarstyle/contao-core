@@ -274,27 +274,25 @@ class Gambling
 
         $connection = \Grow\Database::getConnection();
         $query = $connection->selectQuery()->table('tl_casino')
+            ->fields(['*'])
+            ->fields('tl_casino.id', 'id')
             ->join('tl_casino_data', 'data', 'left')
             ->on('tl_casino.id', 'data.pid')
             ->where('countries', 'like', '%"' . $currentCountry['id'] . '"%')
             ->where('data.country', $currentCountry['id'])
             ->where('is_casino', 1)
             ->where('data.published', 1)
+            ->orderBy('casino_sorting', 'desc')
             ->orderBy('tl_casino.id', 'desc');
         if ($categoryId) {
             $query->where('data.casino_categories', 'like', '%"' . $categoryId . '"%');
         }
+
         $casinos = $query->execute()->asArray();
 
         if (!count($casinos)) return [];
 
         $previewPage = static::getPageData(79);
-
-//        $casinos = \Gambling\Models\CasinoModel::findCasinos($currentCountry['id'], $categoryId, $limit, $offset, $options);
-//
-//        if ($casinos === null || !$casinos->numRows) return [];
-//
-//        $casinos = $casinos->fetchAllAssoc();
 
         foreach ($casinos as $i=>$casino) {
             $casinos[$i] = static::prepareCasino($casino, $previewPage);
@@ -310,12 +308,15 @@ class Gambling
 
         $connection = \Grow\Database::getConnection();
         $query = $connection->selectQuery()->table('tl_casino')
+            ->fields(['*'])
+            ->fields('tl_casino.id', 'id')
             ->join('tl_casino_data', 'data', 'left')
             ->on('tl_casino.id', 'data.pid')
             ->where('countries', 'like', '%"' . $currentCountry['id'] . '"%')
             ->where('data.country', $currentCountry['id'])
             ->where('is_betting', 1)
             ->where('data.published', 1)
+            ->orderBy('betting_sorting', 'desc')
             ->orderBy('tl_casino.id', 'desc');
         if ($categoryId) {
             $query->where('data.betting_categories', 'like', '%"' . $categoryId . '"%');
