@@ -75,35 +75,35 @@ class Casinos extends ListingWithGroups
     public function ajaxGetGroups()
     {
         // TEMP FIX
-        $connection = \Grow\Database::getConnection();
-        $countries = BackendHelpers::getCountriesForOptions();
-        $categories = $connection->selectQuery()
-            ->table('tl_casino_category')
-            ->fields('id')
-            ->execute()->asArray();
-
-        foreach ($categories as $category) {
-            $categoryDataArr = $connection->selectQuery()
-                ->table('tl_casino_category_data')
-                ->where('pid', $category->id)
-                ->execute()->asArray();
-            $missingCountries = array_keys($countries);
-            foreach ($categoryDataArr as $categoryData) {
-                if(($i = array_search($categoryData->country, $missingCountries)) !== false) {
-                    unset($missingCountries[$i]);
-                }
-            }
-            foreach ($missingCountries as $countryId) {
-                $connection->insertQuery()
-                    ->table('tl_casino_category_data')
-                    ->data([
-                        'pid' => $category->id,
-                        'country' => $countryId,
-                        'sorting' => 0
-                    ])
-                    ->execute();
-            }
-        }
+//        $connection = \Grow\Database::getConnection();
+//        $countries = BackendHelpers::getCountriesForOptions();
+//        $categories = $connection->selectQuery()
+//            ->table('tl_casino_category')
+//            ->fields('id')
+//            ->execute()->asArray();
+//
+//        foreach ($categories as $category) {
+//            $categoryDataArr = $connection->selectQuery()
+//                ->table('tl_casino_category_data')
+//                ->where('pid', $category->id)
+//                ->execute()->asArray();
+//            $missingCountries = array_keys($countries);
+//            foreach ($categoryDataArr as $categoryData) {
+//                if(($i = array_search($categoryData->country, $missingCountries)) !== false) {
+//                    unset($missingCountries[$i]);
+//                }
+//            }
+//            foreach ($missingCountries as $countryId) {
+//                $connection->insertQuery()
+//                    ->table('tl_casino_category_data')
+//                    ->data([
+//                        'pid' => $category->id,
+//                        'country' => $countryId,
+//                        'sorting' => 0
+//                    ])
+//                    ->execute();
+//            }
+//        }
 
         $this->config['group']['labelCallback'] = [$this, 'groupsLabelCallback'];
         $this->config['group']['titleCallback'] = [$this, 'groupsLabelCallback'];

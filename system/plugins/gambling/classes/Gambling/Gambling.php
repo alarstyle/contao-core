@@ -243,7 +243,8 @@ class Gambling
         $bettingCategoryPage = \Gambling\Gambling::getPageData(80);
 
         foreach ($categories as &$category) {
-            $category->name = deserialize($category->name)[$countryId] ?: $category->alias;
+            $category->alias = deserialize($category->alias)[$countryId] ?: $category->id;
+            $category->name = deserialize($category->name)[$countryId] ?: $category->id;
             $category->metaTitle = deserialize($category->metaTitle)[$countryId] ?: null;
             $category->metaDescription = deserialize($category->metaDescription)[$countryId] ?: null;
             $category->topTitle = deserialize($category->topTitle)[$countryId] ?: null;
