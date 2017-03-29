@@ -91,14 +91,17 @@ class Organizer
 
         foreach ($fieldsValues as $field => $value) {
             if (in_array($field, $this->skipFields)) continue;
-            $fieldsToSave[$field] = $value;
+            $fieldsToSave[$field] = is_array($value) || is_object($value) ? serialize($value) : $value;
         }
 
-        $objInsertStmt = $this->database->prepare("INSERT INTO " . $this->table . " %s")
-            ->set($fieldsToSave)
-            ->execute();
+        $connection = \Grow\Database::getConnection();
 
-        return $objInsertStmt->insertId;
+        $connection->insertQuery()
+                ->table($this->table)
+                ->data($fieldsToSave)
+                ->execute();
+
+        return $connection->insertId();
     }
 
 
@@ -187,39 +190,75 @@ class Organizer
     }
 
 
-    public function getSimpleList($limit = 20, $skip = 0, $where = [], $order='')
+    public function getSimpleList($limit = 30, $skip = 0, $where = [], $order = [], $hook = null)
     {
+        $connection = \Grow\Database::getConnection();
+
+        $query = $connection->selectQuery()->table($this->table);
+
         if (!empty($where)) {
-            if (is_string($where)) {
-                $where = [$where];
+            $query->startGroup();
+            foreach ($where as $whereItem) {
+                if (isset($whereItem[3])) {
+                    $query->where($whereItem[0], $whereItem[1], $whereItem[2], $whereItem[3]);
+                }
+                elseif (isset($whereItem[2])) {
+                    $query->where($whereItem[0], $whereItem[1], $whereItem[2]);
+                }
+                else {
+                    $query->where($whereItem[0], $whereItem[1]);
+                }
             }
-            $where = 'WHERE (' .implode(') AND (', $where) . ')';
-        }
-        else {
-            $where = '';
+            $query->endGroup();
         }
 
-        if ($order) {
-            $order = 'ORDER BY ' . $order;
+        if (!empty($order)) {
+            foreach ($order as $orderItem) {
+                $query->orderBy($orderItem[0], $orderItem[1]);
+            }
         }
 
-        $query = "SELECT * FROM " . $this->table . ' ' . $where . ' '. $order;
+        $query
+            ->limit($limit)
+            ->offset($skip);
 
-        $objRowStmt = $this->database->prepare($query);
-        $objRowStmt->limit($limit, $skip);
-        $objRow = $objRowStmt->execute();
-
-        if ($objRow->numRows < 1) {
-            return [];
+        if ($hook && is_callable($hook)) {
+            call_user_func($hook, $query);
         }
 
-        $result = $objRow->fetchAllAssoc();
+        $result = $query->execute()->asArray();
+
+//        if (!empty($where)) {
+//            if (is_string($where)) {
+//                $where = [$where];
+//            }
+//            $where = 'WHERE (' .implode(') AND (', $where) . ')';
+//        }
+//        else {
+//            $where = '';
+//        }
+//
+//        if ($order) {
+//            $order = 'ORDER BY ' . $order;
+//        }
+//
+//        $query = "SELECT * FROM " . $this->table . ' ' . $where . ' '. $order;
+//
+//        $objRowStmt = $this->database->prepare($query);
+//        $objRowStmt->limit($limit, $skip);
+//        $objRow = $objRowStmt->execute();
+//
+//        if ($objRow->numRows < 1) {
+//            return [];
+//        }
+//
+//        $result = $objRow->fetchAllAssoc();
 
         return $result;
     }
 
 
-    public function getList($limit = 20, $skip = 0, $where = [], $order = null, $join = null, $joinOn = null)
+    public function getList($limit = 20, $skip = 0, $where = [], $order = [], $join = null, $joinOn = null)
     {
         if ($join) {
             $this->listQuery->join($join[0], $join[1], $join[2]);
@@ -244,13 +283,7 @@ class Organizer
             ->offset($skip);
 
         if ($order) {
-            if (strrpos($order, ",") !== false) {
-                $orderArr = explode(',', trim($order));
-            }
-            else {
-                $orderArr = [trim($order)];
-            }
-            foreach ($orderArr as $orderItem) {
+            foreach ($order as $orderItem) {
                 if (is_string($orderItem)) {
                     $orderItem = explode(' ', trim($orderItem));
                 }

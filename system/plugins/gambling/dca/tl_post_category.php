@@ -70,63 +70,63 @@ $GLOBALS['TL_DCA']['tl_post_category'] = array
 	)
 );
 
-
-use Contao\Backend;
-
-class tl_post_category extends \Contao\Backend
-{
-
-	/**
-	 * Import the back end user object
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-		$this->import('Contao\\BackendUser', 'User');
-	}
-
-
-	public function listCallback($item)
-	{
-		$item['fields'][0] = \Contao\System::getCountriesWithFlags()[$item['fields'][0]];
-		return $item;
-	}
-
-
-	/**
-	 * Return all modules except profile modules
-	 *
-	 * @return array
-	 */
-	public function getModules()
-	{
-		$arrModules = array();
-
-		foreach ($GLOBALS['BE_MOD'] as $k=>$v)
-		{
-			if (!empty($v))
-			{
-				unset($v['undo']);
-				$arrModules[$k] = array_keys($v);
-			}
-		}
-
-		return $arrModules;
-	}
-
-
-	public function getCountriesAsOptions()
-    {
-        $countries = \Contao\System::getCountriesWithFlags();
-        $arr = [];
-
-        foreach ($countries as $key => $name) {
-            $arr[] = [
-                'value' => $key,
-                'label' => $name
-            ];
-        }
-
-        return $countries;
-    }
-}
+//
+//use Contao\Backend;
+//
+//class tl_post_category extends \Contao\Backend
+//{
+//
+//	/**
+//	 * Import the back end user object
+//	 */
+//	public function __construct()
+//	{
+//		parent::__construct();
+//		$this->import('Contao\\BackendUser', 'User');
+//	}
+//
+//
+//	public function listCallback($item)
+//	{
+//		$item['fields'][0] = \Contao\System::getCountriesWithFlags()[$item['fields'][0]];
+//		return $item;
+//	}
+//
+//
+//	/**
+//	 * Return all modules except profile modules
+//	 *
+//	 * @return array
+//	 */
+//	public function getModules()
+//	{
+//		$arrModules = array();
+//
+//		foreach ($GLOBALS['BE_MOD'] as $k=>$v)
+//		{
+//			if (!empty($v))
+//			{
+//				unset($v['undo']);
+//				$arrModules[$k] = array_keys($v);
+//			}
+//		}
+//
+//		return $arrModules;
+//	}
+//
+//
+//	public function getCountriesAsOptions()
+//    {
+//        $countries = \Contao\System::getCountriesWithFlags();
+//        $arr = [];
+//
+//        foreach ($countries as $key => $name) {
+//            $arr[] = [
+//                'value' => $key,
+//                'label' => $name
+//            ];
+//        }
+//
+//        return $countries;
+//    }
+//}

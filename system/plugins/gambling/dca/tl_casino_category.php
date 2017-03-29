@@ -94,9 +94,6 @@ $GLOBALS['TL_DCA']['tl_casino_category'] = array
         ),
         'is_betting' => [
             'sql'               => "char(1) NOT NULL default ''"
-        ],
-        'sorting' => [
-            'sql'               => "int(10) unsigned NOT NULL default '0'"
-        ],
+        ]
 	)
 );

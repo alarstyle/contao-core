@@ -50,12 +50,11 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 1, 'casinos', [
             'creatable' => true,
             'editable' => true,
             'labelCallback' => function ($item) {
-                return $item['name'];
+                return $item->name;
             },
             'titleCallback' => function ($item) {
-                return $item['name'];
-            },
-            'order' => 'sorting DESC, tstamp'
+                return $item->name;
+            }
         ],
         'list' => [
             'table' => 'tl_casino',
@@ -63,7 +62,7 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 1, 'casinos', [
             'labelNew' => 'Add New Casino',
             'labelEdit' => 'Edit Casino',
             'creatable' => true,
-            'order' => 'casino_sorting DESC, tl_casino.id DESC',
+            'order' => [['casino_sorting', 'desc'], ['tl_casino.id', 'desc']],
             'headersCallback' => function($headers) {
                 foreach($headers as &$header) {
                     switch($header['name']) {
@@ -102,12 +101,11 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 2, 'bettings', [
             'creatable' => true,
             'editable' => true,
             'labelCallback' => function ($item) {
-                return $item['name'];
+                return $item->name;
             },
             'titleCallback' => function ($item) {
-                return $item['name'];
-            },
-            //'sorting' => ['tstamp DESC']
+                return $item->name;
+            }
         ],
         'list' => [
             'table' => 'tl_casino',
@@ -115,7 +113,7 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 2, 'bettings', [
             'labelNew' => 'Add New Betting',
             'labelEdit' => 'Edit Betting',
             'creatable' => true,
-            'order' => 'tl_casino.id DESC',
+            'order' => [['tl_casino.id', 'desc']],
             'headersCallback' => function($headers) {
                 foreach($headers as &$header) {
                     switch($header['name']) {
@@ -161,7 +159,7 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 3, 'articles', [
             'labelNew' => 'Add New Article',
             'labelEdit' => 'Edit Article',
             'creatable' => true,
-            'order' => 'date DESC',
+            'order' => [['date', 'desc']],
             'headersCallback' => function($headers) {
                 foreach($headers as &$header) {
                     switch($header['name']) {
@@ -183,9 +181,9 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 3, 'articles', [
             'whereCallback' => function() {
                 $groupId = \Contao\Input::post('groupId');
                 if (empty($groupId) || $groupId === 'all') {
-                    return '';
+                    return [];
                 }
-                return 'category = ' . $groupId;
+                return [['category', $groupId]];
             },
         ]
     ]
@@ -194,17 +192,17 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 3, 'articles', [
 
 array_insert_assoc($GLOBALS['NAVIGATION'], -1, 'countries', [
     'label' => 'Languages & Countries',
-    'controller' => 'Grow\\Controllers\\GroupsEditing',
+    'controller' => 'Gambling\\Controllers\\Countries',
     'config' => [
         'group' => [
             'table' => 'tl_country',
             'title' => 'Countries list',
             'labelNew' => 'Add Country',
             'labelCallback' => function ($item) {
-                return \Contao\System::getCountriesWithFlags()[$item['country']];
+                return \Contao\System::getCountriesWithFlags()[$item->country];
             },
             'titleCallback' => function ($item) {
-                return \Contao\System::getCountries()[$item['country']];
+                return \Contao\System::getCountries()[$item->country];
             },
             'sortingCallback' => function ($groups) {
                 usort($groups, function ($a, $b) {
@@ -232,10 +230,10 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 4, 'pages', [
             'creatable' => false,
             'editable' => false,
             'labelCallback' => function ($item) {
-                return $item['name'];
+                return $item->name;
             },
             'titleCallback' => function ($item) {
-                return $item['name'];
+                return $item->name;
             }
         ]
     ]
@@ -251,10 +249,10 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 5, 'translations', [
             'creatable' => false,
             'editable' => false,
             'labelCallback' => function ($item) {
-                return $item['name'];
+                return $item->name;
             },
             'titleCallback' => function ($item) {
-                return $item['name'];
+                return $item->name;
             }
         ]
     ]

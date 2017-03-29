@@ -159,7 +159,8 @@
 
                 return this.action('reorderGroups', {
                     id: item.id,
-                    previousId: previousItem ? previousItem.id : null })
+                    previousId: previousItem ? previousItem.id : null,
+                    countryId: this.currentCountry })
                     .then(function (response) {
                         if (response.data.success) {
                             //grow.notify('Saved successfully', {type: 'success'});

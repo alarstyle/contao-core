@@ -21,12 +21,6 @@ class Bettings extends Casinos
     }
 
 
-    protected function groupsWhereCallback()
-    {
-        return ['is_betting = 1'];
-    }
-
-
     protected function listWhereCallback()
     {
         $this->listOrganizer->listQuery
@@ -42,7 +36,7 @@ class Bettings extends Casinos
             ->endGroup()
             ->where('is_betting', 1);
 
-        $groupId = Input::post('groupId');
+        $groupId = intval(Input::post('groupId'));
         if (!empty($groupId)) {
             $this->listOrganizer->listQuery
                 ->where('data.betting_categories', 'like', '%"' . $groupId . '"%');
@@ -51,11 +45,24 @@ class Bettings extends Casinos
         return $this->where;
     }
 
+    public function groupsHook($query)
+    {
+        $query
+            ->fields(['*'])
+            ->fields('tl_casino_category.id', 'id')
+            ->join('tl_casino_category_data', 'data', 'left')
+            ->on('tl_casino_category.id', 'pid')
+            ->where('is_betting', 1)
+            ->where('data.country', $this->currentCountryId)
+            ->orderBy('sorting', 'desc');
+            //->orderBy('tstamp', 'asc');
+    }
+
     protected function setListNewPosition($id, $previousId, $countryId)
     {
         $connection = \Grow\Database::getConnection();
 
-        $newSorting = $this->getNewPosition('tl_casino_data', 'pid', 'betting_sorting', $previousId, [$this, 'modifyListQuery']);
+        $newSorting = $this->getNewPosition('tl_casino_data', 'id', 'pid', 'betting_sorting', $previousId, [$this, 'modifyListQuery']);
 
         $connection->updateQuery()
             ->table('tl_casino_data')
@@ -67,7 +74,16 @@ class Bettings extends Casinos
 
     protected function modifyGroupQuery($query)
     {
-        $query->where('is_betting', 1);
+        $query
+            ->fields('tl_casino_category_data.id', 'id')
+            ->fields('tl_casino_category_data.pid', 'pid')
+            ->fields('tl_casino_category_data.sorting', 'sorting')
+            ->fields('tl_casino_category_data.country', 'country')
+            ->join('tl_casino_category', 'tl_casino_category', 'left')
+            ->on('tl_casino_category.id', 'pid')
+            ->where('country', $this->currentCountryId)
+            ->where('tl_casino_category.is_betting', 1)
+        ;
     }
 
 }

@@ -67,9 +67,9 @@ class GroupsEditing extends \Contao\Controllers\BackendMain
         $titleCallback = $this->config['group']['titleCallback'];
         $sortingCallback = $this->config['group']['sortingCallback'];
 
-        foreach ($this->groupOrganizer->getSimpleList(20, 0) as $item) {
+        foreach ($this->groupOrganizer->getSimpleList(30, 0) as $item) {
             $groups[] = [
-                'id' => $item['id'],
+                'id' => $item->id,
                 'label' => is_callable($labelCallback) ? call_user_func($labelCallback, $item) : '',
                 'title' => is_callable($titleCallback) ? call_user_func($titleCallback, $item) : ''
             ];
@@ -117,10 +117,7 @@ class GroupsEditing extends \Contao\Controllers\BackendMain
 
         if ($this->groupOrganizer->hasErrors()) {
             ActionData::error($this->groupOrganizer->getErrors());
-            //return;
         }
-
-        //ActionData::data('group', $this->groupOrganizer->getSimpleList(1, 0, 'WHERE id = ' . $id));
     }
 
 

@@ -49,12 +49,13 @@ class ListingWithGroups extends Listing
         $labelCallback = $this->config['group']['labelCallback'];
         $titleCallback = $this->config['group']['titleCallback'];
         $sortingCallback = $this->config['group']['sortingCallback'];
+        $hook = $this->config['group']['hook'];
 
         $where = is_callable($this->config['group']['whereCallback']) ? call_user_func($this->config['group']['whereCallback']) : '';
 
-        foreach ($this->groupOrganizer->getSimpleList(20, 0, $where, $order) as $item) {
+        foreach ($this->groupOrganizer->getSimpleList(30, 0, $where, $order, $hook) as $item) {
             $groups[] = [
-                'id' => $item['id'],
+                'id' => $item->id,
                 'label' => is_callable($labelCallback) ? call_user_func($labelCallback, $item) : '',
                 'title' => is_callable($titleCallback) ? call_user_func($titleCallback, $item) : ''
             ];

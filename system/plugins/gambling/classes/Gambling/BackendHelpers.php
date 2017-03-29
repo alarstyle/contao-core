@@ -33,7 +33,7 @@ class BackendHelpers
         if ($result->numRows) {
             $countriesNames = \Contao\System::getCountries();
             while ($result->next()) {
-                if ($result->fallback) {
+                if (intval($result->fallback)) {
                     static::$defaultCountryId = $result->id;
                 }
                 static::$countries[$result->id] = [
@@ -42,7 +42,7 @@ class BackendHelpers
                     'flag' => $result->country,
                     'alias' => $result->alias,
                     'name' => $countriesNames[$result->country] ?: $result->country,
-                    'default' => $result->fallback
+                    'default' => intval($result->fallback)
                 ];
             }
         } else {
@@ -71,7 +71,7 @@ class BackendHelpers
         static::loadCountries();
 
         foreach (static::$countries as $country) {
-            if ($country['default']) {
+            if (intval($country['default'])) {
                 return $country;
             }
         }
@@ -148,7 +148,7 @@ class BackendHelpers
         $countryId = static::$defaultCountryId;
 
         foreach ($categories as $category) {
-            $options[$category['id']] = deserialize($category['name'])[$countryId] ?: $category['alias'];;
+            $options[$category['id']] = deserialize($category['name'])[$countryId] ?: $category['id'];;
         }
 
         return $options;
@@ -168,7 +168,7 @@ class BackendHelpers
         $countryId = static::$defaultCountryId;
 
         foreach ($categories as $category) {
-            $options[$category['id']] = deserialize($category['name'])[$countryId] ?: $category['alias'];;
+            $options[$category['id']] = deserialize($category['name'])[$countryId] ?: $category['id'];;
         }
 
         return $options;

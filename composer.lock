@@ -351,16 +351,16 @@
         },
         {
             "name": "phpixie/database",
-            "version": "3.7.1",
+            "version": "3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPixie/Database.git",
-                "reference": "5c86c28f985703acc23f64d1d06a94852189a105"
+                "reference": "4e96c3c9e4f68aa944ff99f91b8e7cb27d329237"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPixie/Database/zipball/5c86c28f985703acc23f64d1d06a94852189a105",
-                "reference": "5c86c28f985703acc23f64d1d06a94852189a105",
+                "url": "https://api.github.com/repos/PHPixie/Database/zipball/4e96c3c9e4f68aa944ff99f91b8e7cb27d329237",
+                "reference": "4e96c3c9e4f68aa944ff99f91b8e7cb27d329237",
                 "shasum": ""
             },
             "require": {
@@ -404,7 +404,7 @@
                 "postgresql",
                 "sqlite"
             ],
-            "time": "2017-01-18 17:29:14"
+            "time": "2017-03-13 18:26:06"
         },
         {
             "name": "phpixie/image",

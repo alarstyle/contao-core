@@ -105,10 +105,10 @@ $GLOBALS['NAVIGATION'] = [
                 'creatable' => true,
                 'editable' => true,
                 'labelCallback' => function ($item) {
-                    return $item['name'];
+                    return $item->name;
                 },
                 'titleCallback' => function ($item) {
-                    return $item['name'];
+                    return $item->name;
                 },
                 'sortingCallback' => function ($groups) {
                     usort($groups, function ($a, $b) {
@@ -129,9 +129,9 @@ $GLOBALS['NAVIGATION'] = [
                 'whereCallback' => function() {
                     $groupId = \Contao\Input::post('groupId');
                     if (empty($groupId) || $groupId === 'all') {
-                        return '';
+                        return [];
                     }
-                    return 'groups LIKE \'%"' . $groupId . '"%\'';
+                    return [['groups', 'like', '%"' . $groupId . '"%']];
                 },
                 'headersCallback' => function($headers) {
                     foreach($headers as &$header) {

@@ -74,9 +74,40 @@ class Casinos extends ListingWithGroups
 
     public function ajaxGetGroups()
     {
-        $this->config['group']['whereCallback'] = [$this, 'groupsWhereCallback'];
+        // TEMP FIX
+        $connection = \Grow\Database::getConnection();
+        $countries = BackendHelpers::getCountriesForOptions();
+        $categories = $connection->selectQuery()
+            ->table('tl_casino_category')
+            ->fields('id')
+            ->execute()->asArray();
+
+        foreach ($categories as $category) {
+            $categoryDataArr = $connection->selectQuery()
+                ->table('tl_casino_category_data')
+                ->where('pid', $category->id)
+                ->execute()->asArray();
+            $missingCountries = array_keys($countries);
+            foreach ($categoryDataArr as $categoryData) {
+                if(($i = array_search($categoryData->country, $missingCountries)) !== false) {
+                    unset($missingCountries[$i]);
+                }
+            }
+            foreach ($missingCountries as $countryId) {
+                $connection->insertQuery()
+                    ->table('tl_casino_category_data')
+                    ->data([
+                        'pid' => $category->id,
+                        'country' => $countryId,
+                        'sorting' => 0
+                    ])
+                    ->execute();
+            }
+        }
+
         $this->config['group']['labelCallback'] = [$this, 'groupsLabelCallback'];
         $this->config['group']['titleCallback'] = [$this, 'groupsLabelCallback'];
+        $this->config['group']['hook'] = [$this, 'groupsHook'];
         parent::ajaxGetGroups();
     }
 
@@ -98,7 +129,7 @@ class Casinos extends ListingWithGroups
 
     public function ajaxGetCasinoData()
     {
-        $id = Input::post('id');
+        $id = intval(Input::post('id'));
         $fieldsValues = Input::post('fields');
         $casinoCountries = $fieldsValues['countries'] ?: [];
 
@@ -122,9 +153,33 @@ class Casinos extends ListingWithGroups
     }
 
 
+    public function ajaxSaveGroup()
+    {
+        $id = intval(Input::post('id'));
+
+        parent::ajaxSaveGroup();
+
+        if ($id === 'new' && !$this->groupOrganizer->hasErrors()) {
+            $countries = BackendHelpers::getCountriesForOptions();
+            $connection = \Grow\Database::getConnection();
+            $newId = ActionData::getData('newId');
+            foreach ($countries as $countryId=>$countryName) {
+                $connection->insertQuery()
+                    ->table('tl_casino_category_data')
+                    ->data([
+                        'pid' => $newId,
+                        'country' => $countryId,
+                        'sorting' => 0
+                    ])
+                    ->execute();
+            }
+        }
+    }
+
+
     public function ajaxSaveCasinoData()
     {
-        $id = Input::post('id');
+        $id = intval(Input::post('id'));
         $countryId = Input::post('countryId');
         $fields = Input::post('fields');
 
@@ -153,18 +208,19 @@ class Casinos extends ListingWithGroups
 
     public function ajaxReorderGroups()
     {
-        $id = Input::post('id');
-        $previousId = Input::post('previousId');
+        $id = intval(Input::post('id'));
+        $previousId = intval(Input::post('previousId'));
+        $countryId = intval(Input::post('countryId'));
 
-        $this->setGroupNewPosition($id, $previousId);
+        $this->setGroupNewPosition($id, $previousId, $countryId);
     }
 
 
     public function ajaxReorderList()
     {
-        $id = Input::post('id');
-        $previousId = Input::post('previousId');
-        $countryId = Input::post('countryId');
+        $id = intval(Input::post('id'));
+        $previousId = intval(Input::post('previousId'));
+        $countryId = intval(Input::post('countryId'));
 
         $this->setListNewPosition($id, $previousId, $countryId);
     }
@@ -173,14 +229,9 @@ class Casinos extends ListingWithGroups
     protected function groupsLabelCallback($item)
     {
         $defaultCountry = BackendHelpers::getDefaultCountry();
-        $nameArr = deserialize($item['name']);
+        $nameArr = deserialize($item->name);
         $name = $nameArr[$defaultCountry['id']];
-        return $name ?: $item['alias'];
-    }
-
-    protected function groupsWhereCallback()
-    {
-        return ['NOT is_betting = 1'];
+        return $name ?: $item->id;
     }
 
 
@@ -199,7 +250,7 @@ class Casinos extends ListingWithGroups
             ->endGroup()
             ->where('is_casino', 1);
 
-        $groupId = Input::post('groupId');
+        $groupId = intval(Input::post('groupId'));
         if (!empty($groupId)) {
             $this->listOrganizer->listQuery
                 ->where('data.casino_categories', 'like', '%"' . $groupId . '"%');
@@ -209,17 +260,50 @@ class Casinos extends ListingWithGroups
     }
 
 
-    protected function setGroupNewPosition($id, $previousId)
+    public function groupsHook($query)
+    {
+        $query
+            ->fields(['*'])
+            ->fields('tl_casino_category.id', 'id')
+            ->join('tl_casino_category_data', 'data', 'left')
+            ->on('tl_casino_category.id', 'pid')
+            ->where('is_betting', '!=', 1)
+            ->where('data.country', $this->currentCountryId)
+            ->orderBy('sorting', 'desc');
+            //->orderBy('tstamp', 'asc');
+    }
+
+
+    protected function setGroupNewPosition($id, $previousId, $countryId)
     {
         $connection = \Grow\Database::getConnection();
 
-        $newSorting = $this->getNewPosition('tl_casino_category', 'id', 'sorting', $previousId, [$this, 'modifyGroupQuery']);
+        $newSorting = $this->getNewPosition('tl_casino_category_data', 'tl_casino_category_data.id', 'pid', 'tl_casino_category_data.sorting', $previousId, [$this, 'modifyGroupQuery']);
 
-        $connection->updateQuery()
-            ->table('tl_casino_category')
-            ->set('sorting', $newSorting)
-            ->where('id', $id)
-            ->execute();
+        $categoryData = $connection->selectQuery()
+            ->table('tl_casino_category_data')
+            ->where('pid', $id)
+            ->where('country', $countryId)
+            ->execute()->asArray();
+
+        if (!count($categoryData)) {
+            $connection->insertQuery()
+                ->table('tl_casino_category_data')
+                ->data([
+                    'pid' => $id,
+                    'country' => $countryId,
+                    'sorting' => $newSorting
+                ])
+                ->execute();
+        }
+        else {
+            $connection->updateQuery()
+                ->table('tl_casino_category_data')
+                ->set('sorting', $newSorting)
+                ->where('pid', $id)
+                ->where('country', $countryId)
+                ->execute();
+        }
     }
 
 
@@ -227,18 +311,18 @@ class Casinos extends ListingWithGroups
     {
         $connection = \Grow\Database::getConnection();
 
-        $newSorting = $this->getNewPosition('tl_casino_data', 'pid', 'casino_sorting', $previousId, [$this, 'modifyListQuery']);
+        $newSorting = $this->getNewPosition('tl_casino_data', 'id', 'pid', 'casino_sorting', $previousId, [$this, 'modifyListQuery']);
 
         $connection->updateQuery()
             ->table('tl_casino_data')
             ->set('casino_sorting', $newSorting)
             ->where('pid', $id)
-            ->where('country', $this->currentCountryId)
+            ->where('country', $countryId)
             ->execute();
     }
 
 
-    protected function getNewPosition($table, $idFiledName, $sortingFieldName, $previousId, callable $modifyQueryMethod = null)
+    protected function getNewPosition($table, $rowIdFieldName, $idFiledName, $sortingFieldName, $previousId, callable $modifyQueryMethod = null)
     {
         $newSorting = 0;
 
@@ -291,7 +375,7 @@ class Casinos extends ListingWithGroups
 
         $itemsQuery = $connection->selectQuery()
             ->table($table)
-            ->fields(['id', $idFiledName, $sortingFieldName])
+            ->fields([$rowIdFieldName, $idFiledName, $sortingFieldName])
             ->orderBy($sortingFieldName, 'asc');
         if ($modifyQueryMethod) $modifyQueryMethod($itemsQuery);
         $items = $itemsQuery->execute()->asArray();
@@ -304,7 +388,7 @@ class Casinos extends ListingWithGroups
             $connection->updateQuery()
                 ->table($table)
                 ->set($sortingFieldName, ($count++ * 128))
-                ->where('id', $item->id)
+                ->where($rowIdFieldName, $item->id)
                 ->execute();
         }
 
@@ -313,7 +397,16 @@ class Casinos extends ListingWithGroups
 
     protected function modifyGroupQuery($query)
     {
-        $query->where('is_betting', '!=', 1);
+        $query
+            ->fields('tl_casino_category_data.id', 'id')
+            ->fields('tl_casino_category_data.pid', 'pid')
+            ->fields('tl_casino_category_data.sorting', 'sorting')
+            ->fields('tl_casino_category_data.country', 'country')
+            ->join('tl_casino_category', 'tl_casino_category', 'left')
+            ->on('tl_casino_category.id', 'pid')
+            ->where('country', $this->currentCountryId)
+            ->where('tl_casino_category.is_betting', '!=', 1)
+        ;
     }
 
     protected function modifyListQuery($query)

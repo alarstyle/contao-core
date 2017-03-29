@@ -34,6 +34,12 @@ class ActionData
     }
 
 
+    public static function getData($key)
+    {
+        return static::$dataArr[$key];
+    }
+
+
     public static function push($key, $data)
     {
         static::$dataArr[$key][] = $data;

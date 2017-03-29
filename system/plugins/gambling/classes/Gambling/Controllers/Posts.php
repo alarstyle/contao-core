@@ -120,9 +120,9 @@ class Posts extends ListingWithGroups
 
     protected function groupsLabelCallback($item)
     {
-        $nameArr = deserialize($item['name']);
+        $nameArr = deserialize($item->name);
         $name = $nameArr[$this->currentCountry];
-        return $name ?: $item['alias'];
+        return $name ?: $item->alias;
     }
 
 }

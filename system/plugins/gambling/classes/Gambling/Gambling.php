@@ -9,8 +9,6 @@ use Contao\Database;
 use Contao\Environment;
 use Contao\Models\PageModel;
 use Contao\System;
-use Gambling\Models\BettingCategoryModel;
-use Gambling\Models\CasinoCategoryModel;
 use Gambling\Models\CountryModel;
 use Gambling\Models\PostModel;
 use Grow\Route;
@@ -171,28 +169,42 @@ class Gambling
             return static::$casinoCategories;
         }
 
-        $categories = CasinoCategoryModel::findAll([
-            'order' => 'sorting DESC'
-        ]);
+        $currentCountry = static::getCurrentCountry();
+
+        $connection = \Grow\Database::getConnection();
+        $query = $connection->selectQuery()->table('tl_casino_category')
+            ->fields(['*'])
+            ->fields('tl_casino_category.id', 'id')
+            ->join('tl_casino_category_data', 'data', 'left')
+            ->on('tl_casino_category.id', 'data.pid')
+            ->where('data.country', $currentCountry['id'])
+            ->where('is_betting', '!=', 1)
+            ->orderBy('data.sorting', 'desc');
+
+        $categories = $query->execute()->asArray();
+
+//        $categories = CasinoCategoryModel::findAll([
+//            'order' => 'sorting DESC'
+//        ]);
 
         if ($categories === null) return [];
 
-        $categories = $categories->fetchAll();
-        $currentCountry = static::getCurrentCountry();
+//        $categories = $categories->fetchAll();
+
         $countryId = intval($currentCountry['id']);
         $casinosCategoryPage = static::getPageData(71);
 
         foreach ($categories as &$category) {
-            $category['alias'] = deserialize($category['alias'])[$countryId] ?: $category['alias'];
-            $category['name'] = deserialize($category['name'])[$countryId] ?: $category['alias'];
-            $category['metaTitle'] = deserialize($category['metaTitle'])[$countryId] ?: null;
-            $category['metaDescription'] = deserialize($category['metaDescription'])[$countryId] ?: null;
-            $category['topTitle'] = deserialize($category['topTitle'])[$countryId] ?: null;
-            $category['topText'] = deserialize($category['topText'])[$countryId] ?: null;
-            $category['bottomTitle'] = deserialize($category['bottomTitle'])[$countryId] ?: null;
-            $category['bottomText'] = deserialize($category['bottomText'])[$countryId] ?: null;
-            $category['url'] = str_replace('{categoryAlias}', $category['alias'], $casinosCategoryPage['url']);
-            $category['current'] = $casinosCategoryPage['current'] && $category['alias'] === end(\Grow\Route::get());
+            $category->alias = deserialize($category->alias)[$countryId] ?: $category->id;
+            $category->name = deserialize($category->name)[$countryId] ?: $category->id;
+            $category->metaTitle = deserialize($category->metaTitle)[$countryId] ?: null;
+            $category->metaDescription = deserialize($category->metaDescription)[$countryId] ?: null;
+            $category->topTitle = deserialize($category->topTitle)[$countryId] ?: null;
+            $category->topText = deserialize($category->topText)[$countryId] ?: null;
+            $category->bottomTitle = deserialize($category->bottomTitle)[$countryId] ?: null;
+            $category->bottomText = deserialize($category->bottomText)[$countryId] ?: null;
+            $category->url = str_replace('{categoryAlias}', $category->alias, $casinosCategoryPage['url']);
+            $category->current = $casinosCategoryPage['current'] && $category->alias === end(\Grow\Route::get());
         }
 
         static::$casinoCategories = $categories;
@@ -207,25 +219,39 @@ class Gambling
             return static::$bettingCategories;
         }
 
-        $categories = BettingCategoryModel::findAll();
+        $currentCountry = static::getCurrentCountry();
+
+        $connection = \Grow\Database::getConnection();
+        $query = $connection->selectQuery()->table('tl_casino_category')
+            ->fields(['*'])
+            ->fields('tl_casino_category.id', 'id')
+            ->join('tl_casino_category_data', 'data', 'left')
+            ->on('tl_casino_category.id', 'data.pid')
+            ->where('data.country', $currentCountry['id'])
+            ->where('is_betting', 1)
+            ->orderBy('data.sorting', 'desc');
+
+        $categories = $query->execute()->asArray();
+
+//        $categories = BettingCategoryModel::findAll();
 
         if ($categories === null) return [];
 
-        $categories = $categories->fetchAll();
-        $currentCountry = static::getCurrentCountry();
+//        $categories = $categories->fetchAll();
+
         $countryId = intval($currentCountry['id']);
         $bettingCategoryPage = \Gambling\Gambling::getPageData(80);
 
         foreach ($categories as &$category) {
-            $category['name'] = deserialize($category['name'])[$countryId] ?: $category['alias'];
-            $category['metaTitle'] = deserialize($category['metaTitle'])[$countryId] ?: null;
-            $category['metaDescription'] = deserialize($category['metaDescription'])[$countryId] ?: null;
-            $category['topTitle'] = deserialize($category['topTitle'])[$countryId] ?: null;
-            $category['topText'] = deserialize($category['topText'])[$countryId] ?: null;
-            $category['bottomTitle'] = deserialize($category['bottomTitle'])[$countryId] ?: null;
-            $category['bottomText'] = deserialize($category['bottomText'])[$countryId] ?: null;
-            $category['url'] = str_replace('{categoryAlias}', $category['alias'], $bettingCategoryPage['url']);
-            $category['current'] = $bettingCategoryPage['current'] && $category['alias'] === end(\Grow\Route::get());
+            $category->name = deserialize($category->name)[$countryId] ?: $category->alias;
+            $category->metaTitle = deserialize($category->metaTitle)[$countryId] ?: null;
+            $category->metaDescription = deserialize($category->metaDescription)[$countryId] ?: null;
+            $category->topTitle = deserialize($category->topTitle)[$countryId] ?: null;
+            $category->topText = deserialize($category->topText)[$countryId] ?: null;
+            $category->bottomTitle = deserialize($category->bottomTitle)[$countryId] ?: null;
+            $category->bottomText = deserialize($category->bottomText)[$countryId] ?: null;
+            $category->url = str_replace('{categoryAlias}', $category->alias, $bettingCategoryPage['url']);
+            $category->current = $bettingCategoryPage['current'] && $category->alias === end(\Grow\Route::get());
         }
 
         static::$bettingCategories = $categories;
@@ -241,7 +267,7 @@ class Gambling
         $casinoCategory = null;
 
         foreach($categories as $category) {
-            if ($category['alias'] === $alias) {
+            if ($category->alias === $alias) {
                 $casinoCategory = $category;
                 break;
             }
@@ -258,7 +284,7 @@ class Gambling
         $bettingCategory = null;
 
         foreach($categories as $category) {
-            if ($category['alias'] === $alias) {
+            if ($category->alias === $alias) {
                 $bettingCategory = $category;
                 break;
             }
