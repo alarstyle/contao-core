@@ -2598,14 +2598,14 @@ ul.dropdown-menu {
         height: 12px; } }
 @media (min-width: 1200px) {
   .slider .item-inner {
-    height: 450px;
+    height: 400px;
     max-width: 1080px;
     padding-top: 55px; }
   .slider .item-info {
     width: 55%;
     padding-bottom: 20px; }
   .slider .item-title {
-    font-size: 42px;
+    font-size: 40px;
     margin-bottom: 20px; }
   .slider .slick-dots {
     margin-left: -540px; } }
@@ -2797,7 +2797,7 @@ ul.dropdown-menu {
     border-left: 5px solid #c33e3e;
     border-bottom: 5px solid #c33e3e;
     content: '';
-    height: 219px;
+    height: 189px;
     width: 18px; }
 
   .top-inner {
@@ -2806,7 +2806,7 @@ ul.dropdown-menu {
 
   .top-article {
     float: left;
-    padding: 155px 50px 40px 0;
+    padding: 125px 50px 30px 0;
     width: calc(100% - 480px); }
 
   .top-title {
@@ -3262,13 +3262,7 @@ ul.dropdown-menu {
     font-size: 16px;
     line-height: 1.8;
     margin: 0 auto;
-    max-width: 1080px;
-    -webkit-columns: 2;
-    -moz-columns: 2;
-    columns: 2;
-    -webkit-column-gap: 30px;
-    -moz-column-gap: 30px;
-    column-gap: 50px; } }
+    max-width: 1080px; } }
 .subscription {
   background: #d24546;
   color: #fff;
