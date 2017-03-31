@@ -28,7 +28,7 @@ $GLOBALS['TL_DCA']['tl_casino_data'] = array
     ),
 
 	'palettes' => [
-		'default'                     => '[categories_title],casino_categories,betting_categories,[links],casino_link,casino_same_window,betting_link,betting_same_window,[misc],rating,currency,currency_before,bonus_code,[casino_signup_bonuses],cash_sign_up,spins_sign_up,deposit_bonuses,[betting_bonuses],bet_bonus_sign_up,bet_bonus_deposit,[wagering_title],wagering,[withdrawal],withdrawal_methods,withdrawal_min,withdrawal_max,withdrawal_frequency,[deposit_methods_title],deposit_methods,[providers_title],providers,[licenses_title],licenses,[contacts],phone,email,[review_title],review,[pros_cons],pros,cons,[seo],meta_title,meta_description',
+		'default'                     => '[categories_title],casino_categories,betting_categories,[links],casino_link,casino_same_window,betting_link,betting_same_window,[misc],rating,currency,currency_before,casino_code,betting_code,[casino_signup_bonuses],cash_sign_up,spins_sign_up,deposit_bonuses,[betting_bonuses],bet_bonus_sign_up,bet_bonus_deposit_percent,bet_bonus_deposit,[wagering_title],wagering,[withdrawal],withdrawal_methods,withdrawal_min,withdrawal_max,withdrawal_frequency,[deposit_methods_title],deposit_methods,[providers_title],providers,[licenses_title],licenses,[contacts],phone,email,[review_title],review,[pros_cons],pros,cons,[seo],meta_title,meta_description',
         'sidebar'                     => 'published'
 	],
 
@@ -102,10 +102,16 @@ $GLOBALS['TL_DCA']['tl_casino_data'] = array
             'eval'                    => array('tl_class'=>'w50 align_to_text'),
             'sql'                     => "char(1) NOT NULL default ''"
         ),
-        'bonus_code' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_casino_data']['bonus_code'],
+        'casino_code' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_casino_data']['casino_code'],
             'inputType'               => 'text',
-            'eval'                    => array('tl_class'=>'w50 clr'),
+            'eval'                    => array('tl_class'=>'w50'),
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ],
+        'betting_code' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_casino_data']['betting_code'],
+            'inputType'               => 'text',
+            'eval'                    => array('tl_class'=>'w50'),
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
         'cash_sign_up' => [
@@ -183,10 +189,22 @@ $GLOBALS['TL_DCA']['tl_casino_data'] = array
             'eval'                    => array('tl_class'=>'w50', 'rgxp'=>'digit'),
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
+        'bet_bonus_deposit_percent' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_casino_data']['bet_bonus_deposit_percent'],
+            'inputType'               => 'text',
+            'config'                  => [
+                'prefix' => '%'
+            ],
+            'eval'                    => array('tl_class'=>'w25', 'rgxp'=>'digit'),
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ],
         'bet_bonus_deposit' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_casino_data']['bet_bonus_deposit'],
             'inputType'               => 'text',
-            'eval'                    => array('tl_class'=>'w50', 'rgxp'=>'digit'),
+            'config'                  => [
+                'prefix' => 'up to'
+            ],
+            'eval'                    => array('tl_class'=>'w25', 'rgxp'=>'digit'),
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
         'wagering' => [

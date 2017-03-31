@@ -89,7 +89,7 @@ $GLOBALS['TL_DCA']['tl_casino_category'] = array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_casino_category']['bottomText'],
             'inputType'               => 'editor',
-            'config' => ['settings' => $GLOBALS['EDITOR_PRESETS']['simple']],
+            //'config' => ['settings' => $GLOBALS['EDITOR_PRESETS']['simple']],
             'sql'                     => "blob NULL"
         ),
         'is_betting' => [

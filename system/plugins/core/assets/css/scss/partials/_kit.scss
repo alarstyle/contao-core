@@ -2,7 +2,7 @@
     display: table;
     min-width: 50%;
     .unit--text, .unit--select, .unit--date {
-        width: 100%;
+        width: 100% !important;
     }
 }
 

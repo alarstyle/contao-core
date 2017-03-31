@@ -692,6 +692,7 @@ $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/Sortable.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/assets/tinymce/tinymce.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/flatpickr.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vue.js';
+$GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vuex.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/vue-router.min.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/plugins/vue-sortable.js';
 $GLOBALS['TL_JAVASCRIPT'][] = '/system/plugins/core/assets/js/plugins/vue-tooltip.js';

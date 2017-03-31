@@ -86,6 +86,7 @@ class Translations extends \Contao\Controllers\BackendMain
         'till the end of deal',
         'top 5 casinos',
         'top 5 betting',
+        'up to',
         'visit',
         'wagering requirement',
         'website',

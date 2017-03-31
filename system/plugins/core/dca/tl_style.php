@@ -65,7 +65,7 @@ $GLOBALS['TL_DCA']['tl_style'] = array
 			'fields'                  => array('sorting'),
 			'panelLayout'             => 'filter;search,limit',
 			'headerFields'            => array('name', 'tstamp', 'media'),
-			'child_record_callback'   => array('StyleSheets', 'compileDefinition')
+			'child_record_callback'   => array('\\Contao\\StyleSheets', 'compileDefinition')
 		),
 		'global_operations' => array
 		(
@@ -613,6 +613,7 @@ $GLOBALS['TL_DCA']['tl_style'] = array
  * @author Leo Feyer <https://github.com/leofeyer>
  */
 use Contao\Image;
+use Contao\Input;
 
 class tl_style extends \Contao\Backend
 {

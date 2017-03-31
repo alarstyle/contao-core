@@ -38,3 +38,16 @@
 .id_deposit_bonuses {
     width: 50%;
 }
+
+.id_bet_bonus_deposit_percent {
+    padding-right: 5px;
+    .unit-hint {
+        overflow: visible;
+        white-space: nowrap;
+    }
+}
+
+.id_bet_bonus_deposit {
+    padding-top: 23px;
+    padding-left: 5px;
+}

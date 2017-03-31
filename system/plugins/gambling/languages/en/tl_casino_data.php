@@ -23,7 +23,8 @@ $GLOBALS['TL_LANG']['tl_casino_data']['betting_same_window'] = ['Open in same wi
 $GLOBALS['TL_LANG']['tl_casino_data']['rating'] = ['Casino rating', ''];
 $GLOBALS['TL_LANG']['tl_casino_data']['currency'] = ['Currency', ''];
 $GLOBALS['TL_LANG']['tl_casino_data']['currency_before'] = ['Show currency before amount', ''];
-$GLOBALS['TL_LANG']['tl_casino_data']['bonus_code'] = ['Bonus Code', ''];
+$GLOBALS['TL_LANG']['tl_casino_data']['casino_code'] = ['Casino Bonus Code', ''];
+$GLOBALS['TL_LANG']['tl_casino_data']['betting_code'] = ['Betting Bonus Code', ''];
 
 $GLOBALS['TL_LANG']['tl_casino_data']['cash_sign_up'] = ['Sign Up Cash Bonus', 'Keep field empty if there is no cash bonus'];
 $GLOBALS['TL_LANG']['tl_casino_data']['spins_sign_up'] = ['Sign Up Free Spins', 'Keep field empty if there is no Free Spins'];
@@ -38,7 +39,8 @@ $GLOBALS['TL_LANG']['tl_casino_data']['cash_3_deposit'] = ['3nd Deposit Cash Bon
 $GLOBALS['TL_LANG']['tl_casino_data']['spins_3_deposit'] = ['3nd Deposit Free Spins', 'Keep field empty if there is no Free Spins'];
 
 $GLOBALS['TL_LANG']['tl_casino_data']['bet_bonus_sign_up'] = ['Sign Up Cash Bonus', 'Keep field empty if there is no bonus'];
-$GLOBALS['TL_LANG']['tl_casino_data']['bet_bonus_deposit'] = ['Deposit Cash Bonus', 'Keep field empty if there is no bonus'];
+$GLOBALS['TL_LANG']['tl_casino_data']['bet_bonus_deposit_percent'] = ['Deposit Bonus', 'Keep field empty if there is no bonus'];
+$GLOBALS['TL_LANG']['tl_casino_data']['bet_bonus_deposit'] = ['', ''];
 
 $GLOBALS['TL_LANG']['tl_casino_data']['withdrawal_methods'] = ['Withdrawal Methods', ''];
 $GLOBALS['TL_LANG']['tl_casino_data']['withdrawal_min'] = ['Min Amount', ''];

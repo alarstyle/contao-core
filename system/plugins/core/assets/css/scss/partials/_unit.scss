@@ -4,7 +4,7 @@
     &.w50 {
         height: auto;
     }
-    &:not(.w50) {
+    &:not(.w50):not(.w25) {
         clear: both;
     }
 }
@@ -63,8 +63,9 @@
         background: #f4f4f4;
         padding: 0 10px;
         position: relative;
-        width: 10px;
         overflow: hidden;
+        width: 10px;
+        white-space: nowrap;
     }
 }
 
@@ -102,6 +103,7 @@
     }
     &.align_to_text {
         padding-top: 33px;
+        padding-bottom: 10px;
     }
 }
 

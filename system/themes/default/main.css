@@ -604,7 +604,12 @@ a.tl_submit, a.tl_submit:hover {
   /* see #1495 */ }
 
 .w50 {
-  width: 50%;
+  width: 50% !important;
+  float: left;
+  height: 72px;
+}
+.w25 {
+  width: 25% !important;
   float: left;
   height: 72px; }
 
