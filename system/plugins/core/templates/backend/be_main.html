@@ -10,9 +10,6 @@
     <meta name="robots" content="noindex, nofollow"/>
     <meta name="referrer" content="origin">
 
-    <?php if ($this->loadFonts): ?>
-    <link rel="stylesheet" href="<?= TL_ASSETS_URL ?>system/themes/<?= $this->theme ?>/fonts.css">
-    <?php endif; ?>
     <link rel="stylesheet" href="<?php
     $objCombiner = new \Contao\Combiner();
     $objCombiner->add('assets/mootools/colorpicker/'. $GLOBALS['TL_ASSETS']['COLORPICKER'] .'/css/mooRainbow.css', $GLOBALS['TL_ASSETS']['COLORPICKER']);

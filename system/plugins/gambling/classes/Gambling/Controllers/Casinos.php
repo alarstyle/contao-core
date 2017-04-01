@@ -140,7 +140,7 @@ class Casinos extends ListingWithGroups
 
         if ($objRow->numRows >= 1) {
             foreach ($objRow->fetchAllAssoc() as $row) {
-                $casinoData[$row['country']] = $this->casinoDataOrganizer->load($row['id']);
+                $casinoData[$row['country']] = $this->loadCasinoData($row['id'], $row['country']);
             }
         }
 
@@ -201,7 +201,7 @@ class Casinos extends ListingWithGroups
             return;
         }
 
-        $casinoData = $this->casinoDataOrganizer->load($dataId);
+        $casinoData = $this->loadCasinoData($dataId, $countryId);
         ActionData::data('casinoData', $casinoData);
     }
 
@@ -412,6 +412,17 @@ class Casinos extends ListingWithGroups
     protected function modifyListQuery($query)
     {
         $query->where('country', $this->currentCountryId);
+    }
+
+
+    protected function loadCasinoData($id, $countryId)
+    {
+        $data = $this->casinoDataOrganizer->load($id);
+        $data['main']['deposit_methods']['config']['options'] = \Gambling\BackendHelpers::getCasinoOptions('deposit methods', $countryId);
+        $data['main']['withdrawal_methods']['config']['options'] = \Gambling\BackendHelpers::getCasinoOptions('withdrawal methods', $countryId);
+        $data['main']['licenses']['config']['options'] = \Gambling\BackendHelpers::getCasinoOptions('licenses', $countryId);
+
+        return $data;
     }
 
 }

@@ -262,7 +262,6 @@ class BackendMain extends Backend
 		$this->Template->expandNode = $GLOBALS['TL_LANG']['MSC']['expandNode'];
 		$this->Template->collapseNode = $GLOBALS['TL_LANG']['MSC']['collapseNode'];
 		$this->Template->loadingData = $GLOBALS['TL_LANG']['MSC']['loadingData'];
-		$this->Template->loadFonts = Config::get('loadGoogleFonts');
 		$this->Template->isAdmin = $this->User->isAdmin;
 		$this->Template->isCoreOnlyMode = Config::get('coreOnlyMode');
 		$this->Template->coreOnlyMode = $GLOBALS['TL_LANG']['MSC']['coreOnlyMode'];

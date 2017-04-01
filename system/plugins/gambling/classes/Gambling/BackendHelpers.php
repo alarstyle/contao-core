@@ -18,6 +18,8 @@ class BackendHelpers
 
     protected static $defaultCountryId = null;
 
+    protected static $casinoAllOptions = null;
+
 
     protected static function loadCountries()
     {
@@ -169,6 +171,38 @@ class BackendHelpers
 
         foreach ($categories as $category) {
             $options[$category['id']] = deserialize($category['name'])[$countryId] ?: $category['id'];;
+        }
+
+        return $options;
+    }
+
+
+    public static function getCasinoOptions($variableName, $countryId)
+    {
+        if (static::$casinoAllOptions === null) {
+            $optionsFile = TL_ROOT . '/system/config/options.php';
+            if (!file_exists($optionsFile)) return [];
+            $allOptions = include $optionsFile;
+            static::$casinoAllOptions =  $allOptions ?: [];
+        }
+
+        if (!static::$casinoAllOptions || !static::$casinoAllOptions[$countryId] || !is_array(static::$casinoAllOptions[$countryId])) {
+            return [];
+        }
+
+        $variableData = static::$casinoAllOptions[$countryId][$variableName];
+
+        if (empty($variableData) || !is_array($variableData)) {
+            return [];
+        }
+
+        $options = [];
+
+        foreach ($variableData as $item) {
+            $options[] = [
+                'value' => $item['id'],
+                'label' => $item['label']
+            ];
         }
 
         return $options;

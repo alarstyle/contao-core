@@ -13,6 +13,8 @@
         },
 
         mounted: function() {
+            console.log('!!!!!!!!!');
+            console.log(this.config);
             this.options = this.config.options;
         },
 

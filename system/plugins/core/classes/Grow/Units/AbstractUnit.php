@@ -91,6 +91,10 @@ abstract class AbstractUnit
             }
         }
 
+        if ($this->fieldData['hidden']) {
+            $unitData['hidden'] = $this->fieldData['hidden'];
+        }
+
         return $unitData;
     }
 

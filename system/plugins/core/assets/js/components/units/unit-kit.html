@@ -5,7 +5,7 @@
     <div class="unit unit--kit" :class="unitClass">
         <!--<label class="unit-label" v-if="label">{{ label }}<span v-if="required">*</span>:</label>-->
         <div class="kit">
-            <div class="kit-head" v-if="items && items.length">
+            <div class="kit-head" v-if="items && items.length && config.head !== false">
                 <div class="kit-item-cell kit-item-cell--number" v-if="config.enumerable"></div>
                 <div class="kit-item-cell" v-for="(field, fieldName) in config.fields" v-if="!field.hidden">
                     <div class="unit-label" v-if="field.component">
@@ -14,7 +14,7 @@
                 </div>
                 <div class="kit-item-cell"></div>
             </div>
-            <div class="kit-item" v-for="(item, itemIndex) in items">
+            <div class="kit-item" v-for="(item, itemIndex) in items" v-if="!item.hidden">
                 <div class="kit-item-cell kit-item-cell--number" v-if="config.enumerable">{{ itemIndex+1 }}.</div>
                 <div class="kit-item-cell" v-for="(field, fieldName) in config.fields" v-if="!field.hidden">
                     <template v-if="field.component">

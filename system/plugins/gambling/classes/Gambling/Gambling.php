@@ -25,6 +25,9 @@ class Gambling
     protected static $translations = null;
 
 
+    protected static $casinoAllOptions = null;
+
+
     public static function getHomePage()
     {
         $currentCountryCode = Route::get()[0];
@@ -462,6 +465,10 @@ class Gambling
         $casino->languages = deserialize($casino->languages) ?: [];
         $casino->deposit_bonuses = deserialize($casino->deposit_bonuses) ?: [];
 
+        $casino->deposit_methods = static::getCasinoOptions('deposit methods', $casino->deposit_methods);
+        $casino->withdrawal_methods = static::getCasinoOptions('withdrawal methods', $casino->withdrawal_methods);
+        $casino->licenses = static::getCasinoOptions('licenses', $casino->licenses);
+
         $depositCashTotal = 0;
         $casino->depositSpinsBonusTotal = 0;
 
@@ -492,6 +499,40 @@ class Gambling
         return $casino->currency_before !== '1'
             ? ($amount . ' ' . $casino->currency)
             : ($casino->currency . $amount);
+    }
+
+    protected static function getCasinoOptions($variableName, $valuesId)
+    {
+        $countryId = static::getCurrentCountry()['id'];
+        $valuesId = deserialize($valuesId) ?: [];
+
+        if (empty($valuesId) || !is_array($valuesId)) return [];
+
+        if (static::$casinoAllOptions === null) {
+            $optionsFile = TL_ROOT . '/system/config/options.php';
+            if (!file_exists($optionsFile)) return [];
+            $allOptions = include $optionsFile;
+            static::$casinoAllOptions =  $allOptions ?: [];
+        }
+
+        if (!static::$casinoAllOptions || !static::$casinoAllOptions[$countryId] || !is_array(static::$casinoAllOptions[$countryId])) {
+            return [];
+        }
+
+        $variableData = static::$casinoAllOptions[$countryId][$variableName];
+
+        if (empty($variableData) || !is_array($variableData)) {
+            return [];
+        }
+
+        $options = [];
+
+        foreach ($variableData as $item) {
+            if (!in_array($item['id'], $valuesId)) continue;
+            $options[] = $item['label'];
+        }
+
+        return $options;
     }
 
 }

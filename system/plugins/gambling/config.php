@@ -26,6 +26,7 @@ $GLOBALS['TL_MODELS']['tl_post'] = 'Gambling\\Models\\PostModel';
     'be_casinos'  => 'system/plugins/gambling/templates',
     'be_pages'  => 'system/plugins/gambling/templates',
     'be_translations'  => 'system/plugins/gambling/templates',
+    'be_options'  => 'system/plugins/gambling/templates',
     'mod_posts'  => 'system/plugins/gambling/templates'
 ]);
 
@@ -221,7 +222,6 @@ array_insert_assoc($GLOBALS['NAVIGATION'], -1, 'countries', [
 
 array_insert_assoc($GLOBALS['NAVIGATION'], 4, 'pages', [
     'label' => 'Website Structure',
-    //'hidden' => true,
     'controller' => 'Gambling\\Controllers\\Pages',
     'config' => [
         'group' => [
@@ -239,23 +239,14 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 4, 'pages', [
     ]
 ]);
 
-array_insert_assoc($GLOBALS['NAVIGATION'], 5, 'translations', [
+array_insert_assoc($GLOBALS['NAVIGATION'], 5, 'casino_options', [
+    'label' => 'Casino Options',
+    'controller' => 'Gambling\\Controllers\\Options'
+]);
+
+array_insert_assoc($GLOBALS['NAVIGATION'], 6, 'translations', [
     'label' => 'Translations',
-    'controller' => 'Gambling\\Controllers\\Translations',
-    'config' => [
-        'group' => [
-            'table' => 'tl_page',
-            'title' => 'Pages',
-            'creatable' => false,
-            'editable' => false,
-            'labelCallback' => function ($item) {
-                return $item->name;
-            },
-            'titleCallback' => function ($item) {
-                return $item->name;
-            }
-        ]
-    ]
+    'controller' => 'Gambling\\Controllers\\Translations'
 ]);
 
 $GLOBALS['UNITS']['rating'] = 'Gambling\\Units\\Rating';

@@ -214,8 +214,8 @@ $GLOBALS['TL_DCA']['tl_casino_data'] = array
         ],
         'withdrawal_methods' => [
             'label'             => &$GLOBALS['TL_LANG']['tl_casino_data']['withdrawal_methods'],
-            'inputType'         => 'textarea',
-            'sql'               => "varchar(255) NOT NULL default ''"
+            'inputType'         => 'checkboxWizard',
+            'sql'               => "varchar(500) NOT NULL default ''"
         ],
         'withdrawal_min' => [
             'label'             => &$GLOBALS['TL_LANG']['tl_casino_data']['withdrawal_min'],
@@ -237,8 +237,8 @@ $GLOBALS['TL_DCA']['tl_casino_data'] = array
         ],
         'deposit_methods' => [
             'label'             => &$GLOBALS['TL_LANG']['tl_casino_data']['deposit_methods'],
-            'inputType'         => 'textarea',
-            'sql'               => "varchar(255) NOT NULL default ''"
+            'inputType'         => 'checkboxWizard',
+            'sql'               => "varchar(500) NOT NULL default ''"
         ],
         'providers' => [
             'label'             => &$GLOBALS['TL_LANG']['tl_casino_data']['providers'],
@@ -246,14 +246,9 @@ $GLOBALS['TL_DCA']['tl_casino_data'] = array
             'sql'               => "varchar(255) NOT NULL default ''"
         ],
         'licenses' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_casino_data']['licenses'],
-            'inputType'               => 'editor',
-            'sql'                     => "mediumtext NULL",
-            'config'                  => [
-                'settings' => [
-                    'toolbar' => 'removeformat | link unlink | code'
-                ]
-            ]
+            'label'             => &$GLOBALS['TL_LANG']['tl_casino_data']['licenses'],
+            'inputType'         => 'checkboxWizard',
+            'sql'               => "varchar(500) NOT NULL default ''"
         ],
         'meta_title' => [
             'label'             => &$GLOBALS['TL_LANG']['tl_casino_data']['meta_title'],
