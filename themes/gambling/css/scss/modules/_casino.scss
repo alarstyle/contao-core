@@ -130,10 +130,10 @@
             content: '';
             width: 3px;
         }
-        &:first-child:before {
+        &.item--casino_bonus:before {
             background: #3387dc;
         }
-        &:nth-child(2):before {
+        &.item--betting_bonus:before {
             background: #39c983;
         }
         &:last-child:after {

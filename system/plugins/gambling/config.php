@@ -249,6 +249,11 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 6, 'translations', [
     'controller' => 'Gambling\\Controllers\\Translations'
 ]);
 
+array_insert_assoc($GLOBALS['NAVIGATION'], 6, 'subscribers', [
+    'label' => 'Subscribers',
+    'controller' => Gambling\Controllers\Subscribers::class
+]);
+
 $GLOBALS['UNITS']['rating'] = 'Gambling\\Units\\Rating';
 $GLOBALS['UNITS']['multilingualText'] = 'Gambling\\Units\\MultilingualText';
 

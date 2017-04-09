@@ -247,6 +247,7 @@
                                 casinoData[countryId].main.bet_bonus_deposit_percent.hidden = true;
                                 casinoData[countryId].main.bet_bonus_deposit.hidden = true;
                                 casinoData[countryId].main.betting_code.hidden = true;
+                                casinoData[countryId].main.wagering_betting.hidden = true;
                                 break;
                             case 'betting':
                                 casinoData[countryId].main.casino_categories.hidden = true;
@@ -257,6 +258,7 @@
                                 casinoData[countryId].main.spins_sign_up.hidden = true;
                                 casinoData[countryId].main.deposit_bonuses.hidden = true;
                                 casinoData[countryId].main.casino_code.hidden = true;
+                                casinoData[countryId].main.wagering_casino.hidden = true;
                                 break;
                         }
 

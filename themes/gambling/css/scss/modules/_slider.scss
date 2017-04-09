@@ -4,7 +4,7 @@
 
 @media (min-width: $min-tablet-width) {
     .slider {
-        background: #31383c;
+        background: #242a2e;
         color: #fff;
         display: block;
         font-size: 0;
@@ -16,6 +16,9 @@
             vertical-align: top;
             width: 100%;
             white-space: normal;
+            &:focus {
+                outline: none;
+            }
         }
         .item-img {
             @include abs-pos(0,0);
@@ -117,6 +120,7 @@
 
 @media (min-width: $min-desktop-width) {
     .slider {
+        min-height: 55px;
         .item-inner {
             height: 400px;
             max-width: 1080px;

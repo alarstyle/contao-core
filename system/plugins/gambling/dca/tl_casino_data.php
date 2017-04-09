@@ -28,7 +28,7 @@ $GLOBALS['TL_DCA']['tl_casino_data'] = array
     ),
 
 	'palettes' => [
-		'default'                     => '[categories_title],casino_categories,betting_categories,[links],casino_link,casino_same_window,betting_link,betting_same_window,[misc],rating,currency,currency_before,casino_code,betting_code,[casino_signup_bonuses],cash_sign_up,spins_sign_up,deposit_bonuses,[betting_bonuses],bet_bonus_sign_up,bet_bonus_deposit_percent,bet_bonus_deposit,[wagering_title],wagering,[withdrawal],withdrawal_methods,withdrawal_min,withdrawal_max,withdrawal_frequency,[deposit_methods_title],deposit_methods,[providers_title],providers,[licenses_title],licenses,[contacts],phone,email,[review_title],review,[pros_cons],pros,cons,[seo],meta_title,meta_description',
+		'default'                     => '[categories_title],casino_categories,betting_categories,[links],casino_link,casino_same_window,betting_link,betting_same_window,[misc],rating,currency,currency_before,casino_code,betting_code,[casino_signup_bonuses],cash_sign_up,spins_sign_up,deposit_bonuses,[betting_bonuses],bet_bonus_sign_up,bet_bonus_deposit_percent,bet_bonus_deposit,[wagering_title],wagering_casino,wagering_betting,[withdrawal],withdrawal_methods,withdrawal_min,withdrawal_max,withdrawal_frequency,[deposit_methods_title],deposit_methods,[providers_title],providers,[licenses_title],licenses,[contacts],phone,email,[review_title],review,[pros_cons],pros,cons,[seo],meta_title,meta_description',
         'sidebar'                     => 'published'
 	],
 
@@ -207,10 +207,17 @@ $GLOBALS['TL_DCA']['tl_casino_data'] = array
             'eval'                    => array('tl_class'=>'w25', 'rgxp'=>'digit'),
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
-        'wagering' => [
-            'label'             => &$GLOBALS['TL_LANG']['tl_casino_data']['wagering'],
-            'inputType'         => 'textarea',
-            'sql'               => "varchar(255) NOT NULL default ''"
+        'wagering_casino' => [
+            'label'             => &$GLOBALS['TL_LANG']['tl_casino_data']['wagering_casino'],
+            'inputType'         => 'checkboxWizard',
+            'eval'              => array('tl_class'=>'w50'),
+            'sql'               => "varchar(500) NOT NULL default ''"
+        ],
+        'wagering_betting' => [
+            'label'             => &$GLOBALS['TL_LANG']['tl_casino_data']['wagering_betting'],
+            'inputType'         => 'checkboxWizard',
+            'eval'              => array('tl_class'=>'w50'),
+            'sql'               => "varchar(500) NOT NULL default ''"
         ],
         'withdrawal_methods' => [
             'label'             => &$GLOBALS['TL_LANG']['tl_casino_data']['withdrawal_methods'],
@@ -219,9 +226,9 @@ $GLOBALS['TL_DCA']['tl_casino_data'] = array
         ],
         'withdrawal_min' => [
             'label'             => &$GLOBALS['TL_LANG']['tl_casino_data']['withdrawal_min'],
-            'inputType'               => 'text',
-            'eval'                    => array('tl_class'=>'w50', 'rgxp'=>'digit'),
-            'sql'                     => "varchar(255) NOT NULL default ''"
+            'inputType'         => 'text',
+            'eval'              => array('tl_class'=>'w50', 'rgxp'=>'digit'),
+            'sql'               => "varchar(255) NOT NULL default ''"
         ],
         'withdrawal_max' => [
             'label'             => &$GLOBALS['TL_LANG']['tl_casino_data']['withdrawal_max'],
@@ -242,8 +249,8 @@ $GLOBALS['TL_DCA']['tl_casino_data'] = array
         ],
         'providers' => [
             'label'             => &$GLOBALS['TL_LANG']['tl_casino_data']['providers'],
-            'inputType'         => 'textarea',
-            'sql'               => "varchar(255) NOT NULL default ''"
+            'inputType'         => 'checkboxWizard',
+            'sql'               => "varchar(500) NOT NULL default ''"
         ],
         'licenses' => [
             'label'             => &$GLOBALS['TL_LANG']['tl_casino_data']['licenses'],

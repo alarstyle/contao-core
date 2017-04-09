@@ -262,6 +262,20 @@
         });
     }
 
+    function initSubscription() {
+        $('.subscription').each(function() {
+            var $subscription = $(this),
+                $input = $subscription.find('input'),
+                $btn = $subscription.find('button');
+
+            $btn.on('click', function() {
+                $.post(location.href, { action: 'subscribe', email: $input.val() }, function(data) {
+                    console.log(data);
+                });
+            });
+        });
+    }
+
 
     $(function () {
         initNav();
@@ -274,6 +288,7 @@
         initCasino();
         initCountdown();
         initBackBtns();
+        initSubscription();
 
         $('a[href="#"]').click(function(e) {
             e.preventDefault();

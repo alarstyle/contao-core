@@ -27,7 +27,7 @@ $GLOBALS['TL_DCA']['tl_country'] = array
 
 	// Palettes
 	'palettes' => [
-		'default'                     => 'country, language, alias, fallback'
+		'default'                     => 'country, language, alias, verificationCode, fallback'
 	],
 
 	// Fields
@@ -78,6 +78,12 @@ $GLOBALS['TL_DCA']['tl_country'] = array
             ],
             'sql'                     => "char(1) NOT NULL default ''"
         ),
+        'verificationCode' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_country']['verificationCode'],
+            'inputType'               => 'text',
+            'eval'                    => array('tl_class'=>'unit--long'),
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ],
 	)
 );
 

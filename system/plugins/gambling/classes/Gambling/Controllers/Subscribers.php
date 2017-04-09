@@ -11,7 +11,7 @@ use Grow\ApplicationData;
 use Grow\Controllers\ListingWithGroups;
 use Grow\Organizer;
 
-class Casinos extends ListingWithGroups
+class Subscribers extends ListingWithGroups
 {
 
     protected $tplName = 'be_casinos';
@@ -418,8 +418,7 @@ class Casinos extends ListingWithGroups
     protected function loadCasinoData($id, $countryId)
     {
         $data = $this->casinoDataOrganizer->load($id);
-        $data['main']['wagering_casino']['config']['options'] = \Gambling\BackendHelpers::getCasinoOptions('wagering requirement', $countryId);
-        $data['main']['wagering_betting']['config']['options'] = \Gambling\BackendHelpers::getCasinoOptions('wagering requirement', $countryId);
+        $data['main']['wagering']['config']['options'] = \Gambling\BackendHelpers::getCasinoOptions('wagering requirement', $countryId);
         $data['main']['withdrawal_methods']['config']['options'] = \Gambling\BackendHelpers::getCasinoOptions('withdrawal methods', $countryId);
         $data['main']['deposit_methods']['config']['options'] = \Gambling\BackendHelpers::getCasinoOptions('deposit methods', $countryId);
         $data['main']['providers']['config']['options'] = \Gambling\BackendHelpers::getCasinoOptions('game providers', $countryId);

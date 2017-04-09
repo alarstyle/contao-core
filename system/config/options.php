@@ -1,6 +1,22 @@
 <?php return array (
   48 => 
   array (
+    'wagering requirement' => 
+    array (
+      0 => 
+      array (
+        'id' => 'fe034214',
+        'label' => 'aaaa',
+      ),
+    ),
+    'withdrawal methods' => 
+    array (
+      0 => 
+      array (
+        'id' => 'ab7112eec882cb50fd299ba67a21fed0',
+        'label' => '2',
+      ),
+    ),
     'deposit methods' => 
     array (
       0 => 
@@ -14,12 +30,12 @@
         'label' => 'asd',
       ),
     ),
-    'withdrawal methods' => 
+    'game providers' => 
     array (
       0 => 
       array (
-        'id' => 'ab7112eec882cb50fd299ba67a21fed0',
-        'label' => '2',
+        'id' => '0b2794ae',
+        'label' => 'ffff',
       ),
     ),
     'licenses' => 
@@ -33,12 +49,12 @@
   ),
   49 => 
   array (
-    'deposit methods' => 
+    'wagering requirement' => 
     array (
       0 => 
       array (
-        'id' => '7a247a62',
-        'label' => 'dd',
+        'id' => 'd8d0416f',
+        'label' => '11',
       ),
     ),
     'withdrawal methods' => 
@@ -49,6 +65,15 @@
         'label' => 'ff',
       ),
     ),
+    'deposit methods' => 
+    array (
+      0 => 
+      array (
+        'id' => '7a247a62',
+        'label' => 'dd',
+      ),
+    ),
+    'game providers' => '',
     'licenses' => 
     array (
       0 => 

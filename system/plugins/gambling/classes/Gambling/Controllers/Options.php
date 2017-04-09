@@ -33,8 +33,10 @@ class Options extends \Contao\Controllers\BackendMain
 
 
     protected $frontendVariables = [
-        'deposit methods',
+        'wagering requirement',
         'withdrawal methods',
+        'deposit methods',
+        'game providers',
         'licenses'
     ];
 

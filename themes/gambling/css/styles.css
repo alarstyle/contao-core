@@ -2494,7 +2494,7 @@ ul.dropdown-menu {
 
 @media (min-width: 768px) {
   .slider {
-    background: #31383c;
+    background: #242a2e;
     color: #fff;
     display: block;
     font-size: 0;
@@ -2506,6 +2506,8 @@ ul.dropdown-menu {
       vertical-align: top;
       width: 100%;
       white-space: normal; }
+      .slider .item:focus {
+        outline: none; }
     .slider .item-img {
       position: absolute;
       top: 0;
@@ -2597,18 +2599,20 @@ ul.dropdown-menu {
         width: 12px;
         height: 12px; } }
 @media (min-width: 1200px) {
-  .slider .item-inner {
-    height: 400px;
-    max-width: 1080px;
-    padding-top: 55px; }
-  .slider .item-info {
-    width: 55%;
-    padding-bottom: 20px; }
-  .slider .item-title {
-    font-size: 40px;
-    margin-bottom: 20px; }
-  .slider .slick-dots {
-    margin-left: -540px; } }
+  .slider {
+    min-height: 55px; }
+    .slider .item-inner {
+      height: 400px;
+      max-width: 1080px;
+      padding-top: 55px; }
+    .slider .item-info {
+      width: 55%;
+      padding-bottom: 20px; }
+    .slider .item-title {
+      font-size: 40px;
+      margin-bottom: 20px; }
+    .slider .slick-dots {
+      margin-left: -540px; } }
 .top {
   background: #fff;
   min-height: 250px;
@@ -3589,7 +3593,7 @@ ul.dropdown-menu {
       height: 100%; }
 
   .about_promo-title {
-    font-size: 38px;
+    font-size: 32px;
     margin-bottom: 40px; } }
 @media (min-width: 1200px) {
   .about_promo {
@@ -3598,7 +3602,7 @@ ul.dropdown-menu {
       margin: 0 20px 10px; }
 
   .about_promo-title {
-    font-size: 44px; } }
+    font-size: 40px; } }
 .article {
   background: #fff; }
   .article h1 {
@@ -3842,9 +3846,9 @@ ul.dropdown-menu {
       background: #ebeced;
       content: '';
       width: 3px; }
-    .casino-overview .item:first-child:before {
+    .casino-overview .item.item--casino_bonus:before {
       background: #3387dc; }
-    .casino-overview .item:nth-child(2):before {
+    .casino-overview .item.item--betting_bonus:before {
       background: #39c983; }
     .casino-overview .item:last-child:after {
       background: -moz-linear-gradient(top, #ebeced 0%, #ebeced 40%, rgba(235, 236, 237, 0) 100%);

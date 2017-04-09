@@ -49,7 +49,8 @@ $GLOBALS['TL_LANG']['tl_casino_data']['withdrawal_frequency'] = ['Withdrawal Tim
 
 $GLOBALS['TL_LANG']['tl_casino_data']['deposit_methods'] = ['', ''];
 $GLOBALS['TL_LANG']['tl_casino_data']['providers'] = ['', ''];
-$GLOBALS['TL_LANG']['tl_casino_data']['wagering'] = ['', ''];
+$GLOBALS['TL_LANG']['tl_casino_data']['wagering_casino'] = ['For Casino', ''];
+$GLOBALS['TL_LANG']['tl_casino_data']['wagering_betting'] = ['For Betting', ''];
 
 $GLOBALS['TL_LANG']['tl_casino_data']['meta_title'] = ['Meta title', 'The meta title is limited to 55 characters.'];
 $GLOBALS['TL_LANG']['tl_casino_data']['meta_description'] = ['Meta description', 'The meta description is limited to 155 characters.'];

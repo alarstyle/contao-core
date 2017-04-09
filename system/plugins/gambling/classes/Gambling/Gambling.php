@@ -56,6 +56,7 @@ class Gambling
                 'alias' => $country['alias'],
                 'lang' => $country['language'],
                 'title' => $allCountries[$country['country']],
+                'verificationCode' => $country['verificationCode'],
                 'link' => '/' . $country['alias'] . '/'
             ];
         }
@@ -465,8 +466,11 @@ class Gambling
         $casino->languages = deserialize($casino->languages) ?: [];
         $casino->deposit_bonuses = deserialize($casino->deposit_bonuses) ?: [];
 
-        $casino->deposit_methods = static::getCasinoOptions('deposit methods', $casino->deposit_methods);
+        $casino->wagering_casino = static::getCasinoOptions('wagering requirement', $casino->wagering_casino);
+        $casino->wagering_betting = static::getCasinoOptions('wagering requirement', $casino->wagering_betting);
         $casino->withdrawal_methods = static::getCasinoOptions('withdrawal methods', $casino->withdrawal_methods);
+        $casino->deposit_methods = static::getCasinoOptions('deposit methods', $casino->deposit_methods);
+        $casino->providers = static::getCasinoOptions('game providers', $casino->providers);
         $casino->licenses = static::getCasinoOptions('licenses', $casino->licenses);
 
         $depositCashTotal = 0;
