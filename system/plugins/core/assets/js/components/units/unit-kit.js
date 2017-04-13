@@ -68,6 +68,7 @@
 
         mounted: function() {
             console.log("KIT MOUNTED");
+            console.log(this.config);
             this.updateItems(this.value);
         }
 

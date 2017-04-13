@@ -4,8 +4,8 @@
     </div>
     <div class="unit unit--kit" :class="unitClass">
         <!--<label class="unit-label" v-if="label">{{ label }}<span v-if="required">*</span>:</label>-->
-        <div class="kit">
-            <div class="kit-head" v-if="items && items.length && config.head !== false">
+        <div class="kit" :class="{ 'kit--blocked': config.blocked }">
+            <div class="kit-head" v-if="items && items.length && config.head !== false && !config.blocked">
                 <div class="kit-item-cell kit-item-cell--number" v-if="config.enumerable"></div>
                 <div class="kit-item-cell" v-for="(field, fieldName) in config.fields" v-if="!field.hidden">
                     <div class="unit-label" v-if="field.component">
@@ -15,36 +15,56 @@
                 <div class="kit-item-cell"></div>
             </div>
             <div class="kit-item" v-for="(item, itemIndex) in items" v-if="!item.hidden">
-                <div class="kit-item-cell kit-item-cell--number" v-if="config.enumerable">{{ itemIndex+1 }}.</div>
-                <div class="kit-item-cell" v-for="(field, fieldName) in config.fields" v-if="!field.hidden">
-                    <template v-if="field.component">
-                        <component :is="field.component"
-                                   :id="itemIndex + '|' + fieldName"
-                                   :value="item[fieldName]"
-                                   :required="field.required"
-                                   label=""
-                                   :hint="field.hint"
-                                   :config="field.config"
-                                   @change="handleUnitChange"
-                                   ref="units"></component>
+
+                <template v-if="config.blocked">
+                    <template v-for="(field, fieldName) in config.fields" v-if="!field.hidden">
+                        <template v-if="field.component">
+                            <component :is="field.component"
+                                       :id="itemIndex + '|' + fieldName"
+                                       :value="item[fieldName]"
+                                       :required="field.required"
+                                       :label="field.label"
+                                       :hint="field.hint"
+                                       :config="field.config"
+                                       @change="handleUnitChange"
+                                       ref="units"></component>
+                        </template>
+                        <template v-else>
+                            NO COMPONENT FOR TYPE: {{ field.type }}
+                        </template>
                     </template>
-                    <template v-else>
-                        NO COMPONENT FOR TYPE: {{ field.type }}
-                    </template>
-                </div>
-                <div class="kit-item-cell kit-item-cell--btns">
-                    <div class="btn btn--danger" @click="deleteItem(itemIndex)"><icon type="trash"></icon></div>
-                </div>
+                    <div class="kit-item-cell kit-item-cell--btns">
+                        <div class="btn btn--danger" @click="deleteItem(itemIndex)"><icon type="trash"></icon></div>
+                    </div>
+                </template>
+
+                <template v-else>
+                    <div class="kit-item-cell kit-item-cell--number" v-if="config.enumerable">{{ itemIndex+1 }}.</div>
+                    <div class="kit-item-cell" v-for="(field, fieldName) in config.fields" v-if="!field.hidden">
+                        <template v-if="field.component">
+                            <component :is="field.component"
+                                       :id="itemIndex + '|' + fieldName"
+                                       :value="item[fieldName]"
+                                       :required="field.required"
+                                       label=""
+                                       :hint="field.hint"
+                                       :config="field.config"
+                                       @change="handleUnitChange"
+                                       ref="units"></component>
+                        </template>
+                        <template v-else>
+                            NO COMPONENT FOR TYPE: {{ field.type }}
+                        </template>
+                    </div>
+                    <div class="kit-item-cell kit-item-cell--btns">
+                        <div class="btn btn--danger" @click="deleteItem(itemIndex)"><icon type="trash"></icon></div>
+                    </div>
+                </template>
+
             </div>
         </div>
         <div class="kit-add" v-if="!config.max || items.length < config.max">
             <div class="btn btn--link" @click="addItem">+ Add</div>
         </div>
-        <!--<div class="unit-input-container">
-            <div class="prefix" v-if="config.prefix">{{ config.prefix }}</div>
-            <input type="text" v-model="currentValue" class="unit-input" @change="handleInputChange">
-            <div class="suffix" v-if="config.suffix">{{ config.suffix }}</div>
-        </div>-->
-        <!--<div class="unit-hint">{{ error || hint }}</div>-->
     </div>
 </div>

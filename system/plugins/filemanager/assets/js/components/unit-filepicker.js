@@ -38,10 +38,10 @@
             },
 
             clear: function () {
-                var _this = this;
+                var component = this;
                 setTimeout(function() {
-                    _this.currentValue = null;
-                    _this.$emit('change', this.currentValue, this);
+                    component.currentValue = null;
+                    component.$emit('change', component.currentValue, component);
                 }, 100);
 
             }

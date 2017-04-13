@@ -96,8 +96,10 @@
             $slider.slick({
                 arrows: true,
                 dots: true,
+                draggable: false,
                 infinite: true,
-                slidesToShow: 1
+                slidesToShow: 1,
+                focusOnSelect: false
             })
         });
     }

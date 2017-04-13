@@ -1,20 +1,45 @@
 .kit {
-    display: table;
-    min-width: 50%;
-    .unit--text, .unit--select, .unit--date {
-        width: 100% !important;
+    &.kit--blocked {
+        padding-left: 5px;
+        padding-right: 5px;
+        .kit-item {
+            @extend .clearfix;
+            border: 1px solid #c0c0c0;
+            padding: 10px 5px 5px;
+            position: relative;
+            & + .kit-item {
+                margin-top: 10px;
+            }
+        }
+
+        .kit-item-cell--btns {
+            @include abs-pos(null, 5px, 5px);
+            width: 40px;
+        }
+    }
+
+    &:not(.kit--blocked) {
+        display: table;
+        min-width: 50%;
+
+        .kit-head,
+        .kit-item {
+            display: table-row;
+        }
+
+        .kit-item-cell {
+            display: table-cell;
+            vertical-align: top;
+            padding: 5px;
+        }
+
+        .unit--text, .unit--select, .unit--date {
+            width: 100% !important;
+        }
     }
 }
 
-.kit-head,
-.kit-item {
-    display: table-row;
-}
-
 .kit-item-cell {
-    display: table-cell;
-    vertical-align: top;
-    padding: 5px;
     .unit {
         margin-bottom: 0;
         padding-left: 0;
