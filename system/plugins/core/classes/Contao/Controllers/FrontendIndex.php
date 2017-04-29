@@ -342,6 +342,10 @@ class FrontendIndex extends Frontend
             }
         }
 
+        if ($uri === 'index') {
+            $uri = '/';
+        }
+
         $dispatcher = \FastRoute\simpleDispatcher(function(\FastRoute\RouteCollector $r) {
 
             $pageRow = Database::getInstance()->prepare("SELECT id, alias FROM tl_page")->execute();

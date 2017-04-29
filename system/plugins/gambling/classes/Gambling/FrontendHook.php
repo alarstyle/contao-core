@@ -62,11 +62,7 @@ class FrontendHook
         System::setCookie('USER_COUNTRY', $countryAlias, time()+60*60*24*30);
         System::setCookie('USER_LANG', $user_lang, time()+60*60*24*30);
 
-        $pageId = implode('/', array_slice($route, 1)) ?: 'index';
-
-//        if (strpos($pageId, 'article/') === 0) {
-//            $pageId = 'article/{id}';
-//        }
+//        $pageId = implode('/', array_slice($route, 1)) ?: 'index';
 
         return null;
         //return $pageId;
@@ -119,7 +115,7 @@ class FrontendHook
 
         $countryAlias = $countryObj->alias;
 
-        Controller::redirect($countryAlias . '/', 302);
+        Controller::redirect($countryAlias, 302);
     }
 
 }

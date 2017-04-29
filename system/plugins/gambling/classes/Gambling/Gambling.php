@@ -57,7 +57,7 @@ class Gambling
                 'lang' => $country['language'],
                 'title' => $allCountries[$country['country']],
                 'verificationCode' => $country['verificationCode'],
-                'link' => '/' . $country['alias'] . '/'
+                'link' => '/' . $country['alias']
             ];
         }
 
@@ -109,7 +109,7 @@ class Gambling
             $metaDescription = deserialize($pageRow['metaDescription'])[$currentCountryId];
             static::$pagesData[$pageId] = [
                 'id' => $pageId,
-                'url' => $url,
+                'url' => rtrim($url, "/"),
                 'current' => $pageId == $objPage->id,
                 'navigationTitle' => $navigationTitle,
                 'metaTitle' => $metaTitle ?: $navigationTitle,
