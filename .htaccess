@@ -316,22 +316,6 @@ FileETag None
   # Make sure to replace "example.com" with your domain name.
   ##
 
-  ##
-  # If you cannot use mod_deflate, uncomment the following lines to load a
-  # compressed .gz version of the aggregated Contao JavaScript and CSS files.
-  ##
-  #AddEncoding gzip .gz
-  #<FilesMatch "\.js\.gz$">
-  #  AddType "application/javascript" .gz
-  #</FilesMatch>
-  #<FilesMatch "\.css\.gz$">
-  #  AddType "text/css" .gz
-  #</FilesMatch>
-  #RewriteCond %{HTTP:Accept-encoding} gzip
-  #RewriteCond %{REQUEST_FILENAME} \.(js|css)$
-  #RewriteCond %{REQUEST_FILENAME}.gz -f
-  #RewriteRule ^(.*)$ $1.gz [QSA,L]
-
   RewriteCond %{REQUEST_FILENAME} !\.(htm|html|php|js|css|map|htc|png|gif|jpe?g|ico|xml|csv|txt|swf|flv|mp4|webm|ogv|mp3|ogg|oga|eot|otf|tt[cf]|woff2?|svgz?|pdf|zip|gz)$
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
@@ -362,10 +346,10 @@ FileETag None
 #
 #    ##
 #    ## You may need to uncomment the following line for some hosting environments.
-#    ## Or change the RewriteBase if your Raccoon installation is in a subdirectoy.
+#    ## Or change the RewriteBase if your Grow installation is in a subdirectoy.
 #    ## Usage example:
 #    ##
-#    ##   RewriteBase /path/to/raccoon
+#    ##   RewriteBase /path/to/grow
 #    ##
 #    # RewriteBase /
 #

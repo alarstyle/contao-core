@@ -70,6 +70,18 @@ class FrontendHook
 
 
     public function getPageUri($uri) {
+        if (false !== $pos = strpos($uri, '?')) {
+            $request = substr($uri, 0, $pos);
+            $query = substr($uri, $pos);
+        }
+        else {
+            $request = $uri;
+            $query = '';
+        }
+        if (strrpos($request, '/') === strlen($request) - 1) {
+            Controller::redirect(rtrim($request, '/') . $query, 301);
+        }
+
         $uri = explode('/', $uri);
         array_splice($uri, 1, 1);
         $uri = implode('/', $uri) ?: 'index';

@@ -151,27 +151,55 @@
         var $filter = $('.filter');
         if (!$filter.length) return;
 
-        var $open = $filter.find('.filter-open'),
-            $close = $filter.find('.filter-close'),
-            isOpened = false;
+        var $filterItems = $filter.find('.item'),
+            $casinos = $('.casinos'),
+            $casinosItems = $casinos.find('.item');
 
-        $open.on('click', function () {
-            isOpened = true;
-            $filter.addClass('opened');
-            disableScroll();
+        function filter(type) {
+            if (!type) return;
+            console.log(type)
+            $casinosItems.sort(function(item1, item2) {
+                return $(item2).data(type) - $(item1).data(type);
+            }).each(function (index, item) {
+                $(item).parent().append(item);
+            });
+        }
+
+        $filterItems.on('click', function() {
+            var $item = $(this),
+                type = $item.data('type');
+            if ($item.hasClass('active')) return;
+            $filterItems.removeClass('active');
+            $item.addClass('active');
+            filter(type);
         });
 
-        $close.on('click', function () {
-            isOpened = false;
-            $filter.removeClass('opened');
-            enableScroll();
-        });
 
-        $w.on('resize', function () {
-            if ($w.width() >= 768 && isOpened) {
-                $close.click();
-            }
-        });
+        // return;
+        // var $filter = $('.filter');
+        // if (!$filter.length) return;
+        //
+        // var $open = $filter.find('.filter-open'),
+        //     $close = $filter.find('.filter-close'),
+        //     isOpened = false;
+        //
+        // $open.on('click', function () {
+        //     isOpened = true;
+        //     $filter.addClass('opened');
+        //     disableScroll();
+        // });
+        //
+        // $close.on('click', function () {
+        //     isOpened = false;
+        //     $filter.removeClass('opened');
+        //     enableScroll();
+        // });
+        //
+        // $w.on('resize', function () {
+        //     if ($w.width() >= 768 && isOpened) {
+        //         $close.click();
+        //     }
+        // });
     }
 
 

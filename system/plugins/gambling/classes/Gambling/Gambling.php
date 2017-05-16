@@ -299,7 +299,7 @@ class Gambling
     }
 
 
-    public static function getCasinos($categoryId, $limit, $offset, $options = null)
+    public static function getCasinos($categoryId, $limit, $offset, $order = null)
     {
         $currentCountry = static::getCurrentCountry();
 
@@ -312,9 +312,16 @@ class Gambling
             ->where('countries', 'like', '%"' . $currentCountry['id'] . '"%')
             ->where('data.country', $currentCountry['id'])
             ->where('is_casino', 1)
-            ->where('data.published', 1)
-            ->orderBy('casino_sorting', 'desc')
-            ->orderBy('tl_casino.id', 'desc');
+            ->where('data.published', 1);
+        if (!$order) {
+            $query
+                ->orderBy('casino_sorting', 'desc')
+                ->orderBy('tl_casino.id', 'desc');
+        }
+        else {
+            $query->orderBy($order[0], $order[1]);
+        }
+
         if ($categoryId) {
             $query->where('data.casino_categories', 'like', '%"' . $categoryId . '"%');
         }
@@ -333,7 +340,7 @@ class Gambling
     }
 
 
-    public static function getBettings($categoryId, $limit, $offset, $options = null)
+    public static function getBettings($categoryId, $limit, $offset, $order = null)
     {
         $currentCountry = static::getCurrentCountry();
 
@@ -346,9 +353,16 @@ class Gambling
             ->where('countries', 'like', '%"' . $currentCountry['id'] . '"%')
             ->where('data.country', $currentCountry['id'])
             ->where('is_betting', 1)
-            ->where('data.published', 1)
-            ->orderBy('betting_sorting', 'desc')
-            ->orderBy('tl_casino.id', 'desc');
+            ->where('data.published', 1);
+        if (!$order) {
+            $query
+                ->orderBy('betting_sorting', 'desc')
+                ->orderBy('tl_casino.id', 'desc');
+        }
+        else {
+            $query->orderBy($order[0], $order[1]);
+        }
+
         if ($categoryId) {
             $query->where('data.betting_categories', 'like', '%"' . $categoryId . '"%');
         }
@@ -439,12 +453,15 @@ class Gambling
         $casino->url = str_replace('{casinoAlias}', $casino->alias, $previewPage['url']);
 
         if ($casino->cash_sign_up) {
+            $casino->cash_sign_up_number = $casino->cash_sign_up;
             $casino->cash_sign_up = static::addCurrency($casino, $casino->cash_sign_up);
         }
         if ($casino->bet_bonus_deposit) {
+            $casino->bet_bonus_deposit_number = $casino->bet_bonus_deposit;
             $casino->bet_bonus_deposit = static::addCurrency($casino, $casino->bet_bonus_deposit);
         }
         if ($casino->bet_bonus_sign_up) {
+            $casino->bet_bonus_sign_up_number = $casino->bet_bonus_sign_up;
             $casino->bet_bonus_sign_up = static::addCurrency($casino, $casino->bet_bonus_sign_up);
         }
         if ($casino->withdrawal_min) {
@@ -489,6 +506,7 @@ class Gambling
         }
 
         if ($depositCashTotal > 0) {
+            $casino->depositCashBonusTotalNumber = $depositCashTotal;
             $casino->depositCashBonusTotal = static::addCurrency($casino, $depositCashTotal);
         }
 
