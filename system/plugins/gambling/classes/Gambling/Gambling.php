@@ -57,7 +57,8 @@ class Gambling
                 'lang' => $country['language'],
                 'title' => $allCountries[$country['country']],
                 'verificationCode' => $country['verificationCode'],
-                'link' => '/' . $country['alias']
+                'domain' => $country['domain'],
+                'link' => $country['domain'] ? 'http://' . $country['domain'] : '/' . $country['alias']
             ];
         }
 
@@ -103,7 +104,9 @@ class Gambling
             $pageRow = PageModel::findByPk($pageId)->row();
             $currentCountry = static::getCurrentCountry();
             $currentCountryId = $currentCountry['id'];
-            $url = '/' . $currentCountry['alias'] . '/' . Controller::generateFrontendUrl($pageRow);
+            $url = !empty($currentCountry['domain']) ?
+                'http://' . $currentCountry['domain'] . '/' . Controller::generateFrontendUrl($pageRow) :
+                '/' . $currentCountry['alias'] . '/' . Controller::generateFrontendUrl($pageRow);
             $navigationTitle = deserialize($pageRow['navigationTitle'])[$currentCountryId] ?: $pageRow['title'];
             $metaTitle = deserialize($pageRow['metaTitle'])[$currentCountryId];
             $metaDescription = deserialize($pageRow['metaDescription'])[$currentCountryId];

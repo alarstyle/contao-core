@@ -2,6 +2,7 @@
 
 namespace Gambling;
 
+use Contao\Cache;
 use Contao\Controller;
 use Contao\Environment;
 use Contao\Input;
@@ -41,6 +42,10 @@ class FrontendHook
 
     public function beforeGetPageIdFromUrl()
     {
+        if ($this->isCountryDomain()) {
+            return null;
+        }
+
         $route = Route::get();
 
         if (empty($route) || empty($route[0])) {
@@ -55,6 +60,9 @@ class FrontendHook
             header('HTTP/1.1 404 Not Found');
             System::log('No active page, host "' . Environment::get('host') . '" (' . Environment::get('base') . Environment::get('request') . ')', __METHOD__, TL_ERROR);
             die('No page found');
+        }
+        elseif ($countryObj->domain) {
+            Controller::redirect('http://' . $countryObj->domain, 301);
         }
 
         $user_lang = $countryObj->language;
@@ -78,25 +86,51 @@ class FrontendHook
             $request = $uri;
             $query = '';
         }
-        if (strrpos($request, '/') === strlen($request) - 1) {
-            Controller::redirect(rtrim($request, '/') . $query, 301);
+
+        if ($this->isCountryDomain()) {
+            if (strrpos($request, '/') === strlen($request) - 1 && $request !== '/') {
+                Controller::redirect(rtrim($request, '/') . $query, 301);
+            }
+            $uri = $uri === '/' ? 'index' : $uri;
+        }
+        else {
+            if (strrpos($request, '/') === strlen($request) - 1) {
+                Controller::redirect(rtrim($request, '/') . $query, 301);
+            }
+
+            $uri = explode('/', $uri);
+            array_splice($uri, 1, 1);
+            $uri = implode('/', $uri) ?: 'index';
         }
 
-        $uri = explode('/', $uri);
-        array_splice($uri, 1, 1);
-        $uri = implode('/', $uri) ?: 'index';
         return $uri;
     }
 
 
-    public function getPageById($pageId)
-    {
+    public function getPageById($pageId) {
         return null;
     }
 
 
-    protected function redirectToCountry()
-    {
+    protected function isCountryDomain() {
+        if ($_SERVER['HTTP_HOST'] === 'gamblingadvisor.com') return false;
+
+        $countries = Gambling::getCountries();
+
+        foreach ($countries as $country) {
+            if ($_SERVER['HTTP_HOST'] === $country['domain']) {
+                System::setCookie('USER_COUNTRY', $country['alias'], time()+60*60*24*30);
+                System::setCookie('USER_LANG', $country['lang'], time()+60*60*24*30);
+                Cache::set('currentCountry', $country);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    protected function redirectToCountry() {
         $countryAlias = Input::cookie('USER_COUNTRY');
         $countryObj = null;
 
@@ -125,9 +159,10 @@ class FrontendHook
             die('No fallback country');
         }
 
+        $countryDomain = $countryObj->domain;
         $countryAlias = $countryObj->alias;
 
-        Controller::redirect($countryAlias, 302);
+        Controller::redirect($countryDomain ? 'http://' . $countryDomain : $countryAlias, 302);
     }
 
 }

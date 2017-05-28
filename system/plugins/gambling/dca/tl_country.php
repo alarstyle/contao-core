@@ -27,7 +27,7 @@ $GLOBALS['TL_DCA']['tl_country'] = array
 
 	// Palettes
 	'palettes' => [
-		'default'                     => 'country, language, alias, verificationCode, fallback'
+		'default'                     => 'country, language, alias, domain, verificationCode, fallback'
 	],
 
 	// Fields
@@ -67,6 +67,15 @@ $GLOBALS['TL_DCA']['tl_country'] = array
                 'prefix' => \Contao\Environment::get('base')
             ],
             'eval'                    => array('mandatory'=>true, 'unique'=>true, 'rgxp'=>'alias', 'tl_class'=>'unit--long'),
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ],
+        'domain' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_country']['domain'],
+            'inputType'               => 'text',
+            'config'                  => [
+                'prefix' => 'http://'
+            ],
+            'eval'                    => array('unique'=>true, 'tl_class'=>'unit--long'),
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
         'fallback' => array
