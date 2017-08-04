@@ -94,6 +94,8 @@
         $('.slider').each(function () {
             var $slider = $(this);
             $slider.slick({
+                autoplay: true,
+                autoplaySpeed: 5000,
                 arrows: true,
                 dots: true,
                 draggable: false,
@@ -157,7 +159,6 @@
 
         function filter(type) {
             if (!type) return;
-            console.log(type)
             $casinosItems.sort(function(item1, item2) {
                 return $(item2).data(type) - $(item1).data(type);
             }).each(function (index, item) {
@@ -171,6 +172,12 @@
             if ($item.hasClass('active')) return;
             $filterItems.removeClass('active');
             $item.addClass('active');
+            if (type === 'new') {
+                $casinosItems.not('[data-new=1]').addClass('hidden');
+                type = $filterItems.eq(0).data('type');
+            } else {
+                $casinosItems.removeClass('hidden');
+            }
             filter(type);
         });
 
@@ -220,7 +227,9 @@
         $('.casino').each(function () {
             var $casino = $(this),
                 $tabs = $casino.find('.casino-tabs div'),
-                $contentItems = $casino.find('.casino-review, .casino-overview');
+                $contentItems = $casino.find('.casino-review, .casino-overview'),
+                $rateDescription = $casino.find('.rate_description'),
+                $rateDescriptionDetails = $casino.find('.rate_description-details');
             $tabs.each(function (i) {
                 $(this).on('click', function () {
                     if ($(this).hasClass('active')) return;
@@ -228,6 +237,27 @@
                     $(this).addClass('active');
                     $contentItems.removeClass('active').eq(i).addClass('active');
                 });
+            });
+
+            function showDetails() {
+                $rateDescriptionDetails.addClass('opened')
+                $(document)
+                    .off('click touchstart', hideDetails)
+                    .on('click touchstart', hideDetails);
+            }
+
+            function hideDetails(event) {
+                if (event && $rateDescription.children('span')[0] == event.target) return;
+                $(document).off('click touchstart', hideDetails);
+                $rateDescriptionDetails.removeClass('opened')
+            }
+
+            $rateDescription.children('span').on('click touchstart mouseover', function() {
+                showDetails();
+            });
+
+            $rateDescription.children('span').on('mouseout', function() {
+                hideDetails();
             });
         });
     }
@@ -319,6 +349,18 @@
         initCountdown();
         initBackBtns();
         initSubscription();
+
+        // Adblock fix
+        // $('.casino-bonuses .btn').each(function() {
+        //   var $a = $(this),
+        //       url = $a.attr('href'),
+        //       target = $a.attr('target') || '_self';
+        //   $a.attr('href', '#')
+        //   $a.click(function() {
+        //     var win = window.open(url, target);
+        //     win.focus();
+        //   });
+        // });
 
         $('a[href="#"]').click(function(e) {
             e.preventDefault();

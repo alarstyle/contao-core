@@ -201,9 +201,16 @@ class BackendHelpers
         foreach ($variableData as $item) {
             $options[] = [
                 'value' => $item['id'],
-                'label' => $item['label']
+                'label' => trim($item['label'])
             ];
         }
+
+        usort($options, function ($a, $b) {
+            if ($a['label'] === $b['label']) {
+                return 0;
+            }
+            return (strtolower($a['label']) < strtolower($b['label'])) ? -1 : 1;
+        });
 
         return $options;
     }

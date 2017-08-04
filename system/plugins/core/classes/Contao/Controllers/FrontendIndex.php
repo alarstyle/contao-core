@@ -346,8 +346,22 @@ class FrontendIndex extends Frontend
             $uri = '/';
         }
 
-        $dispatcher = \FastRoute\simpleDispatcher(function(\FastRoute\RouteCollector $r) {
+        $router = new \Grow\Routing\Router();
 
+        if ($GLOBALS['routes']) {
+            foreach ($GLOBALS['routes'] as $routeConfig) {
+                $router->map($routeConfig['methods'], $routeConfig['pattern'], $routeConfig['handler']);
+            }
+
+            $route = $router->dispatch($httpMethod, $uri);
+
+            if ($route[0] === 1 && $route[1] && is_callable($route[1])) {
+                call_user_func($route[1], $route[2]);
+                exit;
+            }
+        }
+
+        $dispatcher = \FastRoute\simpleDispatcher(function(\FastRoute\RouteCollector $r) {
             $pageRow = Database::getInstance()->prepare("SELECT id, alias FROM tl_page")->execute();
 
             if ($pageRow->numRows < 1) {

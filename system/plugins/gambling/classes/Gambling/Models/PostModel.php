@@ -29,7 +29,7 @@ class PostModel extends Model
             'column' => array_merge(["$t.category = 5", "$t.country = $countryId", "$t.published = 1"]),
             'limit' => $limit,
             'offset' => $offset,
-            'order' => 'date',
+            'order' => 'date DESC',
             'return' => 'Contao\\Model\\Collection'
         ];
 
@@ -49,7 +49,7 @@ class PostModel extends Model
             'column' => ["$t.category = 6", "$t.country = $countryId", "$t.published = 1"],
             'limit' => $limit,
             'offset' => $offset,
-            'order' => 'date',
+            'order' => 'date DESC',
             'return' => 'Contao\\Model\\Collection'
         ];
 

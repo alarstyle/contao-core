@@ -47,7 +47,7 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '[general],countries,name,alias,website,owner,year,licence,phone,email,type,languages,[images],img_logo,img_cover,logo_bg'
+		'default'                     => '[general],countries,name,alias,website,owner,year,phone,email,type,languages,[images],img_logo,img_cover,logo_bg'
 	),
 
 	// Fields
@@ -101,12 +101,6 @@ $GLOBALS['TL_DCA']['tl_casino'] = array
 		'year' => [
 			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['year'],
 			'inputType'               => 'text',
-			'sql'                     => "varchar(255) NOT NULL default ''"
-		],
-		'licence' => [
-			'label'                   => &$GLOBALS['TL_LANG']['tl_casino']['licence'],
-			'inputType'               => 'text',
-            'eval'                    => array('tl_class'=>'unit--long'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		],
         'type' => [

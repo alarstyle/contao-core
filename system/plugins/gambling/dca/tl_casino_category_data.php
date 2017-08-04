@@ -16,12 +16,6 @@ $GLOBALS['TL_DCA']['tl_casino_category_data'] = array
 		]
 	],
 
-	// Palettes
-	'palettes' => array
-	(
-		'default' => 'name,alias,metaTitle,metaDescription,topTitle,topText,bottomTitle,bottomText'
-	),
-
 	// Fields
 	'fields' => array
 	(

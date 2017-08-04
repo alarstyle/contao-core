@@ -23,18 +23,31 @@ class Bettings extends Casinos
 
     protected function listWhereCallback()
     {
+        $database = \Grow\Database::getDatabase();
+        $expression = $database->sqlExpression('SELECT * from tl_casino_data WHERE country = ' . $this->currentCountryId);
         $this->listOrganizer->listQuery
             ->fields(['*'])
             ->fields('tl_casino.id', 'id')
-            ->join('tl_casino_data', 'data', 'left')
+            ->join($expression, 'data', 'left')
             ->on('tl_casino.id', 'data.pid')
-            ->where('data.country', $this->currentCountryId)
+            ->where('is_betting', 1)
             ->startGroup()
-                ->where('countries', 'like', '%"' . $this->currentCountryId . '"%')
-                ->orWhere('countries', 'a:0:{}')
-                ->orWhere('countries', '')
-            ->endGroup()
-            ->where('is_betting', 1);
+            ->where('countries', 'like', '%"' . $this->currentCountryId . '"%')
+            ->orWhere('countries', 'a:0:{}')
+            ->orWhere('countries', '')
+            ->endGroup();
+//        $this->listOrganizer->listQuery
+//            ->fields(['*'])
+//            ->fields('tl_casino.id', 'id')
+//            ->join('tl_casino_data', 'data', 'left')
+//            ->on('tl_casino.id', 'data.pid')
+//            ->where('data.country', $this->currentCountryId)
+//            ->startGroup()
+//                ->where('countries', 'like', '%"' . $this->currentCountryId . '"%')
+//                ->orWhere('countries', 'a:0:{}')
+//                ->orWhere('countries', '')
+//            ->endGroup()
+//            ->where('is_betting', 1);
 
         $groupId = intval(Input::post('groupId'));
         if (!empty($groupId)) {

@@ -1,6 +1,8 @@
 User-agent: *
 Disallow: /check/
 Disallow: /contao/
+Disallow: /go1/
+Disallow: /go2/
 Disallow: /system/
 Disallow: /templates/
 Disallow: /vendor/

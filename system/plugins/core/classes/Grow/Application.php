@@ -8,29 +8,14 @@ use Contao\Environment;
 use Contao\Input;
 use Contao\System;
 
-class Application
+class Application extends Singleton
 {
-
-    protected static $instance;
-
 
     protected $arrRouteStack;
 
-
-    public function __construct()
+    protected  function __construct()
     {
 
-    }
-
-
-    public static function getInstance()
-    {
-        if (static::$instance === null)
-        {
-            static::$instance = new Application();
-        }
-
-        return static::$instance;
     }
 
 

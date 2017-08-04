@@ -114,7 +114,7 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 2, 'bettings', [
             'labelNew' => 'Add New Betting',
             'labelEdit' => 'Edit Betting',
             'creatable' => true,
-            'order' => [['tl_casino.id', 'desc']],
+            'order' => [['betting_sorting', 'desc'], ['tl_casino.id', 'desc']],
             'headersCallback' => function($headers) {
                 foreach($headers as &$header) {
                     switch($header['name']) {
@@ -249,10 +249,10 @@ array_insert_assoc($GLOBALS['NAVIGATION'], 6, 'translations', [
     'controller' => 'Gambling\\Controllers\\Translations'
 ]);
 
-array_insert_assoc($GLOBALS['NAVIGATION'], 6, 'subscribers', [
-    'label' => 'Subscribers',
-    'controller' => Gambling\Controllers\Subscribers::class
-]);
+//array_insert_assoc($GLOBALS['NAVIGATION'], 6, 'subscribers', [
+//    'label' => 'Subscribers',
+//    'controller' => Gambling\Controllers\Subscribers::class
+//]);
 
 $GLOBALS['UNITS']['rating'] = 'Gambling\\Units\\Rating';
 $GLOBALS['UNITS']['multilingualText'] = 'Gambling\\Units\\MultilingualText';

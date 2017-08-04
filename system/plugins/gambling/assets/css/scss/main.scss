@@ -42,11 +42,24 @@ html {
             height: 50px;
         }
     }
-    .unit--radio.id_type {
+    .unit--radio.id_type,
+    .unit--radio.id_wagering_casino_type,
+    .unit--radio.id_wagering_betting_type,
+    .unit--radio.id_livechat {
         li {
             display: inline-block;
             vertical-align: middle;
             margin-right: 50px;
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+    .unit--radio.id_wagering_casino_type,
+    .unit--radio.id_wagering_betting_type,
+    .unit--radio.id_livechat {
+        .unit-label {
+            margin-bottom: 10px;
         }
     }
 }

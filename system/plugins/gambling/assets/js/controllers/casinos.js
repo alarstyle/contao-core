@@ -2,6 +2,41 @@
 
     var fieldsNamesToProcess = ['name', 'alias', 'metaTitle', 'metaDescription', 'topTitle', 'topText', 'bottomTitle', 'bottomText'];
 
+    function hideFields(casinoType, data) {
+      switch(casinoType) {
+        case 'casino':
+          data.main.betting_categories.hidden = true;
+          data.main.betting_link.hidden = true;
+          data.main.betting_same_window.hidden = true;
+          data.main.betting_rating.hidden = true;
+          data.main.betting_bonuses.hidden = true;
+          data.main.bet_bonus_sign_up.hidden = true;
+          data.main.bet_bonus_deposit_percent.hidden = true;
+          data.main.bet_bonus_deposit.hidden = true;
+          data.main.betting_code.hidden = true;
+          data.main.wagering_betting_odds.hidden = true;
+          data.main.wagering_betting_bonus.hidden = true;
+          data.main.wagering_betting_type.hidden = true;
+          break;
+        case 'betting':
+          data.main.casino_categories.hidden = true;
+          data.main.casino_link.hidden = true;
+          data.main.casino_same_window.hidden = true;
+          data.main.casino_rating.hidden = true;
+          data.main.casino_signup_bonuses.hidden = true;
+          data.main.cash_sign_up.hidden = true;
+          data.main.spins_sign_up.hidden = true;
+          data.main.deposit_bonuses.hidden = true;
+          data.main.casino_code.hidden = true;
+          data.main.wagering_casino_spins.hidden = true;
+          data.main.wagering_casino_deposit.hidden = true;
+          data.main.wagering_casino_type.hidden = true;
+          break;
+      }
+
+      return data;
+    }
+
     var Casinos = {
 
         extends: Listing,
@@ -237,32 +272,11 @@
                         console.log('---------------');
                         console.log(casinoData);
 
-                        switch(_this.currentCasinoType) {
-                            case 'casino':
-                                casinoData[countryId].main.betting_categories.hidden = true;
-                                casinoData[countryId].main.betting_link.hidden = true;
-                                casinoData[countryId].main.betting_same_window.hidden = true;
-                                casinoData[countryId].main.betting_bonuses.hidden = true;
-                                casinoData[countryId].main.bet_bonus_sign_up.hidden = true;
-                                casinoData[countryId].main.bet_bonus_deposit_percent.hidden = true;
-                                casinoData[countryId].main.bet_bonus_deposit.hidden = true;
-                                casinoData[countryId].main.betting_code.hidden = true;
-                                casinoData[countryId].main.wagering_betting.hidden = true;
-                                break;
-                            case 'betting':
-                                casinoData[countryId].main.casino_categories.hidden = true;
-                                casinoData[countryId].main.casino_link.hidden = true;
-                                casinoData[countryId].main.casino_same_window.hidden = true;
-                                casinoData[countryId].main.casino_signup_bonuses.hidden = true;
-                                casinoData[countryId].main.cash_sign_up.hidden = true;
-                                casinoData[countryId].main.spins_sign_up.hidden = true;
-                                casinoData[countryId].main.deposit_bonuses.hidden = true;
-                                casinoData[countryId].main.casino_code.hidden = true;
-                                casinoData[countryId].main.wagering_casino.hidden = true;
-                                break;
-                        }
+                        Object.keys(casinoData).map(function(id) {
+                          casinoData[id] = hideFields(_this.currentCasinoType, casinoData[id])
+                        });
 
-
+                        console.log(casinoData.forEach)
 
                         _this.casinoData = casinoData;
 
@@ -311,7 +325,7 @@
                     .then(function (response) {
                         _this.locked = false;
                         if (response.data.success) {
-                            _this.casinoData[countryId] = response.data.data.casinoData;
+                            _this.casinoData[countryId] = hideFields(_this.currentCasinoType, response.data.data.casinoData);
                             //_this.casinoData[_this.casinoDataCountryId] = response.data.data.casinoData;
                             grow.notify('Saved successfully', {type: 'success'});
                             _this.unsaved = false;

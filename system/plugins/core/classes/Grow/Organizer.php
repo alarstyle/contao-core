@@ -273,6 +273,7 @@ class Organizer
                 $where = [$where];
             }
             foreach ($where as $whereItem) {
+                if (!$whereItem) continue;
                 $temp = explode(' ', $whereItem);
                 $this->listQuery->where($temp[0], $temp[1], $temp[2]);
             }

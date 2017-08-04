@@ -22,6 +22,10 @@
 
             onInputChange: function(e) {
                 if (e.target.checked) {
+                    // temp fix
+                    if (typeof this.currentValue === 'string') {
+                      this.currentValue = [];
+                    }
                     if (!this.currentValue) {
                         this.currentValue = [e.target.value + ''];
                     }

@@ -237,18 +237,31 @@ class Casinos extends ListingWithGroups
 
     protected function listWhereCallback()
     {
+        $database = \Grow\Database::getDatabase();
+        $expression = $database->sqlExpression('SELECT * from tl_casino_data WHERE country = ' . $this->currentCountryId);
         $this->listOrganizer->listQuery
             ->fields(['*'])
             ->fields('tl_casino.id', 'id')
-            ->join('tl_casino_data', 'data', 'left')
+            ->join($expression, 'data', 'left')
             ->on('tl_casino.id', 'data.pid')
-            ->where('data.country', $this->currentCountryId)
+            ->where('is_casino', 1)
             ->startGroup()
                 ->where('countries', 'like', '%"' . $this->currentCountryId . '"%')
                 ->orWhere('countries', 'a:0:{}')
                 ->orWhere('countries', '')
-            ->endGroup()
-            ->where('is_casino', 1);
+            ->endGroup();
+//        $this->listOrganizer->listQuery
+//            ->fields(['*'])
+//            ->fields('tl_casino.id', 'id')
+//            ->join('tl_casino_data', 'data', 'left')
+//            ->on('tl_casino.id', 'data.pid')
+//            ->where('data.country', $this->currentCountryId)
+//            ->startGroup()
+//                ->where('countries', 'like', '%"' . $this->currentCountryId . '"%')
+//                ->orWhere('countries', 'a:0:{}')
+//                ->orWhere('countries', '')
+//            ->endGroup()
+//            ->where('is_casino', 1);
 
         $groupId = intval(Input::post('groupId'));
         if (!empty($groupId)) {
@@ -418,8 +431,8 @@ class Casinos extends ListingWithGroups
     protected function loadCasinoData($id, $countryId)
     {
         $data = $this->casinoDataOrganizer->load($id);
-        $data['main']['wagering_casino']['config']['options'] = \Gambling\BackendHelpers::getCasinoOptions('wagering requirement', $countryId);
-        $data['main']['wagering_betting']['config']['options'] = \Gambling\BackendHelpers::getCasinoOptions('wagering requirement', $countryId);
+//        $data['main']['wagering_casino']['config']['options'] = \Gambling\BackendHelpers::getCasinoOptions('wagering requirement', $countryId);
+//        $data['main']['wagering_betting']['config']['options'] = \Gambling\BackendHelpers::getCasinoOptions('wagering requirement', $countryId);
         $data['main']['withdrawal_methods']['config']['options'] = \Gambling\BackendHelpers::getCasinoOptions('withdrawal methods', $countryId);
         $data['main']['deposit_methods']['config']['options'] = \Gambling\BackendHelpers::getCasinoOptions('deposit methods', $countryId);
         $data['main']['providers']['config']['options'] = \Gambling\BackendHelpers::getCasinoOptions('game providers', $countryId);

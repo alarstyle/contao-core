@@ -15,12 +15,17 @@ use Grow\Route;
 
 class Gambling
 {
+    const NEW_CASINO_CATEGORY_ID = 4;
+    const NEW_BETTING_CATEGORY_ID = 9;
 
     protected static $pagesData = [];
 
 
     protected static $casinoCategories = null;
     protected static $bettingCategories = null;
+
+    protected static $newCasinoCategory = null;
+    protected static $newBettingCategory = null;
 
     protected static $translations = null;
 
@@ -104,9 +109,11 @@ class Gambling
             $pageRow = PageModel::findByPk($pageId)->row();
             $currentCountry = static::getCurrentCountry();
             $currentCountryId = $currentCountry['id'];
-            $url = !empty($currentCountry['domain']) ?
-                'http://' . $currentCountry['domain'] . '/' . Controller::generateFrontendUrl($pageRow) :
-                '/' . $currentCountry['alias'] . '/' . Controller::generateFrontendUrl($pageRow);
+            $url =
+                (!empty($currentCountry['domain']) ?
+                    'http://' . $currentCountry['domain'] :
+                    '/' . $currentCountry['alias'])
+                . '/' . Controller::generateFrontendUrl($pageRow);
             $navigationTitle = deserialize($pageRow['navigationTitle'])[$currentCountryId] ?: $pageRow['title'];
             $metaTitle = deserialize($pageRow['metaTitle'])[$currentCountryId];
             $metaDescription = deserialize($pageRow['metaDescription'])[$currentCountryId];
@@ -212,6 +219,10 @@ class Gambling
             $category->bottomText = deserialize($category->bottomText)[$countryId] ?: null;
             $category->url = str_replace('{categoryAlias}', $category->alias, $casinosCategoryPage['url']);
             $category->current = $casinosCategoryPage['current'] && $category->alias === end(\Grow\Route::get());
+
+            if ($category->id == static::NEW_CASINO_CATEGORY_ID) {
+                static::$newCasinoCategory = $category;
+            }
         }
 
         static::$casinoCategories = $categories;
@@ -260,6 +271,10 @@ class Gambling
             $category->bottomText = deserialize($category->bottomText)[$countryId] ?: null;
             $category->url = str_replace('{categoryAlias}', $category->alias, $bettingCategoryPage['url']);
             $category->current = $bettingCategoryPage['current'] && $category->alias === end(\Grow\Route::get());
+
+            if ($category->id == static::NEW_BETTING_CATEGORY_ID) {
+                static::$newBettingCategory = $category;
+            }
         }
 
         static::$bettingCategories = $categories;
@@ -315,7 +330,8 @@ class Gambling
             ->where('countries', 'like', '%"' . $currentCountry['id'] . '"%')
             ->where('data.country', $currentCountry['id'])
             ->where('is_casino', 1)
-            ->where('data.published', 1);
+            ->where('data.published', 1)
+            ->limit($limit);
         if (!$order) {
             $query
                 ->orderBy('casino_sorting', 'desc')
@@ -356,7 +372,8 @@ class Gambling
             ->where('countries', 'like', '%"' . $currentCountry['id'] . '"%')
             ->where('data.country', $currentCountry['id'])
             ->where('is_betting', 1)
-            ->where('data.published', 1);
+            ->where('data.published', 1)
+            ->limit($limit);
         if (!$order) {
             $query
                 ->orderBy('betting_sorting', 'desc')
@@ -416,19 +433,11 @@ class Gambling
         $casino->pros = $prosArr;
         $casino->cons = $consArr;
 
-        if (!$casino->is_casino) {
-            $casino->casino_link = null;
-        }
-
-        if (!$casino->is_betting) {
-            $casino->betting_link = null;
-        }
-
         return $casino;
     }
 
 
-    public static function getTranslation($variableName)
+    public static function getTranslation($variableName, $html = false)
     {
         $currentCountry = static::getCurrentCountry();
         $countryId = $currentCountry['id'];
@@ -447,12 +456,15 @@ class Gambling
             }
         }
 
-        return htmlentities(static::$translations[$variableName] ?: $variableName, ENT_NOQUOTES, 'UTF-8');
+        $str = static::$translations[$variableName] ?: $variableName;
+
+        return $html ? $str : htmlentities($str, ENT_NOQUOTES, 'UTF-8');
     }
 
 
     protected static function prepareCasino($casino, $previewPage)
     {
+        $currentCountry = static::getCurrentCountry();
         $casino->url = str_replace('{casinoAlias}', $casino->alias, $previewPage['url']);
 
         if ($casino->cash_sign_up) {
@@ -473,6 +485,12 @@ class Gambling
         if ($casino->withdrawal_max) {
             $casino->withdrawal_max = static::addCurrency($casino, $casino->withdrawal_max);
         }
+        if ($casino->deposit_min) {
+            $casino->deposit_min = static::addCurrency($casino, $casino->deposit_min);
+        }
+        if ($casino->deposit_max) {
+            $casino->deposit_max = static::addCurrency($casino, $casino->deposit_max);
+        }
 
         if ($casino->is_casino && $casino->casino_link) {
             $casino->affiliate_link = $casino->casino_link;
@@ -486,8 +504,8 @@ class Gambling
         $casino->languages = deserialize($casino->languages) ?: [];
         $casino->deposit_bonuses = deserialize($casino->deposit_bonuses) ?: [];
 
-        $casino->wagering_casino = static::getCasinoOptions('wagering requirement', $casino->wagering_casino);
-        $casino->wagering_betting = static::getCasinoOptions('wagering requirement', $casino->wagering_betting);
+//        $casino->wagering_casino = static::getCasinoOptions('wagering requirement', $casino->wagering_casino);
+//        $casino->wagering_betting = static::getCasinoOptions('wagering requirement', $casino->wagering_betting);
         $casino->withdrawal_methods = static::getCasinoOptions('withdrawal methods', $casino->withdrawal_methods);
         $casino->deposit_methods = static::getCasinoOptions('deposit methods', $casino->deposit_methods);
         $casino->providers = static::getCasinoOptions('game providers', $casino->providers);
@@ -515,6 +533,44 @@ class Gambling
 
         $casino->hasCasinoBonus = $casino->is_casino && ($casino->depositSpinsBonusTotal || $casino->depositCashBonusTotal || $casino->spins_sign_up || $casino->cash_sign_up);
         $casino->hasBettingBonus = $casino->is_betting && ($casino->bet_bonus_deposit || $casino->bet_bonus_sign_up);
+
+        if (!$casino->is_casino) {
+            $casino->casino_link = null;
+        }
+
+        if (!$casino->is_betting) {
+            $casino->betting_link = null;
+        }
+
+        if ($casino->casino_link) {
+            $casino->casinoLocalLink =
+                (!empty($currentCountry['domain']) ?
+                    'http://' . $currentCountry['domain'] :
+                    '/' . $currentCountry['alias'])
+                . '/go1/' . $casino->alias;
+        }
+
+        if ($casino->betting_link) {
+            $casino->bettingLocalLink =
+                (!empty($currentCountry['domain']) ?
+                    'http://' . $currentCountry['domain'] :
+                    '/' . $currentCountry['alias'])
+                . '/go2/' . $casino->alias;
+        }
+
+        if ($casino->casino_categories) {
+            $casino->casino_categories = deserialize($casino->casino_categories);
+            if (is_array($casino->casino_categories) && in_array(static::NEW_CASINO_CATEGORY_ID, $casino->casino_categories)) {
+                $casino->newCasino = true;
+            }
+        }
+
+        if ($casino->betting_categories) {
+            $casino->betting_categories = deserialize($casino->betting_categories);
+            if (is_array($casino->betting_categories) && in_array(static::NEW_BETTING_CATEGORY_ID, $casino->betting_categories)) {
+                $casino->newBetting = true;
+            }
+        }
 
         return $casino;
     }
@@ -554,8 +610,15 @@ class Gambling
 
         foreach ($variableData as $item) {
             if (!in_array($item['id'], $valuesId)) continue;
-            $options[] = $item['label'];
+            $options[] = trim($item['label']);
         }
+
+        usort($options, function ($a, $b) {
+            if ($a === $b) {
+                return 0;
+            }
+            return (strtolower($a) < strtolower($b)) ? -1 : 1;
+        });
 
         return $options;
     }

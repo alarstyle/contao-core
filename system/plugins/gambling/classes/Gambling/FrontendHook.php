@@ -62,7 +62,8 @@ class FrontendHook
             die('No page found');
         }
         elseif ($countryObj->domain) {
-            Controller::redirect('http://' . $countryObj->domain, 301);
+            $uri = $this->getPageUri($_SERVER['REQUEST_URI']);
+            Controller::redirect('http://' . $countryObj->domain . $uri, 301);
         }
 
         $user_lang = $countryObj->language;
@@ -101,6 +102,10 @@ class FrontendHook
             $uri = explode('/', $uri);
             array_splice($uri, 1, 1);
             $uri = implode('/', $uri) ?: 'index';
+        }
+
+        if ($uri === 'index') {
+            $uri = '/';
         }
 
         return $uri;
