@@ -103,6 +103,8 @@
     .filter {
         display: block;
         font-size: 0;
+        overflow: hidden;
+        white-space: nowrap;
 
         .item {
             border-right: 1px solid #eaeaeb;

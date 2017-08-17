@@ -24,7 +24,7 @@ class Bettings extends Casinos
     protected function listWhereCallback()
     {
         $database = \Grow\Database::getDatabase();
-        $expression = $database->sqlExpression('SELECT * from tl_casino_data WHERE country = ' . $this->currentCountryId);
+        $expression = $database->sqlExpression('SELECT * from tl_casino_data WHERE country = ?', [$this->currentCountryId]);
         $this->listOrganizer->listQuery
             ->fields(['*'])
             ->fields('tl_casino.id', 'id')

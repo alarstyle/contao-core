@@ -351,16 +351,16 @@
         initSubscription();
 
         // Adblock fix
-        // $('.casino-bonuses .btn').each(function() {
-        //   var $a = $(this),
-        //       url = $a.attr('href'),
-        //       target = $a.attr('target') || '_self';
-        //   $a.attr('href', '#')
-        //   $a.click(function() {
-        //     var win = window.open(url, target);
-        //     win.focus();
-        //   });
-        // });
+        $('.slider .item-links a').each(function() {
+          var $a = $(this),
+              url = $a.attr('href'),
+              target = $a.attr('target') || '_self';
+          $a.attr('href', '#')
+          $a.click(function() {
+            var win = window.open(url, target);
+            win.focus();
+          });
+        });
 
         $('a[href="#"]').click(function(e) {
             e.preventDefault();

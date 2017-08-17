@@ -2371,7 +2371,9 @@ ul.dropdown-menu {
 @media (min-width: 768px) {
   .filter {
     display: block;
-    font-size: 0; }
+    font-size: 0;
+    overflow: hidden;
+    white-space: nowrap; }
     .filter .item {
       border-right: 1px solid #eaeaeb;
       cursor: pointer;
