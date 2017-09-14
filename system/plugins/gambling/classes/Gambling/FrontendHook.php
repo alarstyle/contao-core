@@ -37,6 +37,7 @@ class FrontendHook
 
         $objPage->title = $metaTitle;
         $objPage->description = $metaDescription ?: '';
+        $objPage->ogImage = ScreenImage::generateImageSrc();
     }
 
 
