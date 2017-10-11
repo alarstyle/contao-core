@@ -76,6 +76,7 @@ class Translations extends \Contao\Controllers\BackendMain
         'most free spins',
         'most popular',
         'name',
+        'new players only',
         'newest casinos',
         'newest betting',
         'news',

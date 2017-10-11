@@ -31,58 +31,6 @@
   margin-bottom: 8px;
 }
 
-.casino-bonuses {
-  margin-top: 12px;
-
-  > div {
-    display: block;
-    + div {
-      margin-top: 30px;
-    }
-  }
-  span {
-    color: #39c983;
-    display: inline-block;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: left;
-    text-transform: uppercase;
-    padding-right: 15px;
-    + span {
-      padding-left: 35px;
-      &:before {
-        content: '+';
-        color: #31383c;
-        font: 51px/30px 'Montserrat', sans-serif;
-        opacity: .3;
-        position: absolute;
-        margin: 5px 0 0 -37px;
-      }
-    }
-  }
-  b {
-    font-size: 28px;
-    text-shadow: 1px 0 0 #39c983;
-  }
-  small {
-    color: #717a7d;
-    display: block;
-    font-size: 14px;
-    font-weight: normal;
-    text-transform: none;
-    margin: -5px -15px 0 0;
-  }
-  .btn {
-    min-width: 180px;
-    margin-top: 10px;
-  }
-}
-
-.casino-bonuses-title {
-  font: bold 16px/1.3 'Montserrat', sans-serif;
-  text-transform: uppercase;
-}
-
 .casino-content {
   .content_block {
     @extend .clearfix;
@@ -96,104 +44,6 @@
 .casino-review {
   background: #fff;
   padding: 15px 15px 20px;
-}
-
-.casino-overview {
-  background: #fff;
-  padding: 0 15px 20px 13px;
-  position: relative;
-  font-size: 14px;
-
-  .items {
-    margin: 0 auto;
-    padding: 58px 0 0 0;
-    position: relative;
-    &:before {
-      @include abs-pos(0, 0);
-      background: #ebeced;
-      content: '';
-      height: 58px;
-      width: 3px;
-    }
-  }
-
-  .item {
-    padding: 0 0 15px 19px;
-    position: relative;
-    &:before {
-      @include abs-pos(-4px, 5px);
-      background: #ebeced;
-      border-radius: 50%;
-      content: '';
-      width: 12px;
-      height: 12px;
-    }
-    &:after {
-      @include abs-pos(0, 22px, null, 0);
-      background: #ebeced;
-      content: '';
-      width: 3px;
-    }
-    &.item--casino_bonus:before {
-      background: #3387dc;
-    }
-    &.item--betting_bonus:before {
-      background: #39c983;
-    }
-    &:last-child:after {
-      background: -moz-linear-gradient(top, rgba(235, 236, 237, 1) 0%, rgba(235, 236, 237, 1) 40%, rgba(235, 236, 237, 0) 100%); /* FF3.6-15 */
-      background: -webkit-linear-gradient(top, rgba(235, 236, 237, 1) 0%, rgba(235, 236, 237, 1) 40%, rgba(235, 236, 237, 0) 100%); /* Chrome10-25,Safari5.1-6 */
-      background: linear-gradient(to bottom, rgba(235, 236, 237, 1) 0%, rgba(235, 236, 237, 1) 40%, rgba(235, 236, 237, 0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    }
-
-    a {
-      color: #3387dc;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-  .item-title {
-    font: bold 18px/24px 'Montserrat', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 15px;
-  }
-  .item-content {
-    color: #5f686d;
-    line-height: 1.6;
-  }
-  ul {
-    display: table;
-    list-style: none;
-    margin-bottom: 6px;
-    width: 100%;
-  }
-  li {
-    display: table-row;
-    div {
-      display: table-cell;
-      vertical-align: top;
-      padding-bottom: 5px;
-      &:first-child {
-        white-space: nowrap;
-      }
-      &:last-child:not(:first-child) {
-        color: #242a2e;
-        text-align: right;
-        padding-left: 20px;
-      }
-    }
-  }
-  p {
-    margin-bottom: 15px;
-  }
-  .btn {
-    display: block;
-    + .btn {
-      margin-top: 20px;
-    }
-  }
 }
 
 .casino-lang {
@@ -243,25 +93,6 @@
   }
 }
 
-@media (max-width: 519px) {
-  .casino-bonuses {
-    .wide {
-      span {
-        display: block;
-        margin: 0 auto;
-        max-width: 380px;
-        padding-right: 0;
-        padding-left: 20px !important;
-      }
-      span + span {
-        &:before {
-          display: none;
-        }
-      }
-    }
-  }
-}
-
 @media (max-width: $max-mobile-width) {
   .casino {
     .rate_large {
@@ -285,14 +116,6 @@
   }
   .casino-title {
     padding: 0 15px;
-  }
-  .casino-bonuses {
-    padding: 0 15px;
-    .btn {
-      display: block;
-      margin: 10px auto 0;
-      max-width: 380px;
-    }
   }
   .casino-content {
     .content_block {
@@ -341,30 +164,8 @@
   .casino-title {
     font-size: 36px;
   }
-  .casino-bonuses {
-    text-align: left;
-    margin-top: 25px;
-    span + span {
-      &:before {
-        color: #fff;
-      }
-    }
-    small {
-      color: #fff;
-    }
-  }
   .casino-review {
     padding: 25px;
-  }
-  .casino-overview {
-    font-size: 16px;
-    padding: 0 80px 50px 62px;
-    .item {
-      padding-bottom: 20px;
-      &:last-child {
-        padding-bottom: 40px;
-      }
-    }
   }
 
   .rate_description {
@@ -407,8 +208,7 @@
     }
   }
 
-  .casino-review,
-  .casino-overview {
+  .casino-review {
     display: none;
 
     &.active {
@@ -437,26 +237,6 @@
     height: 360px;
   }
 
-  .casino-bonuses {
-    display: table;
-    > div {
-      display: table-row;
-      margin: 0 !important;
-      > div {
-        display: table-cell;
-        vertical-align: top;
-      }
-      + div {
-        > div {
-          padding-top: 25px;
-        }
-      }
-    }
-    .btn {
-      display: block;
-      margin: 16px 0 0 25px;
-    }
-  }
   .casino-tabs {
     display: none;
   }
@@ -468,48 +248,6 @@
     float: left;
     padding: 0 55px 0 85px;
     width: calc(100% - 380px);
-  }
-  .casino-overview {
-    background: #2c3438 url("../images/bg-dark3.png") repeat 50% 50% / 34px auto;
-    color: #fff;
-    float: right;
-    font-size: 14px;
-    margin-top: -55px;
-    padding-left: 28px;
-    padding-right: 30px;
-    width: 380px;
-    &:before {
-      background: #424446;
-    }
-    .item {
-      padding-left: 26px;
-    }
-    .items:before,
-    .item:before,
-    .item:after {
-      background: #3a4247;
-    }
-    .item {
-      &:last-child:after {
-        background: -moz-linear-gradient(top, #3a4247 0%, #3a4247 40%, rgba(58, 66, 71, 0) 100%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(top, #3a4247 0%, #3a4247 40%, rgba(58, 66, 71, 0) 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to bottom, #3a4247 0%, #3a4247 40%, rgba(58, 66, 71, 0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-      }
-    }
-    .item-content {
-      color: #b4b4b4;
-    }
-    li {
-      div:last-child:not(:first-child) {
-        color: inherit;
-      }
-      strong {
-        color: #fff;
-      }
-    }
-    .btn {
-      margin-left: 26px;
-    }
   }
 
   .rate_description {

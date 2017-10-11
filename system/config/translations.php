@@ -43,7 +43,7 @@
       'message' => 'Meddelande',
       'min. deposit' => 'Minsta insättning',
       'min. withdrawal' => 'Minsta uttag',
-      'most free spins' => '',
+      'most free spins' => 'Mest free spins',
       'most popular' => 'Populärast',
       'name' => 'Namn',
       'newest casinos' => 'Nya casinon',

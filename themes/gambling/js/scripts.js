@@ -227,7 +227,7 @@
         $('.casino').each(function () {
             var $casino = $(this),
                 $tabs = $casino.find('.casino-tabs div'),
-                $contentItems = $casino.find('.casino-review, .casino-overview'),
+                $contentItems = $casino.find('.casino-review, .overview'),
                 $rateDescription = $casino.find('.rate_description'),
                 $rateDescriptionDetails = $casino.find('.rate_description-details');
             $tabs.each(function (i) {
