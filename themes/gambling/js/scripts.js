@@ -351,7 +351,7 @@
         initSubscription();
 
         // Adblock fix
-        $('.slider .item-links a').each(function() {
+        $('.slider .item-links a, .fix-link').each(function() {
           var $a = $(this),
               url = $a.attr('href'),
               target = $a.attr('target') || '_self';

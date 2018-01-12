@@ -2610,21 +2610,33 @@ ul.dropdown-menu {
     .top-list .item:first-child {
       border-top: 0; }
     .top-list .item > div {
+      display: flex;
+      align-items: center;
       margin: 0 auto;
       max-width: 500px;
       position: relative; }
+    .top-list .item__btn {
+      border: 1px solid #4caeec;
+      border-radius: 3px;
+      color: #4caeec;
+      display: inline-block;
+      padding: 4px 10px 4px 12px;
+      max-width: 100%;
+      white-space: nowrap;
+      letter-spacing: 2px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-transform: uppercase; }
+    .top-list .item__terms {
+      text-decoration: underline; }
   .top-list .item-img {
     background: #242b2e no-repeat 50% 50% / contain;
     border-radius: 50%;
-    display: inline-block;
-    vertical-align: middle;
     overflow: hidden;
     width: 50px;
     height: 50px; }
   .top-list .item-info {
-    display: inline-block;
-    vertical-align: middle;
-    width: calc(100% - 62px);
+    flex: 1 0 0%;
     margin-left: 12px; }
   .top-list .item-title {
     font-size: 16px;
@@ -2640,19 +2652,8 @@ ul.dropdown-menu {
   .top-list .item-link {
     font-size: 13px;
     font-weight: bold;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    text-align: center;
     margin: 10px 0 0 62px; }
-    .top-list .item-link a {
-      border: 1px solid #4caeec;
-      border-radius: 3px;
-      color: #4caeec;
-      display: inline-block;
-      padding: 4px 10px 4px 12px;
-      max-width: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis; }
 
 .top-list-title {
   background: #242b2e url("../images/bg-dark.png") repeat 50% 50%/34px auto;
@@ -2791,6 +2792,8 @@ ul.dropdown-menu {
 
   .top-list-title > div {
     max-width: none; } }
+.casinos .rate, .casinos .rate_small, .casinos .rate_large {
+  margin-left: 78px; }
 .casinos .item {
   background: #fff;
   border-radius: 2px;
@@ -2798,6 +2801,20 @@ ul.dropdown-menu {
   margin-bottom: 15px;
   min-height: 190px;
   position: relative; }
+  .casinos .item__btn {
+    border: 1px solid #3387dd;
+    border-radius: 3px;
+    display: block;
+    letter-spacing: 2px;
+    min-width: 65px;
+    padding: 4px 10px 2px 12px;
+    text-transform: uppercase; }
+    .casinos .item__btn:hover {
+      background: rgba(63, 124, 186, 0.15); }
+  .casinos .item__terms {
+    font-size: 13px;
+    font-weight: normal;
+    text-decoration: underline; }
   .casinos .item.hidden {
     display: none; }
 .casinos .item-img {
@@ -2815,8 +2832,6 @@ ul.dropdown-menu {
   font: bold 18px/1.3 'Montserrat', sans-serif;
   text-transform: uppercase;
   margin: 0 0 3px 78px; }
-.casinos .rate, .casinos .rate_small, .casinos .rate_large {
-  margin-left: 78px; }
 .casinos .item-bonus {
   color: #444c50;
   clear: both;
@@ -2852,18 +2867,8 @@ ul.dropdown-menu {
 .casinos .item-link {
   color: #3387dc;
   text-align: center;
-  text-transform: uppercase;
   float: right;
-  font-weight: bold;
-  letter-spacing: 2px; }
-  .casinos .item-link a {
-    border: 1px solid #3387dd;
-    border-radius: 3px;
-    display: block;
-    min-width: 65px;
-    padding: 4px 10px 2px 12px; }
-    .casinos .item-link a:hover {
-      background: rgba(63, 124, 186, 0.15); }
+  font-weight: bold; }
 .casinos .item--big:nth-child(2), .casinos .item--big:nth-child(3) {
   display: none; }
 .casinos .item--big .item-title,
@@ -2887,6 +2892,8 @@ ul.dropdown-menu {
 
 @media (min-width: 768px) {
   .casinos .items {
+    display: flex;
+    flex-wrap: wrap;
     font-size: 0;
     margin: 0 -10px; }
   .casinos .item {
@@ -3897,6 +3904,8 @@ ul.dropdown-menu {
     margin-top: 10px; }
   .bonuses__awareness {
     padding-top: 0 !important; }
+    .bonuses__awareness a {
+      text-decoration: underline; }
   @media (max-width: 519px) {
     .bonuses .wide span {
       display: block;
@@ -4028,6 +4037,9 @@ ul.dropdown-menu {
       margin-top: 20px; }
   .overview__awareness {
     margin-bottom: 10px; }
+    .overview__awareness a {
+      color: inherit !important;
+      text-decoration: underline; }
   @media (max-width: 1199px) {
     .overview .overview {
       display: none; }
