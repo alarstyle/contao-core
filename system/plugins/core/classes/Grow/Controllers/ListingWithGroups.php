@@ -53,7 +53,7 @@ class ListingWithGroups extends Listing
 
         $where = is_callable($this->config['group']['whereCallback']) ? call_user_func($this->config['group']['whereCallback']) : '';
 
-        foreach ($this->groupOrganizer->getSimpleList(30, 0, $where, $order, $hook) as $item) {
+        foreach ($this->groupOrganizer->getSimpleList(100, 0, $where, $order, $hook) as $item) {
             $groups[] = [
                 'id' => $item->id,
                 'label' => is_callable($labelCallback) ? call_user_func($labelCallback, $item) : '',

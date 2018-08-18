@@ -155,7 +155,7 @@ class Casinos extends ListingWithGroups
 
     public function ajaxSaveGroup()
     {
-        $id = intval(Input::post('id'));
+        $id = Input::post('id');
 
         parent::ajaxSaveGroup();
 
@@ -230,7 +230,7 @@ class Casinos extends ListingWithGroups
     {
         $defaultCountry = BackendHelpers::getDefaultCountry();
         $nameArr = deserialize($item->name);
-        $name = $nameArr[$defaultCountry['id']];
+        $name = $nameArr[$item->country];
         return $name ?: $item->id;
     }
 

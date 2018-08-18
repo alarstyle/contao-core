@@ -71,7 +71,7 @@ class Listing extends \Contao\Controllers\BackendMain
         $joinOn = $this->config['list']['joinOn'] ?: '';
 
         $headers = $this->listOrganizer->getListHeaders();
-        $list = $this->listOrganizer->getList(60, 0, $where, $order, $join, $joinOn);
+        $list = $this->listOrganizer->getList(120, 0, $where, $order, $join, $joinOn);
 
         $headersCallback = $this->config['list']['headersCallback'];
         $listCallback = $this->config['list']['listCallback'];
