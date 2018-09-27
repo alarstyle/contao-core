@@ -3939,6 +3939,8 @@ ul.dropdown-menu {
         .bonuses__item > div {
           display: table-cell;
           vertical-align: top; }
+        .bonuses__item > div:first-child .btn {
+          margin-left: 0; }
         .bonuses__item + .bonuses__item > div {
           padding-top: 25px; }
       .bonuses .btn {

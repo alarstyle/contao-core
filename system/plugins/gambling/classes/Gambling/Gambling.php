@@ -63,7 +63,8 @@ class Gambling
                 'title' => $allCountries[$country['country']],
                 'verificationCode' => $country['verificationCode'],
                 'domain' => $country['domain'],
-                'link' => $country['domain'] ? 'http://' . $country['domain'] : '/' . $country['alias']
+                'link' => $country['domain'] ? 'http://' . $country['domain'] : '/' . $country['alias'],
+                'hidden' => $country['hidden']
             ];
         }
 

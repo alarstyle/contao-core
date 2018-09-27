@@ -115,6 +115,12 @@
       > div {
         display: table-cell;
         vertical-align: top;
+
+        &:first-child {
+          .btn {
+            margin-left: 0;
+          }
+        }
       }
 
       & + & {

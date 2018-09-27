@@ -27,7 +27,7 @@ $GLOBALS['TL_DCA']['tl_country'] = array
 
 	// Palettes
 	'palettes' => [
-		'default'                     => 'country, language, alias, domain, verificationCode, fallback'
+		'default'                     => 'country, language, alias, domain, verificationCode, fallback, hidden'
 	],
 
 	// Fields
@@ -82,9 +82,17 @@ $GLOBALS['TL_DCA']['tl_country'] = array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_country']['fallback'],
             'inputType'               => 'checkbox',
+            'eval'                    => array('tl_class'=>'w50'),
             'save_callback_new' => [
                 ['tl_country', 'fallbackReset']
             ],
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+        'hidden' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_country']['hidden'],
+            'inputType'               => 'checkbox',
+            'eval'                    => array('tl_class'=>'w50'),
             'sql'                     => "char(1) NOT NULL default ''"
         ),
         'verificationCode' => [
