@@ -164,6 +164,7 @@ class Casinos extends ListingWithGroups
             $connection = \Grow\Database::getConnection();
             $newId = ActionData::getData('newId');
             foreach ($countries as $countryId=>$countryName) {
+                if ($countryId !== $this->currentCountryId) continue;
                 $connection->insertQuery()
                     ->table('tl_casino_category_data')
                     ->data([

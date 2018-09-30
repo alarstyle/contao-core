@@ -118,6 +118,11 @@
         'id' => 'af3b64c9',
         'label' => 'Zimpler',
       ),
+      23 => 
+      array (
+        'id' => '50dccdbb',
+        'label' => 'BankID',
+      ),
     ),
     'deposit methods' => 
     array (
@@ -301,6 +306,11 @@
         'id' => 'e988f728',
         'label' => 'Entercash',
       ),
+      36 => 
+      array (
+        'id' => '39705a32',
+        'label' => 'BankID',
+      ),
     ),
     'game providers' => 
     array (
@@ -421,273 +431,268 @@
       ),
       23 => 
       array (
-        'id' => '636d32a5',
-        'label' => 'Bally',
-      ),
-      24 => 
-      array (
         'id' => '84d5cefe',
         'label' => 'IGT',
       ),
-      25 => 
+      24 => 
       array (
         'id' => '8412bb48',
         'label' => 'NextGen Gaming',
       ),
-      26 => 
+      25 => 
       array (
         'id' => '2890ae31',
         'label' => 'Realistic Games',
       ),
-      27 => 
+      26 => 
       array (
         'id' => '0027cc9c',
         'label' => 'Blueprint Gaming',
       ),
-      28 => 
+      27 => 
       array (
         'id' => '49dd9b5b',
         'label' => 'Leander Games',
       ),
-      29 => 
+      28 => 
       array (
         'id' => '346eb6d5',
         'label' => 'Rabcat',
       ),
-      30 => 
+      29 => 
       array (
         'id' => '228502c9',
         'label' => '2 By 2 Gaming',
       ),
-      31 => 
+      30 => 
       array (
         'id' => '9800a906',
         'label' => 'JPM Interactive',
       ),
-      32 => 
+      31 => 
       array (
         'id' => 'b58a3f6f',
         'label' => 'Eyecon',
       ),
-      33 => 
-      array (
-        'id' => '9d47d240',
-        'label' => 'Big Time Gaming',
-      ),
-      34 => 
+      32 => 
       array (
         'id' => 'bdd8b3d5',
         'label' => 'Odobo',
       ),
-      35 => 
+      33 => 
       array (
         'id' => '41d0cebc',
         'label' => 'The Games Company',
       ),
-      36 => 
+      34 => 
       array (
         'id' => 'a5c06c6f',
         'label' => 'GreenTube',
       ),
-      37 => 
+      35 => 
       array (
         'id' => '9e1c438e',
         'label' => 'Barcrest Games',
       ),
-      38 => 
+      36 => 
       array (
         'id' => 'd67a404c',
         'label' => 'Quickfire',
       ),
-      39 => 
+      37 => 
       array (
         'id' => '7627d59e',
         'label' => 'Amaya',
       ),
-      40 => 
+      38 => 
       array (
         'id' => 'b2763db8',
         'label' => 'Yggdrasil Gaming',
       ),
-      41 => 
+      39 => 
       array (
         'id' => '57ff0b0f',
         'label' => 'Jadestone',
       ),
-      42 => 
+      40 => 
       array (
         'id' => 'e91c4a20',
         'label' => 'Merkur',
       ),
-      43 => 
+      41 => 
       array (
         'id' => '0edc6f58',
         'label' => 'Edict',
       ),
-      44 => 
+      42 => 
       array (
         'id' => '797aa776',
         'label' => 'Bluberi',
       ),
-      45 => 
+      43 => 
       array (
         'id' => '8f4c8e0a',
         'label' => 'SideCity',
       ),
-      46 => 
+      44 => 
       array (
         'id' => '1a2e2c1b',
         'label' => 'Aristocrat',
       ),
-      47 => 
+      45 => 
       array (
         'id' => '87cde69f',
         'label' => 'Scientific Games',
       ),
-      48 => 
+      46 => 
       array (
         'id' => 'c407207e',
         'label' => 'Authentic Gaming',
       ),
-      49 => 
+      47 => 
       array (
         'id' => '2d9c72fc',
         'label' => 'Bet Digital',
       ),
-      50 => 
+      48 => 
       array (
         'id' => 'dec20d9a',
         'label' => 'Big Time Gaming',
       ),
-      51 => 
+      49 => 
       array (
         'id' => '868b35dc',
         'label' => 'Chambre Séparée',
       ),
-      52 => 
+      50 => 
       array (
         'id' => '561333e6',
         'label' => 'Chance Interactive',
       ),
-      53 => 
+      51 => 
       array (
         'id' => 'a6e5f854',
         'label' => 'Concept Gaming',
       ),
-      54 => 
+      52 => 
       array (
         'id' => 'fbe78c3b',
         'label' => 'Core Gaming',
       ),
-      55 => 
+      53 => 
       array (
         'id' => '229ed91c',
         'label' => 'Extreme Live Gaming',
       ),
-      56 => 
+      54 => 
       array (
         'id' => '5461ddfd',
         'label' => 'Ezugi',
       ),
-      57 => 
+      55 => 
       array (
         'id' => '500bb92c',
         'label' => 'Fantasma',
       ),
-      58 => 
+      56 => 
       array (
         'id' => '44755b3c',
         'label' => 'Felt',
       ),
-      59 => 
+      57 => 
       array (
         'id' => 'ffa0813d',
         'label' => 'FOG',
       ),
-      60 => 
+      58 => 
       array (
         'id' => '007bbe29',
         'label' => 'GameVy',
       ),
-      61 => 
+      59 => 
       array (
         'id' => 'be106001',
         'label' => 'Gamomat',
       ),
-      62 => 
+      60 => 
       array (
         'id' => 'ca13fe30',
         'label' => 'Genii',
       ),
-      63 => 
+      61 => 
       array (
         'id' => '8336a2e0',
         'label' => 'Igaming2go',
       ),
-      64 => 
+      62 => 
       array (
         'id' => 'a5bc5701',
         'label' => 'Inspired Gaming',
       ),
-      65 => 
+      63 => 
       array (
         'id' => '6e9faf33',
         'label' => 'ISoftBet',
       ),
-      66 => 
+      64 => 
       array (
         'id' => 'd6800ea8',
         'label' => 'JustForTheWiin',
       ),
-      67 => 
+      65 => 
       array (
         'id' => '83611fb1',
         'label' => 'Lightning Box',
       ),
-      68 => 
+      66 => 
       array (
         'id' => 'f1f15400',
         'label' => 'Lucky Streak',
       ),
-      69 => 
+      67 => 
       array (
         'id' => '95c2214f',
         'label' => 'Nektan',
       ),
-      70 => 
+      68 => 
       array (
         'id' => 'ee260227',
         'label' => 'NetEnt Live',
       ),
-      71 => 
+      69 => 
       array (
         'id' => 'c88ae610',
         'label' => 'OGS',
       ),
-      72 => 
+      70 => 
       array (
         'id' => '0548b61d',
         'label' => 'OpenBet',
       ),
-      73 => 
+      71 => 
       array (
         'id' => '0a7fbb4f',
         'label' => 'Portomaso Gaming',
       ),
-      74 => 
+      72 => 
       array (
         'id' => 'c58bad9b',
         'label' => 'Pragmatic Play',
       ),
-      75 => 
+      73 => 
       array (
         'id' => '38c6bb3b',
         'label' => 'Push Gaming',
       ),
-      76 => 
+      74 => 
       array (
         'id' => 'ac29ab3a',
         'label' => 'Skillz gaming',
+      ),
+      75 => 
+      array (
+        'id' => 'ae2a847e',
+        'label' => 'Playson',
       ),
     ),
     'licenses' => 
@@ -1178,5 +1183,53 @@
         'label' => 'Gibraltar Regulatory Authority',
       ),
     ),
+  ),
+  55 => 
+  array (
+    'withdrawal methods' => 
+    array (
+      0 => 
+      array (
+        'id' => 'dd52bedb',
+        'label' => 'Trustly',
+      ),
+      1 => 
+      array (
+        'id' => '3326b79f',
+        'label' => 'VISA',
+      ),
+      2 => 
+      array (
+        'id' => '7e1e6ca1',
+        'label' => 'Mastercard',
+      ),
+    ),
+    'deposit methods' => 
+    array (
+      0 => 
+      array (
+        'id' => 'dd52bedb',
+        'label' => 'Trustly',
+      ),
+      1 => 
+      array (
+        'id' => '3326b79f',
+        'label' => 'VISA',
+      ),
+      2 => 
+      array (
+        'id' => '7e1e6ca1',
+        'label' => 'Mastercard',
+      ),
+    ),
+    'game providers' => 
+    array (
+      0 => 
+      array (
+        'id' => 'ece6a13d',
+        'label' => 'NetEnt',
+      ),
+    ),
+    'licenses' => '',
   ),
 ) ;
